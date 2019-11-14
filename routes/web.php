@@ -12,5 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
+});
+
+Route::get('/login',  'LoginController@index')->name('login');
+Route::post('/login',  'LoginController@login');
+
+//admin
+Route::group(['middleware' => ['auth', 'role:1']], function() {
+	Route::get('/admin',  'AdminController@index')->name('admin');
+	Route::resource('users', 'UserController');
 });
