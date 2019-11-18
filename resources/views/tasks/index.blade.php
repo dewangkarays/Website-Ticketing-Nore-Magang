@@ -6,7 +6,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data User</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Task</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -19,25 +19,27 @@
 		<!-- Hover rows -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-				<a href="{{ route('users.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+				<a href="{{ route('tasks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
 			</div>
 
 			<table class="table datatable-basic table-hover">
 				<thead>
 					<tr>
-						<th>Nama</th>
-						<th>Username</th>
-						<th>Role</th>
+						<th>User</th>
+						<th>Kebutuhan</th>
+						<th>Handler</th>
+						<th>Status</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 				@if(!$tasks->isEmpty())
-					@foreach($users as $user)
+					@foreach($tasks as $task)
 				    <tr>
-				        <td>{{$user->nama}}</td>
-				        <td>{{$user->username}}</td>
-				        <td>{{$user->role}}</td>
+				        <td>{{$task->user_id}}</td>
+				        <td>{{$task->kebutuhan}}</td>
+				        <td>{{$task->handler}}</td>
+				        <td>{{$task->status}}</td>
 				        <td align="center">
 							<div class="list-icons">
 								<div class="dropdown">
@@ -46,8 +48,8 @@
 									</a>
 
 									<div class="dropdown-menu dropdown-menu-right">
-										<a href="{{ route('users.edit',$user->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('users.destroy', $user->id)}}"><i class="icon-x"></i> Delete</a>
+										<a href="{{ route('tasks.edit',$task->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tasks.destroy', $task->id)}}"><i class="icon-x"></i> Delete</a>
 									</div>
 								</div>
 							</div>
@@ -55,9 +57,8 @@
 				    </tr>
 				    @endforeach
 				@else
-				  	<tr><td align="center" colspan="4">Data Kosong</td></tr>
+				  	<tr><td align="center" colspan="5">Data Kosong</td></tr>
 				@endif 
-				    
 				</tbody>
 			</table>
 		</div>
@@ -110,7 +111,7 @@
 		     $("#delform").attr("action", url);
 		});
 
-		
+
 		/* ------------------------------------------------------------------------------
 		 *
 		 *  # Basic datatables
@@ -143,7 +144,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 3 ]
+		                targets: [ 4 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
