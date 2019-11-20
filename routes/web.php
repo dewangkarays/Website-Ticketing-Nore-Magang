@@ -23,5 +23,6 @@ Route::group(['middleware' => ['auth', 'role:1']], function() {
 	Route::get('/admin',  'AdminController@index')->name('admin');
 	Route::resource('users', 'UserController');
 	Route::resource('tasks', 'TaskController');
-	Route::resource('attachment', 'AttachmentController');
+	Route::resource('attachments', 'AttachmentController');
+	Route::resource('payments', 'PaymentController');
 });

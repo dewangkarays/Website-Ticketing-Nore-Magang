@@ -50,7 +50,7 @@
 								<input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
 								<div id="attachdiv">
 									@foreach($attachment as $attach)
-										<span class="form-text text-muted"><a href="{{ asset('storage/attachment/'.$attach->file)}}">{{$attach->file}}</a> <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('attachment.destroy', $attach->id)}}" style="display: inline;"><i class="icon-x"></i></a></span>
+										<span class="form-text text-muted"><a href="{{ asset('storage/attachment/'.$attach->file)}}">{{$attach->file}}</a> <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('attachments.destroy', $attach->id)}}" style="display: inline;"><i class="icon-x"></i></a></span>
 									@endforeach
 								</div>
 							</div>

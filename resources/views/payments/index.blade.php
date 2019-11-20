@@ -6,7 +6,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data User</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Payment</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -19,27 +19,27 @@
 		<!-- Hover rows -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-				<a href="{{ route('users.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+				<a href="{{ route('payments.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
 			</div>
 
 			<table class="table datatable-basic table-hover">
 				<thead>
 					<tr>
-						<th>Nama</th>
-						<th>Username</th>
-						<th>Role</th>
+						<th>User</th>
+						<th>Keterangan</th>
+						<th>Nominal</th>
 						<th>Kadaluarsa</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
-				@if(!$users->isEmpty())
-					@foreach($users as $user)
+				@if(!$payments->isEmpty())
+					@foreach($payments as $payment)
 				    <tr>
-				        <td>{{$user->nama}}</td>
-				        <td>{{$user->username}}</td>
-				        <td>{{$user->role}}</td>
-				        <td>{{$user->kadaluarsa}}</td>
+				        <td>{{$payment->user->nama}}</td>
+				        <td>{{$payment->keterangan}}</td>
+				        <td>{{$payment->nominal}}</td>
+				        <td>{{$payment->kadaluarsa}}</td>
 				        <td align="center">
 							<div class="list-icons">
 								<div class="dropdown">
@@ -48,8 +48,8 @@
 									</a>
 
 									<div class="dropdown-menu dropdown-menu-right">
-										<a href="{{ route('users.edit',$user->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('users.destroy', $user->id)}}"><i class="icon-x"></i> Delete</a>
+										<a href="{{ route('payments.edit',$payment->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('payments.destroy', $payment->id)}}"><i class="icon-x"></i> Delete</a>
 									</div>
 								</div>
 							</div>

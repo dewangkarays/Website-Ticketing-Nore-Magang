@@ -29,12 +29,18 @@ class User extends Authenticatable
          'password' //, 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        // 'email_verified_at' => 'datetime',
-    ];
+    public function task()
+    {
+        return $this->hasMany('App\Model\Task', 'user_id', 'id');
+    }
+
+    public function assign()
+    {
+        return $this->hasMany('App\Model\Task', 'handler', 'id');
+    }
+
+    public function payment()
+    {
+        return $this->hasMany('App\Model\Payment', 'user_id', 'id');
+    }
 }

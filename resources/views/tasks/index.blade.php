@@ -36,9 +36,9 @@
 				@if(!$tasks->isEmpty())
 					@foreach($tasks as $task)
 				    <tr>
-				        <td>{{$task->user_id}}</td>
+				        <td>{{$task->user->nama}}</td>
 				        <td>{{$task->kebutuhan}}</td>
-				        <td>{{$task->handler}}</td>
+				        <td>{{@$task->assign->nama}}</td>
 				        <td>{{$task->status}}</td>
 				        <td align="center">
 							<div class="list-icons">

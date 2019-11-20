@@ -27,7 +27,7 @@
 
 				@if(Auth::user()->role==1)
 					<li class="nav-item">
-						<a href="{{ url('/admin') }}" class="nav-link active">
+						<a href="{{ url('/admin') }}" class="nav-link {{ (request()->is('admin*')) ? 'active' : '' }}">
 							<i class="icon-home4"></i>
 							<span>
 								Dashboard
@@ -35,7 +35,7 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="{{ url('/users') }}" class="nav-link">
+						<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
 							<i class="icon-users"></i>
 							<span>
 								User
@@ -43,7 +43,7 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="{{ url('/tasks') }}" class="nav-link">
+						<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
 							<i class="icon-stack-text"></i>
 							<span>
 								Task
@@ -51,7 +51,7 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="#" class="nav-link">
+						<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
 							<i class="icon-coin-dollar"></i>
 							<span>
 								Pembayaran
