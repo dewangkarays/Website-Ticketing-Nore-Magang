@@ -30,9 +30,10 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $users = User::all();
+        $users = User::where('role','99')->get(); //role customer
+        $handlers = User::where('role','10')->get(); //role karyawan
 
-        return view('tasks.create', compact('users'));
+        return view('tasks.create', compact('users','handlers'));
     }
 
     /**
@@ -107,10 +108,11 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $users = User::all();
+        $users = User::where('role','99')->get(); //role customer
+        $handlers = User::where('role','10')->get(); //role karyawan
         $attachment = Attachment::where('task_id', '=', $id)->get();
         $task = Task::find($id);
-        return view('tasks.edit', compact('task','users','attachment')); 
+        return view('tasks.edit', compact('task','users','handlers','attachment')); 
     }
 
     /**

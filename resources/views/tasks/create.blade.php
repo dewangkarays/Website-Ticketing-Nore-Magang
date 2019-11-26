@@ -54,8 +54,8 @@
 							<div class="col-lg-10">
 								<select name="handler" class="form-control select-search" data-fouc>
                                     <option value="">-- Pilih User --</option>
-									@foreach($users as $user)
-										<option value="{{$user->id}}">{{$user->nama}}</option>
+									@foreach($handlers as $handler)
+										<option value="{{$handler->id}}">{{$handler->nama}}</option>
 				    				@endforeach
 								</select>
 							</div>

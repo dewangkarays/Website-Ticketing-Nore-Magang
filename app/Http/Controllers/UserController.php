@@ -40,6 +40,7 @@ class UserController extends Controller
         $request->validate([
             'nama'=>'required',
             'email'=>'required',
+            'telp'=>'required',
             'username'=>'required',
             'password'=>'required',
             'role'=>'required'
@@ -49,6 +50,7 @@ class UserController extends Controller
             'nama' => $request->get('nama'),
             'username' => $request->get('username'),
             'email' => $request->get('email'),
+            'telp' => $request->get('telp'),
             'password' => bcrypt($request->get('password')),
             'role' => $request->get('role'),
         ]);
@@ -91,6 +93,7 @@ class UserController extends Controller
         $request->validate([
             'nama'=>'required',
             'email'=>'required',
+            'telp'=>'required',
             'username'=>'required',
             'role'=>'required'
         ]);
@@ -99,6 +102,7 @@ class UserController extends Controller
         $user->nama =  $request->get('nama');
         $user->username = $request->get('username');
         $user->email = $request->get('email');
+        $user->telp = $request->get('telp');
         $user->role = $request->get('role');
         if($request->get('password')!=''){
             $user->password = bcrypt($request->get('password'));

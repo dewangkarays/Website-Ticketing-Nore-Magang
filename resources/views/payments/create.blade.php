@@ -29,9 +29,9 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">User</label>
 							<div class="col-lg-10">
-								<select name="user_id" class="form-control select-search" data-fouc>
+								<select name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)">
 									@foreach($users as $user)
-										<option value="{{$user->id}}">{{$user->nama}}</option>
+										<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}">{{$user->nama}}</option>
 				    				@endforeach
 								</select>
 							</div>
@@ -95,7 +95,6 @@
 	<script src="{{asset('global_assets/js/demo_pages/uploader_bootstrap.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
 	<script>
-		
 
         // Accessibility labels
         $('.pickadate-accessibility').pickadate({
@@ -108,6 +107,16 @@
             format: 'yyyy-mm-dd',
             formatSubmit: 'yyyy-mm-dd',
         });
+
+		function changeDate(select){
+			var str = $(select).find(':selected').data('kadaluarsa')
+			console.log(str);
+			var tgl = str.split("-");
+			var picker = $(".pickadate-accessibility").pickadate('picker');
+			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
+			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
+	        picker.render();
+		}
 	</script>
 
 @endsection

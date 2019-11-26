@@ -25,7 +25,8 @@
 			<table class="table datatable-basic table-hover">
 				<thead>
 					<tr>
-						<th>User</th>
+						<th>Username</th>
+						<th>Nama</th>
 						<th>Keterangan</th>
 						<th>Nominal</th>
 						<th>Kadaluarsa</th>
@@ -36,6 +37,7 @@
 				@if(!$payments->isEmpty())
 					@foreach($payments as $payment)
 				    <tr>
+				        <td>{{$payment->user->username}}</td>
 				        <td>{{$payment->user->nama}}</td>
 				        <td>{{$payment->keterangan}}</td>
 				        <td>{{$payment->nominal}}</td>
@@ -145,7 +147,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 4 ]
+		                targets: [ 5 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
