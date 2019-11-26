@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
+	<title>Nore - Pembuatan dan Pengoperasian Website</title>
 
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -70,6 +70,18 @@
 <script src="{{ URL::asset('global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ URL::asset('global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
 <!-- /core JS files -->
+
+<script>
+	$(document).on("click", "#notifButton", function () {
+		$.ajax({
+			url:"{{ url('/clearnotif') }}",
+			method:"GET",
+			success:function(data) {
+				$('#countNotif').html('0');
+			}
+		});
+	});
+</script>
 
 @yield('js')
 

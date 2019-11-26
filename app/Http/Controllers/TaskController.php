@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Model\Task;
 use App\Model\User;
 use App\Model\Attachment;
+use App\Model\Notification;
 
 class TaskController extends Controller
 {
@@ -74,6 +75,16 @@ class TaskController extends Controller
             
         }
 
+        //notifikasi
+        $users = User::whereIn('role', ['1','10'])->get(); //role admin & karyawan
+        foreach ($users as $user) {
+            $notif = new Notification();
+            $notif->title = 'Task Baru';
+            $notif->message = $task->user->username.' mengirimkan task baru.';
+            $notif->user_id = $user->id;
+            $notif->save();
+        }
+
         return redirect('/tasks')->with('success', 'Task saved!');
     }
 
@@ -116,10 +127,37 @@ class TaskController extends Controller
         ]);
 
         $task = Task::find($id);
-        $task->status =  $request->get('status');
+        if($task->status != $request->get('status')){
+            $task->status = $request->get('status');
 
-        if($request->get('handler')!=''){
+            //notifikasi
+            if($request->get('status') == '2') {
+                $notif = new Notification();
+                $notif->title = 'Task Sedang Dikerjakan';
+                $notif->message = 'Task yang anda kirimkan sedang dikerjakan.';
+                $notif->user_id = $task->user_id;
+                $notif->save();
+            }
+
+            //notifikasi
+            if($request->get('status') == '3') {
+                $notif = new Notification();
+                $notif->title = 'Task Selesai Dikerjakan';
+                $notif->message = 'Task yang anda kirimkan selesai dikerjakan.';
+                $notif->user_id = $task->user_id;
+                $notif->save();
+            }
+        }
+
+        if($request->get('handler') != '' && $task->handler != $request->get('handler')){
             $task->handler = $request->get('handler');
+
+            //notifikasi
+            $notif = new Notification();
+            $notif->title = 'Task Baru untuk Anda';
+            $notif->message = 'Anda mendapat task baru untuk dikerjakan.';
+            $notif->user_id = $request->get('handler');
+            $notif->save();
         }
 
         $task->save();
@@ -133,8 +171,8 @@ class TaskController extends Controller
                 // $data[] = $name;  
 
                 $attach= new Attachment();
-                $attach->task_id=$id;
-                $attach->file= $id.$name;
+                $attach->task_id = $id;
+                $attach->file = $id.$name;
                 $attach->save();
             }
              

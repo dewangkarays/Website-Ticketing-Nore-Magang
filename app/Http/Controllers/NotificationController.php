@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\Notification;
 
 class NotificationController extends Controller
 {
@@ -81,4 +82,11 @@ class NotificationController extends Controller
     {
         //
     }
+
+    public function clearNotif()
+    {
+        $id = \Auth::user()->id;
+        Notification::where('user_id','=',$id)->update([ 'status' => '0']);
+    }
 }
+

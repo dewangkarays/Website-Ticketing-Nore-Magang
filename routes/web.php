@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::get('/login',  'LoginController@index')->name('login');
 Route::post('/login',  'LoginController@login');
+Route::get('/logout',  'LoginController@logout');
+Route::get('/clearnotif',  'NotificationController@clearNotif');
 
 //admin
 Route::group(['middleware' => ['auth', 'role:1']], function() {
