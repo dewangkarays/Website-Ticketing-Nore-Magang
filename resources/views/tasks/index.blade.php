@@ -39,7 +39,7 @@
 				        <td>{{$task->user->nama}}</td>
 				        <td>{{$task->kebutuhan}}</td>
 				        <td>{{@$task->assign->nama}}</td>
-				        <td>{{$task->status}}</td>
+				        <td>{{config('custom.status.'.$task->status)}}</td>
 				        <td align="center">
 							<div class="list-icons">
 								<div class="dropdown">

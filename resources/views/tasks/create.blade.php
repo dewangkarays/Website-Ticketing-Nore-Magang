@@ -25,7 +25,7 @@
 					@csrf
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Data Task</legend>
-
+						@if(\Auth::user()->role==1 || \Auth::user()->role==10)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">User</label>
 							<div class="col-lg-10">
@@ -36,6 +36,15 @@
 								</select>
 							</div>
 						</div>
+						@else
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">User</label>
+							<div class="col-lg-10">
+								<label class="col-form-label col-lg-2">{{\Auth::user()->nama}}</label>
+								<input type="hidden" name="user_id" value="{{\Auth::user()->id}}">
+							</div>
+						</div>
+						@endif
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Kebutuhan</label>
 							<div class="col-lg-10">
@@ -49,6 +58,7 @@
 								<input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
 							</div>
 						</div>
+						@if(\Auth::user()->role==1 || \Auth::user()->role==10)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Assign</label>
 							<div class="col-lg-10">
@@ -70,6 +80,7 @@
                                 </select>
 							</div>
 						</div>
+						@endif
 					</fieldset>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Submit <i class="icon-paperplane ml-2"></i></button>

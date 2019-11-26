@@ -18,8 +18,12 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
-
+        if(\Auth::user()->role==99){
+            $tasks = Task::where('user_id',\Auth::user()->id)->get(); //customer
+        } else {
+            $tasks = Task::all(); //admin & karyawan
+        }
+        
         return view('tasks.index', compact('tasks'));
     }
 
@@ -112,6 +116,11 @@ class TaskController extends Controller
         $handlers = User::where('role','10')->get(); //role karyawan
         $attachment = Attachment::where('task_id', '=', $id)->get();
         $task = Task::find($id);
+
+        if (\Auth::user()->role==99 && $task->user_id != \Auth::user()->id) {
+            return redirect('/tasks')->with('error', 'Akses tidak diperbolehkan');
+        }
+
         return view('tasks.edit', compact('task','users','handlers','attachment')); 
     }
 

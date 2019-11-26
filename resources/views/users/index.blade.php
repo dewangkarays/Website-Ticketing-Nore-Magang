@@ -38,7 +38,7 @@
 				    <tr>
 				        <td>{{$user->nama}}</td>
 				        <td>{{$user->username}}</td>
-				        <td>{{$user->role}}</td>
+				        <td>{{config('custom.role.'.$user->role)}}</td>
 				        <td>{{$user->kadaluarsa}}</td>
 				        <td align="center">
 							<div class="list-icons">

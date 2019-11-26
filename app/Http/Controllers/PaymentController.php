@@ -27,7 +27,7 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        $users = User::all();
+        $users = User::where('role','99')->get();
 
         return view('payments.create', compact('users'));
     }
@@ -84,7 +84,7 @@ class PaymentController extends Controller
     public function edit($id)
     {
         $payment = Payment::find($id);
-        $users = User::all();
+        $users = User::where('role','99')->get();
         return view('payments.edit', compact('payment','users')); 
     }
 

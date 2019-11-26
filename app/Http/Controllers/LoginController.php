@@ -27,8 +27,10 @@ class LoginController extends Controller
 	    ){
 	    	if(\Auth::user()->role==1){
 	    		return redirect('/admin');
+	    	}elseif(\Auth::user()->role==10){
+	    		return redirect('/karyawan');
 	    	}elseif(\Auth::user()->role==99){
-	    		return redirect('/member');
+	    		return redirect('/customer');
 	    	} else {
 	    		return redirect('/login')->with('error', 'Invalid Email address or Password');
 	    	}

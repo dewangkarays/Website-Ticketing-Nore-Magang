@@ -59,12 +59,47 @@
 						</a>
 					</li>
 
-				@else
+				@elseif(Auth::user()->role==10)
 					<li class="nav-item">
-						<a href="#" class="nav-link">
+						<a href="{{ url('/karyawan') }}" class="nav-link {{ (request()->is('karyawan*')) ? 'active' : '' }}">
+							<i class="icon-home4"></i>
+							<span>
+								Dashboard
+							</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
+							<i class="icon-stack-text"></i>
+							<span>
+								Task
+							</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
 							<i class="icon-coin-dollar"></i>
 							<span>
 								Pembayaran
+							</span>
+						</a>
+					</li>
+
+
+				@elseif(Auth::user()->role==99)
+					<li class="nav-item">
+						<a href="{{ url('/customer') }}" class="nav-link {{ (request()->is('customer*')) ? 'active' : '' }}">
+							<i class="icon-home4"></i>
+							<span>
+								Dashboard
+							</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
+							<i class="icon-stack-text"></i>
+							<span>
+								Task
 							</span>
 						</a>
 					</li>

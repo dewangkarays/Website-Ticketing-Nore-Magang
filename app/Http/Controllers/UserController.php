@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Model\User;
 
 class UserController extends Controller
@@ -125,5 +126,33 @@ class UserController extends Controller
         $user->delete();
 
         return redirect('/users')->with('success', 'User deleted!');
+    }
+
+    public function changePass()
+    {
+        return view('changepass');
+    }
+
+    public function changePassSubmit(Request $request, $id)
+    {
+        $request->validate([
+            'old_pass'=>'required',
+            'new_pass'=>'required',
+            'con_pass'=>'required',
+        ]);
+
+        $user = User::find($id);
+        if($request->get('new_pass') != $request->get('con_pass')){
+            return redirect('/changepass')->with('error', 'Password baru tidak sama dengan konfirmasi password');
+        }
+
+        if(Hash::check($request->get('old_pass'), $user->password)){
+            $user->password = bcrypt($request->get('new_pass'));
+            $user->save();
+
+            return redirect('/changepass')->with('success', 'Password updated!');
+        } else {
+            return redirect('/changepass')->with('error', 'Password lama salah');
+        }
     }
 }
