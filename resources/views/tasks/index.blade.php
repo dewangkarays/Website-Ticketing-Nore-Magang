@@ -1,5 +1,13 @@
 @extends('layout')
 
+@section('css')
+<style type="text/css">
+	.datatable-column-width{
+		overflow: hidden; text-overflow: ellipsis; max-width: 200px;
+	}
+</style>
+@endsection
+
 @section('content')
 
 	<!-- Page header -->
@@ -26,7 +34,6 @@
 				<thead>
 					<tr>
 						<th>Username</th>
-						<th>Nama</th>
 						<th>Kebutuhan</th>
 						<th>Handler</th>
 						<th>Status</th>
@@ -37,10 +44,9 @@
 				@if(!$tasks->isEmpty())
 					@foreach($tasks as $task)
 				    <tr>
-				        <td>{{$task->user->username}}</td>
-				        <td>{{$task->user->nama}}</td>
-				        <td>{{$task->kebutuhan}}</td>
-				        <td>{{@$task->assign->nama}}</td>
+				        <td><div class="datatable-column-width">{{$task->user->username}}</div></td>
+				        <td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
+				        <td><div class="datatable-column-width">{{@$task->assign->nama}}</div></td>
 				        <td>{{config('custom.status.'.$task->status)}}</td>
 				        <td align="center">
 							<div class="list-icons">
@@ -98,14 +104,14 @@
 
 @section('js')
 	<!-- Theme JS files -->
-	<script src="{{ URL::asset('global_assets/js/plugins/notifications/bootbox.min.js') }}"></script>
-	<script src="{{ URL::asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-	<script src="{{ URL::asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-	<script src="{{ URL::asset('global_assets/js/plugins/buttons/spin.min.js') }}"></script>
-	<script src="{{ URL::asset('global_assets/js/plugins/buttons/ladda.min.js') }}"></script>
+	<script src="{{asset('global_assets/js/plugins/notifications/bootbox.min.js') }}"></script>
+	<script src="{{asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js') }}"></script>
+	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js') }}"></script>
 
-	<script src="{{ URL::asset('assets/js/app.js') }}"></script>
-	<script src="{{ URL::asset('global_assets/js/demo_pages/components_modals.js') }}"></script>
+	<script src="{{asset('assets/js/app.js') }}"></script>
+	<script src="{{asset('global_assets/js/demo_pages/components_modals.js') }}"></script>
 	<script>
 		//modal delete
 		$(document).on("click", ".delbutton", function () {
@@ -128,7 +134,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 5 ]
+		                targets: [ 4 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {

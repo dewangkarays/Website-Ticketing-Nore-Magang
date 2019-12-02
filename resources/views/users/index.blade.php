@@ -1,5 +1,13 @@
 @extends('layout')
 
+@section('css')
+<style type="text/css">
+	.datatable-column-width{
+		overflow: hidden; text-overflow: ellipsis; max-width: 200px;
+	}
+</style>
+@endsection
+
 @section('content')
 
 	<!-- Page header -->
@@ -36,8 +44,8 @@
 				@if(!$users->isEmpty())
 					@foreach($users as $user)
 				    <tr>
-				        <td>{{$user->nama}}</td>
-				        <td>{{$user->username}}</td>
+				        <td><div class="datatable-column-width">{{$user->nama}}</div></td>
+				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
 				        <td>{{config('custom.role.'.$user->role)}}</td>
 				        <td>{{$user->kadaluarsa}}</td>
 				        <td align="center">
@@ -113,25 +121,7 @@
 		     $("#delform").attr("action", url);
 		});
 
-		
-		/* ------------------------------------------------------------------------------
-		 *
-		 *  # Basic datatables
-		 *
-		 *  Demo JS code for datatable_basic.html page
-		 *
-		 * ---------------------------------------------------------------------------- */
-
-
-		// Setup module
-		// ------------------------------
-
 		var DatatableBasic = function() {
-
-
-		    //
-		    // Setup module components
-		    //
 
 		    // Basic Datatable examples
 		    var _componentDatatableBasic = function() {

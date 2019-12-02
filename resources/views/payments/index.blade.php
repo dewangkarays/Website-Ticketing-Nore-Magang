@@ -1,5 +1,13 @@
 @extends('layout')
 
+@section('css')
+<style type="text/css">
+	.datatable-column-width{
+		overflow: hidden; text-overflow: ellipsis; max-width: 200px;
+	}
+</style>
+@endsection
+
 @section('content')
 
 	<!-- Page header -->
@@ -37,9 +45,9 @@
 				@if(!$payments->isEmpty())
 					@foreach($payments as $payment)
 				    <tr>
-				        <td>{{$payment->user->username}}</td>
-				        <td>{{$payment->user->nama}}</td>
-				        <td>{{$payment->keterangan}}</td>
+				        <td><div class="datatable-column-width">{{$payment->user->username}}</div></td>
+				        <td><div class="datatable-column-width">{{$payment->user->nama}}</div></td>
+				        <td><div class="datatable-column-width">{{$payment->keterangan}}</div></td>
 				        <td>{{$payment->nominal}}</td>
 				        <td>{{$payment->kadaluarsa}}</td>
 				        <td align="center">
