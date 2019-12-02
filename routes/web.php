@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/changepass/{id}',  'UserController@changePassSubmit')->name('changepass');
 	Route::resource('tasks', 'TaskController');
 	Route::resource('attachments', 'AttachmentController');
+	Route::get('/antrian',  'TaskController@antrian');
 
 	//admin
 	Route::group(['middleware' => ['role:1']], function() {

@@ -212,4 +212,16 @@ class TaskController extends Controller
 
         return redirect('/tasks')->with('success', 'Task deleted!');
     }
+
+    public function antrian()
+    {
+        $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id')
+                    ->where('tasks.status','=','2')
+                    ->orderBy('users.role', 'ASC')
+                    ->orderBy('tasks.created_at', 'ASC')
+                    ->select('tasks.*')
+                    ->get();
+                    //users.nama, users.username, 
+        return view('antrian', compact('tasks'));
+    }
 }
