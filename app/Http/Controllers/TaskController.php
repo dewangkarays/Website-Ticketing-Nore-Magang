@@ -216,7 +216,7 @@ class TaskController extends Controller
     public function antrian()
     {
         $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id')
-                    ->where('tasks.status','=','2')
+                    ->where('tasks.status','!=','3')
                     ->orderBy('users.role', 'ASC')
                     ->orderBy('tasks.created_at', 'ASC')
                     ->select('tasks.*')
