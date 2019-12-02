@@ -21,7 +21,7 @@
 			<div class="card-header header-elements-inline">
 			</div>
 			<div class="card-body">
-				<form action="{{ route('payments.update', $payment->id)}}" method="post">
+				<form class="form-validate-jquery" action="{{ route('payments.update', $payment->id)}}" method="post">
 					@method('PATCH')
 					@csrf
 					<fieldset class="mb-3">
@@ -30,23 +30,23 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">User</label>
 							<div class="col-lg-10">
-								<select name="user_id" class="form-control select-search" data-fouc>
+								<select name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
 									@foreach($users as $user)
-										<option value="{{$user->id}}" {{ $payment->user_id == $user->id ? 'selected' : '' }}>{{$user->nama}}</option>
+										<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" {{ $payment->user_id == $user->id ? 'selected' : '' }}>{{$user->username}}</option>
 				    				@endforeach
 								</select>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Kebutuhan</label>
+							<label class="col-form-label col-lg-2">Keterangan</label>
 							<div class="col-lg-10">
-								<textarea name="keterangan" rows="4" cols="3" class="form-control" placeholder="Keterangan">{{ $payment->keterangan }}</textarea>
+								<textarea name="keterangan" rows="4" cols="3" class="form-control" placeholder="Keterangan" required>{{ $payment->keterangan }}</textarea>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nominal</label>
 							<div class="col-lg-10">
-								<input type="number" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" value="{{ $payment->nominal }}">
+								<input type="number" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" required value="{{ $payment->nominal }}">
 							</div>
 						</div>
 						<div class="form-group row">
@@ -55,7 +55,7 @@
 								<!-- <span class="input-group-prepend">
 									<span class="input-group-text"><i class="icon-calendar3"></i></span>
 								</span> -->
-								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Kadaluarsa" value="{{ $payment->kadaluarsa }}">
+								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Kadaluarsa" required value="{{ $payment->kadaluarsa }}">
 							</div>
 						</div>
 					</fieldset>
@@ -74,6 +74,7 @@
 
 @section('js')
 	<!-- Theme JS files -->
+	<script src="{{asset('global_assets/js/plugins/forms/validation/validate.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/extensions/jquery_ui/interactions.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
@@ -109,6 +110,104 @@
             format: 'yyyy-mm-dd',
             formatSubmit: 'yyyy-mm-dd',
         });
+
+		function changeDate(select){
+			var str = $(select).find(':selected').data('kadaluarsa')
+			console.log(str);
+			var tgl = str.split("-");
+			var picker = $(".pickadate-accessibility").pickadate('picker');
+			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
+			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
+	        picker.render();
+		}
+	</script>
+	<script type="text/javascript">
+				
+		var FormValidation = function() {
+
+		    // Validation config
+		    var _componentValidation = function() {
+		        if (!$().validate) {
+		            console.warn('Warning - validate.min.js is not loaded.');
+		            return;
+		        }
+
+		        // Initialize
+		        var validator = $('.form-validate-jquery').validate({
+		            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+		            errorClass: 'validation-invalid-label',
+		            //successClass: 'validation-valid-label',
+		            validClass: 'validation-valid-label',
+		            highlight: function(element, errorClass) {
+		                $(element).removeClass(errorClass);
+		            },
+		            unhighlight: function(element, errorClass) {
+		                $(element).removeClass(errorClass);
+		            },
+		            // success: function(label) {
+		            //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+		            //},
+
+		            // Different components require proper error label placement
+		            errorPlacement: function(error, element) {
+
+		                // Unstyled checkboxes, radios
+		                if (element.parents().hasClass('form-check')) {
+		                    error.appendTo( element.parents('.form-check').parent() );
+		                }
+
+		                // Input with icons and Select2
+		                else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+		                    error.appendTo( element.parent() );
+		                }
+
+		                // Input group, styled file input
+		                else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+		                    error.appendTo( element.parent().parent() );
+		                }
+
+		                // Other elements
+		                else {
+		                    error.insertAfter(element);
+		                }
+		            },
+		            messages: {
+		                user_id: {
+		                    required: 'Mohon diisi.'
+		                },
+		                keterangan: {
+		                    required: 'Mohon diisi.'
+		                },
+		                nominal: {
+		                    required: 'Mohon diisi.'
+		                },
+		                kadaluarsa: {
+		                    required: 'Mohon diisi.'
+		                },
+		            },
+		        });
+
+		        // Reset form
+		        $('#reset').on('click', function() {
+		            validator.resetForm();
+		        });
+		    };
+
+		    // Return objects assigned to module
+		    return {
+		        init: function() {
+		            _componentValidation();
+		        }
+		    }
+		}();
+
+
+		// Initialize module
+		// ------------------------------
+
+		document.addEventListener('DOMContentLoaded', function() {
+		    FormValidation.init();
+		});
 	</script>
 
 @endsection

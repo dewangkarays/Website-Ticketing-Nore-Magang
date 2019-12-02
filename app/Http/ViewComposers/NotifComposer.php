@@ -10,8 +10,8 @@ class NotifComposer
 
     public function compose(View $view)
     {
-        $notif = Notification::where('user_id', '=', '1')->orderBy('id','desc')->get();
-        $count = Notification::where('user_id', '=', '1')->where('status', '=', '1')->get()->count();
+        $notif = Notification::where('user_id', '=', \Auth::user()->id)->orderBy('id','desc')->get();
+        $count = Notification::where('user_id', '=', \Auth::user()->id)->where('status', '=', '1')->get()->count();
         $view->with(compact('notif', 'count'));
     }
 }

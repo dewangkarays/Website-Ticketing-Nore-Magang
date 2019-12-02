@@ -21,7 +21,7 @@
 			<div class="card-header header-elements-inline">
 			</div>
 			<div class="card-body">
-				<form action="{{ route('tasks.store')}}" method="post" enctype="multipart/form-data">
+				<form class="form-validate-jquery" action="{{ route('tasks.store')}}" method="post" enctype="multipart/form-data">
 					@csrf
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Data Task</legend>
@@ -31,7 +31,7 @@
 							<div class="col-lg-10">
 								<select name="user_id" class="form-control select-search" data-fouc>
 									@foreach($users as $user)
-										<option value="{{$user->id}}">{{$user->nama}}</option>
+										<option value="{{$user->id}}">{{$user->username}}</option>
 				    				@endforeach
 								</select>
 							</div>
@@ -40,7 +40,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">User</label>
 							<div class="col-lg-10">
-								<label class="col-form-label col-lg-2">{{\Auth::user()->nama}}</label>
+								<label class="col-form-label col-lg-2">{{\Auth::user()->username}}</label>
 								<input type="hidden" name="user_id" value="{{\Auth::user()->id}}">
 							</div>
 						</div>
@@ -48,7 +48,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Kebutuhan</label>
 							<div class="col-lg-10">
-								<textarea name="kebutuhan" rows="4" cols="3" class="form-control" placeholder="Kebutuhan User"></textarea>
+								<textarea name="kebutuhan" rows="4" cols="3" class="form-control" placeholder="Kebutuhan User" required></textarea>
 							</div>
 						</div>
 
@@ -65,12 +65,12 @@
 								<select name="handler" class="form-control select-search" data-fouc>
                                     <option value="">-- Pilih User --</option>
 									@foreach($handlers as $handler)
-										<option value="{{$handler->id}}">{{$handler->nama}}</option>
+										<option value="{{$handler->id}}">{{$handler->username}}</option>
 				    				@endforeach
 								</select>
 							</div>
 						</div>
-						<div class="form-group row">
+						<!-- <div class="form-group row">
 							<label class="col-form-label col-lg-2">Status</label>
 							<div class="col-lg-10">
 								<select name="status" class="form-control">
@@ -79,7 +79,7 @@
                                     <option value="3">Selesai</option>
                                 </select>
 							</div>
-						</div>
+						</div> -->
 						@endif
 					</fieldset>
 					<div class="text-right">
@@ -97,6 +97,7 @@
 
 @section('js')
 	<!-- Theme JS files -->
+	<script src="{{asset('global_assets/js/plugins/forms/validation/validate.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/extensions/jquery_ui/interactions.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
@@ -110,5 +111,84 @@
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/uploader_bootstrap.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
+	<script type="text/javascript">
+				
+		var FormValidation = function() {
+
+		    // Validation config
+		    var _componentValidation = function() {
+		        if (!$().validate) {
+		            console.warn('Warning - validate.min.js is not loaded.');
+		            return;
+		        }
+
+		        // Initialize
+		        var validator = $('.form-validate-jquery').validate({
+		            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+		            errorClass: 'validation-invalid-label',
+		            //successClass: 'validation-valid-label',
+		            validClass: 'validation-valid-label',
+		            highlight: function(element, errorClass) {
+		                $(element).removeClass(errorClass);
+		            },
+		            unhighlight: function(element, errorClass) {
+		                $(element).removeClass(errorClass);
+		            },
+		            // success: function(label) {
+		            //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+		            //},
+
+		            // Different components require proper error label placement
+		            errorPlacement: function(error, element) {
+
+		                // Unstyled checkboxes, radios
+		                if (element.parents().hasClass('form-check')) {
+		                    error.appendTo( element.parents('.form-check').parent() );
+		                }
+
+		                // Input with icons and Select2
+		                else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+		                    error.appendTo( element.parent() );
+		                }
+
+		                // Input group, styled file input
+		                else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+		                    error.appendTo( element.parent().parent() );
+		                }
+
+		                // Other elements
+		                else {
+		                    error.insertAfter(element);
+		                }
+		            },
+		            messages: {
+		                kebutuhan: {
+		                    required: 'Mohon diisi.'
+		                },
+		            },
+		        });
+
+		        // Reset form
+		        $('#reset').on('click', function() {
+		            validator.resetForm();
+		        });
+		    };
+
+		    // Return objects assigned to module
+		    return {
+		        init: function() {
+		            _componentValidation();
+		        }
+		    }
+		}();
+
+
+		// Initialize module
+		// ------------------------------
+
+		document.addEventListener('DOMContentLoaded', function() {
+		    FormValidation.init();
+		});
+	</script>
 
 @endsection

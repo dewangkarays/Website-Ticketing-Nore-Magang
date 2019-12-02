@@ -44,14 +44,14 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-3">Password Lama <span class="text-danger">*</span></label>
 							<div class="col-lg-9">
-								<input type="password" name="old_pass" id="old_pass" class="form-control" required placeholder="minimal 5 karakter">
+								<input type="password" name="old_pass" id="old_pass" class="form-control" required placeholder="minimal 6 karakter">
 							</div>
 						</div>
 
 						<div class="form-group row">
 							<label class="col-form-label col-lg-3">Password Baru <span class="text-danger">*</span></label>
 							<div class="col-lg-9">
-								<input type="password" name="new_pass" id="new_pass" class="form-control" required placeholder="minimal 5 karakter">
+								<input type="password" name="new_pass" id="new_pass" class="form-control" required placeholder="minimal 6 karakter">
 							</div>
 						</div>
 
@@ -87,70 +87,87 @@
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script type="text/javascript">
-		
-    // Validation config
-    var _componentValidation = function() {
-        if (!$().validate) {
-            console.warn('Warning - validate.min.js is not loaded.');
-            return;
-        }
 
-        // Initialize
-        var validator = $('.form-validate-jquery').validate({
-            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
-            errorClass: 'validation-invalid-label',
-            //successClass: 'validation-valid-label',
-            validClass: 'validation-valid-label',
-            highlight: function(element, errorClass) {
-                $(element).removeClass(errorClass);
-            },
-            unhighlight: function(element, errorClass) {
-                $(element).removeClass(errorClass);
-            },
-            // success: function(label) {
-            //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
-            //},
+		var FormValidation = function() {
 
-            // Different components require proper error label placement
-            errorPlacement: function(error, element) {
+		    // Validation config
+		    var _componentValidation = function() {
+		        if (!$().validate) {
+		            console.warn('Warning - validate.min.js is not loaded.');
+		            return;
+		        }
 
-                // Unstyled checkboxes, radios
-                if (element.parents().hasClass('form-check')) {
-                    error.appendTo( element.parents('.form-check').parent() );
-                }
+		        // Initialize
+		        var validator = $('.form-validate-jquery').validate({
+		            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+		            errorClass: 'validation-invalid-label',
+		            //successClass: 'validation-valid-label',
+		            validClass: 'validation-valid-label',
+		            highlight: function(element, errorClass) {
+		                $(element).removeClass(errorClass);
+		            },
+		            unhighlight: function(element, errorClass) {
+		                $(element).removeClass(errorClass);
+		            },
+		            // success: function(label) {
+		            //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+		            //},
 
-                // Input with icons and Select2
-                else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
-                    error.appendTo( element.parent() );
-                }
+		            // Different components require proper error label placement
+		            errorPlacement: function(error, element) {
 
-                // Input group, styled file input
-                else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
-                    error.appendTo( element.parent().parent() );
-                }
+		                // Unstyled checkboxes, radios
+		                if (element.parents().hasClass('form-check')) {
+		                    error.appendTo( element.parents('.form-check').parent() );
+		                }
 
-                // Other elements
-                else {
-                    error.insertAfter(element);
-                }
-            },
-            rules: {
-                old_pass: {
-                    minlength: 6
-                },
-                new_pass: {
-                    minlength: 6
-                },
-                con_pass: {
-                    equalTo: '#new_pass'
-                },
-            },
-        });
+		                // Input with icons and Select2
+		                else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+		                    error.appendTo( element.parent() );
+		                }
 
-        // Reset form
-        $('#reset').on('click', function() {
-            validator.resetForm();
-        });
-    };
+		                // Input group, styled file input
+		                else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+		                    error.appendTo( element.parent().parent() );
+		                }
+
+		                // Other elements
+		                else {
+		                    error.insertAfter(element);
+		                }
+		            },
+		            rules: {
+		                old_pass: {
+		                    minlength: 6
+		                },
+		                new_pass: {
+		                    minlength: 6
+		                },
+		                con_pass: {
+		                    equalTo: '#new_pass'
+		                },
+		            },
+		        });
+
+		        // Reset form
+		        $('#reset').on('click', function() {
+		            validator.resetForm();
+		        });
+		    };
+
+		    // Return objects assigned to module
+		    return {
+		        init: function() {
+		            _componentValidation();
+		        }
+		    }
+		}();
+
+		// Initialize module
+		// ------------------------------
+
+		document.addEventListener('DOMContentLoaded', function() {
+		    FormValidation.init();
+		});
 	</script>
 @endsection

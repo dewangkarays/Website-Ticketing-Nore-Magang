@@ -18,7 +18,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        if(\Auth::user()->role==99){
+        if(\Auth::user()->role > 20){
             $tasks = Task::where('user_id',\Auth::user()->id)->get(); //customer
         } else {
             $tasks = Task::all(); //admin & karyawan
@@ -34,7 +34,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $users = User::where('role','99')->get(); //role customer
+        $users = User::where('role','>','20')->get(); //role customer
         $handlers = User::where('role','10')->get(); //role karyawan
 
         return view('tasks.create', compact('users','handlers'));
@@ -112,12 +112,12 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $users = User::where('role','99')->get(); //role customer
+        $users = User::where('role','>','20')->get(); //role customer
         $handlers = User::where('role','10')->get(); //role karyawan
         $attachment = Attachment::where('task_id', '=', $id)->get();
         $task = Task::find($id);
 
-        if (\Auth::user()->role==99 && $task->user_id != \Auth::user()->id) {
+        if (\Auth::user()->role>20 && $task->user_id != \Auth::user()->id) {
             return redirect('/tasks')->with('error', 'Akses tidak diperbolehkan');
         }
 

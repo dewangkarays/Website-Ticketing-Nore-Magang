@@ -5,7 +5,9 @@ return [
 	'role' => [
        	'1' => 'Super Admin',
        	'10' => 'Karyawan',
-       	'99' => 'Customer',
+        '80' => 'Premium',
+        '90' => 'Prioritas',
+        '99' => 'Simpel',
     ],
 
 	'status' => [
