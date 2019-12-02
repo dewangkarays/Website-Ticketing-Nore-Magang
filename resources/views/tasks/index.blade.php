@@ -25,7 +25,8 @@
 			<table class="table datatable-basic table-hover">
 				<thead>
 					<tr>
-						<th>User</th>
+						<th>Username</th>
+						<th>Nama</th>
 						<th>Kebutuhan</th>
 						<th>Handler</th>
 						<th>Status</th>
@@ -36,6 +37,7 @@
 				@if(!$tasks->isEmpty())
 					@foreach($tasks as $task)
 				    <tr>
+				        <td>{{$task->user->username}}</td>
 				        <td>{{$task->user->nama}}</td>
 				        <td>{{$task->kebutuhan}}</td>
 				        <td>{{@$task->assign->nama}}</td>
@@ -111,25 +113,7 @@
 		     $("#delform").attr("action", url);
 		});
 
-
-		/* ------------------------------------------------------------------------------
-		 *
-		 *  # Basic datatables
-		 *
-		 *  Demo JS code for datatable_basic.html page
-		 *
-		 * ---------------------------------------------------------------------------- */
-
-
-		// Setup module
-		// ------------------------------
-
 		var DatatableBasic = function() {
-
-
-		    //
-		    // Setup module components
-		    //
 
 		    // Basic Datatable examples
 		    var _componentDatatableBasic = function() {
@@ -144,7 +128,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 4 ]
+		                targets: [ 5 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -218,6 +202,27 @@
 		document.addEventListener('DOMContentLoaded', function() {
 		    DatatableBasic.init();
 		});
+	</script>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+	        // Default style
+	        @if(session('error'))
+	            new PNotify({
+	                title: 'Error',
+	                text: '{{ session('error') }}.',
+	                icon: 'icon-blocked',
+	                type: 'error'
+	            });
+            @endif
+            @if ( session('success'))
+	            new PNotify({
+	                title: 'Success',
+	                text: '{{ session('success') }}.',
+	                icon: 'icon-checkmark3',
+	                type: 'success'
+	            });
+            @endif
 
+		});
 	</script>
 @endsection
