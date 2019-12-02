@@ -97,14 +97,15 @@
 
 @section('js')
 	<!-- Theme JS files -->
-	<script src="{{ URL::asset('global_assets/js/plugins/notifications/bootbox.min.js') }}"></script>
-	<script src="{{ URL::asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-	<script src="{{ URL::asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-	<script src="{{ URL::asset('global_assets/js/plugins/buttons/spin.min.js') }}"></script>
-	<script src="{{ URL::asset('global_assets/js/plugins/buttons/ladda.min.js') }}"></script>
+	<script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/notifications/bootbox.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
 
-	<script src="{{ URL::asset('assets/js/app.js') }}"></script>
-	<script src="{{ URL::asset('global_assets/js/demo_pages/components_modals.js') }}"></script>
+	<script src="{{asset('assets/js/app.js')}}"></script>
+	<script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
 	<script>
 		//modal delete
 		$(document).on("click", ".delbutton", function () {
@@ -219,6 +220,27 @@
 		document.addEventListener('DOMContentLoaded', function() {
 		    DatatableBasic.init();
 		});
+	</script>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+	        // Default style
+	        @if(session('error'))
+	            new PNotify({
+	                title: 'Error',
+	                text: '{{ session('error') }}.',
+	                icon: 'icon-blocked',
+	                type: 'error'
+	            });
+            @endif
+            @if ( session('success'))
+	            new PNotify({
+	                title: 'Success',
+	                text: '{{ session('success') }}.',
+	                icon: 'icon-checkmark3',
+	                type: 'success'
+	            });
+            @endif
 
+		});
 	</script>
 @endsection

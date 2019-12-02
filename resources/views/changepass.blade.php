@@ -22,20 +22,6 @@
 			</div>
 			<div class="card-body">
 							
-				@if ( session('error'))
-					<div class="alert alert-danger border-0 alert-dismissible">
-						<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-						{{ session('error') }}.
-				    </div>
-			    @endif
-
-				@if ( session('success'))
-					<div class="alert alert-success border-0 alert-dismissible">
-						<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-						{{ session('success') }}.
-				    </div>
-			    @endif
-			    
 				<form action="{{ route('changepass', \Auth::user()->id)}}" method="post" class="form-validate-jquery">
 					@csrf
 					<fieldset class="mb-3">
@@ -78,6 +64,7 @@
 
 @section('js')
 	<!-- Theme JS files -->
+	<script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/validation/validate.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
@@ -168,6 +155,28 @@
 
 		document.addEventListener('DOMContentLoaded', function() {
 		    FormValidation.init();
+		});
+	</script>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+	        // Default style
+	        @if(session('error'))
+	            new PNotify({
+	                title: 'Error',
+	                text: '{{ session('error') }}.',
+	                icon: 'icon-blocked',
+	                type: 'error'
+	            });
+            @endif
+            @if ( session('success'))
+	            new PNotify({
+	                title: 'Success',
+	                text: '{{ session('success') }}.',
+	                icon: 'icon-checkmark3',
+	                type: 'success'
+	            });
+            @endif
+
 		});
 	</script>
 @endsection

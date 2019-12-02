@@ -99,6 +99,7 @@
 
 @section('js')
 	<!-- Theme JS files -->
+	<script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
 	<script src="{{ URL::asset('global_assets/js/plugins/notifications/bootbox.min.js') }}"></script>
 	<script src="{{ URL::asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 	<script src="{{ URL::asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
@@ -114,25 +115,7 @@
 		     $("#delform").attr("action", url);
 		});
 
-		
-		/* ------------------------------------------------------------------------------
-		 *
-		 *  # Basic datatables
-		 *
-		 *  Demo JS code for datatable_basic.html page
-		 *
-		 * ---------------------------------------------------------------------------- */
-
-
-		// Setup module
-		// ------------------------------
-
 		var DatatableBasic = function() {
-
-
-		    //
-		    // Setup module components
-		    //
 
 		    // Basic Datatable examples
 		    var _componentDatatableBasic = function() {
@@ -201,11 +184,6 @@
 		        });
 		    };
 
-
-		    //
-		    // Return objects assigned to module
-		    //
-
 		    return {
 		        init: function() {
 		            _componentDatatableBasic();
@@ -214,13 +192,30 @@
 		    }
 		}();
 
-
-		// Initialize module
-		// ------------------------------
-
 		document.addEventListener('DOMContentLoaded', function() {
 		    DatatableBasic.init();
 		});
+	</script>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+	        // Default style
+	        @if(session('error'))
+	            new PNotify({
+	                title: 'Error',
+	                text: '{{ session('error') }}.',
+	                icon: 'icon-blocked',
+	                type: 'error'
+	            });
+            @endif
+            @if ( session('success'))
+	            new PNotify({
+	                title: 'Success',
+	                text: '{{ session('success') }}.',
+	                icon: 'icon-checkmark3',
+	                type: 'success'
+	            });
+            @endif
 
+		});
 	</script>
 @endsection
