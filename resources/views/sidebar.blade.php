@@ -115,6 +115,14 @@
 							</span>
 						</a>
 					</li>
+					<li class="nav-item">
+						<a href="{{ url('/history') }}" class="nav-link {{ (request()->is('history')) ? 'active' : '' }}">
+							<i class="icon-list-ordered"></i>
+							<span>
+								Histori
+							</span>
+						</a>
+					</li>
 
 			</ul>
 		</div>

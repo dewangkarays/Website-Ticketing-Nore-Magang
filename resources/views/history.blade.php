@@ -14,7 +14,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Antrian</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Task</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -30,25 +30,35 @@
 			<table class="table datatable-basic table-hover">
 				<thead>
 					<tr>
-						<th>No</th>
 						<th>Username</th>
 						<th>Kebutuhan</th>
-						<th>Layanan</th>
+						<th>Handler</th>
 						<th>Status</th>
+						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 				@if(!$tasks->isEmpty())
-					@php ($i = 1)
 					@foreach($tasks as $task)
 				    <tr>
-				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{$task->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
-				        <td><div class="datatable-column-width">{{config('custom.role.'.$task->user->role)}}</div></td>
+				        <td><div class="datatable-column-width">{{@$task->assign->nama}}</div></td>
 				        <td>{{config('custom.status.'.$task->status)}}</td>
+				        <td align="center">
+							<div class="list-icons">
+								<div class="dropdown">
+									<a href="#" class="list-icons-item" data-toggle="dropdown">
+										<i class="icon-menu9"></i>
+									</a>
+
+									<div class="dropdown-menu dropdown-menu-right">
+										<a class="dropdown-item"><i class="icon-pencil7"></i> Show</a>
+									</div>
+								</div>
+							</div>
+				        </td>
 				    </tr>
-				    @php ($i++)
 				    @endforeach
 				@else
 				  	<tr><td align="center" colspan="5">Data Kosong</td></tr>
@@ -120,7 +130,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 0, 1, 2, 3, 4 ]
+		                targets: [ 4 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {

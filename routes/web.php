@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::resource('tasks', 'TaskController');
 	Route::resource('attachments', 'AttachmentController');
 	Route::get('/antrian',  'TaskController@antrian');
+	Route::get('/history',  'TaskController@history');
 
 	//admin
 	Route::group(['middleware' => ['role:1']], function() {

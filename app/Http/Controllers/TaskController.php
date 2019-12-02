@@ -19,9 +19,9 @@ class TaskController extends Controller
     public function index()
     {
         if(\Auth::user()->role > 20){
-            $tasks = Task::where('user_id',\Auth::user()->id)->get(); //customer
+            $tasks = Task::where('status','!=','3')->where('user_id',\Auth::user()->id)->get(); //customer
         } else {
-            $tasks = Task::all(); //admin & karyawan
+            $tasks = Task::where('status','!=','3')->get(); //admin & karyawan
         }
         
         return view('tasks.index', compact('tasks'));
@@ -223,5 +223,16 @@ class TaskController extends Controller
                     ->get();
                     //users.nama, users.username, 
         return view('antrian', compact('tasks'));
+    }
+
+    public function history()
+    {
+        if(\Auth::user()->role > 20){
+            $tasks = Task::where('status','=','3')->where('user_id',\Auth::user()->id)->get(); //customer
+        } else {
+            $tasks = Task::where('status','=','3')->get(); //admin & karyawan
+        }
+        
+        return view('history', compact('tasks'));
     }
 }
