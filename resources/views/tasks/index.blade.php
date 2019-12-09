@@ -104,6 +104,7 @@
 
 @section('js')
 	<!-- Theme JS files -->
+	<script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/notifications/bootbox.min.js') }}"></script>
 	<script src="{{asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>

@@ -27,6 +27,7 @@
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Data Payment</legend>
 
+						@if(\Auth::user()->role==1 || \Auth::user()->role==10)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">User</label>
 							<div class="col-lg-10">
@@ -35,6 +36,58 @@
 										<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" {{ $payment->user_id == $user->id ? 'selected' : '' }}>{{$user->username}}</option>
 				    				@endforeach
 								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
+							<div class="col-lg-10">
+								<label class="col-form-label col-lg-2">{{ $payment->tgl_bayar }}</label>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Keterangan</label>
+							<div class="col-lg-10">
+								<label class="col-form-label col-lg-2">{{ $payment->keterangan }}</label>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Nominal</label>
+							<div class="col-lg-10">
+								<label class="col-form-label col-lg-2">{{ $payment->nominal }}</label>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Kadaluarsa</label>
+							<div class="col-lg-10">
+								<!-- <span class="input-group-prepend">
+									<span class="input-group-text"><i class="icon-calendar3"></i></span>
+								</span> -->
+								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Kadaluarsa" required value="{{ $payment->kadaluarsa }}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Status</label>
+							<div class="col-lg-10">
+								<select name="status" class="form-control">
+                                    <option value="0" {{ $payment->status == "0" ? 'selected' : '' }}>Belum Dikonfirmasi</option>
+                                    <option value="1" {{ $payment->status == "1" ? 'selected' : '' }}>Sudah Dikonfirmasi</option>
+                                    <option value="2" {{ $payment->status == "2" ? 'selected' : '' }}>Ditolak</option>
+                                </select>
+							</div>
+						</div>
+
+						@else
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">User</label>
+							<div class="col-lg-10">
+								<label class="col-form-label col-lg-2">{{\Auth::user()->username}}</label>
+								<input type="hidden" name="user_id" value="{{\Auth::user()->id}}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
+							<div class="col-lg-10" required>
+								<input name="tgl_bayar" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pembayaran">
 							</div>
 						</div>
 						<div class="form-group row">
@@ -49,15 +102,7 @@
 								<input type="number" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" required value="{{ $payment->nominal }}">
 							</div>
 						</div>
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Kadaluarsa</label>
-							<div class="col-lg-10">
-								<!-- <span class="input-group-prepend">
-									<span class="input-group-text"><i class="icon-calendar3"></i></span>
-								</span> -->
-								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Kadaluarsa" required value="{{ $payment->kadaluarsa }}">
-							</div>
-						</div>
+						@endif
 					</fieldset>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Submit <i class="icon-paperplane ml-2"></i></button>

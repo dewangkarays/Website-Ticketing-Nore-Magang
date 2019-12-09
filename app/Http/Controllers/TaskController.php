@@ -121,6 +121,10 @@ class TaskController extends Controller
             return redirect('/tasks')->with('error', 'Akses tidak diperbolehkan');
         }
 
+        if (\Auth::user()->role>20 && $task->status == '2') {
+            return redirect('/tasks')->with('error', 'Task Sedang Dikerjakan');
+        }
+
         return view('tasks.edit', compact('task','users','handlers','attachment')); 
     }
 
@@ -134,8 +138,16 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'status'=>'required',
+            //'status'=>'required',
         ]);
+
+        if($request->get('user_id')!=''){
+            $task->handler = $request->get('user_id');
+        }
+
+        if($request->get('kebutuhan')!=''){
+            $task->handler = $request->get('kebutuhan');
+        }
 
         $task = Task::find($id);
         if($task->status != $request->get('status')){

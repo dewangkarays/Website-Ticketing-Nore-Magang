@@ -25,7 +25,7 @@
 					@csrf
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Data Payment</legend>
-
+						@if(\Auth::user()->role==1 || \Auth::user()->role==10)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">User</label>
 							<div class="col-lg-10">
@@ -34,6 +34,21 @@
 										<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}">{{$user->username}}</option>
 				    				@endforeach
 								</select>
+							</div>
+						</div>
+						@else
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">User</label>
+							<div class="col-lg-10">
+								<label class="col-form-label col-lg-2">{{\Auth::user()->username}}</label>
+								<input type="hidden" name="user_id" value="{{\Auth::user()->id}}">
+							</div>
+						</div>
+						@endif
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
+							<div class="col-lg-10">
+								<input name="tgl_bayar" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pembayaran" required>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -48,15 +63,27 @@
 								<input type="number" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" required>
 							</div>
 						</div>
+						@if(\Auth::user()->role==1 || \Auth::user()->role==10)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Kadaluarsa</label>
-							<div class="col-lg-10" required>
+							<div class="col-lg-10">
 								<!-- <span class="input-group-prepend">
 									<span class="input-group-text"><i class="icon-calendar3"></i></span>
 								</span> -->
-								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Kadaluarsa">
+								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Kadaluarsa" required>
 							</div>
 						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Status</label>
+							<div class="col-lg-10">
+								<select name="status" class="form-control">
+                                    <option value="0">Belum Dikonfirmasi</option>
+                                    <option value="1">Sudah Dikonfirmasi</option>
+                                    <option value="2">Ditolak</option>
+                                </select>
+							</div>
+						</div>
+						@endif
 					</fieldset>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Submit <i class="icon-paperplane ml-2"></i></button>

@@ -27,12 +27,14 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/changepass/{id}',  'UserController@changePassSubmit')->name('changepass');
 	Route::resource('tasks', 'TaskController');
 	Route::resource('attachments', 'AttachmentController');
+	Route::resource('payments', 'PaymentController');
 	Route::get('/antrian',  'TaskController@antrian');
 	Route::get('/history',  'TaskController@history');
 
 	//admin
 	Route::group(['middleware' => ['role:1']], function() {
 		Route::get('/admin',  'AdminController@index')->name('admin');
+		Route::resource('users', 'UserController');
 	});
 
 	//karyawan
@@ -42,14 +44,12 @@ Route::group(['middleware' => ['auth']], function() {
 
 	//admin && karyawan
 	Route::group(['middleware' => ['role:1' OR 'role:10']], function() {
-		Route::resource('users', 'UserController');
-		Route::resource('payments', 'PaymentController');
 	});
 
 	//customer
-	Route::group(['middleware' => ['role:99']], function() {
+	//Route::group(['middleware' => ['role:80|90|99']], function() {
 		Route::get('/customer',  'AdminController@customer')->name('customer');
-	});
+	//});
 
 });
 

@@ -76,14 +76,6 @@
 							</span>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
-							<i class="icon-coin-dollar"></i>
-							<span>
-								Pembayaran
-							</span>
-						</a>
-					</li>
 
 
 				@elseif(Auth::user()->role==99)
@@ -108,6 +100,14 @@
 
 				<!-- ALL ROLE -->
 					<li class="nav-item">
+						<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
+							<i class="icon-coin-dollar"></i>
+							<span>
+								Pembayaran
+							</span>
+						</a>
+					</li>
+					<li class="nav-item">
 						<a href="{{ url('/antrian') }}" class="nav-link {{ (request()->is('antrian')) ? 'active' : '' }}">
 							<i class="icon-list-ordered"></i>
 							<span>
@@ -117,7 +117,7 @@
 					</li>
 					<li class="nav-item">
 						<a href="{{ url('/history') }}" class="nav-link {{ (request()->is('history')) ? 'active' : '' }}">
-							<i class="icon-list-ordered"></i>
+							<i class="icon-history"></i>
 							<span>
 								Histori
 							</span>
