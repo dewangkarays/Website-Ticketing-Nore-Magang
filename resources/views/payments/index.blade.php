@@ -34,9 +34,9 @@
 				<thead>
 					<tr>
 						<th>Username</th>
-						<th>Nama</th>
 						<th>Keterangan</th>
 						<th>Nominal</th>
+						<th>Status</th>
 						<th>Kadaluarsa</th>
 						<th class="text-center">Actions</th>
 					</tr>
@@ -46,9 +46,9 @@
 					@foreach($payments as $payment)
 				    <tr>
 				        <td><div class="datatable-column-width">{{$payment->user->username}}</div></td>
-				        <td><div class="datatable-column-width">{{$payment->user->nama}}</div></td>
 				        <td><div class="datatable-column-width">{{$payment->keterangan}}</div></td>
 				        <td>{{$payment->nominal}}</td>
+				        <td>{{config('custom.status.'.$payment->status)}}</td>
 				        <td>{{$payment->kadaluarsa}}</td>
 				        <td align="center">
 							<div class="list-icons">
@@ -59,7 +59,9 @@
 
 									<div class="dropdown-menu dropdown-menu-right">
 										<a href="{{ route('payments.edit',$payment->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+										@if($payment->status==0 || \Auth::user()->role==1)
 							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('payments.destroy', $payment->id)}}"><i class="icon-x"></i> Delete</a>
+							            @endif
 									</div>
 								</div>
 							</div>

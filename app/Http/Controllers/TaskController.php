@@ -149,26 +149,28 @@ class TaskController extends Controller
         if($request->get('kebutuhan')!=''){
             $task->kebutuhan = $request->get('kebutuhan');
         }
+        
+        if($request->get('status')!=''){
+            if($task->status != $request->get('status')){
+                $task->status = $request->get('status');
 
-        if($task->status != $request->get('status')){
-            $task->status = $request->get('status');
+                //notifikasi
+                if($request->get('status') == '2') {
+                    $notif = new Notification();
+                    $notif->title = 'Task Sedang Dikerjakan';
+                    $notif->message = 'Task yang anda kirimkan sedang dikerjakan.';
+                    $notif->user_id = $task->user_id;
+                    $notif->save();
+                }
 
-            //notifikasi
-            if($request->get('status') == '2') {
-                $notif = new Notification();
-                $notif->title = 'Task Sedang Dikerjakan';
-                $notif->message = 'Task yang anda kirimkan sedang dikerjakan.';
-                $notif->user_id = $task->user_id;
-                $notif->save();
-            }
-
-            //notifikasi
-            if($request->get('status') == '3') {
-                $notif = new Notification();
-                $notif->title = 'Task Selesai Dikerjakan';
-                $notif->message = 'Task yang anda kirimkan selesai dikerjakan.';
-                $notif->user_id = $task->user_id;
-                $notif->save();
+                //notifikasi
+                if($request->get('status') == '3') {
+                    $notif = new Notification();
+                    $notif->title = 'Task Selesai Dikerjakan';
+                    $notif->message = 'Task yang anda kirimkan selesai dikerjakan.';
+                    $notif->user_id = $task->user_id;
+                    $notif->save();
+                }
             }
         }
 

@@ -50,14 +50,6 @@
 							</span>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
-							<i class="icon-coin-dollar"></i>
-							<span>
-								Pembayaran
-							</span>
-						</a>
-					</li>
 
 				@elseif(Auth::user()->role==10)
 					<li class="nav-item">

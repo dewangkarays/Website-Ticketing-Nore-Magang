@@ -57,7 +57,9 @@
 
 									<div class="dropdown-menu dropdown-menu-right">
 										<a href="{{ route('tasks.edit',$task->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+										@if($task->status==1 || \Auth::user()->role==1)
 							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tasks.destroy', $task->id)}}"><i class="icon-x"></i> Delete</a>
+							            @endif
 									</div>
 								</div>
 							</div>

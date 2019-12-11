@@ -10,9 +10,15 @@ return [
         '99' => 'Simpel',
     ],
 
-	'status' => [
-       	'1' => 'Baru',
-       	'2' => 'Sedang Dikerjakan',
-       	'3' => 'Selesai',
+  'status' => [
+        '1' => 'Baru',
+        '2' => 'Sedang Dikerjakan',
+        '3' => 'Selesai',
+    ],
+
+  'payment' => [
+        '0' => 'Belum Dikonfirmasi',
+        '1' => 'Sudah Dikonfirmasi',
+        '2' => 'Ditolak',
     ],
 ];
