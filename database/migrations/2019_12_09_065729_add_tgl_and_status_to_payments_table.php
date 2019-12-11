@@ -14,7 +14,7 @@ class AddTglAndStatusToPaymentsTable extends Migration
     public function up()
     {
         Schema::table('payments', function (Blueprint $table) {
-            $table->date('tgl_bayar');
+            $table->date('tgl_bayar')->nullable();
             $table->tinyInteger('status')->default('0');
         });
     }
