@@ -115,19 +115,19 @@
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
 								<div class="col-lg-10" required>
-									<label class="col-form-label col-lg-2">{{payment->tgl_bayar}}</label>
+									<label class="col-form-label col-lg-2">{{$payment->tgl_bayar}}</label>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Keterangan</label>
 								<div class="col-lg-10">
-									<label class="col-form-label col-lg-2">{{payment->keterangan}}</label>
+									<label class="col-form-label col-lg-2">{{$payment->keterangan}}</label>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Nominal</label>
 								<div class="col-lg-10">
-									<label class="col-form-label col-lg-2">{{payment->nominal}}</label>
+									<label class="col-form-label col-lg-2">{{$payment->nominal}}</label>
 								</div>
 							</div>
 							<div class="form-group row">
