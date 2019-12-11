@@ -141,15 +141,15 @@ class TaskController extends Controller
             //'status'=>'required',
         ]);
 
+        $task = Task::find($id);
         if($request->get('user_id')!=''){
-            $task->handler = $request->get('user_id');
+            $task->user_id = $request->get('user_id');
         }
 
         if($request->get('kebutuhan')!=''){
-            $task->handler = $request->get('kebutuhan');
+            $task->kebutuhan = $request->get('kebutuhan');
         }
 
-        $task = Task::find($id);
         if($task->status != $request->get('status')){
             $task->status = $request->get('status');
 
