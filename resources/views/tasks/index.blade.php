@@ -34,6 +34,7 @@
 				<thead>
 					<tr>
 						<th>No</th>
+						<th>Tanggal</th>
 						<th>Username</th>
 						<th>Kebutuhan</th>
 						<th>Handler</th>
@@ -47,6 +48,7 @@
 					@foreach($tasks as $task)
 				    <tr>
 				        <td>{{$i}}</td>
+				        <td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
 				        <td><div class="datatable-column-width">{{$task->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
 				        <td><div class="datatable-column-width">{{@$task->assign->nama}}</div></td>
@@ -141,7 +143,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                // width: 100,
-		                targets: [ 0, 1, 2, 3, 4, 5 ]
+		                targets: [ 0, 1, 2, 3, 4, 5, 6 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
