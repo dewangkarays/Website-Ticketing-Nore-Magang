@@ -33,6 +33,7 @@
 			<table class="table datatable-basic table-hover">
 				<thead>
 					<tr>
+						<th>No</th>
 						<th>Username</th>
 						<th>Kebutuhan</th>
 						<th>Handler</th>
@@ -42,8 +43,10 @@
 				</thead>
 				<tbody>
 				@if(!$tasks->isEmpty())
+					@php ($i = 1)
 					@foreach($tasks as $task)
 				    <tr>
+				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{$task->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
 				        <td><div class="datatable-column-width">{{@$task->assign->nama}}</div></td>
@@ -65,6 +68,7 @@
 							</div>
 				        </td>
 				    </tr>
+				    @php ($i++)
 				    @endforeach
 				@else
 				  	<tr><td align="center" colspan="5">Data Kosong</td></tr>
@@ -136,8 +140,8 @@
 		            autoWidth: false,
 		            columnDefs: [{ 
 		                orderable: false,
-		                width: 100,
-		                targets: [ 4 ]
+		                // width: 100,
+		                targets: [ 0, 1, 2, 3, 4, 5 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {

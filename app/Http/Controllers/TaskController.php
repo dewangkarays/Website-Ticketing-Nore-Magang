@@ -19,9 +19,22 @@ class TaskController extends Controller
     public function index()
     {
         if(\Auth::user()->role > 20){
-            $tasks = Task::where('status','!=','3')->where('user_id',\Auth::user()->id)->get(); //customer
+            $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id')
+                        ->where('tasks.status','!=','3')
+                        ->where('user_id',\Auth::user()->id)
+                        ->orderBy('tasks.status', 'DESC')
+                        ->orderBy('users.role', 'ASC')
+                        ->orderBy('tasks.created_at', 'ASC')
+                        ->select('tasks.*')
+                        ->get();  //customer
         } else {
-            $tasks = Task::where('status','!=','3')->get(); //admin & karyawan
+            $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id')
+                        ->where('tasks.status','!=','3')
+                        ->orderBy('tasks.status', 'DESC')
+                        ->orderBy('users.role', 'ASC')
+                        ->orderBy('tasks.created_at', 'ASC')
+                        ->select('tasks.*')
+                        ->get(); //admin & karyawan
         }
         
         return view('tasks.index', compact('tasks'));
@@ -231,6 +244,7 @@ class TaskController extends Controller
     {
         $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id')
                     ->where('tasks.status','!=','3')
+                    ->orderBy('tasks.status', 'DESC')
                     ->orderBy('users.role', 'ASC')
                     ->orderBy('tasks.created_at', 'ASC')
                     ->select('tasks.*')

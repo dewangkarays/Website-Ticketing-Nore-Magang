@@ -15,8 +15,11 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::all();
-
+        if(\Auth::user()->role > 20){
+            $payments = Payment::where('user_id',\Auth::user()->id)->get();
+        } else {
+            $payments = Payment::all();
+        }
         return view('payments.index', compact('payments'));
     }
 
@@ -27,7 +30,7 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        $users = User::where('role','99')->get();
+        $users = User::where('role','>','50')->get();
 
         return view('payments.create', compact('users'));
     }
@@ -84,7 +87,7 @@ class PaymentController extends Controller
     public function edit($id)
     {
         $payment = Payment::find($id);
-        $users = User::where('role','99')->get();
+        $users = User::where('role','>','50')->get();
         return view('payments.edit', compact('payment','users')); 
     }
 

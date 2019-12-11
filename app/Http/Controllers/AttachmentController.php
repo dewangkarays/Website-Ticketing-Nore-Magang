@@ -90,7 +90,7 @@ class AttachmentController extends Controller
         $html = '';
         $attachment = Attachment::where('task_id', '=', $task_id)->get();
         foreach ($attachment as $data) {
-            $html .= '<span class="form-text text-muted">'.$data->file.' <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="'. route('attachment.destroy', $data->id).'" style="display: inline;"><i class="icon-x"></i></a></span>';
+            $html .= '<span class="form-text text-muted">'.$data->file.' <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="'. route('attachments.destroy', $data->id).'" style="display: inline;"><i class="icon-x"></i></a></span>';
         }
         return $html;
     }

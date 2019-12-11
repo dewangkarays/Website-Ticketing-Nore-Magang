@@ -70,7 +70,7 @@
 					</li>
 
 
-				@elseif(Auth::user()->role==99)
+				@else
 					<li class="nav-item">
 						<a href="{{ url('/customer') }}" class="nav-link {{ (request()->is('customer*')) ? 'active' : '' }}">
 							<i class="icon-home4"></i>

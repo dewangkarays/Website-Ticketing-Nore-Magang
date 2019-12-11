@@ -19,14 +19,15 @@ Route::get('/', function () {
 Route::get('/login',  'LoginController@index')->name('login');
 Route::post('/login',  'LoginController@login');
 Route::get('/logout',  'LoginController@logout');
+Route::get('/del/{id}',  'AttachmentController@destroy');
 
 
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('/clearnotif',  'NotificationController@clearNotif');
 	Route::get('/changepass',  'UserController@changePass');
 	Route::post('/changepass/{id}',  'UserController@changePassSubmit')->name('changepass');
-	Route::resource('tasks', 'TaskController');
 	Route::resource('attachments', 'AttachmentController');
+	Route::resource('tasks', 'TaskController');
 	Route::resource('payments', 'PaymentController');
 	Route::get('/antrian',  'TaskController@antrian');
 	Route::get('/history',  'TaskController@history');

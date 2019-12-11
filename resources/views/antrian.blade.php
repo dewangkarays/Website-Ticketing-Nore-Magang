@@ -32,8 +32,7 @@
 					<tr>
 						<th>No</th>
 						<th>Tanggal</th>
-						<th>Username</th>
-						<th>Kebutuhan</th>
+						<th>Pelanggan</th>
 						<th>Layanan</th>
 						<th>Status</th>
 					</tr>
@@ -45,8 +44,9 @@
 				    <tr>
 				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
-				        <td><div class="datatable-column-width">{{$task->user->username}}</div></td>
-				        <td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
+				        <td><div class="datatable-column-width">
+				        	{{(\Auth::user()->id == $task->user_id || \Auth::user()->id<20) ? $task->user->username : 'Pelanggan Lain'}}
+				        </div></td>
 				        <td><div class="datatable-column-width">{{config('custom.role.'.$task->user->role)}}</div></td>
 				        <td>{{config('custom.status.'.$task->status)}}</td>
 				    </tr>
@@ -122,7 +122,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                //width: 200,
-		                targets: [ 0, 1, 2, 3, 4, 5 ]
+		                targets: [ 0, 1, 2, 3, 4]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {

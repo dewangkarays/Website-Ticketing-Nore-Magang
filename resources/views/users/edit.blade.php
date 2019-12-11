@@ -71,7 +71,7 @@
 						</div>
 					</fieldset>
 					<div class="text-right">
-						<button type="submit" class="btn btn-primary">Submit <i class="icon-paperplane ml-2"></i></button>
+						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
 					</div>
 				</form>
 			</div>
