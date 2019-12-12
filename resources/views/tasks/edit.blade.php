@@ -48,6 +48,7 @@
 									<label class="col-lg-2 col-form-label font-weight-semibold">Attachment:</label>
 									<div class="col-lg-10">
 										<input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
+										<span class="form-text text-muted">Jumlah max ukuran file : 32MB</span><hr>
 										<div id="attachdiv">
 											@foreach($attachment as $attach)
 												<span class="form-text text-muted"><a href="{{ asset('storage/attachment/'.$attach->file)}}">{{$attach->file}}</a> <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('attachments.destroy', $attach->id)}}" style="display: inline;"><i class="icon-x"></i></a></span>
@@ -98,6 +99,7 @@
 									<label class="col-lg-2 col-form-label font-weight-semibold">Attachment:</label>
 									<div class="col-lg-10">
 										<input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
+										<span class="form-text text-muted">Jumlah max ukuran file : 32MB</span><hr>
 										<div id="attachdiv">
 											@foreach($attachment as $attach)
 												<span class="form-text text-muted"><a href="{{ asset('storage/attachment/'.$attach->file)}}">{{$attach->file}}</a> <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('attachments.destroy', $attach->id)}}" style="display: inline;"><i class="icon-x"></i></a></span>

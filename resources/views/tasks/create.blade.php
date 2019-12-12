@@ -56,6 +56,7 @@
 							<label class="col-lg-2 col-form-label font-weight-semibold">Attachment:</label>
 							<div class="col-lg-10">
 								<input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
+								<span class="form-text text-muted">Jumlah max ukuran file : 32MB</span><hr>
 							</div>
 						</div>
 						@if(\Auth::user()->role==1 || \Auth::user()->role==10)

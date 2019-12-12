@@ -47,8 +47,8 @@
 				    <tr>
 				        <td><div class="datatable-column-width">{{$payment->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$payment->keterangan}}</div></td>
-				        <td>{{$payment->nominal}}</td>
-				        <td>{{config('custom.status.'.$payment->status)}}</td>
+				        <td style="font-size: 15px;">@angka($payment->nominal)</td>
+				        <td>{{config('custom.payment.'.$payment->status)}}</td>
 				        <td>{{$payment->kadaluarsa}}</td>
 				        <td align="center">
 							<div class="list-icons">

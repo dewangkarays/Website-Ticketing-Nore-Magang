@@ -92,24 +92,20 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama'=>'required',
-            'email'=>'required',
-            'telp'=>'required',
-            'username'=>'required',
-            'role'=>'required'
+            // 'nama'=>'required',
+            // 'email'=>'required',
+            // 'telp'=>'required',
+            // 'username'=>'required',
+            // 'role'=>'required'
         ]);
 
         $user = User::find($id);
-        $user->nama =  $request->get('nama');
-        $user->username = $request->get('username');
-        $user->email = $request->get('email');
-        $user->telp = $request->get('telp');
-        $user->role = $request->get('role');
+        $data = $request->except(['_token', '_method']);
         if($request->get('password')!=''){
-            $user->password = bcrypt($request->get('password'));
+            $data->password = bcrypt($request->get('password'));
         }
 
-        $user->save();
+        $user->update($data);
 
         return redirect('/users')->with('success', 'User updated!');
     }

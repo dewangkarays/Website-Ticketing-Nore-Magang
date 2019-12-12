@@ -101,25 +101,22 @@ class PaymentController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'user_id'=>'required',
-            'keterangan'=>'required',
-            'nominal'=>'required',
+            // 'user_id'=>'required',
+            // 'keterangan'=>'required',
+            // 'nominal'=>'required',
         ]);
 
         $payment = Payment::find($id);
-        $payment->user_id =  $request->get('user_id');
-        $payment->keterangan = $request->get('keterangan');
-        $payment->nominal = $request->get('nominal');
+        $data = $request->except(['_token', '_method']);
 
         if($request->get('kadaluarsa')!=''){
-            $payment->kadaluarsa = $request->get('kadaluarsa');
 
             $user = User::find($request->get('user_id'));
             $user->kadaluarsa = $request->get('kadaluarsa');
             $user->save();
         }
 
-        $payment->save();
+        $payment->update($data);
 
         return redirect('/payments')->with('success', 'Payment updated!');
     }

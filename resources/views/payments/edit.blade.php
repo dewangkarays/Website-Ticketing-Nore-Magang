@@ -189,7 +189,6 @@
             selectMonths: true,
             selectYears: true,
             format: 'yyyy-mm-dd',
-            formatSubmit: 'yyyy-mm-dd',
         });
 
 		function changeDate(select){

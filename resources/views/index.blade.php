@@ -74,6 +74,76 @@
 			</div>
 		</div>
 		<!-- /quick stats boxes -->
+
+
+		<!-- TODAY -->
+		<!-- Quick stats boxes -->
+		<div class="row">
+			<hr><hr>
+		</div>
+		<div class="row">
+			<hr><hr>
+		</div>
+		<div class="row">
+			<h4><span class="font-weight-semibold">Task hari ini</span></h4>
+		</div>
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="card bg-danger-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+	                	<div class="mr-4" style="padding-left: 1.875rem;">
+	                    	<i class="icon-stack-plus icon-4x"></i>
+	                	</div>
+
+	                	<div>
+							<div class="d-flex">
+								<h3 class="font-weight-semibold mb-0">{{ $todaynew }}</h3>
+		                	</div>
+		                	<div>
+								Task Baru
+							</div>
+						</div>
+					</blockquote>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="card bg-teal-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+	                	<div class="mr-4" style="padding-left: 1.875rem;">
+	                    	<i class="icon-forward icon-4x"></i>
+	                	</div>
+
+	                	<div>
+							<div class="d-flex">
+								<h3 class="font-weight-semibold mb-0">{{ $todayongoing }}</h3>
+		                	</div>
+		                	<div>
+								Task Sedang Dikerjakan
+							</div>
+						</div>
+					</blockquote>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="card bg-blue-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+	                	<div class="mr-4" style="padding-left: 1.875rem;">
+	                    	<i class="icon-clipboard2 icon-4x"></i>
+	                	</div>
+
+	                	<div>
+							<div class="d-flex">
+								<h3 class="font-weight-semibold mb-0">{{ $todaydone }}</h3>
+		                	</div>
+		                	<div>
+								Task Selesai
+							</div>
+						</div>
+					</blockquote>
+				</div>
+			</div>
+		</div>
+		<!-- /quick stats boxes -->
 	</div>
 
 @endsection

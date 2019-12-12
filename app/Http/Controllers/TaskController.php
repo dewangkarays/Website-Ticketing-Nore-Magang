@@ -155,17 +155,10 @@ class TaskController extends Controller
         ]);
 
         $task = Task::find($id);
-        if($request->get('user_id')!=''){
-            $task->user_id = $request->get('user_id');
-        }
-
-        if($request->get('kebutuhan')!=''){
-            $task->kebutuhan = $request->get('kebutuhan');
-        }
+        $data = $request->except(['_token', '_method', 'file']);
         
         if($request->get('status')!=''){
             if($task->status != $request->get('status')){
-                $task->status = $request->get('status');
 
                 //notifikasi
                 if($request->get('status') == '2') {
@@ -188,7 +181,6 @@ class TaskController extends Controller
         }
 
         if($request->get('handler') != '' && $task->handler != $request->get('handler')){
-            $task->handler = $request->get('handler');
 
             //notifikasi
             $notif = new Notification();
@@ -198,7 +190,7 @@ class TaskController extends Controller
             $notif->save();
         }
 
-        $task->save();
+        $task->update($data);
 
         if($request->hasfile('file'))
         {
