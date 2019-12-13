@@ -31,11 +31,12 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::resource('payments', 'PaymentController');
 	Route::get('/antrian',  'TaskController@antrian');
 	Route::get('/history',  'TaskController@history');
+	Route::get('/getnotif',  'NotificationController@getNotif')->name('getnotif');
+	Route::get('/clicknotif/{id}',  'NotificationController@clickNotif')->name('clicknotif');
 
 	//admin
 	Route::group(['middleware' => ['role:1']], function() {
 		Route::get('/admin',  'AdminController@index')->name('admin');
-		Route::resource('users', 'UserController');
 	});
 
 	//karyawan
@@ -45,6 +46,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 	//admin && karyawan
 	Route::group(['middleware' => ['role:1' OR 'role:10']], function() {
+		Route::resource('users', 'UserController');
 	});
 
 	//customer

@@ -72,15 +72,31 @@
 <!-- /core JS files -->
 
 <script>
-	$(document).on("click", "#notifButton", function () {
-		$.ajax({
-			url:"{{ url('/clearnotif') }}",
-			method:"GET",
-			success:function(data) {
-				$('#countNotif').html('0');
-			}
-		});
+	$(document).ready(function(){
+		// on page load
+        $.ajax({
+            type:'get',
+            url:'{{ route("getnotif") }}',
+            success:function(data) {
+            	var msg = JSON.parse(data);
+                $("#countNotif").html(msg.count);
+                $("#bodyNotif").html(msg.body);
+            }
+        });
+
+        // cek tiap 30 detik
+	   	setInterval(function () {
+	        $.ajax({
+	            type:'get',
+	            url:'{{ route("getnotif") }}',
+	            success:function(data) {
+	                $("#countNotif").html(data['count']);
+	                $("#bodyNotif").html(data['body']);
+	            }
+	        });
+    	}, 30000);   
 	});
+
 </script>
 
 @yield('js')

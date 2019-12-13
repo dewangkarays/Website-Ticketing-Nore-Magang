@@ -83,6 +83,64 @@ class NotificationController extends Controller
         //
     }
 
+    public function getNotif()
+    {
+        $notif = Notification::where('user_id', '=', \Auth::user()->id)->where('status', '=', '1')->orderBy('id','desc')->get();
+        $count = Notification::where('user_id', '=', \Auth::user()->id)->where('status', '=', '1')->get()->count();
+        
+        $hbody = '';
+        $hcount = '';
+        if($count>0){
+            $hcount = '<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">'.$count.'</span>';
+
+            foreach($notif as $data){
+                $url = route('clicknotif',$data->id);
+                $hbody .= '<li class="media" style="border-top: solid;border-width: 1px;border-color: #39b772;padding-top: 15px; cursor:pointer;">
+                
+                            <a href="'.$url.'">
+                                <div class="media-body">
+                                    <div class="media-title">
+                                            <span class="font-weight-semibold">'.$data->title.'</span>
+                                    </div>
+                
+                                    <span class="text-muted">'.$data->message.'</span>
+                                </div>
+                            </a>
+                        <hr>
+                    </li>';
+            }
+        } else {
+            $hbody = '<li class="media" style="border-top: solid;border-width: 1px;border-color: #39b772;padding-top: 15px;">
+                                <div class="media-body">
+                                    <div class="media-title">
+                                            <span>Tidak ada notifikasi baru</span>
+                                    </div>
+                                </div>
+                            <hr>
+                        </li>';
+        }
+
+        $html['count']  = $hcount;
+        $html['body']   = $hbody;
+
+        return json_encode($html);
+
+    }
+
+    public function clickNotif($id)
+    {
+        $data = Notification::find($id);
+        $data->status = 0;
+        $data->save();
+
+        $url = url('/tasks');
+        if($data->task_id>0){
+            $url = route('tasks.edit',$data->task_id);
+        }
+
+        return redirect($url);
+    }
+
     public function clearNotif()
     {
         $id = \Auth::user()->id;
