@@ -3,15 +3,15 @@
 namespace App\Http\ViewComposers;
 
 use Illuminate\Contracts\View\View;
-use App\Model\Notification;
+use App\Model\User;
+use Carbon\Carbon;
 
 class NotifComposer
 {
 
     public function compose(View $view)
     {
-        $notif = Notification::where('user_id', '=', \Auth::user()->id)->orderBy('id','desc')->get();
-        $count = Notification::where('user_id', '=', \Auth::user()->id)->where('status', '=', '1')->get()->count();
-        $view->with(compact('notif', 'count'));
+        $expired = User::where('kadaluarsa', '<=', Carbon::now()->addDays(7)->toDateString())->get()->count();
+        $view->with(compact('expired'));
     }
 }

@@ -24,9 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // view()->composer(
-        //     'navbar', 'App\Http\ViewComposers\NotifComposer'
-        // );
+        view()->composer(
+            'sidebar', 'App\Http\ViewComposers\NotifComposer'
+        );
 
         Blade::directive('angka', function ($money) {
             return "<?php echo number_format($money, 0, ',', '.'); ?>";

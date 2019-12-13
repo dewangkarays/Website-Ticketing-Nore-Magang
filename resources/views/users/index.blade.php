@@ -43,7 +43,7 @@
 				<tbody>
 				@if(!$users->isEmpty())
 					@foreach($users as $user)
-				    <tr>
+				    <tr @if($user->kadaluarsa <= date("Y-m-d", strtotime("+1 week")) && $user->kadaluarsa != '') style="background-color:red;" @endif > 
 				        <td><div class="datatable-column-width">{{$user->nama}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
 				        <td>{{config('custom.role.'.$user->role)}}</td>
