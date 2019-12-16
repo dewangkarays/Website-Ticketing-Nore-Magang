@@ -75,7 +75,7 @@
 		</div>
 		<!-- /quick stats boxes -->
 
-
+		@if(\Auth::user()->role<20)
 		<!-- TODAY -->
 		<!-- Quick stats boxes -->
 		<div class="row">
@@ -144,6 +144,7 @@
 			</div>
 		</div>
 		<!-- /quick stats boxes -->
+		@endif
 	</div>
 
 @endsection
