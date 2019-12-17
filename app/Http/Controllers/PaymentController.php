@@ -16,9 +16,9 @@ class PaymentController extends Controller
     public function index()
     {
         if(\Auth::user()->role > 20){
-            $payments = Payment::where('user_id',\Auth::user()->id)->get();
+            $payments = Payment::where('user_id',\Auth::user()->id)->orderBy('status','ASC')->orderBy('tgl_bayar','ASC')->get();
         } else {
-            $payments = Payment::all();
+            $payments = Payment::orderBy('status','ASC')->orderBy('tgl_bayar','ASC')->get();
         }
         return view('payments.index', compact('payments'));
     }
@@ -44,26 +44,24 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id'=>'required',
-            'keterangan'=>'required',
-            'nominal'=>'required',
+            // 'user_id'=>'required',
+            // 'keterangan'=>'required',
+            // 'nominal'=>'required',
         ]);
 
-        $payment = new Payment([
-            'user_id' => $request->get('user_id'),
-            'keterangan' => $request->get('keterangan'),
-            'nominal' => $request->get('nominal'),
-        ]);
+        $payment = new Payment();
+
+        $data = $request->except(['_token', '_method']);
+        $payment->insert($data);
         
         if($request->get('kadaluarsa')!=''){
-            $payment->kadaluarsa = $request->get('kadaluarsa');
+            //$payment->kadaluarsa = $request->get('kadaluarsa');
 
             $user = User::find($request->get('user_id'));
             $user->kadaluarsa = $request->get('kadaluarsa');
             $user->save();
         }
 
-        $payment->save();
         return redirect('/payments')->with('success', 'Payment saved!');
     }
 

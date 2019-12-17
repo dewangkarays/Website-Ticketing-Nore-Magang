@@ -43,6 +43,7 @@
 							<label class="col-form-label col-lg-2">Telp</label>
 							<div class="col-lg-10">
 								<input type="text" name="telp" class="form-control border-teal border-1" placeholder="Telp/WA" required value="{{ $user->telp }}">
+								<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
 							</div>
 						</div>
 						<div class="form-group row">

@@ -14,7 +14,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Payment</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Pembayaran</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -44,7 +44,7 @@
 				<tbody>
 				@if(!$payments->isEmpty())
 					@foreach($payments as $payment)
-				    <tr>
+				    <tr @if($payment->status == 1 ) style="background-color:#4caf50; color:white;" @endif >
 				        <td><div class="datatable-column-width">{{$payment->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$payment->keterangan}}</div></td>
 				        <td style="font-size: 15px;">@angka($payment->nominal)</td>

@@ -168,7 +168,7 @@
 							</div>
 							</fieldset>
 							<div class="text-right">
-								<button type="button" class="btn btn-primary" onclick="history.back();">Kembali <i class="icon-undo2 ml-2"></i></button>
+								<a href="{{ route('tasks.index')}}"><button type="button" class="btn btn-primary">Kembali <i class="icon-undo2 ml-2"></i></button></a>
 							</div>
 
 						@endif

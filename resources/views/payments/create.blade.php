@@ -6,7 +6,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Tambah Payment</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Tambah Pembayaran</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -70,7 +70,7 @@
 								<!-- <span class="input-group-prepend">
 									<span class="input-group-text"><i class="icon-calendar3"></i></span>
 								</span> -->
-								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Kadaluarsa" required>
+								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility kadaluarsa" placeholder="Tanggal Kadaluarsa">
 							</div>
 						</div>
 						<div class="form-group row">
@@ -134,14 +134,13 @@
             selectMonths: true,
             selectYears: true,
             format: 'yyyy-mm-dd',
-            formatSubmit: 'yyyy-mm-dd',
         });
 
 		function changeDate(select){
 			var str = $(select).find(':selected').data('kadaluarsa')
 			console.log(str);
 			var tgl = str.split("-");
-			var picker = $(".pickadate-accessibility").pickadate('picker');
+			var picker = $(".kadaluarsa").pickadate('picker');
 			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
 			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
 	        picker.render();

@@ -29,7 +29,10 @@ class AdminController extends Controller
         $new = Task::where('status', '=', '1')->get()->count();
         $ongoing = Task::where('status', '=', '2')->get()->count();
         $done = Task::where('status', '=', '3')->get()->count();
-        return view("index", compact('new','ongoing','done'));
+        $todaynew = Task::where('status', '=', '1')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
+        $todayongoing = Task::where('status', '=', '2')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
+        $todaydone = Task::where('status', '=', '3')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
+        return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone'));
     }
 
     public function customer()

@@ -45,7 +45,7 @@
 				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
 				        <td><div class="datatable-column-width">
-				        	{{(\Auth::user()->id == $task->user_id || \Auth::user()->id<20) ? $task->user->username : 'Pelanggan Lain'}}
+				        	{{(\Auth::user()->id == $task->user_id || \Auth::user()->role<20) ? $task->user->username : 'Pelanggan Lain'}}
 				        </div></td>
 				        <td><div class="datatable-column-width">{{config('custom.role.'.$task->user->role)}}</div></td>
 				        <td>{{config('custom.status.'.$task->status)}}</td>

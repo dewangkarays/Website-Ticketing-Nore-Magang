@@ -100,9 +100,10 @@ class UserController extends Controller
         ]);
 
         $user = User::find($id);
-        $data = $request->except(['_token', '_method']);
+        $data = $request->except(['_token', '_method', 'password']);
+
         if($request->get('password')!=''){
-            $data->password = bcrypt($request->get('password'));
+            $data['password'] = bcrypt($request->get('password'));
         }
 
         $user->update($data);

@@ -46,7 +46,7 @@
 				@if(!$tasks->isEmpty())
 					@php ($i = 1)
 					@foreach($tasks as $task)
-				    <tr>
+				    <tr @if($task->status == 2 ) style="background-color:yellow;" @endif >
 				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
 				        <td><div class="datatable-column-width">{{$task->user->username}}</div></td>

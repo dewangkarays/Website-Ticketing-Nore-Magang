@@ -6,7 +6,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Ubah Payment</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Ubah Pembayaran</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -31,11 +31,8 @@
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2">User</label>
 									<div class="col-lg-10">
-										<select name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
-											@foreach($users as $user)
-												<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" {{ $payment->user_id == $user->id ? 'selected' : '' }}>{{$user->username}}</option>
-						    				@endforeach
-										</select>
+										<label class="col-form-label col-lg-2">{{ $payment->user->nama }}</label>
+										<input type="hidden" name="user_id" id="user_id" value="{{$payment->user_id}}">
 									</div>
 								</div>
 								<div class="form-group row">
@@ -133,12 +130,12 @@
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Status</label>
 								<div class="col-lg-10">
-									<label class="col-form-label col-lg-2">{{config('custom.status.'.$payment->status)}}</label>
+									<label class="col-form-label col-lg-2">{{config('custom.payment.'.$payment->status)}}</label>
 								</div>
 							</div>
 							</fieldset>
 							<div class="text-right">
-								<button type="button" class="btn btn-primary" onclick="history.back();">Kembali <i class="icon-undo2 ml-2"></i></button>
+								<a href="{{ route('payments.index')}}"><button type="button" class="btn btn-primary">Kembali <i class="icon-undo2 ml-2"></i></button></a>
 							</div>
 
 						@endif
@@ -179,6 +176,14 @@
 	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
 	<script>
 		
+		$( document ).ready(function() {
+			var str = $('#user_id').val();
+			var tgl = str.split("-");
+			var picker = $(".pickadate-accessibility").pickadate('picker');
+			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
+			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
+	        picker.render();
+		});
 
         // Accessibility labels
         $('.pickadate-accessibility').pickadate({
@@ -192,8 +197,7 @@
         });
 
 		function changeDate(select){
-			var str = $(select).find(':selected').data('kadaluarsa')
-			console.log(str);
+			var str = $(select).find(':selected').data('kadaluarsa');
 			var tgl = str.split("-");
 			var picker = $(".pickadate-accessibility").pickadate('picker');
 			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
