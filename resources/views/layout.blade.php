@@ -95,8 +95,21 @@
 	                $("#bodyNotif").html(data['body']);
 	            }
 	        });
-    	}, 30000);   
+    	}, 30000); 
+ 
 	});
+		
+	$(document).on("click", "#clearbutton", function () {
+        $.ajax({
+            type:'get',
+            url:'{{ route("clearnotif") }}',
+            success:function(data) {
+            	var msg = JSON.parse(data);
+                $("#countNotif").html(msg.count);
+                $("#bodyNotif").html(msg.body);
+            }
+        });
+    }); 
 
 </script>
 

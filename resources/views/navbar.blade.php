@@ -39,7 +39,7 @@
 				<div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
 					<div class="dropdown-content-header">
 						<span class="font-weight-semibold">Notifikasi</span>
-						<!-- <a href="#"><span>Tandai sudah dibaca semua</span></a> -->
+						<a href="#" id="clearbutton" class="text-default" data-popup="tooltip" title="Tandai sudah dibaca semua"><i style="font-size: 20px;color: #229c59;" class="far fa-calendar-check d-block top-0"></i></a>
 					</div>
 
 					<div class="dropdown-content-body dropdown-scrollable">
@@ -47,9 +47,9 @@
 						</ul>
 					</div>
 
-					<!-- <div class="dropdown-content-footer justify-content-center p-0">
-						<a href="#" class="bg-light text-grey w-100 py-2" data-popup="tooltip" title="Lihat Semua"><i class="icon-menu7 d-block top-0"></i></a>
-					</div> -->
+					<div class="dropdown-content-footer justify-content-center p-0">
+						<a href="{{route('notifikasi')}}" class="bg-light text-grey w-100 py-2" data-popup="tooltip" title="Lihat Semua"><i class="icon-menu7 d-block top-0"></i></a>
+					</div>
 				</div>
 			</li>
 

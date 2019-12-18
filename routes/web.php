@@ -23,7 +23,6 @@ Route::get('/del/{id}',  'AttachmentController@destroy');
 
 
 Route::group(['middleware' => ['auth']], function() {
-	Route::get('/clearnotif',  'NotificationController@clearNotif');
 	Route::get('/changepass',  'UserController@changePass');
 	Route::post('/changepass/{id}',  'UserController@changePassSubmit')->name('changepass');
 	Route::resource('attachments', 'AttachmentController');
@@ -33,6 +32,8 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/history',  'TaskController@history');
 	Route::get('/getnotif',  'NotificationController@getNotif')->name('getnotif');
 	Route::get('/clicknotif/{id}',  'NotificationController@clickNotif')->name('clicknotif');
+	Route::get('/clearnotif',  'NotificationController@clearNotif')->name('clearnotif');
+	Route::get('/notifikasi',  'NotificationController@index')->name('notifikasi');
 
 	//admin
 	Route::group(['middleware' => ['role:1']], function() {

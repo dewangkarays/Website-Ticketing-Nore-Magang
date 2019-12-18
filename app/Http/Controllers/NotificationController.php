@@ -14,7 +14,9 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        //
+        $notif = Notification::where('user_id', '=', \Auth::user()->id)->orderBy('id','desc')->get();
+
+        return view('notifikasi', compact('notif'));
     }
 
     /**
@@ -145,6 +147,46 @@ class NotificationController extends Controller
     {
         $id = \Auth::user()->id;
         Notification::where('user_id','=',$id)->update([ 'status' => '0']);
+
+        $notif = Notification::where('user_id', '=', \Auth::user()->id)->where('status', '=', '1')->orderBy('id','desc')->get();
+        $count = Notification::where('user_id', '=', \Auth::user()->id)->where('status', '=', '1')->get()->count();
+        
+        $hbody = '';
+        $hcount = '';
+        if($count>0){
+            $hcount = '<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">'.$count.'</span>';
+
+            foreach($notif as $data){
+                $url = route('clicknotif',$data->id);
+                $hbody .= '<li class="media" style="border-top: solid;border-width: 1px;border-color: #39b772;padding-top: 15px; cursor:pointer;">
+                
+                            <a href="'.$url.'">
+                                <div class="media-body">
+                                    <div class="media-title">
+                                            <span class="font-weight-semibold">'.$data->title.'</span>
+                                    </div>
+                
+                                    <span class="text-muted">'.$data->message.'</span>
+                                </div>
+                            </a>
+                        <hr>
+                    </li>';
+            }
+        } else {
+            $hbody = '<li class="media" style="border-top: solid;border-width: 1px;border-color: #39b772;padding-top: 15px;">
+                                <div class="media-body">
+                                    <div class="media-title">
+                                            <span>Tidak ada notifikasi baru</span>
+                                    </div>
+                                </div>
+                            <hr>
+                        </li>';
+        }
+
+        $html['count']  = $hcount;
+        $html['body']   = $hbody;
+
+        return json_encode($html);
     }
 }
 
