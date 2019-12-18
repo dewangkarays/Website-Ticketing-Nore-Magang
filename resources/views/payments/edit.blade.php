@@ -54,9 +54,9 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label class="col-form-label col-lg-2">Kadaluarsa</label>
+									<label class="col-form-label col-lg-2">Masa Aktif</label>
 									<div class="col-lg-10">
-										<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Kadaluarsa" required value="{{ $payment->kadaluarsa }}">
+										<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif" required value="{{ $payment->kadaluarsa }}">
 									</div>
 								</div>
 								<div class="form-group row">

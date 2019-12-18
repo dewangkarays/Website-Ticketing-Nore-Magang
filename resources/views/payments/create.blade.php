@@ -65,12 +65,12 @@
 						</div>
 						@if(\Auth::user()->role==1 || \Auth::user()->role==10)
 						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Kadaluarsa</label>
+							<label class="col-form-label col-lg-2">Masa Aktif</label>
 							<div class="col-lg-10">
 								<!-- <span class="input-group-prepend">
 									<span class="input-group-text"><i class="icon-calendar3"></i></span>
 								</span> -->
-								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility kadaluarsa" placeholder="Tanggal Kadaluarsa">
+								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility kadaluarsa" placeholder="Tanggal Masa Aktif">
 							</div>
 						</div>
 						<div class="form-group row">

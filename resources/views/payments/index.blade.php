@@ -33,22 +33,30 @@
 			<table class="table datatable-basic table-hover">
 				<thead>
 					<tr>
+						<th>No</th>
 						<th>Username</th>
 						<th>Keterangan</th>
 						<th>Nominal</th>
 						<th>Status</th>
-						<th>Kadaluarsa</th>
+						<th>Masa Aktif</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 				@if(!$payments->isEmpty())
+					@php ($i = 1)
 					@foreach($payments as $payment)
-				    <tr @if($payment->status == 1 ) style="background-color:#4caf50; color:white;" @endif >
+				    <tr>
+				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{$payment->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$payment->keterangan}}</div></td>
 				        <td style="font-size: 15px;">@angka($payment->nominal)</td>
-				        <td>{{config('custom.payment.'.$payment->status)}}</td>
+				        <td align="center">@if($payment->status == 0 )
+								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.payment.'.$payment->status)}}</span>
+							@else
+								{{config('custom.payment.'.$payment->status)}}
+							@endif
+						</td>
 				        <td>{{$payment->kadaluarsa}}</td>
 				        <td align="center">
 							<div class="list-icons">
@@ -58,6 +66,9 @@
 									</a>
 
 									<div class="dropdown-menu dropdown-menu-right">
+										@if(\Auth::user()->role<=20)
+										<a href="https://wa.me/{{$payment->user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
+							            @endif
 										<a href="{{ route('payments.edit',$payment->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
 										@if($payment->status==0 || \Auth::user()->role==1)
 							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('payments.destroy', $payment->id)}}"><i class="icon-x"></i> Delete</a>
@@ -67,6 +78,7 @@
 							</div>
 				        </td>
 				    </tr>
+				    @php ($i++)
 				    @endforeach
 				@else
 				  	<tr><td align="center" colspan="5">Data Kosong</td></tr>
@@ -139,8 +151,8 @@
 		            autoWidth: false,
 		            columnDefs: [{ 
 		                orderable: false,
-		                width: 100,
-		                targets: [ 5 ]
+		                // width: 100,
+		                targets: [ 0, 1, 2, 3, 4, 5 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {

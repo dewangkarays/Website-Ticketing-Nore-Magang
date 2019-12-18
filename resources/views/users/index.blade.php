@@ -36,7 +36,7 @@
 						<th>Nama</th>
 						<th>Username</th>
 						<th>Role</th>
-						<th>Kadaluarsa</th>
+						<th>Masa Aktif</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>

@@ -46,6 +46,12 @@
 							</div>
 						</div>
 						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Masa Aktif</label>
+							<div class="col-lg-10">
+								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif">
+							</div>
+						</div>
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Username</label>
 							<div class="col-lg-10">
 								<input type="text" name="username" class="form-control border-teal border-1" placeholder="Username" required>
@@ -90,11 +96,28 @@
 	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/daterangepicker.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/anytime.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.date.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script type="text/javascript">
+		
+        // Accessibility labels
+        $('.pickadate-accessibility').pickadate({
+            labelMonthNext: 'Go to the next month',
+            labelMonthPrev: 'Go to the previous month',
+            labelMonthSelect: 'Pick a month from the dropdown',
+            labelYearSelect: 'Pick a year from the dropdown',
+            selectMonths: true,
+            selectYears: true,
+            format: 'yyyy-mm-dd',
+        });
 				
 		var FormValidation = function() {
 
