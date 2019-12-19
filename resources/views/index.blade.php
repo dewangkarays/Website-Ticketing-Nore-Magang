@@ -144,6 +144,57 @@
 			</div>
 		</div>
 		<!-- /quick stats boxes -->
+
+		@else
+		<!-- TODAY -->
+		<!-- Quick stats boxes -->
+		<div class="row">
+			<hr><hr>
+		</div>
+		<div class="row">
+			<div class="col-lg-4">
+				@if(\Auth::user()->kadaluarsa <= date("Y-m-d", strtotime("+1 week")) && \Auth::user()->kadaluarsa != '')
+				<div class="card bg-orange-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+	                	<div class="mr-4" style="padding-left: 1.875rem;">
+	                    	<i class="icon-calendar3 icon-4x"></i>
+	                	</div>
+
+	                	<div>
+							<div class="d-flex">
+								<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->kadaluarsa }}</h3>
+		                	</div>
+		                	<div>
+								Masa Aktif
+							</div>
+						</div>
+					</blockquote>
+	            	<span style="padding:10px;">
+						Masa Aktif kurang dari seminggu, segera lakukan pembayaran untuk memperpanjang masa aktif. 
+					</span>
+				</div>
+
+				@else
+				<div class="card" style="background-color:#229c59; color:white;">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+	                	<div class="mr-4" style="padding-left: 1.875rem;">
+	                    	<i class="icon-calendar3 icon-4x"></i>
+	                	</div>
+
+	                	<div>
+							<div class="d-flex">
+								<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->kadaluarsa }}</h3>
+		                	</div>
+		                	<div>
+								Masa Aktif
+							</div>
+						</div>
+					</blockquote>
+				</div>
+				@endif
+			</div>
+		</div>
+		<!-- /quick stats boxes -->
 		@endif
 	</div>
 

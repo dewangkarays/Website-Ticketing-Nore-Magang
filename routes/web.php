@@ -29,7 +29,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::resource('tasks', 'TaskController');
 	Route::resource('payments', 'PaymentController');
 	Route::get('/antrian',  'TaskController@antrian');
-	Route::get('/history',  'TaskController@history');
+	Route::get('/history',  'TaskController@history')->name('history');
 	Route::get('/getnotif',  'NotificationController@getNotif')->name('getnotif');
 	Route::get('/clicknotif/{id}',  'NotificationController@clickNotif')->name('clicknotif');
 	Route::get('/clearnotif',  'NotificationController@clearNotif')->name('clearnotif');

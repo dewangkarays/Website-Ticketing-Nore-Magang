@@ -34,7 +34,7 @@
 						<th>Tanggal</th>
 						<th>Pelanggan</th>
 						<th>Layanan</th>
-						<th>Status</th>
+						<th class="text-center">Status</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -48,7 +48,12 @@
 				        	{{(\Auth::user()->id == $task->user_id || \Auth::user()->role<20) ? $task->user->username : 'Pelanggan Lain'}}
 				        </div></td>
 				        <td><div class="datatable-column-width">{{config('custom.role.'.$task->user->role)}}</div></td>
-				        <td>{{config('custom.status.'.$task->status)}}</td>
+				        <td align="center">@if($task->status == 2 )
+								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.status.'.$task->status)}}</span>
+							@else
+								{{config('custom.status.'.$task->status)}}
+							@endif
+						</td>
 				    </tr>
 				    @php ($i++)
 				    @endforeach

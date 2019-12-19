@@ -100,6 +100,7 @@ class TaskController extends Controller
             $notif->title = 'Task Baru';
             $notif->message = $task->user->username.' mengirimkan task baru.';
             $notif->user_id = $user->id;
+            $notif->url = route('tasks.edit',$task->id);
             $notif->save();
         }
 
@@ -114,7 +115,20 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+        $users = User::where('role','>','20')->get(); //role customer
+        $handlers = User::where('role','10')->get(); //role karyawan
+        $attachment = Attachment::where('task_id', '=', $id)->get();
+        $task = Task::find($id);
+
+        if (\Auth::user()->role>20 && $task->user_id != \Auth::user()->id) {
+            return redirect('/tasks')->with('error', 'Akses tidak diperbolehkan');
+        }
+
+        // if (\Auth::user()->role>20 && $task->status == '2') {
+        //     return redirect('/tasks')->with('error', 'Task Sedang Dikerjakan');
+        // }
+
+        return view('tasks.show', compact('task','users','handlers','attachment')); 
     }
 
     /**
@@ -134,9 +148,9 @@ class TaskController extends Controller
             return redirect('/tasks')->with('error', 'Akses tidak diperbolehkan');
         }
 
-        if (\Auth::user()->role>20 && $task->status == '2') {
-            return redirect('/tasks')->with('error', 'Task Sedang Dikerjakan');
-        }
+        // if (\Auth::user()->role>20 && $task->status == '2') {
+        //     return redirect('/tasks')->with('error', 'Task Sedang Dikerjakan');
+        // }
 
         return view('tasks.edit', compact('task','users','handlers','attachment')); 
     }
@@ -166,6 +180,7 @@ class TaskController extends Controller
                     $notif->title = 'Task Sedang Dikerjakan';
                     $notif->message = 'Task yang anda kirimkan sedang dikerjakan.';
                     $notif->user_id = $task->user_id;
+                    $notif->url = route('tasks.edit',$task->id);
                     $notif->save();
                 }
 
@@ -175,6 +190,7 @@ class TaskController extends Controller
                     $notif->title = 'Task Selesai Dikerjakan';
                     $notif->message = 'Task yang anda kirimkan selesai dikerjakan.';
                     $notif->user_id = $task->user_id;
+                    $notif->url = route('tasks.edit',$task->id);
                     $notif->save();
                 }
             }
@@ -187,6 +203,7 @@ class TaskController extends Controller
             $notif->title = 'Task Baru untuk Anda';
             $notif->message = 'Anda mendapat task baru untuk dikerjakan.';
             $notif->user_id = $request->get('handler');
+            $notif->url = route('tasks.edit',$task->id);
             $notif->save();
         }
 

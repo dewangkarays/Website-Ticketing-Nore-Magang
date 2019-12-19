@@ -33,7 +33,7 @@
 						<th>Username</th>
 						<th>Kebutuhan</th>
 						<th>Handler</th>
-						<th>Status</th>
+						<th class="text-center">Status</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
@@ -44,7 +44,7 @@
 				        <td><div class="datatable-column-width">{{$task->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
 				        <td><div class="datatable-column-width">{{@$task->assign->nama}}</div></td>
-				        <td>{{config('custom.status.'.$task->status)}}</td>
+				        <td align="center">{{config('custom.status.'.$task->status)}}</td>
 				        <td align="center">
 							<div class="list-icons">
 								<div class="dropdown">
@@ -53,7 +53,7 @@
 									</a>
 
 									<div class="dropdown-menu dropdown-menu-right">
-										<a class="dropdown-item"><i class="icon-pencil7"></i> Show</a>
+										<a href="{{ route('tasks.show',$task->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Show</a>
 									</div>
 								</div>
 							</div>

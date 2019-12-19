@@ -37,8 +37,8 @@
 						<th>Username</th>
 						<th>Keterangan</th>
 						<th>Nominal</th>
-						<th>Status</th>
-						<th>Masa Aktif</th>
+						<th class="text-center">Status</th>
+						<th>Tgl Pembayaran</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
@@ -57,7 +57,7 @@
 								{{config('custom.payment.'.$payment->status)}}
 							@endif
 						</td>
-				        <td>{{$payment->kadaluarsa}}</td>
+				        <td>{{$payment->tgl_bayar}}</td>
 				        <td align="center">
 							<div class="list-icons">
 								<div class="dropdown">

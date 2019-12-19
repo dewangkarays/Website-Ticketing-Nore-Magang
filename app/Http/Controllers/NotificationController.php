@@ -135,10 +135,7 @@ class NotificationController extends Controller
         $data->status = 0;
         $data->save();
 
-        $url = url('/tasks');
-        if($data->task_id>0){
-            $url = route('tasks.edit',$data->task_id);
-        }
+        $url = $data->url;
 
         return redirect($url);
     }
