@@ -26,54 +26,54 @@
 					@csrf
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Data Payment</legend>
-						@if($payment->status==0)
-							@if(\Auth::user()->role==1)
-								<div class="form-group row">
-									<label class="col-form-label col-lg-2">User</label>
-									<div class="col-lg-10">
-										<select name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
-											@foreach($users as $user)
-												<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" {{ $payment->user_id == $user->id ? 'selected' : '' }}>{{$user->username}}</option>
-						    				@endforeach
-										</select>
-									</div>
+						@if(\Auth::user()->role==1)
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">User</label>
+								<div class="col-lg-10">
+									<select name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
+										@foreach($users as $user)
+											<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" {{ $payment->user_id == $user->id ? 'selected' : '' }}>{{$user->username}}</option>
+					    				@endforeach
+									</select>
 								</div>
-								<div class="form-group row">
-									<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
-									<div class="col-lg-10" required>
-										<input name="tgl_bayar" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pembayaran" value="{{ $payment->tgl_bayar }}">
-									</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
+								<div class="col-lg-10" required>
+									<input name="tgl_bayar" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pembayaran" value="{{ $payment->tgl_bayar }}">
 								</div>
-								<div class="form-group row">
-									<label class="col-form-label col-lg-2">Keterangan</label>
-									<div class="col-lg-10">
-										<textarea name="keterangan" rows="4" cols="3" class="form-control" placeholder="Keterangan" required>{{ $payment->keterangan }}</textarea>
-									</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">Keterangan</label>
+								<div class="col-lg-10">
+									<textarea name="keterangan" rows="4" cols="3" class="form-control" placeholder="Keterangan" required>{{ $payment->keterangan }}</textarea>
 								</div>
-								<div class="form-group row">
-									<label class="col-form-label col-lg-2">Nominal</label>
-									<div class="col-lg-10">
-										<input type="number" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" required value="{{ $payment->nominal }}">
-									</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">Nominal</label>
+								<div class="col-lg-10">
+									<input type="number" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" required value="{{ $payment->nominal }}">
 								</div>
-								<div class="form-group row">
-									<label class="col-form-label col-lg-2">Masa Aktif</label>
-									<div class="col-lg-10">
-										<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif" value="{{ $payment->kadaluarsa }}">
-									</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">Masa Aktif</label>
+								<div class="col-lg-10">
+									<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility kadaluarsa" placeholder="Tanggal Masa Aktif" value="{{ $payment->kadaluarsa }}">
 								</div>
-								<div class="form-group row">
-									<label class="col-form-label col-lg-2">Status</label>
-									<div class="col-lg-10">
-										<select name="status" class="form-control">
-		                                    <option value="0" {{ $payment->status == "0" ? 'selected' : '' }}>Belum Dikonfirmasi</option>
-		                                    <option value="1" {{ $payment->status == "1" ? 'selected' : '' }}>Sudah Dikonfirmasi</option>
-		                                    <option value="2" {{ $payment->status == "2" ? 'selected' : '' }}>Ditolak</option>
-		                                </select>
-									</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">Status</label>
+								<div class="col-lg-10">
+									<select name="status" class="form-control">
+	                                    <option value="0" {{ $payment->status == "0" ? 'selected' : '' }}>Belum Dikonfirmasi</option>
+	                                    <option value="1" {{ $payment->status == "1" ? 'selected' : '' }}>Sudah Dikonfirmasi</option>
+	                                    <option value="2" {{ $payment->status == "2" ? 'selected' : '' }}>Ditolak</option>
+	                                </select>
 								</div>
+							</div>
 
-							@elseif(\Auth::user()->role==10)
+						@elseif($payment->status==0)
+							@if(\Auth::user()->role==10)
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2">User</label>
 									<div class="col-lg-10">
@@ -102,7 +102,7 @@
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2">Masa Aktif</label>
 									<div class="col-lg-10">
-										<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif"  value="{{ $payment->kadaluarsa }}">
+										<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility kadaluarsa" placeholder="Tanggal Masa Aktif"  value="{{ $payment->kadaluarsa }}">
 									</div>
 								</div>
 								<div class="form-group row">
@@ -247,7 +247,7 @@
 		function changeDate(select){
 			var str = $(select).find(':selected').data('kadaluarsa');
 			var tgl = str.split("-");
-			var picker = $(".pickadate-accessibility").pickadate('picker');
+			var picker = $(".kadaluarsa").pickadate('picker');
 			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
 			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
 	        picker.render();

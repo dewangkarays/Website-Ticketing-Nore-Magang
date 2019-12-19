@@ -153,7 +153,28 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-4">
-				@if(\Auth::user()->kadaluarsa <= date("Y-m-d", strtotime("+1 week")) && \Auth::user()->kadaluarsa != '')
+				@if(\Auth::user()->kadaluarsa < date("Y-m-d") && \Auth::user()->kadaluarsa != '')
+				<div class="card bg-danger-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+	                	<div class="mr-4" style="padding-left: 1.875rem;">
+	                    	<i class="icon-calendar3 icon-4x"></i>
+	                	</div>
+
+	                	<div>
+							<div class="d-flex">
+								<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->kadaluarsa }}</h3>
+		                	</div>
+		                	<div>
+								Masa Aktif
+							</div>
+						</div>
+					</blockquote>
+	            	<span style="padding:10px;">
+						Masa Aktif habis. Website akan dihapus dari internet. 
+					</span>
+				</div>
+
+				@elseif(\Auth::user()->kadaluarsa <= date("Y-m-d", strtotime("+1 week")) && \Auth::user()->kadaluarsa != '')
 				<div class="card bg-orange-400">
 					<blockquote class="blockquote d-flex py-2 mb-0">
 	                	<div class="mr-4" style="padding-left: 1.875rem;">
