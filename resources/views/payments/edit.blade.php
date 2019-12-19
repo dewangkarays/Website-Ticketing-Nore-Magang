@@ -72,6 +72,11 @@
 								</div>
 							</div>
 
+							</fieldset>
+							<div class="text-right">
+								<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
+							</div>
+
 						@elseif($payment->status==0)
 							@if(\Auth::user()->role==10)
 								<div class="form-group row">
