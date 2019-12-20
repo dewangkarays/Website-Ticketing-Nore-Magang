@@ -115,9 +115,10 @@ class PaymentController extends Controller
         ]);
 
         $payment = Payment::find($id);
-        $data = $request->except(['_token', '_method']);
-
-        if($request->get('kadaluarsa')!='' && $request->get('status')=='1'){
+        $data = $request->except(['_token', '_method','kadaluarsa','updkadaluarsa']);
+        
+        if($request->get('kadaluarsa')!='' && $request->get('status')=='1' && $request->get('updkadaluarsa')=='1'){
+            $data['kadaluarsa'] = $request->get('kadaluarsa');
 
             $user = User::find($request->get('user_id'));
             $user->kadaluarsa = $request->get('kadaluarsa');

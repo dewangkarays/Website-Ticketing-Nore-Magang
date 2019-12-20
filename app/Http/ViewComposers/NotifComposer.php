@@ -11,7 +11,7 @@ class NotifComposer
 
     public function compose(View $view)
     {
-        $expired = User::where('kadaluarsa', '<=', Carbon::now()->addDays(7)->toDateString())->get()->count();
+        $expired = User::where('kadaluarsa', '<', Carbon::now()->toDateString())->get()->count();
         $view->with(compact('expired'));
     }
 }

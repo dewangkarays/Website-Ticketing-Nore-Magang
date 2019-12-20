@@ -40,7 +40,7 @@
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
 								<div class="col-lg-10" required>
-									<input name="tgl_bayar" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pembayaran" value="{{ $payment->tgl_bayar }}">
+									<input name="tgl_bayar" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pembayaran" value="{{ $payment->tgl_bayar }}" required>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -59,6 +59,16 @@
 								<label class="col-form-label col-lg-2">Masa Aktif</label>
 								<div class="col-lg-10">
 									<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility kadaluarsa" placeholder="Tanggal Masa Aktif" value="{{ $payment->kadaluarsa }}">
+									@if($payment->status=="1")
+									<div class="form-check">
+										<label class="form-check-label">
+											<input name="updkadaluarsa" value="1" type="checkbox" class="form-check-input-styled-success" data-fouc>
+											Update Masa Aktif
+										</label>
+									</div>
+									@else
+									<input name="updkadaluarsa" value="1" type="hidden" >
+									@endif
 								</div>
 							</div>
 							<div class="form-group row">
@@ -108,6 +118,16 @@
 									<label class="col-form-label col-lg-2">Masa Aktif</label>
 									<div class="col-lg-10">
 										<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility kadaluarsa" placeholder="Tanggal Masa Aktif"  value="{{ $payment->kadaluarsa }}">
+										@if($payment->status=="1")
+										<div class="form-check">
+											<label class="form-check-label">
+												<input name="updkadaluarsa" value="1" type="checkbox" class="form-check-input-styled-success" data-fouc>
+												Update Masa Aktif
+											</label>
+										</div>
+										@else
+										<input name="updkadaluarsa" value="1" type="hidden" >
+										@endif
 									</div>
 								</div>
 								<div class="form-group row">
@@ -222,11 +242,15 @@
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/notifications/jgrowl.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/forms/styling/switchery.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/forms/styling/switch.min.js')}}"></script>
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/uploader_bootstrap.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
+	<script src="{{asset('global_assets/js/demo_pages/form_checkboxes_radios.js')}}"></script>
 	<script>
 		
 		$( document ).ready(function() {

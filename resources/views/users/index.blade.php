@@ -36,18 +36,26 @@
 						<th>Nama</th>
 						<th>Username</th>
 						<th>Role</th>
-						<th>Masa Aktif</th>
+						<th class="text-center">Masa Aktif</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 				@if(!$users->isEmpty())
 					@foreach($users as $user)
-				    <tr @if($user->kadaluarsa <= date("Y-m-d", strtotime("+1 week")) && $user->kadaluarsa != '') style="background-color:red; color:white;" @endif > 
+				    <tr> 
 				        <td><div class="datatable-column-width">{{$user->nama}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
 				        <td>{{config('custom.role.'.$user->role)}}</td>
-				        <td>{{$user->kadaluarsa}}</td>
+				        <td align="center">
+				        	@if($user->kadaluarsa < date("Y-m-d") && $user->kadaluarsa != '')
+								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->kadaluarsa}}</span>
+							@elseif($user->kadaluarsa <= date("Y-m-d", strtotime("+1 week")) && $user->kadaluarsa != '')
+								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{$user->kadaluarsa}}</span>
+							@else
+								{{$user->kadaluarsa}}
+							@endif
+						</td>
 				        <td align="center">
 							<div class="list-icons">
 								<div class="dropdown">
