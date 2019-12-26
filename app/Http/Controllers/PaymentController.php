@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Payment;
 use App\Model\User;
 use App\Model\Notification;
+use App\Model\Task;
 
 class PaymentController extends Controller
 {
@@ -51,6 +52,8 @@ class PaymentController extends Controller
         ]);
 
         $data = $request->except(['_token', '_method']);
+        $user = User::find($request->get('user_id'));
+        $data['user_role'] = $user->role;
         $payment = Payment::create($data);
         
         $cust = User::find($request->get('user_id'));
@@ -167,5 +170,62 @@ class PaymentController extends Controller
         $payment->delete();
 
         return redirect('/payments')->with('success', 'Payment deleted!');
+    }
+
+    public function statistikpayment($filter = 'bulan'){
+        $pie = array();
+
+        if($filter=="minggu"){
+
+            $qry = Task::selectRaw('week(created_at) as minggu, count(*) as total ')->groupBy('minggu')->get()->toArray();
+            
+            foreach ($qry as $val) {
+                $data['all'][$val['minggu']] = $val['total'];
+            }
+    
+            $employees = Task::select('handler')->groupBy('handler')->get();
+            foreach ($employees as $employee) {
+                $user = User::find($employee->handler);
+                $qry = Task::selectRaw('week(created_at) as minggu, count(*) as total ')->where('handler', $employee->handler)->groupBy('minggu')->get()->toArray();
+    
+                $pie[$user->nama] = 0;
+                foreach ($qry as $val) {
+                    $data[$user->nama][$val['minggu']] = $val['total'];
+                    $pie[$user->nama] += $val['total'];
+                }
+            }
+    
+            $chart = array();
+            foreach ($data as $nama => $value) {
+                $chart[$nama] = array();
+                for($i=1; $i<=53; $i++){ //total week
+                    if(isset($value[$i])){
+                        $nilai = $value[$i];
+                    } else {
+                        $nilai = 0;
+                    }
+                    array_push($chart[$nama], $nilai);
+                }
+            }
+
+        } else {
+
+            $chart = array();
+            $chart[80] = $chart[90] = $chart[99] = array_fill(1, 12, 0);
+            $pie[80] = $pie[90] = $pie[99] = 0;
+
+            $qry = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')->where('status','1')->groupBy('bulan', 'user_role')->get()->toArray();
+            
+            foreach ($qry as $val) {
+                $chart[$val['user_role']][$val['bulan']] = $val['total'];
+
+                $pie[$val['user_role']] += $val['total'];
+            }
+            
+        }
+
+        $clients = Payment::select('*')->offset(10)->limit(7)->get();
+        
+        return view('statistikpayment', compact('chart', 'pie', 'clients', 'filter'));
     }
 }

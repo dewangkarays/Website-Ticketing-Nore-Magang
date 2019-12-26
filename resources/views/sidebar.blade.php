@@ -45,14 +45,6 @@
 							</span>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
-							<i class="icon-stack-text"></i>
-							<span>
-								Task
-							</span>
-						</a>
-					</li>
 
 				@elseif(Auth::user()->role==10)
 					<li class="nav-item">
@@ -60,14 +52,6 @@
 							<i class="icon-home4"></i>
 							<span>
 								Dashboard
-							</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
-							<i class="icon-stack-text"></i>
-							<span>
-								Task
 							</span>
 						</a>
 					</li>
@@ -82,6 +66,10 @@
 							</span>
 						</a>
 					</li>
+
+				@endif
+
+				<!-- ALL ROLE -->
 					<li class="nav-item">
 						<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
 							<i class="icon-stack-text"></i>
@@ -90,10 +78,6 @@
 							</span>
 						</a>
 					</li>
-
-				@endif
-
-				<!-- ALL ROLE -->
 					<li class="nav-item">
 						<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
 							<i class="icon-coin-dollar"></i>
@@ -118,6 +102,28 @@
 							</span>
 						</a>
 					</li>
+
+				@if(Auth::user()->role==1)
+					<li class="nav-item nav-item-submenu {{ (request()->is('statistik*')) ? 'nav-item-open' : '' }}">
+						<a href="#" class="nav-link"><i class="icon-stats-dots"></i> <span>JSON forms</span></a>
+						<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('statistik*')) ? 'block' : 'none' }};">
+							<li class="nav-item">
+								<a href="{{ url('/statistiktask') }}" class="nav-link {{ (request()->is('statistiktask*')) ? 'active' : '' }}">
+									<span>
+										Task
+									</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ url('/statistikpayment') }}" class="nav-link {{ (request()->is('statistikpayment*')) ? 'active' : '' }}">
+									<span>
+										Pembayaran
+									</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+				@endif
 
 			</ul>
 		</div>

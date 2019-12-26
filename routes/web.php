@@ -38,6 +38,9 @@ Route::group(['middleware' => ['auth']], function() {
 	//admin
 	Route::group(['middleware' => ['role:1']], function() {
 		Route::get('/admin',  'AdminController@index')->name('admin');
+		Route::get('/statistiktask/{filter?}',  'TaskController@statistiktask')->name('stat_task');
+		Route::get('/getstatistik',  'TaskController@getstatistik')->name('getstat');
+		Route::get('/statistikpayment/{filter?}',  'PaymentController@statistikpayment')->name('stat_payment');
 	});
 
 	//karyawan

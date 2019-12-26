@@ -8,6 +8,7 @@ use App\Model\Task;
 use App\Model\User;
 use App\Model\Attachment;
 use App\Model\Notification;
+use Carbon\Carbon;
 
 class TaskController extends Controller
 {
@@ -271,5 +272,118 @@ class TaskController extends Controller
         }
         
         return view('history', compact('tasks'));
+    }
+
+    public function statistiktask($filter = 'bulan'){
+        $pie = array();
+
+        if($filter=="minggu"){
+
+            $qry = Task::selectRaw('week(created_at) as minggu, count(*) as total ')->groupBy('minggu')->get()->toArray();
+            
+            foreach ($qry as $val) {
+                $data['all'][$val['minggu']] = $val['total'];
+            }
+    
+            $employees = Task::select('handler')->groupBy('handler')->get();
+            foreach ($employees as $employee) {
+                $user = User::find($employee->handler);
+                $qry = Task::selectRaw('week(created_at) as minggu, count(*) as total ')->where('handler', $employee->handler)->groupBy('minggu')->get()->toArray();
+    
+                $pie[$user->nama] = 0;
+                foreach ($qry as $val) {
+                    $data[$user->nama][$val['minggu']] = $val['total'];
+                    $pie[$user->nama] += $val['total'];
+                }
+            }
+    
+            $chart = array();
+            foreach ($data as $nama => $value) {
+                $chart[$nama] = array();
+                for($i=1; $i<=53; $i++){ //total week
+                    if(isset($value[$i])){
+                        $nilai = $value[$i];
+                    } else {
+                        $nilai = 0;
+                    }
+                    array_push($chart[$nama], $nilai);
+                }
+            }
+
+        } else {
+
+            $qry = Task::selectRaw('month(created_at) as bulan, count(*) as total ')->groupBy('bulan')->get()->toArray();
+            
+            foreach ($qry as $val) {
+                $data['all'][$val['bulan']] = $val['total'];
+            }
+    
+            $employees = Task::select('handler')->groupBy('handler')->get();
+            foreach ($employees as $employee) {
+                $user = User::find($employee->handler);
+                $qry = Task::selectRaw('month(created_at) as bulan, count(*) as total ')->where('handler', $employee->handler)->groupBy('bulan')->get()->toArray();
+    
+                $pie[$user->nama] = 0;
+                foreach ($qry as $val) {
+                    $data[$user->nama][$val['bulan']] = $val['total'];
+                    $pie[$user->nama] += $val['total'];
+                }
+            }
+    
+            $chart = array();
+            foreach ($data as $nama => $value) {
+                $chart[$nama] = array();
+                for($i=1; $i<=12; $i++){ //total month
+                    if(isset($value[$i])){
+                        $nilai = $value[$i];
+                    } else {
+                        $nilai = 0;
+                    }
+                    array_push($chart[$nama], $nilai);
+                }
+            }
+        }
+
+        $clients = User::leftjoin('tasks', 'users.id', '=', 'tasks.user_id')->selectRaw('users.username, count(tasks.id) as total ')->where('users.role','>','50')->groupBy('users.username')->orderBy('total', 'DESC')->get();
+        
+        return view('statistiktask', compact('chart', 'pie', 'clients', 'filter'));
+    }
+
+    public function getstatistik(){
+
+        $qry = Task::selectRaw('week(created_at) as minggu, count(*) as total ')->groupBy('minggu')->get()->toArray();
+        
+        foreach ($qry as $val) {
+            $data['all'][$val['minggu']] = $val['total'];
+        }
+
+        $employees = Task::select('handler')->groupBy('handler')->get();
+        foreach ($employees as $employee) {
+            $user = User::find($employee->handler);
+            $qry = Task::selectRaw('week(created_at) as minggu, count(*) as total ')->where('handler', $employee->handler)->groupBy('minggu')->get()->toArray();
+
+            foreach ($qry as $val) {
+                $data[$user->nama][$val['minggu']] = $val['total'];
+            }
+        }
+
+        $chart = array();
+        $pie = array();
+        foreach ($data as $nama => $value) {
+            // dd($value);
+            $chart[$nama] = array();
+            $pie[$nama] = 0;
+            for($i=1; $i<=53; $i++){
+                if(isset($value[$i])){
+                    $nilai = $value[$i];
+                } else {
+                    $nilai = 0;
+                }
+                array_push($chart[$nama], $nilai);
+                $pie[$nama] += $nilai;
+            }
+        }
+
+        dd($chart);
     }
 }
