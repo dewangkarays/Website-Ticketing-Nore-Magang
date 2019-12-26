@@ -36,7 +36,7 @@
 								</select>
 							</div>
 							<div class="col-lg-3">
-								<button type="submit" class="btn btn-outline-primary active">Pilih</button>
+								<button type="submit" class="btn btn-outline-primary active" style="position: absolute; bottom:0;">Pilih</button>
 							</div>
 						</div>
 					</form>
