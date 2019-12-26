@@ -60,7 +60,7 @@
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Masa Aktif</label>
 								<div class="col-lg-10">
-									<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility kadaluarsa" placeholder="Tanggal Masa Aktif" value="{{ $payment->kadaluarsa }}">
+									<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif" value="{{ $payment->kadaluarsa }}">
 									@if($payment->status=="1")
 									<div class="form-check">
 										<label class="form-check-label">
