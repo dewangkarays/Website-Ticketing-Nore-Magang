@@ -328,7 +328,7 @@
 
 		                // Add title
 		                title: {
-		                    text: 'Persentase task diselesaikan',
+		                    text: 'Persentase Pembayaran',
 		                    left: 'center',
 		                    textStyle: {
 		                        fontSize: 17,
@@ -353,7 +353,7 @@
 
 		                // Add series
 		                series: [{
-		                    name: 'Jumlah Task Diselesaikan',
+		                    name: 'Jumlah Pembayaran',
 		                    type: 'pie',
 		                    radius: '70%',
 		                    center: ['50%', '57.5%'],

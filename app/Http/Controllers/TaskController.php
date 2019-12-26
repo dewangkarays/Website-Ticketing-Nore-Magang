@@ -285,7 +285,8 @@ class TaskController extends Controller
                 $data['all'][$val['minggu']] = $val['total'];
             }
     
-            $employees = Task::select('handler')->groupBy('handler')->get();
+            $employees = Task::select('handler')->where('handler','>',0)->groupBy('handler')->get();
+            
             foreach ($employees as $employee) {
                 $user = User::find($employee->handler);
                 $qry = Task::selectRaw('week(created_at) as minggu, count(*) as total ')->where('handler', $employee->handler)->groupBy('minggu')->get()->toArray();
@@ -318,7 +319,8 @@ class TaskController extends Controller
                 $data['all'][$val['bulan']] = $val['total'];
             }
     
-            $employees = Task::select('handler')->groupBy('handler')->get();
+            $employees = Task::select('handler')->where('handler','>',0)->groupBy('handler')->get();
+            
             foreach ($employees as $employee) {
                 $user = User::find($employee->handler);
                 $qry = Task::selectRaw('month(created_at) as bulan, count(*) as total ')->where('handler', $employee->handler)->groupBy('bulan')->get()->toArray();

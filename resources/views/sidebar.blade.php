@@ -105,7 +105,7 @@
 
 				@if(Auth::user()->role==1)
 					<li class="nav-item nav-item-submenu {{ (request()->is('statistik*')) ? 'nav-item-open' : '' }}">
-						<a href="#" class="nav-link"><i class="icon-stats-dots"></i> <span>JSON forms</span></a>
+						<a href="#" class="nav-link"><i class="icon-stats-dots"></i> <span>Statistik</span></a>
 						<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('statistik*')) ? 'block' : 'none' }};">
 							<li class="nav-item">
 								<a href="{{ url('/statistiktask') }}" class="nav-link {{ (request()->is('statistiktask*')) ? 'active' : '' }}">
