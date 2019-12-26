@@ -224,7 +224,7 @@ class PaymentController extends Controller
             
         }
 
-        $clients = Payment::select('*')->offset(10)->limit(7)->get();
+        $clients = Payment::select('*')->offset(0)->limit(7)->get();
         
         return view('statistikpayment', compact('chart', 'pie', 'clients', 'filter'));
     }
