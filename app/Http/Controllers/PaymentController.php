@@ -224,7 +224,7 @@ class PaymentController extends Controller
             
         }
 
-        $clients = Payment::select('*')->offset(0)->limit(7)->get();
+        $clients = Payment::select('*')->orderBy('tgl_bayar','DESC')->offset(0)->limit(8)->get();
         
         return view('statistikpayment', compact('chart', 'pie', 'clients', 'filter'));
     }
