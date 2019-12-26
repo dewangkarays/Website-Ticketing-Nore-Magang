@@ -35,6 +35,7 @@
 											<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" {{ $payment->user_id == $user->id ? 'selected' : '' }}>{{$user->username}}</option>
 					    				@endforeach
 									</select>
+									<input type="hidden" id="user_kadaluarsa" value="{{$payment->user->kadaluarsa}}">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -52,7 +53,8 @@
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Nominal</label>
 								<div class="col-lg-10">
-									<input type="number" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" required value="{{ $payment->nominal }}">
+									<input type="text" id="tertulis" class="form-control border-teal border-1 numeric" placeholder="Nominal" style="font-size: 15px;" required value="{{ $payment->nominal }}">
+									<input type="hidden" name="nominal" id="nominal" class="form-control border-teal border-1" value="{{ $payment->nominal }}">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -93,7 +95,7 @@
 									<label class="col-form-label col-lg-2">User</label>
 									<div class="col-lg-10">
 										<label class="col-form-label col-lg-2">{{ $payment->user->nama }}</label>
-										<input type="hidden" name="user_id" id="user_id" value="{{$payment->user_id}}">
+										<input type="hidden" id="user_kadaluarsa" value="{{$payment->user->kadaluarsa}}">
 									</div>
 								</div>
 								<div class="form-group row">
@@ -164,7 +166,8 @@
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2">Nominal</label>
 									<div class="col-lg-10">
-										<input type="number" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" required value="{{ $payment->nominal }}">
+										<input type="text" id="tertulis" class="form-control border-teal border-1 numeric" placeholder="Nominal" style="font-size: 15px;" required value="{{ $payment->nominal }}">
+										<input type="hidden" name="nominal" id="nominal" class="form-control border-teal border-1" value="{{ $payment->nominal }}">
 									</div>
 								</div>
 
@@ -254,12 +257,18 @@
 	<script>
 		
 		$( document ).ready(function() {
-			var str = $('#user_id').val();
+			var str = $('#user_kadaluarsa').val();
+			console.log(str);
 			var tgl = str.split("-");
 			var picker = $(".pickadate-accessibility").pickadate('picker');
 			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
 			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
 	        picker.render();
+
+			var angka = $('#tertulis').val();
+			var harga = angka.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+			$('#tertulis').val(harga);
+			console.log(harga);
 		});
 
         // Accessibility labels
@@ -281,6 +290,24 @@
 			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
 	        picker.render();
 		}
+
+		$(document).on("input", ".numeric", function() {
+		    this.value = this.value.replace(/\D/g,'');
+		});
+
+		$('#tertulis').focus(function() {
+			var angka = $('#nominal').val();
+			$('#tertulis').val(angka);
+		});
+
+		$('#tertulis').focusout(function() {
+			var angka = $('#tertulis').val();
+			$('#nominal').val(angka);
+			var harga = angka.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+			$('#tertulis').val(harga);
+
+			console.log(harga);
+		});
 	</script>
 	<script type="text/javascript">
 				

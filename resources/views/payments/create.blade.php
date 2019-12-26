@@ -60,7 +60,8 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nominal</label>
 							<div class="col-lg-10">
-								<input type="number" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" required>
+								<input type="text" id="tertulis" class="form-control border-teal border-1 numeric" placeholder="Nominal" style="font-size: 15px;" required>
+								<input type="hidden" name="nominal" id="nominal" class="form-control border-teal border-1">
 							</div>
 						</div>
 						@if(\Auth::user()->role==1 || \Auth::user()->role==10)
@@ -145,6 +146,25 @@
 			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
 	        picker.render();
 		}
+
+		$(document).on("input", ".numeric", function() {
+		    this.value = this.value.replace(/\D/g,'');
+		});
+
+		$('#tertulis').focus(function() {
+			var angka = $('#nominal').val();
+			$('#tertulis').val(angka);
+		});
+
+		$('#tertulis').focusout(function() {
+			var angka = $('#tertulis').val();
+			$('#nominal').val(angka);
+			var harga = angka.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+			$('#tertulis').val(harga);
+
+			console.log(harga);
+		});
+
 	</script>
 	<script type="text/javascript">
 				

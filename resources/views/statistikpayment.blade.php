@@ -24,10 +24,23 @@
 
 			<div class="card-body">
 				<div class="chart-container">
-				<!-- 	Filter :
-				<a href="{{route('stat_task', 'bulan')}}"><button type="button" class="btn btn-outline-primary @if($filter=='bulan') active @endif">Bulan</button></a>
-				<a href="{{route('stat_task', 'minggu')}}"><button type="button" class="btn btn-outline-primary @if($filter=='minggu') active @endif">Minggu</button></a>
-				<hr> -->
+					Tahun :
+					<form action="{{route('stat_payment')}}" method="post">
+						@csrf
+						<div class="form-group row">
+							<div class="col-lg-3">
+								<select name="tahun" class="form-control select-search" data-fouc>
+									@foreach($years as $year)
+										<option value="{{$year->tahun}}" {{ $filter == $year->tahun ? 'selected' : '' }}>{{$year->tahun}}</option>
+				    				@endforeach
+								</select>
+							</div>
+							<div class="col-lg-3">
+								<button type="submit" class="btn btn-outline-primary active">Pilih</button>
+							</div>
+						</div>
+				</form>
+				<hr>
 					<div class="chart has-fixed-height" id="columns_basic"></div>
 				</div>
 			</div>
@@ -117,6 +130,7 @@
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
+	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
 	<!-- <script src="{{asset('global_assets/js/demo_pages/charts/echarts/lines.js')}}"></script> -->
 	<script type="text/javascript">
 

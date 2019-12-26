@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/admin',  'AdminController@index')->name('admin');
 		Route::get('/statistiktask/{filter?}',  'TaskController@statistiktask')->name('stat_task');
 		Route::get('/getstatistik',  'TaskController@getstatistik')->name('getstat');
-		Route::get('/statistikpayment/{filter?}',  'PaymentController@statistikpayment')->name('stat_payment');
+		Route::match(['get', 'post'], '/statistikpayment/{filter?}',  'PaymentController@statistikpayment')->name('stat_payment');
 	});
 
 	//karyawan
