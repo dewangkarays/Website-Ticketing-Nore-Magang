@@ -260,7 +260,7 @@
 			var str = $('#user_kadaluarsa').val();
 			console.log(str);
 			var tgl = str.split("-");
-			var picker = $(".pickadate-accessibility").pickadate('picker');
+			var picker = $(".kadaluarsa").pickadate('picker');
 			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
 			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
 	        picker.render();

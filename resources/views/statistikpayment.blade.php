@@ -24,11 +24,11 @@
 
 			<div class="card-body">
 				<div class="chart-container">
-					Tahun :
 					<form action="{{route('stat_payment')}}" method="post">
 						@csrf
 						<div class="form-group row">
 							<div class="col-lg-3">
+								<label>Tahun :</label>
 								<select name="tahun" class="form-control select-search" data-fouc>
 									@foreach($years as $year)
 										<option value="{{$year->tahun}}" {{ $filter == $year->tahun ? 'selected' : '' }}>{{$year->tahun}}</option>
@@ -39,8 +39,8 @@
 								<button type="submit" class="btn btn-outline-primary active">Pilih</button>
 							</div>
 						</div>
-				</form>
-				<hr>
+					</form>
+					<hr>
 					<div class="chart has-fixed-height" id="columns_basic"></div>
 				</div>
 			</div>

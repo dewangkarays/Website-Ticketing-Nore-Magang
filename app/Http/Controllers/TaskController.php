@@ -274,12 +274,20 @@ class TaskController extends Controller
         return view('history', compact('tasks'));
     }
 
-    public function statistiktask($filter = 'bulan'){
+    public function statistiktask(Request $request){
+        if($request->isMethod('post')){
+            $filter = $request->get('filter');
+            $tahun = $request->get('tahun');
+        } else {
+            $filter = 'bulan';
+            $tahun = date('Y');;
+        }
         $pie = array();
+        $years = Task::selectRaw('year(created_at) as tahun')->where('status','1')->groupBy('tahun')->get();
 
         if($filter=="minggu"){
 
-            $qry = Task::selectRaw('week(created_at) as minggu, count(*) as total ')->groupBy('minggu')->get()->toArray();
+            $qry = Task::selectRaw('week(created_at) as minggu, count(*) as total ')->whereYear('created_at',$tahun)->groupBy('minggu')->get()->toArray();
             
             foreach ($qry as $val) {
                 $data['all'][$val['minggu']] = $val['total'];
@@ -289,7 +297,7 @@ class TaskController extends Controller
             
             foreach ($employees as $employee) {
                 $user = User::find($employee->handler);
-                $qry = Task::selectRaw('week(created_at) as minggu, count(*) as total ')->where('handler', $employee->handler)->groupBy('minggu')->get()->toArray();
+                $qry = Task::selectRaw('week(created_at) as minggu, count(*) as total ')->where('handler', $employee->handler)->whereYear('created_at',$tahun)->groupBy('minggu')->get()->toArray();
     
                 $pie[$user->nama] = 0;
                 foreach ($qry as $val) {
@@ -313,7 +321,7 @@ class TaskController extends Controller
 
         } else {
 
-            $qry = Task::selectRaw('month(created_at) as bulan, count(*) as total ')->groupBy('bulan')->get()->toArray();
+            $qry = Task::selectRaw('month(created_at) as bulan, count(*) as total ')->whereYear('created_at',$tahun)->groupBy('bulan')->get()->toArray();
             
             foreach ($qry as $val) {
                 $data['all'][$val['bulan']] = $val['total'];
@@ -323,7 +331,7 @@ class TaskController extends Controller
             
             foreach ($employees as $employee) {
                 $user = User::find($employee->handler);
-                $qry = Task::selectRaw('month(created_at) as bulan, count(*) as total ')->where('handler', $employee->handler)->groupBy('bulan')->get()->toArray();
+                $qry = Task::selectRaw('month(created_at) as bulan, count(*) as total ')->where('handler', $employee->handler)->whereYear('created_at',$tahun)->groupBy('bulan')->get()->toArray();
     
                 $pie[$user->nama] = 0;
                 foreach ($qry as $val) {
@@ -346,9 +354,9 @@ class TaskController extends Controller
             }
         }
 
-        $clients = User::leftjoin('tasks', 'users.id', '=', 'tasks.user_id')->selectRaw('users.username, count(tasks.id) as total ')->where('users.role','>','50')->groupBy('users.username')->orderBy('total', 'DESC')->get();
+        $clients = User::leftjoin('tasks', 'users.id', '=', 'tasks.user_id')->selectRaw('users.username, count(tasks.id) as total ')->where('users.role','>','50')->whereYear('tasks.created_at',$tahun)->groupBy('users.username')->orderBy('total', 'DESC')->get();
         
-        return view('statistiktask', compact('chart', 'pie', 'clients', 'filter'));
+        return view('statistiktask', compact('years', 'chart', 'pie', 'clients', 'filter', 'tahun'));
     }
 
     public function getstatistik(){

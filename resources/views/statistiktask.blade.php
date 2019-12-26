@@ -24,9 +24,29 @@
 
 			<div class="card-body">
 				<div class="chart-container">
-					Filter :
-				<a href="{{route('stat_task', 'bulan')}}"><button type="button" class="btn btn-outline-primary @if($filter=='bulan') active @endif">Bulan</button></a>
-				<a href="{{route('stat_task', 'minggu')}}"><button type="button" class="btn btn-outline-primary @if($filter=='minggu') active @endif">Minggu</button></a>
+				<form action="{{route('stat_task')}}" method="post">
+					@csrf
+					<div class="form-group row">
+						<div class="col-lg-3">
+								<label>Tahun :</label>
+							<select name="tahun" class="form-control select-search" data-fouc>
+								@foreach($years as $year)
+									<option value="{{$year->tahun}}" {{ $tahun == $year->tahun ? 'selected' : '' }}>{{$year->tahun}}</option>
+			    				@endforeach
+							</select>
+						</div>
+						<div class="col-lg-3">
+							<label>Filter :</label>
+							<select name="filter" class="form-control select-search" data-fouc>
+									<option value="bulan" {{ ($filter == 'bulan') ? 'selected' : '' }}>bulan</option>
+									<option value="minggu" {{ ($filter == 'minggu') ? 'selected' : '' }}>minggu</option>
+							</select>
+						</div>
+						<div class="col-lg-3">
+							<button type="submit" class="btn btn-outline-primary active" style="position: absolute; bottom:0;">Pilih</button>
+						</div>
+					</div>
+				</form>
 				<hr>
 					<div class="chart has-fixed-height" id="line_zoom"></div>
 				</div>
@@ -114,6 +134,7 @@
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
+	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
 	<!-- <script src="{{asset('global_assets/js/demo_pages/charts/echarts/lines.js')}}"></script> -->
 	<script type="text/javascript">
 
@@ -404,7 +425,9 @@
 		                    },
 		                    data: [
 		                    @foreach($pie as $key => $val)
+		                    	@if($val>0)
 		                        {value: {{$val}}, name: '{{$key}}'},
+		                        @endif
 		                    @endforeach
 		                    ]
 		                }]
