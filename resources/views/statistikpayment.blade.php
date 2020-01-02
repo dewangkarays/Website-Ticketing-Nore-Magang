@@ -44,7 +44,7 @@
 									<option value="{{date('Y')}}">{{date('Y')}}</option>
 									@foreach($years as $year)
 										@if($year->tahun != date('Y'))
-										<option value="{{$year->tahun}}" {{ $tahun == $year->tahun ? 'selected' : '' }}>{{$year->tahun}}</option>
+										<option value="{{$year->tahun}}" {{ $filter == $year->tahun ? 'selected' : '' }}>{{$year->tahun}}</option>
 										@endif
 				    				@endforeach
 								</select>
