@@ -282,6 +282,7 @@ class TaskController extends Controller
             $filter = 'bulan';
             $tahun = date('Y');;
         }
+        $data = array();
         $pie = array();
         $years = Task::selectRaw('year(created_at) as tahun')->where('status','1')->groupBy('tahun')->get();
 
