@@ -284,7 +284,7 @@ class TaskController extends Controller
         }
         $data = array();
         $pie = array();
-        $years = Task::selectRaw('year(created_at) as tahun')->where('status','1')->groupBy('tahun')->get();
+        $years = Task::selectRaw('year(created_at) as tahun')->where('status','1')->groupBy('tahun')->orderBy('tahun','DESC')->get();
 
         if($filter=="minggu"){
 

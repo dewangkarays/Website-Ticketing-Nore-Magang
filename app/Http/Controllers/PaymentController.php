@@ -184,7 +184,7 @@ class PaymentController extends Controller
         $chart[80] = $chart[90] = $chart[99] = array_fill(1, 12, 0);
         $pie[80] = $pie[90] = $pie[99] = 0;
 
-        $years = Payment::selectRaw('year(tgl_bayar) as tahun')->where('status','1')->groupBy('tahun')->get();
+        $years = Payment::selectRaw('year(tgl_bayar) as tahun')->where('status','1')->groupBy('tahun')->orderBy('tahun','DESC')->get();
 
         $qry = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')->where('status','1')->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
         

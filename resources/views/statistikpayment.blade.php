@@ -1,5 +1,16 @@
 @extends('layout')
 
+@section('css')
+	<style type="text/css">
+		@media only screen and (min-width: 768px) {
+		  /* For mobile phones: */
+		  [class*="btnstat"] {
+		    position: absolute; 
+		  }
+		}
+	</style>
+@endsection
+
 @section('content')
 
 	<!-- Page header -->
@@ -30,13 +41,16 @@
 							<div class="col-lg-3">
 								<label>Tahun :</label>
 								<select name="tahun" class="form-control select-search" data-fouc>
+									<option value="{{date('Y')}}">{{date('Y')}}</option>
 									@foreach($years as $year)
-										<option value="{{$year->tahun}}" {{ $filter == $year->tahun ? 'selected' : '' }}>{{$year->tahun}}</option>
+										@if($year->tahun != date('Y'))
+										<option value="{{$year->tahun}}" {{ $tahun == $year->tahun ? 'selected' : '' }}>{{$year->tahun}}</option>
+										@endif
 				    				@endforeach
 								</select>
 							</div>
 							<div class="col-lg-3">
-								<button type="submit" class="btn btn-outline-primary active" style="position: absolute; bottom:0;">Pilih</button>
+								<button type="submit" class="btn btn-outline-primary active btnstat" style="bottom:0;">Pilih</button>
 							</div>
 						</div>
 					</form>
