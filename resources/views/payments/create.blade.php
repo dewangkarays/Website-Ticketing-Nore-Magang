@@ -30,6 +30,7 @@
 							<label class="col-form-label col-lg-2">User</label>
 							<div class="col-lg-10">
 								<select name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
+									<option value="">-- Pilih Pelanggan --</option>
 									@foreach($users as $user)
 										<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}">{{$user->username}}</option>
 				    				@endforeach

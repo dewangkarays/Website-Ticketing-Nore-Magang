@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Payment;
 use App\Model\User;
 use App\Model\Notification;
 use App\Model\Task;
 
-class PaymentController extends Controller
+class PaymentApiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,19 +23,13 @@ class PaymentController extends Controller
         } else {
             $payments = Payment::orderBy('status','ASC')->orderBy('tgl_bayar','ASC')->get();
         }
-        return view('payments.index', compact('payments'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $users = User::where('role','>','50')->get();
-
-        return view('payments.create', compact('users'));
+        
+        return response()->json([
+            'code'=>200, 
+            'status'=>'Success', 
+            'message'=>'Get data payment success', 
+            'data'=> $payments
+        ]);
     }
 
     /**
@@ -46,9 +41,10 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            // 'user_id'=>'required',
-            // 'keterangan'=>'required',
-            // 'nominal'=>'required',
+            'user_id'=>'required',
+            'keterangan'=>'required',
+            'nominal'=>'required',
+            'tgl_bayar'=>'required',
         ]);
 
         $data = $request->except(['_token', '_method']);
@@ -75,7 +71,12 @@ class PaymentController extends Controller
             $notif->save();
         }
 
-        return redirect('/payments')->with('success', 'Payment saved!');
+        return response()->json([
+            'code'=>200, 
+            'status'=>'Success', 
+            'message'=>'Create data payment success', 
+            'data'=> ['insertId'=>$payment->id]
+        ]);
     }
 
     /**
@@ -86,20 +87,24 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
         $payment = Payment::find($id);
-        $users = User::where('role','>','50')->get();
-        return view('payments.edit', compact('payment','users')); 
+        // $users = User::where('role','>','50')->get();
+
+        if (!isset($payment->user_id)) {
+            return response()->json([
+                'code'=>404, 
+                'status'=>'Error', 
+                'message'=>'Data Unavailable', 
+                'data'=> null
+            ]);
+        }
+
+        return response()->json([
+            'code'=>200, 
+            'status'=>'Success', 
+            'message'=>'Show data payment success', 
+            'data'=> $payment
+        ]);
     }
 
     /**
@@ -155,7 +160,12 @@ class PaymentController extends Controller
             $payment->update($data);
         }
 
-        return redirect('/payments')->with('success', 'Payment updated!');
+        return response()->json([
+            'code'=>200, 
+            'status'=>'Success', 
+            'message'=>'Update data payment success', 
+            'data'=> ['updateId'=>$id]
+        ]);
     }
 
     /**
@@ -169,35 +179,40 @@ class PaymentController extends Controller
         $payment = Payment::find($id);
         $payment->delete();
 
-        return redirect('/payments')->with('success', 'Payment deleted!');
+        return response()->json([
+            'code'=>200, 
+            'status'=>'Success', 
+            'message'=>'Delete data payment success', 
+            'data'=> ['deleteId'=>$id]
+        ]);
     }
 
-    public function statistikpayment(Request $request){
-        if($request->isMethod('post')){
-            $filter = $request->get('tahun');
-        } else {
-            $filter = date('Y');
-        }
+    // public function statistikpayment(Request $request){
+    //     if($request->isMethod('post')){
+    //         $filter = $request->get('tahun');
+    //     } else {
+    //         $filter = date('Y');
+    //     }
 
-        $chart = array();
-        $pie = array();
-        // $chart[80] = $chart[90] = $chart[99] = array_fill(1, 12, 0);
-        $chart[0] = array_fill(1, 12, 0);
-        $pie[80] = $pie[90] = $pie[99] = 0;
+    //     $chart = array();
+    //     $pie = array();
+    //     // $chart[80] = $chart[90] = $chart[99] = array_fill(1, 12, 0);
+    //     $chart[0] = array_fill(1, 12, 0);
+    //     $pie[80] = $pie[90] = $pie[99] = 0;
 
-        $years = Payment::selectRaw('year(tgl_bayar) as tahun')->where('status','1')->groupBy('tahun')->orderBy('tahun','DESC')->get();
+    //     $years = Payment::selectRaw('year(tgl_bayar) as tahun')->where('status','1')->groupBy('tahun')->orderBy('tahun','DESC')->get();
 
-        $qry = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')->where('status','1')->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
+    //     $qry = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')->where('status','1')->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
         
-        foreach ($qry as $val) {
-            // $chart[$val['user_role']][$val['bulan']] = $val['total'];
-            $chart[0][$val['bulan']] += $val['total'];
+    //     foreach ($qry as $val) {
+    //         // $chart[$val['user_role']][$val['bulan']] = $val['total'];
+    //         $chart[0][$val['bulan']] += $val['total'];
 
-            $pie[$val['user_role']] += $val['total'];
-        }
+    //         $pie[$val['user_role']] += $val['total'];
+    //     }
 
-        $clients = Payment::select('*')->orderBy('tgl_bayar','DESC')->offset(0)->limit(8)->get();
+    //     $clients = Payment::select('*')->orderBy('tgl_bayar','DESC')->offset(0)->limit(8)->get();
         
-        return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter'));
-    }
+    //     return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter'));
+    // }
 }
