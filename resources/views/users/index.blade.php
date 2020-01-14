@@ -37,13 +37,16 @@
 						<th>Username</th>
 						<th>Role</th>
 						<th class="text-center">Masa Aktif</th>
+						<th class="text-center">Jml Op</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 				@if(!$users->isEmpty())
+					@php ($i = 1)
 					@foreach($users as $user)
 				    <tr> 
+				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{$user->nama}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
 				        <td>{{config('custom.role.'.$user->role)}}</td>
@@ -54,6 +57,15 @@
 								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{$user->kadaluarsa}}</span>
 							@else
 								{{$user->kadaluarsa}}
+							@endif
+						</td>
+				        <td align="center">
+				        	@if($user->task_count < 0)
+								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->task_count}}</span>
+							@elseif($user->task_count == 0)
+								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{$user->task_count}}</span>
+							@else
+								{{$user->task_count}}
 							@endif
 						</td>
 				        <td align="center">
@@ -72,9 +84,10 @@
 							</div>
 				        </td>
 				    </tr>
+				    @php ($i++)
 				    @endforeach
 				@else
-				  	<tr><td align="center" colspan="5">Data Kosong</td></tr>
+				  	<tr><td align="center" colspan="7">Data Kosong</td></tr>
 				@endif 
 				    
 				</tbody>
@@ -145,7 +158,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 4 ]
+		                targets: [ 6 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {

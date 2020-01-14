@@ -18,9 +18,9 @@ class PaymentController extends Controller
     public function index()
     {
         if(\Auth::user()->role > 20){
-            $payments = Payment::where('user_id',\Auth::user()->id)->orderBy('status','ASC')->orderBy('tgl_bayar','ASC')->get();
+            $payments = Payment::where('user_id',\Auth::user()->id)->orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('tgl_bayar','ASC')->get();
         } else {
-            $payments = Payment::orderBy('status','ASC')->orderBy('tgl_bayar','ASC')->get();
+            $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('tgl_bayar','ASC')->get();
         }
         return view('payments.index', compact('payments'));
     }
@@ -61,6 +61,13 @@ class PaymentController extends Controller
             //$payment->kadaluarsa = $request->get('kadaluarsa');
 
             $cust->kadaluarsa = $request->get('kadaluarsa');
+            $cust->save();
+        }
+
+        if($request->get('task_count')!='' && $request->get('status')=='1'){
+            //$payment->kadaluarsa = $request->get('kadaluarsa');
+
+            $cust->task_count += $request->get('task_count');
             $cust->save();
         }
 
@@ -118,13 +125,20 @@ class PaymentController extends Controller
         ]);
 
         $payment = Payment::find($id);
-        $data = $request->except(['_token', '_method','kadaluarsa','updkadaluarsa']);
+        $data = $request->except(['_token', '_method','kadaluarsa','updkadaluarsa','task_count']);
         
+        $user = User::find($request->get('user_id'));
         if($request->get('kadaluarsa')!='' && $request->get('status')=='1' && $request->get('updkadaluarsa')=='1'){
             $data['kadaluarsa'] = $request->get('kadaluarsa');
 
-            $user = User::find($request->get('user_id'));
             $user->kadaluarsa = $request->get('kadaluarsa');
+            $user->save();
+        }
+
+        if($request->get('task_count')!='' && $request->get('status')=='1' && $request->get('updkadaluarsa')=='1'){
+            $data['task_count'] = $request->get('task_count');
+
+            $user->task_count += $request->get('task_count');
             $user->save();
         }
 

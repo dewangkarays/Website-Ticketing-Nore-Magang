@@ -53,6 +53,12 @@
 							</div>
 						</div>
 						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Jumlah Update Task</label>
+							<div class="col-lg-10">
+								<input type="number" name="task_count" class="form-control border-teal border-1" placeholder="jumlah update task" value="{{ $user->task_count }}">
+							</div>
+						</div>
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Username</label>
 							<div class="col-lg-10">
 								<input type="text" name="username" class="form-control border-teal border-1" placeholder="Username" required value="{{ $user->username }}">

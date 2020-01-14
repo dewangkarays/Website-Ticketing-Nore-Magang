@@ -32,7 +32,7 @@
 								<select name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
 									<option value="">-- Pilih Pelanggan --</option>
 									@foreach($users as $user)
-										<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}">{{$user->username}}</option>
+										<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" data-role="{{$user->role}}">{{$user->username}}</option>
 				    				@endforeach
 								</select>
 							</div>
@@ -83,6 +83,12 @@
                                     <option value="1">Sudah Dikonfirmasi</option>
                                     <option value="2">Ditolak</option>
                                 </select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Jumlah Update Task</label>
+							<div class="col-lg-10">
+								<input type="number" id="updtask" name="task_count" class="form-control border-teal border-1" placeholder="jumlah update task">
 							</div>
 						</div>
 						@endif
@@ -139,13 +145,21 @@
         });
 
 		function changeDate(select){
-			var str = $(select).find(':selected').data('kadaluarsa')
-			console.log(str);
+			var str = $(select).find(':selected').data('kadaluarsa');
 			var tgl = str.split("-");
 			var picker = $(".kadaluarsa").pickadate('picker');
 			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
 			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
 	        picker.render();
+			
+			var role = $(select).find(':selected').data('role');
+			if(role==99){
+				$('#updtask').val('3');
+			} else if(role==90){
+				$('#updtask').val('15');
+			} else {
+				$('#updtask').val('0');
+			}
 		}
 
 		$(document).on("input", ".numeric", function() {

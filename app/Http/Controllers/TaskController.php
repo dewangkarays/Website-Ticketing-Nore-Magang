@@ -193,6 +193,10 @@ class TaskController extends Controller
                     $notif->user_id = $task->user_id;
                     $notif->url = route('tasks.edit',$task->id);
                     $notif->save();
+
+                    $user = User::find($task->user_id);
+                    $user->task_count -= 1;
+                    $user->save();
                 }
             }
         }

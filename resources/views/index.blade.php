@@ -214,6 +214,62 @@
 				</div>
 				@endif
 			</div>
+			<div class="col-lg-4">
+				@if(\Auth::user()->task_count < 0)
+				<div class="card bg-danger-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+	                	<div class="mr-4" style="padding-left: 1.875rem;">
+	                    	<i class="icon-pencil7 icon-4x"></i>
+	                	</div>
+
+	                	<div>
+							<div class="d-flex">
+								<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->task_count }}</h3>
+		                	</div>
+		                	<div>
+								Jumlah Pengoperasian
+							</div>
+						</div>
+					</blockquote>
+				</div>
+
+				@elseif(\Auth::user()->task_count == 0)
+				<div class="card bg-orange-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+	                	<div class="mr-4" style="padding-left: 1.875rem;">
+	                    	<i class="icon-pencil7 icon-4x"></i>
+	                	</div>
+
+	                	<div>
+							<div class="d-flex">
+								<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->task_count }}</h3>
+		                	</div>
+		                	<div>
+								Jumlah Pengoperasian
+							</div>
+						</div>
+					</blockquote>
+				</div>
+
+				@else
+				<div class="card" style="background-color:#229c59; color:white;">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+	                	<div class="mr-4" style="padding-left: 1.875rem;">
+	                    	<i class="icon-pencil7 icon-4x"></i>
+	                	</div>
+
+	                	<div>
+							<div class="d-flex">
+								<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->task_count }}</h3>
+		                	</div>
+		                	<div>
+								Jumlah Pengoperasian
+							</div>
+						</div>
+					</blockquote>
+				</div>
+				@endif
+			</div>
 		</div>
 		<!-- /quick stats boxes -->
 		@endif

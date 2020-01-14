@@ -32,10 +32,11 @@
 								<div class="col-lg-10">
 									<select name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
 										@foreach($users as $user)
-											<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" {{ $payment->user_id == $user->id ? 'selected' : '' }}>{{$user->username}}</option>
+											<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" data-role="{{$user->role}}" {{ $payment->user_id == $user->id ? 'selected' : '' }}>{{$user->username}}</option>
 					    				@endforeach
 									</select>
 									<input type="hidden" id="user_kadaluarsa" value="{{$payment->user->kadaluarsa}}">
+									<input type="hidden" id="user_role" value="{{$payment->user->role}}">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -60,7 +61,7 @@
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Masa Aktif</label>
 								<div class="col-lg-10">
-									<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif" value="{{ $payment->kadaluarsa }}">
+									<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility kadaluarsa" placeholder="Tanggal Masa Aktif" value="{{ $payment->kadaluarsa }}">
 									@if($payment->status=="1")
 									<div class="form-check">
 										<label class="form-check-label">
@@ -83,6 +84,12 @@
 	                                </select>
 								</div>
 							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">Jumlah Update Task</label>
+								<div class="col-lg-10">
+									<input type="number" id="updtask" name="task_count" class="form-control border-teal border-1" placeholder="jumlah update task">
+								</div>
+							</div>
 
 							</fieldset>
 							<div class="text-right">
@@ -96,6 +103,7 @@
 									<div class="col-lg-10">
 										<label class="col-form-label col-lg-2">{{ $payment->user->nama }}</label>
 										<input type="hidden" id="user_kadaluarsa" value="{{$payment->user->kadaluarsa}}">
+										<input type="hidden" id="user_role" value="{{$payment->user->role}}">
 									</div>
 								</div>
 								<div class="form-group row">
@@ -140,6 +148,12 @@
 		                                    <option value="1" {{ $payment->status == "1" ? 'selected' : '' }}>Sudah Dikonfirmasi</option>
 		                                    <option value="2" {{ $payment->status == "2" ? 'selected' : '' }}>Ditolak</option>
 		                                </select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-form-label col-lg-2">Jumlah Update Task</label>
+									<div class="col-lg-10">
+										<input type="number" id="updtask" name="task_count" class="form-control border-teal border-1" placeholder="jumlah update task">
 									</div>
 								</div>
 
@@ -257,18 +271,28 @@
 	<script>
 		
 		$( document ).ready(function() {
-			var str = $('#user_kadaluarsa').val();
-			console.log(str);
-			var tgl = str.split("-");
-			var picker = $(".kadaluarsa").pickadate('picker');
-			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
-			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
-	        picker.render();
-
 			var angka = $('#tertulis').val();
 			var harga = angka.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 			$('#tertulis').val(harga);
 			console.log(harga);
+
+			var str = $('#user_kadaluarsa').val();
+			console.log(str);
+			var tgl = str.split("-");
+			var picker = $(".kadaluarsa").pickadate('picker');console.log(picker);
+			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
+			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
+	        picker.render();
+			
+			var role = $('#user_role').val();
+			if(role==99){
+				$('#updtask').val('3');
+			} else if(role==90){
+				$('#updtask').val('15');
+			} else {
+				$('#updtask').val('0');
+			}
+
 		});
 
         // Accessibility labels
@@ -289,6 +313,15 @@
 			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
 			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
 	        picker.render();
+
+			var role = $(select).find(':selected').data('role');
+			if(role==99){
+				$('#updtask').val('3');
+			} else if(role==90){
+				$('#updtask').val('15');
+			} else {
+				$('#updtask').val('0');
+			}
 		}
 
 		$(document).on("input", ".numeric", function() {

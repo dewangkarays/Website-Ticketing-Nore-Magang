@@ -15,8 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-
+        $users = User::selectRaw('users.*, DATEDIFF(users.kadaluarsa, NOW()) AS kadal')->orderByRaw('Case when kadal<0 then 1 else 0 end, kadal')->get();
+       
         return view('users.index', compact('users'));
     }
 
@@ -55,6 +55,7 @@ class UserController extends Controller
             'kadaluarsa' => $request->get('kadaluarsa'),
             'password' => bcrypt($request->get('password')),
             'role' => $request->get('role'),
+            'task_count' => $request->get('task_count'),
         ]);
         $user->save();
         return redirect('/users')->with('success', 'User saved!');
