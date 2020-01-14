@@ -1,3 +1,5 @@
+<?php
+
 namespace MyApp\Http\Middleware;
 
 use Closure;
