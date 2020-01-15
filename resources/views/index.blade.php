@@ -19,7 +19,7 @@
 		<!-- Quick stats boxes -->
 		<div class="row">
 			<div class="col-lg-4">
-				<div class="card bg-danger-400">
+				<div class="card bg-green-400">
 					<blockquote class="blockquote d-flex py-2 mb-0">
 	                	<div class="mr-4" style="padding-left: 1.875rem;">
 	                    	<i class="icon-stack-plus icon-4x"></i>
@@ -89,7 +89,7 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-4">
-				<div class="card bg-danger-400">
+				<div class="card bg-green-400">
 					<blockquote class="blockquote d-flex py-2 mb-0">
 	                	<div class="mr-4" style="padding-left: 1.875rem;">
 	                    	<i class="icon-stack-plus icon-4x"></i>

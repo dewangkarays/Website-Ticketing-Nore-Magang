@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::selectRaw('users.*, DATEDIFF(users.kadaluarsa, NOW()) AS kadal')->orderByRaw('Case when kadal<0 then 1 else 0 end, kadal')->get();
+        $users = User::selectRaw('users.*, DATEDIFF(users.kadaluarsa, NOW()) AS kadal')->orderByRaw('case when kadal<0 then 1 when kadal is null then 2 else 0 end, kadal')->get();
        
         return view('users.index', compact('users'));
     }
