@@ -33,6 +33,7 @@
 			<table class="table datatable-basic table-hover">
 				<thead>
 					<tr>
+						<th>No</th>
 						<th>Nama</th>
 						<th>Username</th>
 						<th>Role</th>
