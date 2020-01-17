@@ -14,11 +14,11 @@ class AddTaskCountToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('task_count')->nullable();
+            $table->Integer('task_count')->nullable();
         });
 
         Schema::table('payments', function (Blueprint $table) {
-            $table->tinyInteger('task_count')->nullable();
+            $table->Integer('task_count')->nullable();
         });
     }
 
