@@ -211,7 +211,8 @@ class PaymentController extends Controller
         }
 
         $clients = Payment::select('*')->orderBy('tgl_bayar','DESC')->offset(0)->limit(8)->get();
+        $totals = Payment::selectRaw('user_id, SUM(nominal) as total')->groupBy('user_id')->orderBy('total','DESC')->get();
         
-        return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter'));
+        return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter','totals'));
     }
 }
