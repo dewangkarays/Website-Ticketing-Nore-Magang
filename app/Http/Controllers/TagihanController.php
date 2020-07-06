@@ -45,8 +45,9 @@ class TagihanController extends Controller
         ]);
 
         $data = $request->except(['_token', '_method']);
-        
+
         $data['invoice'] = 'INV'.date('YmdHis');
+        $data['jml_tagih'] = $request->get('langganan') + $request->get('ads') + $request->get('lainnya');
 
         $tagihan = Tagihan::create($data);
         
@@ -93,6 +94,8 @@ class TagihanController extends Controller
 
         $data = $request->except(['_token', '_method']);
         $tagihan = Tagihan::find($id);
+
+        $data['jml_tagih'] = $request->get('langganan') + $request->get('ads') + $request->get('lainnya');
 
         $tagihan->update($data);
         

@@ -17,8 +17,10 @@ class CreateTagihansTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id');
             $table->string('invoice');
-            $table->string('tipe');
-            $table->Integer('jml_tagih');
+            $table->Integer('langganan')->default('0');
+            $table->Integer('ads')->default('0');
+            $table->Integer('lainnya')->default('0');
+            $table->Integer('jml_tagih')->default('0');
             $table->Integer('jml_bayar')->default('0');
             $table->tinyInteger('status')->default('0');
             $table->string('keterangan');

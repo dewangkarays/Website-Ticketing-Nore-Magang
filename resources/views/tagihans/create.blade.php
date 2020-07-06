@@ -38,7 +38,7 @@
                                 </select>
 							</div>
 						</div>
-						<div class="form-group row">
+						{{-- <div class="form-group row">
 							<label class="col-form-label col-lg-2">Tipe</label>
 							<div class="col-lg-10">
 								<select name="tipe" class="form-control select-search" required>
@@ -47,17 +47,29 @@
                                     <option>Lainnya</option>
                                 </select>
 							</div>
+						</div> --}}
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Langganan</label>
+							<div class="col-lg-10">
+								<input type="number" min="0" name="langganan" class="form-control border-teal border-1" placeholder="Nominal" required>
+							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Jml Tagihan</label>
+							<label class="col-form-label col-lg-2">Ads</label>
 							<div class="col-lg-10">
-								<input type="text" name="jml_tagih" class="form-control border-teal border-1" placeholder="Nominal" required>
+								<input type="number" min="0" name="ads" class="form-control border-teal border-1" placeholder="Nominal" required>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Lainnya</label>
+							<div class="col-lg-10">
+								<input type="number" min="0" name="lainnya" class="form-control border-teal border-1" placeholder="Nominal" required>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Keterangan</label>
 							<div class="col-lg-10">
-								<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" required>
+								<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan">
 							</div>
 						</div>
 					</fieldset>
