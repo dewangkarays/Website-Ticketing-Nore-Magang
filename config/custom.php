@@ -21,4 +21,10 @@ return [
         '1' => 'Sudah Dikonfirmasi',
         '2' => 'Ditolak',
     ],
+
+  'tagihan_status' => [
+        '0' => 'Belum Terbayar',
+        '1' => 'Terbayar Sebagian',
+        '2' => 'Lunas',
+    ],
 ];
