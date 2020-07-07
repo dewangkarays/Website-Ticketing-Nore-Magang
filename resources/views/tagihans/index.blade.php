@@ -35,6 +35,7 @@
 					<tr>
 						<th>No</th>
 						<th>Nama</th>
+						<th>Username</th>
 						<th>Invoice</th>
 						<th>Tagihan</th>
 						<th class="text-center">Status</th>
@@ -48,6 +49,7 @@
 				    <tr> 
 				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{$tagihan->user->nama}}</div></td>
+				        <td><div class="datatable-column-width">{{$tagihan->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
 				        <td><div class="datatable-column-width">{{$tagihan->jml_tagih}}</div></td>
 				        <td align="center">{{config('custom.tagihan_status.'.$tagihan->status)}}</td>
@@ -70,7 +72,7 @@
 				    @php ($i++)
 				    @endforeach
 				@else
-				  	<tr><td align="center" colspan="6">Data Kosong</td></tr>
+				  	<tr><td align="center" colspan="7">Data Kosong</td></tr>
 				@endif 
 				    
 				</tbody>
@@ -141,7 +143,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 5 ]
+		                targets: [ 6 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {

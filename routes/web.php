@@ -35,6 +35,8 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/clicknotif/{id}',  'NotificationController@clickNotif')->name('clicknotif');
 	Route::get('/clearnotif',  'NotificationController@clearNotif')->name('clearnotif');
 	Route::get('/notifikasi',  'NotificationController@index')->name('notifikasi');
+	Route::get('/gettagihan/{id}',  'TagihanController@getTagihan');
+	Route::get('/detailtagihan/{id}',  'TagihanController@detailTagihan');
 
 	//admin
 	Route::group(['middleware' => ['role:1']], function() {

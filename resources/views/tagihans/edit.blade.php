@@ -52,25 +52,25 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Langganan</label>
 							<div class="col-lg-10">
-								<input type="number" min="0" name="langganan" value="{{ $tagihan->langganan }}" class="form-control border-teal border-1" placeholder="Nominal" required>
+								<input type="number" min="0" name="langganan" value="{{ $tagihan->langganan }}" class="form-control border-teal border-1" placeholder="Nominal">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Ads</label>
 							<div class="col-lg-10">
-								<input type="number" min="0" name="ads" value="{{ $tagihan->ads }}" class="form-control border-teal border-1" placeholder="Nominal" required>
+								<input type="number" min="0" name="ads" value="{{ $tagihan->ads }}" class="form-control border-teal border-1" placeholder="Nominal">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Lainnya</label>
 							<div class="col-lg-10">
-								<input type="number" min="0" name="lainnya" value="{{ $tagihan->lainnya }}" class="form-control border-teal border-1" placeholder="Nominal" required>
+								<input type="number" min="0" name="lainnya" value="{{ $tagihan->lainnya }}" class="form-control border-teal border-1" placeholder="Nominal">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Jml Bayar</label>
 							<div class="col-lg-10">
-								<input type="text" name="jml_bayar" value="{{ $tagihan->jml_bayar }}" class="form-control border-teal border-1" placeholder="Nominal" required>
+								<input type="text" name="jml_bayar" value="{{ $tagihan->jml_bayar }}" class="form-control border-teal border-1" placeholder="Nominal">
 							</div>
 						</div>
 						<div class="form-group row">

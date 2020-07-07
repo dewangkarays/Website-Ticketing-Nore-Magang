@@ -23,7 +23,7 @@ class CreateTagihansTable extends Migration
             $table->Integer('jml_tagih')->default('0');
             $table->Integer('jml_bayar')->default('0');
             $table->tinyInteger('status')->default('0');
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

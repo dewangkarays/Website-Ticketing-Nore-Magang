@@ -7,6 +7,7 @@ use App\Model\Payment;
 use App\Model\User;
 use App\Model\Notification;
 use App\Model\Task;
+use App\Model\Tagihan;
 
 class PaymentController extends Controller
 {
@@ -52,35 +53,42 @@ class PaymentController extends Controller
         ]);
 
         $data = $request->except(['_token', '_method']);
-        $user = User::find($request->get('user_id'));
-        $data['user_role'] = $user->role;
+        $cust = User::find($request->get('user_id'));
+        $data['user_role'] = $cust->role;
         $payment = Payment::create($data);
         
-        $cust = User::find($request->get('user_id'));
-        if($request->get('kadaluarsa')!='' && $request->get('status')=='1'){
-            //$payment->kadaluarsa = $request->get('kadaluarsa');
+        if($request->get('kadaluarsa')!=''){
 
             $cust->kadaluarsa = $request->get('kadaluarsa');
             $cust->save();
         }
 
-        if($request->get('task_count')!='' && $request->get('status')=='1'){
-            //$payment->kadaluarsa = $request->get('kadaluarsa');
+        if($request->get('task_count')!=''){
 
             $cust->task_count += $request->get('task_count');
             $cust->save();
         }
 
-        //notifikasi
-        $users = User::whereIn('role', ['1','10'])->get(); //role admin & karyawan
-        foreach ($users as $user) {
-            $notif = new Notification();
-            $notif->title = 'Pembayaran Baru';
-            $notif->message = $cust->username.' mengirimkan pembayaran baru.';
-            $notif->user_id = $user->id;
-            $notif->url = route('payments.edit',$payment->id);
-            $notif->save();
+        $tagihan = Tagihan::find($request->get('tagihan_id'));
+        $tagihan->jml_tagih -= $request->get('nominal');
+        $tagihan->jml_bayar += $request->get('nominal');
+        if($tagihan->jml_tagih==0){
+            $tagihan->status=2;
+        } else {
+            $tagihan->status=1;
         }
+        $tagihan->save();
+
+        //notifikasi
+        // $users = User::whereIn('role', ['1','10'])->get(); //role admin & karyawan
+        // foreach ($users as $user) {
+        //     $notif = new Notification();
+        //     $notif->title = 'Pembayaran Baru';
+        //     $notif->message = $cust->username.' mengirimkan pembayaran baru.';
+        //     $notif->user_id = $user->id;
+        //     $notif->url = route('payments.edit',$payment->id);
+        //     $notif->save();
+        // }
 
         return redirect('/payments')->with('success', 'Payment saved!');
     }
@@ -105,8 +113,10 @@ class PaymentController extends Controller
     public function edit($id)
     {
         $payment = Payment::find($id);
+        $tagihans = Tagihan::where('user_id', $payment->user_id)->get();
+        $detailtagih = Tagihan::find($payment->tagihan_id);
         $users = User::where('role','>','50')->get();
-        return view('payments.edit', compact('payment','users')); 
+        return view('payments.edit', compact('payment','users','tagihans','detailtagih')); 
     }
 
     /**
@@ -128,46 +138,58 @@ class PaymentController extends Controller
         $data = $request->except(['_token', '_method','kadaluarsa','updkadaluarsa','task_count']);
         
         $user = User::find($request->get('user_id'));
-        if($request->get('kadaluarsa')!='' && $request->get('status')=='1' && $request->get('updkadaluarsa')=='1'){
+        if($request->get('kadaluarsa')!='' && $request->get('updkadaluarsa')=='1'){
             $data['kadaluarsa'] = $request->get('kadaluarsa');
 
             $user->kadaluarsa = $request->get('kadaluarsa');
             $user->save();
         }
 
-        if($request->get('task_count')!='' && $request->get('status')=='1' && $request->get('updkadaluarsa')=='1'){
+        if($request->get('task_count')!='' && $request->get('updkadaluarsa')=='1'){
             $data['task_count'] = $request->get('task_count');
 
             $user->task_count += $request->get('task_count');
             $user->save();
         }
 
-        if($request->get('status')!=''){
-            if($payment->status != $request->get('status')){
+        // if($request->get('status')!=''){
+        //     if($payment->status != $request->get('status')){
 
-                //notifikasi
-                if($request->get('status') == '1') {
-                    $notif = new Notification();
-                    $notif->title = 'Pembayaran Dikonfirmasi';
-                    $notif->message = 'Terima kasih telah melakukan pembayaran.';
-                    $notif->user_id = $payment->user_id;
-                    $notif->url = route('payments.edit',$payment->id);
-                    $notif->save();
-                }
+        //         //notifikasi
+        //         if($request->get('status') == '1') {
+        //             $notif = new Notification();
+        //             $notif->title = 'Pembayaran Dikonfirmasi';
+        //             $notif->message = 'Terima kasih telah melakukan pembayaran.';
+        //             $notif->user_id = $payment->user_id;
+        //             $notif->url = route('payments.edit',$payment->id);
+        //             $notif->save();
+        //         }
 
-                //notifikasi
-                if($request->get('status') == '2') {
-                    $notif = new Notification();
-                    $notif->title = 'Input Pembayaran Ditolak';
-                    $notif->message = 'Mohon periksa kembali data pembayaran dan lakukan konfirmasi ulang.';
-                    $notif->user_id = $payment->user_id;
-                    $notif->url = route('payments.edit',$payment->id);
-                    $notif->save();
-                }
-            }
+        //         //notifikasi
+        //         if($request->get('status') == '2') {
+        //             $notif = new Notification();
+        //             $notif->title = 'Input Pembayaran Ditolak';
+        //             $notif->message = 'Mohon periksa kembali data pembayaran dan lakukan konfirmasi ulang.';
+        //             $notif->user_id = $payment->user_id;
+        //             $notif->url = route('payments.edit',$payment->id);
+        //             $notif->save();
+        //         }
+        //     }
 
-            $payment->update($data);
+        // }
+        
+
+        $tagihan = Tagihan::find($request->get('tagihan_id'));
+        $tagihan->jml_tagih -= ($request->get('nominal') - $payment->nominal);
+        $tagihan->jml_bayar += ($request->get('nominal') - $payment->nominal);
+        if($tagihan->jml_tagih==0){
+            $tagihan->status=2;
+        } else {
+            $tagihan->status=1;
         }
+        $tagihan->save();
+
+        $payment->update($data);
 
         return redirect('/payments')->with('success', 'Payment updated!');
     }
@@ -181,6 +203,17 @@ class PaymentController extends Controller
     public function destroy($id)
     {
         $payment = Payment::find($id);
+        
+        $tagihan = Tagihan::find($payment->tagihan_id);
+        $tagihan->jml_tagih += $payment->nominal;
+        $tagihan->jml_bayar -= $payment->nominal;
+        if($tagihan->jml_bayar==0){
+            $tagihan->status=0;
+        } else {
+            $tagihan->status=1;
+        }
+        $tagihan->save();
+
         $payment->delete();
 
         return redirect('/payments')->with('success', 'Payment deleted!');
