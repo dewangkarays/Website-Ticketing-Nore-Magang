@@ -109,7 +109,7 @@
 								        <td><div class="datatable-column-width">{{$client->user->username}}</div></td>
 								        <td><div class="datatable-column-width">{{$client->tgl_bayar}}
 								        </div></td>
-								        <td><div class="datatable-column-width">{{number_format($client->nominal,0,',','.')}}
+								        <td><div class="datatable-column-width">Rp {{number_format($client->nominal,0,',','.')}}
 								        </div></td>
 								    </tr>
 								    @php ($i++)

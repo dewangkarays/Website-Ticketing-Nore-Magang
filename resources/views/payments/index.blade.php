@@ -50,7 +50,7 @@
 				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{$payment->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$payment->keterangan}}</div></td>
-				        <td style="font-size: 15px;">@angka($payment->nominal)</td>
+				        <td style="font-size: 15px;">Rp @angka($payment->nominal)</td>
 				        {{-- <td align="center">@if($payment->status == 0 )
 								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.payment.'.$payment->status)}}</span>
 							@else

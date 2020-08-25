@@ -51,7 +51,7 @@
 				        <td><div class="datatable-column-width">{{$tagihan->user->nama}}</div></td>
 				        <td><div class="datatable-column-width">{{$tagihan->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
-				        <td><div class="datatable-column-width">{{$tagihan->jml_tagih}}</div></td>
+				        <td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
 				        <td align="center">{{config('custom.tagihan_status.'.$tagihan->status)}}</td>
 						</td>
 				        <td align="center">

@@ -38,6 +38,7 @@
 						<th>Username</th>
 						<th>Role</th>
 						<th class="text-center">Masa Aktif</th>
+						<th class="text-center">Belum Terbayar</th>
 						<th class="text-center">Jml Op</th>
 						<th class="text-center">Actions</th>
 					</tr>
@@ -60,6 +61,17 @@
 								{{$user->kadaluarsa}}
 							@endif
 						</td>
+						<td>
+							@php($total = 0)
+                                @foreach ($user->tagihan as $tagihan)
+                                    @if ($tagihan->status == '1' || $tagihan->status == '0')
+                                    @php($total += $tagihan->jml_tagih - $tagihan->jml_bayar)
+                                    @endif  
+                                
+                                @endforeach
+                                
+                                {{ $total }}
+						</td>
 				        <td align="center">
 				        	@if($user->task_count < 0)
 								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->task_count}}</span>
@@ -79,6 +91,7 @@
 									<div class="dropdown-menu dropdown-menu-right">
 										<a href="https://wa.me/{{$user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
 										<a href="{{ route('users.edit',$user->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+										<a href="{{ route('users.show',$user->id)}}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
 							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('users.destroy', $user->id)}}"><i class="icon-x"></i> Delete</a>
 									</div>
 								</div>
