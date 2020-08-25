@@ -6,7 +6,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Tambah Pengeluaran</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Edit Data Pengeluaran</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -21,7 +21,8 @@
 			<div class="card-header header-elements-inline">
 			</div>
 			<div class="card-body">
-				<form class="form-validate-jquery" action="{{ route('pengeluarans.store')}}" method="post">
+                <form class="form-validate-jquery" action="{{ route('pengeluarans.update', $epengeluaran->id)}}" method="post">
+                    @method('PATCH')
 					@csrf
 					<fieldset class="mb-3">
                         <legend class="text-uppercase font-size-sm font-weight-bold">Data Tagihan</legend>
@@ -29,14 +30,14 @@
                         <div class="form-group row">
 							<label class="col-form-label col-lg-2">Tanggal</label>
 							<div class="col-lg-10">
-								<input name="tanggal" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pengeluaran" required>
+								<input name="tanggal" type="text" class="form-control pickadate-accessibility" value="{{ $epengeluaran->tanggal }}" placeholder="Tanggal Pengeluaran" required>
 							</div>
                         </div>
                         
                         <div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama Pengeluaran</label>
 							<div class="col-lg-10">
-								<input name="pengeluaran" type="text" class="form-control" placeholder="Nama Pengeluaran" required>
+								<input name="pengeluaran" type="text" class="form-control" value="{{ $epengeluaran->pengeluaran }}" placeholder="Nama Pengeluaran" required>
 							</div>
 						</div>
 
@@ -44,12 +45,12 @@
 							<label class="col-form-label col-lg-2">Jenis Pengeluaran</label>
 							<div class="col-lg-10">
 								<select name="jenis_pengeluaran" class="form-control bg-teal-400 border-teal-400" required>
-                                    <option value="0">Gaji</option>
-                                    <option value="1">Aset</option>
-                                    <option value="2">Non-Aset (Iklan, Domain, Hosting)</option>
-                                    <option value="3">Tunjangan</option>
-                                    <option value="4">Bonus</option>
-                                    <option value="5">Lain - Lain</option>
+                                    <option value="0" {{ $epengeluaran->jenis_pengeluaran == '0' ? 'selected' : '' }}>Gaji</option>
+                                    <option value="1" {{ $epengeluaran->jenis_pengeluaran == '1' ? 'selected' : '' }}>Aset</option>
+                                    <option value="2" {{ $epengeluaran->jenis_pengeluaran == '2' ? 'selected' : '' }}>Non-Aset (Iklan, Domain, Hosting)</option>
+                                    <option value="3" {{ $epengeluaran->jenis_pengeluaran == '3' ? 'selected' : '' }}>Tunjangan</option>
+                                    <option value="4" {{ $epengeluaran->jenis_pengeluaran == '4' ? 'selected' : '' }}>Bonus</option>
+                                    <option value="5" {{ $epengeluaran->jenis_pengeluaran == '5' ? 'selected' : '' }}>Lain - Lain</option>
                                 </select>
 							</div>
 						</div>
@@ -57,13 +58,13 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nominal</label>
 							<div class="col-lg-10">
-								<input type="number" min="0" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" required>
+								<input type="number" min="0" name="nominal" class="form-control border-teal border-1" value="{{ $epengeluaran->nominal }}" placeholder="Nominal" required>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Keterangan</label>
 							<div class="col-lg-10">
-								<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan">
+								<input type="text" name="keterangan" class="form-control border-teal border-1" value="{{ $epengeluaran->keterangan }}" placeholder="Keterangan">
 							</div>
 						</div>
 					</fieldset>
@@ -160,16 +161,16 @@
 		                }
 		            },
 		            messages: {
-		                tanggal: {
+		                tgl_pengeluaran: {
 		                    required: 'Mohon diisi.'
 		                },
-		                pengeluaran: {
+		                nama_pengeluaran: {
 		                    required: 'Mohon diisi.'
 		                },
 		                // jenis_pengeluaran: {
 		                //     required: 'Mohon diisi.'
 		                // },
-		                nominal: {
+		                nominalp: {
 		                    required: 'Mohon diisi.'
 		                },
 		                // keterangan: {

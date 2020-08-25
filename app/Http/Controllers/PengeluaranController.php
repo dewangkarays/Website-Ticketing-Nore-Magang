@@ -19,29 +19,54 @@ class PengeluaranController extends Controller
         return view('pengeluarans.create');
     }
 
+    public function edit($id)
+    {
+        $epengeluaran = Pengeluaran::find($id);
+        return view('pengeluarans.edit', compact('epengeluaran'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
-            'tgl_pengeluaran'=>'required',
-            'nama_pengeluaran'=>'required',
+            'tanggal'=>'required',
+            'pengeluaran'=>'required',
             // 'jenis_pengeluaran'=>'required',
-            'nominalp'=>'required',
+            'nominal'=>'required',
             // 'keterangan'=>'required'
 
             ]);
             
         // simpan data
         $pengeluaran = new Pengeluaran([
-            'tanggal' => $request->get('tgl_pengeluaran'),
-            'pengeluaran' => $request->get('nama_pengeluaran'),
+            'tanggal' => $request->get('tanggal'),
+            'pengeluaran' => $request->get('pengeluaran'),
             'jenis_pengeluaran' => $request->get('jenis_pengeluaran'),
-            'nominal' => $request->get('nominalp'),
+            'nominal' => $request->get('nominal'),
             'keterangan' => $request->get('keterangan'),
 
             ]);
             
             $pengeluaran->save();
             return redirect('/pengeluarans')->with('success', 'Data Pengeluaran saved!');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            // 'tgl_pengeluaran'=>'required',
+            // 'nama_pengeluaran'=>'required',
+            // 'jenis_pengeluaran'=>'required',
+            // 'nominalp'=>'required',
+            // 'keterangan'=>'required'
+            ]);
+            
+        // update data
+        
+            $pengeluaranup = Pengeluaran::find($id);
+            $data = $request->except(['_token', '_method']);
+
+            $pengeluaranup->update($data);
+            return redirect('/pengeluarans')->with('success', 'Data Updated!');
     }
 
     public function destroy($id)
@@ -51,5 +76,7 @@ class PengeluaranController extends Controller
         
         return redirect('/pengeluarans')->with('success', 'Data Deleted!');
     }
+
+    
 
 }

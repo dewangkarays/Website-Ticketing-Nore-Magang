@@ -63,7 +63,7 @@
 									</a>
 
 									<div class="dropdown-menu dropdown-menu-right">
-										{{-- <a href="{{ route('pengeluarans.edit',$pengeluaran->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a> --}}
+										<a href="{{ route('pengeluarans.edit',$pengeluaran->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
 							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('pengeluarans.destroy', $pengeluaran->id)}}"><i class="icon-x"></i> Delete</a>
 									</div>
 								</div>
