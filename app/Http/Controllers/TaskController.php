@@ -20,7 +20,7 @@ class TaskController extends Controller
     public function index()
     {
         if(\Auth::user()->role > 20){
-            $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id')
+            $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id',)
                         ->where('tasks.status','!=','3')
                         ->where('user_id',\Auth::user()->id)
                         ->orderBy('tasks.status', 'DESC')
@@ -34,7 +34,7 @@ class TaskController extends Controller
                         ->orderBy('tasks.status', 'DESC')
                         ->orderBy('users.role', 'ASC')
                         ->orderBy('tasks.created_at', 'ASC')
-                        ->select('tasks.*')
+                        ->select('tasks.*','users.task_count')
                         ->get(); //admin & karyawan
         }
         
