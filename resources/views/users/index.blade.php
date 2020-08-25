@@ -62,15 +62,7 @@
 							@endif
 						</td>
 						<td>
-							@php($total = 0)
-                                @foreach ($user->tagihan as $tagihan)
-                                    @if ($tagihan->status == '1' || $tagihan->status == '0')
-                                    @php($total += $tagihan->jml_tagih - $tagihan->jml_bayar)
-                                    @endif  
-                                
-                                @endforeach
-                                
-                                {{ $total }}
+							@angka($user->tagihan->sum('jml_tagih')-$user->tagihan->sum('jml_bayar'))
 						</td>
 				        <td align="center">
 				        	@if($user->task_count < 0)
