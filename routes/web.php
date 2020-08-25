@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::resource('tasks', 'TaskController');
 	Route::resource('payments', 'PaymentController');
 	Route::resource('tagihans', 'TagihanController');
+	Route::resource('pengeluarans', 'PengeluaranController');
 	Route::get('/antrian',  'TaskController@antrian');
 	Route::get('/history',  'TaskController@history')->name('history');
 	Route::get('/getnotif',  'NotificationController@getNotif')->name('getnotif');

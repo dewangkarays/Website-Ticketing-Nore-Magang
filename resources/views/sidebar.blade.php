@@ -95,6 +95,14 @@
 						</a>
 					</li>
 					<li class="nav-item">
+						<a href="{{ url('/pengeluarans') }}" class="nav-link {{ (request()->is('pengeluarans*')) ? 'active' : '' }}">
+							<i class="icon-coin-dollar"></i>
+							<span>
+								Pengeluaran
+							</span>
+						</a>
+					</li>
+					<li class="nav-item">
 						<a href="{{ url('/antrian') }}" class="nav-link {{ (request()->is('antrian')) ? 'active' : '' }}">
 							<i class="icon-list-ordered"></i>
 							<span>

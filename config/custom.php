@@ -27,4 +27,13 @@ return [
         '1' => 'Terbayar Sebagian',
         '2' => 'Lunas',
     ],
+
+  'pengeluaran' => [
+        '0' => 'Gaji',
+        '1' => 'Aset',
+        '2' => 'Non-Aset',
+        '3' => 'Tunjangan',
+        '4' => 'Bonus',
+        '5' => 'Lain-lain',
+    ],
 ];
