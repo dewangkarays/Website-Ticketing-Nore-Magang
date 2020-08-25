@@ -62,7 +62,7 @@
 							@endif
 						</td>
 						<td>
-							@angka($user->tagihan->sum('jml_tagih')-$user->tagihan->sum('jml_bayar'))
+							Rp @angka($user->tagihan->sum('jml_tagih')-$user->tagihan->sum('jml_bayar'))
 						</td>
 				        <td align="center">
 				        	@if($user->task_count < 0)

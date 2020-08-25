@@ -67,30 +67,17 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Role</label>
                     <div class="col-lg-10">
-                        <span class="bg-primary py-1 px-2 rounded">
-                            <span class="text-white">
+                            <span class="form-text">
                                 {{ $roleuser }}
-                            </span>
                         </span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Tagihan yang belum dibayar</label>
                     <div class="col-lg-10">
-                        <span class="bg-success py-1 px-2 rounded">
-                            <span class="text-white">
-                                Rp
-                                @php($total = 0)
-                                @foreach ($user->tagihan as $tagihan)
-                                    @if ($tagihan->status == '1' || $tagihan->status == '0')
-                                    @php($total += $tagihan->jml_tagih - $tagihan->jml_bayar)
-                                    @endif  
-                                
-                                @endforeach
-                                
-                                {{ $total }}
+                            <span class="form-text">
+                                Rp @angka($user->tagihan->sum('jml_tagih')-$user->tagihan->sum('jml_bayar'))
                             </span>
-                        </span>
                     </div>
                 </fieldset>
                 <div class="text-right">
