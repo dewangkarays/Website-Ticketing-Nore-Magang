@@ -96,7 +96,7 @@
 					</li>
 					<li class="nav-item">
 						<a href="{{ url('/pengeluarans') }}" class="nav-link {{ (request()->is('pengeluarans*')) ? 'active' : '' }}">
-							<i class="icon-coin-dollar"></i>
+							<i class="icon-rotate-cw"></i>
 							<span>
 								Pengeluaran
 							</span>
@@ -115,6 +115,14 @@
 							<i class="icon-history"></i>
 							<span>
 								Histori
+							</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ url('/laporankeuangan') }}" class="nav-link {{ (request()->is('laporankeuangan')) ? 'active' : '' }}">
+							<i class="icon-balance"></i>
+							<span>
+								Laporan Keuangan
 							</span>
 						</a>
 					</li>

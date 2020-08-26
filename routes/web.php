@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::match(['get', 'post'], '/statistiktask',  'TaskController@statistiktask')->name('stat_task');
 		// Route::get('/getstatistik',  'TaskController@getstatistik')->name('getstat');
 		Route::match(['get', 'post'], '/statistikpayment',  'PaymentController@statistikpayment')->name('stat_payment');
+		
 	});
 
 	//karyawan
@@ -55,6 +56,7 @@ Route::group(['middleware' => ['auth']], function() {
 	//admin && karyawan
 	Route::group(['middleware' => ['role:1' OR 'role:10']], function() {
 		Route::resource('users', 'UserController');
+		Route::resource('laporankeuangan', 'LaporanKeuanganController');
 	});
 
 	//customer
