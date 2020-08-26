@@ -162,26 +162,23 @@
 					</div>
 					
 					<div class="col">
-						<div class="row">
 							<div>
 								Tagihan Belum Terbayar
 							</div>
-							<div class="d-flex">
+							<div>
 								<h3 class="font-weight-semibold mb-0">Rp @angka($tagihan->sum('jml_tagih')-$totalbayar)
 								</h3>
 							</div>
-						</div>
-						
-						<br>
-						
-						<div class="row">
+							
+							<br>
+							
 							<div>
 								Pembayaran Terakhir
 							</div>
-							<div class="d-flex">
-								<h3 class="font-weight-semibold mb-0">{{ $lastpayment->tgl_bayar }}</h3>
+							<div>
+								<h3 class="font-weight-semibold mb-0">{{ empty($lastpayment->tgl_bayar) ? '-' : $lastpayment->tgl_bayar }}</h3>
 							</div>
-						</div>
+						
 					</div>
 					
 				</blockquote>
