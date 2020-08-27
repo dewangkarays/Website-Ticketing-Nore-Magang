@@ -25,8 +25,10 @@ Route::get('/del/{id}',  'AttachmentController@destroy');
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('/changepass',  'UserController@changePass');
 	Route::post('/changepass/{id}',  'UserController@changePassSubmit')->name('changepass');
+	Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');
 	Route::resource('attachments', 'AttachmentController');
 	Route::resource('tasks', 'TaskController');
+	Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
 	Route::resource('payments', 'PaymentController');
 	Route::resource('tagihans', 'TagihanController');
 	Route::resource('pengeluarans', 'PengeluaranController');
@@ -47,16 +49,17 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::match(['get', 'post'], '/statistikpayment',  'PaymentController@statistikpayment')->name('stat_payment');
 		
 	});
-
+	
 	//karyawan
 	Route::group(['middleware' => ['role:10']], function() {
 		Route::get('/karyawan',  'AdminController@karyawan')->name('karyawan');
 	});
-
+	
 	//admin && karyawan
 	Route::group(['middleware' => ['role:1' OR 'role:10']], function() {
 		Route::resource('users', 'UserController');
 		Route::resource('laporankeuangan', 'LaporanKeuanganController');
+		Route::match(['get', 'post'], '/laporankeuangan',  'LaporanKeuanganController@index')->name('filterKeuangan');
 	});
 
 	//customer

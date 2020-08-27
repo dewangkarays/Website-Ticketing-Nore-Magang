@@ -34,7 +34,7 @@
 			
 			@else
 			<a href="{{ route('tasks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
-
+			
 			@endif
 		</div>
 		
@@ -54,12 +54,19 @@
 				@if(!$tasks->isEmpty())
 				@php ($i = 1)
 				@foreach($tasks as $task)
+				
 				<tr>
 					<td>{{$i}}</td>
 					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
 					<td><div class="datatable-column-width">{{$task->user->username}}</div></td>
 					<td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
-					<td><div class="datatable-column-width">{{@$task->assign->nama}}</div></td>
+					<td><div class="datatable-column-width">
+						@if (\Auth::user()->role == 10)
+						<input data-id="{{$task->id}}" class="form-check-input toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
+						@endif
+						{{@$task->assign->nama}}</div>
+					</td>
+					
 					<td align="center">@if($task->status == 2 )
 						<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.status.'.$task->status)}}</span>
 						@else
@@ -77,9 +84,13 @@
 									@if(\Auth::user()->role<=20)
 									<a href="https://wa.me/{{$task->user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
 									@endif
-									@if (\Auth::user()->role==1 || \Auth::user()->id == $task->user->id )
+									@if (\Auth::user()->role==1 || \Auth::user()->id == $task->handler )
 									<a href="{{ route('tasks.edit',$task->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
 									@endif
+									@if (\Auth::user()->role==1 || \Auth::user()->id == $task->user_id )
+									<button type="button" class="btn dropdown-item" id="statusbtn" onclick="updatestatus( {{$task->id}} )"><i class="icon-check"></i> Selesai</button>
+									@endif
+									
 									@if($task->status==1 || \Auth::user()->role==1)
 									<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tasks.destroy', $task->id)}}"><i class="icon-x"></i> Delete</a>
 									@endif
@@ -126,6 +137,7 @@
 </div>
 <!-- /default modal -->
 
+
 @endsection
 
 @section('js')
@@ -140,6 +152,11 @@
 <script src="{{asset('assets/js/app.js') }}"></script>
 <script src="{{asset('global_assets/js/demo_pages/components_modals.js') }}"></script>
 <script>
+	// get token
+	let getToken = function() {
+		return $('meta[name=csrf-token]').attr('content')
+	}
+	
 	//modal delete
 	$(document).on("click", ".delbutton", function () {
 		var url = $(this).data('uri');
@@ -236,6 +253,47 @@
 		DatatableBasic.init();
 	});
 </script>
+
+<script>
+	$(function() {
+		$('.toggle-class').change(function() {
+			var status = $(this).prop('checked') == true ? 2 : 1; 
+			var token = getToken();
+			var task_id = $(this).data('id'); 
+			var user_id = $(this).prop('checked') == true ? {{ \Auth::user()->id }} : '';
+			
+			$.ajax({
+				type: "POST",
+				dataType: "json",
+				url: '/changehandler',
+				data: {'status': status, 'user_id': user_id, 'id': task_id, _token : token },
+				success: function(data){
+					// Sticky buttons
+						alert('Data changed!')
+					
+					location.reload();
+				}
+			});
+		})
+	})
+	
+	
+	function updatestatus(id){
+		var token = getToken();
+		var id = id;
+		var status = 3; 
+		
+		$.ajax({
+			type: "POST",
+			url: '/updatestatus',
+			// 'url': '/updatestatus',
+			// 'method': 'POST',
+			data: {'status': status, 'id': id, _token : token },
+		});
+		
+	}
+</script>
+
 <script type="text/javascript">
 	$( document ).ready(function() {
 		// Default style

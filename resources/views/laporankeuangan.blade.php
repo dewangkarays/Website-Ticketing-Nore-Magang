@@ -30,23 +30,31 @@
 		<!-- Zoom option -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-				<h5 class="card-title">Laporan Keuangan Bulanan</h5>
+				<h5 class="card-title">Laporan Keuangan Tahunan</h5>
 			</div>
 
 			<div class="card-body">
 				<div class="chart-container">
-					<form action="{{route('stat_payment')}}" method="post">
+					<form action="{{route('filterKeuangan')}}" method="post">
 						@csrf
 						<div class="form-group row">
 							<div class="col-lg-3">
 								<label>Tahun :</label>
 								<select name="tahun" class="form-control select-search" data-fouc>
-									<option value="{{date('Y')}}">{{date('Y')}}</option>
+									{{-- <option value="{{date('Y')}}">{{date('Y')}}</option>
 									@foreach($years as $year)
 										@if($year->tahun != date('Y'))
 										<option value="{{$year->tahun}}" {{ $filter == $year->tahun ? 'selected' : '' }}>{{$year->tahun}}</option>
 										@endif
-				    				@endforeach
+									@endforeach --}}
+									@for ($date = 2019; $date <= date('2050'); $date++)
+										@if ($filter == '')
+											<option value=" {{ $date }} "> {{$date}} </option>
+										@else
+										<option value=" {{ $date }} " {{ $filter == $date ? 'selected' : '' }} > {{$date}} </option>
+										@endif
+									@endfor
+
 								</select>
 							</div>
 							<div class="col-lg-3">
@@ -82,27 +90,7 @@
 			</div>
 		</div>	
         <!-- /pie and donut -->
-        <!-- Pie and donut -->
-		<div class="row">
-			<div class="col-xl-6">
 
-				<!-- Basic pie -->
-				<div class="card">
-					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Total Pemasukan</h5>
-					</div>
-
-					<div class="card-body">
-						<div class="chart-container">
-							<div class="chart has-fixed-height" id="pie_basic"></div>
-						</div>
-					</div>
-				</div>
-				<!-- /basic pie -->
-
-			</div>
-		</div>	
-		<!-- /pie and donut -->
 
 	</div>
 	<!-- /content area -->
@@ -238,7 +226,7 @@
 		                series: [
 		                @foreach($chart as $name => $data)
 		                    {
-		                        name: '{{config("custom.role.".$name)}}',
+		                        name: 'Total Pemasukan Bruto',
 		                        type: 'bar',
 		                        data: [
 		                        	@foreach($data as $val)
@@ -264,7 +252,33 @@
 
                         @foreach($chart2 as $name => $data)
 		                    {
-		                        name: '{{config("custom.pengeluaran.".$name)}}',
+		                        name: 'Total Pengeluaran',
+		                        type: 'bar',
+		                        data: [
+		                        	@foreach($data as $val)
+		                        		{{$val}},
+		                        	@endforeach
+		                        ],
+		                        // itemStyle: {
+		                        //     normal: {
+		                        //         label: {
+		                        //             show: true,
+		                        //             position: 'top',
+		                        //             textStyle: {
+		                        //                 fontWeight: 500
+		                        //             }
+		                        //         }
+		                        //     }
+		                        // },
+		                        // markLine: {
+		                        //     data: [{type: 'average', name: 'Average'}]
+		                        // }
+		                    },
+                        @endforeach
+                        
+                        @foreach($neto as $name => $data)
+		                    {
+		                        name: 'Total Pemasukan Neto',
 		                        type: 'bar',
 		                        data: [
 		                        	@foreach($data as $val)
@@ -449,128 +463,6 @@
 		    EchartsPiesDonuts.init();
 		});
     </script>
-    
-    <script type="text/javascript">
-		
-		var EchartsPiesDonuts = function() {
-
-		    // Pie and donut charts
-		    var _piesDonutsExamples = function() {
-		        if (typeof echarts == 'undefined') {
-		            console.warn('Warning - echarts.min.js is not loaded.');
-		            return;
-		        }
-
-		        // Define elements
-		        var pie_basic_element = document.getElementById('pie_basic2');
-
-		        // Basic pie chart
-		        if (pie_basic_element) {
-
-		            // Initialize chart
-		            var pie_basic = echarts.init(pie_basic_element);
-
-		            // Options
-		            pie_basic.setOption({
-
-		                // Colors
-		                color: ['#39b772','#26a69a','#dde833','#ffb980','#d87a80'],
-
-		                // Global text styles
-		                textStyle: {
-		                    fontFamily: 'Roboto, Arial, Verdana, sans-serif',
-		                    fontSize: 13
-		                },
-
-		                // Add title
-		                title: {
-		                    text: 'Persentase Pemasukan',
-		                    left: 'center',
-		                    textStyle: {
-		                        fontSize: 17,
-		                        fontWeight: 500
-		                    },
-		                    subtextStyle: {
-		                        fontSize: 12
-		                    }
-		                },
-
-		                // Add tooltip
-		                tooltip: {
-		                    trigger: 'item',
-		                    backgroundColor: 'rgba(0,0,0,0.75)',
-		                    padding: [10, 15],
-		                    textStyle: {
-		                        fontSize: 13,
-		                        fontFamily: 'Roboto, sans-serif'
-		                    },
-		                    formatter: "{a} <br/>{b}: {c} ({d}%)"
-		                },
-
-		                // Add series
-		                series: [{
-		                    name: 'Jumlah Pembayaran',
-		                    type: 'pie',
-		                    radius: '70%',
-		                    center: ['50%', '57.5%'],
-		                    itemStyle: {
-			                normal : {
-			                    label : {
-			                        show: true, position: 'inside',
-			                        formatter : '{b}\n{d}%',
-			                    },
-			                    labelLine : {
-			                        show : true
-			                    }
-		                	},
-		                    },
-		                    data: [
-		                    @foreach($pie as $key => $val)
-		                    	@if($val>0)
-		                        {value: {{$val}}, name: '{{config("custom.role.".$key)}}'},
-		                        @endif
-		                    @endforeach
-		                    ]
-		                }]
-		            });
-		        }
-
-		        // Resize function
-		        var triggerChartResize = function() {
-		            pie_basic_element && pie_basic.resize();
-		        };
-
-		        // On sidebar width change
-		        $(document).on('click', '.sidebar-control', function() {
-		            setTimeout(function () {
-		                triggerChartResize();
-		            }, 0);
-		        });
-
-		        // On window resize
-		        var resizeCharts;
-		        window.onresize = function () {
-		            clearTimeout(resizeCharts);
-		            resizeCharts = setTimeout(function () {
-		                triggerChartResize();
-		            }, 200);
-		        };
-		    };
-
-		    return {
-		        init: function() {
-		            _piesDonutsExamples();
-		        }
-		    }
-		}();
-
-		// Initialize module
-		// ------------------------------
-
-		document.addEventListener('DOMContentLoaded', function() {
-		    EchartsPiesDonuts.init();
-		});
-	</script>
 
 
 	<script type="text/javascript">
