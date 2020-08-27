@@ -60,6 +60,7 @@
 								{{$user->kadaluarsa}}
 							@endif
 						</td>
+						
 				        <td align="center">
 				        	@if($user->task_count < 0)
 								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->task_count}}</span>
