@@ -79,6 +79,14 @@
 						</a>
 					</li>
 					<li class="nav-item">
+						<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
+							<i class="icon-file-text"></i>
+							<span>
+								Tagihan
+							</span>
+						</a>
+					</li>
+					<li class="nav-item">
 						<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
 							<i class="icon-coin-dollar"></i>
 							<span>

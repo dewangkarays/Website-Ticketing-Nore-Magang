@@ -109,7 +109,7 @@
 								        <td><div class="datatable-column-width">{{$client->user->username}}</div></td>
 								        <td><div class="datatable-column-width">{{$client->tgl_bayar}}
 								        </div></td>
-								        <td><div class="datatable-column-width">{{$client->nominal}}
+								        <td><div class="datatable-column-width">{{number_format($client->nominal,0,',','.')}}
 								        </div></td>
 								    </tr>
 								    @php ($i++)
@@ -127,6 +127,49 @@
 			</div>
 		</div>	
 		<!-- /pie and donut -->
+		
+		<div class="row">
+			<div class="col-xl-6">
+
+				<!-- Basic pie -->
+				<div class="card">
+					<div class="card-header header-elements-inline">
+						<h5 class="card-title">Total Pembayaran per Perlanggan</h5>
+					</div>
+
+					<div class="card-body">
+						<div class="chart-container">
+							<table class="table datatable-basic table-hover">
+								<thead>
+									<tr>
+										<th>No</th>
+										<th>Pelanggan</th>
+										<th>Jumlah</th>
+									</tr>
+								</thead>
+								<tbody>
+								@if(!$totals->isEmpty())
+									@php ($i = 1)
+									@foreach($totals as $total)
+								    <tr>
+								        <td>{{$i}}</td>
+								        <td><div class="datatable-column-width">{{$total->user->username}}</div></td>
+								        <td><div class="datatable-column-width">{{number_format($total->total,0,',','.')}}</div></td>
+								    </tr>
+								    @php ($i++)
+								    @endforeach
+								@else
+								  	<tr><td align="center" colspan="3">Data Kosong</td></tr>
+								@endif 
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- /basic pie -->
+
+			</div>
+		</div>
 
 	</div>
 	<!-- /content area -->
