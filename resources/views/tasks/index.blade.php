@@ -88,7 +88,7 @@
 									<a href="{{ route('tasks.edit',$task->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
 									@endif
 									@if (\Auth::user()->role==1 || \Auth::user()->id == $task->user_id )
-									<button type="button" class="btn dropdown-item" id="statusbtn" onclick="updatestatus( {{$task->id}} )"><i class="icon-check"></i> Selesai</button>
+									<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id=" {{ $task->id }} " data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>
 									@endif
 									
 									@if($task->status==1 || \Auth::user()->role==1)
@@ -106,9 +106,30 @@
 				@endif 
 			</tbody>
 		</table>
+		
 	</div>
 	<!-- /hover rows -->
+	{{-- <button type="button" class="btn btn-info open-modal" >Show </button> --}}
 	
+</div>
+<div id="modal_task" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header bg-info" align="center">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			
+			<div  class="modal-body" align="center">
+				<input class="form-control" type="hidden" name="task_id" id="task_id" value=""/>
+				<h2>Yakin task selesai?</h2>
+			</div>
+			
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" data-dismiss="modal">Belum</button>
+				<button type="button" id="btn-update" class="btn btn-info">Ya, sudah selesai</button>
+			</div>
+		</div>
+	</div>
 </div>
 <!-- /content area -->
 
@@ -156,6 +177,15 @@
 	let getToken = function() {
 		return $('meta[name=csrf-token]').attr('content')
 	}
+	
+	// modal task
+	$(document).on("click", ".open-modal-task", function () {
+		var id_task = $(this).data('id');
+		$(".modal-body #task_id").val( id_task );
+		// As pointed out in comments, 
+		// it is unnecessary to have to manually call the modal.
+		// $('#addBookDialog').modal('show');
+	});
 	
 	//modal delete
 	$(document).on("click", ".delbutton", function () {
@@ -269,7 +299,7 @@
 				data: {'status': status, 'user_id': user_id, 'id': task_id, _token : token },
 				success: function(data){
 					// Sticky buttons
-						alert('Data changed!')
+					alert('Data changed!')
 					
 					location.reload();
 				}
@@ -277,10 +307,9 @@
 		})
 	})
 	
-	
-	function updatestatus(id){
+	$("#btn-update").click(function(){ 
 		var token = getToken();
-		var id = id;
+		var id = $('#task_id').val();
 		var status = 3; 
 		
 		$.ajax({
@@ -289,9 +318,15 @@
 			// 'url': '/updatestatus',
 			// 'method': 'POST',
 			data: {'status': status, 'id': id, _token : token },
+			success: function(data){
+					// Sticky buttons
+					// alert('Data changed!')
+					
+					location.reload();
+				}
 		});
-		
-	}
+	});	
+	
 </script>
 
 <script type="text/javascript">
