@@ -19,9 +19,9 @@ class PaymentController extends Controller
     public function index()
     {
         if(\Auth::user()->role > 20){
-            $payments = Payment::where('user_id',\Auth::user()->id)->orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('tgl_bayar','ASC')->get();
+            $payments = Payment::where('user_id',\Auth::user()->id)->orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('tgl_bayar','desc')->get();
         } else {
-            $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('tgl_bayar','ASC')->get();
+            $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('tgl_bayar','desc')->get();
         }
         return view('payments.index', compact('payments'));
     }
