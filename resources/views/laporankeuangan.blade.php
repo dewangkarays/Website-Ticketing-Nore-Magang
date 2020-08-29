@@ -17,7 +17,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Statistik Pembayaran</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Laporan Keuangan</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -30,23 +30,31 @@
 		<!-- Zoom option -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-				<h5 class="card-title">Pembayaran Pertahun</h5>
+				<h5 class="card-title">Laporan Keuangan Tahunan</h5>
 			</div>
 
 			<div class="card-body">
 				<div class="chart-container">
-					<form action="{{route('stat_payment')}}" method="post">
+					<form action="{{route('filterKeuangan')}}" method="post">
 						@csrf
 						<div class="form-group row">
 							<div class="col-lg-3">
 								<label>Tahun :</label>
 								<select name="tahun" class="form-control select-search" data-fouc>
-									<option value="{{date('Y')}}">{{date('Y')}}</option>
+									{{-- <option value="{{date('Y')}}">{{date('Y')}}</option>
 									@foreach($years as $year)
 										@if($year->tahun != date('Y'))
 										<option value="{{$year->tahun}}" {{ $filter == $year->tahun ? 'selected' : '' }}>{{$year->tahun}}</option>
 										@endif
-				    				@endforeach
+									@endforeach --}}
+									@for ($date = 2019; $date <= date('2050'); $date++)
+										@if ($filter == '')
+											<option value=" {{ $date }} "> {{$date}} </option>
+										@else
+										<option value=" {{ $date }} " {{ $filter == $date ? 'selected' : '' }} > {{$date}} </option>
+										@endif
+									@endfor
+
 								</select>
 							</div>
 							<div class="col-lg-3">
@@ -68,7 +76,7 @@
 				<!-- Basic pie -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Pembayaran per layanan</h5>
+						<h5 class="card-title">Total Pemasukan</h5>
 					</div>
 
 					<div class="card-body">
@@ -80,96 +88,9 @@
 				<!-- /basic pie -->
 
 			</div>
-
-			<div class="col-xl-6">
-
-				<!-- Basic Table -->
-				<div class="card">
-					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Pembayaran Terakhir</h5>
-					</div>
-
-					<div class="card-body">
-						<div class="chart-container">
-							<table class="table datatable-basic table-hover">
-								<thead>
-									<tr>
-										<th>No</th>
-										<th>Pelanggan</th>
-										<th>Tanggal</th>
-										<th>Jumlah</th>
-									</tr>
-								</thead>
-								<tbody>
-								@if(!$clients->isEmpty())
-									@php ($i = 1)
-									@foreach($clients as $client)
-								    <tr>
-								        <td>{{$i}}</td>
-								        <td><div class="datatable-column-width">{{$client->user->username}}</div></td>
-								        <td><div class="datatable-column-width">{{$client->tgl_bayar}}
-								        </div></td>
-								        <td><div class="datatable-column-width">Rp {{number_format($client->nominal,0,',','.')}}
-								        </div></td>
-								    </tr>
-								    @php ($i++)
-								    @endforeach
-								@else
-								  	<tr><td align="center" colspan="4">Data Kosong</td></tr>
-								@endif 
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- /basic donut -->
-
-			</div>
 		</div>	
-		<!-- /pie and donut -->
-		
-		<div class="row">
-			<div class="col-xl-6">
+        <!-- /pie and donut -->
 
-				<!-- Basic pie -->
-				<div class="card">
-					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Total Pembayaran per Perlanggan</h5>
-					</div>
-
-					<div class="card-body">
-						<div class="chart-container">
-							<table class="table datatable-basic table-hover">
-								<thead>
-									<tr>
-										<th>No</th>
-										<th>Pelanggan</th>
-										<th>Jumlah</th>
-									</tr>
-								</thead>
-								<tbody>
-								@if(!$totals->isEmpty())
-									@php ($i = 1)
-									@foreach($totals as $total)
-								    <tr>
-								        <td>{{$i}}</td>
-								        <td><div class="datatable-column-width">{{$total->user->username}}</div></td>
-								        <td><div class="datatable-column-width">{{number_format($total->total,0,',','.')}}</div></td>
-								    </tr>
-								    @php ($i++)
-								    @endforeach
-								@else
-								  	<tr><td align="center" colspan="3">Data Kosong</td></tr>
-								@endif 
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- /basic pie -->
-
-			</div>
-		</div>
 
 	</div>
 	<!-- /content area -->
@@ -188,7 +109,9 @@
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
-	<!-- <script src="{{asset('global_assets/js/demo_pages/charts/echarts/lines.js')}}"></script> -->
+    <!-- <script src="{{asset('global_assets/js/demo_pages/charts/echarts/lines.js')}}"></script> -->
+    
+
 	<script type="text/javascript">
 
 		var EchartsColumnsWaterfalls = function() {
@@ -303,7 +226,59 @@
 		                series: [
 		                @foreach($chart as $name => $data)
 		                    {
-		                        name: '{{config("custom.role.".$name)}}',
+		                        name: 'Total Pemasukan Bruto',
+		                        type: 'bar',
+		                        data: [
+		                        	@foreach($data as $val)
+		                        		{{$val}},
+		                        	@endforeach
+		                        ],
+		                        // itemStyle: {
+		                        //     normal: {
+		                        //         label: {
+		                        //             show: true,
+		                        //             position: 'top',
+		                        //             textStyle: {
+		                        //                 fontWeight: 500
+		                        //             }
+		                        //         }
+		                        //     }
+		                        // },
+		                        // markLine: {
+		                        //     data: [{type: 'average', name: 'Average'}]
+		                        // }
+		                    },
+                        @endforeach
+
+                        @foreach($chart2 as $name => $data)
+		                    {
+		                        name: 'Total Pengeluaran',
+		                        type: 'bar',
+		                        data: [
+		                        	@foreach($data as $val)
+		                        		{{$val}},
+		                        	@endforeach
+		                        ],
+		                        // itemStyle: {
+		                        //     normal: {
+		                        //         label: {
+		                        //             show: true,
+		                        //             position: 'top',
+		                        //             textStyle: {
+		                        //                 fontWeight: 500
+		                        //             }
+		                        //         }
+		                        //     }
+		                        // },
+		                        // markLine: {
+		                        //     data: [{type: 'average', name: 'Average'}]
+		                        // }
+		                    },
+                        @endforeach
+                        
+                        @foreach($neto as $name => $data)
+		                    {
+		                        name: 'Total Pemasukan Neto',
 		                        type: 'bar',
 		                        data: [
 		                        	@foreach($data as $val)
@@ -364,7 +339,9 @@
 		    EchartsColumnsWaterfalls.init();
 		});
 
-	</script>
+    </script>
+    
+    
 	<script type="text/javascript">
 		
 		var EchartsPiesDonuts = function() {
@@ -399,7 +376,7 @@
 
 		                // Add title
 		                title: {
-		                    text: 'Persentase Pembayaran',
+		                    text: 'Persentase Pemasukan',
 		                    left: 'center',
 		                    textStyle: {
 		                        fontSize: 17,
@@ -485,66 +462,9 @@
 		document.addEventListener('DOMContentLoaded', function() {
 		    EchartsPiesDonuts.init();
 		});
-	</script>
-	<script type="text/javascript">
-		var DatatableBasic = function() {
+    </script>
 
-		    // Basic Datatable examples
-		    var _componentDatatableBasic = function() {
-		        if (!$().DataTable) {
-		            console.warn('Warning - datatables.min.js is not loaded.');
-		            return;
-		        }
 
-		        // Setting datatable defaults
-		        $.extend( $.fn.dataTable.defaults, {
-		            autoWidth: false,
-		            columnDefs: [{ 
-		                orderable: false,
-		                //width: 200,
-		                targets: [ 0, 1, 2, 3]
-		            }],
-		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
-		            language: {
-		                search: '<span>Filter:</span> _INPUT_',
-		                searchPlaceholder: 'Type to filter...',
-		                lengthMenu: '<span>Show:</span> _MENU_',
-		                paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
-		            }
-		        });
-
-		        // Basic datatable
-		        $('.datatable-basic').DataTable();
-
-		    };
-
-		    // Select2 for length menu styling
-		    var _componentSelect2 = function() {
-		        if (!$().select2) {
-		            console.warn('Warning - select2.min.js is not loaded.');
-		            return;
-		        }
-
-		        // Initialize
-		        $('.dataTables_length select').select2({
-		            minimumResultsForSearch: Infinity,
-		            dropdownAutoWidth: true,
-		            width: 'auto'
-		        });
-		    };
-
-		    return {
-		        init: function() {
-		            _componentDatatableBasic();
-		            _componentSelect2();
-		        }
-		    }
-		}();
-
-		document.addEventListener('DOMContentLoaded', function() {
-		    DatatableBasic.init();
-		});
-	</script>
 	<script type="text/javascript">
 		$( document ).ready(function() {
 	        // Default style

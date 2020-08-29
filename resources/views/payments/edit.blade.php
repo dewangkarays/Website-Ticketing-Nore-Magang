@@ -26,7 +26,7 @@
 					@csrf
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Data Payment</legend>
-						@if(\Auth::user()->role==1)
+						{{-- @if(\Auth::user()->role==1) --}}
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">User</label>
 								<div class="col-lg-10">
@@ -37,6 +37,38 @@
 									</select>
 									<input type="hidden" id="user_kadaluarsa" value="{{$payment->user->kadaluarsa}}">
 									<input type="hidden" id="user_role" value="{{$payment->user->role}}">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">Tagihan</label>
+								<div class="col-lg-10">
+									<select name="tagihan_id" id="tagihan_id" class="form-control select-search" data-fouc onchange="changeTagihan(this)" required>
+										<option value="">-- Pilih Tagihan --</option>
+										@foreach($tagihans as $tagihan)
+											<option value="{{$tagihan->id}}" data-tagihan="{{$tagihan->jml_tagih}}" {{ $tagihan->id==$detailtagih->id ? 'selected' : ''}}>{{$tagihan->invoice}} ({{number_format($tagihan->jml_tagih,0,',','.')}})</option>
+					    				@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">&nbsp;</label>
+								<div class="col-lg-10" id="detailTagihan">
+									<table class="table table-striped">
+										<tr>
+											<td>Langganan</td>
+											<td>Ads</td>
+											<td>Lainnya</td>
+											<td>Sudah Dibayar</td>
+											<td>Total Tagihan</td>
+										</tr>
+										<tr>
+											<td>{{number_format($detailtagih->langganan,0,',','.')}}</td>
+											<td>{{number_format($detailtagih->ads,0,',','.')}}</td>
+											<td>{{number_format($detailtagih->lainnya,0,',','.')}}</td>
+											<td>{{number_format($detailtagih->jml_bayar,0,',','.')}}</td>
+											<td>{{number_format($detailtagih->jml_tagih,0,',','.')}}</td>
+										</tr>
+									</table>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -54,7 +86,7 @@
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Nominal</label>
 								<div class="col-lg-10">
-									<input type="text" id="tertulis" class="form-control border-teal border-1 numeric" placeholder="Nominal" style="font-size: 15px;" required value="{{ $payment->nominal }}">
+									<input type="text" id="tertulis" min="1" max="{{$detailtagih->jml_bayar+$detailtagih->jml_tagih}}" class="form-control border-teal border-1 numeric" placeholder="Nominal" style="font-size: 15px;" required value="{{ $payment->nominal }}">
 									<input type="hidden" name="nominal" id="nominal" class="form-control border-teal border-1" value="{{ $payment->nominal }}">
 								</div>
 							</div>
@@ -74,7 +106,7 @@
 									@endif
 								</div>
 							</div>
-							<div class="form-group row">
+							{{-- <div class="form-group row">
 								<label class="col-form-label col-lg-2">Status</label>
 								<div class="col-lg-10">
 									<select name="status" class="form-control">
@@ -83,11 +115,11 @@
 	                                    <option value="2" {{ $payment->status == "2" ? 'selected' : '' }}>Ditolak</option>
 	                                </select>
 								</div>
-							</div>
+							</div> --}}
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Jumlah Update Task</label>
 								<div class="col-lg-10">
-									<input type="number" id="updtask" name="task_count" class="form-control border-teal border-1" placeholder="jumlah update task">
+									<input type="number" id="updtask" name="task_count" class="form-control border-teal border-1" value="{{ $payment->task_count }}" placeholder="jumlah update task">
 								</div>
 							</div>
 
@@ -96,7 +128,7 @@
 								<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
 							</div>
 
-						@elseif($payment->status==0)
+						{{-- @elseif($payment->status==0)
 							@if(\Auth::user()->role==10)
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2">User</label>
@@ -228,7 +260,7 @@
 								<a href="{{ route('payments.index')}}"><button type="button" class="btn btn-primary">Kembali <i class="icon-undo2 ml-2"></i></button></a>
 							</div>
 
-						@endif
+						@endif --}}
 				</form>
 			</div>
 
@@ -276,22 +308,22 @@
 			$('#tertulis').val(harga);
 			console.log(harga);
 
-			var str = $('#user_kadaluarsa').val();
-			console.log(str);
-			var tgl = str.split("-");
-			var picker = $(".kadaluarsa").pickadate('picker');console.log(picker);
-			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
-			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
-	        picker.render();
+			// var str = $('#user_kadaluarsa').val();
+			// console.log(str);
+			// var tgl = str.split("-");
+			// var picker = $(".kadaluarsa").pickadate('picker');console.log(picker);
+			// picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
+			// picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
+	        // picker.render();
 			
-			var role = $('#user_role').val();
-			if(role==99){
-				$('#updtask').val('3');
-			} else if(role==90){
-				$('#updtask').val('15');
-			} else {
-				$('#updtask').val('0');
-			}
+			// var role = $('#user_role').val();
+			// if(role==99){
+			// 	$('#updtask').val('3');
+			// } else if(role==90){
+			// 	$('#updtask').val('15');
+			// } else {
+			// 	$('#updtask').val('0');
+			// }
 
 		});
 
@@ -307,21 +339,47 @@
         });
 
 		function changeDate(select){
+			var id = $(select).find(':selected').val();
 			var str = $(select).find(':selected').data('kadaluarsa');
 			var tgl = str.split("-");
 			var picker = $(".kadaluarsa").pickadate('picker');
+			
 			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
-			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
+			picker.set('select', '');
+			picker.set('select', null);
 	        picker.render();
+			
+			// var role = $(select).find(':selected').data('role');
+			// if(role==99){
+			// 	$('#updtask').val('3');
+			// } else if(role==90){
+			// 	$('#updtask').val('15');
+			// } else {
+			// 	$('#updtask').val('0');
+			// }
 
-			var role = $(select).find(':selected').data('role');
-			if(role==99){
-				$('#updtask').val('3');
-			} else if(role==90){
-				$('#updtask').val('15');
-			} else {
-				$('#updtask').val('0');
-			}
+			$.ajax({
+				type: 'GET',
+				url: "{{ url('/gettagihan')}}/"+id,
+				success: function (data) {
+					$('#tagihan_id').html(data);
+				}
+			});
+		}
+
+		function changeTagihan(select){
+			var id = $(select).find(':selected').val();
+			var tagih = $(select).find(':selected').data('tagihan');
+
+			$("#tertulis").prop('max',tagih);
+
+			$.ajax({
+				type: 'GET',
+				url: "{{ url('/detailtagihan')}}/"+id,
+				success: function (data) {
+					$('#detailTagihan').html(data);
+				}
+			});
 		}
 
 		$(document).on("input", ".numeric", function() {

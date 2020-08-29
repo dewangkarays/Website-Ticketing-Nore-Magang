@@ -51,19 +51,19 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Langganan</label>
 							<div class="col-lg-10">
-								<input type="number" min="0" name="langganan" class="form-control border-teal border-1" placeholder="Nominal" required>
+								<input type="number" min="0" name="langganan" class="form-control border-teal border-1" placeholder="Nominal">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Ads</label>
 							<div class="col-lg-10">
-								<input type="number" min="0" name="ads" class="form-control border-teal border-1" placeholder="Nominal" required>
+								<input type="number" min="0" name="ads" class="form-control border-teal border-1" placeholder="Nominal">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Lainnya</label>
 							<div class="col-lg-10">
-								<input type="number" min="0" name="lainnya" class="form-control border-teal border-1" placeholder="Nominal" required>
+								<input type="number" min="0" name="lainnya" class="form-control border-teal border-1" placeholder="Nominal">
 							</div>
 						</div>
 						<div class="form-group row">

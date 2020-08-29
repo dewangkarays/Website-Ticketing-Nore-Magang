@@ -20,7 +20,7 @@ class TaskController extends Controller
     public function index()
     {
         if(\Auth::user()->role > 20){
-            $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id')
+            $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id',)
                         ->where('tasks.status','!=','3')
                         ->where('user_id',\Auth::user()->id)
                         ->orderBy('tasks.status', 'DESC')
@@ -34,7 +34,7 @@ class TaskController extends Controller
                         ->orderBy('tasks.status', 'DESC')
                         ->orderBy('users.role', 'ASC')
                         ->orderBy('tasks.created_at', 'ASC')
-                        ->select('tasks.*')
+                        ->select('tasks.*','users.task_count')
                         ->get(); //admin & karyawan
         }
         
@@ -48,7 +48,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $users = User::where('role','>','20')->get(); //role customer
+        $users = User::where('role','>','20')->where('task_count','>','0')->get(); //role customer
         $handlers = User::where('role','10')->get(); //role karyawan
 
         return view('tasks.create', compact('users','handlers'));
@@ -254,6 +254,25 @@ class TaskController extends Controller
         return redirect('/tasks')->with('success', 'Task deleted!');
     }
 
+    public function updatestatus(Request $request)
+    {
+        $task = Task::find($request->id);
+        $task->status = $request->status;
+        
+        // print_r($task);
+        $task->save();
+    }
+
+    public function changehandler(Request $request)
+    {
+        $task = Task::find($request->id);
+        $task->status = $request->status;
+        $task->handler = $request->user_id;
+        $task->save();
+        
+        return response()->json(['success'=>'Data changed successfully.']);
+    }
+
     public function antrian()
     {
         $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id')
@@ -399,6 +418,6 @@ class TaskController extends Controller
             }
         }
 
-        dd($chart);
+        // dd($chart);
     }
 }

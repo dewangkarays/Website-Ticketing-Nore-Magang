@@ -37,7 +37,7 @@
 						<th>Username</th>
 						<th>Keterangan</th>
 						<th>Nominal</th>
-						<th class="text-center">Status</th>
+						{{-- <th class="text-center">Status</th> --}}
 						<th>Tgl Pembayaran</th>
 						<th class="text-center">Actions</th>
 					</tr>
@@ -50,13 +50,13 @@
 				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{$payment->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$payment->keterangan}}</div></td>
-				        <td style="font-size: 15px;">@angka($payment->nominal)</td>
-				        <td align="center">@if($payment->status == 0 )
+				        <td style="font-size: 15px;">Rp @angka($payment->nominal)</td>
+				        {{-- <td align="center">@if($payment->status == 0 )
 								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.payment.'.$payment->status)}}</span>
 							@else
 								{{config('custom.payment.'.$payment->status)}}
 							@endif
-						</td>
+						</td> --}}
 				        <td>{{$payment->tgl_bayar}}</td>
 				        <td align="center">
 							<div class="list-icons">
@@ -81,7 +81,7 @@
 				    @php ($i++)
 				    @endforeach
 				@else
-				  	<tr><td align="center" colspan="5">Data Kosong</td></tr>
+				  	<tr><td align="center" colspan="6">Data Kosong</td></tr>
 				@endif 
 				    
 				</tbody>

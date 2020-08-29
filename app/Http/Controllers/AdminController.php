@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Task;
+use App\Model\Tagihan;
+use App\Model\Payment;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -40,7 +42,10 @@ class AdminController extends Controller
         $new = Task::where('status', '=', '1')->where('user_id',\Auth::user()->id)->get()->count();
         $ongoing = Task::where('status', '=', '2')->where('user_id',\Auth::user()->id)->get()->count();
         $done = Task::where('status', '=', '3')->where('user_id',\Auth::user()->id)->get()->count();
-        return view("index", compact('new','ongoing','done'));
+        $tagihan = Tagihan::where('user_id',\Auth::user()->id)->get();
+        $totalbayar = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->sum('jml_bayar');
+        $lastpayment = Payment::where('user_id',\Auth::user()->id)->orderBy('tgl_bayar','desc')->get()->first();
+        return view("index", compact('new','ongoing','done','tagihan','lastpayment','totalbayar'));
     }
 
     

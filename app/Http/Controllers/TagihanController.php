@@ -46,8 +46,18 @@ class TagihanController extends Controller
 
         $data = $request->except(['_token', '_method']);
 
+        if($request->get('langganan')==''){
+            $data['langganan'] = 0;
+        }
+        if($request->get('ads')==''){
+            $data['ads'] = 0;
+        }
+        if($request->get('lainnya')==''){
+            $data['lainnya'] = 0;
+        }
+
         $data['invoice'] = 'INV'.date('YmdHis');
-        $data['jml_tagih'] = $request->get('langganan') + $request->get('ads') + $request->get('lainnya');
+        $data['jml_tagih'] = $data['langganan'] + $data['ads'] + $data['lainnya'];
 
         $tagihan = Tagihan::create($data);
         
@@ -95,7 +105,20 @@ class TagihanController extends Controller
         $data = $request->except(['_token', '_method']);
         $tagihan = Tagihan::find($id);
 
-        $data['jml_tagih'] = $request->get('langganan') + $request->get('ads') + $request->get('lainnya');
+        if($request->get('langganan')==''){
+            $data['langganan'] = 0;
+        }
+        if($request->get('ads')==''){
+            $data['ads'] = 0;
+        }
+        if($request->get('lainnya')==''){
+            $data['lainnya'] = 0;
+        }
+        if($request->get('jml_bayar')==''){
+            $data['jml_bayar'] = 0;
+        }
+
+        $data['jml_tagih'] = $data['langganan'] + $data['ads'] + $data['lainnya'];
 
         $tagihan->update($data);
         
@@ -114,5 +137,40 @@ class TagihanController extends Controller
         $tagihan->delete();
 
         return redirect('/tagihans')->with('success', 'Tagihan deleted!');
+    }
+    
+    public function getTagihan($id)
+    {
+        $tagihans = Tagihan::where('user_id', $id)->get();
+        $html = '<option value="">-- Pilih Tagihan --</option>';
+        foreach ($tagihans as $tagihan) {
+            $html .= '<option value="'.$tagihan->id.'" data-tagihan="'.$tagihan->jml_tagih.'" >'.$tagihan->invoice.' ('.number_format($tagihan->jml_tagih,0,',','.').')</option>';
+        }
+
+        return $html;
+    }
+    
+    public function detailTagihan($id)
+    {
+        $tagihan = Tagihan::find($id);
+        $html = '
+        <table class="table table-striped">
+            <tr>
+                <td>Langganan</td>
+                <td>Ads</td>
+                <td>Lainnya</td>
+                <td>Sudah Dibayar</td>
+                <td>Total Tagihan</td>
+            </tr>
+            <tr>
+                <td>'.number_format($tagihan->langganan,0,',','.').'</td>
+                <td>'.number_format($tagihan->ads,0,',','.').'</td>
+                <td>'.number_format($tagihan->lainnya,0,',','.').'</td>
+                <td>'.number_format($tagihan->jml_bayar,0,',','.').'</td>
+                <td>'.number_format($tagihan->jml_tagih,0,',','.').'</td>
+            </tr>
+        </table>';
+
+        return $html;
     }
 }

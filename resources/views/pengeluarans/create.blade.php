@@ -6,7 +6,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Ubah Tagihan</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Tambah Pengeluaran</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -21,76 +21,51 @@
 			<div class="card-header header-elements-inline">
 			</div>
 			<div class="card-body">
-				<form class="form-validate-jquery" action="{{ route('tagihans.update', $tagihan->id)}}" method="post">
-					@method('PATCH')
+				<form class="form-validate-jquery" action="{{ route('pengeluarans.store')}}" method="post">
 					@csrf
 					<fieldset class="mb-3">
-						<legend class="text-uppercase font-size-sm font-weight-bold">Data Tagihan</legend>
+                        <legend class="text-uppercase font-size-sm font-weight-bold">Data Tagihan</legend>
+                        
+                        <div class="form-group row">
+							<label class="col-form-label col-lg-2">Tanggal</label>
+							<div class="col-lg-10">
+								<input name="tanggal" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pengeluaran" required>
+							</div>
+                        </div>
+                        
+                        <div class="form-group row">
+							<label class="col-form-label col-lg-2">Nama Pengeluaran</label>
+							<div class="col-lg-10">
+								<input name="pengeluaran" type="text" class="form-control" placeholder="Nama Pengeluaran" required>
+							</div>
+						</div>
 
 						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Pelanggan</label>
+							<label class="col-form-label col-lg-2">Jenis Pengeluaran</label>
 							<div class="col-lg-10">
-								<select name="user_id" class="form-control select-search" required>
-									<option value="">-- Pilih Pelanggan --</option>
-									@foreach ($users as $user)
-										<option {{ $tagihan->user_id == $user->id ? 'selected' : '' }} value="{{$user->id}}">{{$user->nama.' ('.$user->username.')'}}</option>
-									@endforeach
-									
+								<select name="jenis_pengeluaran" class="form-control bg-teal-400 border-teal-400" required>
+                                    <option value="0">Gaji</option>
+                                    <option value="1">Aset</option>
+                                    <option value="2">Non-Aset (Iklan, Domain, Hosting)</option>
+                                    <option value="3">Tunjangan</option>
+                                    <option value="4">Bonus</option>
+                                    <option value="5">Lain - Lain</option>
                                 </select>
 							</div>
 						</div>
-						{{-- <div class="form-group row">
-							<label class="col-form-label col-lg-2">Tipe</label>
-							<div class="col-lg-10">
-								<select name="tipe" class="form-control select-search" required>
-                                    <option>Langganan</option>
-                                    <option>Ads</option>
-                                    <option>Lainnya</option>
-                                </select>
-							</div>
-						</div> --}}
+						
 						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Langganan</label>
+							<label class="col-form-label col-lg-2">Nominal</label>
 							<div class="col-lg-10">
-								<input type="number" min="0" name="langganan" value="{{ $tagihan->langganan }}" class="form-control border-teal border-1" placeholder="Nominal">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Ads</label>
-							<div class="col-lg-10">
-								<input type="number" min="0" name="ads" value="{{ $tagihan->ads }}" class="form-control border-teal border-1" placeholder="Nominal">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Lainnya</label>
-							<div class="col-lg-10">
-								<input type="number" min="0" name="lainnya" value="{{ $tagihan->lainnya }}" class="form-control border-teal border-1" placeholder="Nominal">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Jml Bayar</label>
-							<div class="col-lg-10">
-								<input type="text" name="jml_bayar" value="{{ $tagihan->jml_bayar }}" class="form-control border-teal border-1" placeholder="Nominal">
+								<input type="number" min="0" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" required>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Keterangan</label>
 							<div class="col-lg-10">
-								<input type="text" name="keterangan" value="{{ $tagihan->keterangan }}" class="form-control border-teal border-1" placeholder="Keterangan">
+								<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan">
 							</div>
 						</div>
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Status</label>
-							<div class="col-lg-10">
-								<select name="status" class="form-control select-search" required>
-									@foreach (config('custom.tagihan_status') as $key => $val)
-										<option {{ $tagihan->status == $key ? 'selected' : '' }} value="{{$key}}">{{$val}}</option>
-									@endforeach
-									
-                                </select>
-							</div>
-						</div>
-
 					</fieldset>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
@@ -185,24 +160,22 @@
 		                }
 		            },
 		            messages: {
-		                nama: {
+		                tanggal: {
 		                    required: 'Mohon diisi.'
 		                },
-		                email: {
+		                pengeluaran: {
 		                    required: 'Mohon diisi.'
 		                },
-		                telp: {
-		                    required: 'Mohon diisi.'
-		                },
-		                tagihanname: {
-		                    required: 'Mohon diisi.'
-		                },
-		                // password: {
+		                // jenis_pengeluaran: {
 		                //     required: 'Mohon diisi.'
 		                // },
-		                role: {
+		                nominal: {
 		                    required: 'Mohon diisi.'
 		                },
+		                // keterangan: {
+		                //     required: 'Mohon diisi.'
+		                // },
+		                
 		            },
 		        });
 
@@ -250,5 +223,4 @@
 
 		});
 	</script>
-	
 @endsection

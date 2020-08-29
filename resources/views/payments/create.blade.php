@@ -47,6 +47,35 @@
 						</div>
 						@endif
 						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Tagihan</label>
+							<div class="col-lg-10">
+								<select name="tagihan_id" id="tagihan_id" class="form-control select-search" data-fouc onchange="changeTagihan(this)" required>
+									<option value="">-- Pilih Tagihan --</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">&nbsp;</label>
+							<div class="col-lg-10" id="detailTagihan">
+								<table class="table table-striped">
+									<tr>
+										<td>Langganan</td>
+										<td>Ads</td>
+										<td>Lainnya</td>
+										<td>Sudah Dibayar</td>
+										<td>Total Tagihan</td>
+									</tr>
+									<tr>
+										<td>-</td>
+										<td>-</td>
+										<td>-</td>
+										<td>-</td>
+										<td>-</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
 							<div class="col-lg-10">
 								<input name="tgl_bayar" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pembayaran" required>
@@ -61,7 +90,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nominal</label>
 							<div class="col-lg-10">
-								<input type="text" id="tertulis" class="form-control border-teal border-1 numeric" placeholder="Nominal" style="font-size: 15px;" required>
+								<input type="text" min="1" max="1" id="tertulis" class="form-control border-teal border-1 numeric" placeholder="Nominal" style="font-size: 15px;" required>
 								<input type="hidden" name="nominal" id="nominal" class="form-control border-teal border-1">
 							</div>
 						</div>
@@ -73,9 +102,10 @@
 									<span class="input-group-text"><i class="icon-calendar3"></i></span>
 								</span> -->
 								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility kadaluarsa" placeholder="Tanggal Masa Aktif">
+								<span class="form-text text-muted">Biarkan kosong jika tidak ada update masa aktif</span>
 							</div>
 						</div>
-						<div class="form-group row">
+						{{-- <div class="form-group row">
 							<label class="col-form-label col-lg-2">Status</label>
 							<div class="col-lg-10">
 								<select name="status" class="form-control">
@@ -84,7 +114,7 @@
                                     <option value="2">Ditolak</option>
                                 </select>
 							</div>
-						</div>
+						</div> --}}
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Jumlah Update Task</label>
 							<div class="col-lg-10">
@@ -145,21 +175,47 @@
         });
 
 		function changeDate(select){
+			var id = $(select).find(':selected').val();
 			var str = $(select).find(':selected').data('kadaluarsa');
 			var tgl = str.split("-");
 			var picker = $(".kadaluarsa").pickadate('picker');
+			
 			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
-			picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
+			picker.set('select', '');
+			picker.set('select', null);
 	        picker.render();
 			
-			var role = $(select).find(':selected').data('role');
-			if(role==99){
-				$('#updtask').val('3');
-			} else if(role==90){
-				$('#updtask').val('15');
-			} else {
-				$('#updtask').val('0');
-			}
+			// var role = $(select).find(':selected').data('role');
+			// if(role==99){
+			// 	$('#updtask').val('3');
+			// } else if(role==90){
+			// 	$('#updtask').val('15');
+			// } else {
+			// 	$('#updtask').val('0');
+			// }
+
+			$.ajax({
+				type: 'GET',
+				url: "{{ url('/gettagihan')}}/"+id,
+				success: function (data) {
+					$('#tagihan_id').html(data);
+				}
+			});
+		}
+
+		function changeTagihan(select){
+			var id = $(select).find(':selected').val();
+			var tagih = $(select).find(':selected').data('tagihan');
+
+			$("#tertulis").prop('max',tagih);
+
+			$.ajax({
+				type: 'GET',
+				url: "{{ url('/detailtagihan')}}/"+id,
+				success: function (data) {
+					$('#detailTagihan').html(data);
+				}
+			});
 		}
 
 		$(document).on("input", ".numeric", function() {
@@ -177,7 +233,6 @@
 			var harga = angka.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 			$('#tertulis').val(harga);
 
-			console.log(harga);
 		});
 
 	</script>

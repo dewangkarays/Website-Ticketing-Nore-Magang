@@ -14,7 +14,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Tagihan</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Pengeluaran</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -27,32 +27,33 @@
 		<!-- Hover rows -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-				<a href="{{ route('tagihans.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+				<a href="{{ route('pengeluarans.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
 			</div>
 
 			<table class="table datatable-basic table-hover">
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>Nama</th>
-						<th>Username</th>
-						<th>Invoice</th>
-						<th>Tagihan</th>
-						<th class="text-center">Status</th>
+						<th>Tanggal</th>
+						<th>Nama Pengeluaran</th>
+						<th>Jenis Pengeluaran</th>
+						<th>Nominal</th>
+						<th>Keterangan</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
-				@if(!$tagihans->isEmpty())
+				@if(!$pengeluarans->isEmpty())
 					@php ($i = 1)
-					@foreach($tagihans as $tagihan)
+					@foreach($pengeluarans as $pengeluaran)
 				    <tr> 
 				        <td>{{$i}}</td>
-				        <td><div class="datatable-column-width">{{$tagihan->user->nama}}</div></td>
-				        <td><div class="datatable-column-width">{{$tagihan->user->username}}</div></td>
-				        <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
-				        <td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
-				        <td align="center">{{config('custom.tagihan_status.'.$tagihan->status)}}</td>
+				        <td><div class="datatable-column-width">{{$pengeluaran->tanggal}}</div></td>
+				        <td><div class="datatable-column-width">{{$pengeluaran->pengeluaran}}</div></td>
+				        <td><div class="datatable-column-width">{{config('custom.pengeluaran.'.$pengeluaran->jenis_pengeluaran)}}</div></td>
+				        <td><div class="datatable-column-width">Rp @angka($pengeluaran->nominal)</div></td>
+				        <td><div class="datatable-column-width">{{$pengeluaran->keterangan}}</div></td>
+				        
 						</td>
 				        <td align="center">
 							<div class="list-icons">
@@ -62,8 +63,8 @@
 									</a>
 
 									<div class="dropdown-menu dropdown-menu-right">
-										<a href="{{ route('tagihans.edit',$tagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tagihans.destroy', $tagihan->id)}}"><i class="icon-x"></i> Delete</a>
+										<a href="{{ route('pengeluarans.edit',$pengeluaran->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('pengeluarans.destroy', $pengeluaran->id)}}"><i class="icon-x"></i> Delete</a>
 									</div>
 								</div>
 							</div>
