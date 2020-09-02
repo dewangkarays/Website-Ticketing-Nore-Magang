@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::resource('users', 'UserController');
 		Route::resource('laporankeuangan', 'LaporanKeuanganController');
 		Route::match(['get', 'post'], '/laporankeuangan',  'LaporanKeuanganController@index')->name('filterKeuangan');
+		// Route::post('/laporankeuangan',  'LaporanKeuanganController@index')->name('filterbulan');
 	});
 
 	//customer
