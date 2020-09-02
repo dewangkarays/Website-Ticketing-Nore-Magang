@@ -109,7 +109,7 @@
 								</div>
 							@endif
 
-							@if(\Auth::user()->role==1 || \Auth::user()->role==10)
+							@if(\Auth::user()->role==1)
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2">Assign</label>
 									<div class="col-lg-10">
@@ -131,6 +131,19 @@
 		                                </select>
 									</div>
 								</div>
+							@elseif(\Auth::user()->role==10)
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">Assign</label>
+								<div class="col-lg-10">
+									<label class="col-form-label col-lg-2">{{$task->assign->nama}}</label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">Status</label>
+								<div class="col-lg-10">
+									<label class="col-form-label col-lg-2">{{config('custom.status.'.$task->status)}}</label>
+								</div>
+							</div>
 							@endif
 							</fieldset>
 							<div class="text-right">

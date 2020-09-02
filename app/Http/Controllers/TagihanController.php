@@ -173,4 +173,21 @@ class TagihanController extends Controller
 
         return $html;
     }
+
+    public function tagihanuser()
+    {
+        $tagihans = Tagihan::where('user_id',\Auth::user()->id)->get( );
+       
+        return view('tagihanuser', compact('tagihans'));
+    }
+
+    public function bayaruser($id)
+    {
+        $tagihanuser = Tagihan::where('user_id',\Auth::user()->id)->get( );
+        $users = User::where('role','>=',80)->get();
+        $tagihanuser2 = Tagihan::find($id);
+        // dd($tagihanuser2);
+        // dd($tagihan);
+        return view('payments.create', compact('users', 'tagihanuser', 'tagihanuser2'));
+    }
 }

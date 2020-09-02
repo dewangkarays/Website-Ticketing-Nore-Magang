@@ -142,9 +142,11 @@ class TaskController extends Controller
     {
         $users = User::where('role','>','20')->get(); //role customer
         $handlers = User::where('role','10')->get(); //role karyawan
+        // $handlersname = Task::find($id)->value('handler');
+        // dd($handlersname);
         $attachment = Attachment::where('task_id', '=', $id)->get();
         $task = Task::find($id);
-
+        // dd($handlersname);
         if (\Auth::user()->role>20 && $task->user_id != \Auth::user()->id) {
             return redirect('/tasks')->with('error', 'Akses tidak diperbolehkan');
         }
@@ -153,7 +155,7 @@ class TaskController extends Controller
         //     return redirect('/tasks')->with('error', 'Task Sedang Dikerjakan');
         // }
 
-        return view('tasks.edit', compact('task','users','handlers','attachment')); 
+        return view('tasks.edit', compact('task', 'users', 'handlers','attachment')); 
     }
 
     /**

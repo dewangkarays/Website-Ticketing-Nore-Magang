@@ -14,7 +14,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Antrian</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Tagihan</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -26,45 +26,50 @@
 
 		<!-- Hover rows -->
 		<div class="card">
+			
 
 			<table class="table datatable-basic table-hover">
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>Tanggal</th>
-						<th>Pelanggan</th>
-						<th>Layanan</th>
-						<th class="text-center">Status</th>
+						<th>Invoice</th>
+                        <th>Tagihan</th>
+                        <th>Nominal yang harus Dibayarkan</th>
+						<th class="text-center">Keterangan</th>
+						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
-				@if(!$tasks->isEmpty())
+				@if(!$tagihans->isEmpty())
 					@php ($i = 1)
-					@foreach($tasks as $task)
-				    <tr>
+					@foreach($tagihans as $tagihan)
+				    <tr> 
 				        <td>{{$i}}</td>
-				        <td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
-							@if (\Auth::user()->role<20)
-							<td><div class="datatable-column-width"> {{$task->user->username}} </div></td>
-							@elseif (\Auth::user()->id == $task->user_id || \Auth::user()->role<20)
-							<td class="bg-primary"><div class="datatable-column-width"> {{$task->user->username}} </div></td>
-							@else
-							<td><div class="datatable-column-width"> Pelanggan Lain </div></td>
-							@endif
-
-				        <td><div class="datatable-column-width">{{config('custom.role.'.$task->user->role)}}</div></td>
-				        <td align="center">@if($task->status == 2 )
-								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.status.'.$task->status)}}</span>
-							@else
-								{{config('custom.status.'.$task->status)}}
-							@endif
+				        <td><div class="datatable-column-width">{{$tagihan->user->nama}}</div></td>
+                        <td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
+                        <td><div class="datatable-column-width">Rp @angka($tagihan->jml_bayar)</div></td>
+				        <td align="center">{{$tagihan->keterangan}}</td>
 						</td>
+				        <td align="center">
+							<div class="list-icons">
+								<div class="dropdown">
+									<a href="#" class="list-icons-item" data-toggle="dropdown">
+										<i class="icon-menu9"></i>
+									</a>
+
+									<div class="dropdown-menu dropdown-menu-right">
+										<a href="{{ route('bayaruser',$tagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Bayar</a>
+									</div>
+								</div>
+							</div>
+				        </td>
 				    </tr>
 				    @php ($i++)
 				    @endforeach
 				@else
-				  	<tr><td align="center" colspan="5">Data Kosong</td></tr>
+				  	<tr><td align="center" colspan="7">Data Kosong</td></tr>
 				@endif 
+				    
 				</tbody>
 			</table>
 		</div>
@@ -102,14 +107,15 @@
 
 @section('js')
 	<!-- Theme JS files -->
-	<script src="{{asset('global_assets/js/plugins/notifications/bootbox.min.js') }}"></script>
-	<script src="{{asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js') }}"></script>
-	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js') }}"></script>
+	<script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/notifications/bootbox.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
 
-	<script src="{{asset('assets/js/app.js') }}"></script>
-	<script src="{{asset('global_assets/js/demo_pages/components_modals.js') }}"></script>
+	<script src="{{asset('assets/js/app.js')}}"></script>
+	<script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
 	<script>
 		//modal delete
 		$(document).on("click", ".delbutton", function () {
@@ -131,8 +137,8 @@
 		            autoWidth: false,
 		            columnDefs: [{ 
 		                orderable: false,
-		                //width: 200,
-		                targets: [ 0, 1, 2, 3, 4]
+		                width: 100,
+		                targets: [ 6 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {

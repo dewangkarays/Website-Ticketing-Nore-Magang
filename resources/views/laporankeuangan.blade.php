@@ -62,17 +62,50 @@
 			</div>
 		</div>
 
+		<div class="card">
+			<div class="card-header header-elements-inline">
+			<h5 class="card-title">Laporan Bulanan</h5>
+			
+			</div>
+
+			<div class="card-body">
+				<div class="chart-container">
+					<form action="{{route('stat_task')}}" method="post">
+						@csrf
+						<div class="form-group row">
+							<div class="col-lg-3">
+								<label>Filter :</label>
+								<select name="filter" class="form-control select-search" data-fouc>
+									@for ($datemonth = 1; $datemonth <= date('12'); $datemonth++)
+									
+									<option value=" {{ $datemonth }} " > {{config('custom.bulan.'.$datemonth)}} </option>
+									
+								@endfor
+								</select>
+							</div>
+							<div class="col-lg-3">
+								<button type="submit" class="btn btn-outline-primary active btnstat" style="bottom:0;">Pilih</button>
+							</div>
+						</div>
+					</form>
+					<hr>
+					<div class="chart has-fixed-height" id="columns_monthly"></div>
+				</div>
+				
+			</div>
+		</div>
+
 		<!-- Zoom option -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-			<h5 class="card-title">Laporan Keuangan Tahun {{$filter}}</h5>
+			<h5 class="card-title">Laporan Tahunan</h5>
 			</div>
 
 			<div class="card-body">
 				<div class="chart-container">
 					
 					<hr>
-					<div class="chart has-fixed-height" id="columns_basic"></div>
+					<div class="chart has-fixed-height" id="columns_yearly"></div>
 				</div>
 				
 			</div>
@@ -199,6 +232,22 @@
 			</div>
 		</div>
 
+		<div class="card">
+
+				<div class="card">
+					<div class="card-header header-elements-inline">
+						<h5 class="card-title">Grafik Keuangan</h5>
+					</div>
+
+					<div class="card-body">
+						<div class="chart-container">
+							<div class="chart has-fixed-height" id="line_zoom"></div>
+						</div>
+					</div>
+				</div>
+
+		</div>
+
 
 		<!-- Pie and donut -->
 		<div class="row">
@@ -263,7 +312,7 @@
     
 
 	<script type="text/javascript">
-
+	// yearly
 		var EchartsColumnsWaterfalls = function() {
 
 		    // Column and waterfall charts
@@ -274,7 +323,7 @@
 		        }
 
 		        // Define elements
-		        var columns_basic_element = document.getElementById('columns_basic');
+		        var columns_basic_element = document.getElementById('columns_yearly');
 
 		        // Basic columns chart
 		        if (columns_basic_element) {
@@ -461,7 +510,428 @@
 		    EchartsColumnsWaterfalls.init();
 		});
 
-    </script>
+	</script>
+
+
+<script type="text/javascript">
+// Laporan bulanan
+	var EchartsColumnsWaterfalls2 = function() {
+
+		// Column and waterfall charts
+		var _columnsWaterfallsExamples2 = function() {
+			if (typeof echarts == 'undefined') {
+				console.warn('Warning - echarts.min.js is not loaded.');
+				return;
+			}
+
+			// Define elements
+			var columns_basic_element2 = document.getElementById('columns_monthly');
+
+			// Basic columns chart
+			if (columns_basic_element2) {
+
+				// Initialize chart
+				var columns_basic2 = echarts.init(columns_basic_element2);
+
+				// Options
+				columns_basic2.setOption({
+
+					// Define colors
+					color: ['#39b772','#26a69a','#dde833','#ffb980','#d87a80'],
+
+					// Global text styles
+					textStyle: {
+						fontFamily: 'Roboto, Arial, Verdana, sans-serif',
+						fontSize: 13
+					},
+
+					// Chart animation duration
+					animationDuration: 750,
+
+					// Setup grid
+					grid: {
+						left: 40,
+						right: 40,
+						top: 35,
+						bottom: 85,
+						containLabel: true
+					},
+
+					// Add legend
+					legend: {
+						data: ['Total Pemasukan Bruto', 'Total Pengeluaran', 'Total Pemasukan Neto'],
+						itemHeight: 8,
+						itemGap: 20,
+						textStyle: {
+							padding: [0, 5]
+						}
+					},
+
+					// Add tooltip
+					tooltip: {
+						trigger: 'axis',
+						backgroundColor: 'rgba(0,0,0,0.75)',
+						padding: [10, 15],
+						textStyle: {
+							fontSize: 13,
+							fontFamily: 'Roboto, sans-serif'
+						}
+					},
+
+					// Horizontal axis
+					xAxis: [{
+						type: 'category',
+						data: [
+						'1'
+						@for($i=2; $i <= $dateina_month; $i++)	
+							,{{ $i }}
+						@endfor
+						],
+						axisLabel: {
+							color: '#333'
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999'
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								color: '#eee',
+								type: 'dashed'
+							}
+						}
+					}],
+
+					// Vertical axis
+					yAxis: [{
+						type: 'value',
+						axisLabel: {
+							color: '#333'
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999'
+							}
+						},
+						splitLine: {
+							lineStyle: {
+								color: ['#eee']
+							}
+						},
+						splitArea: {
+							show: true,
+							areaStyle: {
+								color: ['rgba(250,250,250,0.1)', 'rgba(0,0,0,0.01)']
+							}
+						}
+					}],
+
+					// Add series
+					series: [
+						{
+							name: 'Total Pemasukan Bruto',
+							type: 'bar',
+							data: [
+								@foreach($chartmonth as $hari => $val)
+									{{$val}},
+								@endforeach
+							],
+							// itemStyle: {
+							//     normal: {
+							//         label: {
+							//             show: true,
+							//             position: 'top',
+							//             textStyle: {
+							//                 fontWeight: 500
+							//             }
+							//         }
+							//     }
+							// },
+							// markLine: {
+							//     data: [{type: 'average', name: 'Average'}]
+							// }
+						},
+						
+					]
+				});
+			}
+
+			// Resize function
+			var triggerChartResize2 = function() {
+				columns_basic_element2 && columns_basic2.resize();
+			};
+
+			// On sidebar width change
+			$(document).on('click', '.sidebar-control', function() {
+				setTimeout(function () {
+					triggerChartResize2();
+				}, 0);
+			});
+
+			// On window resize
+			var resizeCharts2;
+			window.onresize = function () {
+				clearTimeout(resizeCharts2);
+				resizeCharts2 = setTimeout(function () {
+					triggerChartResize2();
+				}, 200);
+			};
+		};
+
+		return {
+			init: function() {
+				_columnsWaterfallsExamples2();
+			}
+		}
+	}();
+
+	document.addEventListener('DOMContentLoaded', function() {
+		EchartsColumnsWaterfalls2.init();
+	});
+
+</script>
+
+	
+	<script type="text/javascript">
+
+		var EchartsLines = function() {
+
+		    // Line charts
+		    var _lineChartExamples = function() {
+		        if (typeof echarts == 'undefined') {
+		            console.warn('Warning - echarts.min.js is not loaded.');
+		            return;
+		        }
+
+		        // Define elements
+		        var line_zoom_element = document.getElementById('line_zoom');
+
+		        // Zoom option
+		        if (line_zoom_element) {
+
+		            // Initialize chart
+		            var line_zoom = echarts.init(line_zoom_element);
+
+		            // Options
+		            line_zoom.setOption({
+
+		                // Define colors
+		                color: [
+		                    '#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80',
+		                    '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
+		                    '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
+		                    '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'
+		                ],
+
+		                // Global text styles
+		                textStyle: {
+		                    fontFamily: 'Roboto, Arial, Verdana, sans-serif',
+		                    fontSize: 13
+		                },
+
+		                // Chart animation duration
+		                animationDuration: 750,
+
+		                // Setup grid
+		                grid: {
+		                    left: 40,
+		                    right: 40,
+		                    top: 35,
+		                    bottom: 85,
+		                    containLabel: true
+		                },
+
+		                // Add legend
+		                legend: {
+		                    data: [
+		                    	'Total Pemasukan Bruto', 'Total Pengeluaran', 'Total Pemasukan Neto'
+		                    ],
+		                    itemHeight: 8,
+		                    itemGap: 20
+		                },
+
+		                // Add tooltip
+		                tooltip: {
+		                    trigger: 'axis',
+		                    backgroundColor: 'rgba(0,0,0,0.75)',
+		                    padding: [10, 15],
+		                    textStyle: {
+		                        fontSize: 13,
+		                        fontFamily: 'Roboto, sans-serif'
+		                    }
+		                },
+
+		                // Horizontal axis
+		                xAxis: [{
+		                    type: 'category',
+		                    
+		                    	name: 'Bulan ke-',
+		                    
+					        nameLocation: 'middle',
+					        nameGap: 35,
+		                    boundaryGap: false,
+		                    axisLabel: {
+		                        color: '#333'
+		                    },
+		                    axisLine: {
+		                        lineStyle: {
+		                            color: '#999'
+		                        }
+		                    },
+		                    
+		                    	data: [1,2,3,4,5,6,7,8,9,10,11,12]
+							
+		                }],
+
+		                // Vertical axis
+		                yAxis: [{
+		                    type: 'value',
+		                    
+		                    axisLabel: {
+		                        formatter: '{value} ',
+		                        color: '#333'
+		                    },
+		                    axisLine: {
+		                        lineStyle: {
+		                            color: '#999'
+		                        }
+		                    },
+		                    splitLine: {
+		                        lineStyle: {
+		                            color: ['#eee']
+		                        }
+		                    },
+		                    splitArea: {
+		                        show: true,
+		                        areaStyle: {
+		                            color: ['rgba(250,250,250,0.1)', 'rgba(0,0,0,0.01)']
+		                        }
+		                    }
+		                }],
+
+		                // Zoom control
+		                dataZoom: [
+		                    // {
+		                    //     type: 'inside',
+		                    //     // start: 30,
+		                    //     // end: 70
+		                    // },
+		                    {
+		                        show: true,
+		                        type: 'slider',
+		                        // start: 30,
+		                        // end: 70,
+		                        height: 40,
+		                        bottom: 0,
+		                        borderColor: '#ccc',
+		                        fillerColor: 'rgba(0,0,0,0.05)',
+		                        handleStyle: {
+		                            color: '#585f63'
+		                        }
+		                    }
+		                ],
+
+		                // Add series
+		                series: [
+		                @foreach($chart as $name => $data)
+		                    {
+		                        name: 'Total Pemasukan Bruto',
+		                        type: 'line',
+		                        smooth: true,
+		                        symbolSize: 6,
+		                        itemStyle: {
+		                            normal: {
+		                                borderWidth: 2
+		                            }
+		                        },
+		                        data: [
+		                        	@foreach($data as $val)
+		                        		{{$val}},
+		                        	@endforeach
+		                        ]
+		                    },
+						@endforeach
+
+						@foreach($chart2 as $name => $data)
+		                    {
+		                        name: 'Total Pengeluaran',
+		                        type: 'line',
+		                        smooth: true,
+		                        symbolSize: 6,
+		                        itemStyle: {
+		                            normal: {
+		                                borderWidth: 2
+		                            }
+		                        },
+		                        data: [
+		                        	@foreach($data as $val)
+		                        		{{$val}},
+		                        	@endforeach
+		                        ]
+		                    },
+						@endforeach
+						
+						@foreach($neto as $name => $data)
+		                    {
+		                        name: 'Total Pemasukan Neto',
+		                        type: 'line',
+		                        smooth: true,
+		                        symbolSize: 6,
+		                        itemStyle: {
+		                            normal: {
+		                                borderWidth: 2
+		                            }
+		                        },
+		                        data: [
+		                        	@foreach($data as $val)
+		                        		{{$val}},
+		                        	@endforeach
+		                        ]
+		                    }
+		                @endforeach
+		                ]
+		            });
+		        }
+
+		        // Resize function
+		        var triggerChartResize = function() {
+		            line_zoom_element && line_zoom.resize();
+		        };
+
+		        // On sidebar width change
+		        $(document).on('click', '.sidebar-control', function() {
+		            setTimeout(function () {
+		                triggerChartResize();
+		            }, 0);
+		        });
+
+		        // On window resize
+		        var resizeCharts;
+		        window.onresize = function () {
+		            clearTimeout(resizeCharts);
+		            resizeCharts = setTimeout(function () {
+		                triggerChartResize();
+		            }, 200);
+		        };
+		    };
+
+		    return {
+		        init: function() {
+		            _lineChartExamples();
+		        }
+		    }
+		}();
+
+
+		// Initialize module
+		// ------------------------------
+
+		document.addEventListener('DOMContentLoaded', function() {
+		    EchartsLines.init();
+		});
+	</script>
     
     
 	<script type="text/javascript">

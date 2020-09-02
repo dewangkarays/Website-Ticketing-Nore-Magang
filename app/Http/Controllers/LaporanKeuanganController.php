@@ -19,36 +19,58 @@ class LaporanKeuanganController extends Controller
             $filter = date('Y');
         }
         
-        // $datecoba = Carbon::now()->daysInMonth;
-        // dd($datecoba);
-        
+        $dateina_month = Carbon::now()->daysInMonth;
+        // $days = '1';
+        // for ($i=2; $i <= $dateina_month; $i++) { 
+        //     $days .= ','. $i;
+        // }
+        // dd($days);
+
+        $chartmonth = array();
+
         $chart = array();
         $chart2 = array();
         $neto = array();
+
         $pie = array();
         $pie2 = array();
         
         // $chart[80] = $chart[90] = $chart[99] = array_fill(1, 12, 0);
         $chart[0] = array_fill(1, 12, 0);
         $chart2[0] = array_fill(1, 12, 0);
+        $neto[0] = array_fill(1, 12, 0);
+        
+        $chartmonth = array_fill(1, $dateina_month, 0);
+        $chartmonth2 = array_fill(1, $dateina_month, 0);
+        $chartmonth3 = array_fill(1, $dateina_month, 0);
+
         $br[0] = array_fill(1,12,0);
         $pg[0] = array_fill(1,12,0);
         $qry5[0] = array_fill(1,12,0);
         $qry6[0] = array_fill(1,12,0);
-        $neto[0] = array_fill(1, 12, 0);
+
+        $qry10[0] = array_fill(1,$dateina_month,0);
+        $qry11[0] = array_fill(1,$dateina_month,0);
         // $pie[80] = $pie[90] = $pie[99] = 0;
         // $pie['langgan'] = $pie['ad'] = $pie['lain'] = 0;
         $pie2[0] = $pie2[1] = $pie2[2] = $pie2[3]= $pie2[4]= $pie2[5] = 0;
         
-        // $years = Payment::selectRaw('year(tgl_bayar) as tahun')->where('status','1')->groupBy('tahun')->orderBy('tahun','DESC')->get();
-        // $years = date('Y');
-        // dd($years);
+
         
+        // chart 1, grafik pemasukan monthly bruto
+        $qry10 = Payment::selectRaw('day(tgl_bayar) as hari, user_role, sum(nominal) as total ')->whereYear('tgl_bayar',$filter)->groupBy('hari', 'user_role')->get()->toArray();
+        $qry11 = Payment::selectRaw('day(tgl_bayar) as hari, user_role, sum(nominal) as total ')->whereYear('tgl_bayar',$filter)->groupBy('hari', 'user_role')->get()->toArray();
         
-        // chart 1 pemasukan bruto
-        $qry = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
+        foreach ($qry10 as $val) {
+            $chartmonth[$val['hari']] += $val['total'];
+        }
+        // dd($chartmonth);
         
-        // dd($pie);
+
+        // chart 1, grafik line pemasukan bruto
+        $qry = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')
+        ->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
+
         foreach ($qry as $val) {
             // $chart[$val['user_role']][$val['bulan']] = $val['total'];
             $chart[0][$val['bulan']] += $val['total'];
@@ -56,7 +78,7 @@ class LaporanKeuanganController extends Controller
         }
         
         
-        // chart 1 pengeluaran
+        // chart 1, grafik line pengeluaran
         $qry2 = Pengeluaran::selectRaw('month(tanggal) as bulan, jenis_pengeluaran, sum(nominal) as total ')->whereYear('tanggal',$filter)->groupBy('bulan', 'jenis_pengeluaran')->get()->toArray();
         
         foreach ($qry2 as $val2) {
@@ -66,7 +88,7 @@ class LaporanKeuanganController extends Controller
         }
         
         
-        // chart 1 pemasukan neto
+        // chart 1, grafik line pemasukan neto
         $qry3 = Payment::selectRaw('month(tgl_bayar) as bulan, sum(nominal) as total ')->whereYear('tgl_bayar',$filter)->groupBy('bulan')->get()->toArray();
         
         $qry4 = Pengeluaran::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
@@ -140,6 +162,6 @@ class LaporanKeuanganController extends Controller
         $totals = Payment::selectRaw('user_id, SUM(nominal) as total')->groupBy('user_id')->orderBy('total','DESC')->get();
         
         
-        return view('laporankeuangan', compact('chart', 'chart2', 'neto', 'tblbruto', 'tblpengeluaran', 'brtbl', 'pgtbl', 'netotbl', 'pie', 'pie2', 'clients', 'filter','totals'));
+        return view('laporankeuangan', compact('dateina_month', 'chartmonth', 'chart', 'chart2', 'neto', 'tblbruto', 'tblpengeluaran', 'brtbl', 'pgtbl', 'netotbl', 'pie', 'pie2', 'clients', 'filter','totals'));
     }
 }

@@ -66,6 +66,15 @@
 						</span>
 					</a>
 				</li>
+
+				<li class="nav-item">
+					<a href="{{ url('/tagihanuser') }}" class="nav-link {{ (request()->is('tagihanuser*')) ? 'active' : '' }}">
+						<i class="icon-file-text"></i>
+						<span>
+							Daftar Tagihan
+						</span>
+					</a>
+				</li>
 				
 				@endif
 				

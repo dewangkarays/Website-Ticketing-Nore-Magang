@@ -184,6 +184,11 @@
 							<div class="row">
 								<h3 class="font-weight-semibold mb-0">Rp {{ empty($lastpayment->nominal) ? '0' : number_format($lastpayment->nominal,0,',','.') }} </h3>
 							</div>
+							<div class="row" style="float: right;">
+							<a href="{{ url('/payments') }}">
+								<button type="button" class="btn btn-sm bg-danger rounded-round mr-2"><b><i class="icon-coin-dollar mr-2"></i></b> Ke Pembayaran</button>
+							</a>
+							</div>
 					</div>
 					
 				</blockquote>

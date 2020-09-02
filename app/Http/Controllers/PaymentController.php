@@ -19,9 +19,10 @@ class PaymentController extends Controller
     public function index()
     {
         if(\Auth::user()->role > 20){
-            $payments = Payment::where('user_id',\Auth::user()->id)->orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('tgl_bayar','desc')->get();
+            $payments = Payment::where('user_id',\Auth::user()->id)->orderBy('tgl_bayar','desc')->get();
         } else {
-            $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('tgl_bayar','desc')->get();
+            // $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('tgl_bayar','desc')->get();
+            $payments = Payment::orderBy('tgl_bayar','desc')->get();
         }
         return view('payments.index', compact('payments'));
     }
@@ -34,8 +35,10 @@ class PaymentController extends Controller
     public function create()
     {
         $users = User::where('role','>','50')->get();
-
-        return view('payments.create', compact('users'));
+        $tagihanuser = Tagihan::where('user_id', \Auth::user()->id)->get();
+        $tagihanuser2 = '';
+        // dd($tagihanuser);
+        return view('payments.create', compact('users', 'tagihanuser','tagihanuser2'));
     }
 
     /**

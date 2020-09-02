@@ -31,6 +31,8 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
 	Route::resource('payments', 'PaymentController');
 	Route::resource('tagihans', 'TagihanController');
+	Route::match(['get', 'post'], '/tagihanuser',  'TagihanController@tagihanuser')->name('tagihanuser');
+	Route::get('/bayaruser/{id}', 'TagihanController@bayaruser')->name('bayaruser');
 	Route::resource('pengeluarans', 'PengeluaranController');
 	Route::get('/antrian',  'TaskController@antrian');
 	Route::get('/history',  'TaskController@history')->name('history');
