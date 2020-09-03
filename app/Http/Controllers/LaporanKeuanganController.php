@@ -36,15 +36,18 @@ class LaporanKeuanganController extends Controller
             //     $days .= ','. $i;
             // }
         // dd($dateina_month);
+        
+        // yearly
+        $chart = array();
+        $chart2 = array();
+        $neto = array();
 
+        // monthly
         $chartmonth = array();
         $chartmonth2 = array();
         $chartmonth3 = array();
 
-        $chart = array();
-        $chart2 = array();
-        $neto = array();
-        
+        // quarter
         $chartq1 = array();
         $chartq12 = array();
         $netoq13 = array();
@@ -61,18 +64,22 @@ class LaporanKeuanganController extends Controller
         $chartq42 = array();
         $chartq43 = array();
 
+        // pie
         $pie = array();
         $pie2 = array();
         
         // $chart[80] = $chart[90] = $chart[99] = array_fill(1, 12, 0);
+        // yearly
         $chart[0] = array_fill(1, 12, 0);
         $chart2[0] = array_fill(1, 12, 0);
         $neto[0] = array_fill(1, 12, 0);
         
+        // monthly
         $chartmonth = array_fill(1, $dateina_month, 0);
         $chartmonth2 = array_fill(1, $dateina_month, 0);
         $chartmonth3 = array_fill(1, $dateina_month, 0);
-        
+
+        // quarter
         $chartq1[0] = array_fill(1, 3, 0);
         $chartq12[0] = array_fill(1, 3, 0);
         $netoq13[0] = array_fill(1, 3, 0);
@@ -89,13 +96,20 @@ class LaporanKeuanganController extends Controller
         $chartq42[0] = array_fill(10, 3, 0);
         $chartq43[0] = array_fill(10, 3, 0);
 
+
+
         $br[0] = array_fill(1,12,0);
         $pg[0] = array_fill(1,12,0);
+
+        // tabel
         $qry5[0] = array_fill(1,12,0);
         $qry6[0] = array_fill(1,12,0);
+
+        // monthly
         $bru = array_fill(1,$dateina_month,0);
         $pge = array_fill(1,$dateina_month,0);
         
+        // quarter
         $brq1[0] = array_fill(1,3,0);
         $brq2[0] = array_fill(4,3,0);
         $brq3[0] = array_fill(7,3,0);
@@ -332,8 +346,10 @@ class LaporanKeuanganController extends Controller
 
 /* ------------------------------------------------------------------------------
 * ---------------------------------------------------------------------------- */
+// Chart yearly + grafik line
+// ------------------------------
 
-        // chart 1 + grafik line pemasukan bruto
+        // pemasukan bruto
         $qry = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')
         ->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
 
@@ -344,7 +360,7 @@ class LaporanKeuanganController extends Controller
         }
         
 
-        // chart 1 + grafik line pengeluaran
+        // pengeluaran
         $qry2 = Pengeluaran::selectRaw('month(tanggal) as bulan, jenis_pengeluaran, sum(nominal) as total ')->whereYear('tanggal',$filter)->groupBy('bulan', 'jenis_pengeluaran')->get()->toArray();
         
         foreach ($qry2 as $val2) {
@@ -354,7 +370,7 @@ class LaporanKeuanganController extends Controller
         }
         
         
-        // chart 1 + grafik line pemasukan neto
+        // pemasukan neto
         $qry3 = Payment::selectRaw('month(tgl_bayar) as bulan, sum(nominal) as total ')->whereYear('tgl_bayar',$filter)->groupBy('bulan')->get()->toArray();
         
         $qry4 = Pengeluaran::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
@@ -408,6 +424,9 @@ class LaporanKeuanganController extends Controller
         }
         empty($netotbl) ? 0 : $netotbl;
 
+
+
+
         // pie pemasukan
         $qrypie1 = Tagihan::selectRaw('sum(langganan) as Langganan, sum(ads) as Ads, sum(lainnya) as Lainnya')->whereYear('created_at',$filter)->get()->toArray();
         // dd($qrypie1);
@@ -416,7 +435,6 @@ class LaporanKeuanganController extends Controller
             $pie += $pie1;
             // dd($pie);
         }
-        
         
         // pie pengeluaran
         $qrypie2 = Pengeluaran::selectRaw('jenis_pengeluaran, sum(nominal) as total ')->whereYear('tanggal',$filter)->groupBy('jenis_pengeluaran')->get()->toArray();
@@ -431,6 +449,9 @@ class LaporanKeuanganController extends Controller
         $totals = Payment::selectRaw('user_id, SUM(nominal) as total')->groupBy('user_id')->orderBy('total','DESC')->get();
         
         
+/* ------------------------------------------------------------------------------
+* ---------------------------------------------------------------------------- */        
+
         return view('laporankeuangan', compact(
             'dateina_month', 'chartmonth', 'chartmonth2', 'chartmonth3',
             'chartq1', 'chartq12', 'netoq13',
