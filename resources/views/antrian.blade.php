@@ -47,7 +47,8 @@
 							@if (\Auth::user()->role<20)
 							<td><div class="datatable-column-width"> {{$task->user->username}} </div></td>
 							@elseif (\Auth::user()->id == $task->user_id || \Auth::user()->role<20)
-							<td class="bg-primary"><div class="datatable-column-width"> {{$task->user->username}} </div></td>
+							{{-- pegawai --}}
+							<td><div class="datatable-column-width"> <span style="font-size:100%;" class="badge badge-pill bg-success ml-auto ml-md-0"> {{$task->user->username}}</span></div></td>
 							@else
 							<td><div class="datatable-column-width"> Pelanggan Lain </div></td>
 							@endif
