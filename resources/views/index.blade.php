@@ -155,6 +155,47 @@
 	<div class="row">
 		
 		<div class="col-lg-4">
+			
+			@if (empty($tagihan->jml_tagih))
+			<div class="card bg-success">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-file-stats icon-4x"></i>
+					</div>
+					
+					<div class="col">
+						<div class="row">
+							Tagihan Belum Terbayar
+						</div>
+						<div class="row">
+							<h3 class="font-weight-semibold mb-0">Rp {{ empty($tagihan->jml_tagih)? '0' : number_format($tagihan->jml_tagih,0,',','.') }}
+							</h3>
+						</div>
+						
+						<br>
+						
+						<div class="row">
+							Pembayaran Terakhir
+						</div>
+						<div class="row">
+							<h3 class="font-weight-semibold mb-0">{{ empty($lastpayment->tgl_bayar) ? '-' : $lastpayment->tgl_bayar }}</h3>
+						</div>
+						<div class="row">
+							Nominal 
+						</div>
+						<div class="row">
+							<h3 class="font-weight-semibold mb-0">Rp {{ empty($lastpayment->nominal) ? '0' : number_format($lastpayment->nominal,0,',','.') }} </h3>
+						</div>
+						<div class="row" style="float: right;">
+							<a href="{{ url('/payments') }}">
+								<button type="button" class="btn btn-sm bg-danger rounded-round mr-2"><b><i class="icon-coin-dollar mr-2"></i></b> Ke Pembayaran</button>
+							</a>
+						</div>
+					</div>
+					
+				</blockquote>
+			</div>
+			@else
 			<div class="card bg-warning">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
@@ -162,42 +203,44 @@
 					</div>
 					
 					<div class="col">
-							<div class="row">
-								Tagihan Belum Terbayar
-							</div>
-							<div class="row">
-								<h3 class="font-weight-semibold mb-0">Rp @angka($tagihan->sum('jml_tagih')-$totalbayar)
-								</h3>
-							</div>
-							
-							<br>
-							
-							<div class="row">
-								Pembayaran Terakhir
-							</div>
-							<div class="row">
-								<h3 class="font-weight-semibold mb-0">{{ empty($lastpayment->tgl_bayar) ? '-' : $lastpayment->tgl_bayar }}</h3>
-							</div>
-							<div class="row">
-								Nominal 
-							</div>
-							<div class="row">
-								<h3 class="font-weight-semibold mb-0">Rp {{ empty($lastpayment->nominal) ? '0' : number_format($lastpayment->nominal,0,',','.') }} </h3>
-							</div>
-							<div class="row" style="float: right;">
+						<div class="row">
+							Tagihan Belum Terbayar
+						</div>
+						<div class="row">
+							<h3 class="font-weight-semibold mb-0">Rp {{ empty($tagihan->jml_tagih)? '0' : number_format($tagihan->jml_tagih,0,',','.') }}
+							</h3>
+						</div>
+						
+						<br>
+						
+						<div class="row">
+							Pembayaran Terakhir
+						</div>
+						<div class="row">
+							<h3 class="font-weight-semibold mb-0">{{ empty($lastpayment->tgl_bayar) ? '-' : $lastpayment->tgl_bayar }}</h3>
+						</div>
+						<div class="row">
+							Nominal 
+						</div>
+						<div class="row">
+							<h3 class="font-weight-semibold mb-0">Rp {{ empty($lastpayment->nominal) ? '0' : number_format($lastpayment->nominal,0,',','.') }} </h3>
+						</div>
+						<div class="row" style="float: right;">
 							<a href="{{ url('/payments') }}">
 								<button type="button" class="btn btn-sm bg-danger rounded-round mr-2"><b><i class="icon-coin-dollar mr-2"></i></b> Ke Pembayaran</button>
 							</a>
-							</div>
+						</div>
 					</div>
 					
 				</blockquote>
 			</div>
+			
+			@endif
 		</div>
 		
 		<div class="col-lg-4">
 			@if(\Auth::user()->kadaluarsa < date("Y-m-d") && \Auth::user()->kadaluarsa != '')
-			<div class="card bg-danger-400">
+			<div class="card bg-slate-400">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
 						<i class="icon-calendar3 icon-4x"></i>
@@ -214,6 +257,27 @@
 				</blockquote>
 				<span style="padding:10px;">
 					Masa Aktif habis. Website akan dihapus dari internet. 
+				</span>
+			</div>
+			
+			@elseif(\Auth::user()->kadaluarsa <= date("Y-m-d" ,strtotime("+3 days")) && \Auth::user()->kadaluarsa != '')
+			<div class="card bg-danger-400">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-calendar3 icon-4x"></i>
+					</div>
+					
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->kadaluarsa }}</h3>
+						</div>
+						<div>
+							Masa Aktif
+						</div>
+					</div>
+				</blockquote>
+				<span style="padding:10px;">
+					Masa Aktif akan habis. Website akan dihapus dari internet. 
 				</span>
 			</div>
 			
@@ -258,7 +322,7 @@
 			@endif
 		</div>
 		<div class="col-lg-4">
-			@if(\Auth::user()->task_count < 0)
+			@if(\Auth::user()->task_count <= 3)
 			<div class="card bg-danger-400">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
@@ -276,7 +340,7 @@
 				</blockquote>
 			</div>
 			
-			@elseif(\Auth::user()->task_count == 0)
+			@elseif(\Auth::user()->task_count <= 10)
 			<div class="card bg-orange-400">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">

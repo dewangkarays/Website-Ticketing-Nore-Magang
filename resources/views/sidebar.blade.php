@@ -66,7 +66,7 @@
 						</span>
 					</a>
 				</li>
-
+				
 				<li class="nav-item">
 					<a href="{{ url('/tagihanuser') }}" class="nav-link {{ (request()->is('tagihanuser*')) ? 'active' : '' }}">
 						<i class="icon-file-text"></i>
@@ -87,21 +87,12 @@
 						</span>
 					</a>
 				</li>
-
+				
 				<li class="nav-item">
 					<a href="{{ url('/history') }}" class="nav-link {{ (request()->is('history')) ? 'active' : '' }}">
 						<i class="icon-history"></i>
 						<span>
 							History Task
-						</span>
-					</a>
-				</li>
-				
-				<li class="nav-item">
-					<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
-						<i class="icon-coin-dollar"></i>
-						<span>
-							Pembayaran
 						</span>
 					</a>
 				</li>
@@ -117,54 +108,69 @@
 				
 				
 				
-				@if(Auth::user()->role==1)
+				@if(Auth::user()->role>=1)
+
+					@if (Auth::user()->role==1)
+					<li class="nav-item">
+						<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
+							<i class="icon-file-text"></i>
+							<span>
+								Tagihan
+							</span>
+						</a>
+					</li>
+					@endif
+
 				<li class="nav-item">
-					<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
-						<i class="icon-file-text"></i>
+					<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
+						<i class="icon-coin-dollar"></i>
 						<span>
-							Tagihan
+							Pembayaran
 						</span>
 					</a>
 				</li>
-				
-				<li class="nav-item">
-					<a href="{{ url('/pengeluarans') }}" class="nav-link {{ (request()->is('pengeluarans*')) ? 'active' : '' }}">
-						<i class="icon-rotate-cw"></i>
-						<span>
-							Pengeluaran
-						</span>
-					</a>
-				</li>
-				
-				<li class="nav-item">
-					<a href="{{ url('/laporankeuangan') }}" class="nav-link {{ (request()->is('laporankeuangan')) ? 'active' : '' }}">
-						<i class="icon-balance"></i>
-						<span>
-							Laporan Keuangan
-						</span>
-					</a>
-				</li>
-				
-				<li class="nav-item nav-item-submenu {{ (request()->is('statistik*')) ? 'nav-item-open' : '' }}">
-					<a href="#" class="nav-link"><i class="icon-stats-dots"></i> <span>Statistik</span></a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('statistik*')) ? 'block' : 'none' }};">
-						<li class="nav-item">
-							<a href="{{ url('/statistiktask') }}" class="nav-link {{ (request()->is('statistiktask*')) ? 'active' : '' }}">
-								<span>
-									Task
-								</span>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="{{ url('/statistikpayment') }}" class="nav-link {{ (request()->is('statistikpayment*')) ? 'active' : '' }}">
-								<span>
-									Pembayaran
-								</span>
-							</a>
-						</li>
-						
-					</ul>
-				</li>
+
+					@if (Auth::user()->role==1)
+					<li class="nav-item">
+						<a href="{{ url('/pengeluarans') }}" class="nav-link {{ (request()->is('pengeluarans*')) ? 'active' : '' }}">
+							<i class="icon-rotate-cw"></i>
+							<span>
+								Pengeluaran
+							</span>
+						</a>
+					</li>
+					
+					<li class="nav-item">
+						<a href="{{ url('/laporankeuangan') }}" class="nav-link {{ (request()->is('laporankeuangan')) ? 'active' : '' }}">
+							<i class="icon-balance"></i>
+							<span>
+								Laporan Keuangan
+							</span>
+						</a>
+					</li>
+					
+					<li class="nav-item nav-item-submenu {{ (request()->is('statistik*')) ? 'nav-item-open' : '' }}">
+						<a href="#" class="nav-link"><i class="icon-stats-dots"></i> <span>Statistik</span></a>
+						<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('statistik*')) ? 'block' : 'none' }};">
+							<li class="nav-item">
+								<a href="{{ url('/statistiktask') }}" class="nav-link {{ (request()->is('statistiktask*')) ? 'active' : '' }}">
+									<span>
+										Task
+									</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ url('/statistikpayment') }}" class="nav-link {{ (request()->is('statistikpayment*')) ? 'active' : '' }}">
+									<span>
+										Pembayaran
+									</span>
+								</a>
+							</li>
+							
+						</ul>
+					</li>
+					@endif
+
 				@endif
 				
 			</ul>
