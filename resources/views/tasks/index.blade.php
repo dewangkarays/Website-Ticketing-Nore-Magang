@@ -37,7 +37,7 @@
 			
 			@endif
 		</div>
-		
+
 		<table class="table datatable-basic table-hover">
 			<thead>
 				<tr>
@@ -60,11 +60,14 @@
 					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
 					<td><div class="datatable-column-width">{{$task->user->username}}</div></td>
 					<td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
-					<td><div class="datatable-column-width">
-						@if (\Auth::user()->role == 10)
-						<input data-id="{{$task->id}}" class="form-check-input toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
-						@endif
-						{{@$task->assign->nama}}</div>
+					<td><div class="datatable-column-width form-check">
+						<label class="form-check-label">
+							@if (\Auth::user()->role == 10)
+							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
+							@endif
+							{{@$task->assign->nama ? @$task->assign->nama : 'Belum ada handler'}} 
+						</label>
+						</div>
 					</td>
 					
 					<td align="center">@if($task->status == 2 )
@@ -172,7 +175,12 @@
 <script src="{{asset('global_assets/js/plugins/buttons/spin.min.js') }}"></script>
 <script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js') }}"></script>
 
+<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
+<script src="{{asset('global_assets/js/plugins/forms/styling/switchery.min.js')}}"></script>
+// <script src="{{asset('global_assets/js/plugins/forms/styling/switch.min.js')}}"></script>
+
 <script src="{{asset('assets/js/app.js') }}"></script>
+<script src="{{asset('global_assets/js/demo_pages/form_checkboxes_radios.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/components_modals.js') }}"></script>
 <script>
 	// get token
@@ -321,11 +329,11 @@
 			// 'method': 'POST',
 			data: {'status': status, 'id': id, _token : token },
 			success: function(data){
-					// Sticky buttons
-					// alert('Data changed!')
-					
-					location.reload();
-				}
+				// Sticky buttons
+				// alert('Data changed!')
+				
+				location.reload();
+			}
 		});
 	});	
 	
