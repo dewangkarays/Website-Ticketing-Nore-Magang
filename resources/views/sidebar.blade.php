@@ -87,6 +87,15 @@
 						</span>
 					</a>
 				</li>
+
+				<li class="nav-item">
+					<a href="{{ url('/history') }}" class="nav-link {{ (request()->is('history')) ? 'active' : '' }}">
+						<i class="icon-history"></i>
+						<span>
+							History Task
+						</span>
+					</a>
+				</li>
 				
 				<li class="nav-item">
 					<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
@@ -105,14 +114,7 @@
 						</span>
 					</a>
 				</li>
-				<li class="nav-item">
-					<a href="{{ url('/history') }}" class="nav-link {{ (request()->is('history')) ? 'active' : '' }}">
-						<i class="icon-history"></i>
-						<span>
-							Histori
-						</span>
-					</a>
-				</li>
+				
 				
 				
 				@if(Auth::user()->role==1)
