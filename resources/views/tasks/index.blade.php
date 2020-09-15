@@ -120,7 +120,7 @@
 <div id="modal_task" class="modal fade" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header bg-info" align="center">
+			<div class="modal-header bg-success" align="center">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			
@@ -131,7 +131,7 @@
 			
 			<div class="modal-footer">
 				<button type="button" class="btn btn-warning" data-dismiss="modal">Belum</button>
-				<button type="button" id="btn-update" class="btn btn-info">Ya, sudah selesai</button>
+				<button type="button" id="btn-update" class="btn btn-success">Ya, sudah selesai</button>
 			</div>
 		</div>
 	</div>
