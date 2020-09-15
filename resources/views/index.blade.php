@@ -156,8 +156,8 @@
 		
 		<div class="col-lg-4">
 			
-			@if (empty($tagihan->jml_tagih))
-			<div class="card bg-success">
+			@if ($tagihan->sum('jml_tagih') != '0')
+			<div class="card bg-warning">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
 						<i class="icon-file-stats icon-4x"></i>
@@ -168,7 +168,7 @@
 							Tagihan Belum Terbayar
 						</div>
 						<div class="row">
-							<h3 class="font-weight-semibold mb-0">Rp {{ empty($tagihan->jml_tagih)? '0' : number_format($tagihan->jml_tagih,0,',','.') }}
+							<h3 class="font-weight-semibold mb-0">Rp {{ empty($tagihan->sum('jml_tagih')) ? '0' : number_format($tagihan->sum('jml_tagih'),0,',','.') }}
 							</h3>
 						</div>
 						
@@ -196,7 +196,7 @@
 				</blockquote>
 			</div>
 			@else
-			<div class="card bg-warning">
+			<div class="card bg-success">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
 						<i class="icon-file-stats icon-4x"></i>
@@ -207,7 +207,7 @@
 							Tagihan Belum Terbayar
 						</div>
 						<div class="row">
-							<h3 class="font-weight-semibold mb-0">Rp {{ empty($tagihan->jml_tagih)? '0' : number_format($tagihan->jml_tagih,0,',','.') }}
+							<h3 class="font-weight-semibold mb-0">Rp {{ empty($tagihan->sum('jml_tagih')) ? '0' : number_format($tagihan->sum('jml_tagih'),0,',','.') }}
 							</h3>
 						</div>
 						
@@ -225,11 +225,11 @@
 						<div class="row">
 							<h3 class="font-weight-semibold mb-0">Rp {{ empty($lastpayment->nominal) ? '0' : number_format($lastpayment->nominal,0,',','.') }} </h3>
 						</div>
-						<div class="row" style="float: right;">
+						{{-- <div class="row" style="float: right;">
 							<a href="{{ url('/payments') }}">
 								<button type="button" class="btn btn-sm bg-danger rounded-round mr-2"><b><i class="icon-coin-dollar mr-2"></i></b> Ke Pembayaran</button>
 							</a>
-						</div>
+						</div> --}}
 					</div>
 					
 				</blockquote>
