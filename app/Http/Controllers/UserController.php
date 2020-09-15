@@ -51,6 +51,7 @@ class UserController extends Controller
                 'username' => $request->get('username'),
                 'email' => $request->get('email'),
                 'telp' => $request->get('telp'),
+                'website' => $request->get('website'),
                 'kadaluarsa' => $request->get('kadaluarsa'),
                 'password' => bcrypt($request->get('password')),
                 'role' => $request->get('role'),

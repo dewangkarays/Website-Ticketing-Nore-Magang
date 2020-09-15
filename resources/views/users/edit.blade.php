@@ -46,6 +46,14 @@
 								<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
 							</div>
 						</div>
+
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Website</label>
+							<div class="col-lg-10">
+								<input type="text" name="website" class="form-control border-teal border-1" placeholder="Website" value=" {{ $user->website }} ">
+							</div>
+						</div>
+
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Masa Aktif</label>
 							<div class="col-lg-10">

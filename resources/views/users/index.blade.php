@@ -37,6 +37,7 @@
 						<th>Nama</th>
 						<th>Username</th>
 						<th>Role</th>
+						<th>Website</th>
 						<th class="text-center">Masa Aktif</th>
 						<th class="text-center">Belum Terbayar</th>
 						<th class="text-center">Jml Op</th>
@@ -52,6 +53,7 @@
 				        <td><div class="datatable-column-width">{{$user->nama}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
 				        <td>{{config('custom.role.'.$user->role)}}</td>
+				        <td><div class="datatable-column-width">{{$user->website}}</div></td>
 				        <td align="center">
 				        	@if($user->kadaluarsa < date("Y-m-d") && $user->kadaluarsa != '')
 								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->kadaluarsa}}</span>
