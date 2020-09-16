@@ -47,8 +47,10 @@ return [
         '0' => 'Gaji',
         '1' => 'Aset',
         '2' => 'Non-Aset',
-        '3' => 'Tunjangan',
+        // '3' => 'Tunjangan',
+        '3' => 'Konsumsi',
         '4' => 'Bonus',
         '5' => 'Lain-lain',
+        '6' => 'Modal',
     ],
 ];

@@ -46,8 +46,9 @@
 								<select name="jenis_pengeluaran" class="form-control bg-teal-400 border-teal-400" required>
                                     <option value="0">Gaji</option>
                                     <option value="1">Aset</option>
-                                    <option value="2">Non-Aset (Iklan, Domain, Hosting)</option>
-                                    <option value="3">Tunjangan</option>
+                                    <option value="2">Non-Aset</option>
+                                    <option value="3">Konsumsi</option>
+                                    <option value="6">Modal</option>
                                     <option value="4">Bonus</option>
                                     <option value="5">Lain - Lain</option>
                                 </select>

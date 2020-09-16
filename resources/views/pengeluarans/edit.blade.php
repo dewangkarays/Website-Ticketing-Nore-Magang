@@ -47,8 +47,9 @@
 								<select name="jenis_pengeluaran" class="form-control bg-teal-400 border-teal-400" required>
                                     <option value="0" {{ $epengeluaran->jenis_pengeluaran == '0' ? 'selected' : '' }}>Gaji</option>
                                     <option value="1" {{ $epengeluaran->jenis_pengeluaran == '1' ? 'selected' : '' }}>Aset</option>
-                                    <option value="2" {{ $epengeluaran->jenis_pengeluaran == '2' ? 'selected' : '' }}>Non-Aset (Iklan, Domain, Hosting)</option>
-                                    <option value="3" {{ $epengeluaran->jenis_pengeluaran == '3' ? 'selected' : '' }}>Tunjangan</option>
+                                    <option value="2" {{ $epengeluaran->jenis_pengeluaran == '2' ? 'selected' : '' }}>Non-Aset</option>
+                                    <option value="3" {{ $epengeluaran->jenis_pengeluaran == '3' ? 'selected' : '' }}>Konsumsi</option>
+                                    <option value="6" {{ $epengeluaran->jenis_pengeluaran == '6' ? 'selected' : '' }}>Modal</option>
                                     <option value="4" {{ $epengeluaran->jenis_pengeluaran == '4' ? 'selected' : '' }}>Bonus</option>
                                     <option value="5" {{ $epengeluaran->jenis_pengeluaran == '5' ? 'selected' : '' }}>Lain - Lain</option>
                                 </select>
