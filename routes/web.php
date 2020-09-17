@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::resource('tasks', 'TaskController');
 	Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
 	Route::resource('payments', 'PaymentController');
+	Route::post('/terimapayment', 'PaymentController@statuspayment')->name('terimapayment');
+	Route::post('/tolakpayment', 'PaymentController@statuspayment')->name('tolakpayment');
 	Route::resource('tagihans', 'TagihanController');
 	Route::match(['get', 'post'], '/tagihanuser',  'TagihanController@tagihanuser')->name('tagihanuser');
 	Route::get('/bayaruser/{id}', 'TagihanController@bayaruser')->name('bayaruser');

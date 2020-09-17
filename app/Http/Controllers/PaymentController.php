@@ -23,6 +23,7 @@ class PaymentController extends Controller
         } else {
             // $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('tgl_bayar','desc')->get();
             $payments = Payment::orderBy('tgl_bayar','desc')->get();
+            
         }
         return view('payments.index', compact('payments'));
     }
@@ -56,6 +57,9 @@ class PaymentController extends Controller
         ]);
 
         $data = $request->except(['_token', '_method']);
+        if (\Auth::user()->role < 20) {
+            $data['status'] = 1;
+        }
         $cust = User::find($request->get('user_id'));
         $data['user_role'] = $cust->role;
         $payment = Payment::create($data);
@@ -220,6 +224,28 @@ class PaymentController extends Controller
         $payment->delete();
 
         return redirect('/payments')->with('success', 'Payment deleted!');
+    }
+
+    public function statuspayment(Request $request)
+    {
+        $payment = Payment::find($request->id);
+        $payment->status = $request->status;
+
+        // tolak
+        if ($request->status == 2){
+            $tagihan = Tagihan::find($payment->tagihan_id);
+            $tagihan->jml_tagih += $payment->nominal;
+            $tagihan->jml_bayar -= $payment->nominal;
+            if($tagihan->jml_bayar==0){
+                $tagihan->status=0;
+            } else {
+                $tagihan->status=1;
+            }
+            $tagihan->save();
+        }
+
+        // print_r($task);
+        $payment->save();
     }
 
     public function statistikpayment(Request $request){

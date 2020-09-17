@@ -14,4 +14,9 @@ class Payment extends Model
     {
         return $this->belongsTo('App\Model\User', 'user_id', 'id');
     }
+
+    public function tagihan()
+    {
+        return $this->belongsTo('App\Model\Tagihan', 'tagihan_id', 'id');
+    }
 }

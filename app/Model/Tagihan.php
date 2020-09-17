@@ -14,4 +14,9 @@ class Tagihan extends Model
     {
         return $this->belongsTo('App\Model\User', 'user_id', 'id');
     }
+    
+    public function payment()
+    {
+        return $this->hasMany('App\Model\Payment', 'tagihan_id', 'id');
+    }
 }
