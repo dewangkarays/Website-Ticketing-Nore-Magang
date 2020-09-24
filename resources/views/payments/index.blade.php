@@ -82,6 +82,7 @@
 									<a href="https://wa.me/{{$payment->user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
 									@endif
 									<a href="{{ route('payments.edit',$payment->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+									<a href="{{url('/payments/cetak/'.$payment->id)}}" class="dropdown-item"><i class="icon-printer2"></i> Print</a>
 									@if($payment->status== 0 )
 									<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('payments.destroy', $payment->id)}}"><i class="icon-x"></i> Delete</a>
 									@endif
@@ -112,8 +113,8 @@
 			</div>
 			
 			<div  class="modal-body" align="center">
-				<input class="form-control" type="text" name="payment_id" id="payment_id" value=""/>
-				<input class="form-control" type="text" name="payment_status" id="payment_status" value=""/>
+				<input class="form-control" type="hidden" name="payment_id" id="payment_id" value=""/>
+				<input class="form-control" type="hidden" name="payment_status" id="payment_status" value=""/>
 				
 				<h2>Terima Pembayaran?</h2>
 			</div>
@@ -134,9 +135,9 @@
 			</div>
 			
 			<div  class="modal-body" align="center">
-				<input class="form-control" type="text" name="payment_id2" id="payment_id2" value=""/>
-				<input class="form-control" type="text" name="payment_status2" id="payment_status2" value=""/>
-				<input class="form-control" type="text" name="payment_nominal" id="payment_nominal" value=""/>
+				<input class="form-control" type="hidden" name="payment_id2" id="payment_id2" value=""/>
+				<input class="form-control" type="hidden" name="payment_status2" id="payment_status2" value=""/>
+				<input class="form-control" type="hidden" name="payment_nominal" id="payment_nominal" value=""/>
 				<h2>Tolak pembayaran?</h2>
 			</div>
 			

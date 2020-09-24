@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Tagihan;
 use App\Model\User;
+use App\Model\Lampiran_gambar;
+use Illuminate\Support\Facades\File;
+use PDF;
 
 class TagihanController extends Controller
 {
@@ -85,6 +88,7 @@ class TagihanController extends Controller
     {
         $users = User::where('role','>=',80)->get();
         $tagihan = Tagihan::find($id);
+        // $gambar = Lampiran_gambar::where('tagihan_id',$tagihan->id);
 
         return view('tagihans.edit', compact('tagihan','users')); 
     }
@@ -104,7 +108,6 @@ class TagihanController extends Controller
 
         $data = $request->except(['_token', '_method']);
         $tagihan = Tagihan::find($id);
-
         if($request->get('langganan')==''){
             $data['langganan'] = 0;
         }
@@ -123,6 +126,69 @@ class TagihanController extends Controller
         $tagihan->update($data);
         
         return redirect('/tagihans')->with('success', 'Tagihan updated!');
+    }
+
+    public function cetak($id)
+    {
+        $invoice = Tagihan::find($id);
+        $lampirans = Lampiran_gambar::where('tagihan_id', $id)->orderBy('id', 'asc')->get();
+        // dd($lampirans);
+
+        $pdf = PDF::loadview('tagihans.invoice', compact('invoice','lampirans'))->setPaper('a4', 'potrait');
+        return $pdf->stream();
+    }
+
+    public function lampiran(Request $request,$id)
+    {
+        if ($request->isMethod('GET')) {
+            $tagihan = Tagihan::find($id);
+            $lampirans = Lampiran_gambar::where('tagihan_id', $id)->orderBy('id', 'desc')->get();
+            // dd($lampirans);
+            return view('tagihans.lampiran', compact('tagihan', 'lampirans'));
+        }
+
+        if ($request->isMethod('POST')) {
+        $data = $request->except(['_token', '_method','gambar']);
+        // $tagihan = Tagihan::find($id);
+        // dd($tagihan);
+
+        $tujuan_upload = config('app.upload_url').'attachment/lampiran';
+        $file = $request->file('gambar');
+        if($file){
+                $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
+                // $name = \Auth::user()->id."_".time().".".$file->getClientOriginalExtension();
+                $up1 = $file->move($tujuan_upload,$name);
+                if($up1){
+                    $data['gambar'] = $tujuan_upload.'/'.$name;
+                }
+        }
+
+        Lampiran_gambar::create([
+            'tagihan_id' => $id,
+            'gambar' => $data['gambar'],
+            'keterangan' => $data['keterangan']
+
+        ]);
+        }
+
+        return redirect()->back()->with('success', 'File uploaded!');
+        
+    }
+
+    public function lampirandestroy(Request $request,$id,$idm)
+    {
+        $data = $request->except(['_token', '_method']);
+        $lampiran = Lampiran_gambar::find($id);
+        $path = $lampiran->gambar;
+        // dd($idm);
+
+        if(File::exists($path)) {
+            File::delete($path);
+        }
+
+        $lampiran->delete();
+
+        return redirect()->back()->with('success', 'File deleted!');
     }
 
     /**
@@ -190,4 +256,6 @@ class TagihanController extends Controller
         // dd($tagihan);
         return view('payments.create', compact('users', 'tagihanuser', 'tagihanuser2'));
     }
+
+    
 }

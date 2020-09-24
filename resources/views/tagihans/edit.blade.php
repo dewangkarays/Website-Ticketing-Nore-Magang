@@ -21,7 +21,7 @@
 			<div class="card-header header-elements-inline">
 			</div>
 			<div class="card-body">
-				<form class="form-validate-jquery" action="{{ route('tagihans.update', $tagihan->id)}}" method="post">
+				<form class="form-validate-jquery" enctype="multipart/form-data" action="{{ route('tagihans.update', $tagihan->id)}}" method="post">
 					@method('PATCH')
 					@csrf
 					<fieldset class="mb-3">
@@ -91,6 +91,14 @@
 							</div>
 						</div>
 
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Keterangan</label>
+							<div class="col-lg-10">
+								<input type="text" name="keterangan" value="{{ $tagihan->keterangan }}" class="form-control border-teal border-1" placeholder="Keterangan">
+							</div>
+						</div>
+
+						
 					</fieldset>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>

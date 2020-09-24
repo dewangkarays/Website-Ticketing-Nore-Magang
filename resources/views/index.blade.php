@@ -55,7 +55,7 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			<div class="card bg-blue-400">
+			<div class="card bg-success-400">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
 						<i class="icon-clipboard2 icon-4x"></i>
@@ -107,7 +107,7 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			<div class="card bg-teal-400">
+			<div class="card bg-orange-400">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
 						<i class="icon-forward icon-4x"></i>
@@ -125,7 +125,7 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			<div class="card bg-blue-400">
+			<div class="card bg-success-400">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
 						<i class="icon-clipboard2 icon-4x"></i>

@@ -8,6 +8,7 @@ use App\Model\User;
 use App\Model\Notification;
 use App\Model\Task;
 use App\Model\Tagihan;
+use PDF;
 
 class PaymentController extends Controller
 {
@@ -109,6 +110,66 @@ class PaymentController extends Controller
     public function show($id)
     {
         //
+    }
+
+
+    public function cetak($id)
+    {
+        $receipt = Payment::find($id);
+
+        $pdf = PDF::loadview('payments.receipt', compact('receipt'))->setPaper('a4', 'potrait');
+        return $pdf->stream();
+    }
+
+    public static function kekata($x) {
+        $x = abs($x);
+        $angka = array("", "satu", "dua", "tiga", "empat", "lima",
+        "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+        $temp = "";
+        if ($x <12) {
+            $temp = " ". $angka[$x];
+        } else if ($x <20) {
+            $temp = PaymentController::kekata($x - 10). " belas";
+        } else if ($x <100) {
+            $temp = PaymentController::kekata($x/10)." puluh". PaymentController::kekata($x % 10);
+        } else if ($x <200) {
+            $temp = " seratus" . PaymentController::kekata($x - 100);
+        } else if ($x <1000) {
+            $temp = PaymentController::kekata($x/100) . " ratus" . PaymentController::kekata($x % 100);
+        } else if ($x <2000) {
+            $temp = " seribu" . PaymentController::kekata($x - 1000);
+        } else if ($x <1000000) {
+            $temp = PaymentController::kekata($x/1000) . " ribu" . PaymentController::kekata($x % 1000);
+        } else if ($x <1000000000) {
+            $temp = PaymentController::kekata($x/1000000) . " juta" . PaymentController::kekata($x % 1000000);
+        } else if ($x <1000000000000) {
+            $temp = PaymentController::kekata($x/1000000000) . " milyar" . PaymentController::kekata(fmod($x,1000000000));
+        } else if ($x <1000000000000000) {
+            $temp = PaymentController::kekata($x/1000000000000) . " trilyun" . PaymentController::kekata(fmod($x,1000000000000));
+        }
+            return $temp;
+    }
+    public static function terbilang($x, $style=4) {
+        if($x<0) {
+            $hasil = "minus ". trim(PaymentController::kekata($x));
+        } else {
+            $hasil = trim(PaymentController::kekata($x));
+        }
+        switch ($style) {
+            case 1:
+                $hasil = strtoupper($hasil);
+                break;
+            case 2:
+                $hasil = strtolower($hasil);
+                break;
+            case 3:
+                $hasil = ucwords($hasil);
+                break;
+            default:
+                $hasil = ucfirst($hasil);
+                break;
+        }
+        return $hasil;
     }
 
     /**

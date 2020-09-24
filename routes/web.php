@@ -32,7 +32,12 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::resource('payments', 'PaymentController');
 	Route::post('/terimapayment', 'PaymentController@statuspayment')->name('terimapayment');
 	Route::post('/tolakpayment', 'PaymentController@statuspayment')->name('tolakpayment');
+	Route::get('payments/cetak/{id}',  'PaymentController@cetak')->name('cetak');
 	Route::resource('tagihans', 'TagihanController');
+	Route::get('tagihans/cetak/{id}',  'TagihanController@cetak')->name('cetak');
+	Route::get('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
+	Route::post('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
+	Route::post('tagihans/lampirandestroy/{id}/{idm}', 'TagihanController@lampirandestroy')->name('lampirandestroy');
 	Route::match(['get', 'post'], '/tagihanuser',  'TagihanController@tagihanuser')->name('tagihanuser');
 	Route::get('/bayaruser/{id}', 'TagihanController@bayaruser')->name('bayaruser');
 	Route::resource('pengeluarans', 'PengeluaranController');

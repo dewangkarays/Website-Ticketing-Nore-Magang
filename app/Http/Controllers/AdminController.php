@@ -44,7 +44,7 @@ class AdminController extends Controller
         $done = Task::where('status', '=', '3')->where('user_id',\Auth::user()->id)->get()->count();
         $tagihan = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get();
         $totalbayar = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->sum('jml_bayar');
-        $lastpayment = Payment::where('user_id',\Auth::user()->id)->orderBy('tgl_bayar','desc')->get()->first();
+        $lastpayment = Payment::where('user_id',\Auth::user()->id)->where('status',1)->orderBy('tgl_bayar','desc')->get()->first();
         // dd($tagihan);
         return view("index", compact('new','ongoing','done','tagihan','lastpayment','totalbayar'));
     }

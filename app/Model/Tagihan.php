@@ -19,4 +19,9 @@ class Tagihan extends Model
     {
         return $this->hasMany('App\Model\Payment', 'tagihan_id', 'id');
     }
+
+    public function lampiran_gambar()
+    {
+        return $this->hasMany('App\Model\Lampiran_gambar', 'tagihan_id', 'id');
+    }
 }

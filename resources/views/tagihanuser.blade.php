@@ -45,7 +45,7 @@
 				@foreach($tagihans as $tagihan)
 				<tr> 
 					<td>{{$i}}</td>
-					<td><div class="datatable-column-width">{{$tagihan->user->nama}}</div></td>
+					<td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
 					<td><div class="datatable-column-width">Rp @angka(($tagihan->jml_tagih)+($tagihan->jml_bayar))</div></td>
 					<td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
 					<td align="center">{{$tagihan->keterangan}}</td>
