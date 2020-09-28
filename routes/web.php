@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/terimapayment', 'PaymentController@statuspayment')->name('terimapayment');
 	Route::post('/tolakpayment', 'PaymentController@statuspayment')->name('tolakpayment');
 	Route::get('payments/cetak/{id}',  'PaymentController@cetak')->name('cetak');
+	Route::get('export_excel', 'Paymentcontroller@export_excel');
 	Route::resource('tagihans', 'TagihanController');
 	Route::get('tagihans/cetak/{id}',  'TagihanController@cetak')->name('cetak');
 	Route::get('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::match(['get', 'post'], '/tagihanuser',  'TagihanController@tagihanuser')->name('tagihanuser');
 	Route::get('/bayaruser/{id}', 'TagihanController@bayaruser')->name('bayaruser');
 	Route::resource('pengeluarans', 'PengeluaranController');
+	Route::get('export_excel_pengeluaran', 'PengeluaranController@export_excel_pengeluaran');
 	Route::get('/antrian',  'TaskController@antrian');
 	Route::get('/history',  'TaskController@history')->name('history');
 	Route::get('/getnotif',  'NotificationController@getNotif')->name('getnotif');

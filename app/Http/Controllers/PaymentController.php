@@ -8,6 +8,8 @@ use App\Model\User;
 use App\Model\Notification;
 use App\Model\Task;
 use App\Model\Tagihan;
+use App\Exports\PaymentExport;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class PaymentController extends Controller
@@ -112,6 +114,10 @@ class PaymentController extends Controller
         //
     }
 
+    public function export_excel() 
+    {
+        return Excel::download(new PaymentExport, 'Payment '.(date('Y-m-d')).'.xlsx' );
+    }
 
     public function cetak($id)
     {

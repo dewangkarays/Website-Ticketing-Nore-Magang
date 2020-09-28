@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Pengeluaran;
+use App\Exports\PengeluaranExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PengeluaranController extends Controller
 {
@@ -75,6 +77,11 @@ class PengeluaranController extends Controller
         $dpengeluaran->delete();
         
         return redirect('/pengeluarans')->with('success', 'Data Deleted!');
+    }
+
+    public function export_excel_pengeluaran() 
+    {
+        return Excel::download(new PengeluaranExport, 'Pengeluaran '.(date('Y-m-d')).'.xlsx' );
     }
 
     

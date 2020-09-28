@@ -28,6 +28,8 @@
 		<div class="card">
 			<div class="card-header header-elements-inline">
 				<a href="{{ route('pengeluarans.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+				<a href={{ url('export_excel_pengeluaran')}} target="_blank"><button class="btn btn-success rounded-round"><i class="icon-file-excel mr-2"></i> Export Excel</button></a>
+
 			</div>
 
 			<table class="table datatable-basic table-hover">
