@@ -23,6 +23,7 @@ Route::get('/del/{id}',  'AttachmentController@destroy');
 
 
 Route::group(['middleware' => ['auth']], function() {
+	Route::resource('setting', 'SettingController');
 	Route::get('/changepass',  'UserController@changePass');
 	Route::post('/changepass/{id}',  'UserController@changePassSubmit')->name('changepass');
 	Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');

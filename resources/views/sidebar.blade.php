@@ -35,6 +35,14 @@
 					</a>
 				</li>
 				<li class="nav-item">
+					<a href="{{ url('/setting') }}" class="nav-link {{ (request()->is('setting*')) ? 'active' : '' }}">
+						<i class="icon-gear"></i>
+						<span>
+							Setting
+						</span>
+					</a>
+				</li>
+				<li class="nav-item">
 					<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
 						<i class="icon-users"></i>
 						<span>
