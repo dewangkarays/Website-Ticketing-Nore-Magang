@@ -28,8 +28,10 @@
 	<div class="card">
 		<div class="card-header header-elements-inline">
 			<a href="{{ route('payments.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+			@if (Auth::user()->role==1)
 			<a href={{ url('export_excel')}} target="_blank"><button class="btn btn-success rounded-round"><i class="icon-file-excel mr-2"></i> Export Excel</button></a>
-
+			@endif
+			
 		</div>
 		
 		<table class="table datatable-basic table-hover">
@@ -205,7 +207,7 @@
 		// it is unnecessary to have to manually call the modal.
 		// $('#addBookDialog').modal('show');
 	});
-
+	
 	// modal tolak
 	$(document).on("click", ".open-modal-reject", function () {
 		var id_payment2 = $(this).data('id');
@@ -218,7 +220,7 @@
 		// it is unnecessary to have to manually call the modal.
 		// $('#addBookDialog').modal('show');
 	});
-
+	
 	//modal delete
 	$(document).on("click", ".delbutton", function () {
 		var url = $(this).data('uri');
@@ -246,7 +248,7 @@
 			}
 		});
 	});	
-
+	
 	$("#btn-tolak").click(function(){ 
 		var token = getToken();
 		var id = $('#payment_id2').val();
@@ -267,7 +269,7 @@
 			}
 		});
 	});	
-
+	
 	
 	var DatatableBasic = function() {
 		
@@ -349,8 +351,8 @@
 	document.addEventListener('DOMContentLoaded', function() {
 		DatatableBasic.init();
 	});
-
-
+	
+	
 	$( document ).ready(function() {
 		// Default style
 		@if(session('error'))
