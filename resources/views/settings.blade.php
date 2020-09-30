@@ -23,7 +23,7 @@
 			<form class="form-validate-jquery" action="{{route('setting.store')}}" method="post" enctype="multipart/form-data">
 				@csrf
 				<fieldset class="mb-3">
-					{{-- <legend class="text-uppercase font-size-sm font-weight-bold">Setting</legend> --}}
+					<legend class="text-uppercase font-size-sm font-weight-bold">General</legend>
 
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Logo</label>
@@ -45,7 +45,9 @@
 									value="{{$setting ? $setting->no_telp : ""}}">
 								<label class="col-form-label">Gunakan format kode negara 62. Contoh: 6281335625529</label>
 							</div>
-                        </div>
+						</div>
+						<br>
+						<h4><b>Payment Receipt</b></h4>
                         <hr>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Penerima</label>
@@ -64,7 +66,12 @@
 							<div class="col-lg-8">
 								<input type="text" class="form-control border-teal border-1" name="ttd_pospenerima" id="ttd_pospenerima" required value="{{$setting ? $setting->ttd_pospenerima : ""}}">
 							</div>
-                        </div>
+						</div>
+						<br>
+
+						<h4><b>Invoice</b></h4>
+						<hr>
+						
                         <div class="form-group row">
 							<label class="col-form-label col-lg-2">Penagih</label>
 							<div class="col-lg-8">
@@ -77,7 +84,6 @@
 								<input type="text" class="form-control border-teal border-1" name="pospenagih" id="pospenagih" required value="{{$setting ? $setting->pospenagih : ""}}">
 							</div>
 						</div>
-						<hr>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Catatan Tagihan</label>
 							<div class="col-lg-8">

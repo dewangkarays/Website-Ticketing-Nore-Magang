@@ -27,18 +27,32 @@
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Data Payment</legend>
 						{{-- @if(\Auth::user()->role==1) --}}
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Receipt No.</label>
+							<div class="col-lg-10">
+								<input id="receipt" name="receipt" type="text" class="form-control" placeholder="Receipt No." value="{{$payment->receipt_no}}" disabled>
+							</div>
+						</div>
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">User</label>
 								<div class="col-lg-10">
-									<select name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
+									<select id="user_id" name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
 										@foreach($users as $user)
-											<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" data-role="{{$user->role}}" {{ $payment->user_id == $user->id ? 'selected' : '' }}>{{$user->username}}</option>
+											<option data-name="{{$user->nama}}" value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" data-role="{{$user->role}}" {{ $payment->user_id == $user->id ? 'selected' : '' }}>{{$user->username}}</option>
 					    				@endforeach
 									</select>
 									<input type="hidden" id="user_kadaluarsa" value="{{$payment->user->kadaluarsa}}">
 									<input type="hidden" id="user_role" value="{{$payment->user->role}}">
 								</div>
 							</div>
+
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">Nama</label>
+								<div class="col-lg-10">
+								<input id="nama" name="nama" type="text" class="form-control" placeholder="Nama User" required value="{{$payment->nama}}">
+								</div>
+							</div>
+
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Tagihan</label>
 								<div class="col-lg-10">
@@ -120,6 +134,25 @@
 								<label class="col-form-label col-lg-2">Jumlah Update Task</label>
 								<div class="col-lg-10">
 									<input type="number" id="updtask" name="task_count" class="form-control border-teal border-1" value="{{ $payment->task_count }}" placeholder="jumlah update task">
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">Penerima</label>
+								<div class="col-lg-10">
+								<input id="penerima" name="penerima" type="text" class="form-control" placeholder="Penerima" required value="{{$payment->penerima}}">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">TTD Penerima</label>
+								<div class="col-lg-10">
+								<input id="ttd_penerima" name="ttd_penerima" type="text" class="form-control" placeholder="Ttd Penerima" required value="{{$payment->ttd_penerima}}">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label col-lg-2">Posisi TTD Penerima</label>
+								<div class="col-lg-10">
+								<input id="ttd_pospenerima" name="ttd_pospenerima" type="text" class="form-control" placeholder="Posisi TTd Penerima" required value="{{$payment->ttd_pospenerima}}">
 								</div>
 							</div>
 
@@ -301,6 +334,13 @@
 	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_checkboxes_radios.js')}}"></script>
 	<script>
+
+		$('#user_id').on('change', function(){
+			var nama = $('#user_id option:selected').data('name');
+			$('#nama').val(nama);
+			$('#nama').text(nama);
+			
+		});
 		
 		$( document ).ready(function() {
 			var angka = $('#tertulis').val();

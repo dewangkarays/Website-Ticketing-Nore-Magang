@@ -26,15 +26,23 @@
 				<fieldset class="mb-3">
 					<legend class="text-uppercase font-size-sm font-weight-bold">Data Payment</legend>
 					@if(\Auth::user()->role==1 || \Auth::user()->role==10)
+
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">User</label>
 						<div class="col-lg-10">
-							<select name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
+							<select id="user_id" name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
 								<option value="">-- Pilih Pelanggan --</option>
 								@foreach($users as $user)
-								<option value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" data-role="{{$user->role}}">{{$user->username}}</option>
+							<option data-name="{{$user->nama}}" value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" data-role="{{$user->role}}">{{$user->username}}</option>
 								@endforeach
 							</select>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Nama</label>
+						<div class="col-lg-10">
+							<input id="nama" name="nama" type="text" class="form-control" placeholder="Nama User" required>
 						</div>
 					</div>
 					@else
@@ -151,6 +159,24 @@
 							<input type="number" id="updtask" name="task_count" class="form-control border-teal border-1" placeholder="jumlah update task">
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Penerima</label>
+						<div class="col-lg-10">
+						<input id="penerima" name="penerima" type="text" class="form-control" placeholder="Penerima" required value="{{$setting->penerima}}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">TTD Penerima</label>
+						<div class="col-lg-10">
+						<input id="ttd_penerima" name="ttd_penerima" type="text" class="form-control" placeholder="Ttd Penerima" required value="{{$setting->ttd_penerima}}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Posisi TTD Penerima</label>
+						<div class="col-lg-10">
+						<input id="ttd_pospenerima" name="ttd_pospenerima" type="text" class="form-control" placeholder="Posisi TTd Penerima" required value="{{$setting->ttd_pospenerima}}">
+						</div>
+					</div>
 					@endif
 				</fieldset>
 				<div class="text-right">
@@ -202,6 +228,13 @@
 		selectMonths: true,
 		selectYears: true,
 		format: 'yyyy-mm-dd',
+	});
+
+	$('#user_id').on('change', function(){
+		var nama = $('#user_id option:selected').data('name');
+		$('#nama').val(nama);
+		$('#nama').text(nama);
+		
 	});
 	
 	function changeDate(select){

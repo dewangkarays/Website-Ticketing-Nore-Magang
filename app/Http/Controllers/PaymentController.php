@@ -8,6 +8,7 @@ use App\Model\User;
 use App\Model\Notification;
 use App\Model\Task;
 use App\Model\Tagihan;
+use App\Model\Setting;
 use App\Exports\PaymentExport;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
@@ -41,8 +42,10 @@ class PaymentController extends Controller
         $users = User::where('role','>','50')->get();
         $tagihanuser = Tagihan::where('user_id', \Auth::user()->id)->get();
         $tagihanuser2 = '';
-        // dd($tagihanuser);
-        return view('payments.create', compact('users', 'tagihanuser','tagihanuser2'));
+        $setting = Setting::first();
+
+        
+        return view('payments.create', compact('setting', 'users', 'tagihanuser','tagihanuser2'));
     }
 
     /**
@@ -65,6 +68,18 @@ class PaymentController extends Controller
         }
         $cust = User::find($request->get('user_id'));
         $data['user_role'] = $cust->role;
+
+        $receiptno = 01;
+        $lastreceipt = Payment::latest('id')->first();
+        if ($lastreceipt->receipt_no == null) {
+            $data['receipt_no'] = 'PAY/0'.$receiptno.'/'.date('dmY');
+        } else{
+            $lastno = $lastreceipt->receipt_no;
+            $no = substr($lastno,5,1);
+            $data['receipt_no'] = 'PAY/0'.($no+1).'/'.date('dmY');
+        }
+        // dd($data['receipt_no']);
+        
         $payment = Payment::create($data);
         
         if($request->get('kadaluarsa')!=''){
@@ -122,8 +137,9 @@ class PaymentController extends Controller
     public function cetak($id)
     {
         $receipt = Payment::find($id);
+        $setting = Setting::first();
 
-        $pdf = PDF::loadview('payments.receipt', compact('receipt'))->setPaper('a4', 'potrait');
+        $pdf = PDF::loadview('payments.receipt', compact('receipt','setting'))->setPaper('a4', 'potrait');
         return $pdf->stream();
     }
 

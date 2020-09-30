@@ -86,29 +86,38 @@
             <tr>
                 <td rowspan="4" style="vertical-align: top">
                     <h2 class="nore-fontcolor">NORE Inovasi</h2>
-                    <p>Gedung Setos Lantai 3 R1, Jalan Inspeksi Gajahmada No. 6
-                        <br>
-                        Semarang, 50133</p>
-                        <p>+62 813 3562 5529</p>
+                <p style="width: 200px;word-wrap: break-word;">{{$setting->alamat}}</p>
+                <p> +{{$setting->no_telp}} </p>
                     </td>
                     
                     <td align="right" colspan="2" style="font-size: 32px; font-weight: bold">
-                        <img src="{{asset('/global_assets/images/logo_nore_1000px.png')}}" alt="logo" height="50px">
+                        <img src="{{url($setting->logo)}}" alt="logo" height="50px">
                     </td>
                 </tr>
                 
             </table>
             
             <h1 class="nore-fontcolor">Payment Receipt</h1>
-            <h2 style="color:#fabf16">Tanggal : {{date('Y F d')}} </h2>
+            <h3 style="color:#fabf16">Tanggal : {{date('Y F d')}} </h3>
             
+            <br>
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <h3><b>Receipt No:</b></h3>
+                        <p>{{$receipt->receipt_no}}</p>
+                    </td>
+                </tr>
+            </table>
+
             <table style="margin-top: 20px" class="from-table">
+               
                 <tr>
                     <td style="width: 50%; vertical-align: top">
                         <table style="padding-right: 50px">
                             <tr>
                                 <td style="width: 20%"><b><h3>Diterima Dari</h3></b></td>
-                                <td style="width: 80%" align="left"><b><h3>: {{$receipt->user->nama}}</h3></b></td>
+                                <td style="width: 80%" align="left"><b><h3>: {{$receipt->nama}}</h3></b></td>
                             </tr>
                             
                             <tr>
@@ -120,99 +129,99 @@
                                 <td style="width: 20%"><b><h3>Terbilang</h3></b></td>
                                 
                                 <td style="width: 80%" align="left"><b><h3>: 
-                                @php
+                                    @php
                                     use App\Http\Controllers\PaymentController;
                                     $nilai = $receipt->nominal;
                                     echo PaymentController::terbilang($nilai, $style=3);
-                                @endphp    
-                                Rupiah</h3></b></td>
-                            </tr>
-                        </table>
-                    </td>
-                    
-                </tr>
-            </table>
-            <br>
-            <br>
-            
-            <hr style="">
-            
-            <table class="main-table" style="margin-top: 30px">
-                <tr>
-                    <th align="left" class="nore-fontcolor">No. Invoice</th>
-                    <th>Jumlah</th> 
-                    <th>Status</th> 
-                    <th>Keterangan</th> 
-                </tr>
+                                    @endphp    
+                                    Rupiah</h3></b></td>
+                                </tr>
+                            </table>
+                        </td>
+                        
+                    </tr>
+                </table>
+                <br>
+                <br>
                 
-                <tbody> 
-                    
+                <hr style="">
+                
+                <table class="main-table" style="margin-top: 30px">
                     <tr>
-                        <td>{{$receipt->tagihan->invoice}} </td>
-                        <td>Rp @angka($receipt->nominal) </td>
-                        <td>{{config('custom.tagihan_status.'.$receipt->tagihan->status)}} </td>
-                        <td>{{$receipt->keterangan}} </td>
+                        <th align="left" class="nore-fontcolor">No. Invoice</th>
+                        <th>Jumlah</th> 
+                        <th>Status</th> 
+                        <th>Keterangan</th> 
                     </tr>
                     
-                </tbody>
-                <tfoot >
-                    
-                    
-                </tfoot>
-            </table>
-            <br>
-            <hr style=""><br>
-            
-            <table>
-                <tr>
-                    <td><h3><b>Tanggal</b></h3></td>
-                    <td style="width: 80%" align="left  "><h3><b>: {{date('Y F d')}}</b></h3></td>
-                </tr>
-                <tr>
-                    <td><h3><b>Diterima Oleh</b></h3></td>
-                    <td style="width: 80%" align="left  "><h3><b>: Noer Prajitno</b></h3></td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td align="center" style="width:20%">Semarang</td>
+                    <tbody> 
+                        
+                        <tr>
+                            <td>{{$receipt->tagihan->invoice}} </td>
+                            <td>Rp @angka($receipt->nominal) </td>
+                            <td>{{config('custom.tagihan_status.'.$receipt->tagihan->status)}} </td>
+                            <td>{{$receipt->keterangan}} </td>
+                        </tr>
+                        
+                    </tbody>
+                    <tfoot >
+                        
+                        
+                    </tfoot>
+                </table>
+                <br>
+                <hr style=""><br>
+                
+                <table>
+                    <tr>
+                        <td><h3><b>Tanggal</b></h3></td>
+                        <td style="width: 80%" align="left  "><h3><b>: {{date('Y F d')}}</b></h3></td>
+                    </tr>
+                    <tr>
+                        <td><h3><b>Diterima Oleh</b></h3></td>
+                    <td style="width: 80%" align="left  "><h3><b>: {{$receipt->penerima}}</b></h3></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="width:20%">Semarang</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="width:20%"><h3><b>
+                            {{$receipt->ttd_penerima}},<br>{{$receipt->ttd_pospenerima}}
+                        </b></h3>
+                    </td>
                     <td>&nbsp;</td>
                 </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td align="center" style="width:20%"><h3><b>
-                        Noer Prajitno,<br>CEO/Direktur
-                    </b></h3>
-                </td>
-                <td>&nbsp;</td>
-            </tr>
+                
+                
+                
+            </main>
             
-            
-            
-        </main>
+            <div class="footer">
+                <table>
+                    <tr>
+                        <td class="nore-bgcolor">&nbsp;</td>
+                    </tr>
+                </table>
+            </div>
+        </body>
+        </html>
         
-        <div class="footer">
-            <table>
-                <tr>
-                    <td class="nore-bgcolor">&nbsp;</td>
-                </tr>
-            </table>
-        </div>
-    </body>
-    </html>
-    
