@@ -37,6 +37,7 @@
 						<th>Nama</th>
 						<th>Username</th>
 						<th>Invoice</th>
+						<th>Nama Proyek</th>
 						<th>Tagihan</th>
 						<th class="text-center">Status</th>
 						<th class="text-center">Actions</th>
@@ -51,8 +52,18 @@
 				        <td><div class="datatable-column-width">{{$tagihan->user->nama}}</div></td>
 				        <td><div class="datatable-column-width">{{$tagihan->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
+				        <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
 				        <td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
-				        <td align="center">{{config('custom.tagihan_status.'.$tagihan->status)}}</td>
+						<td align="center">
+							@if ($tagihan->status == 2)
+							<span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>
+							@elseif ($tagihan->status == 1)
+							<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>
+							@else
+							<span style="font-size:100%;" class="badge badge-pill bg-info-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>
+							@endif
+						
+							</td>
 						</td>
 				        <td align="center">
 							<div class="list-icons">

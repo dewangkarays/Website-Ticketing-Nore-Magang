@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::resource('tagihans', 'TagihanController');
 	Route::get('tagihans/cetak/{id}',  'TagihanController@cetak')->name('cetak');
 	Route::get('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
+	Route::get('getweb/{id}',  'TagihanController@getweb');
 	Route::post('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
 	Route::post('tagihans/lampirandestroy/{id}/{idm}', 'TagihanController@lampirandestroy')->name('lampirandestroy');
 	Route::match(['get', 'post'], '/tagihanuser',  'TagihanController@tagihanuser')->name('tagihanuser');

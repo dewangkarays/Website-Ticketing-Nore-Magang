@@ -88,14 +88,12 @@
             <tr>
                 <td rowspan="4" style="vertical-align: top">
                     <h2 class="nore-fontcolor">NORE Inovasi</h2>
-                    <p>Gedung Setos Lantai 3 R1, Jalan Inspeksi Gajahmada No. 6
-                        <br>
-                        Semarang, 50133</p>
-                        <p>+62 813 3562 5529</p>
+                <p style="width: 200px;word-wrap: break-word;">{{$setting->alamat}}</p>
+                <p> +{{$setting->no_telp}} </p>
                     </td>
                     
                     <td align="right" colspan="2" style="font-size: 32px; font-weight: bold">
-                        <img src="{{asset('/global_assets/images/logo_nore_1000px.png')}}" alt="logo" height="50px">
+                    <img src="{{url($setting->logo)}}" alt="logo" height="50px">
                     </td>
                 </tr>
                 
@@ -114,6 +112,12 @@
                             
                             <tr>
                                 <td>{{$invoice->user->nama}}</td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
                             </tr>
                             
                             <tr style="width: 200px">
@@ -138,7 +142,7 @@
                                 <tr>
                                     <td style="font-size: 12px;">
                                         <b>Proyek</b>
-                                        <br>{{$invoice->user->website}}
+                                        <br>{{$invoice->nama_proyek}}
                                     </td>
                                 </tr>
                             </table>
@@ -174,11 +178,7 @@
                         <tr>
                             <td rowspan="7" style="vertical-align: top;">
                                 <span style="font-size: 18px">Catatan :</span> <br>
-                                <ul >
-                                    <li>Pembayaran dapat dilakukan ke nomor rekening BCA a/n Noer Tjahja Moekthi Prajitno 898 518 1108</li>
-                                    <li>Bukti Pengerjaan Terlampir</li>
-                                    <li>Nomor NPWP 95.225.490.2-503.000 a/n CV Nore Inovasi</li>
-                                </ul>
+                                <p style="width: 320px;word-wrap: break-word;line-height: 1.2"> {{$setting->catatan_tagihan}} </p>
                                 
                                     </td>
                                     <td align="right" style="color:#fabf16"><h1>Rp @angka($invoice->jml_tagih) </h1></td>
@@ -212,7 +212,7 @@
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
-                                    <td align="center" style="width:20%">Noer Prajitno,<br>Direktur</td>
+                                    <td align="center" style="width:20%">{{$setting->penagih}},<br> {{$setting->pospenagih}} </td>
                                 </tr>
                             </table>
                             

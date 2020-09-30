@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Tagihan;
 use App\Model\User;
+use App\Model\Setting;
 use App\Model\Lampiran_gambar;
 use Illuminate\Support\Facades\File;
 use PDF;
@@ -31,8 +32,8 @@ class TagihanController extends Controller
     public function create()
     {
         $users = User::where('role','>=',80)->get();
-
-        return view('tagihans.create',compact('users'));
+        $penagih = Setting::first();
+        return view('tagihans.create',compact('users','penagih'));
     }
 
     /**
@@ -88,9 +89,10 @@ class TagihanController extends Controller
     {
         $users = User::where('role','>=',80)->get();
         $tagihan = Tagihan::find($id);
+        $penagih = Setting::first();
         // $gambar = Lampiran_gambar::where('tagihan_id',$tagihan->id);
 
-        return view('tagihans.edit', compact('tagihan','users')); 
+        return view('tagihans.edit', compact('tagihan','users','penagih')); 
     }
 
     /**
@@ -128,13 +130,22 @@ class TagihanController extends Controller
         return redirect('/tagihans')->with('success', 'Tagihan updated!');
     }
 
+    public function getweb($id)
+    {
+        $data = User::find($id);
+        // dd($data['website']);
+        $web = $data['website'];
+        return $web;
+    }
+
     public function cetak($id)
     {
         $invoice = Tagihan::find($id);
         $lampirans = Lampiran_gambar::where('tagihan_id', $id)->orderBy('id', 'asc')->get();
+        $setting = Setting::first();
         // dd($lampirans);
 
-        $pdf = PDF::loadview('tagihans.invoice', compact('invoice','lampirans'))->setPaper('a4', 'potrait');
+        $pdf = PDF::loadview('tagihans.invoice', compact('invoice','lampirans','setting'))->setPaper('a4', 'potrait');
         return $pdf->stream();
     }
 

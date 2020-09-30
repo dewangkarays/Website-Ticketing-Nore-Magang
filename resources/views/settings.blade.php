@@ -77,6 +77,13 @@
 								<input type="text" class="form-control border-teal border-1" name="pospenagih" id="pospenagih" required value="{{$setting ? $setting->pospenagih : ""}}">
 							</div>
 						</div>
+						<hr>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Catatan Tagihan</label>
+							<div class="col-lg-8">
+								<textarea class="form-control border-teal border-1" name="catatan_tagihan" id="catatan_tagihan" cols="110" rows="3">{{$setting ? $setting->catatan_tagihan : ""}}</textarea>	
+							</div>
+						</div>
 					
 				</fieldset>
 				<div class="text-right">

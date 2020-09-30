@@ -41,7 +41,8 @@ class SettingController extends Controller
             'ttd_penerima' => $data['ttd_penerima'],
             'ttd_pospenerima' => $data['ttd_pospenerima'],
             'penagih' => $data['penagih'],
-            'pospenagih' => $data['pospenagih']
+            'pospenagih' => $data['pospenagih'],
+            'catatan_tagihan' => $data['catatan_tagihan']
         ]);
 
         return redirect()->back()->with('success', 'Setting Updated');
