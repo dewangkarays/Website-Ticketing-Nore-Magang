@@ -79,7 +79,7 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Jabatan Penagih</label>
+							<label class="col-form-label col-lg-2">Posisi Penagih</label>
 							<div class="col-lg-8">
 								<input type="text" class="form-control border-teal border-1" name="pospenagih" id="pospenagih" required value="{{$setting ? $setting->pospenagih : ""}}">
 							</div>

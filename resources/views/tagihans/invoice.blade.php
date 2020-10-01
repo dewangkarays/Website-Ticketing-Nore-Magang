@@ -212,7 +212,7 @@
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
-                                    <td align="center" style="width:20%">{{$setting->penagih}},<br> {{$setting->pospenagih}} </td>
+                                    <td align="center" style="width:20%">{{$invoice->penagih}},<br> {{$invoice->pospenagih}} </td>
                                 </tr>
                             </table>
                             

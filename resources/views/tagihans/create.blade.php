@@ -82,7 +82,13 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Penagih</label>
 						<div class="col-lg-10">
-							<input type="text" id="penagih" name="penagih" class="form-control border-teal border-1" placeholder="Nama Penagih" value=" {{$penagih->penagih}} ">
+							<input type="text" id="penagih" name="penagih" class="form-control border-teal border-1" placeholder="Nama Penagih" value="{{$penagih->penagih}}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Posisi Penagih</label>
+						<div class="col-lg-10">
+							<input type="text" id="pospenagih" name="pospenagih" class="form-control border-teal border-1" placeholder="Nama Penagih" value="{{$penagih->pospenagih}}">
 						</div>
 					</div>
 					<div class="form-group row">

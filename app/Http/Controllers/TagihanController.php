@@ -60,7 +60,26 @@ class TagihanController extends Controller
             $data['lainnya'] = 0;
         }
 
-        $data['invoice'] = 'INV'.date('YmdHis');
+        // FORMAT INVOICE
+        $invoiceno = 01;
+        $lastinv = Tagihan::latest('id')->first();
+        $diffinv = substr($lastinv->invoice,0,3);
+        
+        if ($diffinv = 'INV') {
+            $different = 'no';
+        } else {
+            $different = 'yes';
+        }
+        // dd($different);
+        if ($lastinv->invoice == null || $different = 'yes') {
+            $data['invoice'] = 'INV/0'.$invoiceno.'/'.date('dmY');
+        } else{
+            $lastno = $lastinv->invoice;
+            $no = substr($lastno,5,1);
+            $data['invoice'] = 'INV/0'.($no+1).'/'.date('dmY');
+        }
+        // dd($data['invoice']);
+        // $data['invoice'] = 'INV'.date('YmdHis');
         $data['jml_tagih'] = $data['langganan'] + $data['ads'] + $data['lainnya'];
 
         $tagihan = Tagihan::create($data);
