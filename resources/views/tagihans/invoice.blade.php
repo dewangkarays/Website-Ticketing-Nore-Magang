@@ -111,7 +111,7 @@
                             </tr>
                             
                             <tr>
-                                <td>{{$invoice->user->nama}}</td>
+                                <td>{{$invoice->nama}}</td>
                             </tr>
 
                             <tr>
