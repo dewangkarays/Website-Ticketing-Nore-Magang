@@ -78,7 +78,7 @@ class PaymentController extends Controller
             $no = substr($lastno,5,1);
             $data['receipt_no'] = 'PAY/0'.($no+1).'/'.date('dmY');
         }
-        // dd($data['receipt_no']);
+        // dd($data);
         
         $payment = Payment::create($data);
         

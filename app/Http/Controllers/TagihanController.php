@@ -284,7 +284,8 @@ class TagihanController extends Controller
         $tagihanuser2 = Tagihan::find($id);
         // dd($tagihanuser2);
         // dd($tagihan);
-        return view('payments.create', compact('users', 'tagihanuser', 'tagihanuser2'));
+        $setting = Setting::first();
+        return view('payments.create', compact('users', 'tagihanuser', 'tagihanuser2', 'setting'));
     }
 
     
