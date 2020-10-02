@@ -13,7 +13,7 @@ class AddAdditionalColumnToTagihanTable extends Migration
      */
     public function up()
     {
-        Schema::table('tagihan', function (Blueprint $table) {
+        Schema::table('tagihans', function (Blueprint $table) {
             $table->string('nama')->nullable();
             $table->string('nama_proyek')->nullable();
         });
@@ -26,7 +26,7 @@ class AddAdditionalColumnToTagihanTable extends Migration
      */
     public function down()
     {
-        Schema::table('tagihan', function (Blueprint $table) {
+        Schema::table('tagihans', function (Blueprint $table) {
             $table->dropColumn('nama');
             $table->dropColumn('nama_proyek');
         });
