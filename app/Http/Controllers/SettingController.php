@@ -31,7 +31,7 @@ class SettingController extends Controller
         }else{
             $data['logo'] = $logo->logo;
         }
-        // dd($data['logo']);
+        // dd($data);
         Setting::updateOrInsert(
             ['id' => 1],[
             'logo' => $data['logo'],

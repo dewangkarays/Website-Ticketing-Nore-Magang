@@ -26,9 +26,23 @@
         }
         body{
             font-family:Arial, Helvetica, sans-serif;
+            margin-left: 60px;
+            margin-right: 80px;
         }
+
+        hr {
+            border-top: .1px solid #595657;
+        }
+        
+        .head-block {
+            margin-left: -40px !important;
+            margin-right: -80px !important;
+        }
+
         .from-table {
-            line-height: .1 !important;
+            line-height: 1.2 !important;
+            font-weight: bold;
+            font-size: 14px !important;
         }
         
         .main-table{
@@ -40,7 +54,9 @@
             padding: 5px 10px;
         }
         .main-table tbody td{
-            background-color: #f3f3f3;
+            background-color: #d8ead2;
+            font-weight: bold;
+            font-size: 11px;
         }
         .main-table th{
             overflow-wrap: break-word;
@@ -62,9 +78,11 @@
         }
         
         .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
+            /* position: fixed; */
+            /* left: 0;
+            bottom: 0; */
+            margin-left: -40px !important;
+            margin-right: -80px !important;
         }
     </style>
 </head>
@@ -77,7 +95,7 @@
         
     </footer>
     <main>
-        <table style="margin-bottom: 10px;">
+        <table class="head-block" style="margin-bottom: 10px;">
             <tr>
                 <td class="nore-bgcolor">&nbsp;</td>
             </tr>
@@ -86,22 +104,24 @@
             <tr>
                 <td rowspan="4" style="vertical-align: top">
                     <h2 class="nore-fontcolor">NORE Inovasi</h2>
-                <p style="width: 200px;word-wrap: break-word;">{{$setting->alamat}}</p>
-                <p> +{{$setting->no_telp}} </p>
+                <p><?php echo $setting->alamat ?></p>
+                <p>{{$setting->no_telp}} </p>
                     </td>
                     
                     <td align="right" colspan="2" style="font-size: 32px; font-weight: bold">
-                        <img src="{{url($setting->logo)}}" alt="logo" height="50px">
+                        <img src="{{url($setting->logo)}}" alt="logo" height="60px">
                     </td>
                 </tr>
                 
             </table>
             
-            <h1 class="nore-fontcolor">Payment Receipt</h1>
-            <h3 style="color:#fabf16">Tanggal : {{date('Y F d')}} </h3>
+            <div style="line-height: 0.1">
+                <h1 class="nore-fontcolor font-weight-bold" style="font-size: 40px;">Payment Receipt</h1>
+                <h4 style="color:#fabf16">Tanggal : {{date('d F Y')}} </h4>
+            </div>
             
-            <br>
-            <table>
+            
+            <table style="margin-top: 10;line-height: 0.6 !important">
                 <tr>
                     <td colspan="2">
                         <h3><b>Receipt No:</b></h3>
@@ -111,42 +131,38 @@
             </table>
 
             <table style="margin-top: 20px" class="from-table">
-               
                 <tr>
                     <td style="width: 50%; vertical-align: top">
                         <table style="padding-right: 50px">
                             <tr>
-                                <td style="width: 20%"><b><h3>Diterima Dari</h3></b></td>
-                                <td style="width: 80%" align="left"><b><h3>: {{$receipt->nama}}</h3></b></td>
+                                <td style="width: 20%">Diterima Dari</td>
+                                <td style="width: 80%" align="left">: {{$receipt->nama}}</td>
                             </tr>
-                            
                             <tr>
-                                <td style="width: 20%"><b><h3>Uang Sebesar</h3></b></td>
-                                <td style="width: 80%" align="left"><b><h3>: Rp @angka($receipt->nominal)</h3></b></td>
+                                <td style="width: 20%">Uang Sebesar</td>
+                                <td style="width: 80%" align="left">: Rp @angka($receipt->nominal)</td>
                             </tr>
-                            
                             <tr>
-                                <td style="width: 20%"><b><h3>Terbilang</h3></b></td>
+                                <td style="width: 20%">Terbilang</td>
                                 
-                                <td style="width: 80%" align="left"><b><h3>: 
+                                <td style="width: 80%" align="left">: 
                                     @php
                                     use App\Http\Controllers\PaymentController;
                                     $nilai = $receipt->nominal;
                                     echo PaymentController::terbilang($nilai, $style=3);
                                     @endphp    
-                                    Rupiah</h3></b></td>
+                                    Rupiah</td>
                                 </tr>
                             </table>
-                        </td>
-                        
+                        </td>       
                     </tr>
                 </table>
                 <br>
-                <br>
+                
                 
                 <hr style="">
                 
-                <table class="main-table" style="margin-top: 30px">
+                <table class="main-table" style="margin-top: 10px">
                     <tr>
                         <th align="left" class="nore-fontcolor">No. Invoice</th>
                         <th>Jumlah</th> 
@@ -158,7 +174,7 @@
                         
                         <tr>
                             <td>{{$receipt->tagihan->invoice}} </td>
-                            <td>Rp @angka($receipt->nominal) </td>
+                            <td align="right">Rp @angka($receipt->nominal) </td>
                             <td>{{config('custom.tagihan_status.'.$receipt->tagihan->status)}} </td>
                             <td>{{$receipt->keterangan}} </td>
                         </tr>
@@ -172,15 +188,17 @@
                 <br>
                 <hr style=""><br>
                 
-                <table>
+                <table style="line-height: 0.1">
                     <tr>
                         <td><h3><b>Tanggal</b></h3></td>
-                        <td style="width: 80%" align="left  "><h3><b>: {{date('Y F d')}}</b></h3></td>
+                        <td style="width: 80%" align="left  "><h3><b>: {{date('d F Y')}}</b></h3></td>
                     </tr>
                     <tr>
                         <td><h3><b>Diterima Oleh</b></h3></td>
                     <td style="width: 80%" align="left  "><h3><b>: {{$receipt->penerima}}</b></h3></td>
                     </tr>
+                </table>
+                <table>
                     <tr>
                         <td colspan="2">&nbsp;</td>
                     </tr>

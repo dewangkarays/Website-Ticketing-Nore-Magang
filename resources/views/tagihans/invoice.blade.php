@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Nore</title>
     
+    
     <style type="text/css">
         
         @page {
@@ -25,6 +26,10 @@
         }
         body{
             font-family:Arial, Helvetica, sans-serif;
+            color: #595657;
+            background-color:#ffffff;
+            margin-left: 60px;
+            margin-right: 20px;
         }
         
         ul {
@@ -36,6 +41,11 @@
             content: '- ';
             margin-left: -20px;
             margin-right: 10px;
+        }
+        
+        .head-block {
+            margin-left: -40px !important;
+            margin-right: -20px !important;
         }
         
         .main-table{
@@ -69,187 +79,197 @@
         }
         
     </style>
+    
+    
 </head>
 
-<body style="background-color:#ffffff;">
-    <header>
-        
-    </header>
-    <footer>
-        
-    </footer>
+<body>
+    
     <main>
-        <table style="margin-bottom: 10px;">
+        <table class="head-block" style="margin-bottom: 10px;">
             <tr>
-                <td class="nore-bgcolor">&nbsp;</td>
+                <td class="nore-bgcolor" style="height: 23px">&nbsp;</td>
             </tr>
         </table>
         <table>
             <tr>
                 <td rowspan="4" style="vertical-align: top">
-                    <h2 class="nore-fontcolor">NORE Inovasi</h2>
-                <p style="width: 200px;word-wrap: break-word;">{{$setting->alamat}}</p>
-                <p> +{{$setting->no_telp}} </p>
+                    <h2 class="nore-fontcolor" style="font-weight: lighter">NORE Inovasi</h2>
+                    <p><?php echo $setting->alamat ?></p>
+                    <p style="margin-top: -2"> +{{$setting->no_telp}} </p>
+                </td>
+                
+                <td align="right" colspan="2" style="font-size: 32px; font-weight: bold">
+                    <img src="{{url($setting->logo)}}" alt="logo" height="60px">
+                </td>
+            </tr>
+            
+        </table>
+        <div style="line-height: 0.1">
+            <h1 class="nore-fontcolor font-weight-bold" style="font-size: 40px;"><b>Invoice</b></h1>
+            <h4 style="color:#fabf16">Tanggal : {{date('d F Y')}} </h4>
+        </div>
+        
+        <table style="margin-top: 20px;margin-bottom: 8px;font-size: 15px !important">
+            <tr>
+                <td style="width: 50%; vertical-align: top">
+                    <table style="padding-right: 50px">
+                        <tr>
+                            <td><b>Ditujukan Kepada</b></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>{{$invoice->nama}}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                        
+                        <tr style="width: 200px">
+                            <td style="font-size: 12px;">
+                                <span style="font-size: 12px !important">
+                                    
+                                    {{$invoice->user->alamat}} 
+                                </span>
+                                
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 50%; vertical-align: top">
+                    <table style="padding-left: 50px;">
+                        <tr>
+                            <td><b>Invoice #</b>
+                                <br> <span style="font-size: 12px !important;">{{$invoice->invoice}}</span>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                                <td><b></b></td>
+                            </tr>
+                            <tr><td>&nbsp;</td></tr>
+                            <tr>
+                                <td style="line-height: 0.5;">
+                                    <b>Proyek</b>
+                                    <p>{{$invoice->nama_proyek ? $invoice->nama_proyek : '-'}}</p>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
+                </tr>
+            </table>
+            
+            <hr style="margin-top: -8px;margin-bottom: -8px">
+            
+            <table class="main-table" style="margin-top: 30px;margin-bottom: 5px;line-height: 0.7">
+                <tr>
+                    <th align="left" style="width: 65%" class="nore-fontcolor">Deskripsi</th>
                     
-                    <td align="right" colspan="2" style="font-size: 32px; font-weight: bold">
-                    <img src="{{url($setting->logo)}}" alt="logo" height="50px">
+                    <th align="right" style="width: 35%">Total</th> 
+                </tr>
+                
+                <tbody> 
+                    
+                    <tr>
+                        <td><b>{{$invoice->keterangan}}</b></td>
+                        <td align="right">Rp @angka($invoice->jml_tagih)</td> 
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="background-color: white">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="nore-fontcolor">&nbsp;</td>
+                        <td align="right"><span class="nore-fontcolor" style="float: left">Subtotal</span> <b>Rp @angka($invoice->jml_tagih)</b></td> 
+                    </tr> 
+                </tbody>
+                
+            </table>
+            
+            <table style="line-height: 1.3;">
+                <tr>
+                    <td style="vertical-align: top;">
+                        <span style="font-size: 12px;color: #b1acaa">Catatan :</span> <br>
+                        <span style="font-size: 13px"><?php echo $setting->catatan_tagihan ?></span>
                     </td>
+                    <td align="right" style="color:#fabf16;vertical-align: top;font-size: 25px;font-weight: bold"><span>Rp @angka($invoice->jml_tagih) </span></td>
+                    
                 </tr>
                 
             </table>
             
-            <h1 class="nore-fontcolor">Invoice</h1>
-            <h2 style="color:#fabf16">Tanggal : {{date('Y F d')}} </h2>
-            
-            <table style="margin-top: 20px">
-                <tr>
-                    <td style="width: 50%; vertical-align: top">
-                        <table style="padding-right: 50px">
-                            <tr>
-                                <td><b>Ditujukan Kepada</b></td>
-                            </tr>
-                            
-                            <tr>
-                                <td>{{$invoice->nama}}</td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    &nbsp;
-                                </td>
-                            </tr>
-                            
-                            <tr style="width: 200px">
-                                <td style="font-size: 12px;">
-                                    {{$invoice->user->alamat}} 
-                                    
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td style="width: 50%; vertical-align: top">
-                        <table style="padding-left: 50px">
-                            <tr>
-                                <td><b>Invoice#</b>
-                                    <br> {{$invoice->invoice}} </td>
-                                </tr>
-                                
-                                <tr>
-                                    <td><b></b></td>
-                                </tr>
-                                <tr><td>&nbsp;</td></tr>
-                                <tr>
-                                    <td style="font-size: 12px;">
-                                        <b>Proyek</b>
-                                        <br>{{$invoice->nama_proyek}}
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
+            @if (count($lampirans)>0)
+            <table class="page-break">
+                @else
+                
+                <table style="margin-right: 60px;">
+                    @endif
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td align="center" style="width:20%">Semarang,</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td align="center" style="width:20%;font-weight: bold">{{$invoice->penagih}},<br> {{$invoice->pospenagih}} </td>
                     </tr>
                 </table>
+                
+                
                 <br>
+                @if ($lampirans != null)
                 
-                <hr>
-                
-                <table class="main-table" style="margin-top: 30px">
+                <table>
+                    @php ($i = 1)
+                    @foreach ($lampirans as $lampiran)
                     <tr>
-                        <th align="left" style="width: 65%" class="nore-fontcolor">Deskripsi</th>
-                        
-                        <th style="width: 35%">Total</th> 
+                        <td>
+                            Lampiran {{$i}} : {{ $lampiran->keterangan}} 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <img src="{{url($lampiran->gambar)}}" style="width:50%;object-fit: cover;">
+                            
+                        </td>
+                    </tr>
+                    <br>
+                    <tr>
+                        <td>&nbsp;</td>
                     </tr>
                     
-                    <tbody> 
-                        
-                        <tr>
-                            <td>{{$invoice->keterangan}}</td>
-                            <td align="right">Rp @angka($invoice->jml_tagih)</td> 
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="background-color: white">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td align="right" class="nore-fontcolor">Subtotal</td>
-                            <td align="right"> <b>Rp @angka($invoice->jml_tagih)</b></td> 
-                        </tr> 
-                    </tbody>
-                    <tfoot >
-                        <tr>
-                            <td rowspan="7" style="vertical-align: top;">
-                                <span style="font-size: 18px">Catatan :</span> <br>
-                                <p style="width: 320px;word-wrap: break-word;line-height: 1.2"> {{$setting->catatan_tagihan}} </p>
-                                
-                                    </td>
-                                    <td align="right" style="color:#fabf16"><h1>Rp @angka($invoice->jml_tagih) </h1></td>
-                                    
-                                </tr>
-                                
-                            </tfoot>
-                        </table>
-                        
-                        @if (count($lampirans)>0)
-                        <table class="page-break">
-                            @else
-                            
-                            <table>
-                                @endif
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td align="center" style="width:20%">Semarang</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td align="center" style="width:20%">{{$invoice->penagih}},<br> {{$invoice->pospenagih}} </td>
-                                </tr>
-                            </table>
-                            
-                            
-                            <br>
-                            @if ($lampirans != null)
-                            
-                            <table>
-                                @php ($i = 1)
-                                @foreach ($lampirans as $lampiran)
-                                <tr>
-                                    <td>
-                                        Lampiran {{$i}} : {{ $lampiran->keterangan}} 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center">
-                                        <img src="{{url($lampiran->gambar)}}" style="width:50%;object-fit: cover;">
-                                        
-                                    </td>
-                                </tr>
-                                <br>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                
-                                @php ($i++)
-                                @endforeach
-                            </table>
-                            @endif
-                            
-                            
-                            
-                            
-                        </main>
-                        
-                        
-                    </body>
-                    </html>
-                    
+                    @php ($i++)
+                    @endforeach
+                </table>
+                @endif
+                
+                
+                
+                
+            </main>
+            
+            <script>
+                $(".phone").text(function(i, text) {
+                    text = text.replace(/(\d{2})(\d{3})(\d{4})(\d{4})/, "$1 $2 $3 $4");
+                    return text;
+                });
+            </script>
+            
+        </body>
+        
+        
+        </html>
+        
