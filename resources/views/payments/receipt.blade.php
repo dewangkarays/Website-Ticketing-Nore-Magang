@@ -195,7 +195,7 @@
                     </tr>
                     <tr>
                         <td><h3><b>Diterima Oleh</b></h3></td>
-                    <td style="width: 80%" align="left  "><h3><b>: {{$receipt->penerima}}</b></h3></td>
+                    <td style="width: 80%" align="left  "><h3><b>: {{$receipt->penerima ? $receipt->penerima : $setting->penerima}}</b></h3></td>
                     </tr>
                 </table>
                 <table>
@@ -222,8 +222,9 @@
                         <td colspan="2">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td align="center" style="width:20%"><h3><b>
-                            {{$receipt->ttd_penerima}},<br>{{$receipt->ttd_pospenerima}}
+                        <td align="center" style="width:30%"><h3><b>
+                            {{$receipt->ttd_penerima ? $receipt->ttd_penerima : $setting->ttd_penerima}},
+                            <br>{{$receipt->ttd_pospenerima ? $receipt->ttd_pospenerima : $setting->ttd_pospenerima}}
                         </b></h3>
                     </td>
                     <td>&nbsp;</td>

@@ -46,7 +46,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nomor Telpon</label>
 						<div class="col-lg-8">
-							<input type="text" name="no_telp" class="form-control border-teal border-1" required
+							<input type="text" id="no_telp" name="no_telp" class="form-control border-teal border-1" required
 							value="{{$setting ? $setting->no_telp : ""}}">
 							<label class="col-form-label">Gunakan format kode negara 62. Contoh: 6281335625529</label>
 						</div>
@@ -57,7 +57,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Penerima</label>
 						<div class="col-lg-8">
-							<input type="text" name="penerima" class="form-control border-teal border-1" required value="{{$setting ? $setting->penerima : ""}}">
+							<input type="text" id="penerima" name="penerima" class="form-control border-teal border-1" required value="{{$setting ? $setting->penerima : ""}}">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -128,6 +128,107 @@
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_checkboxes_radios.js')}}"></script>
 	
+	<script type="text/javascript">
+				
+		var FormValidation = function() {
+			
+			// Validation config
+			var _componentValidation = function() {
+				if (!$().validate) {
+					console.warn('Warning - validate.min.js is not loaded.');
+					return;
+				}
+				
+				// Initialize
+				var validator = $('.form-validate-jquery').validate({
+					ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+					errorClass: 'validation-invalid-label',
+					//successClass: 'validation-valid-label',
+					validClass: 'validation-valid-label',
+					highlight: function(element, errorClass) {
+						$(element).removeClass(errorClass);
+					},
+					unhighlight: function(element, errorClass) {
+						$(element).removeClass(errorClass);
+					},
+					// success: function(label) {
+						//    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+						//},
+						
+						// Different components require proper error label placement
+						errorPlacement: function(error, element) {
+							
+							// Unstyled checkboxes, radios
+							if (element.parents().hasClass('form-check')) {
+								error.appendTo( element.parents('.form-check').parent() );
+							}
+							
+							// Input with icons and Select2
+							else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+								error.appendTo( element.parent() );
+							}
+							
+							// Input group, styled file input
+							else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+								error.appendTo( element.parent().parent() );
+							}
+							
+							// Other elements
+							else {
+								error.insertAfter(element);
+							}
+						},
+						messages: {
+							// logo: {
+							// 	required: 'Mohon diisi.'
+							// },
+							alamat: {
+								required: 'Mohon diisi.'
+							},
+							no_telp: {
+								required: 'Mohon diisi.'
+							},
+							penerima: {
+								required: 'Mohon diisi.'
+							},
+							ttd_penerima: {
+								required: 'Mohon diisi.'
+							},
+							ttd_pospenerima: {
+								required: 'Mohon diisi.'
+							},
+							penagih: {
+								required: 'Mohon diisi.'
+							},
+							pospenagih: {
+								required: 'Mohon diisi.'
+							},
+						},
+					});
+					
+					// Reset form
+					$('#reset').on('click', function() {
+						validator.resetForm();
+					});
+				};
+				
+				// Return objects assigned to module
+				return {
+					init: function() {
+						_componentValidation();
+					}
+				}
+			}();
+			
+			
+			// Initialize module
+			// ------------------------------
+			
+			document.addEventListener('DOMContentLoaded', function() {
+				FormValidation.init();
+			});
+		</script>
+
 	<script type="text/javascript">
 		$( document ).ready(function() {
 			

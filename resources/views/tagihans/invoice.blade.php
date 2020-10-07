@@ -119,7 +119,9 @@
                         </tr>
                         
                         <tr>
-                            <td>{{$invoice->nama}}</td>
+                            <td>
+                                {{$invoice->nama ? $invoice->nama : $invoice->user->nama}}
+                            </td>
                         </tr>
                         
                         <tr>
@@ -154,7 +156,16 @@
                             <tr>
                                 <td style="line-height: 0.5;">
                                     <b>Proyek</b>
-                                    <p>{{$invoice->nama_proyek ? $invoice->nama_proyek : '-'}}</p>
+                                    {{-- <p>{{$invoice->nama_proyek ? $invoice->nama_proyek : $invoice->user->website}}</p> --}}
+                                    <p>
+                                        @if ($invoice->nama_proyek)
+                                        {{$invoice->nama_proyek}} 
+                                        @elseif ($invoice->user->website)
+                                        {{$invoice->user->website}}
+                                        @else
+                                        -
+                                        @endif
+                                    </p>
                                 </td>
                             </tr>
                         </table>
@@ -224,7 +235,8 @@
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td align="center" style="width:20%;font-weight: bold">{{$invoice->penagih}},<br> {{$invoice->pospenagih}} </td>
+                        <td align="center" style="width:20%;font-weight: bold">{{$invoice->penagih ? $invoice->penagih : $setting->penagih}},
+                            <br> {{$invoice->pospenagih ? $invoice->pospenagih : $setting->pospenagih}} </td>
                     </tr>
                 </table>
                 
