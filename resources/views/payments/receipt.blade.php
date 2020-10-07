@@ -136,7 +136,7 @@
                         <table style="padding-right: 50px">
                             <tr>
                                 <td style="width: 20%">Diterima Dari</td>
-                                <td style="width: 80%" align="left">: {{$receipt->nama}}</td>
+                                <td style="width: 80%" align="left">: {{$receipt->nama ? $receipt->nama : $receipt->user->nama}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 20%">Uang Sebesar</td>
