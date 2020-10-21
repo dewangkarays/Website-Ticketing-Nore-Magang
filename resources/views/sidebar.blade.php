@@ -1,3 +1,11 @@
+<style>
+
+ul{
+	list-style-type: none;
+}
+
+</style>
+
 
 <div class="sidebar sidebar-dark sidebar-main sidebar-expand-md" style="background-color: #229c59">
 	
@@ -38,7 +46,7 @@
 					<a href="{{ url('/setting') }}" class="nav-link {{ (request()->is('setting*')) ? 'active' : '' }}">
 						<i class="icon-gear"></i>
 						<span>
-							Setting
+							Print
 						</span>
 					</a>
 				</li>
@@ -64,7 +72,6 @@
 					</a>
 				</li>
 				
-				
 				@else
 				<li class="nav-item">
 					<a href="{{ url('/customer') }}" class="nav-link {{ (request()->is('customer*')) ? 'active' : '' }}">
@@ -88,8 +95,86 @@
 				</li>
 				
 				@endif
+
+				@if (Auth::user()->role==1||Auth::user()->role==10)
+
+				<li class="nav-item nav-item-submenu">
+					<a href="#" class="nav-link"><i class="icon-stack-text"></i><span>Pengoperasian</span></a>
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('statistik*')) ? 'block' : 'none' }};">
+						<li class="nav-item">
+							<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
+								<i class="icon-stack-text"></i>
+								<span>
+									Task
+								</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ url('/history') }}" class="nav-link {{ (request()->is('history')) ? 'active' : '' }}">
+								<i class="icon-history"></i>
+								<span>
+									History Task
+								</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ url('/antrian') }}" class="nav-link {{ (request()->is('antrian')) ? 'active' : '' }}">
+								<i class="icon-list-ordered"></i>
+								<span>
+									Antrian
+								</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<li class="nav-item nav-item-submenu">
+					<a href="#" class="nav-link"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms">
+					@if (Auth::user()->role==1||Auth::user()->role==10)
+					<li class="nav-item">
+						<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
+							<i class="icon-file-text"></i>
+							<span>
+								Tagihan 
+								@if ($admunpaid)
+								<br><span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{$admunpaid}} Tagihan belum terbayar lunas</span>
+								@endif
+							</span>
+						</a>
+					</li>
+					@endif
+					<li class="nav-item">
+						<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
+							<i class="icon-coin-dollar"></i>
+							<span>
+								Pembayaran
+							</span>
+						</a>
+					</li>
+					<li class="nav-item">
+					<a href="{{ url('/pengeluarans') }}" class="nav-link {{ (request()->is('pengeluarans*')) ? 'active' : '' }}">
+						<i class="icon-rotate-cw"></i>
+						<span>
+							Pengeluaran
+						</span>
+					</a>
+				</li>
 				
-				<!-- ALL ROLE -->
+				<li class="nav-item">
+					<a href="{{ url('/laporankeuangan') }}" class="nav-link {{ (request()->is('laporankeuangan')) ? 'active' : '' }}">
+						<i class="icon-balance"></i>
+						<span>
+							Laporan Keuangan
+						</span>
+					</a>
+				</li>
+					</ul>
+				</li>
+				@endif
+
+				@if (Auth::user()->role!=1 && Auth::user()->role!=10)
+
 				<li class="nav-item">
 					<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
 						<i class="icon-stack-text"></i>
@@ -98,7 +183,7 @@
 						</span>
 					</a>
 				</li>
-				
+
 				<li class="nav-item">
 					<a href="{{ url('/history') }}" class="nav-link {{ (request()->is('history')) ? 'active' : '' }}">
 						<i class="icon-history"></i>
@@ -107,7 +192,7 @@
 						</span>
 					</a>
 				</li>
-				
+
 				<li class="nav-item">
 					<a href="{{ url('/antrian') }}" class="nav-link {{ (request()->is('antrian')) ? 'active' : '' }}">
 						<i class="icon-list-ordered"></i>
@@ -116,12 +201,43 @@
 						</span>
 					</a>
 				</li>
+
+				@endif
+				
+				<!-- ALL ROLE -->
+
+				<!-- <li class="nav-item">
+					<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
+						<i class="icon-stack-text"></i>
+						<span>
+							Task
+						</span>
+					</a>
+				</li> -->
+				
+				<!-- <li class="nav-item">
+					<a href="{{ url('/history') }}" class="nav-link {{ (request()->is('history')) ? 'active' : '' }}">
+						<i class="icon-history"></i>
+						<span>
+							History Task
+						</span>
+					</a>
+				</li> -->
+				
+				<!-- <li class="nav-item">
+					<a href="{{ url('/antrian') }}" class="nav-link {{ (request()->is('antrian')) ? 'active' : '' }}">
+						<i class="icon-list-ordered"></i>
+						<span>
+							Antrian
+						</span>
+					</a>
+				</li> -->
 				
 				
-				
+<!-- 				
 				@if(Auth::user()->role>=1)
 				
-				@if (Auth::user()->role==1)
+				@if (Auth::user()->role==1||Auth::user()->role==10)
 				<li class="nav-item">
 					<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
 						<i class="icon-file-text"></i>
@@ -135,7 +251,7 @@
 					</a>
 				</li>
 				@endif
-				
+
 				<li class="nav-item">
 					<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
 						<i class="icon-coin-dollar"></i>
@@ -187,7 +303,7 @@
 				@endif
 				
 				@endif
-				
+				 -->
 			</ul>
 		</div>
 		<!-- /main navigation -->
