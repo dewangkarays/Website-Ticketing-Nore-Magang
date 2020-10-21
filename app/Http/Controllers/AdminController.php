@@ -48,6 +48,5 @@ class AdminController extends Controller
         // dd($tagihan);
         return view("index", compact('new','ongoing','done','tagihan','lastpayment','totalbayar'));
     }
-
     
 }
