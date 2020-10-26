@@ -21,7 +21,6 @@ class TagihanController extends Controller
     public function index()
     {
         $tagihans = Tagihan::orderBy('id')->get();
-       
         return view('tagihans.index', compact('tagihans'));
     }
 

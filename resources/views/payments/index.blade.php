@@ -55,7 +55,7 @@
 				@foreach($payments as $payment)
 				<tr>
 					<td>{{$i}}</td>
-					<td><div class="datatable-column-width">{{$payment->user->username}}</div></td>
+					<td><div class="datatable-column-width">{{@$payment->user->username}}</div></td>
 					<td><div class="datatable-column-width">{{$payment->keterangan}}</div></td>
 					<td style="font-size: 15px;">Rp @angka($payment->nominal)</td>
 					<td><div class="datatable-column-width">{{@$payment->tagihan->invoice}}</div></td>
@@ -83,7 +83,7 @@
 									<button type="button" class="btn dropdown-item bg-danger open-modal-reject" id="statusbtn" data-id=" {{ $payment->id }} " data-payment=" {{ $payment->nominal }} " data-toggle="modal" data-target="#modal_tolak"><i class="icon-cancel-circle2"></i> Tolak</button>
 									@endif
 									@if(\Auth::user()->role<=20)
-									<a href="https://wa.me/{{$payment->user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
+									<a href="https://wa.me/{{@$payment->user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
 									@endif
 									<a href="{{ route('payments.edit',$payment->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
 									<a href="{{url('/payments/cetak/'.$payment->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>

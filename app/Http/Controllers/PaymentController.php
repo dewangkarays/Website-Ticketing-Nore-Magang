@@ -10,7 +10,7 @@ use App\Model\Task;
 use App\Model\Nomor;
 use App\Model\Tagihan;
 use App\Model\Setting;
-use App\Exports\PaymentExport;
+use App\Exports\PaymentExport; //plugin excel
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
