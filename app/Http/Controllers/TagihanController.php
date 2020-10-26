@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Tagihan;
 use App\Model\User;
 use App\Model\Setting;
+use App\Model\Nomor;
 use App\Model\Lampiran_gambar;
 use Illuminate\Support\Facades\File;
 use PDF;
@@ -33,7 +34,8 @@ class TagihanController extends Controller
     {
         $users = User::where('role','>=',80)->get();
         $penagih = Setting::first();
-        return view('tagihans.create',compact('users','penagih'));
+        $lastno = Nomor::first();
+        return view('tagihans.create',compact('users','penagih','lastno'));
     }
 
     /**
@@ -45,11 +47,10 @@ class TagihanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            //
+            'ninv'=>'bail|unique:nomors|required',
         ]);
 
-        $data = $request->except(['_token', '_method']);
-
+        $data = $request->except(['_token', '_method','noinv','ninv','noakhir','nouser']);
         if($request->get('langganan')==''){
             $data['langganan'] = 0;
         }
@@ -62,26 +63,58 @@ class TagihanController extends Controller
 
         // FORMAT INVOICE
         $invoiceno = 01;
-        $lastinv = Tagihan::latest('id')->first();
-        $diffinv = substr($lastinv->invoice,0,3);
-        
-        if ($diffinv = 'INV') {
-            $different = 'no';
-        } else {
-            $different = 'yes';
-        }
-        // dd($different);
-        if ($lastinv->invoice == null || $different = 'yes') {
-            $data['invoice'] = 'INV/0'.$invoiceno.'/'.date('dmY');
-        } else{
-            $lastno = $lastinv->invoice;
-            $no = substr($lastno,5,1);
-            $data['invoice'] = 'INV/0'.($no+1).'/'.date('dmY');
-        }
-        // dd($data['invoice']);
-        // $data['invoice'] = 'INV'.date('YmdHis');
-        $data['jml_tagih'] = $data['langganan'] + $data['ads'] + $data['lainnya'];
 
+        $invawal = $request->get('noinv');
+        $nomorinv = $request->get('ninv');
+        $noakhir = $request->get('noakhir');
+        $nouser = $request->get('nouser');
+        $no = str_pad($nomorinv,3,"0",STR_PAD_LEFT);
+        $nouserpad = str_pad($nouser,2,"0",STR_PAD_LEFT);
+        $data['invoice'] = $invawal.'/'.$no.'/'.$noakhir.'/'.$nouserpad;
+        $lastinv = Tagihan::latest('id')->first();
+
+        if ($lastinv) {
+            $diffinv = substr($lastinv->invoice,0,3);
+            if ($diffinv == 'INV') {
+                $different = 'no';
+            } else {
+                $different = 'yes';
+            }
+
+            if ($different == 'yes') {
+                $lastno = Nomor::first();
+                    if ($lastno) {
+                        $lastno->ninv = $nomorinv;
+                        $lastno->save();
+                    } else {
+                        $lastno['ninv'] = 1;
+                        $lastno = Nomor::create($lastno);
+                    }
+            } else {
+                // jika tidak sama
+                $lastno = Nomor::first();
+                    if ($lastno) {
+                        $lastno->ninv = $nomorinv;
+                        $lastno->save();
+                    } else {
+                        $lastno['ninv'] = 1;
+                        $lastno = Nomor::create($lastno);
+                    }
+            }
+            
+        } else {
+            $lastno = Nomor::first();
+                    if ($lastno) {
+                        $lastno->ninv = $nomorinv;
+                        $lastno->save();
+                    } else {
+                        $lastno['ninv'] = 1;
+                        $lastno = Nomor::create($lastno);
+                    }
+        }
+ 
+        $data['jml_tagih'] = $data['langganan'] + $data['ads'] + $data['lainnya'];
+        
         $tagihan = Tagihan::create($data);
         
         return redirect('/tagihans')->with('success', 'Tagihan saved!');

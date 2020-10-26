@@ -7,6 +7,7 @@ use App\Model\Payment;
 use App\Model\User;
 use App\Model\Notification;
 use App\Model\Task;
+use App\Model\Nomor;
 use App\Model\Tagihan;
 use App\Model\Setting;
 use App\Exports\PaymentExport;
@@ -71,12 +72,65 @@ class PaymentController extends Controller
 
         $receiptno = 01;
         $lastreceipt = Payment::latest('id')->first();
-        if ($lastreceipt->receipt_no == null) {
-            $data['receipt_no'] = 'PAY/0'.$receiptno.'/'.date('dmY');
+        if ($lastreceipt) {
+            $diffpay = substr($lastreceipt->receipt_no,0,3);
+            if ($diffpay == 'PAY') {
+                $different = 'no';
+            } else {
+                $different = 'yes';
+            }
+            // $data['receipt_no'] = 'PAY/'.$receiptno.'/'.date('dmY');
+
+                if ($different == 'yes') {
+                    $lastno = Nomor::first();
+                    if ($lastno) {
+                        $no1 = $lastno->npay + 1;
+                        $lastno->npay = $no1;
+                        $no = str_pad($no1,3,"0",STR_PAD_LEFT);
+                        $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                        $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                        $lastno->save();
+                    } else {
+                        $lastno['npay'] = 1;
+                        $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
+                        $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                        $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                        $lastno = Nomor::create($lastno);
+                    }
+                } else {
+                    // jika tidak sama
+                    $lastno = Nomor::first();
+                    if ($lastno) {
+                        $no1 = $lastno->npay + 1;
+                        $lastno->npay = $no1;
+                        $no = str_pad($no1,3,"0",STR_PAD_LEFT);
+                        $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                        $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                        $lastno->save();
+                    } else {
+                        $lastno['npay'] = 1;
+                        $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
+                        $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                        $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                        $lastno = Nomor::create($lastno);
+                    }
+                }
         } else{
-            $lastno = $lastreceipt->receipt_no;
-            $no = substr($lastno,5,1);
-            $data['receipt_no'] = 'PAY/0'.($no+1).'/'.date('dmY');
+            $lastno = Nomor::first();
+                    if ($lastno) {
+                        $no1 = $lastno->npay + 1;
+                        $lastno->npay = $no1;
+                        $no = str_pad($no1,3,"0",STR_PAD_LEFT);
+                        $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                        $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                        $lastno->save();
+                    } else {
+                        $lastno['npay'] = 1;
+                        $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
+                        $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                        $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                        $lastno = Nomor::create($lastno);
+                    }
         }
         // dd($data);
         
