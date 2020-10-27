@@ -99,7 +99,7 @@ ul{
 
 				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link"><i class="icon-stack-text"></i><span>Pengoperasian</span></a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('statistik*')) ? 'block' : 'none' }};">
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('task*','history','antrian')) ? 'block' : 'none' }};">
 						<li class="nav-item">
 							<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
 								<i class="icon-stack-text"></i>
@@ -129,7 +129,7 @@ ul{
 
 				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms">
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','payments*','pengeluarans*','laporankeuangan')) ? 'block' : 'none' }};">
 					@if (Auth::user()->role==1||Auth::user()->role==10)
 					<li class="nav-item">
 						<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
