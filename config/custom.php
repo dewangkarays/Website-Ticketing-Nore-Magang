@@ -19,7 +19,8 @@ return [
 
 	'role' => [
        	'1' => 'Super Admin',
-       	'10' => 'Karyawan',
+        '10' => 'Karyawan',
+        '20' => 'Keuangan',
         '80' => 'Premium',
         '90' => 'Prioritas',
         '99' => 'Simpel',

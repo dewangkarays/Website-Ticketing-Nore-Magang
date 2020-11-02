@@ -44,10 +44,10 @@
 				    <tr>
 				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
-							@if (\Auth::user()->role<20)
+							@if (\Auth::user()->role<20 || \Auth::user()->role=20)
 							<td><div class="datatable-column-width"> {{$task->user->username}} </div></td>
-							@elseif (\Auth::user()->id == $task->user_id || \Auth::user()->role<20)
-							{{-- pegawai --}}
+							@elseif (\Auth::user()->id == $task->user_id || \Auth::user()->role<20 || \Auth::user()->role=20)
+							{{-- karyawan --}}
 							<td><div class="datatable-column-width"> <span style="font-size:100%;" class="badge badge-pill bg-success ml-auto ml-md-0"> {{$task->user->username}}</span></div></td>
 							@else
 							<td><div class="datatable-column-width"> Pelanggan Lain </div></td>

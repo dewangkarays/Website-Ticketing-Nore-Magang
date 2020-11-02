@@ -51,7 +51,7 @@
 					<td align="center">{{$tagihan->keterangan}}</td>
 				</td>
 				<td align="center">
-					@if (Auth::user()->role > 10)
+					@if (Auth::user()->role > 20)
 						@if ($tagihan->jml_tagih == 0)
 						<span style="font-size: 100%" class="badge badge-pill bg-success ml-auto ml-md-auto"><i class="icon-checkmark3 mr-1"></i>Lunas</span>
 						@else

@@ -214,7 +214,7 @@
 								@foreach($tblbruto as $bruto)
 								<tr>
 									<td>{{$i}}</td>
-									<td><div class="datatable-column-width">{{$bruto->user->username}}</div></td>
+									<td><div class="datatable-column-width">{{@$bruto->user->username}}</div></td>
 									<td><div class="datatable-column-width">{{$bruto->tgl_bayar}}
 									</div></td>
 									<td><div class="datatable-column-width">Rp {{number_format($bruto->nominal,0,',','.')}}

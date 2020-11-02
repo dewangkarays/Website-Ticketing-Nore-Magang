@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('tagihans/cetak/{id}',  'TagihanController@cetak')->name('cetak');
 	Route::get('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
 	Route::get('getweb/{id}',  'TagihanController@getweb');
+	Route::get('getkadaluarsa/{nama_proyek}',  'TagihanController@getkadaluarsa');
 	Route::post('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
 	Route::post('tagihans/lampirandestroy/{id}/{idm}', 'TagihanController@lampirandestroy')->name('lampirandestroy');
 	Route::match(['get', 'post'], '/tagihanuser',  'TagihanController@tagihanuser')->name('tagihanuser');
@@ -66,6 +67,11 @@ Route::group(['middleware' => ['auth']], function() {
 	//karyawan
 	Route::group(['middleware' => ['role:10']], function() {
 		Route::get('/karyawan',  'AdminController@karyawan')->name('karyawan');
+	});
+
+	//keuangan
+	Route::group(['middleware' => ['role:20']], function() {
+		Route::get('/keuangan',  'AdminController@keuangan')->name('keuangan');
 	});
 	
 	//admin && karyawan

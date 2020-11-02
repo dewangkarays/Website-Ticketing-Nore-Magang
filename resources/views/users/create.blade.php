@@ -89,7 +89,8 @@
 							<div class="col-lg-10">
 								<select name="role" class="form-control bg-teal-400 border-teal-400" required>
                                     <option value="1">Super Admin</option>
-                                    <option value="10">Karyawan</option>
+									<option value="10">Karyawan</option>
+									<option value="20">Keuangan</option>
                                     <option value="80">Premium</option>
                                     <option value="90">Prioritas</option>
                                     <option value="99" selected>Simpel</option>
