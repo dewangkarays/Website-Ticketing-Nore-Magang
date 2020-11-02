@@ -32,7 +32,13 @@
 							<input type="text" id="noinv" name="noinv" class="form-control border-info border-1" value="INV" readonly>
 						</div>
 						<div class="col-lg-2">
-							<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" max="3" value="{{$lastno->ninv ? $lastno->ninv+1 : 1}}" required>
+							@if ($lastno)
+							@if (isset($lastno->ninv))
+							<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" max="3" value="{{$lastno->ninv+1}}" required>
+							@endif
+							@else
+							<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" max="3" value="1" required>
+							@endif
 						</div>
 						<div class="col-lg-2">
 							<input type="text" id="noakhir" name="noakhir" class="form-control border-info border-1" value="{{date('Ymd')}}" readonly>
@@ -43,7 +49,7 @@
 					</div>
 					
 					<hr>
-
+					
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Pelanggan</label>
 						<div class="col-lg-10">

@@ -135,7 +135,15 @@
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Assign</label>
 								<div class="col-lg-10">
-									<label class="col-form-label col-lg-2">{{$task->assign->nama}}</label>
+									@if ($task->handler)
+										@if (isset($task->assign->nama))
+										<label class="col-form-label col-lg-2">{{$task->assign->nama}}</label>
+										@else
+										<label class="col-form-label col-lg-2">-</label>
+										@endif
+									@else
+									<label class="col-form-label col-lg-2">-</label>
+									@endif
 								</div>
 							</div>
 							<div class="form-group row">
