@@ -36,7 +36,7 @@ class TaskApiController extends Controller
                         ->orderBy('users.role', 'ASC')
                         ->orderBy('tasks.created_at', 'ASC')
                         ->select('tasks.*')
-                        ->get(); //admin & karyawan
+                        ->get(); //admin & karyawan & keuangan
         }
         
         return response()->json([
@@ -88,7 +88,7 @@ class TaskApiController extends Controller
         }
 
         //notifikasi
-        $users = User::whereIn('role', ['1','10'])->get(); //role admin & karyawan
+        $users = User::whereIn('role', ['1','10','20'])->get(); //role admin & karyawan & keuangan
         foreach ($users as $user) {
             $notif = new Notification();
             $notif->title = 'Task Baru';
@@ -284,7 +284,7 @@ class TaskApiController extends Controller
         if(\Auth::user()->role > 20){
             $tasks = Task::where('status','=','3')->where('user_id',\Auth::user()->id)->get(); //customer
         } else {
-            $tasks = Task::where('status','=','3')->get(); //admin & karyawan
+            $tasks = Task::where('status','=','3')->get(); //admin & karyawan & keuangan
         }
         
         return response()->json([

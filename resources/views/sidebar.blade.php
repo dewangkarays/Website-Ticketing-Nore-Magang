@@ -70,7 +70,17 @@ ul{
 						</span>
 					</a>
 				</li>
-				
+
+				@elseif(Auth::user()->role==20)
+				<li class="nav-item">
+					<a href="{{ url('/keuangan') }}" class="nav-link {{ (request()->is('keuangan*')) ? 'active' : '' }}">
+						<i class="icon-home4"></i>
+						<span>
+							Dashboard
+						</span>
+					</a>
+				</li>
+
 				@else
 				<li class="nav-item">
 					<a href="{{ url('/customer') }}" class="nav-link {{ (request()->is('customer*')) ? 'active' : '' }}">
@@ -95,7 +105,7 @@ ul{
 				
 				@endif
 
-				@if (Auth::user()->role==1||Auth::user()->role==10)
+				@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 
 				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link"><i class="icon-stack-text"></i><span>Pengoperasian</span></a>
@@ -130,7 +140,7 @@ ul{
 				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','payments*','pengeluarans*','laporankeuangan')) ? 'block' : 'none' }};">
-					@if (Auth::user()->role==1||Auth::user()->role==10)
+					@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 					<li class="nav-item">
 						<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
 							<i class="icon-file-text"></i>
@@ -151,7 +161,7 @@ ul{
 							</span>
 						</a>
 					</li>
-					@if(Auth::user()->role==1)
+					@if(Auth::user()->role==1||Auth::user()->role==20)
 					<li class="nav-item">
 					<a href="{{ url('/pengeluarans') }}" class="nav-link {{ (request()->is('pengeluarans*')) ? 'active' : '' }}">
 						<i class="icon-rotate-cw"></i>
@@ -173,7 +183,7 @@ ul{
 				@endif
 				@endif
 
-				@if (Auth::user()->role!=1 && Auth::user()->role!=10)
+				@if (Auth::user()->role!=1 && Auth::user()->role!=10 && Auth::user()->role!=20)
 
 				<li class="nav-item">
 					<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
@@ -224,6 +234,17 @@ ul{
 						
 					</ul>
 				</li>
+				<li class="nav-item">
+					<a href="{{ url('/setting') }}" class="nav-link {{ (request()->is('setting*')) ? 'active' : '' }}">
+						<i class="icon-gear"></i>
+						<span>
+							Setting Print
+						</span>
+					</a>
+				</li>
+				@endif
+
+				@if(Auth::user()->role==20)
 				<li class="nav-item">
 					<a href="{{ url('/setting') }}" class="nav-link {{ (request()->is('setting*')) ? 'active' : '' }}">
 						<i class="icon-gear"></i>

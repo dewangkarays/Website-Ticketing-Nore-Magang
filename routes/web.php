@@ -68,6 +68,11 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::group(['middleware' => ['role:10']], function() {
 		Route::get('/karyawan',  'AdminController@karyawan')->name('karyawan');
 	});
+
+	//keuangan
+	Route::group(['middleware' => ['role:20']], function() {
+		Route::get('/keuangan',  'AdminController@keuangan')->name('keuangan');
+	});
 	
 	//admin && karyawan
 	Route::group(['middleware' => ['role:1' OR 'role:10']], function() {

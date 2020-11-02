@@ -33,6 +33,18 @@ class GlobalApiController extends Controller
         ]);
     }
 
+    public function getKeuangan()
+    {
+        $users = User::where('role','20')->get();
+        
+        return response()->json([
+            'code'=>200, 
+            'status'=>'Success', 
+            'message'=>'Get data keuangan success', 
+            'data'=> $users
+        ]);
+    }
+
     public function getAttachment($id)
     {
         $attachment = Attachment::where('task_id', '=', $id)->get();

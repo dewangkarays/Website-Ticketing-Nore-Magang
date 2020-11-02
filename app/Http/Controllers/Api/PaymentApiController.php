@@ -61,7 +61,7 @@ class PaymentApiController extends Controller
         }
 
         //notifikasi
-        $users = User::whereIn('role', ['1','10'])->get(); //role admin & karyawan
+        $users = User::whereIn('role', ['1','10','20'])->get(); //role admin & karyawan & keuangan
         foreach ($users as $user) {
             $notif = new Notification();
             $notif->title = 'Pembayaran Baru';

@@ -35,7 +35,7 @@ class TaskController extends Controller
                         ->orderBy('users.role', 'ASC')
                         ->orderBy('tasks.created_at', 'ASC')
                         ->select('tasks.*','users.task_count')
-                        ->get(); //admin & karyawan
+                        ->get(); //admin & karyawan & keuangan
         }
         
         return view('tasks.index', compact('tasks'));
@@ -50,8 +50,9 @@ class TaskController extends Controller
     {
         $users = User::where('role','>','20')->where('task_count','>','0')->get(); //role customer
         $handlers = User::where('role','10')->get(); //role karyawan
+        $finances = User::where('role','20')->get(); //keuangan
 
-        return view('tasks.create', compact('users','handlers'));
+        return view('tasks.create', compact('users','handlers','finances'));
     }
 
     /**
@@ -95,7 +96,7 @@ class TaskController extends Controller
         }
 
         //notifikasi
-        $users = User::whereIn('role', ['1','10'])->get(); //role admin & karyawan
+        $users = User::whereIn('role', ['1','10','20'])->get(); //role admin & karyawan & keuangan
         foreach ($users as $user) {
             $notif = new Notification();
             $notif->title = 'Task Baru';
@@ -118,6 +119,7 @@ class TaskController extends Controller
     {
         $users = User::where('role','>','20')->get(); //role customer
         $handlers = User::where('role','10')->get(); //role karyawan
+        $finances = User::where('role','20')->get(); //role keuangan
         $attachment = Attachment::where('task_id', '=', $id)->get();
         $task = Task::find($id);
 
@@ -129,7 +131,7 @@ class TaskController extends Controller
         //     return redirect('/tasks')->with('error', 'Task Sedang Dikerjakan');
         // }
 
-        return view('tasks.show', compact('task','users','handlers','attachment')); 
+        return view('tasks.show', compact('task','users','handlers','attachment','finances')); 
     }
 
     /**
@@ -142,6 +144,7 @@ class TaskController extends Controller
     {
         $users = User::where('role','>','20')->get(); //role customer
         $handlers = User::where('role','10')->get(); //role karyawan
+        $finances = User::where('role','20')->get(); //role keuangan
         // $handlersname = Task::find($id)->value('handler');
         // dd($handlersname);
         $attachment = Attachment::where('task_id', '=', $id)->get();
@@ -155,7 +158,7 @@ class TaskController extends Controller
         //     return redirect('/tasks')->with('error', 'Task Sedang Dikerjakan');
         // }
 
-        return view('tasks.edit', compact('task', 'users', 'handlers','attachment')); 
+        return view('tasks.edit', compact('task', 'users', 'handlers','attachment','finances')); 
     }
 
     /**
@@ -213,6 +216,18 @@ class TaskController extends Controller
             $notif->url = route('tasks.edit',$task->id);
             $notif->save();
         }
+
+        if($request->get('finance') != '' && $task->finance != $request->get('finance')){
+
+            //notifikasi
+            $notif = new Notification();
+            $notif->title = 'Task Baru untuk Anda';
+            $notif->message = 'Anda mendapat task baru untuk dikerjakan.';
+            $notif->user_id = $request->get('finance');
+            $notif->url = route('tasks.edit',$task->id);
+            $notif->save();
+        }
+
 
         $task->update($data);
 
