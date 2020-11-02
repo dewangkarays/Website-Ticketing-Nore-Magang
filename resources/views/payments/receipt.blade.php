@@ -173,9 +173,9 @@
                     <tbody> 
                         
                         <tr>
-                            <td>{{$receipt->tagihan->invoice}} </td>
+                            <td>{{@$receipt->tagihan->invoice}} </td>
                             <td align="right">Rp @angka($receipt->nominal) </td>
-                            <td>{{config('custom.tagihan_status.'.$receipt->tagihan->status)}} </td>
+                            <td>{{config('custom.tagihan_status.'.@$receipt->tagihan->status)}} </td>
                             <td>{{$receipt->keterangan}} </td>
                         </tr>
                         

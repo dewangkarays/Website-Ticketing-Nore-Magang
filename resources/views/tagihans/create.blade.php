@@ -26,6 +26,24 @@
 				<fieldset class="mb-3">
 					<legend class="text-uppercase font-size-sm font-weight-bold">Data Tagihan</legend>
 					<div class="form-group row">
+						<label class="col-form-label col-lg-2 font-weight-bold">Nomor Invoice</label>
+						<div class="col-lg-1">
+							<input type="text" id="noinv" name="noinv" class="form-control border-info border-1" value="INV" readonly>
+						</div>
+						<div class="col-lg-2">
+							<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" max="3" value="{{$lastno->ninv ? $lastno->ninv+1 : 1}}" required>
+						</div>
+						<div class="col-lg-2">
+							<input type="text" id="noakhir" name="noakhir" class="form-control border-info border-1" value="{{date('Ymd')}}" readonly>
+						</div>
+						<div class="col-lg-2">
+							<input type="text" id="nouser" name="nouser" class="form-control border-info border-1" value="{{\Auth::user()->id}}" readonly>
+						</div>
+					</div>
+					
+					<hr>
+
+					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Proyek</label>
 						<div class="col-lg-10">
 							<select id="nama_proyek" name="nama_proyek" class="form-control select-search" required>
@@ -97,7 +115,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Keterangan</label>
 						<div class="col-lg-10">
-							<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan">
+							<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" required>
 						</div>
 					</div>
 				</fieldset>
@@ -276,6 +294,25 @@
 				icon: 'icon-checkmark3',
 				type: 'success'
 			});
+			@endif
+			@if ($errors->any())
+			new PNotify({
+				title: 'Error',
+				text: 'Nomor Invoice Sudah Terambil, input kembali.',
+				icon: 'icon-blocked',
+				type: 'error'
+			});
+			
+			@elseif ($errors->has('ninv'))
+			@foreach ($errors->all() as $error)
+			new PNotify({
+				title: 'Error',
+				text: '{{ $error }}.',
+				icon: 'icon-blocked',
+				type: 'error'
+			});
+			@endforeach
+			
 			@endif
 			
 		});
