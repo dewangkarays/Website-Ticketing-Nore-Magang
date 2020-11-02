@@ -25,7 +25,6 @@
 				@csrf
 				<fieldset class="mb-3">
 					<legend class="text-uppercase font-size-sm font-weight-bold">Data Tagihan</legend>
-					
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2 font-weight-bold">Nomor Invoice</label>
 						<div class="col-lg-1">
@@ -51,15 +50,13 @@
 					<hr>
 					
 					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Pelanggan</label>
+						<label class="col-form-label col-lg-2">Proyek</label>
 						<div class="col-lg-10">
-							<select id="user_id" name="user_id" class="form-control select-search" required>
-								<option value="">-- Pilih Pelanggan --</option>
+							<select id="nama_proyek" name="nama_proyek" class="form-control select-search" required>
+								<option value="">-- Pilih Proyek --</option>
 								@foreach ($users as $user)
-								{{-- <option data-name="{{$user->nama}}" value="{{$user->id}}">{{$user->nama.' ('.$user->username.')'}}</option> --}}
-								<option data-name="{{$user->nama}}" value="{{$user->id}}">{{$user->username}}</option>
+								<option value="{{$user->id}}">{{$user->website}}</option>
 								@endforeach
-								
 							</select>
 						</div>
 					</div>
@@ -67,6 +64,12 @@
 						<label class="col-form-label col-lg-2">Nama</label>
 						<div class="col-lg-10">
 							<input type="text" id="nama" name="nama" class="form-control border-teal border-1" value="">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Masa Berlaku</label>
+						<div class="col-lg-10">
+							<input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1" value="">
 						</div>
 					</div>
 					{{-- <div class="form-group row">
@@ -170,22 +173,18 @@
 		format: 'yyyy-mm-dd',
 	});
 	
-	$('#user_id').on('change', function(){
-		var nama = $('#user_id option:selected').data('name');
-		var id_proyek = $('#user_id option:selected').val();
-		var token = getToken();
-		$('#nama').val(nama);
-		$('#nama').text(nama);
-		// alert(id_proyek);
+	$('#nama_proyek').on('change', function(){
+		var id_proyek = $('#nama_proyek option:selected').val();
 		$.ajax({
-			type: "get",
-			url : '{{url("getweb")}}/'+id_proyek,
-			// jika data string langsung tanpa datatype
+			type: 'get',
+			url : '{{url("getkadaluarsa")}}/'+id_proyek,
 			success : function(data){
-				$('#nama_proyek').val(data);
+				$('#kadaluarsa').val(data);
+				$('#kadaluarsa').text(data);
 				console.log('Success');
-			}, error: function (data) {
-				console.log('Error:', data);
+			},
+			error:function(data){
+				console.log('Error',data);
 			}
 		});
 	});

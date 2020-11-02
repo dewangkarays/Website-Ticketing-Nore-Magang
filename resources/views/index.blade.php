@@ -75,8 +75,8 @@
 	</div>
 	<!-- /quick stats boxes -->
 	
-	@if(\Auth::user()->role<20)
-	<!-- TODAY -->
+	@if(\Auth::user()->role<20 || \Auth::user()->role=20)
+	 <!-- TODAY -->
 	<!-- Quick stats boxes -->
 	<div class="row">
 		<hr><hr>

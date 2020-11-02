@@ -76,6 +76,8 @@ class UserController extends Controller
                     $roleuser = 'Super-Admin';
                 } elseif ($user->role == '10') {
                     $roleuser = 'Karyawan';
+                }elseif($user->role=='20'){
+                    $roleuser = 'Keuangan';
                 } elseif ($user->role == '80') {
                     $roleuser = 'Premium';
                 }elseif ($user->role == '90') {

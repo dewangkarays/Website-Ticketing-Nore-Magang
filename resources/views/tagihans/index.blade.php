@@ -55,9 +55,9 @@
 				        <td><div class="datatable-column-width">{{@$tagihan->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
 				        <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
-				        <td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
-						<td><div class="datatable-column-width">Rp </div></td>
-						<td><div class="datatable-column-width">Rp </div></td>
+				        <td><div class="datatable-column-width"></div>Rp @angka(($tagihan->langganan)+($tagihan->ads)+($tagihan->lainnya))</td>
+						<td><div class="datatable-column-width">Rp @angka($tagihan->payment->sum('nominal'))</div></td>
+						<td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
 						<td align="center">
 							@if ($tagihan->status == 2)
 							<span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>

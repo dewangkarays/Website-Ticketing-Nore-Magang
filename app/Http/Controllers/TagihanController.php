@@ -32,6 +32,7 @@ class TagihanController extends Controller
     public function create()
     {
         $users = User::where('role','>=',80)->get();
+        $users = $users->sortBy('kadaluarsa');
         $penagih = Setting::first();
         $lastno = Nomor::first();
         return view('tagihans.create',compact('users','penagih','lastno'));
@@ -187,6 +188,13 @@ class TagihanController extends Controller
         // dd($data['website']);
         $web = $data['website'];
         return $web;
+    }
+
+    public function getkadaluarsa($nama_proyek)
+    {
+        $data = User::find($nama_proyek);
+        $kadaluarsa = $data['kadaluarsa'];       
+        return $kadaluarsa;
     }
 
     public function cetak($id)

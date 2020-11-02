@@ -90,7 +90,8 @@
 							<div class="col-lg-10">
 								<select name="role" class="form-control bg-teal-400 border-teal-400" required>
                                     <option value="1" {{ $user->role == '1' ? 'selected' : '' }}>Super Admin</option>
-                                    <option value="10" {{ $user->role == '10' ? 'selected' : '' }}>Karyawan</option>
+									<option value="10" {{ $user->role == '10' ? 'selected' : '' }}>Karyawan</option>
+									<option value="20" {{ $user->role == '20' ? 'selected' : '' }}>Keuangan</option>
                                     <option value="80" {{ $user->role == '80' ? 'selected' : '' }}>Premium</option>
                                     <option value="90" {{ $user->role == '90' ? 'selected' : '' }}>Prioritas</option>
                                     <option value="99" {{ $user->role == '99' ? 'selected' : '' }}>Simpel</option>
