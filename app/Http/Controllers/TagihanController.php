@@ -40,6 +40,16 @@ class TagihanController extends Controller
         return view('tagihans.create',compact('users','penagih','lastno'));
     }
 
+    public function createtagihan($id)
+    {
+        $fuser = User::find($id);
+        $users = User::where('role','>=',80)->get();
+        $users = $users->sortBy('kadaluarsa');
+        $penagih = Setting::first();
+        $lastno = Nomor::first();
+        return view('users.createtagihan',compact('fuser','users','penagih','lastno'));
+    }
+
     public function export_excel() 
     {
         return Excel::download(new TagihanExport, 'Tagihan '.(date('Y-m-d')).'.xlsx' );
@@ -57,7 +67,7 @@ class TagihanController extends Controller
             'ninv'=>'bail|unique:nomors|required',
         ]);
 
-        $data = $request->except(['_token', '_method','select_proyek','noinv','ninv','noakhir','nouser']);
+        $data = $request->except(['_token', '_method','noinv','ninv','noakhir','nouser']);
         if($request->get('langganan')==''){
             $data['langganan'] = 0;
         }
@@ -78,7 +88,7 @@ class TagihanController extends Controller
         $no = str_pad($nomorinv,3,"0",STR_PAD_LEFT);
         $nouserpad = str_pad($nouser,2,"0",STR_PAD_LEFT);
         $data['invoice'] = $invawal.'/'.$no.'/'.$noakhir.'/'.$nouserpad;
-        // $data['user_id'] = $request->get('select_proyek');
+        // $data['user_id'] = $request->get('user_id');
         $lastinv = Tagihan::latest('id')->first();
 
         // dd($data);

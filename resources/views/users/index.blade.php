@@ -83,6 +83,7 @@
 									</a>
 
 									<div class="dropdown-menu dropdown-menu-right">
+										<a href="{{ url('createtagihan',$user->id)}}" class="dropdown-item"><i class="icon-file-text"></i> Buat Tagihan</a>
 										<a href="{{ route('users.show',$user->id)}}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
 										<a href="https://wa.me/{{$user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
 										@if (Auth::user()->role==1)

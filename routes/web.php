@@ -83,6 +83,10 @@ Route::group(['middleware' => ['auth']], function() {
 		// Route::post('/laporankeuangan',  'LaporanKeuanganController@index')->name('filterbulan');
 	});
 
+	Route::group(['middleware' => ['role:1' OR 'role:10' OR 'role:20']], function() {
+		Route::get('createtagihan/{id}',  'TagihanController@createtagihan')->name('createtagihan');
+	});
+
 	//customer
 	//Route::group(['middleware' => ['role:80|90|99']], function() {
 		Route::get('/customer',  'AdminController@customer')->name('customer');
