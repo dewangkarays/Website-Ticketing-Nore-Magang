@@ -85,7 +85,19 @@ Route::group(['middleware' => ['auth']], function() {
 	//customer
 	//Route::group(['middleware' => ['role:80|90|99']], function() {
 		Route::get('/customer',  'AdminController@customer')->name('customer');
-	//});
+		//});
+		
+	});
 
-});
+	Route::get('/tagihanclient','client\TagihanClient@index');
+	Route::get('/tagihanaktif','client\TagihanClient@active');
+	Route::get('/tagihanriwayat','client\TagihanClient@history');
+	Route::get('/payment','client\PaymentClient@index');
+	Route::get('/purchase','client\PaymentClient@create');
+	Route::view('/dashboard','/client/index');
+	Route::get('/taskclient','client\TaskClient@index');
+	Route::get('/taskcreate','client\TaskClient@create');
+	Route::get('/antrian','client\AntrianClient@index');
+
+
 

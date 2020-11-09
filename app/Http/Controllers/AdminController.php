@@ -48,16 +48,22 @@ class AdminController extends Controller
         return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone'));
     }
 
-    public function customer()
-    {
-        $new = Task::where('status', '=', '1')->where('user_id',\Auth::user()->id)->get()->count();
-        $ongoing = Task::where('status', '=', '2')->where('user_id',\Auth::user()->id)->get()->count();
-        $done = Task::where('status', '=', '3')->where('user_id',\Auth::user()->id)->get()->count();
-        $tagihan = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get();
-        $totalbayar = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->sum('jml_bayar');
-        $lastpayment = Payment::where('user_id',\Auth::user()->id)->where('status',1)->orderBy('tgl_bayar','desc')->get()->first();
-        // dd($tagihan);
-        return view("index", compact('new','ongoing','done','tagihan','lastpayment','totalbayar'));
+    // public function customer()
+    // {
+    //     $new = Task::where('status', '=', '1')->where('user_id',\Auth::user()->id)->get()->count();
+    //     $ongoing = Task::where('status', '=', '2')->where('user_id',\Auth::user()->id)->get()->count();
+    //     $done = Task::where('status', '=', '3')->where('user_id',\Auth::user()->id)->get()->count();
+    //     $tagihan = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get();
+    //     $totalbayar = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->sum('jml_bayar');
+    //     $lastpayment = Payment::where('user_id',\Auth::user()->id)->where('status',1)->orderBy('tgl_bayar','desc')->get()->first();
+    //     dd($tagihan);
+    //     return view("index", compact('new','ongoing','done','tagihan','lastpayment','totalbayar'));
+    // }
+
+    //test view costumer()
+    public function customer(){
+        return view("client/index");
     }
+        
     
 }
