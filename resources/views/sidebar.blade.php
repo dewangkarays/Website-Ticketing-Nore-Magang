@@ -70,6 +70,17 @@ ul{
 						</span>
 					</a>
 				</li>
+				<li class="nav-item">
+					<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
+						<i class="icon-users"></i>
+						<span>
+							User &nbsp;
+							@if($expired>0)
+							<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}} expired</span>
+							@endif
+						</span>
+					</a>
+				</li>
 
 				@elseif(Auth::user()->role==20)
 				<li class="nav-item">
@@ -77,6 +88,18 @@ ul{
 						<i class="icon-home4"></i>
 						<span>
 							Dashboard
+						</span>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
+						<i class="icon-users"></i>
+						<span>
+							User &nbsp;
+							@if($expired>0)
+							<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}} expired</span>
+							@endif
 						</span>
 					</a>
 				</li>

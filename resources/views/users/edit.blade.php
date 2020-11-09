@@ -50,14 +50,14 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Alamat</label>
 							<div class="col-lg-10">
-								<input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat" value=" {{ $user->alamat }} ">
+								<input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat" value="{{ $user->alamat }} ">
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Website</label>
+							<label class="col-form-label col-lg-2">Proyek</label>
 							<div class="col-lg-10">
-								<input type="text" name="website" class="form-control border-teal border-1" placeholder="Website" value=" {{ $user->website }} ">
+								<input type="text" name="website" class="form-control border-teal border-1" placeholder="Website" value="{{ $user->website }} ">
 							</div>
 						</div>
 

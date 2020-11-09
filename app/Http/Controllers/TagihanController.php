@@ -8,6 +8,8 @@ use App\Model\User;
 use App\Model\Setting;
 use App\Model\Nomor;
 use App\Model\Lampiran_gambar;
+use App\Exports\TagihanExport; //plugin excel
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\File;
 use PDF;
 
@@ -36,6 +38,11 @@ class TagihanController extends Controller
         $penagih = Setting::first();
         $lastno = Nomor::first();
         return view('tagihans.create',compact('users','penagih','lastno'));
+    }
+
+    public function export_excel() 
+    {
+        return Excel::download(new TagihanExport, 'Tagihan '.(date('Y-m-d')).'.xlsx' );
     }
 
     /**
