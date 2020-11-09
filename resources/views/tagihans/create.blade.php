@@ -33,10 +33,10 @@
 						<div class="col-lg-2">
 							@if ($lastno)
 							@if (isset($lastno->ninv))
-							<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" max="3" value="{{$lastno->ninv+1}}" required>
+							<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" value="{{$lastno->ninv+1}}" required>
 							@endif
 							@else
-							<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" max="3" value="1" required>
+							<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" value="1" required>
 							@endif
 						</div>
 						<div class="col-lg-2">
@@ -52,10 +52,10 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Proyek</label>
 						<div class="col-lg-10">
-							<select id="nama_proyek" name="nama_proyek" class="form-control select-search" required>
+							<select id="user_id" name="user_id" class="form-control select-search" required >
 								<option value="">-- Pilih Proyek --</option>
 								@foreach ($users as $user)
-								<option value="{{$user->id}}">{{$user->website}}</option>
+								<option data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" value="{{$user->id}}" {{$user->id == old('user_id') ? 'selected' : ''}}>{{$user->website? $user->username .' - '. $user->website : $user->username .' - Proyek kosong'}}</option>
 								@endforeach
 							</select>
 						</div>
@@ -63,14 +63,12 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama</label>
 						<div class="col-lg-10">
-							<input type="text" id="nama" name="nama" class="form-control border-teal border-1" value="">
+						<input type="text" id="nama" name="nama" class="form-control border-teal border-1" value="{{old('nama')}}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Masa Berlaku</label>
-						<div class="col-lg-10">
-							<input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1" value="">
-						</div>
+						<span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">-</span>
 					</div>
 					{{-- <div class="form-group row">
 						<label class="col-form-label col-lg-2">Tipe</label>
@@ -85,25 +83,25 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Langganan</label>
 						<div class="col-lg-10">
-							<input type="number" min="0" name="langganan" class="form-control border-teal border-1" placeholder="Nominal">
+						<input type="number" min="0" name="langganan" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('langganan')}}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Ads</label>
 						<div class="col-lg-10">
-							<input type="number" min="0" name="ads" class="form-control border-teal border-1" placeholder="Nominal">
+							<input type="number" min="0" name="ads" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('nominal')}}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Lainnya</label>
 						<div class="col-lg-10">
-							<input type="number" min="0" name="lainnya" class="form-control border-teal border-1" placeholder="Nominal">
+							<input type="number" min="0" name="lainnya" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('lainnya')}}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Proyek</label>
 						<div class="col-lg-10">
-							<input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="">
+							<input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -121,7 +119,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Keterangan</label>
 						<div class="col-lg-10">
-							<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" required>
+							<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}" required>
 						</div>
 					</div>
 				</fieldset>
@@ -173,13 +171,18 @@
 		format: 'yyyy-mm-dd',
 	});
 	
-	$('#nama_proyek').on('change', function(){
-		var id_proyek = $('#nama_proyek option:selected').val();
+	$('#user_id').on('change', function(){
+		var id_proyek = $('#user_id option:selected').val();
+		var pnama = $('#user_id option:selected').data('pnama');
+		var pproyek = $('#user_id option:selected').data('pproyek');
+		$('#nama').val(pnama);
+		$('#nama_proyek').val(pproyek);
+
 		$.ajax({
 			type: 'get',
 			url : '{{url("getkadaluarsa")}}/'+id_proyek,
 			success : function(data){
-				$('#kadaluarsa').val(data);
+				// $('#kadaluarsa').val(data);
 				$('#kadaluarsa').text(data);
 				console.log('Success');
 			},

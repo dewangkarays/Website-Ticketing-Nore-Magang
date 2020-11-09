@@ -56,7 +56,7 @@
 				        <td><div class="datatable-column-width">{{@$tagihan->user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
 				        <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
-				        <td><div class="datatable-column-width"></div>Rp @angka(($tagihan->langganan)+($tagihan->ads)+($tagihan->lainnya))</td>
+				        <td><div class="datatable-column-width">Rp @angka(($tagihan->langganan)+($tagihan->ads)+($tagihan->lainnya))</div></td>
 						<td><div class="datatable-column-width">Rp @angka($tagihan->payment->sum('nominal'))</div></td>
 						<td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
 						<td align="center">
@@ -67,8 +67,6 @@
 							@else
 							<span style="font-size:100%;" class="badge badge-pill bg-info-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>
 							@endif
-						
-							</td>
 						</td>
 				        <td align="center">
 							<div class="list-icons">
@@ -90,7 +88,7 @@
 				    @php ($i++)
 				    @endforeach
 				@else
-				  	<tr><td align="center" colspan="7">Data Kosong</td></tr>
+				  	<tr><td align="center" colspan="9">Data Kosong</td></tr>
 				@endif 
 				    
 				</tbody>
@@ -161,7 +159,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 6 ]
+		                targets: [ 9 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {

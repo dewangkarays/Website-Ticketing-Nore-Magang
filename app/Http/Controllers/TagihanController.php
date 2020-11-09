@@ -57,7 +57,7 @@ class TagihanController extends Controller
             'ninv'=>'bail|unique:nomors|required',
         ]);
 
-        $data = $request->except(['_token', '_method','noinv','ninv','noakhir','nouser']);
+        $data = $request->except(['_token', '_method','select_proyek','noinv','ninv','noakhir','nouser']);
         if($request->get('langganan')==''){
             $data['langganan'] = 0;
         }
@@ -78,7 +78,10 @@ class TagihanController extends Controller
         $no = str_pad($nomorinv,3,"0",STR_PAD_LEFT);
         $nouserpad = str_pad($nouser,2,"0",STR_PAD_LEFT);
         $data['invoice'] = $invawal.'/'.$no.'/'.$noakhir.'/'.$nouserpad;
+        // $data['user_id'] = $request->get('select_proyek');
         $lastinv = Tagihan::latest('id')->first();
+
+        // dd($data);
 
         if ($lastinv) {
             $diffinv = substr($lastinv->invoice,0,3);
@@ -119,8 +122,9 @@ class TagihanController extends Controller
                         $lastno = Nomor::create($lastno);
                     }
         }
- 
+        
         $data['jml_tagih'] = $data['langganan'] + $data['ads'] + $data['lainnya'];
+        
         
         $tagihan = Tagihan::create($data);
         
