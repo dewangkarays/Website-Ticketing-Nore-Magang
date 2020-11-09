@@ -50,17 +50,37 @@ ul{
 						</span>
 					</a>
 				</li> -->
-				<li class="nav-item">
-					<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
-						<i class="icon-users"></i>
-						<span>
-							User &nbsp;
+				<li class="nav-item nav-item-submenu">
+					<a href="#" class="nav-link"><i class="icon-users4"></i>
+						<span>Users &nbsp;
 							@if($expired>0)
-							<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}} expired</span>
+							<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}}</span>
 							@endif
 						</span>
 					</a>
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('users*','member')) ? 'block' : 'none' }};">
+						<li class="nav-item">
+							<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users')) ? 'active' : '' }}">
+								<i class="icon-briefcase"></i>
+								<span>
+									Karyawan
+								</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ url('/member') }}" class="nav-link {{ (request()->is('member')) ? 'active' : '' }}">
+								<i class="icon-user-tie"></i>
+								<span>
+									Member &nbsp;
+									@if($expired>0)
+									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}} expired</span>
+									@endif
+								</span>
+							</a>
+						</li>
+					</ul>
 				</li>
+
 				@elseif(Auth::user()->role==10)
 				<li class="nav-item">
 					<a href="{{ url('/karyawan') }}" class="nav-link {{ (request()->is('karyawan*')) ? 'active' : '' }}">
@@ -70,16 +90,35 @@ ul{
 						</span>
 					</a>
 				</li>
-				<li class="nav-item">
-					<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
-						<i class="icon-users"></i>
-						<span>
-							User &nbsp;
+				<li class="nav-item nav-item-submenu">
+					<a href="#" class="nav-link"><i class="icon-users4"></i>
+						<span>Users &nbsp;
 							@if($expired>0)
-							<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}} expired</span>
+							<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}}</span>
 							@endif
 						</span>
 					</a>
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('users*','member')) ? 'block' : 'none' }};">
+						<li class="nav-item">
+							<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users')) ? 'active' : '' }}">
+								<i class="icon-briefcase"></i>
+								<span>
+									Karyawan
+								</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ url('/member') }}" class="nav-link {{ (request()->is('member')) ? 'active' : '' }}">
+								<i class="icon-user-tie"></i>
+								<span>
+									Member &nbsp;
+									@if($expired>0)
+									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}} expired</span>
+									@endif
+								</span>
+							</a>
+						</li>
+					</ul>
 				</li>
 
 				@elseif(Auth::user()->role==20)
@@ -92,16 +131,35 @@ ul{
 					</a>
 				</li>
 
-				<li class="nav-item">
-					<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
-						<i class="icon-users"></i>
-						<span>
-							User &nbsp;
+				<li class="nav-item nav-item-submenu">
+					<a href="#" class="nav-link"><i class="icon-users4"></i>
+						<span>Users &nbsp;
 							@if($expired>0)
-							<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}} expired</span>
+							<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}}</span>
 							@endif
 						</span>
 					</a>
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('users*','member')) ? 'block' : 'none' }};">
+						<li class="nav-item">
+							<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users')) ? 'active' : '' }}">
+								<i class="icon-briefcase"></i>
+								<span>
+									Karyawan
+								</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ url('/member') }}" class="nav-link {{ (request()->is('member')) ? 'active' : '' }}">
+								<i class="icon-user-tie"></i>
+								<span>
+									Member &nbsp;
+									@if($expired>0)
+									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}} expired</span>
+									@endif
+								</span>
+							</a>
+						</li>
+					</ul>
 				</li>
 
 				@else

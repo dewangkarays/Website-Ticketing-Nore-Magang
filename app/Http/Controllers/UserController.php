@@ -15,8 +15,14 @@ class UserController extends Controller
     */
     public function index()
     {
-        $users = User::selectRaw('users.*, DATEDIFF(users.kadaluarsa, NOW()) AS kadal')->orderByRaw('case when kadal<0 then 0 when kadal is null then 2 else 1 end, kadal')->get();
+        $users = User::where('role','<=','20')->get();
         return view('users.index', compact('users'));
+    }
+
+    public function indexmember()
+    {
+        $users = User::selectRaw('users.*, DATEDIFF(users.kadaluarsa, NOW()) AS kadal')->orderByRaw('case when kadal<0 then 0 when kadal is null then 2 else 1 end, kadal')->get();
+        return view('users.indexmember', compact('users'));
     }
     
     /**
