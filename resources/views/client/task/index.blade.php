@@ -125,6 +125,20 @@
         .split{
           padding-top: 5em;
         }
+
+        .card-body{
+          padding: 1rem !important;
+        }
+
+        .separate{
+          padding-bottom: 4px;
+        }
+
+        .row{
+          padding-top: 0 !important;
+          padding-bottom: 4px!important;
+        }
+
   
     </style>
     <title>OP Ticketing</title>
@@ -149,18 +163,14 @@
               @for($i=0;$i<3;$i++)
               <div class="card">
                 <div class="card-body">
-                    <p class="card-text text-right">Status</p>
-                    <h2 class="card-title text-left" id="task">Task</h2>
-                    <!-- <div class="row">
-                        <div class="col">
-                        </div>
-                        <div class="col"></div>
-                        <div class="col text-right">
-                        </div>
-                    </div> -->
+                  <div class="row">
+                    <div class="col"><h2 class="card-title text-left" id="task">Task</h2></div>
+                    <div class="col"></div>
+                    <div class="col"><p class="card-text text-right">Status</p></div>
+                  </div>
                     <p class="card-text" id="date">Tanggal Input : </p>
-                  <p class="card-text bold" id="need">Kebutuhan : </p>
-                  <p class="card-text">Deskripsi</p>
+                    <p class="card-text bold" id="need">Kebutuhan : </p>
+                    <p class="card-text">Deskripsi</p>
                   <div class="row">
                       <div class="col">
                           <p class="card-text" id="handler">Handler : </p>   
@@ -174,6 +184,7 @@
                   </div>
                 </div>
               </div>
+              <div class="separate"></div>
               @endfor
             </div>
                   <div class="row">

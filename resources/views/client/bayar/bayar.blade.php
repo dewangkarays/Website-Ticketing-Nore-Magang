@@ -103,6 +103,23 @@
         #nominal{
           font-size: 12px !important;
           font-weight: bold;
+          margin-bottom: 0 !important;
+        }
+
+        .card-body{
+          padding: 1rem !important;
+        }
+
+        .row{
+          padding: 0 0 !important;
+        }
+
+        #status{
+          padding-bottom: 4px !important;
+        }
+
+        .separate{
+          padding-bottom: 4px;
         }
 
     </style>
@@ -116,7 +133,7 @@
             <div class="bayar-head">
               <div class="row">
                 <div class="col" id="task"><h2>Data Pembayaran</h2></div>
-                <div class="col text-right"><button type="button" class="btn btn-primary rounded-pill" id="sorting">Terbaru</button>
+                <div class="col text-right"  id="status"><button type="button" class="btn btn-primary rounded-pill" id="sorting">Terbaru</button>
                     <span class="material-icons" id="dropdown">
                         arrow_drop_down
                         </span>
@@ -125,7 +142,7 @@
             </div>
             <div class="cardContainer">
               {{-- diganti jumlah aktif --}}
-              @for($i=0;$i<3;$i++)
+              @for($i=0;$i<5;$i++)
               <div class="card w-100">
                 <div class="card-body">
                   <div class="row">
@@ -156,7 +173,8 @@
                     </div>
                   </div>
               </div>
-              </div>
+            </div>
+            <div class="separate"></div>
               @endfor
               <div class="row">
                 <div class="col"></div>

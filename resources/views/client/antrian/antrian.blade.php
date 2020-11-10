@@ -79,6 +79,10 @@
         text-align: center;
         }
         
+        tr{
+          font-size: 9px !important;
+        }
+        
     </style>
     <title>OP Ticketing</title>
   </head>
