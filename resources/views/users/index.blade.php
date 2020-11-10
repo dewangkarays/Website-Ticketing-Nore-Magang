@@ -14,7 +14,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data User</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Karyawan</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -37,10 +37,6 @@
 						<th>Nama</th>
 						<th>Username</th>
 						<th>Role</th>
-						<th>Website</th>
-						<th class="text-center">Masa Aktif</th>
-						<th class="text-center">Belum Terbayar</th>
-						<th class="text-center">Jml Op</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
@@ -53,28 +49,6 @@
 				        <td><div class="datatable-column-width">{{$user->nama}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
 				        <td>{{config('custom.role.'.$user->role)}}</td>
-				        <td><div class="datatable-column-width">{{$user->website}}</div></td>
-				        <td align="center">
-				        	@if($user->kadaluarsa < date("Y-m-d") && $user->kadaluarsa != '')
-								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->kadaluarsa}}</span>
-							@elseif($user->kadaluarsa <= date("Y-m-d", strtotime("+1 week")) && $user->kadaluarsa != '')
-								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{$user->kadaluarsa}}</span>
-							@else
-								{{$user->kadaluarsa}}
-							@endif
-						</td>
-						<td>
-							Rp @angka($user->tagihan->sum('jml_tagih')-$user->tagihan->sum('jml_bayar'))
-						</td>
-				        <td align="center">
-				        	@if($user->task_count < 0)
-								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->task_count}}</span>
-							@elseif($user->task_count == 0)
-								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{$user->task_count}}</span>
-							@else
-								{{$user->task_count}}
-							@endif
-						</td>
 				        <td align="center">
 							<div class="list-icons">
 								<div class="dropdown">

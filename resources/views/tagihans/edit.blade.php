@@ -28,12 +28,12 @@
 					<legend class="text-uppercase font-size-sm font-weight-bold">Data Tagihan</legend>
 					
 					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Pelanggan</label>
+						<label class="col-form-label col-lg-2">Proyek</label>
 						<div class="col-lg-10">
 							<select id="user_id" name="user_id" class="form-control select-search" required>
-								<option value="">-- Pilih Pelanggan --</option>
+								<option value="">-- Pilih Proyek --</option>
 								@foreach ($users as $user)
-								<option data-name="{{$user->nama}}" {{ $tagihan->user_id == $user->id ? 'selected' : '' }} value="{{$user->id}}">{{$user->username}}</option>
+								<option data-name="{{$user->nama}}" {{ $tagihan->user_id == $user->id ? 'selected' : '' }} value="{{$user->id}}">{{$user->website? $user->username .' - '. $user->website : $user->username .' -'}}</option>
 								@endforeach
 								
 							</select>
@@ -173,7 +173,7 @@
 		$('#nama').val(nama);
 		$('#nama').text(nama);
 		// console.log(nama);
-		alert(id_proyek);
+		// alert(id_proyek);
 		$.ajax({
 			type: "get",
 			url : '{{url("getweb")}}/'+id_proyek,

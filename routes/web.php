@@ -77,10 +77,15 @@ Route::group(['middleware' => ['auth']], function() {
 	
 	//admin && karyawan
 	Route::group(['middleware' => ['role:1' OR 'role:10']], function() {
-		Route::resource('users', 'UserController');
 		Route::resource('laporankeuangan', 'LaporanKeuanganController');
 		Route::match(['get', 'post'], '/laporankeuangan',  'LaporanKeuanganController@index')->name('filterKeuangan');
 		// Route::post('/laporankeuangan',  'LaporanKeuanganController@index')->name('filterbulan');
+	});
+	
+	Route::group(['middleware' => ['role:1' OR 'role:10' OR 'role:20']], function() {
+		Route::get('createtagihan/{id}',  'TagihanController@createtagihan')->name('createtagihan');
+		Route::resource('users', 'UserController');
+		Route::get('member', 'UserController@indexmember')->name('indexmember');
 	});
 
 	//customer

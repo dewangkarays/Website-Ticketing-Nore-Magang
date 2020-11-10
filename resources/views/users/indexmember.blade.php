@@ -14,7 +14,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Tagihan</h4>
+				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Data Member</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -27,8 +27,7 @@
 		<!-- Hover rows -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-				<a href="{{ route('tagihans.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
-				<a href="{{ url('exporttagihan')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-file-excel mr-2"></i> Export Excel</button></a>
+				<a href="{{ route('users.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
 			</div>
 
 			<table class="table datatable-basic table-hover">
@@ -37,35 +36,43 @@
 						<th>No</th>
 						<th>Nama</th>
 						<th>Username</th>
-						<th>Invoice</th>
-						<th>Nama Proyek</th>
-						<th>Tagihan</th>
-						<th>Terbayar</th>
-						<th>Sisa Tagihan</th>
-						<th class="text-center">Status</th>
+						<th>Role</th>
+						<th>Website</th>
+						<th class="text-center">Masa Aktif</th>
+						<th class="text-center">Belum Terbayar</th>
+						<th class="text-center">Jml Op</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
-				@if(!$tagihans->isEmpty())
+				@if(!$users->isEmpty())
 					@php ($i = 1)
-					@foreach($tagihans as $tagihan)
+					@foreach($users as $user)
 				    <tr> 
 				        <td>{{$i}}</td>
-				        <td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
-				        <td><div class="datatable-column-width">{{@$tagihan->user->username}}</div></td>
-				        <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
-				        <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
-				        <td><div class="datatable-column-width">Rp @angka(($tagihan->langganan)+($tagihan->ads)+($tagihan->lainnya))</div></td>
-						<td><div class="datatable-column-width">Rp @angka($tagihan->payment->sum('nominal'))</div></td>
-						<td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
-						<td align="center">
-							@if ($tagihan->status == 2)
-							<span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>
-							@elseif ($tagihan->status == 1)
-							<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>
+				        <td><div class="datatable-column-width">{{$user->nama}}</div></td>
+				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
+				        <td>{{config('custom.role.'.$user->role)}}</td>
+				        <td><div class="datatable-column-width">{{$user->website}}</div></td>
+				        <td align="center">
+				        	@if($user->kadaluarsa < date("Y-m-d") && $user->kadaluarsa != '')
+								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->kadaluarsa}}</span>
+							@elseif($user->kadaluarsa <= date("Y-m-d", strtotime("+1 week")) && $user->kadaluarsa != '')
+								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{$user->kadaluarsa}}</span>
 							@else
-							<span style="font-size:100%;" class="badge badge-pill bg-info-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>
+								{{$user->kadaluarsa}}
+							@endif
+						</td>
+						<td>
+							Rp @angka($user->tagihan->sum('jml_tagih')-$user->tagihan->sum('jml_bayar'))
+						</td>
+				        <td align="center">
+				        	@if($user->task_count < 0)
+								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->task_count}}</span>
+							@elseif($user->task_count == 0)
+								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{$user->task_count}}</span>
+							@else
+								{{$user->task_count}}
 							@endif
 						</td>
 				        <td align="center">
@@ -76,10 +83,13 @@
 									</a>
 
 									<div class="dropdown-menu dropdown-menu-right">
-										<a href="{{ route('tagihans.edit',$tagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-										<a href="{{url('/tagihans/cetak/'.$tagihan->id)}}" class="dropdown-item"><i class="icon-printer2"></i> Print</a>
-										<a href="{{url('/tagihans/lampiran/'.$tagihan->id)}}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a>
-							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tagihans.destroy', $tagihan->id)}}"><i class="icon-x"></i> Delete</a>
+										<a href="{{ url('createtagihan',$user->id)}}" class="dropdown-item"><i class="icon-file-text"></i> Buat Tagihan</a>
+										<a href="{{ route('users.show',$user->id)}}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
+										<a href="https://wa.me/{{$user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
+										@if (Auth::user()->role==1)
+										<a href="{{ route('users.edit',$user->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('users.destroy', $user->id)}}"><i class="icon-x"></i> Delete</a>
+										@endif
 									</div>
 								</div>
 							</div>
@@ -88,7 +98,7 @@
 				    @php ($i++)
 				    @endforeach
 				@else
-				  	<tr><td align="center" colspan="9">Data Kosong</td></tr>
+				  	<tr><td align="center" colspan="7">Data Kosong</td></tr>
 				@endif 
 				    
 				</tbody>
@@ -159,7 +169,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 9 ]
+		                targets: [ 6 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
