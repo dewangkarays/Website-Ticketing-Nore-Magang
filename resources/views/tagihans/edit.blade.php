@@ -28,12 +28,12 @@
 					<legend class="text-uppercase font-size-sm font-weight-bold">Data Tagihan</legend>
 					
 					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Proyek</label>
+						<label class="col-form-label col-lg-2">Pelanggan</label>
 						<div class="col-lg-10">
-							<select id="user_id" name="user_id" class="form-control select-search" required>
-								<option value="">-- Pilih Proyek --</option>
+							<select id="user_id" name="user_id" class="form-control select-search" required disabled>
+								<option value="">-- Pilih Pelanggan --</option>
 								@foreach ($users as $user)
-								<option data-name="{{$user->nama}}" {{ $tagihan->user_id == $user->id ? 'selected' : '' }} value="{{$user->id}}">{{$user->website? $user->username .' - '. $user->website : $user->username .' -'}}</option>
+								<option data-name="{{$user->nama}}" {{ $tagihan->user_id == $user->id ? 'selected' : '' }} value="{{$user->id}}">{{$user->username}}</option>
 								@endforeach
 								
 							</select>
@@ -100,7 +100,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Proyek</label>
 						<div class="col-lg-10">
-							<input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{$tagihan->nama_proyek}}">
+							<input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{$tagihan->nama_proyek}}" readonly>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -167,26 +167,61 @@
 	});
 	
 	$('#user_id').on('change', function(){
-		var nama = $('#user_id option:selected').data('name');
 		var id_proyek = $('#user_id option:selected').val();
-		var token = getToken();
-		$('#nama').val(nama);
-		$('#nama').text(nama);
-		// console.log(nama);
-		// alert(id_proyek);
+		var pnama = $('#user_id option:selected').data('pnama');
+		
+		$('#nama').val(pnama);
+		$('#select_proyek').find('option').not(':first').remove();
+		$('#nama_proyek').val('');
+		
 		$.ajax({
-			type: "get",
-			url : '{{url("getweb")}}/'+id_proyek,
-			// jika data string langsung tanpa datatype
+			type: 'get',
+			url : '{{url("getkadaluarsa")}}/'+id_proyek,
 			success : function(data){
-				$('#nama_proyek').val(data);
-				$('#nama_proyek').text(data);
+				// $('#kadaluarsa').val(data);
+				$('#kadaluarsa').text(data);
 				console.log('Success');
-			}, error: function (data) {
-				console.log('Error:', data);
+			},
+			error:function(data){
+				console.log('Error',data);
 			}
 		});
-	});
+		
+		$.ajax({
+			url : '{{url("getproyek")}}/'+id_proyek,
+			type: 'get',
+			dataType: 'json',
+			success : function(res){
+				var len = 0;
+				if(res['data'] != null){
+					len = res['data'].length;
+				}
+				// alert(len);
+				if(len > 0){
+					// Read data and create <option >
+						for(var i=0; i<len; i++){
+							
+							var id = res['data'][i].id;
+							var website = res['data'][i].website;
+							
+							var option = "<option value='"+id+"'>"+website+"</option>"; 
+							
+							$("#select_proyek").append(option); 
+						}
+					}
+					console.log('Success2');
+				},
+				error:function(data){
+					console.log('Error2',data);
+				}
+			});
+			
+		});
+
+		$('#select_proyek').on('change',function() {
+			var proyek = $('#select_proyek option:selected').text();
+			$('#nama_proyek').val(proyek);
+		});
 	
 	var FormValidation = function() {
 		

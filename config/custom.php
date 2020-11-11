@@ -23,6 +23,7 @@ return [
         '20' => 'Keuangan',
         '80' => 'Premium',
         '90' => 'Prioritas',
+        '95' => 'Klien',
         '99' => 'Simpel',
     ],
 

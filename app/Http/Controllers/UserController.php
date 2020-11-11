@@ -18,12 +18,6 @@ class UserController extends Controller
         $users = User::where('role','<=','20')->get();
         return view('users.index', compact('users'));
     }
-
-    public function indexmember()
-    {
-        $users = User::selectRaw('users.*, DATEDIFF(users.kadaluarsa, NOW()) AS kadal')->orderByRaw('case when kadal<0 then 0 when kadal is null then 2 else 1 end, kadal')->get();
-        return view('users.indexmember', compact('users'));
-    }
     
     /**
     * Show the form for creating a new resource.
@@ -33,6 +27,11 @@ class UserController extends Controller
     public function create()
     {
         return view('users.create');
+    }
+
+    public function createmember()
+    {
+        return view('users.createmember');
     }
     
     /**
@@ -65,8 +64,9 @@ class UserController extends Controller
                 'task_count' => $request->get('task_count'),
                 ]);
                 $user->save();
-                return redirect('/users')->with('success', 'User saved!');
+                return redirect('/members')->with('success', 'Member saved!');
             }
+
             
             /**
             * Display the specified resource.

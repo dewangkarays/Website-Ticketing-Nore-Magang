@@ -50,12 +50,12 @@
 					<hr>
 					
 					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Proyek</label>
+						<label class="col-form-label col-lg-2">Pelanggan</label>
 						<div class="col-lg-10">
 							<select id="user_id" name="user_id" class="form-control select-search" required >
-								<option value="">-- Pilih Proyek --</option>
+								<option value="">-- Pilih Pelanggan --</option>
 								@foreach ($users as $user)
-								<option data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" value="{{$user->id}}" {{$user->id == old('user_id') ? 'selected' : ''}}>{{$user->website? $user->username .' - '. $user->website : $user->username .' - Proyek kosong'}}</option>
+								<option data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" value="{{$user->id}}" {{$user->id == old('user_id') ? 'selected' : ''}}>{{$user->username}}</option>
 								@endforeach
 							</select>
 						</div>
@@ -63,7 +63,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama</label>
 						<div class="col-lg-10">
-						<input type="text" id="nama" name="nama" class="form-control border-teal border-1" value="{{old('nama')}}">
+							<input type="text" id="nama" name="nama" class="form-control border-teal border-1" value="{{old('nama')}}">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -83,7 +83,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Langganan</label>
 						<div class="col-lg-10">
-						<input type="number" min="0" name="langganan" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('langganan')}}">
+							<input type="number" min="0" name="langganan" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('langganan')}}">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -96,6 +96,15 @@
 						<label class="col-form-label col-lg-2">Lainnya</label>
 						<div class="col-lg-10">
 							<input type="number" min="0" name="lainnya" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('lainnya')}}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Proyek</label>
+						<div class="col-lg-10">
+							<select id="select_proyek" name="select_proyek" class="form-control select-search" required >
+								<option value="">-- Pilih Proyek --</option>
+								
+							</select>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -174,10 +183,11 @@
 	$('#user_id').on('change', function(){
 		var id_proyek = $('#user_id option:selected').val();
 		var pnama = $('#user_id option:selected').data('pnama');
-		var pproyek = $('#user_id option:selected').data('pproyek');
+		
 		$('#nama').val(pnama);
-		$('#nama_proyek').val(pproyek);
-
+		$('#select_proyek').find('option').not(':first').remove();
+		$('#nama_proyek').val('');
+		
 		$.ajax({
 			type: 'get',
 			url : '{{url("getkadaluarsa")}}/'+id_proyek,
@@ -190,140 +200,175 @@
 				console.log('Error',data);
 			}
 		});
-	});
-	
-	var FormValidation = function() {
 		
-		// Validation config
-		var _componentValidation = function() {
-			if (!$().validate) {
-				console.warn('Warning - validate.min.js is not loaded.');
-				return;
-			}
+		$.ajax({
+			url : '{{url("getproyek")}}/'+id_proyek,
+			type: 'get',
+			dataType: 'json',
+			success : function(res){
+				var len = 0;
+				if(res['data'] != null){
+					len = res['data'].length;
+				}
+				// alert(len);
+				if(len > 0){
+					// Read data and create <option >
+						for(var i=0; i<len; i++){
+							
+							var id = res['data'][i].id;
+							var website = res['data'][i].website;
+							
+							var option = "<option value='"+id+"'>"+website+"</option>"; 
+							
+							$("#select_proyek").append(option); 
+						}
+					}
+					console.log('Success2');
+				},
+				error:function(data){
+					console.log('Error2',data);
+				}
+			});
 			
-			// Initialize
-			var validator = $('.form-validate-jquery').validate({
-				ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
-				errorClass: 'validation-invalid-label',
-				//successClass: 'validation-valid-label',
-				validClass: 'validation-valid-label',
-				highlight: function(element, errorClass) {
-					$(element).removeClass(errorClass);
-				},
-				unhighlight: function(element, errorClass) {
-					$(element).removeClass(errorClass);
-				},
-				// success: function(label) {
-					//    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
-					//},
+		});
+
+		$('#select_proyek').on('change',function() {
+			var proyek = $('#select_proyek option:selected').text();
+			$('#nama_proyek').val(proyek);
+		});
+		
+		var FormValidation = function() {
+			
+			// Validation config
+			var _componentValidation = function() {
+				if (!$().validate) {
+					console.warn('Warning - validate.min.js is not loaded.');
+					return;
+				}
+				
+				// Initialize
+				var validator = $('.form-validate-jquery').validate({
+					ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+					errorClass: 'validation-invalid-label',
+					//successClass: 'validation-valid-label',
+					validClass: 'validation-valid-label',
+					highlight: function(element, errorClass) {
+						$(element).removeClass(errorClass);
+					},
+					unhighlight: function(element, errorClass) {
+						$(element).removeClass(errorClass);
+					},
+					// success: function(label) {
+						//    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+						//},
+						
+						// Different components require proper error label placement
+						errorPlacement: function(error, element) {
+							
+							// Unstyled checkboxes, radios
+							if (element.parents().hasClass('form-check')) {
+								error.appendTo( element.parents('.form-check').parent() );
+							}
+							
+							// Input with icons and Select2
+							else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+								error.appendTo( element.parent() );
+							}
+							
+							// Input group, styled file input
+							else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+								error.appendTo( element.parent().parent() );
+							}
+							
+							// Other elements
+							else {
+								error.insertAfter(element);
+							}
+						},
+						messages: {
+							nama: {
+								required: 'Mohon diisi.'
+							},
+							email: {
+								required: 'Mohon diisi.'
+							},
+							telp: {
+								required: 'Mohon diisi.'
+							},
+							tagihanname: {
+								required: 'Mohon diisi.'
+							},
+							password: {
+								required: 'Mohon diisi.'
+							},
+							role: {
+								required: 'Mohon diisi.'
+							},
+						},
+					});
 					
-					// Different components require proper error label placement
-					errorPlacement: function(error, element) {
-						
-						// Unstyled checkboxes, radios
-						if (element.parents().hasClass('form-check')) {
-							error.appendTo( element.parents('.form-check').parent() );
-						}
-						
-						// Input with icons and Select2
-						else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
-							error.appendTo( element.parent() );
-						}
-						
-						// Input group, styled file input
-						else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
-							error.appendTo( element.parent().parent() );
-						}
-						
-						// Other elements
-						else {
-							error.insertAfter(element);
-						}
-					},
-					messages: {
-						nama: {
-							required: 'Mohon diisi.'
-						},
-						email: {
-							required: 'Mohon diisi.'
-						},
-						telp: {
-							required: 'Mohon diisi.'
-						},
-						tagihanname: {
-							required: 'Mohon diisi.'
-						},
-						password: {
-							required: 'Mohon diisi.'
-						},
-						role: {
-							required: 'Mohon diisi.'
-						},
-					},
+					// Reset form
+					$('#reset').on('click', function() {
+						validator.resetForm();
+					});
+				};
+				
+				// Return objects assigned to module
+				return {
+					init: function() {
+						_componentValidation();
+					}
+				}
+			}();
+			
+			
+			// Initialize module
+			// ------------------------------
+			
+			document.addEventListener('DOMContentLoaded', function() {
+				FormValidation.init();
+			});
+		</script>
+		<script type="text/javascript">
+			$( document ).ready(function() {
+				
+				// Default style
+				@if(session('error'))
+				new PNotify({
+					title: 'Error',
+					text: '{{ session('error') }}.',
+					icon: 'icon-blocked',
+					type: 'error'
+				});
+				@endif
+				@if ( session('success'))
+				new PNotify({
+					title: 'Success',
+					text: '{{ session('success') }}.',
+					icon: 'icon-checkmark3',
+					type: 'success'
+				});
+				@endif
+				@if ($errors->any())
+				new PNotify({
+					title: 'Error',
+					text: 'Nomor Invoice Sudah Terambil, input kembali.',
+					icon: 'icon-blocked',
+					type: 'error'
 				});
 				
-				// Reset form
-				$('#reset').on('click', function() {
-					validator.resetForm();
+				@elseif ($errors->has('ninv'))
+				@foreach ($errors->all() as $error)
+				new PNotify({
+					title: 'Error',
+					text: '{{ $error }}.',
+					icon: 'icon-blocked',
+					type: 'error'
 				});
-			};
-			
-			// Return objects assigned to module
-			return {
-				init: function() {
-					_componentValidation();
-				}
-			}
-		}();
-		
-		
-		// Initialize module
-		// ------------------------------
-		
-		document.addEventListener('DOMContentLoaded', function() {
-			FormValidation.init();
-		});
-	</script>
-	<script type="text/javascript">
-		$( document ).ready(function() {
-			
-			// Default style
-			@if(session('error'))
-			new PNotify({
-				title: 'Error',
-				text: '{{ session('error') }}.',
-				icon: 'icon-blocked',
-				type: 'error'
+				@endforeach
+				
+				@endif
+				
 			});
-			@endif
-			@if ( session('success'))
-			new PNotify({
-				title: 'Success',
-				text: '{{ session('success') }}.',
-				icon: 'icon-checkmark3',
-				type: 'success'
-			});
-			@endif
-			@if ($errors->any())
-			new PNotify({
-				title: 'Error',
-				text: 'Nomor Invoice Sudah Terambil, input kembali.',
-				icon: 'icon-blocked',
-				type: 'error'
-			});
-			
-			@elseif ($errors->has('ninv'))
-			@foreach ($errors->all() as $error)
-			new PNotify({
-				title: 'Error',
-				text: '{{ $error }}.',
-				icon: 'icon-blocked',
-				type: 'error'
-			});
-			@endforeach
-			
-			@endif
-			
-		});
-	</script>
-	@endsection
+		</script>
+		@endsection

@@ -50,33 +50,42 @@ ul{
 						</span>
 					</a>
 				</li> -->
+				
 				<li class="nav-item nav-item-submenu">
-					<a href="#" class="nav-link"><i class="icon-users4"></i>
-						<span>Users &nbsp;
-							@if($expired>0)
-							<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}}</span>
-							@endif
+					<a href="#" class="nav-link {{ (request()->is('users*','members*','proyeks*')) ? 'active' : '' }}"><i class="icon-users"></i>
+						<span>Users 
 						</span>
 					</a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('users*','member')) ? 'block' : 'none' }};">
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('users*','members*','proyeks*')) ? 'block' : 'none' }};">
 						<li class="nav-item">
-							<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users')) ? 'active' : '' }}">
-								<i class="icon-briefcase"></i>
+							<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
+								<i class="icon-vcard"></i>
 								<span>
 									Karyawan
 								</span>
 							</a>
 						</li>
-						<li class="nav-item">
-							<a href="{{ url('/member') }}" class="nav-link {{ (request()->is('member')) ? 'active' : '' }}">
-								<i class="icon-user-tie"></i>
+						<li class="nav-item nav-item-submenu">
+							<a href="{{ url('/members') }}" class="nav-link {{ (request()->is('members*','proyeks*')) ? 'active' : '' }}">
+								<i class="icon-briefcase"></i>
 								<span>
-									Member &nbsp;
-									@if($expired>0)
-									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $expired}} expired</span>
-									@endif
+									Member & Proyek
 								</span>
 							</a>
+							<ul class="nav nav-group-sub" style="display: {{ (request()->is('members*','proyeks*')) ? 'block' : 'none' }};">
+								<li class="nav-item"><a href="{{ url('/members') }}" class="nav-link {{ (request()->is('members*')) ? 'active' : '' }}">
+									<i class="icon-user"></i>
+									<span>
+										Daftar Member
+									</span>
+								</a></li>
+								<li class="nav-item"><a href="{{url('proyeks')}}" class="nav-link {{ (request()->is('proyeks*')) ? 'active' : '' }}">
+									<i class="icon-traffic-cone"></i>
+									<span>
+										Data Proyek
+									</span>
+								</a></li>
+							</ul>
 						</li>
 					</ul>
 				</li>
