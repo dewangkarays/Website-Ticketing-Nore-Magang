@@ -19,10 +19,11 @@
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"> --}}
     <style>
 
+
         body{
         font-family: 'Raleway', sans-serif !important;
         /* adition */
-        display: grid;
+        /* display: grid; */
         }
 
         p{
@@ -224,8 +225,8 @@
     .contact h2{
       padding-bottom: 1em;
     }
+@media (min-width: 600px) {
 
-@media (min-width: 992px) {
     #mainNav {
         border-color: transparent;
         background-color: transparent;

@@ -106,6 +106,15 @@
           font-size: 9px !important;
         }
 
+        .card-body{
+          padding: 1rem !important;
+        }
+
+        .separate{
+          padding-bottom: 4px;
+        }
+
+
     </style>
     <title>OP Ticketing</title>
   </head>
@@ -141,6 +150,7 @@
                   </div>
                 </div>
               </div>
+              <div class="separate"></div>
               @endfor
               <div class="row">
                 <div class="col">
@@ -181,6 +191,7 @@
                   </div>
                 </div>
               </div>
+              <div class="separate"></div>
               @endfor
               <div class="row">
                 <div class="col">
