@@ -90,7 +90,15 @@
         #nominal{
           font-weight: bold;
         }
-        
+
+        ::placeholder{
+          font-size: 12px;
+        }
+
+        #jumlah{
+          margin : 0 12px;
+        }
+
     </style>
     <title>OP Ticketing</title>
   </head>
@@ -106,13 +114,13 @@
               <div class="form-group row">
                 <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Nama</label>
                 <div class="col-sm-8">
-                  <input type="name" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Input Nama">
+                  <input type="name" class="form-control form-control-sm-8" id="colFormLabelSm" placeholder="Input Nama">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Tanggal Pembayaran</label>
                 <div class="col-sm-8">
-                  <input type="name" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Input Nama">
+                  <input type="date" class="form-control form-control-sm" id="datepicker" name="date" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
@@ -143,9 +151,7 @@
               </div>
               <div class="form-group row">
                 <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm" id="nominal">Nominal Pembayaran</label>
-                <div class="col-sm-10">
-                  <input type="name" class="form-control form-control-sm-8" id="colFormLabelSm" placeholder="Input Nominal">
-                </div>
+                <input type="name" class="form-control form-control-sm-8" id="jumlah" placeholder="Input Nominal">
               </div>
             </form>
             <button type="button" class="btn btn-success btn-lg btn-block">Bayar</button>

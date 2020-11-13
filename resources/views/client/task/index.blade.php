@@ -139,6 +139,10 @@
           padding-bottom: 4px!important;
         }
 
+        .rounded-circle{
+        size: 50px 50px !important;
+        }
+
   
     </style>
     <title>OP Ticketing</title>

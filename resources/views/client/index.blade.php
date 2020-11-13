@@ -152,270 +152,159 @@
         color: white;
         text-align: center;
         } */
-
-        /* css bootstrap */
-
-        /*!
- * Start Bootstrap - New Age v5.0.8 (https://startbootstrap.com/themes/new-age)
- * Copyright 2013-2020 Start Bootstrap
- * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-new-age/blob/master/LICENSE)
- */
-
-    html,
-    body {
-        width: 100%;
-        height: 100%;
-    }
-
-    #mainNav {
-        /* border-color: rgba(34, 34, 34, 0.05); */
-        background-color:#3EB772;
-        transition: all .35s;
-        font-weight: 200;
-        /* letter-spacing: 1px; */
-    }
-
-    #footer{
-      background-color: #ffff;
-    }
-
-    #mainNav .navbar-brand {
-        color: #ffff;
-        font-weight: 200;
-        /* letter-spacing: 1px; */
-    }
-
-    #mainNav .navbar-brand:hover, #mainNav .navbar-brand:focus {
-        color: #fcbd20;
-    }
-
-    #mainNav .navbar-toggler {
-        font-size: 12px;
-        padding: 8px 10px;
-    }
-
-    #mainNav .navbar-nav > li > a {
-        font-size: 11px;
-        letter-spacing: 2px;
-    }
-
-    #mainNav .navbar-nav > li > a.active {
-    color: #fdcc52 !important;
-    background-color: transparent;
-    }
-
-    #mainNav .navbar-nav > li > a.active:hover {
-    background-color: transparent;
-    }
-
-    #mainNav .navbar-nav > li > a,
-    #mainNav .navbar-nav > li > a:focus {
-    color: #ffff;
-    }
-
-    #mainNav .navbar-nav > li > a:hover,
-    #mainNav .navbar-nav > li > a:focus:hover {
-    color: #fdcc52;
-    }
-
-    .md-dark { 
-      color:#3EB772 !important; 
-    }
-
-    .contact h2{
-      padding-bottom: 1em;
-    }
-@media (min-width: 600px) {
-
-    #mainNav {
-        border-color: transparent;
-        background-color: transparent;
-    }
-    #mainNav .navbar-brand {
-        color: fade(white, 70%);
-    }
-    #mainNav .navbar-brand:hover, #mainNav .navbar-brand:focus {
-        color: white;
-    }
-    #mainNav .navbar-nav > li > a,
-    #mainNav .navbar-nav > li > a:focus {
-        color: rgba(255, 255, 255, 0.7);
-    }
-    #mainNav .navbar-nav > li > a:hover,
-    #mainNav .navbar-nav > li > a:focus:hover {
-        color: white;
-    }
-    #mainNav.navbar-shrink {
-        border-color: rgba(34, 34, 34, 0.1);
-        background-color: white;
-    }
-    #mainNav.navbar-shrink .navbar-brand {
-        color: #ffff;
-    }
-    #mainNav.navbar-shrink .navbar-brand:hover, #mainNav.navbar-shrink .navbar-brand:focus {
-        color: #fdcc52;
-    }
-    #mainNav.navbar-shrink .navbar-nav > li > a,
-    #mainNav.navbar-shrink .navbar-nav > li > a:focus {
-        color: #ffff;
-    }
-    #mainNav.navbar-shrink .navbar-nav > li > a:hover,
-    #mainNav.navbar-shrink .navbar-nav > li > a:focus:hover {
-        color: #fdcc52;
-    }
-    }
+        
     </style>
 </head>
 <body>
-      @extends('client.navbar')
-      @section('title','Dashboard')
-        <div class="container">
-            <div class="greeting">
-                <p>Selamat Datang</p>
-                {{-- username ganti nama --}}
-                <h1>Username</h1>
+    @extends('client.navbar')
+    @section('title','Dashboard')
+      <div class="container">
+          <div class="greeting">
+              <p>Selamat Datang</p>
+              {{-- username ganti nama --}}
+              <h1>Username</h1>
+          </div>
+          <div class="wrap">
+            <div class="website">
+                <h2>Website Langganan</h2>
+                {{-- total langganan dimasukkan --}}
+                <p>Total Langganan : </p>
             </div>
-            <div class="wrap">
-              <div class="website">
-                  <h2>Website Langganan</h2>
-                  {{-- total langganan dimasukkan --}}
-                  <p>Total Langganan : </p>
-              </div>
-              {{-- <div class="slider">
-              </div> --}}
-              <div class="row">
-                {{-- 2 diganti count website --}}
-                <div class="slider owl-carousel">
-                  @for ($i=0; $i<3; $i++)
-                  <div class="col">
-                      <div class="card bg-light">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col">
-                              {{-- diisi nama website --}}
-                              <h3 id="namawebsite" class="card-title">Nama Website</h3>
-                              <p>Status</p>
-                            </div>
-                            <div class="col text-right">
-                              <p>Jumlah</p>
-                              <p>Pengoperasian</p>
-                              {{-- diisi count website --}}
-                              <h1 id="countwebsite">3</h1>
-                            </div>
+            {{-- <div class="slider">
+            </div> --}}
+            <div class="row">
+              {{-- 2 diganti count website --}}
+              <div class="slider owl-carousel">
+                @for ($i=0; $i<3; $i++)
+                <div class="col">
+                    <div class="card bg-light" style="width: 10rem;">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col">
+                            {{-- diisi nama website --}}
+                            <h3 id="namawebsite" class="card-title">Nama Website</h3>
+                            <p>Status</p>
                           </div>
-                          <div id="date-bottom" class="row">
-                            <div class="col">
-                              <div class="tanggal">
-                                <p>Hingga</p>
-                                {{-- diisi tanggal --}}
-                                <h2 id="date">15 Oktober 2020</h2>
-                              </div>
+                          <div class="col text-right">
+                            <p>Jumlah</p>
+                            <p>Pengoperasian</p>
+                            {{-- diisi count website --}}
+                            <h1 id="countwebsite">3</h1>
+                          </div>
+                        </div>
+                        <div id="date-bottom" class="row">
+                          <div class="col">
+                            <div class="tanggal">
+                              <p>Hingga</p>
+                              {{-- diisi tanggal --}}
+                              <h2 id="date">15 Oktober 2020</h2>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    @endfor
-                </div>
                   </div>
+                  @endfor
               </div>
-            <div class="wrap">
-              <div class="task">
-                  <h2>Task</h2>
+                </div>
+            </div>
+          <div class="wrap">
+            <div class="task">
+                <h2>Task</h2>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="card bg-light">
+                  <div class="card-body">
+                    <h5 class="card-title">Baru</h5>
+                    {{-- Diganti jumlah --}}
+                    <h1 id="task" class="card-text text-right">1</h1>
+                  </div>
+                </div>
               </div>
-              <div class="row">
-                <div class="col">
-                  <div class="card bg-light">
-                    <div class="card-body">
-                      <h5 class="card-title">Baru</h5>
-                      {{-- Diganti jumlah --}}
-                      <h1 id="task" class="card-text text-right">1</h1>
-                    </div>
+              <div class="col">
+                <div class="card bg-light">
+                  <div class="card-body">
+                    <h5 class="card-title">Dikerjakan</h5>
+                    {{-- Diganti jumlah --}}
+                    <h1 id="task" class="card-text text-right">1</h1>
                   </div>
                 </div>
-                <div class="col">
-                  <div class="card bg-light">
-                    <div class="card-body">
-                      <h5 class="card-title">Dikerjakan</h5>
-                      {{-- Diganti jumlah --}}
-                      <h1 id="task" class="card-text text-right">1</h1>
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="card bg-light">
-                    <div class="card-body">
-                      <h5 class="card-title">Selesai</h5>
-                      {{-- Diganti jumlah --}}
-                      <h1 id="task" class="card-text text-right">1</h1>
-                    </div>
+              </div>
+              <div class="col">
+                <div class="card bg-light">
+                  <div class="card-body">
+                    <h5 class="card-title">Selesai</h5>
+                    {{-- Diganti jumlah --}}
+                    <h1 id="task" class="card-text text-right">1</h1>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="wrap">
-              <div class="tagihan">
-                  <h2>Tagihan Aktif</h2>
+          </div>
+          <div class="wrap">
+            <div class="tagihan">
+                <h2>Tagihan Aktif</h2>
+            </div>
+            <div class="cardContainer">
+                {{-- jml diganti count tagihan --}}
+                @for($i=0; $i<3; $i++)
+                <div class="card">
+                  <h5 class="card-header">Invoice</h5>
+                  <div class="card-body">
+                    <p class="card-text">Rp 111111</p>
+                    <a href="#" id="bayar" class="btn btn-success rounded-pill">Bayar</a>
+                  </div>
+                </div>
+                @endfor
+                <a href="#" id="detail" class="btn btn-warning rounded-pill">Detail</a>
+            </div>
+          </div>
+          <div class="wrap">
+              <div class="history">
+                {{-- jml diganti count tagihan --}}
+                <h2>Riwayat Tagihan</h2>
               </div>
               <div class="cardContainer">
-                  {{-- jml diganti count tagihan --}}
-                  @for($i=0; $i<3; $i++)
-                  <div class="card">
-                    <h5 class="card-header">Invoice</h5>
-                    <div class="card-body">
-                      <p class="card-text">Rp 111111</p>
-                      <a href="#" id="bayar" class="btn btn-success rounded-pill">Bayar</a>
-                    </div>
+                @for($i=0; $i<3; $i++)
+                <div class="card">
+                  <h5 class="card-header">Invoice</h5>
+                  <div class="card-body">
+                    <p class="card-text rounded-pill">Rp 111111</p>
                   </div>
-                  @endfor
-                  <a href="#" id="detail" class="btn btn-warning rounded-pill">Detail</a>
+                </div>
+                @endfor
+                <a href="#" id="detail" class="btn btn-warning rounded-pill">Detail</a>
               </div>
-            </div>
-            <div class="wrap">
-                <div class="history">
-                  {{-- jml diganti count tagihan --}}
-                  <h2>Riwayat Tagihan</h2>
+          </div>
+          <div class="wrap">
+            <div class="contact">
+              <h2>Pusat Bantuan</h2>
+              <div class="row">
+                <div class="col text-right">
+                  <button type="button" class="btn btn-success btn-sm">
+                    <img src="" alt="" class="rounded">
+                    <span class="material-icons" id="wa">
+                      sms
+                      </span>
+                    <p>Whatsapp</p>
+                  </button>
                 </div>
-                <div class="cardContainer">
-                  @for($i=0; $i<3; $i++)
-                  <div class="card">
-                    <h5 class="card-header">Invoice</h5>
-                    <div class="card-body">
-                      <p class="card-text rounded-pill">Rp 111111</p>
-                    </div>
-                  </div>
-                  @endfor
-                  <a href="#" id="detail" class="btn btn-warning rounded-pill">Detail</a>
-                </div>
-            </div>
-            <div class="wrap">
-              <div class="contact">
-                <h2>Pusat Bantuan</h2>
-                <div class="row">
-                  <div class="col text-right">
-                    <button type="button" class="btn btn-success btn-sm">
-                      <img src="" alt="" class="rounded">
-                      <span class="material-icons" id="wa">
-                        sms
-                        </span>
-                      <p>Whatsapp</p>
-                    </button>
-                  </div>
-                  <div class="col text-left">
-                    <button type="button" class="btn btn-primary btn-sm" id="btnmail">
-                      <img src="" alt="" class="rounded">
-                      <span class="material-icons" id="mail">
-                        mail
-                        </span>
-                      <p>Email</p>
-                    </button>
-                  </div>
+                <div class="col text-left">
+                  <button type="button" class="btn btn-primary btn-sm" id="btnmail">
+                    <img src="" alt="" class="rounded">
+                    <span class="material-icons" id="mail">
+                      mail
+                      </span>
+                    <p>Email</p>
+                  </button>
                 </div>
               </div>
             </div>
-            <div class="split"></div>
-            @extends('client.footer')
-        </div>
+          </div>
+          <div class="split"></div>
+          @extends('client.footer')
+      </div>
     <!-- Bootstrap JS -->
     {{-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> --}}
     <script  src="https://code.jquery.com/jquery-3.5.1.js"></script>

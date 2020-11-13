@@ -207,14 +207,14 @@ ul{
 								</span>
 							</a>
 						</li>
-						<li class="nav-item">
+						{{-- <li class="nav-item">
 							<a href="{{ url('/antrian') }}" class="nav-link {{ (request()->is('antrian')) ? 'active' : '' }}">
 								<i class="icon-list-ordered"></i>
 								<span>
 									Antrian
 								</span>
 							</a>
-						</li>
+						</li> --}}
 					</ul>
 				</li>
 

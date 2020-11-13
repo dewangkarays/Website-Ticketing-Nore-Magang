@@ -82,10 +82,11 @@
     }
 
 @media (min-width: 992px) {
-    #mainNav {
+    /* #mainNav {
         border-color: transparent;
         background-color: transparent;
-    }
+    } */
+    
     #mainNav .navbar-brand {
         color: fade(white, 70%);
     }
@@ -136,10 +137,10 @@
                 <img src="{{ URL::to('/assets/img/nore.png') }}" alt="" class="rounded-circle rounded-sm">
               </li> --}}
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#">Ganti Password</a>
+                <a class="nav-link js-scroll-trigger" href="{{ url('/changepass') }}">Ganti Password</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#">Logout</a>
+                <a class="nav-link js-scroll-trigger" href="{{ url('/logout') }}">Logout</a>
               </li>
             </ul>
           </div>
