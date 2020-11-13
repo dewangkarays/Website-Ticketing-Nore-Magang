@@ -27,7 +27,7 @@
 		<!-- Hover rows -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-				<a href="{{ route('users.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+				<a href="{{ route('members.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
 			</div>
 
 			<table class="table datatable-basic table-hover">
@@ -36,10 +36,8 @@
 						<th>No</th>
 						<th>Nama</th>
 						<th>Username</th>
-						<th>Role</th>
-						<th>Website</th>
-						<th class="text-center">Masa Aktif</th>
-						<th class="text-center">Belum Terbayar</th>
+						<th>Email</th>
+						<th>Telpon</th>
 						<th class="text-center">Jml Op</th>
 						<th class="text-center">Actions</th>
 					</tr>
@@ -52,20 +50,9 @@
 				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{$user->nama}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
-				        <td>{{config('custom.role.'.$user->role)}}</td>
-				        <td><div class="datatable-column-width">{{$user->website}}</div></td>
-				        <td align="center">
-				        	@if($user->kadaluarsa < date("Y-m-d") && $user->kadaluarsa != '')
-								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->kadaluarsa}}</span>
-							@elseif($user->kadaluarsa <= date("Y-m-d", strtotime("+1 week")) && $user->kadaluarsa != '')
-								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{$user->kadaluarsa}}</span>
-							@else
-								{{$user->kadaluarsa}}
-							@endif
-						</td>
-						<td>
-							Rp @angka($user->tagihan->sum('jml_tagih')-$user->tagihan->sum('jml_bayar'))
-						</td>
+				        <td><div class="datatable-column-width">{{$user->email}}</div></td>
+				        <td><div class="datatable-column-width">{{$user->telp}}</div></td>
+				        
 				        <td align="center">
 				        	@if($user->task_count < 0)
 								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->task_count}}</span>
@@ -84,11 +71,11 @@
 
 									<div class="dropdown-menu dropdown-menu-right">
 										<a href="{{ url('createtagihan',$user->id)}}" class="dropdown-item"><i class="icon-file-text"></i> Buat Tagihan</a>
-										<a href="{{ route('users.show',$user->id)}}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
+										<a href="{{ route('members.show',$user->id)}}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
 										<a href="https://wa.me/{{$user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
 										@if (Auth::user()->role==1)
-										<a href="{{ route('users.edit',$user->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('users.destroy', $user->id)}}"><i class="icon-x"></i> Delete</a>
+										<a href="{{ route('members.edit',$user->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('members.destroy', $user->id)}}"><i class="icon-x"></i> Delete</a>
 										@endif
 									</div>
 								</div>
@@ -169,7 +156,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 6 ]
+		                targets: [ 4 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {

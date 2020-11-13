@@ -85,7 +85,9 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::group(['middleware' => ['role:1' OR 'role:10' OR 'role:20']], function() {
 		Route::get('createtagihan/{id}',  'TagihanController@createtagihan')->name('createtagihan');
 		Route::resource('users', 'UserController');
-		Route::get('member', 'UserController@indexmember')->name('indexmember');
+		Route::resource('members', 'MemberController');
+		Route::resource('proyeks', 'ProyekController');
+		Route::get('getproyek/{id}', 'TagihanController@getproyek');
 	});
 
 	//customer

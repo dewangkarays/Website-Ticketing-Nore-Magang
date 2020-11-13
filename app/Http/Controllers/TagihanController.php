@@ -7,6 +7,7 @@ use App\Model\Tagihan;
 use App\Model\User;
 use App\Model\Setting;
 use App\Model\Nomor;
+use App\Model\Proyek;
 use App\Model\Lampiran_gambar;
 use App\Exports\TagihanExport; //plugin excel
 use Maatwebsite\Excel\Facades\Excel;
@@ -45,9 +46,11 @@ class TagihanController extends Controller
         $fuser = User::find($id);
         $users = User::where('role','>=',80)->get();
         $users = $users->sortBy('kadaluarsa');
+        $proyeks = Proyek::where('user_id',$id)->get();
         $penagih = Setting::first();
         $lastno = Nomor::first();
-        return view('users.createtagihan',compact('fuser','users','penagih','lastno'));
+        // dd($proyeks);
+        return view('users.createtagihan',compact('fuser','users','proyeks','penagih','lastno'));
     }
 
     public function export_excel() 
@@ -67,7 +70,7 @@ class TagihanController extends Controller
             'ninv'=>'bail|unique:nomors|required',
         ]);
 
-        $data = $request->except(['_token', '_method','noinv','ninv','noakhir','nouser']);
+        $data = $request->except(['_token', '_method','noinv','ninv','noakhir','nouser','select_proyek']);
         if($request->get('langganan')==''){
             $data['langganan'] = 0;
         }
@@ -216,6 +219,15 @@ class TagihanController extends Controller
         $data = User::find($nama_proyek);
         $kadaluarsa = $data['kadaluarsa'];       
         return $kadaluarsa;
+    }
+
+    public function getproyek($id)
+    {
+        $proyek['data'] = Proyek::where('user_id',$id)->get();
+        // $proyek = $data['proyek'];       
+        // dd($data);
+        return response()->json($proyek);
+
     }
 
     public function cetak($id)
