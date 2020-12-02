@@ -6,20 +6,16 @@
     <title>OP Ticketing</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="main.css"> --}}
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+    {{-- font --}}
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+      {{-- carousel --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"> --}}
-    {{-- <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"> --}}
+
     <style>
-
-
         body{
         font-family: 'Raleway', sans-serif !important;
         /* adition */
@@ -109,17 +105,10 @@
             padding: 3px 0 1em 0 !important
         }
 
-        /* .tagihan{
-            padding: 2em 0!important;
-        } */
 
         .card-body{
           padding: 0.5em ;
         }
-
-        /* .cardContainer{
-            padding: 0 0 1em 0 !important;
-        } */
 
         .btn-warning{
           color:#ffff;
@@ -177,7 +166,7 @@
               <div class="slider owl-carousel">
                 @for ($i=0; $i<3; $i++)
                 <div class="col">
-                    <div class="card bg-light" style="width: 10rem;">
+                    <div class="card bg-light" >
                       <div class="card-body">
                         <div class="row">
                           <div class="col">

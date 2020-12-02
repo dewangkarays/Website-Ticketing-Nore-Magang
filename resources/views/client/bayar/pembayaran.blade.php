@@ -99,65 +99,195 @@
           margin : 0 12px;
         }
 
+           /* sidebar */
+      .wrapper {
+      display: flex;
+      align-items: stretch;
+      /* width: 80%; */
+    }
+
+    #sidebar {
+      min-width: 250px;
+      max-width: 250px;
+      /* min-width: 20%;
+      max-width: 20%; */
+      min-height: 100vh;
+    }
+
+    #sidebar.active {
+      margin-left: -250px;
+    }
+
+    a, a:hover, a:focus {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    #sidebar {
+      background: #3EB772;
+      color: #fff;
+      transition: all 0.3s;
+    }
+
+    #sidebar .sidebar-header {
+      padding: 20px;
+      background: #3EB772;
+    }
+
+    #sidebar ul.components {
+      padding: 20px 0;
+    }
+
+    #sidebar ul p {
+      color: #fff;
+      padding: 10px;
+    }
+
+    #sidebar ul li a {
+      padding: 10px;
+      font-size: 1.1em;
+      display: block;
+    }
+    #sidebar ul li a:hover {
+      color: #3EB772;
+      font-weight: bold;
+      background: #fff;
+    }
+
+    ul ul a {
+      font-size: 0.9em !important;
+      padding-left: 30px !important;
+      background: #3EB772;
+    }
+
+    .divider{
+      padding-bottom: 1em;
+    }
+
+    @media (max-width: 768px) {
+
+      .sidebar{
+        display: none;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .contact, .header, .greeting, .footer{
+        display: none;
+      }
+
+      .website h2, .task h2, .tagihan h2, .history h2{
+        font-size:24px !important;
+        padding-bottom: 1em;
+      }
+    }
     </style>
     <title>OP Ticketing</title>
   </head>
   <body>
-    @extends('client.navbar')
     @section('title','Bayar')
-        <div class="container">
-          <div class="form-pembayaran">
-            <div class="bayar-head">
-              <h2>Form Pembayaran</h2>      
-            </div>
-            <form>
-              <div class="form-group row">
-                <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Nama</label>
-                <div class="col-sm-8">
-                  <input type="name" class="form-control form-control-sm-8" id="colFormLabelSm" placeholder="Input Nama">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Tanggal Pembayaran</label>
-                <div class="col-sm-8">
-                  <input type="date" class="form-control form-control-sm" id="datepicker" name="date" placeholder="">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Keterangan</label>
-              </div>
-              <div class="form-group row">
-                <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Rincian Tagihan</label>
-                <table class="table table-hover col-sm-8">
-                  <thead>
-                    <tr>
-                      <th scope="col">Langganan</th>
-                      <th scope="col">Ads</th>
-                      <th scope="col">Lainnya</th>
-                      <th scope="col">Terbayar</th>
-                      <th scope="col">Total Tagihan</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">Rp. </th>
-                      <td>Rp. </td>
-                      <td>Rp. </td>
-                      <td>Rp. </td>
-                      <td>Rp. </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="form-group row">
-                <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm" id="nominal">Nominal Pembayaran</label>
-                <input type="name" class="form-control form-control-sm-8" id="jumlah" placeholder="Input Nominal">
-              </div>
-            </form>
-            <button type="button" class="btn btn-success btn-lg btn-block">Bayar</button>
-          </div>
-              @extends('client.footer')
+    <div class="header">
+      @include('client.navbar')
+    </div>
+    <div class="wrapper">
+      <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3 style="font-size: 24px">Nore</h3>
         </div>
+        <ul class="list-unstyled components" style="padding-left:10px">
+         <li>
+            <a href="/dashboard">Dashboard</a>
+         </li>
+         <li>
+            <a href="/tagihanclient">Tagihan</a>
+         </li>
+         <li>
+            <a href="/payment">Bayar</a>
+         </li>
+         <li>
+            <a href="/taskclient">Task</a>
+         </li>
+         <li>
+            <a href="/antrian">Antrian</a>
+         </li>
+        </ul>
+          <div class="row text-center">
+            <div class="col">
+              <button type="button" class="btn btn-success btn-sm">
+                <img src="" alt="" class="rounded">
+                <span class="material-icons" id="wa">
+                  sms
+                  </span>
+                <p>Whatsapp</p>
+              </button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-sm" id="btnmail">
+                <img src="" alt="" class="rounded">
+                <span class="material-icons" id="mail">
+                  mail
+                  </span>
+                <p>Email</p>
+              </button>
+            </div>
+          </div>
+    </nav>
+    <div class="container">
+      @include('client.toogle')
+      <div class="form-pembayaran">
+        <div class="bayar-head">
+          <h2>Form Pembayaran</h2>      
+        </div>
+        <form>
+          <div class="form-group row">
+            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Nama</label>
+            <div class="col-sm-8">
+              <input type="name" class="form-control form-control-sm-8" id="colFormLabelSm" placeholder="Input Nama">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Tanggal Pembayaran</label>
+            <div class="col-sm-8">
+              <input type="date" class="form-control form-control-sm" id="datepicker" name="date" placeholder="">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Keterangan</label>
+          </div>
+          <div class="form-group row">
+            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Rincian Tagihan</label>
+            <table class="table table-hover col-sm-8">
+              <thead>
+                <tr>
+                  <th scope="col">Langganan</th>
+                  <th scope="col">Ads</th>
+                  <th scope="col">Lainnya</th>
+                  <th scope="col">Terbayar</th>
+                  <th scope="col">Total Tagihan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Rp. </th>
+                  <td>Rp. </td>
+                  <td>Rp. </td>
+                  <td>Rp. </td>
+                  <td>Rp. </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="form-group row">
+            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm" id="nominal">Nominal Pembayaran</label>
+            <input type="name" class="form-control form-control-sm-8" id="jumlah" placeholder="Input Nominal">
+          </div>
+        </form>
+        <button type="button" class="btn btn-success btn-lg btn-block">Bayar</button>
+      </div>
+          @include('client.footer')
+    </div>
+    </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->

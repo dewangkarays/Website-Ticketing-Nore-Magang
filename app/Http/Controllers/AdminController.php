@@ -62,7 +62,7 @@ class AdminController extends Controller
 
     //test view costumer()
     public function customer(){
-        return view("client/index");
+        return view("client.layout");
     }
         
     

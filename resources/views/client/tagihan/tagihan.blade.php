@@ -6,17 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"> --}}
+      <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {{-- font --}}
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
+    {{-- icon --}}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    {{-- script --}}
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <style>
-         .bg-light {
+        /* .bg-light {
         background-color: #3EB772 !important;
-        }
+        } */
 
         body{
         font-family: 'Raleway', sans-serif !important;
@@ -41,13 +53,13 @@
             font-weight: bold;
         }
 
-        .greeting, .tagihan-aktif{
+        .tagihan-aktif{
             padding-top: 5em ;
         }
 
-        .greeting h1{
+        /* .greeting h1{
                 font-weight: bold !important;
-        }
+        } */
 
         .row{
             padding: 1em 0 !important
@@ -61,15 +73,15 @@
             padding: 0 0 2em 0 !important;
         }
 
-        .tanggal{
+        /* .tanggal{
             padding-top:2em;
-        }
+        } */
 
         .btn-warning{
           color:#ffff;
         }
 
-        footer {
+        /* footer {
         background-color: #3EB772;
         position: fixed;
         left: 0;
@@ -77,7 +89,7 @@
         width: 100%;
         color: white;
         text-align: center;
-        }
+        } */
 
         .invoice h5{
           font-size: 12px !important;
@@ -114,14 +126,154 @@
           padding-bottom: 4px;
         }
 
+      /* sidebar */
+      .wrapper {
+      display: flex;
+      align-items: stretch;
+      /* width: 80%; */
+    }
 
+    #sidebar {
+      min-width: 250px;
+      max-width: 250px;
+      /* min-width: 20%;
+      max-width: 20%; */
+      min-height: 100vh;
+    }
+
+    #sidebar.active {
+      margin-left: -250px;
+    }
+
+    a, a:hover, a:focus {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    #sidebar {
+      background: #3EB772;
+      color: #fff;
+      transition: all 0.3s;
+    }
+
+    #sidebar .sidebar-header {
+      padding: 20px;
+      background: #3EB772;
+    }
+
+    #sidebar ul.components {
+      padding: 20px 0;
+    }
+
+    #sidebar ul p {
+      color: #fff;
+      padding: 10px;
+    }
+
+    #sidebar ul li a {
+      padding: 10px;
+      font-size: 1.1em;
+      display: block;
+    }
+    #sidebar ul li a:hover {
+      color: #3EB772;
+      font-weight: bold;
+      background: #fff;
+    }
+
+    ul ul a {
+      font-size: 0.9em !important;
+      padding-left: 30px !important;
+      background: #3EB772;
+    }
+
+    .divider{
+      padding-bottom: 1em;
+    }
+
+    @media (max-width: 768px) {
+      /* #sidebar {
+          margin-left: -250px;
+      }
+      #sidebar.active {
+          margin-left: 0;
+      } */
+
+      .sidebar{
+        display: none;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .contact, .header, .greeting, .footer{
+        display: none;
+      }
+
+      /* .website h2, .task h2, .tagihan h2, .history h2{
+        font-size:24px !important;
+        padding-bottom: 1em;
+      } */
+    }
     </style>
     <title>OP Ticketing</title>
   </head>
   <body>
-    @extends('client.navbar')
     @section('title','Tagihan')
+    <div class="header">
+      @include('client.navbar')
+    </div>
+    <div class="wrapper">
+      <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3 style="font-size: 24px">Nore</h3>
+        </div>
+        <ul class="list-unstyled components" style="padding-left:10px">
+         <li>
+            <a href="/dashboard">Dashboard</a>
+         </li>
+         <li>
+            <a href="/tagihanclient">Tagihan</a>
+         </li>
+         <li>
+            <a href="/payment">Bayar</a>
+         </li>
+         <li>
+            <a href="/taskclient">Task</a>
+         </li>
+         <li>
+            <a href="/antrian">Antrian</a>
+         </li>
+        </ul>
+          <div class="row text-center">
+            <div class="col">
+              <button type="button" class="btn btn-success btn-sm">
+                <img src="" alt="" class="rounded">
+                <span class="material-icons" id="wa">
+                  sms
+                  </span>
+                <p>Whatsapp</p>
+              </button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-sm" id="btnmail">
+                <img src="" alt="" class="rounded">
+                <span class="material-icons" id="mail">
+                  mail
+                  </span>
+                <p>Email</p>
+              </button>
+            </div>
+          </div>
+      </nav>
         <div class="container">
+          <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                </button>
+            </div>
+          </nav>
           <div class="tagihan-aktif">
             <div class="tagihan-head">
               <h2>Tagihan Aktif</h2>      
@@ -129,7 +281,7 @@
             <div class="cardContainer">
               {{-- diganti jumlah aktif --}}
               @for($i=0;$i<3;$i++)
-              <div class="card w-100">
+              <div class="card">
                 <div class="card-body">
                   <div class="invoice">
                     <h5 class="card-title">Invoice</h5>
@@ -170,7 +322,7 @@
             <div class="cardContainer">
               {{-- diganti jumlah aktif --}}
               @for($i=0;$i<3;$i++)
-              <div class="card w-100">
+              <div class="card">
                 <div class="card-body">
                   <div class="invoice">
                     <h5 class="card-title">Invoice</h5>
@@ -204,9 +356,13 @@
               </div>
             </div>
           </div>
-          <div class="split"></div>
-              @extends('client.footer')
+          <div class="footer">
+            <div class="split"></div>
+                @include('client.footer')
+          </div>
         </div>
+    </div>
+        
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
@@ -219,5 +375,14 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
+    <script>
+      $(document).ready(function () {
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+
+      });
+    </script>
   </body>
 </html>

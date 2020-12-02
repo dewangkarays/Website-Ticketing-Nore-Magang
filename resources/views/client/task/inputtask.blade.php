@@ -73,47 +73,187 @@
           font-size: 12px !important;
         }
 
+        
+      /* sidebar */
+      .wrapper {
+      display: flex;
+      align-items: stretch;
+      /* width: 80%; */
+    }
+
+    #sidebar {
+      min-width: 250px;
+      max-width: 250px;
+      /* min-width: 20%;
+      max-width: 20%; */
+      min-height: 100vh;
+    }
+
+    #sidebar.active {
+      margin-left: -250px;
+    }
+
+    a, a:hover, a:focus {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    #sidebar {
+      background: #3EB772;
+      color: #fff;
+      transition: all 0.3s;
+    }
+
+    #sidebar .sidebar-header {
+      padding: 20px;
+      background: #3EB772;
+    }
+
+    #sidebar ul.components {
+      padding: 20px 0;
+    }
+
+    #sidebar ul p {
+      color: #fff;
+      padding: 10px;
+    }
+
+    #sidebar ul li a {
+      padding: 10px;
+      font-size: 1.1em;
+      display: block;
+    }
+    #sidebar ul li a:hover {
+      color: #3EB772;
+      font-weight: bold;
+      background: #fff;
+    }
+
+    ul ul a {
+      font-size: 0.9em !important;
+      padding-left: 30px !important;
+      background: #3EB772;
+    }
+
+    .divider{
+      padding-bottom: 1em;
+    }
+
+    @media (max-width: 768px) {
+      /* #sidebar {
+          margin-left: -250px;
+      }
+      #sidebar.active {
+          margin-left: 0;
+      } */
+
+      .sidebar{
+        display: none;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .contact, .header, .greeting, .footer{
+        display: none;
+      }
+
+      .website h2, .task h2, .tagihan h2, .history h2{
+        font-size:24px !important;
+        padding-bottom: 1em;
+      }
+    }
+
     </style>
     <title>OP Ticketing</title>
   </head>
   <body>
-  @extends('client.navbar')
   @section('title','Task')
-        <div class="container">
-          <div class="data-task">
-            <div class="task-head">
-              <h2>Form Tambah Task</h2>      
-            </div>
-            <form>
-              <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-6 col-form-label">Username</label>
-                <div class="col-sm-6">
-                  <input type="email" class="form-control" id="inputEmail3">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-6 col-form-label">Kebutuhan</label>
-                <div class="col-sm-6">
-                  <input type="email" class="form-control" id="inputEmail3">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-6 col-form-label">Lampiran</label>
-                <div class="col-sm-6">
-                  <button type="button" class="btn btn-warning btn-block text-center">Pilih File</button>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-6 col-form-label"></label>
-                <div class="col-sm-6">
-                  <input type="email" class="form-control text-center" id="inputEmail3" placeholder="Preview">
-              </div>
-            </div>
-            </form>
-            <button type="button" class="btn btn-success btn-lg btn-block">Tambah</button>
+  <div class="header">
+    @include('client.navbar')
+  </div>
+  <div class="wrapper">
+    <nav id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+          <h3 style="font-size: 24px">Nore</h3>
+      </div>
+      <ul class="list-unstyled components" style="padding-left:10px">
+       <li>
+          <a href="/dashboard">Dashboard</a>
+       </li>
+       <li>
+          <a href="/tagihanclient">Tagihan</a>
+       </li>
+       <li>
+          <a href="/payment">Bayar</a>
+       </li>
+       <li>
+          <a href="/taskclient">Task</a>
+       </li>
+       <li>
+          <a href="/antrian">Antrian</a>
+       </li>
+      </ul>
+        <div class="row text-center">
+          <div class="col">
+            <button type="button" class="btn btn-success btn-sm">
+              <img src="" alt="" class="rounded">
+              <span class="material-icons" id="wa">
+                sms
+                </span>
+              <p>Whatsapp</p>
+            </button>
           </div>
-              @extends('client.footer')
+          <div class="col">
+            <button type="button" class="btn btn-primary btn-sm" id="btnmail">
+              <img src="" alt="" class="rounded">
+              <span class="material-icons" id="mail">
+                mail
+                </span>
+              <p>Email</p>
+            </button>
+          </div>
         </div>
+  </nav>
+  <div class="container">
+    @include('client.toogle')
+    <div class="data-task">
+      <div class="task-head">
+        <h2>Form Tambah Task</h2>      
+      </div>
+      <form>
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-6 col-form-label">Username</label>
+          <div class="col-sm-6">
+            <input type="email" class="form-control" id="inputEmail3">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-6 col-form-label">Kebutuhan</label>
+          <div class="col-sm-6">
+            <input type="email" class="form-control" id="inputEmail3">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-6 col-form-label">Lampiran</label>
+          <div class="col-sm-6">
+            <button type="button" class="btn btn-warning btn-block text-center">Pilih File</button>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-6 col-form-label"></label>
+          <div class="col-sm-6">
+            <input type="email" class="form-control text-center" id="inputEmail3" placeholder="Preview">
+        </div>
+      </div>
+      </form>
+      <button type="button" class="btn btn-success btn-lg btn-block">Tambah</button>
+    </div>
+    <div class="footer">
+      @include('client.footer')
+    </div>
+  </div>
+  </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->

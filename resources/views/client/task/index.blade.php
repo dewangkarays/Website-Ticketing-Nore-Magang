@@ -143,64 +143,190 @@
         size: 50px 50px !important;
         }
 
+         /* sidebar */
+    #sidebar {
+      min-width: 250px;
+      max-width: 250px;
+      min-height: 100vh;
+    }
+
+    #sidebar.active {
+      margin-left: -250px;
+    }
+
+    a, a:hover, a:focus {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    #sidebar {
+      background: #3EB772;
+      color: #fff;
+      transition: all 0.3s;
+    }
+
+    #sidebar .sidebar-header {
+      padding: 20px;
+      background: #3EB772;
+    }
+
+    #sidebar ul.components {
+      padding: 20px 0;
+    }
+
+    #sidebar ul p {
+      color: #fff;
+      padding: 10px;
+    }
+
+    #sidebar ul li a {
+      padding: 10px;
+      font-size: 1.1em;
+      display: block;
+    }
+    #sidebar ul li a:hover {
+      color: #3EB772;
+      font-weight: bold;
+      background: #fff;
+    }
+
+    ul ul a {
+      font-size: 0.9em !important;
+      padding-left: 30px !important;
+      background: #3EB772;
+    }
+
+    .wrapper {
+      display: flex;
+      align-items: stretch;
+      /* width: 80%; */
+    }
+
+    @media (max-width: 768px) {
+      .sidebar{
+        display: none;
+      }
+    }
+
+      @media (min-width: 768px) {
+      .footer, .header{
+        display: none;
+      }
+
+      h2{
+        font-size:24px !important;
+        padding-bottom: 1em;
+      }
+    }
+
   
     </style>
     <title>OP Ticketing</title>
   </head>
   <body>
-    @extends('client.navbar')
     @section('title','Task')
-        <div class="container">
-          <div class="data-task">
-            <div class="task-head">
-              <div class="row">
-                <div class="col" id="task"><h2>Data Task</h2></div>
-                <div class="col text-right"><button type="button" class="btn btn-primary rounded-pill" id="sorting">Terbaru</button>
-                    <span class="material-icons" id="dropdown">
-                        arrow_drop_down
-                        </span>
-                </div>
+    <div class="header">
+      @include('client.navbar')
+    </div>
+    <div class="wrapper">
+      <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3 style="font-size: 24px">Nore</h3>
+        </div>
+        <ul class="list-unstyled components" style="padding-left:10px">
+         <li>
+            <a href="/dashboard">Dashboard</a>
+         </li>
+         <li>
+            <a href="/tagihanclient">Tagihan</a>
+         </li>
+         <li>
+            <a href="/payment">Bayar</a>
+         </li>
+         <li>
+            <a href="/taskclient">Task</a>
+         </li>
+         <li>
+            <a href="/antrian">Antrian</a>
+         </li>
+        </ul>
+          <div class="row text-center">
+            <div class="col">
+              <button type="button" class="btn btn-success btn-sm">
+                <img src="" alt="" class="rounded">
+                <span class="material-icons" id="wa">
+                  sms
+                  </span>
+                <p>Whatsapp</p>
+              </button>
             </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-sm" id="btnmail">
+                <img src="" alt="" class="rounded">
+                <span class="material-icons" id="mail">
+                  mail
+                  </span>
+                <p>Email</p>
+              </button>
             </div>
-            <div class="cardContainer">
-              {{-- diganti jumlah aktif --}}
-              @for($i=0;$i<3;$i++)
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col"><h2 class="card-title text-left" id="task">Task</h2></div>
-                    <div class="col"></div>
-                    <div class="col"><p class="card-text text-right">Status</p></div>
-                  </div>
-                    <p class="card-text" id="date">Tanggal Input : </p>
-                    <p class="card-text bold" id="need">Kebutuhan : </p>
-                    <p class="card-text">Deskripsi</p>
-                  <div class="row">
-                      <div class="col">
-                          <p class="card-text" id="handler">Handler : </p>   
-                      </div>
-                      <div class="col">
-                        <a href="#" class="btn btn-success rounded-pill" id="selesai">Selesai</a>
-                      </div>
-                      <div class="col">
-                        <a href="#" class="btn btn-danger rounded-pill" id="hapus">Hapus</a>
-                      </div>
-                  </div>
-                </div>
-              </div>
-              <div class="separate"></div>
-              @endfor
-            </div>
-                  <div class="row">
-                      <div class="col"></div>
-                      <div class="col text-center">
-                        <a href="/taskcreate" class="btn btn-success rounded-circle">+</a>
-                      </div>
-                      <div class="col"></div>
-                  </div>
           </div>
-          <div class="split"></div>
-              @extends('client.footer')
+    </nav>
+    <div class="container">
+      @include('client.toogle')
+      <div class="data-task">
+        <div class="task-head">
+          <div class="row">
+            <div class="col" id="task"><h2>Data Task</h2></div>
+            <div class="col text-right"><button type="button" class="btn btn-primary rounded-pill" id="sorting">Terbaru</button>
+                <span class="material-icons" id="dropdown">
+                    arrow_drop_down
+                    </span>
+            </div>
+        </div>
+        </div>
+        <div class="cardContainer">
+          {{-- diganti jumlah aktif --}}
+          @for($i=0;$i<3;$i++)
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col"><h2 class="card-title text-left" id="task">Task</h2></div>
+                <div class="col"></div>
+                <div class="col"><p class="card-text text-right">Status</p></div>
+              </div>
+                <p class="card-text" id="date">Tanggal Input : </p>
+                <p class="card-text bold" id="need">Kebutuhan : </p>
+                <p class="card-text">Deskripsi</p>
+              <div class="row">
+                  <div class="col">
+                      <p class="card-text" id="handler">Handler : </p>   
+                  </div>
+                  <div class="col">
+                    <a href="#" class="btn btn-success rounded-pill" id="selesai">Selesai</a>
+                  </div>
+                  <div class="col">
+                    <a href="#" class="btn btn-danger rounded-pill" id="hapus">Hapus</a>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="separate"></div>
+          @endfor
+        </div>
+              <div class="row">
+                  <div class="col"></div>
+                  <div class="col text-center">
+                    <a href="/taskcreate" class="btn btn-success rounded-circle">+</a>
+                  </div>
+                  <div class="col"></div>
+              </div>
+      </div>
+      <div class="split"></div>
+      <div class="footer">
+        @include('client.footer')
+      </div>
+    </div>
         </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
