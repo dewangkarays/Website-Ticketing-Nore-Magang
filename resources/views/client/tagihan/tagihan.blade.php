@@ -16,7 +16,8 @@
       <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     {{-- font --}}
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
     {{-- icon --}}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -34,9 +35,6 @@
         font-family: 'Raleway', sans-serif !important;
         }
 
-        p{
-            font-size: 9px !important;
-        }
 
         h1{
             font-size: 24px !important ;
@@ -49,7 +47,6 @@
         }
 
         h3{
-            font-size: 11px;
             font-weight: bold;
         }
 
@@ -92,13 +89,10 @@
         } */
 
         .invoice h5{
-          font-size: 12px !important;
           font-weight: bold;
         }
 
-        .invoice p{
-          font-size :10px !important ;
-        }
+       
         
         #tombol{
           padding: 0 !important;
@@ -111,11 +105,6 @@
 
         #detail{
           margin-top: 0.5em !important;
-          font-size: 9px !important;
-        }
-
-        #bayar, #lunas{
-          font-size: 9px !important;
         }
 
         .card-body{
@@ -215,6 +204,15 @@
         padding-bottom: 1em;
       } */
     }
+
+    .navbar{
+            padding: .5rem 0 !important;
+        }
+
+    .container-fluid{
+        padding: 0 !important;
+    }
+
     </style>
     <title>OP Ticketing</title>
   </head>
@@ -256,7 +254,7 @@
               </button>
             </div>
             <div class="col">
-              <button type="button" class="btn btn-primary btn-sm" id="btnmail">
+              <button type="button" class="btn btn-primary btn-sm" id="btnmail" style="padding:4px 23px;">
                 <img src="" alt="" class="rounded">
                 <span class="material-icons" id="mail">
                   mail
@@ -276,7 +274,7 @@
           </nav>
           <div class="tagihan-aktif">
             <div class="tagihan-head">
-              <h2>Tagihan Aktif</h2>      
+              <h3>Tagihan Aktif</h3>      
             </div>
             <div class="cardContainer">
               {{-- diganti jumlah aktif --}}
@@ -296,7 +294,7 @@
                         <h5 class="card-text">Rp. </h5>
                       </div>
                       <div class="col text-center" id="tombol">
-                        <a href="/purchase" class="btn btn-success rounded-pill" id="bayar">Bayar</a>
+                        <a href="/purchase" class="btn btn-success rounded-pill" id="bayar" style="padding-left:12px; padding-bottom:5px;">Bayar</a>
                       </div>
                     </div>
                   </div>
@@ -317,7 +315,7 @@
           </div>
           <div class="tagihan-riwayat">
             <div class="tagihan-head">
-              <h2>Riwayat Tagihan</h2>      
+              <h3>Riwayat Tagihan</h3>      
             </div>
             <div class="cardContainer">
               {{-- diganti jumlah aktif --}}

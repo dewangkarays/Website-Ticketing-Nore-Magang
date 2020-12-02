@@ -164,6 +164,15 @@
       }
     }
 
+    .navbar{
+            padding: .5rem 0 !important;
+        }
+
+    .container-fluid{
+        padding: 0 !important;
+    }
+
+
     </style>
     <title>OP Ticketing</title>
   </head>

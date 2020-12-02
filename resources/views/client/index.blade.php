@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
     {{-- font --}}
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -23,28 +24,23 @@
         }
 
         p{
-            font-size: 9px !important;
             margin-bottom: 2px !important;
         }
 
         h1{
-            font-size: 24px !important ;
+            
         }
 
         h2{
-            font-weight: bold !important;
-            font-size: 12px !important;
             line-height: 14px !important;
         }
 
         h3{
-            font-size: 11px;
-            font-weight: bold !important;
+       
         }
 
         h5{
-          font-size:14px;
-          font-weight: bold !important;
+      
         }
 
         .wrap{
@@ -56,7 +52,6 @@
         }
 
         .greeting h1{
-            font-weight: bold !important;
             padding-bottom: 5px !important;
     
         }
@@ -75,11 +70,9 @@
         }
 
         #countwebsite{
-          font-weight: bold;
         }
 
         #date{
-          font-weight: bold;
           margin:0;
         }
 
@@ -88,17 +81,16 @@
         }
 
         #task{
-          font-weight: bolder;
-          font-size: 48px !important;
+         
         }
 
         #detail{
           margin-top: 0.5em !important;
-          font-size: 9px !important;
+         
         }
 
         #bayar{
-          font-size: 9px !important;
+       
         }
 
         .row{

@@ -22,17 +22,9 @@
         font-family: 'Raleway', sans-serif !important;
         }
 
-        p{
-            font-size: 9px !important;
-        }
-
-        h1{
-            font-size: 24px !important ;
-        }
 
         h2{
             font-weight: bold !important;
-            font-size: 12px !important;
             line-height: 14px !important;
         }
 
@@ -80,14 +72,9 @@
         }
 
         .invoice h5{
-          font-size: 12px !important;
           font-weight: bold;
         }
 
-        .invoice p{
-          font-size :10px !important ;
-        }
-        
         #tombol{
           padding: 0 !important;
 
@@ -99,14 +86,9 @@
 
         #detail{
           margin-top: 0.5em !important;
-          font-size: 9px !important;
         }
 
-        #bayar, #lunas{
-          font-size: 9px !important;
-        }
-
-             /* sidebar */
+      /* sidebar */
       .wrapper {
       display: flex;
       align-items: stretch;
@@ -196,6 +178,15 @@
       }
     }
 
+    .navbar{
+            padding: .5rem 0 !important;
+        }
+
+    .container-fluid{
+        padding: 0 !important;
+    }
+
+
 
     </style>
     <title>OP Ticketing</title>
@@ -238,7 +229,7 @@
               </button>
             </div>
             <div class="col">
-              <button type="button" class="btn btn-primary btn-sm" id="btnmail">
+              <button type="button" class="btn btn-primary btn-sm" id="btnmail" style="padding:4px 23px;">
                 <img src="" alt="" class="rounded">
                 <span class="material-icons" id="mail">
                   mail
@@ -252,7 +243,7 @@
       @include('client.toogle')
       <div class="tagihan-aktif">
         <div class="tagihan-head">
-          <h2>Tagihan Aktif</h2>      
+          <h5>Tagihan Aktif</h5>      
         </div>
         <div class="cardContainer">
           {{-- diganti jumlah aktif --}}

@@ -7,7 +7,8 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     {{-- font --}}
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
     {{-- icon --}}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -27,28 +28,17 @@
       }
 
       p{
-          font-size: 9px !important;
+        
           margin-bottom: 2px !important;
-      }
-
-      h1{
-          font-size: 24px !important ;
       }
 
       h2{
           font-weight: bold !important;
-          font-size: 12px !important;
           line-height: 14px !important;
       }
 
       h3{
-          font-size: 11px;
-          font-weight: bold !important;
-      }
-
-      h5{
-        font-size:14px;
-        font-weight: bold !important;
+          font-weight: bold;
       }
 
       .wrap{
@@ -93,16 +83,10 @@
 
       #task{
         font-weight: bolder;
-        font-size: 48px !important;
-      }
-
-      #detail{
-        margin-top: 0.5em !important;
-        font-size: 9px !important;
       }
 
       #bayar{
-        font-size: 9px !important;
+      
       }
 
       .row{
@@ -221,9 +205,16 @@
       }
 
       .website h2, .task h2, .tagihan h2, .history h2{
-        font-size:24px !important;
         padding-bottom: 1em;
       }
+    }
+
+    .navbar{
+        padding: .5rem 0 !important;
+    }
+
+    .container-fluid{
+        padding: 0 !important;
     }
 
     </style>
@@ -242,21 +233,21 @@
               <h3 style="font-size: 24px">Nore</h3>
           </div>
           <ul class="list-unstyled components" style="padding-left:10px">
-           <li>
-              <a href="/dashboard">Dashboard</a>
-           </li>
-           <li>
-              <a href="/tagihanclient">Tagihan</a>
-           </li>
-           <li>
-              <a href="/payment">Bayar</a>
-           </li>
-           <li>
-              <a href="/taskclient">Task</a>
-           </li>
-           <li>
-              <a href="/antrian">Antrian</a>
-           </li>
+          <li>
+            <a href="/dashboard">Dashboard</a>
+          </li>
+          <li>
+            <a href="/tagihanclient">Tagihan</a>
+          </li>
+          <li>
+            <a href="/payment">Bayar</a>
+          </li>
+          <li>
+            <a href="/taskclient">Task</a>
+          </li>
+          <li>
+            <a href="/antrian">Antrian</a>
+          </li>
           </ul>
             <div class="row text-center">
               <div class="col">
@@ -269,7 +260,7 @@
                 </button>
               </div>
               <div class="col">
-                <button type="button" class="btn btn-primary btn-sm" id="btnmail">
+                <button type="button" class="btn btn-primary btn-sm" id="btnmail" style="padding:4px 23px;">
                   <img src="" alt="" class="rounded">
                   <span class="material-icons" id="mail">
                     mail
@@ -293,19 +284,20 @@
                 </div>
                 <div class="wrap">
                   <div class="website">
-                      <h2>Website Langganan</h2>
-                      <p>Total Langganan : </p>
+                      <h3>Website Langganan</h3>
+                      <p style="font-size:14px">Total Langganan : </p>
                   </div>
             
                   <div class="row">
                     <div class="slider owl-carousel">
                       @for ($i=0; $i<3; $i++)
                       <div class="col">
-                          <div class="card bg-light" >
+                          <div class="card bg-light" style="padding:10px">
                             <div class="card-body">
                               <div class="row">
                                 <div class="col">
-                                  <h3 id="namawebsite" class="card-title">Nama Website</h3>
+                                  <h5 id="namawebsite" class="card-title" style="margin-bottom: 0;
+                                  padding: 0 0 2px 0; ">Nama Website</h5>
                                   <p>Status</p>
                                 </div>
                                 <div class="col text-right">
@@ -318,8 +310,7 @@
                                 <div class="col">
                                   <div class="tanggal">
                                     <p>Hingga</p>
-                                  
-                                    <h2 id="date">15 Oktober 2020</h2>
+                                    <h5 id="date">15 Oktober 2020</h5>
                                   </div>
                                 </div>
                               </div>
@@ -368,15 +359,19 @@
                   <div class="cardContainer">
                       @for($i=0; $i<3; $i++)
                       <div class="card">
-                        <h5 class="card-header">Invoice</h5>
+                        <h5 class="card-header" style="font-weight:bold;">Invoice</h5>
                         <div class="card-body">
-                          <p class="card-text">Rp 111111</p>
-                          <a href="/payment" id="bayar" class="btn btn-success rounded-pill">Bayar</a>
+                          <p class="card-text" style="padding: 5px 0 10px 12px; font-size:24px;">Rp 111111</p>
+                          <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
+                            <a href="/payment" id="bayar" class="btn btn-success rounded-pill" style="padding:6px 18px;">Bayar</a>
+                          </div>
                         </div>
                       </div>
                       <div class="divider"></div>
                       @endfor
-                      <a href="/tagihanaktif" id="detail" class="btn btn-warning rounded-pill">Detail</a>
+                        <div class="col text-right">
+                            <a href="/tagihanaktif" id="detail" class="btn btn-warning rounded-pill" style="padding:6px 18px; justify-content:right; align-items:right;">Detail</a>
+                        </div>
                   </div>
                 </div>
                 <div class="wrap">
@@ -386,14 +381,16 @@
                     <div class="cardContainer">
                       @for($i=0; $i<3; $i++)
                       <div class="card">
-                        <h5 class="card-header">Invoice</h5>
+                        <h5 class="card-header" style="font-weight:bold;">Invoice</h5>
                         <div class="card-body">
-                          <p class="card-text rounded-pill">Rp 111111</p>
+                          <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:24px;">Rp 111111</p>
                       </div>
                     </div>
                     <div class="divider"></div>
                       @endfor
-                      <a href="/tagihanriwayat" id="detail" class="btn btn-warning rounded-pill">Detail</a>
+                      <div class="col text-right">
+                        <a href="/tagihanriwayat" id="detail" class="btn btn-warning rounded-pill" style="padding:6px 18px;">Detail</a>
+                      </div>
                 </div>
                 </div>
                 <div class="wrap">

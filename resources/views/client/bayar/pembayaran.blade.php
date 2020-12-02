@@ -22,22 +22,13 @@
         font-family: 'Raleway', sans-serif !important;
         }
 
-        p{
-            font-size: 9px !important;
-        }
-
-        h1{
-            font-size: 24px !important ;
-        }
 
         h2{
             font-weight: bold !important;
-            font-size: 12px !important;
             line-height: 14px !important;
         }
 
         h3{
-            font-size: 11px;
             font-weight: bold;
         }
 
@@ -79,24 +70,16 @@
         text-align: center;
         }
 
-        th, td{
-          font-size: 9px !important;
-        }
-
-        label{
-          font-size: 12px !important;
-        }
-
         #nominal{
           font-weight: bold;
         }
 
-        ::placeholder{
-          font-size: 12px;
-        }
-
         #jumlah{
           margin : 0 12px;
+        }
+
+        .split{
+        padding-top: 4em;
         }
 
            /* sidebar */
@@ -182,6 +165,15 @@
         padding-bottom: 1em;
       }
     }
+
+    .navbar{
+            padding: .5rem 0 !important;
+        }
+
+    .container-fluid{
+        padding: 0 !important;
+    }
+
     </style>
     <title>OP Ticketing</title>
   </head>
@@ -223,7 +215,7 @@
               </button>
             </div>
             <div class="col">
-              <button type="button" class="btn btn-primary btn-sm" id="btnmail">
+              <button type="button" class="btn btn-primary btn-sm" id="btnmail" style="padding:4px 23px;">
                 <img src="" alt="" class="rounded">
                 <span class="material-icons" id="mail">
                   mail
@@ -283,9 +275,14 @@
             <input type="name" class="form-control form-control-sm-8" id="jumlah" placeholder="Input Nominal">
           </div>
         </form>
-        <button type="button" class="btn btn-success btn-lg btn-block">Bayar</button>
+        <div class="col text-center">
+          <button type="button" class="btn btn-success btn-lg">Bayar</button>
+        </div>
       </div>
-          @include('client.footer')
+      <div class="split"></div>
+      <div class="footer">
+        @include('client.footer')
+      </div>
     </div>
     </div>
     <!-- Optional JavaScript; choose one of the two! -->

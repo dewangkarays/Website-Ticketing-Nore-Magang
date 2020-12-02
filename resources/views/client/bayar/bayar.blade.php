@@ -8,7 +8,8 @@
    <!-- Bootstrap -->
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
    {{-- font --}}
-   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
    {{-- icon --}}
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
      rel="stylesheet">
@@ -29,22 +30,16 @@
         font-family: 'Raleway', sans-serif !important;
         }
 
-        p{
-            font-size: 9px !important;
-        }
-
         h1{
             font-size: 24px !important ;
         }
 
         h2{
             font-weight: bold !important;
-            font-size: 12px !important;
             line-height: 14px !important;
         }
 
         h3{
-            font-size: 11px;
             font-weight: bold;
         }
 
@@ -91,24 +86,16 @@
           font-size: 9px !important;
         }
 
-        #selesai, #hapus, #sorting{
-          font-size: 9px !important;
-        }
-
         .split{
           padding-top: 4em;
         }
 
-        p{
-          font-size: 9px;
-        }
 
         .nominal{
           padding-bottom:0px !important;
         }
 
         #nominal{
-          font-size: 12px !important;
           font-weight: bold;
           margin-bottom: 0 !important;
         }
@@ -215,10 +202,18 @@
       }
 
       .website h2, .task h2, .tagihan h2, .history h2{
-        font-size:24px !important;
         padding-bottom: 1em;
       }
     }
+
+    .navbar{
+            padding: .5rem 0 !important;
+        }
+
+    .container-fluid{
+        padding: 0 !important;
+    }
+
 
 
     </style>
@@ -262,7 +257,7 @@
               </button>
             </div>
             <div class="col">
-              <button type="button" class="btn btn-primary btn-sm" id="btnmail">
+              <button type="button" class="btn btn-primary btn-sm" id="btnmail" style="padding:4px 23px;">
                 <img src="" alt="" class="rounded">
                 <span class="material-icons" id="mail">
                   mail
@@ -283,11 +278,11 @@
         <div class="data-pembayaran">
           <div class="bayar-head">
             <div class="row">
-              <div class="col" id="task"><h2>Data Pembayaran</h2></div>
+              <div class="col" id="task"><h3>Data Pembayaran</h3></div>
               <div class="col text-right"  id="status"><button type="button" class="btn btn-primary rounded-pill" id="sorting">Terbaru</button>
                   <span class="material-icons" id="dropdown">
-                      arrow_drop_down
-                      </span>
+                    arrow_drop_down
+                  </span>
               </div>
           </div>
           </div>
@@ -298,7 +293,7 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h2 class="card-title text-left" id="task">Tagihan INV </h2>
+                    <h5 class="card-title text-left" id="task" style="font-weight: bold;">Tagihan INV </h5>
                   </div>
                   <div class="col">
                     <p class="card-text text-right">Status</p>
@@ -331,7 +326,7 @@
               <div class="col"></div>
               <div class="col"></div>
               <div class="col text-right">
-                <span class="material-icons">
+                <span class="material-icons" style="padding-top:10px;">
                   arrow_forward_ios
                   </span>
               </div>

@@ -7,14 +7,15 @@
     <title>OP Ticketing</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
     rel="stylesheet">
     <style>
-         /* .bg-light {
+        /* .bg-light {
         background-color: #3EB772 !important;
         } */
 
@@ -22,10 +23,7 @@
         font-family: 'Raleway', sans-serif !important;
         }
 
-        p{
-            font-size: 9px !important;
-        }
-
+      
         /* h1{
             font-size: 24px !important ;
         } */
@@ -79,9 +77,7 @@
         text-align: center;
         } */
         
-        tr{
-          font-size: 9px !important;
-        }
+       
 
         .split{
         padding-top: 4em;
@@ -164,6 +160,15 @@
         padding-bottom: 1em;
       }
     }
+
+    .navbar{
+            padding: .5rem 0 !important;
+        }
+
+    .container-fluid{
+        padding: 0 !important;
+    }
+
     </style>
   </head>
   <body>
@@ -205,7 +210,7 @@
                 </button>
               </div>
               <div class="col">
-                <button type="button" class="btn btn-primary btn-sm" id="btnmail">
+                <button type="button" class="btn btn-primary btn-sm" id="btnmail"  style="padding:4px 23px;">
                   <img src="" alt="" class="rounded">
                   <span class="material-icons" id="mail">
                     mail
