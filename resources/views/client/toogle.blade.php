@@ -42,6 +42,7 @@
 
            $('#sidebarCollapse').on('click', function () {
                $('#sidebar').toggleClass('active');
+               $('.container').toggleClass('active');
            });
 
        });

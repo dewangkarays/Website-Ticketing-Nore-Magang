@@ -5,147 +5,79 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>OP Ticketing</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {{-- font --}}
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    {{-- icon --}}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    rel="stylesheet">
+      rel="stylesheet">
+    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    {{-- fixed --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    {{-- script --}}
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <style>
-        /* .bg-light {
-        background-color: #3EB772 !important;
-        } */
-
         body{
         font-family: 'Raleway', sans-serif !important;
         }
 
-      
-        /* h1{
-            font-size: 24px !important ;
-        } */
-
         h2{
             font-weight: bold !important;
-            font-size: 12px !important;
             line-height: 14px !important;
         }
 
-        /* h3{
-            font-size: 11px;
-            font-weight: bold;
-        } */
-
-        .data-antrian{
-            padding-top: 5em ;
+        h3{
+          font-weight: bold;
         }
 
-        /* .greeting h1{
-                font-weight: bold !important;
-        } */
-
-        .row{
-            padding: 1em 0 !important
-        }
-
-        /* .tagihan{
-            padding: 2em 0!important;
-        } */
-
-        /* .cardContainer{
-            padding: 0 0 2em 0 !important;
-        } */
-
-        /* .tanggal{
-            padding-top:2em;
-        } */
-
-        /* .btn-warning{
-          color:#ffff;
-        } */
-
-        /* footer {
-        background-color: #3EB772;
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        color: white;
-        text-align: center;
-        } */
-        
-       
-
-        .split{
-        padding-top: 4em;
+        .divider{
+        padding-top: 1em;
       }
 
-    /* sidebar */
-    #sidebar {
-      min-width: 250px;
-      max-width: 250px;
-      min-height: 100vh;
+      .container{
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+      }
+
+
+    .page-item.active .page-link{
+      background-color:#3EB772;
+      border-color: #3EB772;
     }
 
-    #sidebar.active {
-      margin-left: -250px;
+    .page-link{
+      color:#3EB772;
     }
 
-    a, a:hover, a:focus {
-      color: inherit;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-
-    #sidebar {
-      background: #3EB772;
-      color: #fff;
-      transition: all 0.3s;
-    }
-
-    #sidebar .sidebar-header {
-      padding: 20px;
-      background: #3EB772;
-    }
-
-    #sidebar ul.components {
-      padding: 20px 0;
-    }
-
-    #sidebar ul p {
-      color: #fff;
-      padding: 10px;
-    }
-
-    #sidebar ul li a {
-      padding: 10px;
-      font-size: 1.1em;
-      display: block;
-    }
-    #sidebar ul li a:hover {
-      color: #3EB772;
-      font-weight: bold;
-      background: #fff;
-    }
-
-    ul ul a {
-      font-size: 0.9em !important;
-      padding-left: 30px !important;
-      background: #3EB772;
+    .split{
+      padding-top: 6rem;
     }
 
         /* tambahan */
       .wrapper {
       display: flex;
-      align-items: stretch;
+      align-items: 100%;
       /* width: 80%; */
       }
 
       @media (max-width: 768px) {
       .sidebar{
+        display: none;
+      }
+
+      .copyright{
+        display: none;
+      }
+
+      .data-antrian{
+        padding-top: 5rem;
+      }
+
+      .headerdesktop{
         display: none;
       }
     }
@@ -158,6 +90,11 @@
       h2{
         font-size:24px !important;
         padding-bottom: 1em;
+      }
+
+      .container{
+        margin-left:250px;
+        transition: all 0.3s;
       }
     }
 
@@ -177,54 +114,14 @@
       @include('client.navbar')
     </div>
     <div class="wrapper">
-        {{-- @include('client.sidebar') --}}
-        <nav id="sidebar" class="sidebar">
-          <div class="sidebar-header">
-              <h3 style="font-size: 24px">Nore</h3>
-          </div>
-          <ul class="list-unstyled components" style="padding-left:10px">
-           <li>
-              <a href="/dashboard">Dashboard</a>
-           </li>
-           <li>
-              <a href="/tagihanclient">Tagihan</a>
-           </li>
-           <li>
-              <a href="/payment">Bayar</a>
-           </li>
-           <li>
-              <a href="/taskclient">Task</a>
-           </li>
-           <li>
-              <a href="/antrian">Antrian</a>
-           </li>
-          </ul>
-            <div class="row text-center">
-              <div class="col">
-                <button type="button" class="btn btn-success btn-sm">
-                  <img src="" alt="" class="rounded">
-                  <span class="material-icons" id="wa">
-                    sms
-                    </span>
-                  <p>Whatsapp</p>
-                </button>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-primary btn-sm" id="btnmail"  style="padding:4px 23px;">
-                  <img src="" alt="" class="rounded">
-                  <span class="material-icons" id="mail">
-                    mail
-                    </span>
-                  <p>Email</p>
-                </button>
-              </div>
-            </div>
-      </nav>
+        @include('client.sidebar')
       <div class="container">
-        @include('client.toogle')
+        <div class="headerdesktop">
+          @include('client.headerdesktop')
+        </div>
         <div class="data-antrian">
           <div class="antrian-head">
-            <h2>Data Antrian</h2>      
+            <h3 style="padding-top:1em; padding-bottom:0.5em;">Data Antrian</h3>      
           </div>
           <div class="table-responsive">
             <table class="table table-bordered">
@@ -255,20 +152,32 @@
             <div class="col"></div>
             <div class="col"></div>
           <div class="col text-right">
-            <span class="material-icons">
-              arrow_back_ios
-              </span>
-            <span class="material-icons">
-              arrow_forward_ios
-              </span>
+            <nav aria-label="...">
+              <ul class="pagination">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active">
+                  <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#">Next</a>
+                </li>
+              </ul>
+            </nav>
           </div>
           </div>
         </div>
-        <div class="footer">
-          <div class="split"></div>
-          @include('client.footer')
+        <div class="copyright">
+          <p style="text-align: center">2020. Nore Inovasi.</p>
         </div>
       </div>
+    </div>
+    <div class="footer">
+      <div class="split"></div>
+      @include('client.footer')
     </div>
         
     <!-- Optional JavaScript; choose one of the two! -->

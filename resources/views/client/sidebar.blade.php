@@ -1,13 +1,25 @@
 <head>
-    <style>
- #sidebar {
-      min-width: 250px;
-      max-width: 250px;
-      min-height: 100vh;
+  <style>
+  #sidebar {
+      /* min-width: 250px;
+      max-width: 250px; */
+      /* min-width: 20%;
+      max-width: 20%; */
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      /* position: fixed; */
+      z-index: 999;
     }
 
     #sidebar.active {
       margin-left: -250px;
+    }
+
+    .container.active{
+      margin: 0 auto;
     }
 
     a, a:hover, a:focus {
@@ -57,43 +69,33 @@
 <body>
   <nav id="sidebar" class="sidebar">
     <div class="sidebar-header">
-        <h3 style="font-size: 24px">Nore</h3>
+        <img src="{{ URL::asset('global_assets/images/nore_w_1000px.png') }}" alt="" style="width:100px; height:50px">
     </div>
     <ul class="list-unstyled components" style="padding-left:10px">
-     <li>
-        <a href="/dashboard">Dashboard</a>
-     </li>
-     <li>
-        <a href="/tagihanclient">Tagihan</a>
-     </li>
-     <li>
-        <a href="/payment">Bayar</a>
-     </li>
-     <li>
-        <a href="/taskclient">Task</a>
-     </li>
-     <li>
-        <a href="/antrian">Antrian</a>
-     </li>
-    </ul>
-      <div class="row text-center">
+    <li>
+      <a href="/dashboard">Dashboard</a>
+    </li>
+    <li>
+      <a href="/tagihanclient">Tagihan</a>
+    </li>
+    <li>
+      <a href="/payment">Bayar</a>
+    </li>
+    <li>
+      <a href="/taskclient">Task</a>
+    </li>
+    <li>
+      <a href="/antrian">Antrian</a>
+    </li>
+  </ul>
+  <div class="row" style="padding-top:6rem;"></div>
+  <h6 style=" font-weight:bold; padding-bottom:1rem; text-align:center;">Pusat Bantuan</h6>
+      <div class="row" style="text-align:center">
         <div class="col">
-          <button type="button" class="btn btn-success btn-sm">
-            <img src="" alt="" class="rounded">
-            <span class="material-icons" id="wa">
-              sms
-              </span>
-            <p>Whatsapp</p>
-          </button>
+          <img src="{{ URL::asset('global_assets/images/wanew.png') }}" height="34px">
         </div>
         <div class="col">
-          <button type="button" class="btn btn-primary btn-sm" id="btnmail">
-            <img src="" alt="" class="rounded">
-            <span class="material-icons" id="mail">
-              mail
-              </span>
-            <p>Email</p>
-          </button>
+          <img src="{{ URL::asset('global_assets/images/mailnew.png') }}" height="34px">
         </div>
       </div>
 </nav>

@@ -16,6 +16,8 @@
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     {{-- carousel --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    {{-- fixed --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     {{-- script --}}
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
@@ -23,13 +25,6 @@
     <style>
       body{
       font-family: 'Raleway', sans-serif !important;
-      /* adition */
-      /* display: grid; */
-      }
-
-      p{
-        
-          margin-bottom: 2px !important;
       }
 
       h2{
@@ -49,50 +44,9 @@
           padding-top: 5em ;
       }
 
-      .greeting h1{
-          font-weight: bold !important;
-          padding-bottom: 5px !important;
-  
-      }
-
-      .website h2{
-        margin-bottom: 3px !important; 
-      }
-
-      .task h2{
-        margin-bottom: 3px !important; 
-      }
-
-      #namawebsite{
-        margin-bottom: 0;
-        padding: 0 0 2px 0 ;
-      }
-
-      #countwebsite{
-        font-weight: bold;
-      }
-
-      #date{
-        font-weight: bold;
-        margin:0;
-      }
-
-      #date-bottom{
-        padding-bottom:0 !important;
-      }
-
       #task{
         font-weight: bolder;
       }
-
-      #bayar{
-      
-      }
-
-      .row{
-          padding: 3px 0 1em 0 !important
-      }
-
 
       .card-body{
         padding: 0.5em ;
@@ -103,7 +57,7 @@
       }
 
       .split{
-        padding-top: 4em;
+        padding-top: 6em;
       }
 
       .slider{
@@ -119,84 +73,43 @@
         padding-left:14px;
       }
 
-
-      /* sidebar */
-      .wrapper {
+    .wrapper {
       display: flex;
-      align-items: stretch;
-      /* width: 80%; */
+      /* align-items: stretch; */
+      width: 100%;
     }
 
-    #sidebar {
-      min-width: 250px;
-      max-width: 250px;
-      /* min-width: 20%;
-      max-width: 20%; */
-      min-height: 100vh;
-    }
-
-    #sidebar.active {
-      margin-left: -250px;
-    }
-
-    a, a:hover, a:focus {
-      color: inherit;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-
-    #sidebar {
-      background: #3EB772;
-      color: #fff;
-      transition: all 0.3s;
-    }
-
-    #sidebar .sidebar-header {
-      padding: 20px;
-      background: #3EB772;
-    }
-
-    #sidebar ul.components {
-      padding: 20px 0;
-    }
-
-    #sidebar ul p {
-      color: #fff;
-      padding: 10px;
-    }
-
-    #sidebar ul li a {
-      padding: 10px;
-      font-size: 1.1em;
-      display: block;
-    }
-    #sidebar ul li a:hover {
-      color: #3EB772;
-      font-weight: bold;
-      background: #fff;
-    }
-
-    ul ul a {
-      font-size: 0.9em !important;
-      padding-left: 30px !important;
-      background: #3EB772;
+    p{
+      margin: 0 0 !important;
     }
 
     .divider{
       padding-bottom: 1em;
     }
 
+    .container{
+        padding-left:15px !important;
+        padding-right:15px !important;
+    }
+
     @media (max-width: 768px) {
-      /* #sidebar {
-          margin-left: -250px;
-      }
-      #sidebar.active {
-          margin-left: 0;
-      } */
 
       .sidebar{
         display: none;
       }
+
+      .hide-mobile{
+        display: none;
+      }
+
+      .copyright{
+        display: none;
+      }
+
+      .headerdesktop{
+        display: none;
+      }
+      
     }
 
     @media (min-width: 768px) {
@@ -205,7 +118,27 @@
       }
 
       .website h2, .task h2, .tagihan h2, .history h2{
-        padding-bottom: 1em;
+        padding-bottom: 0.5em;
+      }
+
+      .container{
+        margin-left:250px;
+      }
+
+      .hide-desktop{
+        display: none;
+      }
+
+      .wrap{
+        padding-bottom:4em;
+      }
+
+      p{
+        margin:0 0 !important;
+      }
+
+      .container{
+        transition: all 0.3s;
       }
     }
 
@@ -217,6 +150,49 @@
         padding: 0 !important;
     }
 
+    .btn-circle.btn-xl { 
+    width: 50px; 
+    height: 50px; 
+    border-radius: 35px; 
+    font-weight: bold;
+    padding:0px 0px;
+    text-align: center; 
+    }
+
+    /* --dropdown setting-- */
+    .dropdown{
+      position: relative;
+      display: inline-block;
+    }
+
+    .setting{
+      display: none;
+      position: absolute;
+      overflow: auto;
+      background-color: #eee;
+      padding: 10px 10px;
+      z-index: 1;
+      border-radius: 5px;
+      border: none;
+      margin-top:0.4rem;
+    }
+
+    .setting a{
+      font-size: 14px;
+      text-decoration: none;
+      display: block;
+      line-height: 26px;
+    }
+
+    .setting a:hover{
+      font-weight: bold;
+    }
+
+    .show{
+      display: block;
+    } 
+    /* --- */
+
     </style>
 </head>
 <body>
@@ -225,92 +201,43 @@
     @include('client.navbar')
   </div>
   <div class="wrapper">
-    {{-- <div class="sidebar">
-      @include('client.sidebar')
-    </div> --}}
-      <nav id="sidebar" class="sidebar">
-          <div class="sidebar-header">
-              <h3 style="font-size: 24px">Nore</h3>
-          </div>
-          <ul class="list-unstyled components" style="padding-left:10px">
-          <li>
-            <a href="/dashboard">Dashboard</a>
-          </li>
-          <li>
-            <a href="/tagihanclient">Tagihan</a>
-          </li>
-          <li>
-            <a href="/payment">Bayar</a>
-          </li>
-          <li>
-            <a href="/taskclient">Task</a>
-          </li>
-          <li>
-            <a href="/antrian">Antrian</a>
-          </li>
-          </ul>
-            <div class="row text-center">
-              <div class="col">
-                <button type="button" class="btn btn-success btn-sm">
-                  <img src="" alt="" class="rounded">
-                  <span class="material-icons" id="wa">
-                    sms
-                    </span>
-                  <p>Whatsapp</p>
-                </button>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-primary btn-sm" id="btnmail" style="padding:4px 23px;">
-                  <img src="" alt="" class="rounded">
-                  <span class="material-icons" id="mail">
-                    mail
-                    </span>
-                  <p>Email</p>
-                </button>
-              </div>
-            </div>
-      </nav>
-          <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container-fluid">
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-                    </button>
-                </div>
-            </nav>
+     @include('client.sidebar')
+      <div class="container">
+        <div class="headerdesktop">
+          @include('client.headerdesktop')
+        </div>
                 <div class="greeting">
-                    <p>Selamat Datang</p>
-                    <h1>{{\Auth::user()->nama}}</h1>
+                    <p style="margin: 0 0;">Selamat Datang</p>
+                    <h1 style="font-weight:bold;">{{\Auth::user()->nama}}</h1>
                 </div>
                 <div class="wrap">
                   <div class="website">
-                      <h3>Website Langganan</h3>
-                      <p style="font-size:14px">Total Langganan : </p>
+                      <h3 style="padding-top: 1em;">Website Langganan</h3>
+                      <p style="font-size:14px; padding-bottom:0.3em;">Total Langganan : </p>
                   </div>
-            
-                  <div class="row">
+                  <div class="row" style="">
                     <div class="slider owl-carousel">
                       @for ($i=0; $i<3; $i++)
                       <div class="col">
-                          <div class="card bg-light" style="padding:10px">
+                          <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee;">
                             <div class="card-body">
                               <div class="row">
                                 <div class="col">
-                                  <h5 id="namawebsite" class="card-title" style="margin-bottom: 0;
-                                  padding: 0 0 2px 0; ">Nama Website</h5>
-                                  <p>Status</p>
+                                  <h6 id="namawebsite" class="card-title" style="margin-bottom: 0;
+                                  padding: 0 0 2px 0; font-weight:bold; ">Nama Website</h6>
+                                  <p style="color:#ffff; font-weight:bold; background-color: #3EB772; padding:5px 10px; border-radius:20px; text-align:center;">Status</p>
                                 </div>
                                 <div class="col text-right">
                                   <p>Jumlah</p>
                                   <p>Pengoperasian</p>
-                                  <h1 id="countwebsite">3</h1>
+                                  <h1 style="font-weight: bold;">3</h1>
                                 </div>
                               </div>
-                              <div id="date-bottom" class="row">
+                              <div id="date-bottom" class="row" style="padding-bottom:0">
                                 <div class="col">
                                   <div class="tanggal">
-                                    <p>Hingga</p>
-                                    <h5 id="date">15 Oktober 2020</h5>
+                                    <p style="margin-bottom: 0 !important;">Hingga</p>
+                                    <h5 style="font-weight: bold; margin:0;" id="date">15 Oktober 2020</h5>
                                   </div>
                                 </div>
                               </div>
@@ -325,73 +252,122 @@
                   <div class="task">
                       <h2>Task</h2>
                   </div>
-                  <div class="row">
-                    <div class="col">
-                      <div class="card bg-light">
-                        <div class="card-body">
-                          <h5 class="card-title">Baru</h5>
-                          <h1 id="task" class="card-text text-right">1</h1>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card bg-light">
-                        <div class="card-body">
-                          <h5 class="card-title">Dikerjakan</h5>
-                          <h1 id="task" class="card-text text-right">1</h1>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card bg-light">
-                        <div class="card-body">
-                          <h5 class="card-title">Selesai</h5>
-                          <h1 id="task" class="card-text text-right">1</h1>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="wrap">
-                  <div class="tagihan">
-                      <h2>Tagihan Aktif</h2>
-                  </div>
-                  <div class="cardContainer">
-                      @for($i=0; $i<3; $i++)
-                      <div class="card">
-                        <h5 class="card-header" style="font-weight:bold;">Invoice</h5>
-                        <div class="card-body">
-                          <p class="card-text" style="padding: 5px 0 10px 12px; font-size:24px;">Rp 111111</p>
-                          <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
-                            <a href="/payment" id="bayar" class="btn btn-success rounded-pill" style="padding:6px 18px;">Bayar</a>
+                    <div class="row">
+                      <div class="col-sm-3" style="padding-bottom:0.5em;">
+                        <div class="card" style="border:none; border-radius:10px; background-color:#eeee;padding: 10px;">
+                          <div class="card-body">
+                            <h5 class="card-title" style="padding-bottom: 3em">Baru</h5>
+                            <h1 id="task" class="card-text text-right">1</h1>
                           </div>
                         </div>
                       </div>
-                      <div class="divider"></div>
-                      @endfor
-                        <div class="col text-right">
-                            <a href="/tagihanaktif" id="detail" class="btn btn-warning rounded-pill" style="padding:6px 18px; justify-content:right; align-items:right;">Detail</a>
+                      <div class="col-sm-3" style="padding-bottom:0.5em;">
+                        <div class="card" style="border:none; border-radius:10px; background-color:#eeee;  padding: 10px;">
+                          <div class="card-body">
+                            <h5 class="card-title" style="padding-bottom: 3em">Dikerjakan</h5>
+                            <h1 id="task" class="card-text text-right">1</h1>
+                          </div>
                         </div>
+                      </div>
+                      <div class="col-sm-3" style="padding-bottom:0.5em;">
+                        <div class="card" style="border:none; border-radius:10px; background-color:#eeee;  padding: 10px;">
+                          <div class="card-body">
+                            <h5 class="card-title" style="padding-bottom: 3em">Selesai</h5>
+                            <h1 id="task" class="card-text text-right">1</h1>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="hide-mobile">
+                  <div class="wrap">
+                    <div class="row">
+                      <div class="col w-50">
+                        <div class="tagihan">
+                          <h2>Tagihan Aktif</h2>
+                        </div>
+                        <div class="cardContainer">
+                          @for($i=0; $i<3; $i++)
+                          <div class="card">
+                            <h5 class="card-header" style="font-weight:bold;">Invoice</h5>
+                            <div class="card-body">
+                              <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Rp 111111</p>
+                              <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
+                                <a href="/purchase" id="bayar" class="btn btn-success" style="padding:6px 18px; border-radius:5px;">Bayar</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="divider"></div>
+                          @endfor
+                        </div>
+                        <div class="col text-right">
+                        <a href="/tagihanaktif" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right;">Detail</a>
+                        </div>
+                      </div>
+                      <div class="col w-50">
+                        <div class="history">
+                          <h2>Riwayat Tagihan</h2>
+                        </div>
+                        <div class="cardContainer">
+                          @for($i=0; $i<4; $i++)
+                          <div class="card">
+                            <h5 class="card-header" style="font-weight:bold;">Invoice</h5>
+                            <div class="card-body">
+                              <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:16px;">Rp 111111</p>
+                            </div>
+                          </div>
+                          <div class="divider"></div>
+                          @endfor
+                      </div>
+                      <div class="col text-right">
+                        <a href="/tagihanriwayat" id="detail" class="btn btn-warning" style="padding:6px 18px; border-radius:5px;">Detail</a>
+                      </div>
+                    </div>
+                    </div>
                   </div>
                 </div>
-                <div class="wrap">
-                    <div class="history">
-                      <h2>Riwayat Tagihan</h2>
-                    </div>
-                    <div class="cardContainer">
-                      @for($i=0; $i<3; $i++)
-                      <div class="card">
-                        <h5 class="card-header" style="font-weight:bold;">Invoice</h5>
-                        <div class="card-body">
-                          <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:24px;">Rp 111111</p>
+                <div class="hide-desktop">
+                  <div class="wrap">
+                      <div class="tagihan">
+                          <h2>Tagihan Aktif</h2>
                       </div>
-                    </div>
-                    <div class="divider"></div>
-                      @endfor
+                      <div class="cardContainer">
+                        @for($i=0; $i<3; $i++)
+                        <div class="card">
+                          <h5 class="card-header" style="font-weight:bold;">Invoice</h5>
+                          <div class="card-body">
+                            <p class="card-text" style="padding: 5px 0 10px 12px; font-size:24px;">Rp 111111</p>
+                            <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
+                              <a href="/payment" id="bayar" class="btn btn-success rounded-pill" style="padding:6px 18px;">Bayar</a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="divider"></div>
+                        @endfor
+                      </div>
                       <div class="col text-right">
-                        <a href="/tagihanriwayat" id="detail" class="btn btn-warning rounded-pill" style="padding:6px 18px;">Detail</a>
+                          <a href="/tagihanaktif" id="detail" class="btn btn-warning rounded-pill" style="padding:6px 18px; justify-content:right; align-items:right;">Detail</a>
                       </div>
-                </div>
+                  </div>
+                  <div class="wrap">
+                      <div class="history">
+                        <h2>Riwayat Tagihan</h2>
+                      </div>
+                    <div class="cardContainer">
+                        @for($i=0; $i<3; $i++)
+                        <div class="card">
+                          <h5 class="card-header" style="font-weight:bold;">Invoice</h5>
+                          <div class="card-body">
+                            <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:24px;">Rp 111111</p>
+                          </div>
+                        </div>
+                        <div class="divider"></div>
+                        @endfor
+                    </div>
+                    <div class="col text-right">
+                      <a href="/tagihanriwayat" id="detail" class="btn btn-warning rounded-pill" style="padding:6px 18px;">Detail</a>
+                    </div>
+                  </div>
                 </div>
                 <div class="wrap">
                   <div class="contact">
@@ -418,12 +394,14 @@
                     </div>
                   </div>
                 </div>
+                <div class="copyright">
+                  <p style="text-align: center">2020. Nore Inovasi.</p>
+                </div>
                 <div class="footer">
                 <div class="split"></div>
                   @include('client.footer')
                 </div>
-            {{-- </div> --}}
-        </div>
+      </div>
   </div>
     <!-- Bootstrap JS -->
     {{-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> --}}
@@ -431,19 +409,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+      <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script> --}}
     <script>
       $(".slider").owlCarousel({
         loop: true,
       });
-
-      $(document).ready(function () {
-
-           $('#sidebarCollapse').on('click', function () {
-               $('#sidebar').toggleClass('active');
-           });
-
-       });
     </script>
 </body>
 </html>

@@ -7,12 +7,16 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    {{-- font --}}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+    {{-- fixed --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     <style>
         .bg-light {
         background-color: #3EB772 !important;
@@ -28,21 +32,8 @@
             line-height: 14px !important;
         }
 
-        h3{
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        .greeting, .tagihan-aktif{
-            padding-top: 5em ;
-        }
-
         .greeting h1{
                 font-weight: bold !important;
-        }
-
-        .row{
-            padding: 1em 0 !important
         }
 
         .tagihan{
@@ -80,78 +71,22 @@
 
         }
 
-        .split{
-          padding-top: 4em;
-        }
-
         #detail{
           margin-top: 0.5em !important;
         }
 
-      /* sidebar */
       .wrapper {
       display: flex;
-      align-items: stretch;
+      align-items: 100%;
       /* width: 80%; */
-    }
-
-    #sidebar {
-      min-width: 250px;
-      max-width: 250px;
-      /* min-width: 20%;
-      max-width: 20%; */
-      min-height: 100vh;
-    }
-
-    #sidebar.active {
-      margin-left: -250px;
-    }
-
-    a, a:hover, a:focus {
-      color: inherit;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-
-    #sidebar {
-      background: #3EB772;
-      color: #fff;
-      transition: all 0.3s;
-    }
-
-    #sidebar .sidebar-header {
-      padding: 20px;
-      background: #3EB772;
-    }
-
-    #sidebar ul.components {
-      padding: 20px 0;
-    }
-
-    #sidebar ul p {
-      color: #fff;
-      padding: 10px;
-    }
-
-    #sidebar ul li a {
-      padding: 10px;
-      font-size: 1.1em;
-      display: block;
-    }
-    #sidebar ul li a:hover {
-      color: #3EB772;
-      font-weight: bold;
-      background: #fff;
-    }
-
-    ul ul a {
-      font-size: 0.9em !important;
-      padding-left: 30px !important;
-      background: #3EB772;
     }
 
     .divider{
       padding-bottom: 1em;
+    }
+
+    .split{
+      padding-top: 5em;
     }
 
     @media (max-width: 768px) {
@@ -165,6 +100,18 @@
       .sidebar{
         display: none;
       }
+
+      .copyright{
+        display: none;
+      }
+
+      .tagihan-aktif{
+        padding-top: 5rem;
+      }
+
+      .headerdesktop{
+        display: none;
+      }
     }
 
     @media (min-width: 768px) {
@@ -173,8 +120,13 @@
       }
 
       .website h2, .task h2, .tagihan h2, .history h2{
-        font-size:24px !important;
+
         padding-bottom: 1em;
+      }
+
+      .container{
+        margin-left:250px;
+        transition: all 0.3s;
       }
     }
 
@@ -186,64 +138,29 @@
         padding: 0 !important;
     }
 
+    .container{
+        padding-left:15px !important;
+        padding-right:15px !important;
+      }
 
 
     </style>
     <title>OP Ticketing</title>
   </head>
   <body>
-    @section('title','Task')
+    @section('title','Tagihan')
     <div class="header">
       @include('client.navbar')
     </div>
     <div class="wrapper">
-      <nav id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h3 style="font-size: 24px">Nore</h3>
-        </div>
-        <ul class="list-unstyled components" style="padding-left:10px">
-         <li>
-            <a href="/dashboard">Dashboard</a>
-         </li>
-         <li>
-            <a href="/tagihanclient">Tagihan</a>
-         </li>
-         <li>
-            <a href="/payment">Bayar</a>
-         </li>
-         <li>
-            <a href="/taskclient">Task</a>
-         </li>
-         <li>
-            <a href="/antrian">Antrian</a>
-         </li>
-        </ul>
-          <div class="row text-center">
-            <div class="col">
-              <button type="button" class="btn btn-success btn-sm">
-                <img src="" alt="" class="rounded">
-                <span class="material-icons" id="wa">
-                  sms
-                  </span>
-                <p>Whatsapp</p>
-              </button>
-            </div>
-            <div class="col">
-              <button type="button" class="btn btn-primary btn-sm" id="btnmail" style="padding:4px 23px;">
-                <img src="" alt="" class="rounded">
-                <span class="material-icons" id="mail">
-                  mail
-                  </span>
-                <p>Email</p>
-              </button>
-            </div>
-          </div>
-    </nav>
+      @include('client.sidebar')
     <div class="container">
-      @include('client.toogle')
+      <div class="headerdesktop">
+        @include('client.headerdesktop')
+      </div>
       <div class="tagihan-aktif">
         <div class="tagihan-head">
-          <h5>Tagihan Aktif</h5>      
+          <h3 style="font-weight:bold; padding-top:1em;">Tagihan Aktif</h3>      
         </div>
         <div class="cardContainer">
           {{-- diganti jumlah aktif --}}
@@ -255,15 +172,15 @@
                 <p class="card-text">Keterangan</p>
                 <div class="row">
                   <div class="col">
-                    <p class="card-text">Tagihan</p>
+                    <p class="card-text" style="font-weight:bold;">Tagihan</p>
                     <h5 class="card-text">Rp. </h5>
                   </div>
                   <div class="col">
-                    <p class="card-text">Harus dibayar</p>
+                    <p class="card-text"  style="font-weight:bold;">Harus dibayar</p>
                     <h5 class="card-text">Rp. </h5>
                   </div>
                   <div class="col text-center" id="tombol">
-                    <a href="#" class="btn btn-success rounded-pill" id="bayar">Bayar</a>
+                    <a href="/purchase" class="btn btn-success" style="font-weight: bold; padding:6px 18px; border-radius:5px;">Bayar</a>
                   </div>
                 </div>
               </div>
@@ -271,19 +188,17 @@
           </div>
           <div class="divider"></div>
           @endfor
-          <div class="col text-right">
-            <span class="material-icons">
-              arrow_forward_ios
-              </span>
-          </div>
+        </div>
+        <div class="copyright">
+          <p style="text-align: center">2020. Nore Inovasi.</p>
         </div>
       </div>
       </div>
-      <div class="split"></div>
-      <div class="footer">
-        @include('client.footer')
-      </div>
     </div>
+  </div>
+  <div class="split"></div>
+  <div class="footer">
+    @include('client.footer')
   </div>
     <!-- Optional JavaScript; choose one of the two! -->
 

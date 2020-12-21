@@ -7,12 +7,15 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
+    {{-- font --}}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+       {{-- fixed --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     <style>
         .bg-light {
         background-color: #3EB772 !important;
@@ -22,36 +25,18 @@
         font-family: 'Raleway', sans-serif !important;
         }
 
-        p{
-            font-size: 9px !important;
-        }
-
-        h1{
-            font-size: 24px !important ;
-        }
-
         h2{
-            font-weight: bold !important;
-            font-size: 12px !important;
-            line-height: 14px !important;
-        }
-
-        h3{
-            font-size: 11px;
             font-weight: bold;
-        }
-
-        .greeting, .tagihan-aktif, .data-pembayaran, .data-task{
-            padding-top: 5em ;
+            line-height: 14px !important;
         }
 
         .greeting h1{
                 font-weight: bold !important;
         }
 
-        .row{
+        /* .row{
             padding: 1em 0 !important
-        }
+        } */
 
         .tagihan{
             padding: 2em 0!important;
@@ -69,87 +54,38 @@
           color:#ffff;
         }
 
-        label{
-          font-size: 12px !important;
+        .split{
+          padding-top: 6rem;
         }
-
         
       /* sidebar */
       .wrapper {
       display: flex;
-      align-items: stretch;
+      align-items: 100%;
       /* width: 80%; */
-    }
-
-    #sidebar {
-      min-width: 250px;
-      max-width: 250px;
-      /* min-width: 20%;
-      max-width: 20%; */
-      min-height: 100vh;
-    }
-
-    #sidebar.active {
-      margin-left: -250px;
-    }
-
-    a, a:hover, a:focus {
-      color: inherit;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-
-    #sidebar {
-      background: #3EB772;
-      color: #fff;
-      transition: all 0.3s;
-    }
-
-    #sidebar .sidebar-header {
-      padding: 20px;
-      background: #3EB772;
-    }
-
-    #sidebar ul.components {
-      padding: 20px 0;
-    }
-
-    #sidebar ul p {
-      color: #fff;
-      padding: 10px;
-    }
-
-    #sidebar ul li a {
-      padding: 10px;
-      font-size: 1.1em;
-      display: block;
-    }
-    #sidebar ul li a:hover {
-      color: #3EB772;
-      font-weight: bold;
-      background: #fff;
-    }
-
-    ul ul a {
-      font-size: 0.9em !important;
-      padding-left: 30px !important;
-      background: #3EB772;
     }
 
     .divider{
       padding-bottom: 1em;
     }
 
+    .container{
+        padding-left:15px !important;
+        padding-right:15px !important;
+    }
+
     @media (max-width: 768px) {
-      /* #sidebar {
-          margin-left: -250px;
-      }
-      #sidebar.active {
-          margin-left: 0;
-      } */
 
       .sidebar{
         display: none;
+      }
+
+      .copyright{
+        display: none;
+      }
+
+      .headerdesktop{
+        display:none;
       }
     }
 
@@ -159,8 +95,12 @@
       }
 
       .website h2, .task h2, .tagihan h2, .history h2{
-        font-size:24px !important;
         padding-bottom: 1em;
+      }
+
+      .container{
+        margin-left:250px;
+        transition: all 0.3s;
       }
     }
 
@@ -172,6 +112,10 @@
         padding: 0 !important;
     }
 
+    .container{
+      padding-left:15px !important;
+      padding-right:15px !important;
+    }
 
     </style>
     <title>OP Ticketing</title>
@@ -182,53 +126,14 @@
     @include('client.navbar')
   </div>
   <div class="wrapper">
-    <nav id="sidebar" class="sidebar">
-      <div class="sidebar-header">
-          <h3 style="font-size: 24px">Nore</h3>
-      </div>
-      <ul class="list-unstyled components" style="padding-left:10px">
-       <li>
-          <a href="/dashboard">Dashboard</a>
-       </li>
-       <li>
-          <a href="/tagihanclient">Tagihan</a>
-       </li>
-       <li>
-          <a href="/payment">Bayar</a>
-       </li>
-       <li>
-          <a href="/taskclient">Task</a>
-       </li>
-       <li>
-          <a href="/antrian">Antrian</a>
-       </li>
-      </ul>
-        <div class="row text-center">
-          <div class="col">
-            <button type="button" class="btn btn-success btn-sm">
-              <img src="" alt="" class="rounded">
-              <span class="material-icons" id="wa">
-                sms
-                </span>
-              <p>Whatsapp</p>
-            </button>
-          </div>
-          <div class="col">
-            <button type="button" class="btn btn-primary btn-sm" id="btnmail">
-              <img src="" alt="" class="rounded">
-              <span class="material-icons" id="mail">
-                mail
-                </span>
-              <p>Email</p>
-            </button>
-          </div>
-        </div>
-  </nav>
+   @include('client.sidebar')
   <div class="container">
-    @include('client.toogle')
+    <div class="headerdesktop">
+      @include('client.headerdesktop')
+    </div>
     <div class="data-task">
       <div class="task-head">
-        <h2>Form Tambah Task</h2>      
+        <h3 style="padding-top: 5rem; font-weight:bold;">Form Tambah Task</h3>      
       </div>
       <form>
         <div class="form-group row">
@@ -258,11 +163,15 @@
       </form>
       <button type="button" class="btn btn-success btn-lg btn-block">Tambah</button>
     </div>
-    <div class="footer">
-      @include('client.footer')
+    <div class="copyright fixed-bottom" style="margin-left:250px; text-align: center">
+      <p>2020. Nore Inovasi.</p>
     </div>
   </div>
-  </div>
+</div>
+<div class="footer">
+  <div class="split"></div>
+  @include('client.footer')
+</div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
@@ -275,5 +184,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
+    <script>
+    </script>
   </body>
 </html>

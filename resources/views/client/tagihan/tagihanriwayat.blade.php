@@ -5,30 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"> --}}
-       <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    {{-- font --}}
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
-    {{-- icon --}}
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    {{-- carousel --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    {{-- script --}}
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      {{-- font --}}
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
+      <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+      {{-- fixed --}}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">  
     <style>
         .bg-light {
         background-color: #3EB772 !important;
@@ -38,34 +26,12 @@
         font-family: 'Raleway', sans-serif !important;
         }
 
-        h1{
-            font-size: 24px !important ;
-        }
-
-        h2{
-            font-weight: bold !important;
-            font-size: 12px !important;
-            line-height: 14px !important;
-        }
-
         h3{
-            font-weight: bold;
-        }
-
-        .greeting, .tagihan-aktif, .tagihan-riwayat{
-            padding-top: 5em ;
+          font-weight: bold;
         }
 
         .greeting h1{
-                font-weight: bold !important;
-        }
-
-        .row{
-            padding: 1em 0 !important
-        }
-
-        .tagihan{
-            padding: 2em 0!important;
+          font-weight: bold !important;
         }
 
         .cardContainer{
@@ -105,84 +71,42 @@
 
         #detail{
           margin-top: 0.5em !important;
- 
         }
 
-                /* sidebar */
       .wrapper {
       display: flex;
-      align-items: stretch;
+      align-items: 100%;
       /* width: 80%; */
-    }
-
-    #sidebar {
-      min-width: 250px;
-      max-width: 250px;
-      /* min-width: 20%;
-      max-width: 20%; */
-      min-height: 100vh;
-    }
-
-    #sidebar.active {
-      margin-left: -250px;
-    }
-
-    a, a:hover, a:focus {
-      color: inherit;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-
-    #sidebar {
-      background: #3EB772;
-      color: #fff;
-      transition: all 0.3s;
-    }
-
-    #sidebar .sidebar-header {
-      padding: 20px;
-      background: #3EB772;
-    }
-
-    #sidebar ul.components {
-      padding: 20px 0;
-    }
-
-    #sidebar ul p {
-      color: #fff;
-      padding: 10px;
-    }
-
-    #sidebar ul li a {
-      padding: 10px;
-      font-size: 1.1em;
-      display: block;
-    }
-    #sidebar ul li a:hover {
-      color: #3EB772;
-      font-weight: bold;
-      background: #fff;
-    }
-
-    ul ul a {
-      font-size: 0.9em !important;
-      padding-left: 30px !important;
-      background: #3EB772;
     }
 
     .divider{
       padding-bottom: 1em;
     }
 
+    .container{
+      padding-left:15px !important;
+      padding-right:15px !important;
+    }
+
+    .split{
+      padding-top: 5em;
+    }
+
     @media (max-width: 768px) {
-      /* #sidebar {
-          margin-left: -250px;
-      }
-      #sidebar.active {
-          margin-left: 0;
-      } */
 
       .sidebar{
+        display: none;
+      }
+
+      .copyright{
+        display: none;
+      }
+
+      .tagihan-head{
+        padding-top: 4rem;
+      }
+
+      .headerdesktop{
         display: none;
       }
     }
@@ -193,9 +117,15 @@
       }
 
       .website h2, .task h2, .tagihan h2, .history h2{
-        font-size:24px !important;
         padding-bottom: 1em;
       }
+
+      .container{
+        margin-left:250px;
+        transition: all 0.3s;
+      }
+
+      
     }
 
     .navbar{
@@ -211,96 +141,54 @@
     <title>OP Ticketing</title>
   </head>
   <body>
-    @section('title','Task')
+    @section('title','Tagihan')
     <div class="header">
       @include('client.navbar')
     </div>
     <div class="wrapper">
-      <nav id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h3 style="font-size: 24px">Nore</h3>
-        </div>
-        <ul class="list-unstyled components" style="padding-left:10px">
-         <li>
-            <a href="/dashboard">Dashboard</a>
-         </li>
-         <li>
-            <a href="/tagihanclient">Tagihan</a>
-         </li>
-         <li>
-            <a href="/payment">Bayar</a>
-         </li>
-         <li>
-            <a href="/taskclient">Task</a>
-         </li>
-         <li>
-            <a href="/antrian">Antrian</a>
-         </li>
-        </ul>
-          <div class="row text-center">
-            <div class="col">
-              <button type="button" class="btn btn-success btn-sm">
-                <img src="" alt="" class="rounded">
-                <span class="material-icons" id="wa">
-                  sms
-                  </span>
-                <p>Whatsapp</p>
-              </button>
-            </div>
-            <div class="col">
-              <button type="button" class="btn btn-primary btn-sm" id="btnmail">
-                <img src="" alt="" class="rounded">
-                <span class="material-icons" id="mail">
-                  mail
-                  </span>
-                <p>Email</p>
-              </button>
-            </div>
-          </div>
-    </nav>
+      @include('client.sidebar')
     <div class="container">
-      <div class="tagihan-riwayat">
+      <div class="headerdesktop">
+        @include('client.headerdesktop')
+      </div>
+      <div class="tagihan-riwayat" style="padding-top:1em;">
         <div class="tagihan-head">
-          <h3>Riwayat Tagihan</h3>      
+          <h3 style="padding-top:1em; padding-bottom:0.5em;">Riwayat Tagihan</h3>      
         </div>
         <div class="cardContainer">
           {{-- diganti jumlah aktif --}}
-          @for($i=0;$i<5;$i++)
-          <div class="card w-100">
+          @for($i=0;$i<3;$i++)
+          <div class="card" style="border:none; border-radius:5px; background-color:#eeee;">
             <div class="card-body">
-              <div class="invoice">
-                <h5 class="card-title">Invoice</h5>
-                <p class="card-text">Keterangan</p>
+              <div class="invoice" style="padding:1em;">
                 <div class="row">
                   <div class="col">
-                    <p class="card-text">Tagihan</p>
-                    <h5 class="card-text">Rp. </h5>
+                    <h5 class="card-title">Invoice</h5>
+                    <p class="card-text">Keterangan</p>
+                    <p class="card-text" style="font-weight: bold;">Terbayar</p>
                   </div>
                   <div class="col">
-                    <p class="card-text">Harus dibayar</p>
-                    <h5 class="card-text">Rp. </h5>
-                  </div>
-                  <div class="col text-center" id="tombol">
-                    <a href="#" class="btn btn-secondary rounded-pill" id="lunas">Lunas</a>
+                    <div class="col text-right" id="tombol">
+                      <a id="lunas" style="padding:5px 10px; background-color:#6c757d; border-radius:20px; color:#fff;">Lunas</a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          @endfor
-          <div class="col text-right">
-            <span class="material-icons">
-              arrow_forward_ios
-              </span>
-          </div>
+        </div>
+        <div class="divider"></div>
+        @endfor
         </div>
       </div>
-      <div class="split"></div>
-      <div class="footer">
-        @include('client.footer')
+      <div class="copyright">
+        <p style="text-align: center">2020. Nore Inovasi.</p>
       </div>
     </div>
-    </div>
+  </div>
+  <div class="footer">
+    <div class="split"></div>
+    @include('client.footer')
+  </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->

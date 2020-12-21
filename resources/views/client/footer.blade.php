@@ -133,7 +133,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light fixed-bottom" id="footer">
-        <div class="container">
+        
             <a type="button" class="btn btn-light" href="/tagihanclient"><span class="material-icons md-dark">
             local_offer
             </span><p>Tagihan</p></a>
@@ -149,7 +149,7 @@
             <a type="button" class="btn btn-light" href="/antrian"><span class="material-icons md-dark">
             groups
             </span><p>Antrian</p></a>
-        </div>
+        
 </nav>
 </body>
 </html>
