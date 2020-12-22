@@ -103,7 +103,7 @@
       }
 
       .tagihan-head{
-        padding-top: 4rem;
+        padding-top: 2rem;
       }
 
       .headerdesktop{
@@ -143,7 +143,7 @@
   <body>
     @section('title','Tagihan')
     <div class="header">
-      @include('client.navbar')
+      @include('client.headermobile')
     </div>
     <div class="wrapper">
       @include('client.sidebar')

@@ -139,7 +139,7 @@
         display: none;
       }
       .data-task{
-        padding-top: 5rem;
+        padding-top: 2rem;
       }
       .headerdesktop{
         display: none;
@@ -216,7 +216,7 @@
   <body>
     @section('title','Task')
     <div class="header">
-      @include('client.navbar')
+      @include('client.headermobile')
     </div>
     <div class="wrapper">
      @include('client.sidebar')

@@ -74,7 +74,7 @@
       }
 
       .data-antrian{
-        padding-top: 5rem;
+        padding-top: 2rem;
       }
 
       .headerdesktop{
@@ -111,7 +111,7 @@
   <body>
     @section('title','Antrian')
     <div class="header">
-      @include('client.navbar')
+      @include('client.headermobile')
     </div>
     <div class="wrapper">
         @include('client.sidebar')
@@ -135,8 +135,18 @@
                 </tr>
               </thead>
               <tbody>
+                @php($i=1)
+                @foreach ($antrians as $antrians)
+                <tr>
+                  <th scope="row">{{$i}}</th>
+                <td>{{$antrians->created_at}}</td>
+                <td>{{$antrians->user_id}}</td>
+                <td>Premium</td>
+                <td>{{$antrians->status}}</td>
+                </tr>
+                @endforeach
                 {{-- ganti jadi data antrian --}}
-                @for($i=1;$i<10;$i++)
+                {{-- @for($i=1;$i<;$i++)
                 <tr>
                   <th scope="row">{{$i}}</th>
                   <td>2-2-2020</td>
@@ -144,7 +154,7 @@
                   <td>Premium</td>
                   <td>Selesai</td>
                 </tr>
-                @endfor
+                @endfor --}}
               </tbody>
             </table>
           </div>

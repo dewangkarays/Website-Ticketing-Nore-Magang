@@ -123,7 +123,7 @@
   <body>
   @section('title','Task')
   <div class="header">
-    @include('client.navbar')
+    @include('client.headermobile')
   </div>
   <div class="wrapper">
    @include('client.sidebar')
@@ -133,7 +133,7 @@
     </div>
     <div class="data-task">
       <div class="task-head">
-        <h3 style="padding-top: 5rem; font-weight:bold;">Form Tambah Task</h3>      
+        <h3 style="padding-top: 2rem; font-weight:bold;">Form Tambah Task</h3>      
       </div>
       <form>
         <div class="form-group row">

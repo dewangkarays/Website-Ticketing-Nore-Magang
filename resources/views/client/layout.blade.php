@@ -41,7 +41,7 @@
       }
 
       .greeting{
-          padding-top: 5em ;
+          padding-top: 2rem ;
       }
 
       #task{
@@ -198,7 +198,7 @@
 <body>
   @section('title','Dashboard')
   <div class="header">
-    @include('client.navbar')
+    @include('client.headermobile')
   </div>
   <div class="wrapper">
      @include('client.sidebar')
@@ -213,7 +213,7 @@
                 <div class="wrap">
                   <div class="website">
                       <h3 style="padding-top: 1em;">Website Langganan</h3>
-                      <p style="font-size:14px; padding-bottom:0.3em;">Total Langganan : </p>
+                  <p style="font-size:14px; padding-bottom:0.3em;">Total Langganan :</p>
                   </div>
                   <div class="row" style="">
                     <div class="slider owl-carousel">
@@ -250,7 +250,7 @@
                   </div>
                 <div class="wrap">
                   <div class="task">
-                      <h2>Task</h2>
+                      <h2 style="padding-bottom:1rem;">Task</h2>
                   </div>
                     <div class="row">
                       <div class="col-sm-3" style="padding-bottom:0.5em;">
@@ -329,7 +329,7 @@
                 <div class="hide-desktop">
                   <div class="wrap">
                       <div class="tagihan">
-                          <h2>Tagihan Aktif</h2>
+                          <h2 style="padding-bottom:1rem;">Tagihan Aktif</h2>
                       </div>
                       <div class="cardContainer">
                         @for($i=0; $i<3; $i++)
@@ -351,7 +351,7 @@
                   </div>
                   <div class="wrap">
                       <div class="history">
-                        <h2>Riwayat Tagihan</h2>
+                        <h2 style="padding-bottom:1rem;">Riwayat Tagihan</h2>
                       </div>
                     <div class="cardContainer">
                         @for($i=0; $i<3; $i++)
@@ -374,21 +374,27 @@
                     <h2>Pusat Bantuan</h2>
                     <div class="row">
                       <div class="col text-right">
-                        <button type="button" class="btn btn-success btn-sm">
+                        {{-- <button type="button" class="btn btn-success btn-sm">
                           <img src="" alt="" class="rounded">
                           <span class="material-icons" id="wa">
                             sms
                             </span>
                           <p>Whatsapp</p>
+                        </button> --}}
+                        <button type="button" style="background-color: #3EB772; border:none; border-radius:10px; padding:10px 20px;">
+                          <img src="{{ URL::asset('global_assets/images/wanew.png') }}" height="34px">
                         </button>
                       </div>
                       <div class="col text-left">
-                        <button type="button" class="btn btn-primary btn-sm" id="btnmail">
+                        {{-- <button type="button" class="btn btn-primary btn-sm" id="btnmail">
                           <img src="" alt="" class="rounded">
                           <span class="material-icons" id="mail">
                             mail
                             </span>
                           <p>Email</p>
+                        </button> --}}
+                        <button type="button" style="background-color: #3EB772; border:none; border-radius:10px; padding:10px 20px;">
+                          <img src="{{ URL::asset('global_assets/images/mailnew.png') }}" height="34px">
                         </button>
                       </div>
                     </div>
@@ -416,6 +422,59 @@
       $(".slider").owlCarousel({
         loop: true,
       });
+
+      $('#user_id').ready(function(){
+        var id_proyek = $('#user_id option:selected').val();
+        var pnama = $('#user_id option:selected').data('pnama');
+        
+        $('#nama').val(pnama);
+        $('#select_proyek').find('option').not(':first').remove();
+        $('#nama_proyek').val('');
+        
+        $.ajax({
+          type: 'get',
+          url : '{{url("getkadaluarsa")}}/'+id_proyek,
+          success : function(data){
+            // $('#kadaluarsa').val(data);
+            $('#kadaluarsa').text(data);
+            console.log('Success');
+          },
+          error:function(data){
+            console.log('Error',data);
+			}
+		});
+		
+		$.ajax({
+			url : '{{url("getproyek")}}/'+id_proyek,
+			type: 'get',
+			dataType: 'json',
+			success : function(res){
+				var len = 0;
+				if(res['data'] != null){
+					len = res['data'].length;
+				}
+				// alert(len);
+				if(len > 0){
+					// Read data and create <option >
+						for(var i=0; i<len; i++){
+							
+							var id = res['data'][i].id;
+							var website = res['data'][i].website;
+							
+							var option = "<option value='"+id+"'>"+website+"</option>"; 
+							
+							$("#select_proyek").append(option); 
+						}
+					}
+					console.log('Success2');
+				},
+				error:function(data){
+					console.log('Error2',data);
+				}
+			});
+			
+		});
+
     </script>
 </body>
 </html>

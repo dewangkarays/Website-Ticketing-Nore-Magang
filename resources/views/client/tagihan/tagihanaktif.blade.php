@@ -106,7 +106,7 @@
       }
 
       .tagihan-aktif{
-        padding-top: 5rem;
+        padding-top: 2rem;
       }
 
       .headerdesktop{
@@ -150,7 +150,7 @@
   <body>
     @section('title','Tagihan')
     <div class="header">
-      @include('client.navbar')
+      @include('client.headermobile')
     </div>
     <div class="wrapper">
       @include('client.sidebar')

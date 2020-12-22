@@ -62,7 +62,7 @@
                     <span style="padding-left:0.5rem; font-weight:bold;">{{\Auth::user()->nama}}</span>
                     <div class="setting" id="dropdownlist">
                     <a href="">Ubah Password</a>
-                    <a href="">Sign Out</a>
+                    <a href="{{ url('/logout') }}">Sign Out</a>
                     </div>
                 </div>
             </div>

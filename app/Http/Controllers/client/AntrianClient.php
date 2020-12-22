@@ -4,6 +4,7 @@ namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\client\Antrian;
 
 class AntrianClient extends Controller
 {
@@ -14,8 +15,9 @@ class AntrianClient extends Controller
      */
     public function index()
     {
-        //
-        return view('client.antrian.antrian');
+        
+        $antrians = Antrian::all();
+        return view('client.antrian.antrian',['antrians'=>$antrians]);
     }
 
     /**
