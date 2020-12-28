@@ -4,13 +4,14 @@ namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\client\User;
+use App\Model\client\Proyek;
 
 class UserClient extends Controller
 {
     //
     public function index(){
-        $users = User::all();
-        return view('client.layout',['users'=>$users]);
+        $proyeks = Proyek::where('user_id',\Auth::user()->id);
+        
+        return view('client.layout',['proyeks'=>$proyeks]);
     }
 }

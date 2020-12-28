@@ -4,6 +4,7 @@ namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\Payment;
 
 class PaymentClient extends Controller
 {
@@ -15,7 +16,8 @@ class PaymentClient extends Controller
     public function index()
     {
         //
-        return view('client.bayar.bayar');
+        $payments = Payment::where('user_id',\Auth::user()->id)->orderBy('tgl_bayar','desc')->get();
+        return view('client.bayar.bayar',compact('payments'));
     }
 
     /**

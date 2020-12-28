@@ -4,6 +4,9 @@ namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\User;
+use App\Model\Task;
+
 
 class TaskClient extends Controller
 {
@@ -14,8 +17,26 @@ class TaskClient extends Controller
      */
     public function index()
     {
-        //
-        return view('client.task.index');
+        if(\Auth::user()->role > 20){
+            $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id',)
+                        ->where('tasks.status','!=','3')
+                        ->where('user_id',\Auth::user()->id)
+                        ->orderBy('tasks.status', 'DESC')
+                        ->orderBy('users.role', 'ASC')
+                        ->orderBy('tasks.created_at', 'ASC')
+                        ->select('tasks.*')
+                        ->get();  //customer
+        } else {
+            $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id')
+                        ->where('tasks.status','!=','3')
+                        ->orderBy('tasks.status', 'DESC')
+                        ->orderBy('users.role', 'ASC')
+                        ->orderBy('tasks.created_at', 'ASC')
+                        ->select('tasks.*','users.task_count')
+                        ->get(); //admin & karyawan
+        }
+
+        return view('client.task.index',['tasks'=>$tasks]);
     }
 
     /**

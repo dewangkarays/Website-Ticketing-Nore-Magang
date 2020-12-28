@@ -139,22 +139,17 @@
                 @foreach ($antrians as $antrians)
                 <tr>
                   <th scope="row">{{$i}}</th>
-                <td>{{$antrians->created_at}}</td>
-                <td>{{$antrians->user_id}}</td>
-                <td>Premium</td>
-                <td>{{$antrians->status}}</td>
+                <td>{{date("Y-m-d", strtotime($antrians->created_at))}}</td>
+                <td>{{(\Auth::user()->id == $antrians->user_id || \Auth::user()->role<20) ? $antrians->user->username : 'Pelanggan Lain'}}</td>
+                <td>{{config('custom.role.'.$antrians->user->role)}}</td>
+                <td>@if($antrians->status == 2 )
+                  {{config('custom.status.'.$antrians->status)}}
+                @else
+                  {{config('custom.status.'.$antrians->status)}}
+                @endif</td>
                 </tr>
+                @php($i++)
                 @endforeach
-                {{-- ganti jadi data antrian --}}
-                {{-- @for($i=1;$i<;$i++)
-                <tr>
-                  <th scope="row">{{$i}}</th>
-                  <td>2-2-2020</td>
-                  <td>Nama</td>
-                  <td>Premium</td>
-                  <td>Selesai</td>
-                </tr>
-                @endfor --}}
               </tbody>
             </table>
           </div>
@@ -162,7 +157,7 @@
             <div class="col"></div>
             <div class="col"></div>
           <div class="col text-right">
-            <nav aria-label="...">
+            {{-- <nav aria-label="...">
               <ul class="pagination">
                 <li class="page-item disabled">
                   <a class="page-link" href="#" tabindex="-1">Previous</a>
@@ -176,7 +171,7 @@
                   <a class="page-link" href="#">Next</a>
                 </li>
               </ul>
-            </nav>
+            </nav> --}}
           </div>
           </div>
         </div>

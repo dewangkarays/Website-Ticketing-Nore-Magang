@@ -219,7 +219,7 @@
       @include('client.headermobile')
     </div>
     <div class="wrapper">
-     @include('client.sidebar')
+    @include('client.sidebar')
     <div class="container">
       <div class="headerdesktop">
         @include('client.headerdesktop')
@@ -228,7 +228,7 @@
           <div class="task-head">
             <div class="row">
               <div class="col" id="task"><h3 style="padding-top: 1em;">Data Task</h3></div>
-              <div class="col" style="text-align: right">
+              {{-- <div class="col" style="text-align: right">
                 <div class="dropdown" style="padding-top:1em;">
                   <button class="dropbtn">Sorting</button>
                   <div class="dropdown-content" style="text-align: left !important;">
@@ -237,37 +237,41 @@
                     <a href="#">Sedang dikerjakan</a>
                   </div>
                 </div>
-              </div>
+              </div> --}}
           </div>
           </div>
-          <div class="hide-mobile">
-            @for($i=0;$i<3;$i++)
-            <div class="card" style="background-color:#fafafa;">
-              <div class="card-header" style="font-weight: bold; font-size:24px;">
-                Task 
+          {{-- <div class="hide-mobile"> --}}
+            @foreach ($tasks as $tasks)
+              {{-- @for($i=0;$i<3;$i++) --}}
+              <div class="card" style="background-color:#fafafa;">
+                <div class="card-header" style="font-weight: bold; font-size:24px;">
+                  Task 
+                </div>
+                <div class="card-body">
+                  <p class="card-text">Tanggal input: {{date("Y-m-d", strtotime($tasks->created_at))}} </p>
+                  <p class="card-text">Kebutuhan : {{$tasks->kebutuhan}} </p>
+                  <p class="card-text">Handler :
+                    @if (\Auth::user()->role == 10)
+                    <input data-id="{{$tasks->id}}" class="form-check-input toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $tasks->handler == \Auth::user()->id ? 'checked' : '' }}>
+                    @endif
+                    {{@$tasks->assign->nama}}
+                  </p>
+                  <a href="#" class="btn btn-primary">Selesai</a>
+                  <a href="#" class="btn btn-danger">Hapus</a>
+                </div>
               </div>
-              <div class="card-body">
-                {{-- <h5 class="card-title">Special title treatment</h5> --}}
-                <p class="card-text">Tanggal input: </p>
-                <p class="card-text">Kebutuhan : </p>
-                <p class="card-text">Handler : </p>
-                <a href="#" class="btn btn-primary">Selesai</a>
-                <a href="#" class="btn btn-danger">Hapus</a>
-              </div>
-            </div>
-            <div class="divider"></div>
-            @endfor
-          </div>
-          <div class="hide-desktop">
+              <div class="divider"></div>
+              {{-- @endfor --}}
+              @endforeach
+          {{-- </div> --}}
+          {{-- <div class="hide-desktop">
             <div class="cardContainer">
-              {{-- diganti jumlah aktif --}}
               @for($i=0;$i<3;$i++)
               <div class="card" style="background-color:#fafafa;">
                 <div class="card-header" style="font-weight: bold; font-size:24px;">
                   Task 
                 </div>
                 <div class="card-body">
-                  {{-- <h5 class="card-title">Special title treatment</h5> --}}
                   <p class="card-text">Tanggal input: </p>
                   <p class="card-text">Kebutuhan : </p>
                   <p class="card-text">Handler : </p>
@@ -278,7 +282,7 @@
               <div class="divider"></div>
               @endfor
             </div>
-          </div>
+          </div> --}}
           <div class="row">
               <div class="col"></div>
               <div class="col text-center">

@@ -234,7 +234,7 @@
           <div class="bayar-head">
             <div class="row">
               <div class="col" id="task"><h3 style="padding-top:1em; ">Data Pembayaran</h3></div>
-              <div class="col text-right"  id="status">
+              {{-- <div class="col text-right"  id="status">
                 <div class="dropdown" style="padding-top:1em;">
                   <button class="dropbtn">Sorting</button>
                   <div class="dropdown-content" style="text-align: left !important;">
@@ -243,17 +243,18 @@
                     <a href="#">Sedang dikerjakan</a>
                   </div>
                 </div>
-              </div>
+              </div> --}}
             </div>
           </div>
           </div>
           <div class="hide-mobile">
-            @for($i=0;$i<3;$i++)
+            @foreach ($payments as $payment)
+            {{-- @for($i=0;$i<3;$i++) --}}
             <div class="card" style="background-color:#fafafa;">
               <div class="card-header" style="font-weight: bold; font-size:24px;">
                 <div class="row">
                   <div class="col">
-                    Tagihan 
+                    {{$payment->receipt_no}} 
                   </div>
                   <div class="col text-right">
                     <a href="" class="btn btn-success rounded-pill">Status</a>
@@ -262,23 +263,25 @@
               </div>
               <div class="card-body">
                 {{-- <h5 class="card-title">Special title treatment</h5> --}}
-                <p class="card-text">Tanggal input: </p>
-                <p class="card-text">Kebutuhan : </p>
-                <p class="card-text">Handler : </p>
-                <a href="/purchase" class="btn btn-success" style="font-weight: bold; padding:6px 18px; border-radius:5px;">Bayar</a>
+                <p class="card-text">Tanggal pembayaran: {{$payment->tgl_bayar}}</p>
+                <p class="card-text">Keterangan : {{$payment->keterangan}}</p>
+                <p class="card-text">Nominal : {{$payment->nominal}} </p>
+                {{-- <a href="/purchase" class="btn btn-success" style="font-weight: bold; padding:6px 18px; border-radius:5px;">Bayar</a> --}}
               </div>
             </div>
             <div class="divider"></div>
-            @endfor
+            {{-- @endfor --}}
+            @endforeach
           </div> 
           <div class="hide-desktop">
             <div class="cardContainer">
-              @for($i=0;$i<3;$i++)
-            <div class="card" style="background-color:#fafafa;">
-              <div class="card-header" style="font-weight: bold; font-size:24px;">
-                <div class="row">
-                  <div class="col">
-                    Tagihan 
+              @foreach ($payments as $payment)
+              {{-- @for($i=0;$i<3;$i++) --}}
+              <div class="card" style="background-color:#fafafa;">
+                <div class="card-header" style="font-weight: bold; font-size:24px;">
+                  <div class="row">
+                    <div class="col">
+                    {{$payment->receipt_no}} 
                   </div>
                   <div class="col text-right">
                     <a href="" class="btn btn-success rounded-pill">Status</a>
@@ -287,14 +290,15 @@
               </div>
               <div class="card-body">
                 {{-- <h5 class="card-title">Special title treatment</h5> --}}
-                <p class="card-text">Tanggal input: </p>
-                <p class="card-text">Kebutuhan : </p>
-                <p class="card-text">Handler : </p>
-                <a href="/purchase" class="btn btn-success" style="font-weight: bold; padding:6px 18px; border-radius:5px;">Bayar</a>
+                <p class="card-text">Tanggal pembayaran: {{$payment->tgl_bayar}}</p>
+                <p class="card-text">Keterangan : {{$payment->keterangan}}</p>
+                <p class="card-text">Nominal : {{$payment->nominal}} </p>
+                {{-- <a href="/purchase" class="btn btn-success" style="font-weight: bold; padding:6px 18px; border-radius:5px;">Bayar</a> --}}
               </div>
             </div>
-            <div class="divider"></div>
-            @endfor
+            <div class="divider"></div>  
+            @endforeach
+            {{-- @endfor --}}
             </div>
           </div>
         <div class="copyright">

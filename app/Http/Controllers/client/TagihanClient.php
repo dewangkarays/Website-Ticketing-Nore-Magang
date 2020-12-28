@@ -4,6 +4,7 @@ namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\Tagihan;
 
 class TagihanClient extends Controller
 {
@@ -15,19 +16,22 @@ class TagihanClient extends Controller
     public function index()
     {
         //
-        return view('client.tagihan.tagihan');
+        $tagihans = Tagihan::orderBy('created_at')->get();
+        return view('client.tagihan.tagihan',['tagihans'=>$tagihans]);
     }
 
     public function active()
     {
         //
-        return view('client.tagihan.tagihanaktif');
+        $tagihans = Tagihan::orderBy('created_at')->get();
+        return view('client.tagihan.tagihanaktif',['tagihans'=>$tagihans]);
     }
 
     public function history()
     {
         //
-        return view('client.tagihan.tagihanriwayat');
+        $tagihans = Tagihan::orderBy('created_at')->get();
+        return view('client.tagihan.tagihanriwayat',['tagihans'=>$tagihans]);
     }
 
     /**

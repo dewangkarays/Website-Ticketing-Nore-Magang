@@ -213,38 +213,40 @@
                 <div class="wrap">
                   <div class="website">
                       <h3 style="padding-top: 1em;">Website Langganan</h3>
-                  <p style="font-size:14px; padding-bottom:0.3em;">Total Langganan :</p>
+                  <p style="padding-bottom:0.3em;">Total Langganan : {{@$website}}</p>
                   </div>
                   <div class="row" style="">
                     <div class="slider owl-carousel">
-                      @for ($i=0; $i<3; $i++)
+                      @foreach ($users as $user)
+                      {{-- @for ($i=0; $i<3; $i++) --}}
                       <div class="col">
-                          <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee;">
+                        <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee;">
                             <div class="card-body">
                               <div class="row">
                                 <div class="col">
                                   <h6 id="namawebsite" class="card-title" style="margin-bottom: 0;
-                                  padding: 0 0 2px 0; font-weight:bold; ">Nama Website</h6>
-                                  <p style="color:#ffff; font-weight:bold; background-color: #3EB772; padding:5px 10px; border-radius:20px; text-align:center;">Status</p>
+                                  padding: 0 0 2px 0; font-weight:bold; ">{{$user->website}}</h6>
+                                  <p style="color:#ffff; font-weight:bold; background-color: #3EB772; padding:5px 10px; border-radius:20px; text-align:center;">Beroperasi</p>
                                 </div>
                                 <div class="col text-right">
                                   <p>Jumlah</p>
                                   <p>Pengoperasian</p>
-                                  <h1 style="font-weight: bold;">3</h1>
+                                  <h1 style="font-weight: bold;">{{$user->task_count}}</h1>
                                 </div>
                               </div>
                               <div id="date-bottom" class="row" style="padding-bottom:0">
                                 <div class="col">
                                   <div class="tanggal">
                                     <p style="margin-bottom: 0 !important;">Hingga</p>
-                                    <h5 style="font-weight: bold; margin:0;" id="date">15 Oktober 2020</h5>
+                                    <h5 style="font-weight: bold; margin:0;" id="date">{{$user->kadaluarsa}}</h5>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                        @endfor
+                        {{-- @endfor --}}
+                        @endforeach
                     </div>
                       </div>
                   </div>
@@ -257,7 +259,7 @@
                         <div class="card" style="border:none; border-radius:10px; background-color:#eeee;padding: 10px;">
                           <div class="card-body">
                             <h5 class="card-title" style="padding-bottom: 3em">Baru</h5>
-                            <h1 id="task" class="card-text text-right">1</h1>
+                            <h1 id="task" class="card-text text-right">{{@$new}}</h1>    
                           </div>
                         </div>
                       </div>
@@ -265,7 +267,7 @@
                         <div class="card" style="border:none; border-radius:10px; background-color:#eeee;  padding: 10px;">
                           <div class="card-body">
                             <h5 class="card-title" style="padding-bottom: 3em">Dikerjakan</h5>
-                            <h1 id="task" class="card-text text-right">1</h1>
+                            <h1 id="task" class="card-text text-right">{{@$ongoing}}</h1>
                           </div>
                         </div>
                       </div>
@@ -273,7 +275,7 @@
                         <div class="card" style="border:none; border-radius:10px; background-color:#eeee;  padding: 10px;">
                           <div class="card-body">
                             <h5 class="card-title" style="padding-bottom: 3em">Selesai</h5>
-                            <h1 id="task" class="card-text text-right">1</h1>
+                            <h1 id="task" class="card-text text-right">{{@$done}}</h1>
                           </div>
                         </div>
                       </div>
@@ -287,18 +289,22 @@
                           <h2>Tagihan Aktif</h2>
                         </div>
                         <div class="cardContainer">
-                          @for($i=0; $i<3; $i++)
+                          {{-- @for($i=0; $i<3; $i++) --}}
+                          @foreach ($tagihans as $tagihan)
+                          @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
                           <div class="card">
-                            <h5 class="card-header" style="font-weight:bold;">Invoice</h5>
+                            <h5 class="card-header" style="font-weight:bold;">{{@$tagihan->invoice}}</h5>
                             <div class="card-body">
-                              <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Rp 111111</p>
+                              <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{@$tagihan->jml_bayar}}</p>
                               <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
                                 <a href="/purchase" id="bayar" class="btn btn-success" style="padding:6px 18px; border-radius:5px;">Bayar</a>
                               </div>
                             </div>
                           </div>
                           <div class="divider"></div>
-                          @endfor
+                          @endif
+                          @endforeach
+                          {{-- @endfor --}}
                         </div>
                         <div class="col text-right">
                         <a href="/tagihanaktif" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right;">Detail</a>
@@ -309,15 +315,19 @@
                           <h2>Riwayat Tagihan</h2>
                         </div>
                         <div class="cardContainer">
-                          @for($i=0; $i<4; $i++)
+                          @foreach ($tagihans as $tagihan)
+                          {{-- @for($i=0; $i<4; $i++) --}}
+                          @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
                           <div class="card">
-                            <h5 class="card-header" style="font-weight:bold;">Invoice</h5>
+                            <h5 class="card-header" style="font-weight:bold;">Invoice {{$tagihan->invoice}}</h5>
                             <div class="card-body">
-                              <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:16px;">Rp 111111</p>
+                              <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{$tagihan->jml_tagih}}</p>
                             </div>
                           </div>
                           <div class="divider"></div>
-                          @endfor
+                          @endif
+                          {{-- @endfor --}}
+                          @endforeach
                       </div>
                       <div class="col text-right">
                         <a href="/tagihanriwayat" id="detail" class="btn btn-warning" style="padding:6px 18px; border-radius:5px;">Detail</a>
@@ -332,18 +342,22 @@
                           <h2 style="padding-bottom:1rem;">Tagihan Aktif</h2>
                       </div>
                       <div class="cardContainer">
-                        @for($i=0; $i<3; $i++)
+                        @foreach ($tagihans as $tagihan)
+                        {{-- @for($i=0; $i<3; $i++) --}}
+                        @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
                         <div class="card">
-                          <h5 class="card-header" style="font-weight:bold;">Invoice</h5>
+                          <h5 class="card-header" style="font-weight:bold;">Invoice {{$tagihan->invoice}}</h5>
                           <div class="card-body">
-                            <p class="card-text" style="padding: 5px 0 10px 12px; font-size:24px;">Rp 111111</p>
+                            <p class="card-text" style="padding: 5px 0 10px 12px; font-size:24px;">Rp {{$tagihan->jml_bayar}}</p>
                             <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
                               <a href="/payment" id="bayar" class="btn btn-success rounded-pill" style="padding:6px 18px;">Bayar</a>
                             </div>
                           </div>
                         </div>
                         <div class="divider"></div>
-                        @endfor
+                        @endif
+                        {{-- @endfor --}}
+                        @endforeach
                       </div>
                       <div class="col text-right">
                           <a href="/tagihanaktif" id="detail" class="btn btn-warning rounded-pill" style="padding:6px 18px; justify-content:right; align-items:right;">Detail</a>
@@ -354,15 +368,19 @@
                         <h2 style="padding-bottom:1rem;">Riwayat Tagihan</h2>
                       </div>
                     <div class="cardContainer">
-                        @for($i=0; $i<3; $i++)
-                        <div class="card">
-                          <h5 class="card-header" style="font-weight:bold;">Invoice</h5>
-                          <div class="card-body">
-                            <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:24px;">Rp 111111</p>
-                          </div>
+                      @foreach ($tagihans as $tagihan)
+                      @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
+                      {{-- @for($i=0; $i<3; $i++) --}}
+                      <div class="card">
+                        <h5 class="card-header" style="font-weight:bold;">Invoice {{$tagihan->invoice}}</h5>
+                        <div class="card-body">
+                          <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:24px;">Rp {{$tagihan->jml_tagih}}</p>
                         </div>
-                        <div class="divider"></div>
-                        @endfor
+                      </div>
+                      <div class="divider"></div>
+                      {{-- @endfor --}}
+                      @endif
+                      @endforeach
                     </div>
                     <div class="col text-right">
                       <a href="/tagihanriwayat" id="detail" class="btn btn-warning rounded-pill" style="padding:6px 18px;">Detail</a>

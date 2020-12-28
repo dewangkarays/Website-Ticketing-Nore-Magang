@@ -164,20 +164,22 @@
         </div>
         <div class="cardContainer">
           {{-- diganti jumlah aktif --}}
-          @for($i=0;$i<5;$i++)
+          @foreach ($tagihans as $tagihans)
+          @if (\Auth::user()->id == $tagihans->user_id && $tagihans->status!=2)
+          {{-- @for($i=0;$i<5;$i++) --}}
           <div class="card w-100">
             <div class="card-body">
               <div class="invoice">
-                <h5 class="card-title">Invoice</h5>
-                <p class="card-text">Keterangan</p>
+                <h5 class="card-title">Invoice {{$tagihans->invoice}}</h5>
+                <p class="card-text">{{$tagihans->keterangan}}</p>
                 <div class="row">
                   <div class="col">
                     <p class="card-text" style="font-weight:bold;">Tagihan</p>
-                    <h5 class="card-text">Rp. </h5>
+                    <h5 class="card-text">Rp. {{$tagihans->jml_tagih}}</h5>
                   </div>
                   <div class="col">
                     <p class="card-text"  style="font-weight:bold;">Harus dibayar</p>
-                    <h5 class="card-text">Rp. </h5>
+                    <h5 class="card-text">Rp. {{$tagihans->jml_bayar}}</h5>
                   </div>
                   <div class="col text-center" id="tombol">
                     <a href="/purchase" class="btn btn-success" style="font-weight: bold; padding:6px 18px; border-radius:5px;">Bayar</a>
@@ -187,7 +189,9 @@
             </div>
           </div>
           <div class="divider"></div>
-          @endfor
+          {{-- @endfor --}}
+          @endif
+          @endforeach
         </div>
         <div class="copyright">
           <p style="text-align: center">2020. Nore Inovasi.</p>

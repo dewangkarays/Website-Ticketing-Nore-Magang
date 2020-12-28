@@ -4,7 +4,8 @@ namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\client\Antrian;
+use App\Model\User;
+use App\Model\Task;
 
 class AntrianClient extends Controller
 {
@@ -16,7 +17,14 @@ class AntrianClient extends Controller
     public function index()
     {
         
-        $antrians = Antrian::all();
+        $antrians = Task::join('users', 'users.id', '=', 'tasks.user_id')
+        ->where('tasks.status','!=','3')
+        ->orderBy('tasks.status', 'DESC')
+        ->orderBy('users.role', 'ASC')
+        ->orderBy('tasks.created_at', 'ASC')
+        ->select('tasks.*')
+        ->get();
+
         return view('client.antrian.antrian',['antrians'=>$antrians]);
     }
 

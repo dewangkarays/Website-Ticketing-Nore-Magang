@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Model\Task;
 use App\Model\Tagihan;
 use App\Model\Payment;
+use App\Model\Proyek;
+use App\Model\User;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -62,8 +64,24 @@ class AdminController extends Controller
 
     //test view costumer()
     public function customer(){
-        return view("client.layout");
+        
+        $new = Task::where('status', '=', '1')->where('user_id',\Auth::user()->id)->get()->count();
+        $ongoing = Task::where('status', '=', '2')->where('user_id',\Auth::user()->id)->get()->count();
+        $done = Task::where('status', '=', '3')->where('user_id',\Auth::user()->id)->get()->count();
+        $website = Proyek::where('user_id',\Auth::user()->id)->get()->count();
+        $users = User::where('id',\Auth::user()->id)->get();
+        $tagihans = Tagihan::orderBy('created_at')->get();
+        return view("client.layout",compact('new','ongoing','done','website','users','tagihans'));
+        // return view("client.layout",compact('new','ongoing','done','tagihans'));
     }
+
+    // public function customer()
+    // {
+    //     $new = Task::where('status', '=', '1')->where('user_id',\Auth::user()->id)->get()->count();
+    //     $ongoing = Task::where('status', '=', '2')->where('user_id',\Auth::user()->id)->get()->count();
+    //     $done = Task::where('status', '=', '3')->where('user_id',\Auth::user()->id)->get()->count();
+    //     return view("client.layout", compact('new','ongoing','done'));
+    // }
         
     
 }

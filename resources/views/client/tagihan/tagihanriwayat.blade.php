@@ -157,13 +157,15 @@
         </div>
         <div class="cardContainer">
           {{-- diganti jumlah aktif --}}
-          @for($i=0;$i<3;$i++)
+          {{-- @for($i=0;$i<3;$i++) --}}
+          @foreach ($tagihans as $tagihans)
+          @if (\Auth::user()->id == @$tagihans->user_id && $tagihans->status==2)
           <div class="card" style="border:none; border-radius:5px; background-color:#eeee;">
             <div class="card-body">
               <div class="invoice" style="padding:1em;">
                 <div class="row">
                   <div class="col">
-                    <h5 class="card-title">Invoice</h5>
+                    <h5 class="card-title">Invoice {{$tagihans->invoice}}</h5>
                     <p class="card-text">Keterangan</p>
                     <p class="card-text" style="font-weight: bold;">Terbayar</p>
                   </div>
@@ -177,7 +179,9 @@
             </div>
         </div>
         <div class="divider"></div>
-        @endfor
+          @endif
+          @endforeach
+        {{-- @endfor --}}
         </div>
       </div>
       <div class="copyright">
