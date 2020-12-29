@@ -18,9 +18,9 @@ class AntrianClient extends Controller
     {
         
         $antrians = Task::join('users', 'users.id', '=', 'tasks.user_id')
+        ->orderBy('users.role', 'ASC')
         ->where('tasks.status','!=','3')
         ->orderBy('tasks.status', 'DESC')
-        ->orderBy('users.role', 'ASC')
         ->orderBy('tasks.created_at', 'ASC')
         ->select('tasks.*')
         ->get();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Tagihan;
+use App\Model\Payment;
 
 class TagihanClient extends Controller
 {

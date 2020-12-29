@@ -140,7 +140,7 @@
             <a type="button" class="btn btn-light" href="/payment"><div class="tombol"></div><span class="material-icons md-dark">
             monetization_on
             </span><p>Bayar</p></a>
-            <a type="button" class="btn btn-light" href="/dashboard"><span class="material-icons md-dark">
+            <a type="button" class="btn btn-light" href="/customer"><span class="material-icons md-dark">
             home
             </span><p>Dashboard</p></a>
             <a type="button" class="btn btn-light" href="/taskclient"><span class="material-icons md-dark">

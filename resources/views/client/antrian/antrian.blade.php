@@ -139,7 +139,8 @@
                 @foreach ($antrians as $antrians)
                 <tr>
                   <th scope="row">{{$i}}</th>
-                <td>{{date("Y-m-d", strtotime($antrians->created_at))}}</td>
+                <td>{{$antrians->created_at->format('j F Y')}}</td>
+                {{-- <td>{{date("Y-m-d", strtotime($antrians->created_at))}}</td> --}}
                 <td>{{(\Auth::user()->id == $antrians->user_id || \Auth::user()->role<20) ? $antrians->user->username : 'Pelanggan Lain'}}</td>
                 <td>{{config('custom.role.'.$antrians->user->role)}}</td>
                 <td>@if($antrians->status == 2 )

@@ -233,7 +233,7 @@
         <div class="data-pembayaran" style="padding-bottom:0.5em;">
           <div class="bayar-head">
             <div class="row">
-              <div class="col" id="task"><h3 style="padding-top:1em; ">Data Pembayaran</h3></div>
+              <div class="col" id="task"><h3 style="padding-top:1em; ">History Pembayaran</h3></div>
               {{-- <div class="col text-right"  id="status">
                 <div class="dropdown" style="padding-top:1em;">
                   <button class="dropbtn">Sorting</button>
@@ -257,7 +257,7 @@
                     {{$payment->receipt_no}} 
                   </div>
                   <div class="col text-right">
-                    <a href="" class="btn btn-success rounded-pill">Status</a>
+                    <a href="" class="btn btn-success rounded-pill">Terbayar</a>
                   </div>
                 </div>
               </div>
@@ -284,7 +284,7 @@
                     {{$payment->receipt_no}} 
                   </div>
                   <div class="col text-right">
-                    <a href="" class="btn btn-success rounded-pill">Status</a>
+                    <a href="" class="btn btn-success rounded-pill">Terbayar</a>
                   </div>
                 </div>
               </div>

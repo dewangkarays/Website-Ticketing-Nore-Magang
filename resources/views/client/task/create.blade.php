@@ -126,7 +126,7 @@
     @include('client.headermobile')
   </div>
   <div class="wrapper">
-   @include('client.sidebar')
+  @include('client.sidebar')
   <div class="container">
     <div class="headerdesktop">
       @include('client.headerdesktop')
@@ -135,19 +135,28 @@
       <div class="task-head">
         <h3 style="padding-top: 2rem; font-weight:bold;">Form Tambah Task</h3>      
       </div>
-      <form>
-        <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-6 col-form-label">Username</label>
-          <div class="col-sm-6">
-            {{-- <input type="email" class="form-control" id="inputEmail3"> --}}
-            <input name="user_id" class="form-control" id="inputEmail3">
-          </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <p>Nama</p>
         </div>
+        <div class="col-sm-6">
+          <p>{{\Auth::user()->nama}}</p>
+        </div>
+      </div>
+      <form method="POST" action="{{route('taskclients.store')}}">
+        @csrf
+        {{-- <div class="form-group row">
+          <label for="username" class="col-sm-6 col-form-label">Nama</label>
+          <div class="col-sm-6">
+            <input type="email" class="form-control" id="inputEmail3">
+            <input type="text" class="form-control" id="username" name="username">
+          </div>
+        </div> --}}
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-6 col-form-label">Kebutuhan</label>
+          <label for="kebutuhan" class="col-sm-6 col-form-label">Kebutuhan</label>
           <div class="col-sm-6">
             {{-- <input type="email" class="form-control" id="inputEmail3"> --}}
-            <input name="kebutuhan" class="form-control" id="inputEmail3">
+            <input type="text" class="form-control" id="kebutuhan" name="kebutuhan">
           </div>
         </div>
         <div class="form-group row">
@@ -158,14 +167,14 @@
             <input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
           </div>
         </div>
-        <div class="form-group row">
+        {{-- <div class="form-group row">
           <label for="inputEmail3" class="col-sm-6 col-form-label"></label>
           <div class="col-sm-6">
             <input type="email" class="form-control text-center" id="inputEmail3" placeholder="Preview">
-        </div>
+        </div> --}}
       </div>
+      <button type="submit" class="btn btn-success btn-lg btn-block" href="/taskclient">Tambah</button>
       </form>
-      <button type="button" class="btn btn-success btn-lg btn-block">Tambah</button>
     </div>
     <div class="copyright fixed-bottom" style="margin-left:250px; text-align: center">
       <p>2020. Nore Inovasi.</p>

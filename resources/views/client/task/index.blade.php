@@ -245,10 +245,11 @@
               {{-- @for($i=0;$i<3;$i++) --}}
               <div class="card" style="background-color:#fafafa;">
                 <div class="card-header" style="font-weight: bold; font-size:24px;">
-                  Task 
+                  Task
                 </div>
                 <div class="card-body">
-                  <p class="card-text">Tanggal input: {{date("Y-m-d", strtotime($tasks->created_at))}} </p>
+                  {{-- <p class="card-text">{{date("d-m-Y", strtotime($tasks->created_at))}}</p> --}}
+                  <p class="card-text">{{$tasks->created_at->format('j F Y')}}</p>
                   <p class="card-text">Kebutuhan : {{$tasks->kebutuhan}} </p>
                   <p class="card-text">Handler :
                     @if (\Auth::user()->role == 10)
@@ -256,8 +257,21 @@
                     @endif
                     {{@$tasks->assign->nama}}
                   </p>
-                  <a href="#" class="btn btn-primary">Selesai</a>
-                  <a href="#" class="btn btn-danger">Hapus</a>
+                  @if ($tasks->status!=3)
+                  <button type="button" id="btn-update" class="btn btn-secondary">Selesai</button>
+                  @else
+                  <input class="form-control" type="hidden" name="task_id" id="task_id" value=""/>
+                  <button type="button" id="btn-update" class="btn btn-primary">Selesai</button>
+                  @endif
+                  {{-- <a href="#" class="btn btn-primary"></a> --}}
+                  <form action="{{route('taskclients.destroy',$tasks->id)}}" method="post" class="d-inline">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-danger d-inline">
+                      Hapus
+                    </button>
+                    {{-- <a href="#" class="btn btn-danger">Hapus</a> --}}
+                  </form>
                 </div>
               </div>
               <div class="divider"></div>
@@ -317,6 +331,26 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> --}}
     <script>
+
+    $("#btn-update").click(function(){ 
+		var token = getToken();
+		var id = $('#task_id').val();
+		var status = 3; 
+		
+		$.ajax({
+			type: "POST",
+			url: '/updatestatus',
+			// 'url': '/updatestatus',
+			// 'method': 'POST',
+			data: {'status': status, 'id': id, _token : token },
+			success: function(data){
+					// Sticky buttons
+					// alert('Data changed!')
+					
+					location.reload();
+				}
+		});
+	});	
     </script>
   </body>
 </html>

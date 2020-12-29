@@ -17,6 +17,8 @@ class User extends Authenticatable
      * @var array
      */
 
+    protected $dates = ['kadaluarsa'];
+
     protected $guarded = [
         'id', 'created_at'
     ];

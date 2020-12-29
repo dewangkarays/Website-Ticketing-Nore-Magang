@@ -73,7 +73,7 @@
     </div>
     <ul class="list-unstyled components" style="padding-left:10px">
     <li>
-      <a href="/dashboard">Dashboard</a>
+      <a href="/customer">Dashboard</a>
     </li>
     <li>
       <a href="/tagihanclient">Tagihan</a>
@@ -92,12 +92,14 @@
   <h6 style=" font-weight:bold; padding-bottom:1rem; text-align:center;">Pusat Bantuan</h6>
       <div class="row" style="text-align:center">
         <div class="col">
-          <a href="https://wa.me/6281335625529">
+          <a href="https://wa.me/6281335625529" target="_blank" rel="noopener noreferrer">
             <img src="{{ URL::asset('global_assets/images/wanew.png') }}" height="34px">
           </a>
         </div>
         <div class="col">
-          <img src="{{ URL::asset('global_assets/images/mailnew.png') }}" height="34px">
+          <a href="mailto:cs@nore.web.id">
+            <img src="{{ URL::asset('global_assets/images/mailnew.png') }}" height="34px">
+          </a>
         </div>
       </div>
 </nav>

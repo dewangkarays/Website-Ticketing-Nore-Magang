@@ -5,6 +5,8 @@ namespace App\Http\Controllers\client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Payment;
+use App\Model\Tagihan;
+use App\Model\User;
 
 class PaymentClient extends Controller
 {
@@ -25,10 +27,14 @@ class PaymentClient extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
-        return view('client.bayar.pembayaran');
+        // $payments = Payment::join('tagihans','tagihans.id=','payments.tagihan_id')
+        // ->where('user_id',\Auth::user()->id)
+        // ->get();
+        $tagihan = Tagihan::find($id);
+        return view('client.bayar.pembayaran',compact('tagihan'));
     }
 
     /**
@@ -40,6 +46,15 @@ class PaymentClient extends Controller
     public function store(Request $request)
     {
         //
+        $payment = new Payment;
+        $payment->user_id = \Auth::user()->id;
+        $payment->tgl_bayar = $request->tgl_bayar;
+        $payment->keterangan = $request->keterangan;
+        $payment->nominal = $request->nominal;
+        $payment->save();
+       
+        return redirect('/payment')->with('success', 'Payment saved!');
+
     }
 
     /**

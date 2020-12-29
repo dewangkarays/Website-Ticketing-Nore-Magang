@@ -206,10 +206,10 @@
                             </div>
                             <div class="col">
                               <p class="card-text">Harus dibayar</p>
-                              <h5 class="card-text">Rp. {{$tagihan->jml_bayar}} </h5>
+                              <h5 class="card-text">Rp.{{ ((int)$tagihan['jml_tagih'] - (int)$tagihan['jml_bayar'])}} </h5>
                             </div>
                             <div class="col text-center" id="tombol">
-                              <a href="/purchase" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                              <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                             </div>
                           </div>
                         </div>

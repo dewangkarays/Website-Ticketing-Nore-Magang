@@ -162,21 +162,37 @@
         <div class="bayar-head">
           <h3 style="padding-top:1em;">Form Pembayaran</h3>      
         </div>
-        <form>
-          <div class="form-group row">
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <p>Nama</p>
+          </div>
+          <div class="col-sm-8">
+            <p>{{\Auth::user()->nama}}</p>
+          </div>
+        </div>
+        <form method="POST" action="{{route('paymentclients.store')}}">
+          @csrf
+          {{-- <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Nama</label>
             <div class="col-sm-8">
               <input type="name" class="form-control form-control-sm-8" id="colFormLabelSm" placeholder="Input Nama">
+              <p>{{\Auth::user()->nama}}</p>
             </div>
-          </div>
+          </div> --}}
           <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Tanggal Pembayaran</label>
             <div class="col-sm-8">
-              <input type="date" class="form-control form-control-sm" id="datepicker" name="date" placeholder="">
+              {{-- <input type="text" class="form-control form-control-sm" id="datepicker" name="date" placeholder=""> --}}
+              {{-- <input type="text" class="form-control pickadate-accessibility" id="datepicker" name="tgl_bayar" required> --}}
+              <input name="tgl_bayar" type="date" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif">
             </div>
           </div>
           <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Keterangan</label>
+            <div class="col-sm-8">
+              <textarea name="keterangan" rows="4" cols="3" class="form-control" placeholder="Keterangan" required></textarea>
+            </div>
           </div>
           <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Rincian Tagihan</label>
@@ -192,27 +208,29 @@
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">Rp. </th>
-                  <td>Rp. </td>
-                  <td>Rp. </td>
-                  <td>Rp. </td>
-                  <td>Rp. </td>
+                  <th scope="row">Rp. {{$tagihan->langganan}} </th>
+                  <td>Rp. {{$tagihan->ads}}</td>
+                  <td>Rp. {{$tagihan->lainnya}}</td>
+                  <td>Rp. {{$tagihan->jml_bayar}}</td>
+                  <td>Rp. {{$tagihan->jml_tagih}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm" id="nominal">Nominal Pembayaran</label>
-            <input type="name" class="form-control form-control-sm-8" id="jumlah" placeholder="Input Nominal">
+            <div class="col">
+              <input name="nominal" type="text" class="form-control form-control-sm-8" id="jumlah" placeholder="Input Nominal">
+            </div>
+          </div>
+          <div class="col text-center">
+            <button type="submit" class="btn btn-success btn-lg btn-block" href="/payment">Bayar</button>
           </div>
         </form>
-        <div class="col text-center">
-          <button type="button" class="btn btn-success btn-lg btn-block">Bayar</button>
+        <div class="split"></div>
+        <div class="copyright">
+          <p style="text-align: center">2020. Nore Inovasi.</p>
         </div>
-      </div>
-      <div class="split"></div>
-      <div class="copyright">
-        <p style="text-align: center">2020. Nore Inovasi.</p>
       </div>
     </div>
   </div>
@@ -233,7 +251,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
     <script>
-
+      
     </script>
   </body>
 </html>

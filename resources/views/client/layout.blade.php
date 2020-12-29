@@ -201,7 +201,7 @@
     @include('client.headermobile')
   </div>
   <div class="wrapper">
-     @include('client.sidebar')
+    @include('client.sidebar')
       <div class="container">
         <div class="headerdesktop">
           @include('client.headerdesktop')
@@ -238,7 +238,7 @@
                                 <div class="col">
                                   <div class="tanggal">
                                     <p style="margin-bottom: 0 !important;">Hingga</p>
-                                    <h5 style="font-weight: bold; margin:0;" id="date">{{$user->kadaluarsa}}</h5>
+                                    <h5 style="font-weight: bold; margin:0;" id="date">{{$user->kadaluarsa->format('j F Y')}}</h5>
                                   </div>
                                 </div>
                               </div>
@@ -400,7 +400,9 @@
                           <p>Whatsapp</p>
                         </button> --}}
                         <button type="button" style="background-color: #3EB772; border:none; border-radius:10px; padding:10px 20px;">
-                          <img src="{{ URL::asset('global_assets/images/wanew.png') }}" height="34px">
+                          <a href="https://wa.me/6281335625529" target="_blank" rel="noopener noreferrer">
+                            <img src="{{ URL::asset('global_assets/images/wanew.png') }}" height="34px">
+                          </a>
                         </button>
                       </div>
                       <div class="col text-left">
@@ -412,7 +414,9 @@
                           <p>Email</p>
                         </button> --}}
                         <button type="button" style="background-color: #3EB772; border:none; border-radius:10px; padding:10px 20px;">
-                          <img src="{{ URL::asset('global_assets/images/mailnew.png') }}" height="34px">
+                          <a href="mailto:cs@nore.web.id">
+                            <img src="{{ URL::asset('global_assets/images/mailnew.png') }}" height="34px">
+                          </a>
                         </button>
                       </div>
                     </div>

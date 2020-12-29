@@ -96,11 +96,14 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/tagihanclient','client\TagihanClient@index');
 		Route::get('/tagihanaktif','client\TagihanClient@active');
 		Route::get('/tagihanriwayat','client\TagihanClient@history');
+		Route::resource('/paymentclients', 'client\PaymentClient');
 		Route::get('/payment','client\PaymentClient@index');
-		Route::get('/purchase','client\PaymentClient@create');
-		Route::view('/dashboard','/client/layout');
+		Route::get('/purchase/{id}','client\PaymentClient@create');
+		// Route::view('/dashboard','/client/layout');
+		Route::resource('/taskclients', 'client\TaskClient');
 		Route::get('/taskclient','client\TaskClient@index');
 		Route::get('/taskcreate','client\TaskClient@create');
+		// Route::post('/taskclient','client\TaskClient@store');
 		Route::get('/antrian','client\AntrianClient@index');
 	});
 });

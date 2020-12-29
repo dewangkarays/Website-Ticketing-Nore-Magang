@@ -49,7 +49,7 @@
 </nav>
   <div class="setting-list" id="setting-list">
     <div class="container">
-      <a href="">Ubah Password</a>
+      <a href="{{ url('/changepass') }}">Ubah Password</a>
       <a href="{{ url('/logout') }}">Sign Out</a>
     </div>
   </div>
