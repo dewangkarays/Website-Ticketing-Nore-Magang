@@ -24,4 +24,9 @@ class Tagihan extends Model
     {
         return $this->hasMany('App\Model\Lampiran_gambar', 'tagihan_id', 'id');
     }
+
+    public function proyek()
+    {
+        return $this->belongsTo('App\Model\Proyek','id_proyek','id');
+    }
 }

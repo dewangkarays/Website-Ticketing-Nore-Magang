@@ -69,9 +69,15 @@ class AdminController extends Controller
         $ongoing = Task::where('status', '=', '2')->where('user_id',\Auth::user()->id)->get()->count();
         $done = Task::where('status', '=', '3')->where('user_id',\Auth::user()->id)->get()->count();
         $website = Proyek::where('user_id',\Auth::user()->id)->get()->count();
-        $users = User::where('id',\Auth::user()->id)->get();
-        $tagihans = Tagihan::orderBy('created_at')->get();
-        return view("client.layout",compact('new','ongoing','done','website','users','tagihans'));
+        // $users = User::where('id',\Auth::user()->id)->get();
+        $taskall = User::where('id',\Auth::user()->id)->value('task_count');
+        $tagihans = Tagihan::where('user_id',\Auth::user()->id)->orderBy('created_at')->orderBy('status','desc')->get();
+        $proyeks = Proyek::where('user_id',\Auth::user()->id)->orderBy('masa_berlaku','asc')->get();
+        $taskcounts = Task::where('user_id',\Auth::user()->id)->get()->count();
+        $tasks = Task::where('user_id',\Auth::user()->id)->get();
+        $tagihanhistories = Tagihan::where('user_id',\Auth::user()->id)->where('status','=','2')->get();
+        // dd($tagihans->proyek);
+        return view("client.layout",compact('new','ongoing','done','website','taskall','proyeks','tagihans','taskcounts','tasks','tagihanhistories'));
         // return view("client.layout",compact('new','ongoing','done','tagihans'));
     }
 

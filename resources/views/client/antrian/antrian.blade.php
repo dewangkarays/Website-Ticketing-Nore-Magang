@@ -121,9 +121,17 @@
         </div>
         <div class="data-antrian">
           <div class="antrian-head">
-            <h3 style="padding-top:1em; padding-bottom:0.5em;">Data Antrian</h3>      
+            <h3 style="padding-top:1em; padding-bottom:0.5em;">Data Antrian</h3>
+            <div class="row">
+              <div class="col">
+                <p>Ingin upgrade ke versi Premium?</p>
+                  <a class="btn btn-success" href="https://wa.me/6281335625529" target="_blank" rel="noopener noreferrer">
+                    Klik Disini
+                  </a>     
+              </div>
+            </div>
           </div>
-          <div class="table-responsive">
+          <div class="table-responsive" style="padding-top:1rem;">
             <table class="table table-bordered">
               <thead class="table-success">
                 <tr>
@@ -132,22 +140,40 @@
                   <th scope="col">Pelanggan</th>
                   <th scope="col">Layanan</th>
                   <th scope="col">Status</th>
+                  <th scoper="col">Handler</th>
                 </tr>
               </thead>
               <tbody>
                 @php($i=1)
-                @foreach ($antrians as $antrians)
+                @foreach ($antrians as $antrian)
                 <tr>
                   <th scope="row">{{$i}}</th>
-                <td>{{$antrians->created_at->format('j F Y')}}</td>
-                {{-- <td>{{date("Y-m-d", strtotime($antrians->created_at))}}</td> --}}
-                <td>{{(\Auth::user()->id == $antrians->user_id || \Auth::user()->role<20) ? $antrians->user->username : 'Pelanggan Lain'}}</td>
-                <td>{{config('custom.role.'.$antrians->user->role)}}</td>
-                <td>@if($antrians->status == 2 )
-                  {{config('custom.status.'.$antrians->status)}}
+                {{-- <td>{{$antrians->created_at->format('j F Y')}}</td> --}}
+                <td>{{date("Y-m-d", strtotime($antrian->created_at))}}</td>
+                <td>{{(\Auth::user()->id == $antrian->user_id || \Auth::user()->role<20) ? $antrian->user->username : 'Pelanggan Lain'}}</td>
+                <td>@if ($antrian->user->role==80)
+                  <a style="background-color: #D4AF37; color:#fff; padding:4px 6px; border-radius:10px;">
+                    Premium
+                  </a>
+                  @elseif($antrian->user->role==90)
+                  <a style="background-color: grey; color:#fff; padding:4px 6px; border-radius:10px;">
+                    Prioritas
+                  </a>
+                  @elseif($antrian->user->role==99)
+                  <a style="background-color: #fff; color:#242424; padding:4px 6px; border-radius:10px;">
+                    Simple
+                  </a>
+                  @else
+                  Tidak ada
+                @endif
+                  {{-- {{config('custom.role.'.$antrians->user->role)}} --}}
+                </td>
+                <td>@if($antrian->status == 2 )
+                  {{config('custom.status.'.$antrian->status)}}
                 @else
-                  {{config('custom.status.'.$antrians->status)}}
+                  {{config('custom.status.'.$antrian->status)}}
                 @endif</td>
+                <td>{{$antrian->handler}}</td>
                 </tr>
                 @php($i++)
                 @endforeach

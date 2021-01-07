@@ -14,4 +14,8 @@ class Proyek extends Model
     {
         return $this->belongsTo('App\Model\User', 'user_id', 'id');
     }
+
+    public function tagihan(){
+        return $this->hasOne('App\Model\Tagihan','id_proyek','id');
+    }
 }

@@ -72,6 +72,7 @@
                         </span>
                     </div>
                 </div>
+                @if ($user->role>70)
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Tagihan yang belum dibayar</label>
                     <div class="col-lg-10">
@@ -79,6 +80,8 @@
                                 Rp @angka($user->tagihan->sum('jml_tagih')-$user->tagihan->sum('jml_bayar'))
                             </span>
                     </div>
+                </div>
+                @endif
                 </fieldset>
                 <div class="text-right">
                     <a href="{{ route('users.index') }}">

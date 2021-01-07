@@ -227,6 +227,17 @@
         <div class="data-task" style="padding-bottom:0.5em;">
           <div class="task-head">
             <div class="row">
+              <div class="col">
+                {{-- <button class="btn btn-success rounded-pill" style="font-weight: bold">TAMBAH</button> --}}
+                {{-- <a href="/taskcreate">
+                  <button type="button" class="btn btn-success btn-circle btn-xl" style="text-align: center">+</button> 
+                </a> --}}
+                <button class="btn btn-success" style="font-weight: bold; border:none; padding:12px 20px;">
+                <a href="/taskcreate">Tambah</a>
+                </button>
+              </div>
+            </div>
+            <div class="row">
               <div class="col" id="task"><h3 style="padding-top: 1em;">Data Task</h3></div>
               {{-- <div class="col" style="text-align: right">
                 <div class="dropdown" style="padding-top:1em;">
@@ -245,7 +256,7 @@
               {{-- @for($i=0;$i<3;$i++) --}}
               <div class="card" style="background-color:#fafafa;">
                 <div class="card-header" style="font-weight: bold; font-size:24px;">
-                  Task
+                  {{-- <p></p> --}}
                 </div>
                 <div class="card-body">
                   {{-- <p class="card-text">{{date("d-m-Y", strtotime($tasks->created_at))}}</p> --}}
@@ -297,7 +308,7 @@
               @endfor
             </div>
           </div> --}}
-          <div class="row">
+          {{-- <div class="row">
               <div class="col"></div>
               <div class="col text-center">
                 <a href="/taskcreate">
@@ -305,7 +316,7 @@
                 </a>
               </div>
               <div class="col"></div>
-          </div>
+          </div> --}}
       </div>
       <div class="divider"></div>
       <div class="copyright">

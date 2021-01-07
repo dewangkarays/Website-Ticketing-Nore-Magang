@@ -109,6 +109,10 @@
       .headerdesktop{
         display: none;
       }
+
+      .dekstop-tagihan{
+        display:none;
+      }
       
     }
 
@@ -139,6 +143,10 @@
 
       .container{
         transition: all 0.3s;
+      }
+
+      .mobile-tagihan{
+        display: none;
       }
     }
 
@@ -206,81 +214,396 @@
         <div class="headerdesktop">
           @include('client.headerdesktop')
         </div>
-                <div class="greeting">
-                    <p style="margin: 0 0;">Selamat Datang</p>
-                    <h1 style="font-weight:bold;">{{\Auth::user()->nama}}</h1>
-                </div>
-                <div class="wrap">
-                  <div class="website">
-                      <h3 style="padding-top: 1em;">Website Langganan</h3>
-                  <p style="padding-bottom:0.3em;">Total Langganan : {{@$website}}</p>
-                  </div>
-                  <div class="row" style="">
-                    <div class="slider owl-carousel">
-                      @foreach ($users as $user)
-                      {{-- @for ($i=0; $i<3; $i++) --}}
-                      <div class="col">
-                        <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee;">
-                            <div class="card-body">
+        <div class="wrap">
+          <div class="greeting">
+            <p style="margin: 0 0;">Selamat Datang</p>
+            <h1 style="font-weight:bold;">{{\Auth::user()->nama}}</h1>
+          </div>
+          <div class="website">
+            <h3 style="padding-top: 1em;">Website Langganan</h3>
+              <p style="padding-bottom:0.3em;">Total Langganan : <span style="font-weight: bold; font-size:24px;">{{@$website}}</span></p>
+            </div>
+            {{-- <div class="row"> --}}
+              <div class="dekstop-tagihan">
+                @if (count($proyeks)>3)
+                  <div class="slider owl-carousel">
+                    @foreach ($tagihans as $tagihan)
+                      {{-- <div class="col"> --}}
+                        <div class="col">
+                          <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee;">
+                            <div class="card-body-sm-6">
                               <div class="row">
                                 <div class="col">
-                                  <h6 id="namawebsite" class="card-title" style="margin-bottom: 0;
-                                  padding: 0 0 2px 0; font-weight:bold; ">{{$user->website}}</h6>
-                                  <p style="color:#ffff; font-weight:bold; background-color: #3EB772; padding:5px 10px; border-radius:20px; text-align:center;">Beroperasi</p>
-                                </div>
-                                <div class="col text-right">
-                                  <p>Jumlah</p>
-                                  <p>Pengoperasian</p>
-                                  <h1 style="font-weight: bold;">{{$user->task_count}}</h1>
-                                </div>
+                                <h5 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{$tagihan->nama_proyek}}</h5>
                               </div>
-                              <div id="date-bottom" class="row" style="padding-bottom:0">
-                                <div class="col">
-                                  <div class="tanggal">
-                                    <p style="margin-bottom: 0 !important;">Hingga</p>
-                                    <h5 style="font-weight: bold; margin:0;" id="date">{{$user->kadaluarsa->format('j F Y')}}</h5>
-                                  </div>
+                              {{-- <div class="col"></div> --}}
+                              <div class="col text-right">
+                                @if (@$tagihan->status=='0')
+                                <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Belum dibayar</a>
+                                @elseif($tagihan->status=='1')
+                                <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar Sebagian</a>
+                                @else
+                                <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center;">Sudah dibayar</a>
+                                @endif
+                              </div>
+                            </div>
+                            <div class="row" style="padding-top:1rem;">
+                              <div class="col">
+                                @if (@$tagihan->proyek->tipe==80)
+                                <a style="background-color: #D4AF37; color:#fff; padding:4px 6px; border-radius:10px;">
+                                  Premium
+                                </a>
+                                  {{-- <p></p> --}}
+                                @elseif(@$tagihan->proyek->tipe==90)
+                                  <a style="background-color: grey; color:#fff; padding:4px 6px; border-radius:10px;">Prioritas</a>
+                                @elseif(@$tagihan->proyek->tipe==99)
+                                  <a style="background-color: #fff; color:#242424; padding:4px 6px; border-radius:10px;">Simple</a>
+                                @else
+                                  <p>Tidak ada</p>
+                                @endif
+                              </div>
+                            </div>
+                            <div class="row" style="padding-top:1rem">
+                              <div class="col">
+                                <p>Hingga : <span style="font-weight: bold;">{{@$tagihan->proyek->masa_berlaku}}</span></p>
+                              </div>
+                            </div>
+                            {{-- <div class="col">
+                              <p>Kadaluarsa : {{@$tagihan->proyek->masa_berlaku}}</p>
+                            </div> --}}
+                            <div class="row" style="padding-top:2rem;">
+                              <div class="col text-left">
+                                @if ($tagihan->status!='2')
+                                <p>Tagihan :</p>
+                                <h5 style="font-weight: bold;">Rp.{{@$tagihan->jml_tagih}},- </h5>  
+                                @endif
+                              </div>
+                              <div class="col text-right">
+                                @if ($tagihan->status!='2')
+                                <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
+                                  <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                                 </div>
+                                @endif 
                               </div>
                             </div>
                           </div>
                         </div>
-                        {{-- @endfor --}}
+                        {{-- </div> --}}
+                      </div>
                         @endforeach
-                    </div>
-                      </div>
                   </div>
-                <div class="wrap">
-                  <div class="task">
-                      <h2 style="padding-bottom:1rem;">Task</h2>
+                @elseif(count($proyeks)<1)
+                  <div class="row">
+                    <div class="col">
+                      <h2>Belum Ada Website Langganan</h2>
+                    </div>
                   </div>
-                    <div class="row">
-                      <div class="col-sm-3" style="padding-bottom:0.5em;">
-                        <div class="card" style="border:none; border-radius:10px; background-color:#eeee;padding: 10px;">
+                @else
+                  <div class="row">
+                    @foreach ($tagihans as $tagihan)
+                      <div class="col">
+                        <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee;">
                           <div class="card-body">
-                            <h5 class="card-title" style="padding-bottom: 3em">Baru</h5>
-                            <h1 id="task" class="card-text text-right">{{@$new}}</h1>    
+                            <div class="row">
+                              <div class="col">
+                                <h5 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{$tagihan->nama_proyek}}</h5>
+                              </div>
+                            <div class="col text-right">
+                              @if ($tagihan->status=='0')
+                              <a  style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px">Belum dibayar</a>
+                              @elseif($tagihan->status=='1')
+                              <a  style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar Sebagian</a>
+                              @else
+                              <a  style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center;">Sudah dibayar</a>
+                              @endif  
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-3" style="padding-bottom:0.5em;">
-                        <div class="card" style="border:none; border-radius:10px; background-color:#eeee;  padding: 10px;">
-                          <div class="card-body">
-                            <h5 class="card-title" style="padding-bottom: 3em">Dikerjakan</h5>
-                            <h1 id="task" class="card-text text-right">{{@$ongoing}}</h1>
+                          <div class="row" style="padding-top:1rem;">
+                            <div class="col">
+                              @if (@$tagihan->proyek->tipe==80)
+                              <a style="background-color: #D4AF37; color:#fff; padding:4px 6px; border-radius:10px;">
+                                Premium
+                              </a>
+                              @elseif(@$tagihan->proyek->tipe==90)
+                                <a style="background-color: grey; color:#fff; padding:4px 6px; border-radius:10px;">Prioritas</a>
+                              @elseif(@$tagihan->proyek->tipe==99)
+                                <a style="background-color: #fff; color:#242424; padding:4px 6px; border-radius:10px;">Simple</a>
+                              @else
+                                <p>Tidak ada</p>
+                              @endif
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-3" style="padding-bottom:0.5em;">
-                        <div class="card" style="border:none; border-radius:10px; background-color:#eeee;  padding: 10px;">
-                          <div class="card-body">
-                            <h5 class="card-title" style="padding-bottom: 3em">Selesai</h5>
-                            <h1 id="task" class="card-text text-right">{{@$done}}</h1>
+                          <div class="row" style="padding-top:1rem">
+                            <div class="col">
+                              <p>Hingga : <span style="font-weight: bold;">{{@$tagihan->proyek->masa_berlaku}}</span></p>
+                            </div>
+                          </div>
+                          <div class="row" style="padding-top:1rem;">
+                            <div class="col text-left">
+                              @if ($tagihan->status!='2')
+                              <p>Tagihan :</p>
+                              <h5 style="font-weight: bold;">Rp.{{@$tagihan->jml_tagih}},- </h5>  
+                              @endif
+                            </div>
+                            <div class="col text-right">
+                              @if ($tagihan->status!='2')
+                              <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
+                                <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                              </div>
+                              @endif 
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                    @endforeach
+                  </div>
+                @endif
+          </div>
+          <div class="mobile-tagihan">
+            <div class="slider owl-carousel">
+              @foreach ($tagihans as $tagihan)
+                <div class="col">
+                  <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee; width:10rem;">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                            <p id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{$tagihan->nama_proyek}}</p>    
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            @if ($tagihan->status=='0')
+                            <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Belum dibayar</a>
+                            @elseif($tagihan->status=='1')
+                            <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar Sebagian</a>
+                            @else
+                            <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center;">Sudah dibayar</a>
+                            @endif
+                          </div>
+                      </div>
+                      <div class="row" style="padding-top:1rem;">
+                        <div class="col">
+                          @if (@$tagihan->proyek->tipe==80)
+                          <a style="background-color: #D4AF37; color:#fff; padding:4px 6px; border-radius:10px;">
+                            Premium
+                          </a>
+                          @elseif(@$tagihan->proyek->tipe==90)
+                            <a style="background-color: grey; color:#fff; padding:4px 6px; border-radius:10px;">Prioritas</a>
+                          @elseif(@$tagihan->proyek->tipe==99)
+                            <a style="background-color: #fff; color:#242424; padding:4px 6px; border-radius:10px;">Simple</a>
+                          @else
+                            <p>Tidak ada</p>
+                          @endif
+                        </div>
+                      </div>
+                      <div class="row" style="padding-top:1rem">
+                        <div class="col">
+                          <p>Hingga : <span style="font-weight: bold;">{{@$tagihan->proyek->masa_berlaku}}</span></p>
+                        </div>
+                      </div>
+                      <div class="row" style="padding-top:1rem;">
+                        <div class="col">
+                          @if ($tagihan->status!='2')
+                          <p>Tagihan :</p>
+                          <p style="font-weight: bold;">Rp.{{@$tagihan->jml_tagih}},- </p>  
+                          @endif
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          @if ($tagihan->status!='2')
+                          <div class="buttondetail" style="padding-bottom:5px;">
+                            <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                          </div>
+                          @endif 
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+                @endforeach
+            </div>
+          </div>
+        </div>
+        <div class="wrap">
+          <div class="task">
+            <h2>Task</h2>
+            <p style="padding-bottom:1rem;">Sisa Pengoperasian : <span style="font-weight: bold; font-size:24px;">{{@$taskall - @$taskcounts}}</span></p>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="task-baru">
+                <h5 style="font-weight: bold; text-align:center;">Task Baru</h5>
+                @if ($new==0)
+                <p style="text-align: center; padding-top:1rem;">Belum ada task baru</p>
+                @else
+                <?php $count = 0; ?>
+                @foreach ($tasks as $task)
+                @if ($task->status=='1')
+                <?php if($count == 3) break; ?>
+                    <div class="card" style="background-color:#fff; border:none;">
+                      <div class="card-header" style="background-color:#4A708B">
+                        <p style="font-weight: bold; color:#fff;">Tes</p>
+                      </div>
+                      <div class="card-body" style="background-color:#fafafa;">
+                        <div class="row">
+                          <div class="col">
+                            <p style="">Handler</p>
+                          </div>
+                          {{-- <div class="col">
+                            :
+                          </div> --}}
+                          <div class="col">
+                            <p>Belum ada handler</p>
+                          </div>
+                        </div>
+                        <div class="row" style="padding-top:1rem;">
+                          <div class="col">Tanggal input</div>
+                          {{-- <div class="col">:</div> --}}
+                          
+                          <div class="col">{{date('d-m-Y', strtotime($task->created_at))}}</div>
+                        </div>
+                        <div class="row" style="padding-top:1rem;">
+                          <div class="col">Keterangan</div>
+                          {{-- <div class="col">:</div> --}}
+                          <div class="col">{{$task->kebutuhan}}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" style="padding-top:1em;"></div>
+                    <?php $count++; ?>
+                    @endif
+                    @endforeach
+                  @endif
+                </div>
+              </div>
+              <div class="col">
+                <div class="task-dikerjakan">
+                  <h5 style="font-weight: bold; text-align:center;">Task Sedang Dikerjakan</h5>
+                  @if ($ongoing==0)
+                  <p style="text-align: center; padding-top:1rem;">Belum ada task yang dikerjakan</p>
+                  @else
+                  <?php $count = 0; ?>
+                  @foreach ($tasks as $task)
+                    @if ($task->status=='2')
+                    <?php if($count == 3) break; ?>
+                    <div class="card" style="background-color: #fff; border:none;">
+                      <div class="card-header" style="background-color:rgb(255, 196, 0)">
+                        <p style="font-weight: bold;">Tes</p>
+                      </div>
+                      <div class="card-body" style="background-color: #fafafa">
+                        <div class="row">
+                          <div class="col">
+                            <p style="">Handler</p>
+                          </div>
+                          {{-- <div class="col">
+                            :
+                          </div> --}}
+                          <div class="col">
+                            <p>{{$task->handler}}</p>
+                          </div>
+                        </div>
+                        <div class="row" style="padding-top:1rem;">
+                          <div class="col">Tanggal input</div>
+                          {{-- <div class="col">:</div> --}}
+                          
+                          <div class="col">{{date('d-m-Y', strtotime($task->created_at))}}</div>
+                        </div>
+                        <div class="row" style="padding-top:1rem;">
+                          <div class="col">Keterangan</div>
+                          {{-- <div class="col">:</div> --}}
+                          <div class="col">{{$task->kebutuhan}}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" style="padding-top:1em;"></div>
+                    <?php $count++; ?>
+                    @endif
+                  @endforeach
+                  @endif
+                </div>
+              </div>
+              <div class="col">
+                <div class="task-selesai">
+                  <h5 style="font-weight: bold; text-align:center;">Task Selesai</h5>
+                  @if ($done==0)
+                  <p style="text-align: center; padding-top:1rem;">Belum ada task yang selesai</p>
+                  @else
+                  @foreach ($tasks as $task)
+                    @if ($task->status=='3')
+                    <?php if($count == 3) break; ?>
+                    <div class="card" style="background-color: #fff; border:none">
+                      <div class="card-header" style="background-color:	grey">
+                        <p style="font-weight: bold; color:#ffff;">Tes</p>
+                      </div>
+                      <div class="card-body" style="background-color: #fafafa">
+                        <div class="row">
+                          <div class="col">
+                            <p style="">Handler</p>
+                          </div>
+                          {{-- <div class="col">
+                            :
+                          </div> --}}
+                          <div class="col">
+                            <p>{{$task->handler}}</p>
+                          </div>
+                        </div>
+                        <div class="row" style="padding-top:1rem;">
+                          <div class="col">Tanggal input</div>
+                          {{-- <div class="col">:</div> --}}
+                          
+                          <div class="col">{{date('d-m-Y', strtotime($task->created_at))}}</div>
+                        </div>
+                        <div class="row" style="padding-top:1rem;">
+                          <div class="col">Keterangan</div>
+                          {{-- <div class="col">:</div> --}}
+                          <div class="col">{{$task->kebutuhan}}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <?php $count++; ?>
+                    @endif 
+                  @endforeach  
+                  @endif
+                </div>
+              </div>
+            </div>
+            {{-- <div class="row" style="display:flex; align-items: center; justify-content:center;">
+              <div class="col" style="padding-bottom:0.5em;">
+                <div class="card" style="border:none; border-radius:10px; background-color:#eeee;padding: 10px;">
+                  <div class="card-body">
+                    <h5 class="card-title" style="padding-bottom: 3em">Baru</h5>
+                    <h1 id="task" class="card-text text-right">{{@$new}}</h1>
+                    <div class="row">
+                      <div class="col"></div>
+                      <div class="col text-right">
+                        <p>detail
+                        <button class="btn btn-warning">>></button>
+                      </p>
+                      </div>
+                    </div>    
+                  </div>
+                </div>
+              </div>
+              <div class="col" style="padding-bottom:0.5em;">
+                <div class="card" style="border:none; border-radius:10px; background-color:#eeee;  padding: 10px;">
+                  <div class="card-body">
+                    <h5 class="card-title" style="padding-bottom: 3em">Dikerjakan</h5>
+                    <h1 id="task" class="card-text text-right">{{@$ongoing}}</h1>
+                  </div>
+                </div>
+              </div>
+              <div class="col" style="padding-bottom:0.5em;">
+                <div class="card" style="border:none; border-radius:10px; background-color:#eeee;  padding: 10px;">
+                  <div class="card-body">
+                    <h5 class="card-title" style="padding-bottom: 3em">Selesai</h5>
+                    <h1 id="task" class="card-text text-right">{{@$done}}</h1>
+                  </div>
+                </div>
+              </div>
+            </div> --}}
+        </div>
                 <div class="hide-mobile">
                   <div class="wrap">
                     <div class="row">
@@ -289,22 +612,47 @@
                           <h2>Tagihan Aktif</h2>
                         </div>
                         <div class="cardContainer">
-                          {{-- @for($i=0; $i<3; $i++) --}}
                           @foreach ($tagihans as $tagihan)
                           @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
                           <div class="card">
-                            <h5 class="card-header" style="font-weight:bold;">{{@$tagihan->invoice}}</h5>
-                            <div class="card-body">
-                              <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{@$tagihan->jml_bayar}}</p>
-                              <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
-                                <a href="/purchase" id="bayar" class="btn btn-success" style="padding:6px 18px; border-radius:5px;">Bayar</a>
+                            <div class="card-header">
+                              <div class="row">
+                                <div class="col">
+                                  <h5 style="font-weight:bold;">{{@$tagihan->nama_proyek}}</h5>
+                                  <p style="font-weight:bold;">{{@$tagihan->invoice}}</p>
+                                </div>
+                                <div class="col text-right">
+                                    @if ($tagihan->status==0)
+                                    <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Belum dibayar</a>
+                                    @else
+                                    <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar sebagian</a>
+                                    @endif
+                                </div>
                               </div>
+                            </div>
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col">
+                                  <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Total Tagihan : </p>
+                                  <p style="padding: 0 0 10px 12px; font-size:16px;">Rp {{@$tagihan->jml_tagih+@$tagihan->jml_bayar}},-</p>
+                                </div>
+                                <div class="col">
+                                  <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Sudah terbayar : </p>
+                                  <p style="padding: 0 0 10px 12px; font-size:16px;">Rp {{@$tagihan->jml_bayar}},-</p>
+                                </div>
+                                <div class="col">
+                                  <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Harus dibayar : </p>
+                                  <p style="padding: 0 0 10px 12px; font-size:16px; font-weight:bold;">Rp {{@$tagihan->jml_tagih}},-</p>
+                                </div>
+                              </div>
+                              <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
+                                <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                              </div>  
                             </div>
                           </div>
                           <div class="divider"></div>
                           @endif
                           @endforeach
-                          {{-- @endfor --}}
                         </div>
                         <div class="col text-right">
                         <a href="/tagihanaktif" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right;">Detail</a>
@@ -315,22 +663,21 @@
                           <h2>Riwayat Tagihan</h2>
                         </div>
                         <div class="cardContainer">
-                          @foreach ($tagihans as $tagihan)
-                          {{-- @for($i=0; $i<4; $i++) --}}
-                          @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
-                          <div class="card">
-                            <h5 class="card-header" style="font-weight:bold;">Invoice {{$tagihan->invoice}}</h5>
-                            <div class="card-body">
-                              <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{$tagihan->jml_tagih}}</p>
-                            </div>
-                          </div>
-                          <div class="divider"></div>
+                          @if (count($tagihanhistories)==0)
+                            <h6 style="text-align: center; padding-top:1rem;">Tidak ada history</h6>
+                          @else
+                            @foreach ($tagihans as $tagihan)
+                              @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
+                              <div class="card">
+                                <h5 class="card-header" style="font-weight:bold;">Invoice {{$tagihan->invoice}}</h5>
+                                <div class="card-body">
+                                  <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{$tagihan->jml_tagih}}</p>
+                                </div>
+                              </div>
+                              <div class="divider"></div>
+                              @endif
+                            @endforeach
                           @endif
-                          {{-- @endfor --}}
-                          @endforeach
-                      </div>
-                      <div class="col text-right">
-                        <a href="/tagihanriwayat" id="detail" class="btn btn-warning" style="padding:6px 18px; border-radius:5px;">Detail</a>
                       </div>
                     </div>
                     </div>
@@ -343,24 +690,25 @@
                       </div>
                       <div class="cardContainer">
                         @foreach ($tagihans as $tagihan)
-                        {{-- @for($i=0; $i<3; $i++) --}}
                         @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
                         <div class="card">
-                          <h5 class="card-header" style="font-weight:bold;">Invoice {{$tagihan->invoice}}</h5>
+                          <div class="card-header">
+                            <h5 style="font-weight:bold;">{{@$tagihan->nama_proyek}}</h5>
+                            <p style="font-weight:bold;">{{@$tagihan->invoice}}</p>
+                          </div>
                           <div class="card-body">
-                            <p class="card-text" style="padding: 5px 0 10px 12px; font-size:24px;">Rp {{$tagihan->jml_bayar}}</p>
+                            <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{@$tagihan->jml_tagih}}</p>
                             <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
-                              <a href="/payment" id="bayar" class="btn btn-success rounded-pill" style="padding:6px 18px;">Bayar</a>
-                            </div>
+                              <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                            </div>  
                           </div>
                         </div>
                         <div class="divider"></div>
                         @endif
-                        {{-- @endfor --}}
                         @endforeach
                       </div>
                       <div class="col text-right">
-                          <a href="/tagihanaktif" id="detail" class="btn btn-warning rounded-pill" style="padding:6px 18px; justify-content:right; align-items:right;">Detail</a>
+                          <a href="/tagihanaktif" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right; border-radius:10px;">Detail</a>
                       </div>
                   </div>
                   <div class="wrap">
@@ -368,22 +716,23 @@
                         <h2 style="padding-bottom:1rem;">Riwayat Tagihan</h2>
                       </div>
                     <div class="cardContainer">
+                      @if (count($tagihanhistories)==0)
+                      <h6 style="text-align: center; padding-top:1rem;">Tidak ada history</h6>
+                      @else
                       @foreach ($tagihans as $tagihan)
+                      {{-- @for($i=0; $i<4; $i++) --}}
                       @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
-                      {{-- @for($i=0; $i<3; $i++) --}}
                       <div class="card">
                         <h5 class="card-header" style="font-weight:bold;">Invoice {{$tagihan->invoice}}</h5>
                         <div class="card-body">
-                          <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:24px;">Rp {{$tagihan->jml_tagih}}</p>
+                          <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{$tagihan->jml_tagih}}</p>
                         </div>
                       </div>
                       <div class="divider"></div>
-                      {{-- @endfor --}}
                       @endif
+                      {{-- @endfor --}}
                       @endforeach
-                    </div>
-                    <div class="col text-right">
-                      <a href="/tagihanriwayat" id="detail" class="btn btn-warning rounded-pill" style="padding:6px 18px;">Detail</a>
+                    @endif
                     </div>
                   </div>
                 </div>

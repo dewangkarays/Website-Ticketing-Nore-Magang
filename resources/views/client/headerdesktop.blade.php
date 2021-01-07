@@ -52,6 +52,15 @@
 <body>
     <div class="header-desktop" style="display: flex; 
     justify-content: space-between; padding-bottom:3rem;">
+    {{-- @if (\Auth::user()->role == '80') 
+        <p>Premium</p>
+    @elseif (\Auth::user()->role == '90') 
+        <p>Prioritas</p> 
+    @elseif (\Auth::user()->role == '99')
+        <p>Simple</p>
+    @else
+        <p>Bukan Klien</p>
+    @endif --}}
         <a href="#" style="margin-left:2rem;">
             @include('client.toogle')
             <div class="account">
