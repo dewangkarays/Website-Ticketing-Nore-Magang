@@ -113,6 +113,14 @@
       .dekstop-tagihan{
         display:none;
       }
+
+      #task-baru{
+        padding-bottom:1.5rem;
+      }
+
+      #task-selesai{
+        padding-bottom:1.5rem;
+      }
       
     }
 
@@ -239,11 +247,11 @@
                               {{-- <div class="col"></div> --}}
                               <div class="col text-right">
                                 @if (@$tagihan->status=='0')
-                                <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Belum dibayar</a>
+                                <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Belum dibayar</a>
                                 @elseif($tagihan->status=='1')
-                                <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar Sebagian</a>
+                                <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Terbayar Sebagian</a>
                                 @else
-                                <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center;">Sudah dibayar</a>
+                                <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Sudah dibayar</a>
                                 @endif
                               </div>
                             </div>
@@ -253,7 +261,6 @@
                                 <a style="background-color: #D4AF37; color:#fff; padding:4px 6px; border-radius:10px;">
                                   Premium
                                 </a>
-                                  {{-- <p></p> --}}
                                 @elseif(@$tagihan->proyek->tipe==90)
                                   <a style="background-color: grey; color:#fff; padding:4px 6px; border-radius:10px;">Prioritas</a>
                                 @elseif(@$tagihan->proyek->tipe==99)
@@ -312,9 +319,9 @@
                               @if ($tagihan->status=='0')
                               <a  style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px">Belum dibayar</a>
                               @elseif($tagihan->status=='1')
-                              <a  style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar Sebagian</a>
+                              <a  style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px">Terbayar Sebagian</a>
                               @else
-                              <a  style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center;">Sudah dibayar</a>
+                              <a  style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px">Sudah dibayar</a>
                               @endif  
                             </div>
                           </div>
@@ -376,9 +383,9 @@
                             @if ($tagihan->status=='0')
                             <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Belum dibayar</a>
                             @elseif($tagihan->status=='1')
-                            <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar Sebagian</a>
+                            <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Terbayar Sebagian</a>
                             @else
-                            <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center;">Sudah dibayar</a>
+                            <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Sudah dibayar</a>
                             @endif
                           </div>
                       </div>
@@ -434,28 +441,29 @@
           <div class="row">
             <div class="col">
               <div class="task-baru">
-                <h5 style="font-weight: bold; text-align:center;">Task Baru</h5>
+                <h5 style="font-weight: bold; text-align:center;" id="task-baru">Task Baru</h5>
                 @if ($new==0)
                 <p style="text-align: center; padding-top:1rem;">Belum ada task baru</p>
                 @else
                 <?php $count = 0; ?>
                 @foreach ($tasks as $task)
                 @if ($task->status=='1')
-                <?php if($count == 3) break; ?>
+                <?php if($count == 2) break; ?>
                     <div class="card" style="background-color:#fff; border:none;">
                       <div class="card-header" style="background-color:#4A708B">
-                        <p style="font-weight: bold; color:#fff;">Tes</p>
+                        <p style="font-weight: bold; color:#fff;">{{$task->proyek->website}}</p>
                       </div>
                       <div class="card-body" style="background-color:#fafafa;">
                         <div class="row">
                           <div class="col">
                             <p style="">Handler</p>
                           </div>
-                          {{-- <div class="col">
-                            :
-                          </div> --}}
                           <div class="col">
-                            <p>Belum ada handler</p>
+                            @if ($task->handler==null)
+                              <p>Belum ada handler</p>
+                            @else
+                              <p>{{$task->handler}}</p>
+                            @endif
                           </div>
                         </div>
                         <div class="row" style="padding-top:1rem;">
@@ -487,27 +495,26 @@
                   <?php $count = 0; ?>
                   @foreach ($tasks as $task)
                     @if ($task->status=='2')
-                    <?php if($count == 3) break; ?>
+                    <?php if($count == 2) break; ?>
                     <div class="card" style="background-color: #fff; border:none;">
                       <div class="card-header" style="background-color:rgb(255, 196, 0)">
-                        <p style="font-weight: bold;">Tes</p>
+                        <p style="font-weight: bold;">{{$task->proyek->website}}</p>
                       </div>
                       <div class="card-body" style="background-color: #fafafa">
                         <div class="row">
                           <div class="col">
                             <p style="">Handler</p>
                           </div>
-                          {{-- <div class="col">
-                            :
-                          </div> --}}
                           <div class="col">
-                            <p>{{$task->handler}}</p>
+                            @if ($task->handler==null)
+                              <p>Belum ada handler</p>
+                            @else
+                              <p>{{$task->handler}}</p>
+                            @endif
                           </div>
                         </div>
                         <div class="row" style="padding-top:1rem;">
                           <div class="col">Tanggal input</div>
-                          {{-- <div class="col">:</div> --}}
-                          
                           <div class="col">{{date('d-m-Y', strtotime($task->created_at))}}</div>
                         </div>
                         <div class="row" style="padding-top:1rem;">
@@ -526,27 +533,29 @@
               </div>
               <div class="col">
                 <div class="task-selesai">
-                  <h5 style="font-weight: bold; text-align:center;">Task Selesai</h5>
+                  <h5 style="font-weight: bold; text-align:center;" id="task-selesai">Task Selesai</h5>
                   @if ($done==0)
                   <p style="text-align: center; padding-top:1rem;">Belum ada task yang selesai</p>
                   @else
+                  <?php $count = 0; ?>
                   @foreach ($tasks as $task)
                     @if ($task->status=='3')
-                    <?php if($count == 3) break; ?>
+                    <?php if($count == 2) break; ?>
                     <div class="card" style="background-color: #fff; border:none">
                       <div class="card-header" style="background-color:	grey">
-                        <p style="font-weight: bold; color:#ffff;">Tes</p>
+                        <p style="font-weight: bold; color:#ffff;">{{$task->proyek->website}}</p>
                       </div>
                       <div class="card-body" style="background-color: #fafafa">
                         <div class="row">
                           <div class="col">
                             <p style="">Handler</p>
                           </div>
-                          {{-- <div class="col">
-                            :
-                          </div> --}}
                           <div class="col">
-                            <p>{{$task->handler}}</p>
+                            @if ($task->handler==null)
+                              <p>Belum ada handler</p>
+                            @else
+                              <p>{{$task->handler}}</p>
+                            @endif
                           </div>
                         </div>
                         <div class="row" style="padding-top:1rem;">
@@ -569,40 +578,9 @@
                 </div>
               </div>
             </div>
-            {{-- <div class="row" style="display:flex; align-items: center; justify-content:center;">
-              <div class="col" style="padding-bottom:0.5em;">
-                <div class="card" style="border:none; border-radius:10px; background-color:#eeee;padding: 10px;">
-                  <div class="card-body">
-                    <h5 class="card-title" style="padding-bottom: 3em">Baru</h5>
-                    <h1 id="task" class="card-text text-right">{{@$new}}</h1>
-                    <div class="row">
-                      <div class="col"></div>
-                      <div class="col text-right">
-                        <p>detail
-                        <button class="btn btn-warning">>></button>
-                      </p>
-                      </div>
-                    </div>    
-                  </div>
-                </div>
+              <div class="col text-right">
+                <a href="/taskclients" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right; border-radius:5px;">Detail</a>
               </div>
-              <div class="col" style="padding-bottom:0.5em;">
-                <div class="card" style="border:none; border-radius:10px; background-color:#eeee;  padding: 10px;">
-                  <div class="card-body">
-                    <h5 class="card-title" style="padding-bottom: 3em">Dikerjakan</h5>
-                    <h1 id="task" class="card-text text-right">{{@$ongoing}}</h1>
-                  </div>
-                </div>
-              </div>
-              <div class="col" style="padding-bottom:0.5em;">
-                <div class="card" style="border:none; border-radius:10px; background-color:#eeee;  padding: 10px;">
-                  <div class="card-body">
-                    <h5 class="card-title" style="padding-bottom: 3em">Selesai</h5>
-                    <h1 id="task" class="card-text text-right">{{@$done}}</h1>
-                  </div>
-                </div>
-              </div>
-            </div> --}}
         </div>
                 <div class="hide-mobile">
                   <div class="wrap">
@@ -612,8 +590,10 @@
                           <h2>Tagihan Aktif</h2>
                         </div>
                         <div class="cardContainer">
+                          <?php $count = 0; ?>
                           @foreach ($tagihans as $tagihan)
                           @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
+                          <?php if($count == 3) break; ?>
                           <div class="card">
                             <div class="card-header">
                               <div class="row">
@@ -651,6 +631,7 @@
                             </div>
                           </div>
                           <div class="divider"></div>
+                          <?php $count++; ?>
                           @endif
                           @endforeach
                         </div>
@@ -666,17 +647,43 @@
                           @if (count($tagihanhistories)==0)
                             <h6 style="text-align: center; padding-top:1rem;">Tidak ada history</h6>
                           @else
+                          <?php $count = 0; ?>
                             @foreach ($tagihans as $tagihan)
                               @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
+                              <?php if($count == 3) break; ?>
                               <div class="card">
-                                <h5 class="card-header" style="font-weight:bold;">Invoice {{$tagihan->invoice}}</h5>
+                                <div class="card-header">
+                                  <div class="row">
+                                    <div class="col">
+                                      <h5 style="font-weight:bold;">{{@$tagihan->nama_proyek}}</h5>
+                                      <p style="font-weight:bold;">{{@$tagihan->invoice}}</p>
+                                    </div>
+                                    <div class="col text-right">
+                                      <a style="color:#fff; font-weight:bold; background-color: gray; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Lunas</a>
+                                    </div>
+                                  </div>
+                                </div>
                                 <div class="card-body">
-                                  <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{$tagihan->jml_tagih}}</p>
+                                  <div class="row">
+                                    <div class="col">
+                                      <p style="padding: 5px 0 10px 12px; font-size:16px;">Total Tagihan</p>
+                                      <p style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{$tagihan->jml_tagih}},-</p>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col">
+                                      <p style="padding: 5px 0 10px 12px; font-size:16px; font-style:italic;">Dibayar pada {{date("Y-m-d", strtotime($tagihan->updated_at))}}</p>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                               <div class="divider"></div>
+                              <?php $count++; ?>
                               @endif
                             @endforeach
+                            <div class="col text-right">
+                              <a href="/tagihanriwayat" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right; border-radius:5px;">Detail</a>
+                            </div>
                           @endif
                       </div>
                     </div>
@@ -689,8 +696,10 @@
                           <h2 style="padding-bottom:1rem;">Tagihan Aktif</h2>
                       </div>
                       <div class="cardContainer">
+                        <?php $count = 0; ?>
                         @foreach ($tagihans as $tagihan)
                         @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
+                        <?php if($count == 3) break; ?>
                         <div class="card">
                           <div class="card-header">
                             <h5 style="font-weight:bold;">{{@$tagihan->nama_proyek}}</h5>
@@ -704,6 +713,7 @@
                           </div>
                         </div>
                         <div class="divider"></div>
+                        <?php $count++; ?>
                         @endif
                         @endforeach
                       </div>
@@ -719,20 +729,44 @@
                       @if (count($tagihanhistories)==0)
                       <h6 style="text-align: center; padding-top:1rem;">Tidak ada history</h6>
                       @else
+                      <?php $count = 0; ?>
                       @foreach ($tagihans as $tagihan)
-                      {{-- @for($i=0; $i<4; $i++) --}}
                       @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
+                      <?php if($count == 3) break; ?>
                       <div class="card">
-                        <h5 class="card-header" style="font-weight:bold;">Invoice {{$tagihan->invoice}}</h5>
+                        <div class="card-header">
+                          <div class="row">
+                            <div class="col">
+                              <h5 style="font-weight:bold;">{{@$tagihan->nama_proyek}}</h5>
+                              <p style="font-weight:bold;">{{@$tagihan->invoice}}</p>
+                            </div>
+                            <div class="col text-right">
+                              <a style="color:#fff; font-weight:bold; background-color: gray; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Lunas</a>
+                            </div>
+                          </div>
+                        </div>
                         <div class="card-body">
-                          <p class="card-text rounded-pill" style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{$tagihan->jml_tagih}}</p>
+                          <div class="row">
+                            <div class="col">
+                              <p style="padding: 5px 0 10px 12px; font-size:16px;">Total Tagihan</p>
+                              <p style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{$tagihan->jml_tagih}},-</p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <p style="padding: 5px 0 10px 12px; font-size:16px; font-style:italic;">Dibayar pada {{date("Y-m-d", strtotime($tagihan->updated_at))}}</p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       <div class="divider"></div>
+                      <?php $count++; ?>
                       @endif
-                      {{-- @endfor --}}
                       @endforeach
                     @endif
+                    </div>
+                    <div class="col text-right">
+                      <a href="/tagihanriwayat" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right; border-radius:10px;">Detail</a>
                     </div>
                   </div>
                 </div>

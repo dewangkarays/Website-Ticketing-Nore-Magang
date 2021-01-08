@@ -27,16 +27,18 @@ class PaymentClient extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    // public function create($id)
+    // {
+    
+    //     $tagihan = Tagihan::find($id);
+    //     return view('client.bayar.pembayaran',compact('tagihan'));
+    // }
+
+    public function create()
     {
-        //
-        // $payments = Payment::join('tagihans','tagihans.id=','payments.tagihan_id')
-        // ->where('user_id',\Auth::user()->id)
-        // ->get();
-        $tagihan = Tagihan::find($id);
+        $tagihan = Tagihan::where('user_id',\Auth::user()->id)->get();
         return view('client.bayar.pembayaran',compact('tagihan'));
     }
-
     /**
      * Store a newly created resource in storage.
      *

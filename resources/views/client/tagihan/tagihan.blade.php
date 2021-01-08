@@ -190,23 +190,37 @@
                     <h3>Tagihan Aktif</h3>      
                   </div>
                   <div class="cardContainer">
-                    {{-- diganti jumlah aktif --}}
-                    {{-- @for($i=0;$i<2;$i++) --}}
                     @foreach ($tagihans as $tagihan)
                     @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
                     <div class="card">
                       <div class="card-body">
                         <div class="invoice">
-                          <h5 class="card-title">Invoice {{$tagihan->invoice}}</h5>
+                          <div class="row">
+                            <div class="col">
+                              <h5 class="card-title">{{$tagihan->proyek->website}}</h5>
+                              <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
+                            </div>
+                            <div class="col text-right">
+                              @if ($tagihan->status==0)
+                              <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Belum dibayar</a>
+                              @else
+                              <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar sebagian</a>
+                              @endif
+                            </div>
+                          </div>
                           <p class="card-text">{{$tagihan->keterangan}}</p>
                           <div class="row">
                             <div class="col">
-                              <p class="card-text">Tagihan</p>
-                              <h5 class="card-text">Rp. {{$tagihan->jml_tagih}} </h5>
+                              <p class="card-text">Total Tagihan</p>
+                              <h5 class="card-text">Rp. {{ ((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar'])}}</h5>
+                            </div>
+                            <div class="col">
+                              <p class="card-text">Sudah Dibayar</p>
+                              <h5 class="card-text">Rp. {{$tagihan->jml_bayar}} </h5>
                             </div>
                             <div class="col">
                               <p class="card-text">Harus dibayar</p>
-                              <h5 class="card-text">Rp.{{ ((int)$tagihan['jml_tagih'] - (int)$tagihan['jml_bayar'])}} </h5>
+                              <h5 class="card-text">Rp.{{$tagihan->jml_tagih}} </h5>
                             </div>
                             <div class="col text-center" id="tombol">
                               <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
@@ -218,7 +232,6 @@
                     <div class="divider"></div>
                     @endif
                     @endforeach
-                    {{-- @endfor --}}
                     <div class="row">
                       <div class="col">
                       </div>
@@ -239,16 +252,16 @@
                   <div class="cardContainer">
                     @foreach ($tagihans as $tagihan)
                     @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
-                    {{-- @for($i=0;$i<4;$i++) --}}
                     <div class="col">
                       <div class="card" style="border:none; border-radius:5px; background-color:#eeee;">
                         <div class="card-body">
                           <div class="invoice" style="padding:1em;">
                             <div class="row">
                               <div class="col">
-                                <h5 class="card-title">{{$tagihan->invoice}}</h5>
-                                <p class="card-text">{{$tagihan->keterangan}}</p>
-                                <p class="card-text" style="font-weight: bold;">Terbayar</p>
+                                  <h5 class="card-title">{{$tagihan->proyek->website}}</h5>
+                                  <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
+                                  <p class="card-text">Total tagihan Rp. {{ ((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar'])}},-</p>
+                                  <p class="card-text" style="font-style: italic;">Terbayar pada {{date("Y-m-d", strtotime($tagihan->updated_at))}}</p>
                               </div>
                               <div class="col">
                                 <div class="col text-right" id="tombol">
@@ -261,7 +274,6 @@
                       </div>
                     </div>
                     <div class="divider"></div>
-                    {{-- @endfor --}}     
                     @endif
                     @endforeach
                     <div class="row">
@@ -291,26 +303,40 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="invoice">
-                      <h5 class="card-title">Invoice {{$tagihan->invoice}}</h5>
-                      <p class="card-text">{{$tagihan->keterangan}}</p>
                       <div class="row">
                         <div class="col">
-                          <p class="card-text">Tagihan</p>
-                          <h5 class="card-text">Rp. {{$tagihan->jml_tagih}} </h5>
+                          <h5 class="card-title">{{$tagihan->proyek->website}}</h5>
+                          <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
+                        </div>
+                        <div class="col text-right">
+                          @if ($tagihan->status==0)
+                          <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Belum dibayar</a>
+                          @else
+                          <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar sebagian</a>
+                          @endif
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <p class="card-text">Total Tagihan</p>
+                          <h5 class="card-text">Rp. {{ ((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar'])}}</h5>
+                        </div>
+                        <div class="col">
+                          <p class="card-text">Sudah Dibayar</p>
+                          <h5 class="card-text">Rp. {{$tagihan->jml_bayar}} </h5>
                         </div>
                         <div class="col">
                           <p class="card-text">Harus dibayar</p>
-                          <h5 class="card-text">Rp. {{$tagihan->jml_bayar}} </h5>
+                          <h5 class="card-text">Rp.{{$tagihan->jml_tagih}} </h5>
                         </div>
                         <div class="col text-center" id="tombol">
-                          <a href="/purchase" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                          <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="divider"></div>
-                {{-- @endfor --}}
                 @endif
                 @endforeach
                 <div class="row">
@@ -329,7 +355,6 @@
                 <h3>Riwayat Tagihan</h3>      
               </div>
               <div class="cardContainer">
-                {{-- diganti jumlah aktif --}}
                 @foreach ($tagihans as $tagihan)
                 @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
                   <div class="card" style="border:none; border-radius:5px; background-color:#eeee;">
@@ -337,10 +362,11 @@
                       <div class="invoice" style="padding:1em;">
                         <div class="row">
                           <div class="col">
-                            <h5 class="card-title">{{$tagihan->invoice}}</h5>
-                            <p class="card-text">{{$tagihan->keterangan}}</p>
-                            <p class="card-text" style="font-weight: bold;">Terbayar</p>
-                          </div>
+                            <h5 class="card-title">{{$tagihan->proyek->website}}</h5>
+                            <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
+                            <p class="card-text">Total tagihan Rp. {{ ((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar'])}},-</p>
+                            <p class="card-text" style="font-style: italic;">Terbayar pada {{date("Y-m-d", strtotime($tagihan->updated_at))}}</p>
+                        </div>
                           <div class="col">
                             <div class="col text-right" id="tombol">
                               <a id="lunas" style="padding:5px 10px; background-color:#6c757d; border-radius:20px; color:#fff;">Lunas</a>

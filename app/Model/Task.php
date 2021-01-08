@@ -25,4 +25,8 @@ class Task extends Model
     {
         return $this->belongsTo('App\Model\User', 'handler', 'id');
     }
+
+    public function proyek(){
+        return $this->belongsTo('App\Model\Proyek', 'id_proyek', 'id');
+    }
 }

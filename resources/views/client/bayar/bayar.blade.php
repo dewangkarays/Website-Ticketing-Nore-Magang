@@ -231,80 +231,138 @@
           @include('client.headerdesktop')
         </div>
         <div class="data-pembayaran" style="padding-bottom:0.5em;">
-          <div class="bayar-head">
+          <div class="bayar-head" style="padding-bottom:2rem;">
             <div class="row">
-              <div class="col" id="task"><h3 style="padding-top:1em; ">History Pembayaran</h3></div>
-              {{-- <div class="col text-right"  id="status">
-                <div class="dropdown" style="padding-top:1em;">
-                  <button class="dropbtn">Sorting</button>
-                  <div class="dropdown-content" style="text-align: left !important;">
-                    <a href="#">Terbaru</a>
-                    <a href="#">Selesai</a>
-                    <a href="#">Sedang dikerjakan</a>
+              <div class="col" id="task">
+                <h3 style="padding-top:1em; ">Bayar</h3>
+                <div class="card" style="background-color: #aaaa; padding:10px 10px; border:none; color:#242424;">
+                  <p>Pembayaran dapat dilakukan melalui bank : </p>
+                  <div class="row">
+                    <div class="col">
+                      <img src="{{ URL::asset('global_assets/images/bca.png') }}" alt="" style="width:100px; display:inline;"/>
+                      <span style="display: inline-block;">a/n Noer Tjahja Moekthi Prajitno (8985181108)</span>
+                    </div>
                   </div>
                 </div>
-              </div> --}}
+                <div class="card" style="background-color: #fafafa; padding:10px 10px; border:none; color:#242424; margin-top:1rem;">
+                  <p style="text-align: center;">Setelah melakukan pembayaran, isi form pembayaran berikut</p>
+                  <a href="/purchase" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Konfirmasi Pembayaran</a>
+                </div>
+              </div>
             </div>
           </div>
-          </div>
           <div class="hide-mobile">
+            <h3 style="padding-top:1em; ">Status Pembayaran</h3>
+            @if (count($payments)==0)
+                <p style="text-align: center; font-style:italic; padding-top:1rem;">Belum ada transaksi pembayaran</p>
+            @else
             @foreach ($payments as $payment)
-            {{-- @for($i=0;$i<3;$i++) --}}
             <div class="card" style="background-color:#fafafa;">
               <div class="card-header" style="font-weight: bold; font-size:24px;">
                 <div class="row">
                   <div class="col">
-                    {{$payment->receipt_no}} 
+                    <h5 style="font-weight: bold;">{{$payment->receipt_no}}</h5>
                   </div>
                   <div class="col text-right">
-                    <a href="" class="btn btn-success rounded-pill">Terbayar</a>
+                    @if ($payment->status==0)
+                    <a class="btn btn-warning rounded-pill" style="color:#fff;">Belum Terkonfirmasi</a>
+                    @elseif($payment->status==1)
+                    <a class="btn btn-success rounded-pill" style="color:#fff;">Terkonfirmasi</a>
+                    @elseif($payment->status==2)
+                    <a class="btn btn-danger rounded-pill" style="color:#fff;">Ditolak</a>
+                    @else
+                      <p>Kosong</p>
+                    @endif
                   </div>
                 </div>
               </div>
               <div class="card-body">
-                {{-- <h5 class="card-title">Special title treatment</h5> --}}
-                <p class="card-text">Tanggal pembayaran: {{$payment->tgl_bayar}}</p>
-                <p class="card-text">Keterangan : {{$payment->keterangan}}</p>
-                <p class="card-text">Nominal : {{$payment->nominal}} </p>
-                {{-- <a href="/purchase" class="btn btn-success" style="font-weight: bold; padding:6px 18px; border-radius:5px;">Bayar</a> --}}
+                <div class="row">
+                  <div class="col">
+                    <p class="card-text">No. Invoice</p>
+                    <p class="card-text">Tanggal pembayaran</p>
+                    <p class="card-text">Nominal</p>
+                    <p class="card-text">Keterangan</p>
+                  </div>
+                  <div class="col">
+                    <p class="card-text">{{$payment->tagihan->invoice}}</p>
+                    <p class="card-text">{{$payment->tgl_bayar}}</p>
+                    <p class="card-text">{{$payment->nominal}} </p>
+                    <p class="card-text">{{$payment->keterangan}}</p>
+                  </div>
+                </div>
+                <div class="row" style="padding-top:1rem;">
+                  <div class="col">
+                    @if ($payment->status==2)
+                    <a href="/purchase" class="btn btn-success" id="bayar" style="border-radius:5px; font-weight:bold;">Re-konfirmasi</a>
+                  @endif
+                  </div>
+                </div>
               </div>
             </div>
             <div class="divider"></div>
-            {{-- @endfor --}}
-            @endforeach
+            @endforeach    
+            @endif
           </div> 
           <div class="hide-desktop">
+            <h3 style="padding-top:1em; ">Status Pembayaran</h3>
+            @if (count($payments)==0)
+              <p style="text-align: center; font-style:italic; padding-top:1rem;">Belum ada transaksi pembayaran</p>
+            @else
             <div class="cardContainer">
               @foreach ($payments as $payment)
-              {{-- @for($i=0;$i<3;$i++) --}}
               <div class="card" style="background-color:#fafafa;">
                 <div class="card-header" style="font-weight: bold; font-size:24px;">
                   <div class="row">
                     <div class="col">
-                    {{$payment->receipt_no}} 
-                  </div>
+                      <h5 style="font-weight: bold;">{{$payment->receipt_no}}</h5>
+                    </div>
                   <div class="col text-right">
-                    <a href="" class="btn btn-success rounded-pill">Terbayar</a>
+                    @if ($payment->status==0)
+                    <a class="btn btn-warning rounded-pill" style="color:#fff;">Belum Terkonfirmasi</a>
+                    @elseif($payment->status==1)
+                    <a class="btn btn-success rounded-pill" style="color:#fff;">Terkonfirmasi</a>
+                    @elseif($payment->status==2)
+                    <a class="btn btn-danger rounded-pill" style="color:#fff;">Ditolak</a>
+                    @else
+                      <p>Kosong</p>
+                    @endif
                   </div>
                 </div>
               </div>
               <div class="card-body">
-                {{-- <h5 class="card-title">Special title treatment</h5> --}}
-                <p class="card-text">Tanggal pembayaran: {{$payment->tgl_bayar}}</p>
-                <p class="card-text">Keterangan : {{$payment->keterangan}}</p>
-                <p class="card-text">Nominal : {{$payment->nominal}} </p>
-                {{-- <a href="/purchase" class="btn btn-success" style="font-weight: bold; padding:6px 18px; border-radius:5px;">Bayar</a> --}}
+                <div class="row">
+                  <div class="col">
+                    <p class="card-text">No. Invoice</p>
+                    <p class="card-text">Tanggal pembayaran</p>
+                    <p class="card-text">Nominal</p>
+                    <p class="card-text">Keterangan</p>
+                  </div>
+                  <div class="col">
+                    <p class="card-text">{{$payment->tagihan->invoice}}</p>
+                    <p class="card-text">{{$payment->tgl_bayar}}</p>
+                    <p class="card-text">{{$payment->nominal}} </p>
+                    <p class="card-text">{{$payment->keterangan}}</p>
+                  </div>
+                </div>
+                <div class="row" style="padding-top:1rem;">
+                  <div class="col">
+                    @if ($payment->status==2)
+                    <a href="/purchase" class="btn btn-success" id="bayar" style="border-radius:5px; font-weight:bold;">Re-konfirmasi</a>
+                  @endif
+                  </div>
+                </div>
               </div>
             </div>
             <div class="divider"></div>  
             @endforeach
-            {{-- @endfor --}}
             </div>
           </div>
+          @endif
+        </div>
         <div class="copyright">
           <p style="text-align: center">2020. Nore Inovasi.</p>
         </div>
-      </div>
     </div>
     <div class="footer">
         <div class="split"></div>

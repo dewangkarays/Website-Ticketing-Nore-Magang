@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\User;
 use App\Model\Task;
+use App\Model\Proyek;
 
 class AntrianClient extends Controller
 {
@@ -17,8 +18,8 @@ class AntrianClient extends Controller
     public function index()
     {
         
-        $antrians = Task::join('users', 'users.id', '=', 'tasks.user_id')
-        ->orderBy('users.role', 'ASC')
+        $antrians = Task::join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
+        ->orderBy('proyeks.tipe', 'ASC')
         ->where('tasks.status','!=','3')
         ->orderBy('tasks.status', 'DESC')
         ->orderBy('tasks.created_at', 'ASC')

@@ -164,25 +164,41 @@
         </div>
         <div class="cardContainer">
           {{-- diganti jumlah aktif --}}
-          @foreach ($tagihans as $tagihans)
-          @if (\Auth::user()->id == $tagihans->user_id && $tagihans->status!=2)
+          @foreach ($tagihans as $tagihan)
+          @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
           {{-- @for($i=0;$i<5;$i++) --}}
           <div class="card w-100">
             <div class="card-body">
               <div class="invoice">
-                <h5 class="card-title">Invoice {{$tagihans->invoice}}</h5>
-                <p class="card-text">{{$tagihans->keterangan}}</p>
                 <div class="row">
                   <div class="col">
-                    <p class="card-text" style="font-weight:bold;">Tagihan</p>
-                    <h5 class="card-text">Rp. {{$tagihans->jml_tagih}}</h5>
+                    <h5 class="card-title">{{$tagihan->proyek->website}}</h5>
+                    <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
+                  </div>
+                  <div class="col text-right">
+                    @if ($tagihan->status==0)
+                    <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Belum dibayar</a>
+                    @else
+                    <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar sebagian</a>
+                    @endif
+                  </div>
+                </div>
+                <p class="card-text">{{$tagihan->keterangan}}</p>
+                <div class="row">
+                  <div class="col">
+                    <p class="card-text">Total Tagihan</p>
+                    <h5 class="card-text">Rp. {{ ((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar'])}}</h5>
                   </div>
                   <div class="col">
-                    <p class="card-text"  style="font-weight:bold;">Harus dibayar</p>
-                    <h5 class="card-text">Rp. {{$tagihans->jml_bayar}}</h5>
+                    <p class="card-text">Sudah Dibayar</p>
+                    <h5 class="card-text">Rp. {{$tagihan->jml_bayar}} </h5>
+                  </div>
+                  <div class="col">
+                    <p class="card-text">Harus dibayar</p>
+                    <h5 class="card-text">Rp.{{$tagihan->jml_tagih}} </h5>
                   </div>
                   <div class="col text-center" id="tombol">
-                    <a href="/purchase" class="btn btn-success" style="font-weight: bold; padding:6px 18px; border-radius:5px;">Bayar</a>
+                    <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                   </div>
                 </div>
               </div>

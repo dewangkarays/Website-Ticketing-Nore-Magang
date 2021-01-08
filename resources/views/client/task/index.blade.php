@@ -232,9 +232,11 @@
                 {{-- <a href="/taskcreate">
                   <button type="button" class="btn btn-success btn-circle btn-xl" style="text-align: center">+</button> 
                 </a> --}}
-                <button class="btn btn-success" style="font-weight: bold; border:none; padding:12px 20px;">
-                <a href="/taskcreate">Tambah</a>
-                </button>
+                <a href="/taskcreate">
+                  <button class="btn btn-success" style="font-weight: bold; border:none; padding:12px 20px;">
+                    Tambah
+                  </button>
+                </a>
               </div>
             </div>
             <div class="row">
@@ -252,37 +254,75 @@
           </div>
           </div>
           {{-- <div class="hide-mobile"> --}}
-            @foreach ($tasks as $tasks)
-              {{-- @for($i=0;$i<3;$i++) --}}
+            <p>Sisa Task : <span style="font-weight:bold; font-size:26px !important;"> {{@$users->first()->task_count - count($tasks)}} </span></p>
+            @foreach ($tasks as $task)
+            {{-- <p>{{$tasks->user->get(0)->count_task}}</p> --}}
+            {{-- <p>{{$tasks->count_task}}</p> --}}
               <div class="card" style="background-color:#fafafa;">
-                <div class="card-header" style="font-weight: bold; font-size:24px;">
-                  {{-- <p></p> --}}
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col">
+                      <h5 style="font-weight:bold;">{{$task->proyek->website}}</h5>
+                    </div>
+                    <div class="col text-right">
+                      @if ($task->status==1)
+                      <a style="background-color:#4A708B; color:#fff; padding:5px 24px; border-radius:20px; font-weight:bold; ">Baru</a>
+                      @elseif($task->status==2)
+                      <a style="background-color:rgb(255, 196, 0); color:#fff; padding:5px 24px; border-radius:20px; font-weight:bold;">Dikerjakan</a>
+                      @elseif($task->status==3)
+                      <a style="background-color:grey; color:#fff; padding:5px 24px; border-radius:20px; font-weight:bold;">Selesai</a>
+                      @else
+                      <p>Tidak diketahui</p>
+                      @endif
+                    </div>
+                  </div>
                 </div>
                 <div class="card-body">
-                  {{-- <p class="card-text">{{date("d-m-Y", strtotime($tasks->created_at))}}</p> --}}
-                  <p class="card-text">{{$tasks->created_at->format('j F Y')}}</p>
-                  <p class="card-text">Kebutuhan : {{$tasks->kebutuhan}} </p>
-                  <p class="card-text">Handler :
-                    @if (\Auth::user()->role == 10)
-                    <input data-id="{{$tasks->id}}" class="form-check-input toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $tasks->handler == \Auth::user()->id ? 'checked' : '' }}>
-                    @endif
-                    {{@$tasks->assign->nama}}
-                  </p>
-                  @if ($tasks->status!=3)
+                  {{-- <p class="card-text">{{date("d-m-Y", strtotime($task->created_at))}}</p> --}}
+                  <div class="row">
+                    <div class="col">
+                      <p class="card-text">Kebutuhan :</p>
+                    </div>
+                    <div class="col">
+                      <p>{{$task->kebutuhan}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      {{-- <p class="card-text">{{$task->created_at->format('j F Y')}}</p> --}}
+                      <p class="card-text">
+                      @if ($task->handler==null)
+                        Belum ada handler
+                      @else
+                        Handler : {{@$task->assign->nama}}
+                      @endif
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row" style="padding-top:1rem;">
+                    <div class="col">
+                      @if ($task->handler==null)
+                        <form action="{{route('taskclients.destroy',$task->id)}}" method="post" class="d-inline">
+                          @csrf
+                          @method('delete')
+                            <button type="submit" class="btn btn-danger" style="font-weight: bold;">Batalkan</button>
+                        </form>
+                      @endif
+                    </div>
+                  </div>
+                  {{-- @if ($task->status!=3)
                   <button type="button" id="btn-update" class="btn btn-secondary">Selesai</button>
                   @else
                   <input class="form-control" type="hidden" name="task_id" id="task_id" value=""/>
                   <button type="button" id="btn-update" class="btn btn-primary">Selesai</button>
                   @endif
-                  {{-- <a href="#" class="btn btn-primary"></a> --}}
-                  <form action="{{route('taskclients.destroy',$tasks->id)}}" method="post" class="d-inline">
+                  <form action="{{route('taskclients.destroy',$task->id)}}" method="post" class="d-inline">
                     @csrf
                     @method('delete')
                     <button type="submit" class="btn btn-danger d-inline">
                       Hapus
                     </button>
-                    {{-- <a href="#" class="btn btn-danger">Hapus</a> --}}
-                  </form>
+                  </form> --}}
                 </div>
               </div>
               <div class="divider"></div>

@@ -207,13 +207,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                {{-- <tr>
                   <th scope="row">Rp. {{$tagihan->langganan}} </th>
                   <td>Rp. {{$tagihan->ads}}</td>
                   <td>Rp. {{$tagihan->lainnya}}</td>
                   <td>Rp. {{$tagihan->jml_bayar}}</td>
                   <td>Rp. {{$tagihan->jml_tagih}}</td>
-                </tr>
+                </tr> --}}
               </tbody>
             </table>
           </div>

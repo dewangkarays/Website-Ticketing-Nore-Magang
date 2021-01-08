@@ -98,7 +98,8 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/tagihanriwayat','client\TagihanClient@history');
 		Route::resource('/paymentclients', 'client\PaymentClient');
 		Route::get('/payment','client\PaymentClient@index');
-		Route::get('/purchase/{id}','client\PaymentClient@create');
+		Route::get('/purchase','client\PaymentClient@create');
+		// Route::get('/purchase/{id}','client\PaymentClient@create');
 		// Route::view('/dashboard','/client/layout');
 		Route::resource('/taskclients', 'client\TaskClient');
 		Route::get('/taskclient','client\TaskClient@index');

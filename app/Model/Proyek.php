@@ -18,4 +18,9 @@ class Proyek extends Model
     public function tagihan(){
         return $this->hasOne('App\Model\Tagihan','id_proyek','id');
     }
+
+    public function task(){
+        return $this->hasMany('App\Model\Task','id_proyek','id');
+    }
+    
 }
