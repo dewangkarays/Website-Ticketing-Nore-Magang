@@ -26,7 +26,11 @@ class AntrianClient extends Controller
         ->select('tasks.*')
         ->get();
 
-        return view('client.antrian.antrian',['antrians'=>$antrians]);
+        $taskcount = Task::where('user_id',\Auth::user()->id)->get()->count();
+
+        $task = User::where('id',\Auth::user()->id)->first();
+
+        return view('client.antrian.antrian',compact('antrians','taskcount','task'));
     }
 
     /**

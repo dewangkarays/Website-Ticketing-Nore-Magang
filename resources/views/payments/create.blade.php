@@ -73,7 +73,6 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Tagihan</label>
 						<div class="col-lg-10">
-							
 							@if ($tagihanuser2 != null)	
 							<label class="col-form-label">{{$tagihanuser2->invoice}} - Rp. {{number_format($tagihanuser2->jml_tagih,0,',','.')}}</label>
 							<input class="form-control" type="hidden" name="tagihan_id" id="tagihan_id" value="{{$tagihanuser2->id}}">

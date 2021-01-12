@@ -275,9 +275,6 @@
                                 <p>Hingga : <span style="font-weight: bold;">{{@$tagihan->proyek->masa_berlaku}}</span></p>
                               </div>
                             </div>
-                            {{-- <div class="col">
-                              <p>Kadaluarsa : {{@$tagihan->proyek->masa_berlaku}}</p>
-                            </div> --}}
                             <div class="row" style="padding-top:2rem;">
                               <div class="col text-left">
                                 @if ($tagihan->status!='2')
@@ -288,21 +285,21 @@
                               <div class="col text-right">
                                 @if ($tagihan->status!='2')
                                 <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
-                                  <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                                  <a href="/payment" class="btn btn-success" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                                  {{-- <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a> --}}
                                 </div>
                                 @endif 
                               </div>
                             </div>
                           </div>
                         </div>
-                        {{-- </div> --}}
                       </div>
                         @endforeach
                   </div>
                 @elseif(count($proyeks)<1)
                   <div class="row">
                     <div class="col">
-                      <h2>Belum Ada Website Langganan</h2>
+                      <p style="text-align: center; padding-top:1rem;">Belum Ada Website Langganan</p>
                     </div>
                   </div>
                 @else
@@ -355,7 +352,7 @@
                             <div class="col text-right">
                               @if ($tagihan->status!='2')
                               <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
-                                <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                                <a href="/payment" class="btn btn-success" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                               </div>
                               @endif 
                             </div>
@@ -421,7 +418,7 @@
                         <div class="col">
                           @if ($tagihan->status!='2')
                           <div class="buttondetail" style="padding-bottom:5px;">
-                            <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                            <a href="/payment" class="btn btn-success" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                           </div>
                           @endif 
                         </div>
@@ -462,7 +459,7 @@
                             @if ($task->handler==null)
                               <p>Belum ada handler</p>
                             @else
-                              <p>{{$task->handler}}</p>
+                              <p>{{$task->assign->nama}}</p>
                             @endif
                           </div>
                         </div>
@@ -509,7 +506,7 @@
                             @if ($task->handler==null)
                               <p>Belum ada handler</p>
                             @else
-                              <p>{{$task->handler}}</p>
+                              <p><p>{{$task->assign->nama}}</p></p>
                             @endif
                           </div>
                         </div>
@@ -554,7 +551,7 @@
                             @if ($task->handler==null)
                               <p>Belum ada handler</p>
                             @else
-                              <p>{{$task->handler}}</p>
+                              <p>{{$task->assign->nama}}</p>
                             @endif
                           </div>
                         </div>
@@ -578,9 +575,11 @@
                 </div>
               </div>
             </div>
-              <div class="col text-right">
-                <a href="/taskclients" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right; border-radius:5px;">Detail</a>
-              </div>
+            @if ($taskcounts>0)
+            <div class="col text-right" style="padding-top:1rem;">
+              <a href="/taskclients" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right; border-radius:5px;">Detail</a>
+            </div>
+            @endif
         </div>
                 <div class="hide-mobile">
                   <div class="wrap">
@@ -590,6 +589,9 @@
                           <h2>Tagihan Aktif</h2>
                         </div>
                         <div class="cardContainer">
+                          @if ($tagihanactives==0)
+                          <h6 style="text-align: center; padding-top:1rem;">Tidak tagihan aktif</h6>
+                          @else
                           <?php $count = 0; ?>
                           @foreach ($tagihans as $tagihan)
                           @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
@@ -626,7 +628,8 @@
                                 </div>
                               </div>
                               <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
-                                <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                                {{-- <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a> --}}
+                                <a href="/payment" class="btn btn-success" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                               </div>  
                             </div>
                           </div>
@@ -634,9 +637,10 @@
                           <?php $count++; ?>
                           @endif
                           @endforeach
-                        </div>
-                        <div class="col text-right">
-                        <a href="/tagihanaktif" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right;">Detail</a>
+                          <div class="col text-right">
+                            <a href="/tagihanaktif" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right;">Detail</a>
+                          </div>
+                          @endif
                         </div>
                       </div>
                       <div class="col w-50">
@@ -679,7 +683,7 @@
                               </div>
                               <div class="divider"></div>
                               <?php $count++; ?>
-                              @endif
+                            @endif
                             @endforeach
                             <div class="col text-right">
                               <a href="/tagihanriwayat" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right; border-radius:5px;">Detail</a>
@@ -696,6 +700,9 @@
                           <h2 style="padding-bottom:1rem;">Tagihan Aktif</h2>
                       </div>
                       <div class="cardContainer">
+                        @if ($tagihanactives==0)
+                        <h6 style="text-align: center; padding-top:1rem;">Tidak tagihan aktif</h6>
+                        @else
                         <?php $count = 0; ?>
                         @foreach ($tagihans as $tagihan)
                         @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
@@ -708,7 +715,7 @@
                           <div class="card-body">
                             <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{@$tagihan->jml_tagih}}</p>
                             <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
-                              <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                              <a href="/payment" class="btn btn-success" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                             </div>  
                           </div>
                         </div>
@@ -720,6 +727,7 @@
                       <div class="col text-right">
                           <a href="/tagihanaktif" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right; border-radius:10px;">Detail</a>
                       </div>
+                        @endif
                   </div>
                   <div class="wrap">
                       <div class="history">
@@ -763,10 +771,10 @@
                       <?php $count++; ?>
                       @endif
                       @endforeach
+                      <div class="col text-right">
+                        <a href="/tagihanriwayat" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right; border-radius:10px;">Detail</a>
+                      </div>
                     @endif
-                    </div>
-                    <div class="col text-right">
-                      <a href="/tagihanriwayat" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right; border-radius:10px;">Detail</a>
                     </div>
                   </div>
                 </div>

@@ -174,17 +174,71 @@
         <form method="POST" action="{{route('paymentclients.store')}}">
           @csrf
           {{-- <div class="form-group row">
-            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Nama</label>
+            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Invoice</label>
             <div class="col-sm-8">
-              <input type="name" class="form-control form-control-sm-8" id="colFormLabelSm" placeholder="Input Nama">
-              <p>{{\Auth::user()->nama}}</p>
+              @if ($tagihanuser2 != null)	
+							<label class="col-form-label">{{$tagihanuser2->invoice}} - Rp. {{number_format($tagihanuser2->jml_tagih,0,',','.')}}</label>
+							<input class="form-control" type="hidden" name="tagihan_id" id="tagihan_id" value="{{$tagihanuser2->id}}">
+							@else
+							<select name="tagihan_id" id="tagihan_id" class="form-control select-search" data-fouc onchange="changeTagihan(this)" required>
+								<option value="">-- Pilih Tagihan --</option>
+								@foreach ($tagihanuser as $tagihan)
+								<option value="{{$tagihan->id}}" data-tagihan="{{$tagihan->jml_tagih}}" >{{$tagihan->invoice}} {{number_format($tagihan->jml_tagih,0,',','.')}}</option>'
+								@endforeach
+							</select>
+							@endif
             </div>
           </div> --}}
           <div class="form-group row">
+						<label class="col-sm-4 col-form-label col-form-label-sm">Tagihan</label>
+						<div class="col-sm-8">
+							@if ($tagihanuser2 != null)	
+							<label class="col-form-label">{{$tagihanuser2->invoice}} - Rp. {{number_format($tagihanuser2->jml_tagih,0,',','.')}}</label>
+							<input class="form-control" type="hidden" name="tagihan_id" id="tagihan_id" value="{{$tagihanuser2->id}}">
+							@else
+							<select name="tagihan_id" id="tagihan_id" class="form-control select-search" data-fouc onchange="changeTagihan(this)" required>
+								<option value="">-- Pilih Tagihan --</option>
+								@foreach ($tagihanuser as $tagihan)
+								<option value="{{$tagihan->id}}" data-tagihan="{{$tagihan->jml_tagih}}" >{{$tagihan->invoice}} {{number_format($tagihan->jml_tagih,0,',','.')}}</option>'
+								@endforeach
+							</select>
+							@endif
+						</div>
+          </div>
+          <div class="form-group row">
+						<label class="col-form-label col-lg-4">&nbsp;</label>
+						<div class="col-lg-8" id="detailTagihan">
+							<table class="table table-striped">
+								<tr>
+									<td>Langganan</td>
+									<td>Ads</td>
+									<td>Lainnya</td>
+									<td>Sudah Dibayar</td>
+									<td>Total Tagihan</td>
+								</tr>
+								@if ($tagihanuser2 != null)	
+								<tr>
+									<td>{{number_format($tagihanuser2->langganan,0,',','.')}}</td>
+									<td>{{number_format($tagihanuser2->ads,0,',','.')}}</td>
+									<td>{{number_format($tagihanuser2->lainnya,0,',','.')}}</td>
+									<td>{{number_format($tagihanuser2->jml_bayar,0,',','.')}}</td>
+									<td>{{number_format($tagihanuser2->jml_tagih,0,',','.')}}</td>
+								</tr>
+								@else
+								<tr>	
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+								</tr>
+								@endif
+							</table>
+						</div>
+					</div>
+          <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Tanggal Pembayaran</label>
             <div class="col-sm-8">
-              {{-- <input type="text" class="form-control form-control-sm" id="datepicker" name="date" placeholder=""> --}}
-              {{-- <input type="text" class="form-control pickadate-accessibility" id="datepicker" name="tgl_bayar" required> --}}
               <input name="tgl_bayar" type="date" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif">
             </div>
           </div>
@@ -193,29 +247,6 @@
             <div class="col-sm-8">
               <textarea name="keterangan" rows="4" cols="3" class="form-control" placeholder="Keterangan" required></textarea>
             </div>
-          </div>
-          <div class="form-group row">
-            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Rincian Tagihan</label>
-            <table class="table table-hover col-sm-8" style="align-items:center;">
-              <thead>
-                <tr>
-                  <th scope="col">Langganan</th>
-                  <th scope="col">Ads</th>
-                  <th scope="col">Lainnya</th>
-                  <th scope="col">Terbayar</th>
-                  <th scope="col">Total Tagihan</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{-- <tr>
-                  <th scope="row">Rp. {{$tagihan->langganan}} </th>
-                  <td>Rp. {{$tagihan->ads}}</td>
-                  <td>Rp. {{$tagihan->lainnya}}</td>
-                  <td>Rp. {{$tagihan->jml_bayar}}</td>
-                  <td>Rp. {{$tagihan->jml_tagih}}</td>
-                </tr> --}}
-              </tbody>
-            </table>
           </div>
           <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm" id="nominal">Nominal Pembayaran</label>
@@ -251,7 +282,34 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
     <script>
+      $.ajax({
+						type: 'GET',
+						url: "{{ url('/gettagihan')}}/"+id,
+						success: function (data) {
+							$('#tagihan_id').html(data);
+						}
+					});
+        }
+        
+      function changeTagihan(select){
+        var id = $(select).find(':selected').val();
+        var tagih = $(select).find(':selected').data('tagihan');
+        
+        $("#tertulis").prop('max',tagih);
+        
+        
+        $.ajax({
+          type: 'GET',
+          url: "{{ url('/detailtagihan')}}/"+id,
+          success: function (data) {
+            $('#detailTagihan').html(data);
+          }
+        });
+      }
+
       
+
+
     </script>
   </body>
 </html>

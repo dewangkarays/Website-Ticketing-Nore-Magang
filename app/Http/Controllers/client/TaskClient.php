@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Task;
 use App\Model\User;
+use App\Model\Proyek;
 
 
 class TaskClient extends Controller
@@ -23,6 +24,7 @@ class TaskClient extends Controller
                         ->orderBy('tasks.created_at', 'DESC')
                         ->select('tasks.*')
                         ->get();  //customer
+            // $taskcount = Task::where('user_id',\Auth::user()->id)->get()->count();
             $users = User::where('id',\Auth::user()->id)->get();
         } 
 
@@ -37,7 +39,10 @@ class TaskClient extends Controller
     public function create()
     {
         //
-        return view('client.task.create');
+        $tasks = Task::where('user_id',\Auth::user()->id)->get();
+        $proyeks = Proyek::where('user_id',\Auth::user()->id)->get();
+        // $taskuser = '';
+        return view('client.task.create',compact('tasks','proyeks'));
     }
 
     /**
@@ -53,6 +58,7 @@ class TaskClient extends Controller
         $task = new Task;
         $task->user_id = \Auth::user()->id;
         $task->kebutuhan = $request->kebutuhan;
+        $task->id_proyek = $request->website;
         $task->save();
         return redirect('/taskclient');
     }

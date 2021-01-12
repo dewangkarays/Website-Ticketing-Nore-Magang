@@ -18,7 +18,10 @@ class TagihanClient extends Controller
     {
         //
         $tagihans = Tagihan::orderBy('created_at')->get();
-        return view('client.tagihan.tagihan',['tagihans'=>$tagihans]);
+        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+        $tagihanhistories = Tagihan::where('user_id',\Auth::user()->id)->where('status','=','2')->get()->count();
+
+        return view('client.tagihan.tagihan',compact('tagihans','tagihanactives','tagihanhistories'));
     }
 
     public function active()
@@ -100,4 +103,41 @@ class TagihanClient extends Controller
     {
         //
     }
+
+    public function getTagihan($id)
+    {
+        $tagihans = Tagihan::where('user_id', $id)->get();
+        $html = '<option value="">-- Pilih Tagihan --</option>';
+        foreach ($tagihans as $tagihan) {
+            $html .= '<option value="'.$tagihan->id.'" data-tagihan="'.$tagihan->jml_tagih.'" >'.$tagihan->invoice.' ('.$tagihan->jml_tagih.')</option>';
+        }
+
+        return $html;
+    }
+    
+    public function detailTagihan($id)
+    {
+        $tagihan = Tagihan::find($id);
+        $html = '
+        <table class="table table-striped">
+            <tr>
+                <td>Langganan</td>
+                <td>Ads</td>
+                <td>Lainnya</td>
+                <td>Sudah Dibayar</td>
+                <td>Total Tagihan</td>
+            </tr>
+            <tr>
+                <td>'.$tagihan->langganan.'</td>
+                <td>'.$tagihan->ads.'</td>
+                <td>'.$tagihan->lainnya.'</td>
+                <td>'.$tagihan->jml_bayar.'</td>
+                <td>'.$tagihan->jml_tagih.'</td>
+            </tr>
+        </table>';
+
+        return $html;
+    }
+
+
 }

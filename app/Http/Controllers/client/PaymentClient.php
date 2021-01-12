@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\Payment;
 use App\Model\Tagihan;
 use App\Model\User;
+use App\Model\Setting;
 
 class PaymentClient extends Controller
 {
@@ -36,8 +37,11 @@ class PaymentClient extends Controller
 
     public function create()
     {
-        $tagihan = Tagihan::where('user_id',\Auth::user()->id)->get();
-        return view('client.bayar.pembayaran',compact('tagihan'));
+        $users = User::where('role','>','50')->get();
+        $tagihanuser = Tagihan::where('user_id', \Auth::user()->id)->get();
+        $tagihanuser2 = '';
+        $setting = Setting::first();
+        return view('client.bayar.pembayaran',compact('setting', 'users', 'tagihanuser','tagihanuser2'));
     }
     /**
      * Store a newly created resource in storage.
@@ -48,14 +52,16 @@ class PaymentClient extends Controller
     public function store(Request $request)
     {
         //
-        $payment = new Payment;
-        $payment->user_id = \Auth::user()->id;
-        $payment->tgl_bayar = $request->tgl_bayar;
-        $payment->keterangan = $request->keterangan;
-        $payment->nominal = $request->nominal;
-        $payment->save();
-       
-        return redirect('/payment')->with('success', 'Payment saved!');
+        // $payment = new Payment;
+        // $payment->user_id = \Auth::user()->id;
+        // $payment->tgl_bayar = $request->tgl_bayar;
+        // $payment->keterangan = $request->keterangan;
+        // $payment->nominal = $request->nominal;
+        // $payment->save();
+    
+        // return redirect('/payment')->with('success', 'Payment saved!');
+
+        
 
     }
 

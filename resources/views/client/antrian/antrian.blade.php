@@ -57,12 +57,23 @@
       padding-top: 6rem;
     }
 
-        /* tambahan */
-      .wrapper {
-      display: flex;
-      align-items: 100%;
-      /* width: 80%; */
-      }
+      /* tambahan */
+    .wrapper {
+    display: flex;
+    align-items: 100%;
+    /* width: 80%; */
+    }
+
+    table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
 
       @media (max-width: 768px) {
       .sidebar{
@@ -130,12 +141,19 @@
                     </a>
                 </div>
             </div>
+            <div class="row" style="padding-top:1rem;;">
+              <div class="col">
+              <p>Sisa Task : <span style="font-size:24px;">{{$task->task_count - $taskcount}}</span></p>
+            </div>
           </div>
-          <div class="table-responsive" style="padding-top:1rem;">
-            <table class="table table-bordered">
-              <thead class="table-success">
-                <tr>
-                  <th scope="col">No</th>
+          </div>
+          <input type="text" id="myInput" placeholder="Cari">
+          <br><br>
+          <div class="table-responsive">
+          <table>
+            <thead class="table-success">
+            <tr>
+              <th scope="col">No</th>
                   <th scope="col">Tanggal</th>
                   <th scope="col">Pelanggan</th>
                   <th scope="col">Proyek</th>
@@ -143,13 +161,13 @@
                   <th scope="col">Status</th>
                   <th scoper="col">Handler</th>
                   <th scoper="col">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                @php($i=1)
-                @foreach ($antrians as $antrian)
-                <tr>
-                  <th scope="row">{{$i}}</th>
+            </tr>
+            </thead>
+            <tbody id="myTable">
+            @php($i=1)
+            @foreach ($antrians as $antrian)
+            <tr>
+              <th scope="row">{{$i}}</th>
                   <td>{{date("Y-m-d", strtotime($antrian->created_at))}}</td>
                   <td>{{(\Auth::user()->id == $antrian->user_id || \Auth::user()->role<20) ? $antrian->user->username : 'Pelanggan Lain'}}</td>
                   <td>
@@ -184,26 +202,28 @@
                     @if ($antrian->handler==null)
                       <p>Belum ada handler</p>
                     @else
-                    <p>{{$antrian->handler}}</p> 
+                    <p>{{$antrian->assign->nama}}</p> 
                     @endif
                   </td>
                   <td>
                     <p>
-                      @if ($antrian->handler==null)
+                      @if ($antrian->handler==null && \Auth::user()->id == $antrian->user_id)
                       <form action="{{route('taskclients.destroy',$antrian->id)}}" method="post" class="d-inline">
                         @csrf
                         @method('delete')
                           <button type="submit" class="btn btn-danger" style="font-weight: bold;">Batalkan</button>
                       </form>
+                      @else
+                      <p>Tidak ada aksi</p>
                       @endif
                     </p>
                   </td>
-                </tr>
-                @php($i++)
-                @endforeach
-              </tbody>
-            </table>
-          </div>
+            </tr>
+            @php($i++)
+            @endforeach
+            </tbody>
+          </table>
+        </div>
           <div class="row">
             <div class="col"></div>
             <div class="col"></div>
@@ -248,6 +268,17 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+    </script>
 
   </body>
 </html>

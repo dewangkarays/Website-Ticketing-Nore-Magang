@@ -253,11 +253,11 @@
               </div> --}}
           </div>
           </div>
-          {{-- <div class="hide-mobile"> --}}
-            <p>Sisa Task : <span style="font-weight:bold; font-size:26px !important;"> {{@$users->first()->task_count - count($tasks)}} </span></p>
+            <p>Sisa Task : <span style="font-weight:bold; font-size:26px !important;"> {{@$users->first()->task_count - count(@$tasks)}} </span></p>
+            @if (count($tasks)==0)
+              <p style="text-align: center;">Belum ada Task</p>
+            @else
             @foreach ($tasks as $task)
-            {{-- <p>{{$tasks->user->get(0)->count_task}}</p> --}}
-            {{-- <p>{{$tasks->count_task}}</p> --}}
               <div class="card" style="background-color:#fafafa;">
                 <div class="card-header">
                   <div class="row">
@@ -278,7 +278,6 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  {{-- <p class="card-text">{{date("d-m-Y", strtotime($task->created_at))}}</p> --}}
                   <div class="row">
                     <div class="col">
                       <p class="card-text">Kebutuhan :</p>
@@ -289,7 +288,6 @@
                   </div>
                   <div class="row">
                     <div class="col">
-                      {{-- <p class="card-text">{{$task->created_at->format('j F Y')}}</p> --}}
                       <p class="card-text">
                       @if ($task->handler==null)
                         Belum ada handler
@@ -328,35 +326,8 @@
               <div class="divider"></div>
               {{-- @endfor --}}
               @endforeach
+             @endif
           {{-- </div> --}}
-          {{-- <div class="hide-desktop">
-            <div class="cardContainer">
-              @for($i=0;$i<3;$i++)
-              <div class="card" style="background-color:#fafafa;">
-                <div class="card-header" style="font-weight: bold; font-size:24px;">
-                  Task 
-                </div>
-                <div class="card-body">
-                  <p class="card-text">Tanggal input: </p>
-                  <p class="card-text">Kebutuhan : </p>
-                  <p class="card-text">Handler : </p>
-                  <a href="#" class="btn btn-primary">Selesai</a>
-                  <a href="#" class="btn btn-danger">Hapus</a>
-                </div>
-              </div>
-              <div class="divider"></div>
-              @endfor
-            </div>
-          </div> --}}
-          {{-- <div class="row">
-              <div class="col"></div>
-              <div class="col text-center">
-                <a href="/taskcreate">
-                  <button type="button" class="btn btn-success btn-circle btn-xl" style="text-align: center">+</button> 
-                </a>
-              </div>
-              <div class="col"></div>
-          </div> --}}
       </div>
       <div class="divider"></div>
       <div class="copyright">
@@ -368,15 +339,6 @@
       </div>
     </div>
   </div>
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script> --}}
-    {{-- tambahan --}}
-    {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> --}}
-    {{-- <script src="https://unpkg.com/@popperjs/core@2"></script> --}}
-     {{-- Option 2: jQuery, Popper.js, and Bootstrap JS --}}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>

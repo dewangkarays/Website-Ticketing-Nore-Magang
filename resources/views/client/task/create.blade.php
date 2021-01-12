@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-       {{-- fixed --}}
+    {{-- fixed --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     <style>
         .bg-light {
@@ -145,33 +145,28 @@
       </div>
       <form method="POST" action="{{route('taskclients.store')}}">
         @csrf
-        {{-- <div class="form-group row">
-          <label for="username" class="col-sm-6 col-form-label">Nama</label>
+        <div class="form-group row">
+          <label class="col-sm-6 col-form-label">Website</label>
           <div class="col-sm-6">
-            <input type="email" class="form-control" id="inputEmail3">
-            <input type="text" class="form-control" id="username" name="username">
+            <select name="website" class="form-control select-search" data-fouc>
+              @foreach($proyeks as $proyek)
+                <option value="{{$proyek->id}}">{{$proyek->website}}</option>
+              @endforeach
+            </select>
           </div>
-        </div> --}}
+        </div>
         <div class="form-group row">
           <label for="kebutuhan" class="col-sm-6 col-form-label">Kebutuhan</label>
           <div class="col-sm-6">
-            {{-- <input type="email" class="form-control" id="inputEmail3"> --}}
             <input type="text" class="form-control" id="kebutuhan" name="kebutuhan">
           </div>
         </div>
         <div class="form-group row">
           <label for="inputEmail3" class="col-sm-6 col-form-label">Lampiran</label>
           <div class="col-sm-6">
-            {{-- <button type="button" class="btn btn-warning btn-block text-center">Pilih File
-            </button> --}}
             <input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
           </div>
         </div>
-        {{-- <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-6 col-form-label"></label>
-          <div class="col-sm-6">
-            <input type="email" class="form-control text-center" id="inputEmail3" placeholder="Preview">
-        </div> --}}
       </div>
       <button type="submit" class="btn btn-success btn-lg btn-block" href="/taskclient">Tambah</button>
       </form>

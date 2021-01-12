@@ -75,9 +75,10 @@ class AdminController extends Controller
         $proyeks = Proyek::where('user_id',\Auth::user()->id)->orderBy('masa_berlaku','asc')->get();
         $taskcounts = Task::where('user_id',\Auth::user()->id)->get()->count();
         $tasks = Task::where('user_id',\Auth::user()->id)->get();
+        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
         $tagihanhistories = Tagihan::where('user_id',\Auth::user()->id)->where('status','=','2')->get();
         // dd($tagihans->proyek);
-        return view("client.layout",compact('new','ongoing','done','website','taskall','proyeks','tagihans','taskcounts','tasks','tagihanhistories'));
+        return view("client.layout",compact('new','ongoing','done','website','taskall','proyeks','tagihans','taskcounts','tasks','tagihanactives','tagihanhistories'));
         // return view("client.layout",compact('new','ongoing','done','tagihans'));
     }
 

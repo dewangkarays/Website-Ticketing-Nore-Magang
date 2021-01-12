@@ -190,6 +190,9 @@
                     <h3>Tagihan Aktif</h3>      
                   </div>
                   <div class="cardContainer">
+                    @if ($tagihanactives==0)
+                      <p style="text-align:center;">Tidak ada tagihan aktif</p>
+                    @else
                     @foreach ($tagihans as $tagihan)
                     @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
                     <div class="card">
@@ -240,7 +243,8 @@
                       <div class="col text-right">
                         <a href="/tagihanaktif" class="btn btn-warning" id="detail" style="border-radius:5px; padding:10px 20px; font-weight:bold">Detail</a>
                       </div>
-                    </div>
+                    </div>    
+                    @endif
                   </div>
                 </div>
               </div>
@@ -250,6 +254,9 @@
                     <h3>Riwayat Tagihan</h3>      
                   </div>
                   <div class="cardContainer">
+                    @if ($tagihanhistories==0)
+                      <p style="text-align:center;">Tidak ada riwayat tagihan</p>
+                    @else
                     @foreach ($tagihans as $tagihan)
                     @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
                     <div class="col">
@@ -284,7 +291,8 @@
                       <div class="col  text-right">
                         <a href="/tagihanriwayat" class="btn btn-warning" style="border-radius:5px; padding:10px 20px; font-weight:bold"id="detail">Detail</a>
                       </div>
-                    </div>
+                    </div>  
+                    @endif
                   </div>
                 </div>
               </div>
