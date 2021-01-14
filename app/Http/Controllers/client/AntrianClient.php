@@ -20,11 +20,17 @@ class AntrianClient extends Controller
         
         $antrians = Task::join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
         ->orderBy('proyeks.tipe', 'ASC')
-        ->where('tasks.status','!=','3')
+        // ->where('tasks.status','!=','3')
         ->orderBy('tasks.status', 'DESC')
         ->orderBy('tasks.created_at', 'ASC')
         ->select('tasks.*')
-        ->get();
+        ->paginate(5);
+        // dd(request()->all());
+        // ->get();
+        // dd($antrians);
+
+        // dd('/antrian?page=2');
+        // dd($antrians->toJson());
 
         $taskcount = Task::where('user_id',\Auth::user()->id)->get()->count();
 
@@ -32,6 +38,22 @@ class AntrianClient extends Controller
 
         return view('client.antrian.antrian',compact('antrians','taskcount','task'));
     }
+
+    // public function fetch_data(Request $request)
+    // {
+    // if($request->ajax())
+    // {
+    // $antrians = Task::join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
+    // ->orderBy('proyeks.tipe', 'ASC')
+    // ->where('tasks.status','!=','3')
+    // ->orderBy('tasks.status', 'DESC')
+    // ->orderBy('tasks.created_at', 'ASC')
+    // ->select('tasks.*')
+    // ->paginate(5);
+    
+    // return view('client.antrian.antrian', compact('antrians'))->render();
+    // }
+    // }
 
     /**
      * Show the form for creating a new resource.

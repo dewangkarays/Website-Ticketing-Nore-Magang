@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>OP Ticketing</title>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> --}}
     {{-- font --}}
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
@@ -149,6 +150,7 @@
           </div>
           <input type="text" id="myInput" placeholder="Cari">
           <br><br>
+          <div id="table_data">
           <div class="table-responsive">
           <table>
             <thead class="table-success">
@@ -221,13 +223,17 @@
             </tr>
             @php($i++)
             @endforeach
-            </tbody>
-          </table>
+          </tbody>
+        </table>
+        <?php echo $antrians->render(); ?>
+        {{-- {!! $antrians->links() !!} --}}
         </div>
+      </div>
           <div class="row">
             <div class="col"></div>
             <div class="col"></div>
           <div class="col text-right">
+            
             {{-- <nav aria-label="...">
               <ul class="pagination">
                 <li class="page-item disabled">
@@ -269,6 +275,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script>
     $(document).ready(function(){
       $("#myInput").on("keyup", function() {
@@ -277,6 +284,27 @@
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
       });
+    });
+
+    $(document).ready(function(){
+
+      $(document).on('click', '.pagination a', function(event){
+        event.preventDefault(); 
+        var page = $(this).attr('href').split('page=')[1];
+        fetch_data(page);
+      });
+
+      function fetch_data(page)
+      {
+        $.ajax({
+          url:"/pagination/fetch_data?page="+page,
+          success:function(data)
+          {
+          $('#table_data').html(data);
+          }
+        });
+      }
+
     });
     </script>
 
