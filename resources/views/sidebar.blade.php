@@ -108,16 +108,16 @@ ul{
 						</span>
 					</a>
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('users*','member')) ? 'block' : 'none' }};">
-						<li class="nav-item">
+						{{-- <li class="nav-item">
 							<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users')) ? 'active' : '' }}">
 								<i class="icon-briefcase"></i>
 								<span>
 									Karyawan
 								</span>
 							</a>
-						</li>
+						</li> --}}
 						<li class="nav-item">
-							<a href="{{ url('/member') }}" class="nav-link {{ (request()->is('member')) ? 'active' : '' }}">
+							<a href="{{ url('/members') }}" class="nav-link {{ (request()->is('members')) ? 'active' : '' }}">
 								<i class="icon-user-tie"></i>
 								<span>
 									Member &nbsp;
@@ -149,16 +149,16 @@ ul{
 						</span>
 					</a>
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('users*','member')) ? 'block' : 'none' }};">
-						<li class="nav-item">
+						{{-- <li class="nav-item">
 							<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users')) ? 'active' : '' }}">
 								<i class="icon-briefcase"></i>
 								<span>
 									Karyawan
 								</span>
 							</a>
-						</li>
+						</li> --}}
 						<li class="nav-item">
-							<a href="{{ url('/member') }}" class="nav-link {{ (request()->is('member')) ? 'active' : '' }}">
+							<a href="{{ url('/members') }}" class="nav-link {{ (request()->is('members')) ? 'active' : '' }}">
 								<i class="icon-user-tie"></i>
 								<span>
 									Member &nbsp;

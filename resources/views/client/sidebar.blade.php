@@ -92,7 +92,7 @@
   <h6 style=" font-weight:bold; padding-bottom:1rem; text-align:center;">Pusat Bantuan</h6>
       <div class="row" style="text-align:center">
         <div class="col">
-          <a href="https://wa.me/6281335625529" target="_blank" rel="noopener noreferrer">
+          <a href="https://wa.me/628112772788" target="_blank" rel="noopener noreferrer">
             <img src="{{ URL::asset('global_assets/images/wanew.png') }}" height="34px">
           </a>
         </div>

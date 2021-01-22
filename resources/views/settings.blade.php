@@ -37,7 +37,7 @@
 						
 						<div class="col-lg-8">
 							<textarea class="form-control click2edit border-teal border-1 p-2 mb-2" name="alamat" id="alamat" cols="30" rows="5" readonly>
-								{{$setting ? $setting->alamat : ""}}
+								{!!$setting ? $setting->alamat : ""!!}
 							</textarea>
 							<button type="button" id="edit" class="btn btn-primary"><i class="icon-pencil3 mr-2"></i> Edit</button>
 							<button type="button" id="save" class="btn btn-success"><i class="icon-checkmark3 mr-2"></i> Save</button>
@@ -93,7 +93,7 @@
 						<label class="col-form-label col-lg-2">Catatan Tagihan</label>
 						<div class="col-lg-8">
 							<textarea class=" form-control click2edit2 border-teal border-1 p-2 mb-2" name="catatan_tagihan" id="catatan_tagihan" cols="30" rows="5" readonly>
-								{{$setting ? $setting->catatan_tagihan : ""}}
+								{!!$setting ? $setting->catatan_tagihan : ""!!}
 							</textarea>
 							<button type="button" id="edit2" class="btn btn-primary"><i class="icon-pencil3 mr-2"></i> Edit</button>
 							<button type="button" id="save2" class="btn btn-success"><i class="icon-checkmark3 mr-2"></i> Save</button>
@@ -268,7 +268,7 @@
 	<script>
 		var Summernote = function() {
 			
-			
+			$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
 			//
 			// Setup module components
 			//
@@ -350,7 +350,7 @@
 <script>
 	var Summernote2 = function() {
 		
-		
+		$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
 		//
 		// Setup module components
 		//

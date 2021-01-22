@@ -105,8 +105,8 @@
     }
 
     .navbar{
-            padding: .5rem 0 !important;
-        }
+      padding: .5rem 0 !important;
+    }
 
     .container-fluid{
         padding: 0 !important;

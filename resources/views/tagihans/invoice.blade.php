@@ -144,7 +144,7 @@
                 <td style="width: 50%; vertical-align: top">
                     <table style="padding-left: 50px;">
                         <tr>
-                            <td><b>Invoice #</b>
+                            <td><b>Invoice</b>
                                 <br> <span style="font-size: 12px !important;">{{$invoice->invoice}}</span>
                             </td>
                             </tr>

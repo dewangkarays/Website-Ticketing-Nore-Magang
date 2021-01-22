@@ -310,7 +310,7 @@
                           <div class="card-body">
                             <div class="row">
                               <div class="col">
-                                <h5 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{$tagihan->nama_proyek}}</h5>
+                                <h5 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{@$tagihan->nama_proyek}}</h5>
                               </div>
                             <div class="col text-right">
                               @if ($tagihan->status=='0')
@@ -372,7 +372,7 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col">
-                            <p id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{$tagihan->nama_proyek}}</p>    
+                            <p id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{@$tagihan->nama_proyek}}</p>    
                           </div>
                         </div>
                         <div class="row">
@@ -448,7 +448,7 @@
                 <?php if($count == 2) break; ?>
                     <div class="card" style="background-color:#fff; border:none;">
                       <div class="card-header" style="background-color:#4A708B">
-                        <p style="font-weight: bold; color:#fff;">{{$task->proyek->website}}</p>
+                        <p style="font-weight: bold; color:#fff;">{{@$task->proyek->website}}</p>
                       </div>
                       <div class="card-body" style="background-color:#fafafa;">
                         <div class="row">
@@ -495,7 +495,7 @@
                     <?php if($count == 2) break; ?>
                     <div class="card" style="background-color: #fff; border:none;">
                       <div class="card-header" style="background-color:rgb(255, 196, 0)">
-                        <p style="font-weight: bold;">{{$task->proyek->website}}</p>
+                        <p style="font-weight: bold;">{{@$task->proyek->website}}</p>
                       </div>
                       <div class="card-body" style="background-color: #fafafa">
                         <div class="row">
@@ -540,7 +540,7 @@
                     <?php if($count == 2) break; ?>
                     <div class="card" style="background-color: #fff; border:none">
                       <div class="card-header" style="background-color:	grey">
-                        <p style="font-weight: bold; color:#ffff;">{{$task->proyek->website}}</p>
+                        <p style="font-weight: bold; color:#ffff;">{{@$task->proyek->website}}</p>
                       </div>
                       <div class="card-body" style="background-color: #fafafa">
                         <div class="row">
@@ -791,7 +791,7 @@
                           <p>Whatsapp</p>
                         </button> --}}
                         <button type="button" style="background-color: #3EB772; border:none; border-radius:10px; padding:10px 20px;">
-                          <a href="https://wa.me/6281335625529" target="_blank" rel="noopener noreferrer">
+                          <a href="https://wa.me/628112772788" target="_blank" rel="noopener noreferrer">
                             <img src="{{ URL::asset('global_assets/images/wanew.png') }}" height="34px">
                           </a>
                         </button>

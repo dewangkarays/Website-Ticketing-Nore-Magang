@@ -26,12 +26,23 @@
                 <fieldset class="mb-3">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Data Proyek</legend>
                     
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="col-form-label col-lg-2">User / Klien</label>
                         <div class="col-lg-10">
                             <select class="form-control border-teal" name="user_id" id="user_id">
                                 @foreach ($users as $user)
                             <option value="{{$user->id}}">{{$user->nama}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div> --}}
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">User / Klien</label>
+                        <div class="col-lg-10">
+                            <select name="user_id" class="form-control select-search" data-fouc>
+                                <option value="">-- Pilih User --</option>
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -102,7 +113,14 @@
 
 <script src="{{asset('assets/js/app.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
+<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
 <script type="text/javascript">
+    
+    //select search
+    // $(document).ready(function() {
+    //     $('.form-control').materialSelect();
+    // });
+    
     
     // Accessibility labels
     $('.pickadate-accessibility').pickadate({

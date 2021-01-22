@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
+	<title>OP Ticketing</title>
 
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -40,23 +40,27 @@
 		<div class="content-wrapper">
 
 			<!-- Content area -->
-			<div class="content d-flex justify-content-center align-items-center">
+			<div class="content d-flex justify-content-center align-items-center" style="background:#3EB772;">
 				<!-- Login form -->
 				<form class="login-form form-validate-jquery" method="POST" action="{{ url('/login') }}">
 					{{ csrf_field() }}
 					<div class="card mb-0">
 						<div class="card-body">
 							<div class="text-center mb-3">
-								<i class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i>
-								<h5 class="mb-0">Login to your account</h5>
-								<span class="d-block text-muted">Enter your credentials below</span>
+								{{-- <i class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i> --}}
+								<i>
+									<img src="{{ URL::asset('global_assets/images/logo_nore_1000px.png') }}" alt="" style="width:200px; height:100px">
+								</i>
+								{{-- <img src="{{ URL::asset('global_assets/images/nore_w_1000px.png') }}" alt="" style="width:100px; height:50px"> --}}
+								<h5 class="mb-0">Login ke akun Anda</h5>
+								<span class="d-block text-muted">Masukkan info login anda</span>
 							</div>
 							
 							@if ( session('error'))
 								<div class="alert alert-danger border-0 alert-dismissible">
 									<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
 									{{ session('error') }}.
-							    </div>
+								</div>
 						    @endif
 
 							<div class="form-group form-group-feedback form-group-feedback-left">
@@ -74,7 +78,7 @@
 							</div>
 
 							<div class="form-group">
-								<button type="submit" class="btn btn-success btn-block">Sign in <i class="icon-circle-right2 ml-2"></i></button>
+								<button type="submit" class="btn btn-success btn-block">Masuk<i class="icon-circle-right2 ml-2"></i></button>
 							</div>
 
 							<!-- <div class="text-center">

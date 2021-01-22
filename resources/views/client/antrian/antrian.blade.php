@@ -136,8 +136,8 @@
             <h3 style="padding-top:1em; padding-bottom:0.5em;">Data Antrian</h3>
             <div class="row">
                 <div class="col">
-                  <p>Ingin upgrade ke versi Premium?</p>
-                    <a class="btn btn-success" href="https://wa.me/6281335625529" target="_blank" rel="noopener noreferrer">
+                  <p>Ingin upgrade ke versi layanan?</p>
+                    <a class="btn btn-success" href="https://wa.me/628112772788" target="_blank" rel="noopener noreferrer">
                       Klik Disini
                     </a>
                 </div>
