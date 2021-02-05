@@ -18,6 +18,385 @@
 	
 	<!-- Quick stats boxes -->
 	<div class="row">
+		<h4><span class="font-weight-semibold">Info penting</span></h4>
+	</div>
+	<div class="row">
+		<h5><span class="font-weight">Info Klien</span></h5>
+	</div>
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="card bg-green-400">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-stack-plus icon-4x"></i>
+					</div>
+					
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">{{ $member }}</h3>
+						</div>
+						<div>
+							Jumlah Klien
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="card bg-orange-400">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-stack-plus icon-4x"></i>
+					</div>
+					
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">{{ $memberthis }}</h3>
+						</div>
+						<div>
+							Jumlah Klien Bulan Ini
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="card bg-green-400">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-stack-plus icon-4x"></i>
+					</div>
+					
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">{{ $memberlast }}</h3>
+						</div>
+						<div>
+							Jumlah Klien Bulan Lalu
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<h5><span>Info Website</span></h5>
+	</div>
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="card bg-green-400">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-stack-plus icon-4x"></i>
+					</div>
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">{{ count($proyek) }}</h3>
+						</div>
+						<div>
+							Total Website (All Layanan)
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="card bg-orange-400">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-stack-plus icon-4x"></i>
+					</div>
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">{{ $proyekthis }}</h3>
+						</div>
+						<div>
+							Total Website Bulan Ini
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="card bg-green-400">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-stack-plus icon-4x"></i>
+					</div>
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">{{ $proyeklast }}</h3>
+						</div>
+						<div>
+							Total Website Bulan Lalu
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<h5>Info Layanan Website</h5>
+	</div>
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="card bg-green-400">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-stack-plus icon-4x"></i>
+					</div>
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">{{ $simple }}</h3>
+						</div>
+						<div>
+							Total Website Simple
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="card bg-orange-400">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-stack-plus icon-4x"></i>
+					</div>
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">{{ $prioritas }}</h3>
+						</div>
+						<div>
+							Total Website Prioritas
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="card bg-green-400">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-stack-plus icon-4x"></i>
+					</div>
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">{{ $premium }}</h3>
+						</div>
+						<div>
+							Total Website Premium
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+	</div>
+	@if (\Auth::user()->role==1)
+		<div class="row">
+			<h5>Info pendapatan</h5>
+		</div>
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="card bg-green-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+						<div class="mr-4" style="padding-left: 1.875rem;">
+							<i class="icon-stack-plus icon-4x"></i>
+						</div>
+						<div>
+							<div class="d-flex">
+							@php($gross=0)
+							@foreach ($pendapatans as $pendapatan)
+							@php($gross = $pendapatan->sum('nominal'))
+							@endforeach
+								<h3 class="font-weight-semibold mb-0">Rp {{ $gross }},-</h3>
+							</div>
+							<div>
+								Total Pendapatan
+							</div>
+						</div>
+					</blockquote>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="card bg-orange-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+						<div class="mr-4" style="padding-left: 1.875rem;">
+							<i class="icon-stack-plus icon-4x"></i>
+						</div>
+						<div>
+							<div class="d-flex">
+								@php($grossthis=0)
+									@foreach ($pendapatanthis as $pendapatanthis)
+										@php($grossthis = $pendapatanthis->sum('nominal'))
+									@endforeach
+								<h3 class="font-weight-semibold mb-0">Rp {{ $grossthis }},-</h3>
+							</div>
+							<div>
+								Total pendapatan bulan ini
+							</div>
+						</div>
+					</blockquote>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="card bg-green-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+						<div class="mr-4" style="padding-left: 1.875rem;">
+							<i class="icon-stack-plus icon-4x"></i>
+						</div>
+						<div>
+							<div class="d-flex">
+								@php($grosslast=0)
+									@foreach ($pendapatanlast as $pendapatanlast)
+										@php($grosslast = $pendapatanlast->sum('nominal'))
+									@endforeach
+								<h3 class="font-weight-semibold mb-0">Rp {{ $grosslast }},-</h3>
+							</div>
+							<div>
+								Total pendapatan bulan lalu
+							</div>
+						</div>
+					</blockquote>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<h5>Info pengeluaran</h5>
+		</div>
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="card bg-green-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+						<div class="mr-4" style="padding-left: 1.875rem;">
+							<i class="icon-stack-plus icon-4x"></i>
+						</div>
+						<div>
+							<div class="d-flex">
+								@php($total=0)
+								@foreach ($pengeluarans as $pengeluaran)
+								@php($total = $pengeluaran->sum('nominal'))
+								@endforeach
+								<h3 class="font-weight-semibold mb-0">
+									Rp {{$total}} ,-
+								</h3>
+							</div>
+							<div>
+								Total pengeluaran
+							</div>
+						</div>
+					</blockquote>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="card bg-orange-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+						<div class="mr-4" style="padding-left: 1.875rem;">
+							<i class="icon-stack-plus icon-4x"></i>
+						</div>
+						<div>
+							<div class="d-flex">
+								@php($expendthis=0)
+								@foreach ($pengeluaranthis as $pengeluaranthis)
+								@php($expendthis = $pengeluaranthis->sum('nominal'))
+								@endforeach
+								<h3 class="font-weight-semibold mb-0">Rp {{$expendthis}} ,-</h3>
+							</div>
+							<div>
+								Total pengeluaran bulan ini
+							</div>
+						</div>
+					</blockquote>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="card bg-green-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+						<div class="mr-4" style="padding-left: 1.875rem;">
+							<i class="icon-stack-plus icon-4x"></i>
+						</div>
+						<div>
+							<div class="d-flex">
+								@php($expendlast=0)
+								@foreach ($pengeluaranlast as $pengeluaranlast)
+									@php($expendlast = $pengeluaranlast->sum('nominal'))
+								@endforeach
+								<h3 class="font-weight-semibold mb-0">Rp {{$expendlast}} ,-</h3>
+							</div>
+							<div>
+								Total pengeluaran bulan lalu
+							</div>
+						</div>
+					</blockquote>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<h5>Info net/profit</h5>
+		</div>
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="card bg-green-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+						<div class="mr-4" style="padding-left: 1.875rem;">
+							<i class="icon-stack-plus icon-4x"></i>
+						</div>
+						<div>
+							<div class="d-flex">
+								<h3 class="font-weight-semibold mb-0">Rp {{ $gross -  $total}} , -</h3>
+							</div>
+							<div>
+								Total nett/profit
+							</div>
+						</div>
+					</blockquote>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="card bg-orange-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+						<div class="mr-4" style="padding-left: 1.875rem;">
+							<i class="icon-stack-plus icon-4x"></i>
+						</div>
+						<div>
+							<div class="d-flex">
+								<h3 class="font-weight-semibold mb-0">Rp {{ $grossthis - $expendthis }},-</h3>
+							</div>
+							<div>
+								Total nett/profit bulan ini
+							</div>
+						</div>
+					</blockquote>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="card bg-green-400">
+					<blockquote class="blockquote d-flex py-2 mb-0">
+						<div class="mr-4" style="padding-left: 1.875rem;">
+							<i class="icon-stack-plus icon-4x"></i>
+						</div>
+						<div>
+							<div class="d-flex">
+								<h3 class="font-weight-semibold mb-0">Rp {{ $grosslast - $expendlast }},-</h3>
+							</div>
+							<div>
+								Total nett/profit bulan lalu
+							</div>
+						</div>
+					</blockquote>
+				</div>
+			</div>
+		</div>
+	@endif
+	<div class="row">
+		<hr><hr>
+	</div>
+	<div class="row">
+		<hr><hr>
+	</div>
+	<div class="row">
+		<h4><span class="font-weight-semibold">Total Task</span></h4>
+	</div>
+	<div class="row">
 		<div class="col-lg-4">
 			<div class="card bg-green-400">
 				<blockquote class="blockquote d-flex py-2 mb-0">
@@ -74,8 +453,6 @@
 		</div>
 	</div>
 	<!-- /quick stats boxes -->
-	
-	@if(\Auth::user()->role<20 || \Auth::user()->role=20)
 	 <!-- TODAY -->
 	<!-- Quick stats boxes -->
 	<div class="row">
@@ -144,242 +521,12 @@
 		</div>
 	</div>
 	<!-- /quick stats boxes -->
-	
-	@else
 	<!-- TODAY -->
 	<!-- Quick stats boxes -->
 	<div class="row">
 		<hr><hr>
 	</div>
-	
-	<div class="row">
-		
-		<div class="col-lg-4">
-			
-			@if ($tagihan->sum('jml_tagih') != '0')
-			<div class="card bg-warning">
-				<blockquote class="blockquote d-flex py-2 mb-0">
-					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-file-stats icon-4x"></i>
-					</div>
-					
-					<div class="col">
-						<div class="row">
-							Tagihan Belum Terbayar
-						</div>
-						<div class="row">
-							<h3 class="font-weight-semibold mb-0">Rp {{ empty($tagihan->sum('jml_tagih')) ? '0' : number_format($tagihan->sum('jml_tagih'),0,',','.') }}
-							</h3>
-						</div>
-						
-						<br>
-						
-						<div class="row">
-							Pembayaran Terakhir
-						</div>
-						<div class="row">
-							<h3 class="font-weight-semibold mb-0">{{ empty($lastpayment->tgl_bayar) ? '-' : $lastpayment->tgl_bayar }}</h3>
-						</div>
-						<div class="row">
-							Nominal 
-						</div>
-						<div class="row">
-							<h3 class="font-weight-semibold mb-0">Rp {{ empty($lastpayment->nominal) ? '0' : number_format($lastpayment->nominal,0,',','.') }} </h3>
-						</div>
-						<div class="row" style="float: right;">
-							<a href="{{ url('/payments') }}">
-								<button type="button" class="btn btn-sm bg-danger rounded-round mr-2"><b><i class="icon-coin-dollar mr-2"></i></b> Ke Pembayaran</button>
-							</a>
-						</div>
-					</div>
-					
-				</blockquote>
-			</div>
-			@else
-			<div class="card bg-success">
-				<blockquote class="blockquote d-flex py-2 mb-0">
-					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-file-stats icon-4x"></i>
-					</div>
-					
-					<div class="col">
-						<div class="row">
-							Tagihan Belum Terbayar
-						</div>
-						<div class="row">
-							<h3 class="font-weight-semibold mb-0">Rp {{ empty($tagihan->sum('jml_tagih')) ? '0' : number_format($tagihan->sum('jml_tagih'),0,',','.') }}
-							</h3>
-						</div>
-						
-						<br>
-						
-						<div class="row">
-							Pembayaran Terakhir
-						</div>
-						<div class="row">
-							<h3 class="font-weight-semibold mb-0">{{ empty($lastpayment->tgl_bayar) ? '-' : $lastpayment->tgl_bayar }}</h3>
-						</div>
-						<div class="row">
-							Nominal 
-						</div>
-						<div class="row">
-							<h3 class="font-weight-semibold mb-0">Rp {{ empty($lastpayment->nominal) ? '0' : number_format($lastpayment->nominal,0,',','.') }} </h3>
-						</div>
-						{{-- <div class="row" style="float: right;">
-							<a href="{{ url('/payments') }}">
-								<button type="button" class="btn btn-sm bg-danger rounded-round mr-2"><b><i class="icon-coin-dollar mr-2"></i></b> Ke Pembayaran</button>
-							</a>
-						</div> --}}
-					</div>
-					
-				</blockquote>
-			</div>
-			
-			@endif
-		</div>
-		
-		<div class="col-lg-4">
-			@if(\Auth::user()->kadaluarsa < date("Y-m-d") && \Auth::user()->kadaluarsa != '')
-			<div class="card bg-slate-400">
-				<blockquote class="blockquote d-flex py-2 mb-0">
-					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-calendar3 icon-4x"></i>
-					</div>
-					
-					<div>
-						<div class="d-flex">
-							<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->kadaluarsa }}</h3>
-						</div>
-						<div>
-							Masa Aktif
-						</div>
-					</div>
-				</blockquote>
-				<span style="padding:10px;">
-					Masa Aktif habis. Website akan dihapus dari internet. 
-				</span>
-			</div>
-			
-			@elseif(\Auth::user()->kadaluarsa <= date("Y-m-d" ,strtotime("+3 days")) && \Auth::user()->kadaluarsa != '')
-			<div class="card bg-danger-400">
-				<blockquote class="blockquote d-flex py-2 mb-0">
-					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-calendar3 icon-4x"></i>
-					</div>
-					
-					<div>
-						<div class="d-flex">
-							<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->kadaluarsa }}</h3>
-						</div>
-						<div>
-							Masa Aktif
-						</div>
-					</div>
-				</blockquote>
-				<span style="padding:10px;">
-					Masa Aktif akan habis. Website akan dihapus dari internet. 
-				</span>
-			</div>
-			
-			@elseif(\Auth::user()->kadaluarsa <= date("Y-m-d", strtotime("+1 week")) && \Auth::user()->kadaluarsa != '')
-			<div class="card bg-orange-400">
-				<blockquote class="blockquote d-flex py-2 mb-0">
-					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-calendar3 icon-4x"></i>
-					</div>
-					
-					<div>
-						<div class="d-flex">
-							<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->kadaluarsa }}</h3>
-						</div>
-						<div>
-							Masa Aktif
-						</div>
-					</div>
-				</blockquote>
-				<span style="padding:10px;">
-					Masa Aktif kurang dari seminggu, segera lakukan pembayaran untuk memperpanjang masa aktif. 
-				</span>
-			</div>
-			
-			@else
-			<div class="card" style="background-color:#229c59; color:white;">
-				<blockquote class="blockquote d-flex py-2 mb-0">
-					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-calendar3 icon-4x"></i>
-					</div>
-					
-					<div>
-						<div class="d-flex">
-							<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->kadaluarsa }}</h3>
-						</div>
-						<div>
-							Masa Aktif
-						</div>
-					</div>
-				</blockquote>
-			</div>
-			@endif
-		</div>
-		<div class="col-lg-4">
-			@if(\Auth::user()->task_count <= 3)
-			<div class="card bg-danger-400">
-				<blockquote class="blockquote d-flex py-2 mb-0">
-					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-pencil7 icon-4x"></i>
-					</div>
-					
-					<div>
-						<div class="d-flex">
-							<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->task_count }}</h3>
-						</div>
-						<div>
-							Jumlah Pengoperasian
-						</div>
-					</div>
-				</blockquote>
-			</div>
-			
-			@elseif(\Auth::user()->task_count <= 10)
-			<div class="card bg-orange-400">
-				<blockquote class="blockquote d-flex py-2 mb-0">
-					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-pencil7 icon-4x"></i>
-					</div>
-					
-					<div>
-						<div class="d-flex">
-							<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->task_count }}</h3>
-						</div>
-						<div>
-							Jumlah Pengoperasian
-						</div>
-					</div>
-				</blockquote>
-			</div>
-			
-			@else
-			<div class="card" style="background-color:#229c59; color:white;">
-				<blockquote class="blockquote d-flex py-2 mb-0">
-					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-pencil7 icon-4x"></i>
-					</div>
-					
-					<div>
-						<div class="d-flex">
-							<h3 class="font-weight-semibold mb-0">{{ \Auth::user()->task_count }}</h3>
-						</div>
-						<div>
-							Jumlah Pengoperasian
-						</div>
-					</div>
-				</blockquote>
-			</div>
-			@endif
-		</div>
-	</div>
 	<!-- /quick stats boxes -->
-	@endif
 </div>
 
 @endsection
@@ -397,5 +544,4 @@
 <script src="{{asset('assets/js/app.js') }}"></script>
 <script src="{{asset('global_assets/js/demo_pages/dashboard.js') }}"></script>
 <!-- /theme JS files -->
-
 @endsection

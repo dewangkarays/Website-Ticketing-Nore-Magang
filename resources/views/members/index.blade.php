@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-
+@if ((Auth::user()->role==1) || (Auth::user()->role==20) || (Auth::user()->role==10) )
 	<!-- Page header -->
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
@@ -25,6 +25,7 @@
 	<div class="content">
 
 		<!-- Hover rows -->
+		
 		<div class="card">
 			<div class="card-header header-elements-inline">
 				<a href="{{ route('members.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
@@ -120,6 +121,7 @@
 		</div>
 	</div>
 	<!-- /default modal -->
+	@endif
 
 @endsection
 

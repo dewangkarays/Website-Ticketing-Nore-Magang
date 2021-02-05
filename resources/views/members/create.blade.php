@@ -36,6 +36,7 @@
 							<label class="col-form-label col-lg-2">Email</label>
 							<div class="col-lg-10">
 								<input type="email" name="email" class="form-control border-teal border-1" placeholder="Email" required>
+								{{$errors->first('email')}}
 							</div>
 						</div>
 						<div class="form-group row">
@@ -56,6 +57,7 @@
 							<label class="col-form-label col-lg-2">Username</label>
 							<div class="col-lg-10">
 								<input type="text" name="username" class="form-control border-teal border-1" placeholder="Username" required>
+								{{$errors->first('username')}}
 							</div>
 						</div>
 						<div class="form-group row">

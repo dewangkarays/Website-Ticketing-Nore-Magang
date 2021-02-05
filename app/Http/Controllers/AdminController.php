@@ -8,6 +8,7 @@ use App\Model\Tagihan;
 use App\Model\Payment;
 use App\Model\Proyek;
 use App\Model\User;
+use App\Model\Pengeluaran;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -25,7 +26,23 @@ class AdminController extends Controller
         $todaynew = Task::where('status', '=', '1')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
         $todayongoing = Task::where('status', '=', '2')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
         $todaydone = Task::where('status', '=', '3')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
-        return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone'));
+        $member = User::where('role','>','20')->get()->count();
+        $proyek = Proyek::all();
+        $simple = Proyek::where('tipe','=','99')->get()->count();
+        $prioritas = Proyek::where('tipe','=','90')->get()->count();
+        $premium = Proyek::where('tipe','=','80')->get()->count();
+        $pengeluarans = Pengeluaran::all();
+        $pendapatans = Payment::all();
+        $memberthis = User::where('role','>','20')->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
+        $memberlast = User::where('role','>','20')->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
+        $proyekthis =  Proyek::whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
+        $proyeklast =  Proyek::whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
+        $pengeluaranthis = Pengeluaran::whereMonth('created_at','=',Carbon::now()->today()->month)->get();
+        $pengeluaranlast =  Pengeluaran::whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get();
+        $pendapatanthis = Payment::whereMonth('created_at','=',Carbon::now()->today()->month)->get();
+        $pendapatanlast =  Payment::whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get();
+        return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone','member','proyek','simple','prioritas','premium',
+        'pengeluarans','pendapatans','memberlast','memberthis','proyekthis','proyeklast','pengeluaranthis','pengeluaranlast','pendapatanthis','pendapatanlast'));
     }
 
     public function karyawan()
@@ -36,7 +53,17 @@ class AdminController extends Controller
         $todaynew = Task::where('status', '=', '1')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
         $todayongoing = Task::where('status', '=', '2')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
         $todaydone = Task::where('status', '=', '3')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
-        return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone'));
+        $member = User::where('role','>','20')->get()->count();
+        $proyek = Proyek::all();
+        $simple = Proyek::where('tipe','=','99')->get()->count();
+        $prioritas = Proyek::where('tipe','=','90')->get()->count();
+        $premium = Proyek::where('tipe','=','80')->get()->count();
+        $memberthis = User::where('role','>','20')->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
+        $memberlast = User::where('role','>','20')->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
+        $proyekthis =  Proyek::whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
+        $proyeklast =  Proyek::whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
+        return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone','member','proyek','simple','prioritas','premium',
+        'memberlast','memberthis','proyekthis','proyeklast'));
     }
 
     public function keuangan()
@@ -47,7 +74,17 @@ class AdminController extends Controller
         $todaynew = Task::where('status', '=', '1')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
         $todayongoing = Task::where('status', '=', '2')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
         $todaydone = Task::where('status', '=', '3')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
-        return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone'));
+        $member = User::where('role','>','20')->get()->count();
+        $proyek = Proyek::all();
+        $simple = Proyek::where('tipe','=','99')->get()->count();
+        $prioritas = Proyek::where('tipe','=','90')->get()->count();
+        $premium = Proyek::where('tipe','=','80')->get()->count();
+        $memberthis = User::where('role','>','20')->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
+        $memberlast = User::where('role','>','20')->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
+        $proyekthis =  Proyek::whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
+        $proyeklast =  Proyek::whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
+        return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone','member','proyek','simple','prioritas','premium',
+        'memberlast','memberthis','proyekthis','proyeklast'));
     }
 
     // public function customer()

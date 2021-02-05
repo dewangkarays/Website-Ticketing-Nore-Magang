@@ -267,10 +267,6 @@
                     @endforeach
                 </table>
                 @endif
-                
-                
-                
-                
             </main>
             
             <script>

@@ -40,11 +40,16 @@ class MemberController extends Controller
         // dd($request);
         $request->validate([
             'nama'=>'required',
-            'email'=>'required',
+            'email'=>'required|unique:users',
             'telp'=>'required',
-            'username'=>'required',
+            'username'=>'required|unique:users',
             'password'=>'required',
-            ]);
+        ],
+            [
+                'email.unique'=>':attribute tidak boleh sama',
+                'username.unique'=>':attribute tidak boleh sama'
+            ]
+        );
             
             $user = new User([
                 'nama' => $request->get('nama'),

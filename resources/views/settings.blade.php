@@ -127,8 +127,8 @@
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_checkboxes_radios.js')}}"></script>
-	
-	<script type="text/javascript">
+
+	{{-- <script type="text/javascript">
 				
 		var FormValidation = function() {
 			
@@ -264,11 +264,10 @@
 			
 		});
 	</script>
-	
+	 --}}
 	<script>
 		var Summernote = function() {
-			
-			$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
+
 			//
 			// Setup module components
 			//
@@ -279,12 +278,15 @@
 					console.warn('Warning - summernote.min.js is not loaded.');
 					return;
 				}
+
+				
 				
 				// Basic examples
 				// ------------------------------
 				
 				// Default initialization
 				$('.summernote').summernote();
+
 				
 				// Control editor height
 				$('.summernote-height').summernote({
@@ -307,7 +309,7 @@
 				
 				// Save
 				$('#save').on('click', function() {
-					var aHTML = $('.click2edit').summernote('code');
+					var aHTML = $('.click2edit').html(escape($('.click2edit').summernote('code')));
 					$('.click2edit').summernote('destroy');
 				});
 			};
@@ -350,7 +352,7 @@
 <script>
 	var Summernote2 = function() {
 		
-		$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
+		// $("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
 		//
 		// Setup module components
 		//
@@ -389,7 +391,8 @@
 			
 			// Save
 			$('#save2').on('click', function() {
-				var aHTML = $('.click2edit2').summernote('code');
+				$('#summernote').summernote('code', '')
+				var aHTML = $('.click2edit2').html(escape($('.click2edit').summernote('code')));
 				$('.click2edit2').summernote('destroy');
 			});
 		};
