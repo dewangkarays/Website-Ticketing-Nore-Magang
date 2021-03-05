@@ -14,10 +14,11 @@
     {{-- icon --}}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     {{-- fixed --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    {{-- datatable --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css">
     {{-- script --}}
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
@@ -76,43 +77,49 @@
     padding: 8px;
   }
 
-      @media (max-width: 768px) {
-      .sidebar{
-        display: none;
-      }
+  @media (max-width: 768px) {
+  .sidebar{
+    display: none;
+  }
 
-      .copyright{
-        display: none;
-      }
+  .copyright{
+    display: none;
+  }
 
-      .data-antrian{
-        padding-top: 2rem;
-      }
+  .data-antrian{
+    padding-top: 2rem;
+  }
 
-      .headerdesktop{
-        display: none;
+  .headerdesktop{
+    display: none;
+  }
+}
+
+  @media (min-width: 768px) {
+  .footer, .header{
+    display: none;
+  }
+
+  h2{
+    font-size:24px !important;
+    padding-bottom: 1em;
+  }
+
+  .container{
+    margin-left:250px;
+    transition: all 0.3s;
+    }
+  }
+
+  @media (min-width: 1200px){
+      .container {
+      max-width: 100%;
       }
     }
 
-      @media (min-width: 768px) {
-      .footer, .header{
-        display: none;
+  .navbar{
+          padding: .5rem 0 !important;
       }
-
-      h2{
-        font-size:24px !important;
-        padding-bottom: 1em;
-      }
-
-      .container{
-        margin-left:250px;
-        transition: all 0.3s;
-      }
-    }
-
-    .navbar{
-            padding: .5rem 0 !important;
-        }
 
     .container-fluid{
         padding: 0 !important;
@@ -136,78 +143,92 @@
             <h3 style="padding-top:1em; padding-bottom:0.5em;">Data Antrian</h3>
             <div class="row">
                 <div class="col">
-                  <p>Ingin upgrade ke versi layanan?</p>
-                    <a class="btn btn-success" href="https://wa.me/628112772788" target="_blank" rel="noopener noreferrer">
+                  <p>Ingin upgrade versi layanan?</p>
+                    <a class="btn btn-success" href="https://wa.me/628112772788/?text=Halo%20nama%20saya%20{{\Auth::user()->nama}}%20ingin%20meng-upgrade%20layanan" target="_blank" rel="noopener noreferrer">
                       Klik Disini
                     </a>
                 </div>
             </div>
+            <div class="row" style="padding-top:1rem;">
+              <div class="col">
+                <p>Ingin tambah task?</p>
+                <a class="btn btn-success" href="/taskcreate">
+                  Tambah
+                </a>
+              </div>
+            </div>
             <div class="row" style="padding-top:1rem;;">
               <div class="col">
-              <p>Sisa Task : <span style="font-size:24px;">{{$task->task_count - $taskcount}}</span></p>
+              {{-- <p>Sisa Task : <span style="font-size:24px;">{{$task->task_count - $taskcount}}</span></p> --}}
             </div>
           </div>
           </div>
-          <input type="text" id="myInput" placeholder="Cari">
-          <br><br>
+          {{-- <input type="text" id="myInput" placeholder="Cari"> --}}
+          {{-- <br><br> --}}
           <div id="table_data">
           <div class="table-responsive">
-          <table>
+          <table id="table_id">
             <thead class="table-success">
             <tr>
-              <th scope="col">No</th>
-                  <th scope="col">Tanggal</th>
-                  <th scope="col">Pelanggan</th>
-                  <th scope="col">Proyek</th>
-                  <th scope="col">Layanan</th>
-                  <th scope="col">Status</th>
-                  <th scoper="col">Handler</th>
-                  <th scoper="col">Aksi</th>
+              <th scope="col" style="text-align:center;" >No</th>
+                  <th scope="col" style="text-align:center;">Tanggal</th>
+                  <th scope="col" style="text-align:center;">Pelanggan</th>
+                  <th scope="col" style="text-align:center;">Proyek</th>
+                  <th scope="col" style="text-align:center;">Layanan</th>
+                  <th scope="col" style="text-align:center;">Status</th>
+                  <th scoper="col" style="text-align:center;">Handler</th>
+                  <th scoper="col" style="text-align:center;">Aksi</th>
             </tr>
             </thead>
             <tbody id="myTable">
             @php($i=1)
             @foreach ($antrians as $antrian)
             <tr>
-              <th scope="row">{{$i}}</th>
-                  <td>{{date("Y-m-d", strtotime($antrian->created_at))}}</td>
-                  <td>{{(\Auth::user()->id == $antrian->user_id || \Auth::user()->role<20) ? $antrian->user->username : 'Pelanggan Lain'}}</td>
-                  <td>
+              <th scope="row" style="text-align:center;">{{$i}}</th>
+                  <td style="text-align:center;">{{date("Y-m-d", strtotime($antrian->created_at))}}</td>
+                  <td style="text-align:center;">
+                    @if (\Auth::user()->id == $antrian->user_id)
+                        <p>{{$antrian->user->username}}</p>
+                    @else
+                        <p>{{$alias = strtoupper(substr($antrian->user->username,0,2))}}</p>
+                    @endif
+                  </td>
+                  <td style="text-align:center;">
                     @if (Auth::user()->id == $antrian->user_id)
                       <p>{{$antrian->proyek->website}}</p>
                     @else
                       <p>Proyek Lain</p>
                     @endif
                   </td>
-                  <td>@if ($antrian->proyek->tipe==80)
-                    <a style="background-color: #D4AF37; color:#fff; padding:4px 6px; border-radius:10px;">
+                  <td style="text-align:center;">@if ($antrian->proyek->tipe==80)
+                    <a style="background-color: #D4AF37; color:#fff; padding:6px 12px; border-radius:10px;">
                       Premium
                     </a>
                     @elseif($antrian->proyek->tipe==90)
-                    <a style="background-color: grey; color:#fff; padding:4px 6px; border-radius:10px;">
+                    <a style="background-color: grey; color:#fff; padding:6px 16px; border-radius:10px;">
                       Prioritas
                     </a>
                     @elseif($antrian->proyek->tipe==99)
-                    <a style="background-color: #fff; color:#242424; padding:4px 6px; border-radius:10px;">
+                    <a style="background-color: #FFFAFA; color:#242424; padding:6px 17px; border-radius:10px; border-style:solid; border-color:black; border-width:0.1px;">
                       Simple
                     </a>
                     @else
                     Tidak ada
                   @endif
                   </td>
-                  <td>@if($antrian->status == 2 )
+                  <td style="text-align:center;">@if($antrian->status == 2 )
                     {{config('custom.status.'.$antrian->status)}}
                   @else
                     {{config('custom.status.'.$antrian->status)}}
                   @endif</td>
-                  <td>
+                  <td style="text-align:center;">
                     @if ($antrian->handler==null)
                       <p>Belum ada handler</p>
                     @else
                     <p>{{$antrian->assign->nama}}</p> 
                     @endif
                   </td>
-                  <td>
+                  <td style="text-align:center;">
                     <p>
                       @if ($antrian->handler==null && \Auth::user()->id == $antrian->user_id)
                       <form action="{{route('taskclients.destroy',$antrian->id)}}" method="post" class="d-inline">
@@ -225,30 +246,12 @@
             @endforeach
           </tbody>
         </table>
-        <?php echo $antrians->render(); ?>
-        {{-- {!! $antrians->links() !!} --}}
         </div>
       </div>
           <div class="row">
             <div class="col"></div>
             <div class="col"></div>
           <div class="col text-right">
-            
-            {{-- <nav aria-label="...">
-              <ul class="pagination">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active">
-                  <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Next</a>
-                </li>
-              </ul>
-            </nav> --}}
           </div>
           </div>
         </div>
@@ -276,37 +279,18 @@
     -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    {{-- datatable --}}
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
     <script>
-    $(document).ready(function(){
-      $("#myInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#myTable tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-      });
-    });
-
-    $(document).ready(function(){
-
-      $(document).on('click', '.pagination a', function(event){
-        event.preventDefault(); 
-        var page = $(this).attr('href').split('page=')[1];
-        fetch_data(page);
-      });
-
-      function fetch_data(page)
-      {
-        $.ajax({
-          url:"/pagination/fetch_data?page="+page,
-          success:function(data)
-          {
-          $('#table_data').html(data);
-          }
-        });
-      }
-
-    });
+      $(document).ready( function () {
+        $('#table_id').DataTable();
+      } );
     </script>
-
+    <script>
+      $('#table_id').DataTable( {
+        responsive: true
+      } );
+    </script>
   </body>
 </html>

@@ -136,6 +136,12 @@
       }
     }
 
+    @media (min-width: 1200px){
+      .container {
+      max-width: 100%;
+      }
+    }
+
     .navbar{
             padding: .5rem 0 !important;
         }

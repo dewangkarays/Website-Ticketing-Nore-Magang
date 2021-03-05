@@ -43,9 +43,9 @@
             padding-top:1em;
         }
 
-        /* .greeting h1{
-                font-weight: bold !important;
-        } */
+        #tombol{
+        padding: 0 !important;
+        }
 
         .cardContainer{
             padding: 0 0 2em 0 !important;
@@ -69,13 +69,8 @@
         text-align: center;
         } */
 
-        .invoice h5{
+        h5{
           font-weight: bold;
-        }
-
-        #tombol{
-          padding: 0 !important;
-
         }
 
         .split{
@@ -87,7 +82,7 @@
         }
 
         .card-body{
-          padding: 1rem !important;
+          padding: 0.8rem !important;
         }
 
         .divider{
@@ -109,7 +104,7 @@
     .container{
         padding-left:15px !important;
         padding-right:15px !important;
-      }
+    }
 
     @media (max-width: 768px) {
       /* #sidebar {
@@ -118,6 +113,10 @@
       #sidebar.active {
           margin-left: 0;
       } */
+
+      h5{
+        font-size:16px;
+      }
 
       .sidebar{
         display: none;
@@ -138,12 +137,14 @@
       .headerdesktop{
         display: none;
       }
+
     }
 
     @media (min-width: 768px) {
-      .contact, .header, .greeting, .footer{
-        display: none;
-      }
+
+    .contact, .header, .greeting, .footer{
+      display: none;
+    }
 
     .hide-mobile{
       display:none;
@@ -154,10 +155,16 @@
       transition: all 0.3s;
     }
 
-      /* .website h2, .task h2, .tagihan h2, .history h2{
-        font-size:24px !important;
-        padding-bottom: 1em;
-      } */
+    #tombol{
+      padding: 0 15px 0 !important;
+    }
+
+    }
+
+    @media (min-width: 1200px){
+      .container {
+      max-width: 100%;
+      }
     }
 
     .navbar{
@@ -184,7 +191,7 @@
           </div>
           <div class="hide-desktop">
             <div class="row">
-              <div class="col-sm-6">
+              <div class="col-sm-8">
                 <div class="tagihan-aktif" style="padding-top:1em;">
                   <div class="tagihan-head">
                     <h3>Tagihan Aktif</h3>      
@@ -195,43 +202,47 @@
                     @else
                     @foreach ($tagihans as $tagihan)
                     @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="invoice">
-                          <div class="row">
-                            <div class="col">
-                              <h5 class="card-title">{{$tagihan->proyek->website}}</h5>
-                              <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
+                      <div class="card" style="width:100%;">
+                        <div class="card-body">
+                          {{-- <div class="invoice"> --}}
+                            <div class="row">
+                              <div class="col">
+                                <h5 class="card-title">{{@$tagihan->proyek->website}}</h5>
+                                <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
+                              </div>
+                              <div class="col text-right">
+                                @if ($tagihan->status==0)
+                                <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Belum dibayar</a>
+                                @else
+                                <a style="color:#fff; font-weight:bold; background-color:#ffaf42; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar sebagian</a>
+                                @endif
+                              </div>
                             </div>
-                            <div class="col text-right">
-                              @if ($tagihan->status==0)
-                              <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Belum dibayar</a>
-                              @else
-                              <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar sebagian</a>
-                              @endif
+                            <div class="row" style="padding-bottom:1rem;">
+                              <div class="col">
+                                <p class="card-text" style="font-style:italic;">{{$tagihan->keterangan}}</p>
+                              </div>
                             </div>
-                          </div>
-                          <p class="card-text">{{$tagihan->keterangan}}</p>
-                          <div class="row">
-                            <div class="col">
-                              <p class="card-text">Total Tagihan</p>
-                              <h5 class="card-text">Rp. {{ ((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar'])}}</h5>
+                            <div class="row">
+                              <div class="col">
+                                <p class="card-text">Total Tagihan</p>
+                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format(((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}}</p>
+                              </div>
+                              <div class="col">
+                                <p class="card-text">Sudah Dibayar</p>
+                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format($tagihan->jml_bayar,0,',','.')}}</p>
+                              </div>
+                              <div class="col">
+                                <p class="card-text">Harus dibayar</p>
+                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format($tagihan->jml_tagih,0,',','.')}}</p>
+                              </div>
+                              <div class="col text-right" id="tombol">
+                                <a href="/payment" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                              </div>
                             </div>
-                            <div class="col">
-                              <p class="card-text">Sudah Dibayar</p>
-                              <h5 class="card-text">Rp. {{$tagihan->jml_bayar}} </h5>
-                            </div>
-                            <div class="col">
-                              <p class="card-text">Harus dibayar</p>
-                              <h5 class="card-text">Rp.{{$tagihan->jml_tagih}} </h5>
-                            </div>
-                            <div class="col text-center" id="tombol">
-                              <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
-                            </div>
-                          </div>
+                          {{-- </div> --}}
                         </div>
                       </div>
-                    </div>
                     <div class="divider"></div>
                     @endif
                     @endforeach
@@ -248,7 +259,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-6">
+              <div class="col-sm-4">
                 <div class="tagihan-riwayat" style="padding-top:1em;">
                   <div class="tagihan-head">
                     <h3>Riwayat Tagihan</h3>      
@@ -265,9 +276,9 @@
                           <div class="invoice" style="padding:1em;">
                             <div class="row">
                               <div class="col">
-                                  <h5 class="card-title">{{$tagihan->proyek->website}}</h5>
+                                  <h5 class="card-title">{{@$tagihan->proyek->website}}</h5>
                                   <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
-                                  <p class="card-text">Total tagihan Rp. {{ ((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar'])}},-</p>
+                                  <p class="card-text">Total tagihan Rp. {{number_format(((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}}</p>
                                   <p class="card-text" style="font-style: italic;">Terbayar pada {{date("Y-m-d", strtotime($tagihan->updated_at))}}</p>
                               </div>
                               <div class="col">
@@ -304,41 +315,39 @@
                 <h3>Tagihan Aktif</h3>      
               </div>
               <div class="cardContainer">
-                {{-- diganti jumlah aktif --}}
                 @foreach ($tagihans as $tagihan)
                 @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
-                {{-- @for($i=0;$i<3;$i++) --}}
                 <div class="card">
                   <div class="card-body">
                     <div class="invoice">
                       <div class="row">
                         <div class="col">
-                          <h5 class="card-title">{{$tagihan->proyek->website}}</h5>
+                          <h5 class="card-title">{{@$tagihan->proyek->website}}</h5>
                           <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
                         </div>
-                        <div class="col text-right">
+                        <div class="col text-right" style="font-size:12px;">
                           @if ($tagihan->status==0)
-                          <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Belum dibayar</a>
+                          <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center;">Belum dibayar</a>
                           @else
-                          <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar sebagian</a>
+                          <a style="color:#fff; font-weight:bold;background-color:#ffaf42; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar sebagian</a>
                           @endif
                         </div>
                       </div>
-                      <div class="row">
+                      <div class="row" style="padding-right:10px;">
                         <div class="col">
-                          <p class="card-text">Total Tagihan</p>
-                          <h5 class="card-text">Rp. {{ ((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar'])}}</h5>
+                          <p class="card-text" style="font-size:14px;">Total Tagihan</p>
+                          <p class="card-text" style="font-weight: bold; font-size:14px;">Rp.<br> {{number_format(((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}}</p>
                         </div>
                         <div class="col">
-                          <p class="card-text">Sudah Dibayar</p>
-                          <h5 class="card-text">Rp. {{$tagihan->jml_bayar}} </h5>
+                          <p class="card-text" style="font-size:14px;">Sudah Dibayar</p>
+                          <p class="card-text" style="font-weight: bold; font-size:14px;">Rp.<br> {{number_format($tagihan->jml_bayar,0,',','.')}}</p>
                         </div>
                         <div class="col">
-                          <p class="card-text">Harus dibayar</p>
-                          <h5 class="card-text">Rp.{{$tagihan->jml_tagih}} </h5>
+                          <p class="card-text" style="font-size:14px;">Harus dibayar</p>
+                          <p class="card-text" style="font-weight: bold; font-size:14px;">Rp.<br> {{number_format($tagihan->jml_tagih,0,',','.')}}</p>
                         </div>
                         <div class="col text-center" id="tombol">
-                          <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                          <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style=" font-size:14px; border-radius:5px; padding:5px 10px; font-weight:bold;">Bayar</a>
                         </div>
                       </div>
                     </div>
@@ -353,7 +362,7 @@
                   <div class="col">
                   </div>
                   <div class="col text-right">
-                    <a href="/tagihanaktif" class="btn btn-warning" id="detail" style="border-radius:5px; padding:10px 20px; font-weight:bold">Detail</a>
+                    <a href="/tagihanaktif" class="btn btn-warning" id="detail" style="border-radius:5px; padding:5px 10px; font-weight:bold; font-size:14px;">Detail</a>
                   </div>
                 </div>
               </div>
@@ -370,9 +379,9 @@
                       <div class="invoice" style="padding:1em;">
                         <div class="row">
                           <div class="col">
-                            <h5 class="card-title">{{$tagihan->proyek->website}}</h5>
+                            <h5 class="card-title">{{@$tagihan->proyek->website}}</h5>
                             <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
-                            <p class="card-text">Total tagihan Rp. {{ ((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar'])}},-</p>
+                            <p class="card-text">Total tagihan Rp.  {{number_format(((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}},-</p>
                             <p class="card-text" style="font-style: italic;">Terbayar pada {{date("Y-m-d", strtotime($tagihan->updated_at))}}</p>
                         </div>
                           <div class="col">
@@ -394,7 +403,7 @@
                   <div class="col">
                   </div>
                   <div class="col  text-right">
-                    <a href="/tagihanriwayat" class="btn btn-warning"  style="border-radius:5px; padding:10px 20px; font-weight:bold"id="detail" id="detail">Detail</a>
+                    <a href="/tagihanriwayat" class="btn btn-warning"  style="border-radius:5px; padding:5px 10px; font-weight:bold; font-size:14px;" id="detail" id="detail">Detail</a>
                   </div>
                 </div>
               </div>

@@ -1,16 +1,11 @@
 <head>
   <style>
   #sidebar {
-      /* min-width: 250px;
-      max-width: 250px; */
-      /* min-width: 20%;
-      max-width: 20%; */
       width: 250px;
       position: fixed;
       top: 0;
       left: 0;
       height: 100vh;
-      /* position: fixed; */
       z-index: 999;
     }
 
@@ -76,13 +71,21 @@
       <a href="/customer">Dashboard</a>
     </li>
     <li>
-      <a href="/tagihanclient">Tagihan</a>
+      <a href="/tagihanclient">Tagihan
+        @if($tagihanactives>0)
+          <span style="margin-left:10px; font-size:12px; color:#3EB772; font-weight:bold; background:white; padding:5px 10px; border-radius:10px;">{{$tagihanactives}} belum terbayar</span>
+        @endif
+      </a>
     </li>
     <li>
       <a href="/payment">Bayar</a>
     </li>
     <li>
-      <a href="/taskclient">Task</a>
+      <a href="/taskclient">Task
+        @if($tagihanactives>0)
+          <span style="margin-left:10px; font-size:12px; color:#3EB772; font-weight:bold; background:white; padding:5px 10px; border-radius:10px;">{{$tagihanactives}} task aktif</span>
+        @endif
+      </a>
     </li>
     <li>
       <a href="/antrian">Antrian</a>
@@ -92,13 +95,13 @@
   <h6 style=" font-weight:bold; padding-bottom:1rem; text-align:center;">Pusat Bantuan</h6>
       <div class="row" style="text-align:center">
         <div class="col">
-          <a href="https://wa.me/628112772788" target="_blank" rel="noopener noreferrer">
-            <img src="{{ URL::asset('global_assets/images/wanew.png') }}" height="34px">
+          <a href="https://wa.me/628112772788/?text=Halo%20nama%20saya%20{{\Auth::user()->nama}}%20ingin%20bertanya" target="_blank" rel="noopener noreferrer">
+            <img src="{{ URL::asset('global_assets/images/wanew.png') }}" height="40px">
           </a>
         </div>
         <div class="col">
           <a href="mailto:cs@nore.web.id">
-            <img src="{{ URL::asset('global_assets/images/mailnew.png') }}" height="34px">
+            <img src="{{ URL::asset('global_assets/images/mailnew.png') }}" height="38px">
           </a>
         </div>
       </div>

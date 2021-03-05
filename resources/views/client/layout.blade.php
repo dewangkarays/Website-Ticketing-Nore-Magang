@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     {{-- carousel --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="{{asset('global_assets/owlcarousel/dist/assets/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{asset('global_assets/owlcarousel/dist/assets/owl.theme.default.min.css') }}">
     {{-- fixed --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     {{-- script --}}
@@ -25,6 +26,8 @@
     <style>
       body{
       font-family: 'Raleway', sans-serif !important;
+      margin:0;
+      padding:0;
       }
 
       h2{
@@ -60,14 +63,6 @@
         padding-top: 6em;
       }
 
-      .slider{
-        display: flex;
-      }
-
-      .slider, .col{
-        flex: 1 !important;
-      }
-
       #btnmail{
         padding-right:14px;
         padding-left:14px;
@@ -75,7 +70,6 @@
 
     .wrapper {
       display: flex;
-      /* align-items: stretch; */
       width: 100%;
     }
 
@@ -151,10 +145,21 @@
 
       .container{
         transition: all 0.3s;
+
       }
 
       .mobile-tagihan{
         display: none;
+      }
+
+      /* .cardket{
+        flex:1 0 auto;
+      } */
+    }
+
+    @media (min-width: 1200px){
+      .container {
+      max-width: 100%;
       }
     }
 
@@ -224,78 +229,94 @@
         </div>
         <div class="wrap">
           <div class="greeting">
-            <p style="margin: 0 0;">Selamat Datang</p>
-            <h1 style="font-weight:bold;">{{\Auth::user()->nama}}</h1>
+            <div class="row">
+              <div class="col">
+                <p style="margin: 0 0;">Selamat Datang</p>
+                <h1 style="font-weight:bold;">{{\Auth::user()->nama}}</h1>
+              </div>
+              <div class="col text-right" style="font-size:16px;">
+                @if (@$highproyek->tipe=='80')
+                <a style="background-color: #D4AF37; color:#fff; padding:5px 10px; border-radius:10px;">
+                  Pelanggan Premium
+                </a>
+                @elseif(@$highproyek->tipe=='90')
+                <a style="background-color: grey; color:#fff; padding:4px 6px; border-radius:10px;">Pelanggan Prioritas</a>
+                @else
+                <a style="background-color: #fff; color:#242424; padding:4px 6px; border-radius:10px;">Pelanggan Simple</a>
+                @endif
+              </div>
+            </div>
           </div>
           <div class="website">
             <h3 style="padding-top: 1em;">Website Langganan</h3>
               <p style="padding-bottom:0.3em;">Total Langganan : <span style="font-weight: bold; font-size:24px;">{{@$website}}</span></p>
             </div>
-            {{-- <div class="row"> --}}
               <div class="dekstop-tagihan">
                 @if (count($proyeks)>3)
-                  <div class="slider owl-carousel">
-                    @foreach ($tagihans as $tagihan)
-                      {{-- <div class="col"> --}}
-                        <div class="col">
-                          <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee;">
-                            <div class="card-body-sm-6">
+                  {{-- <div class="owl-carousel owl-theme owl-loaded"> --}}
+                    <div class="row">
+                    @foreach ($proyeks as $proyek)
+                        <div class="col" style="display:flex;">
+                          <div class="card" style="display:flex; align-items:stretch; border:none; border-radius:10px; background-color:#eeee; padding:10px;">
+                            <div class="card-body cardket">
                               <div class="row">
                                 <div class="col">
-                                <h5 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{$tagihan->nama_proyek}}</h5>
-                              </div>
-                              {{-- <div class="col"></div> --}}
-                              <div class="col text-right">
-                                @if (@$tagihan->status=='0')
-                                <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Belum dibayar</a>
-                                @elseif($tagihan->status=='1')
-                                <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Terbayar Sebagian</a>
-                                @else
-                                <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Sudah dibayar</a>
-                                @endif
+                                  <h5 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{$proyek->website}}</h5>
+                                </div>
+                                <div class="col text-right">
+                                  @if (@$proyek->tagihan->status=='0')
+                                  <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:10px;">Belum dibayar</a>
+                                  @elseif(@$proyek->tagihan->status=='1')
+                                  <a style="color:#fff; font-weight:bold; background-color: #ffaf42; padding:5px 12px; border-radius:20px; text-align:center; font-size:10px;">Terbayar Sebagian</a>
+                                  @elseif(@$proyek->tagihan->status=='2')
+                                  <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center; font-size:10px;">Sudah dibayar</a>
+                                  @else
+                                  <a style="color:#fff; font-weight:bold; background-color: grey; border:black; padding:5px 12px; border-radius:20px; text-align:center; font-size:10px;">Belum Ada Tagihan</a>
+                                  @endif
+                                </div>
                               </div>
                             </div>
-                            <div class="row" style="padding-top:1rem;">
+                            <div class="row cardket" style="padding-top:1rem;">
                               <div class="col">
-                                @if (@$tagihan->proyek->tipe==80)
-                                <a style="background-color: #D4AF37; color:#fff; padding:4px 6px; border-radius:10px;">
-                                  Premium
-                                </a>
-                                @elseif(@$tagihan->proyek->tipe==90)
+                                @if (@$proyek->tipe==80)
+                                  <a style="background-color: #D4AF37; color:#fff; padding:4px 6px; border-radius:10px;">
+                                    Premium
+                                  </a>
+                                @elseif(@$proyek->tipe==90)
                                   <a style="background-color: grey; color:#fff; padding:4px 6px; border-radius:10px;">Prioritas</a>
-                                @elseif(@$tagihan->proyek->tipe==99)
+                                @elseif(@$proyek->tipe==99)
                                   <a style="background-color: #fff; color:#242424; padding:4px 6px; border-radius:10px;">Simple</a>
                                 @else
                                   <p>Tidak ada</p>
                                 @endif
                               </div>
                             </div>
-                            <div class="row" style="padding-top:1rem">
+                            <div class="row cardket" style="padding-top:1rem;">
                               <div class="col">
-                                <p>Hingga : <span style="font-weight: bold;">{{@$tagihan->proyek->masa_berlaku}}</span></p>
+                                <p>Hingga : <span style="font-weight: bold;">{{date('j F Y',strtotime(@$proyek->masa_berlaku))}}</span></p>
                               </div>
                             </div>
-                            <div class="row" style="padding-top:2rem;">
+                            <div class="row cardket" style="padding-top:2rem;">
                               <div class="col text-left">
-                                @if ($tagihan->status!='2')
+                                @if (@$proyek->tagihan->status!='2')
                                 <p>Tagihan :</p>
-                                <h5 style="font-weight: bold;">Rp.{{@$tagihan->jml_tagih}},- </h5>  
+                                <h5 style="font-weight: bold;">Rp. {{number_format(@$proyek->tagihan->jml_tagih,0,',','.')}},- </h5>  
                                 @endif
                               </div>
                               <div class="col text-right">
-                                @if ($tagihan->status!='2')
+                                @if (@$proyek->tagihan->status!='2')
                                 <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
                                   <a href="/payment" class="btn btn-success" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
-                                  {{-- <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a> --}}
                                 </div>
                                 @endif 
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
                         @endforeach
-                  </div>
+                      </div>
+                  {{-- </div> --}}
+                  <div class="owl-dots"></div>
                 @elseif(count($proyeks)<1)
                   <div class="row">
                     <div class="col">
@@ -304,33 +325,35 @@
                   </div>
                 @else
                   <div class="row">
-                    @foreach ($tagihans as $tagihan)
+                    @foreach ($proyeks as $proyek)
                       <div class="col">
                         <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee;">
                           <div class="card-body">
                             <div class="row">
                               <div class="col">
-                                <h5 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{@$tagihan->nama_proyek}}</h5>
+                                <h5 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{@$proyek->website}}</h5>
                               </div>
                             <div class="col text-right">
-                              @if ($tagihan->status=='0')
+                              @if (@$proyek->tagihan->status=='0')
                               <a  style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px">Belum dibayar</a>
-                              @elseif($tagihan->status=='1')
-                              <a  style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px">Terbayar Sebagian</a>
+                              @elseif(@$proyek->tagihan->status=='1')
+                              <a  style="color:#fff; font-weight:bold; background-color:#ffaf42; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px">Terbayar Sebagian</a>
+                              @elseif(@$proyek->tagihan->status=='2')
+                              <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Sudah dibayar</a>
                               @else
-                              <a  style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px">Sudah dibayar</a>
+                              <a style="color:#fff; font-weight:bold; background-color: grey; border:black; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Belum Ada Tagihan</a>
                               @endif  
                             </div>
                           </div>
                           <div class="row" style="padding-top:1rem;">
                             <div class="col">
-                              @if (@$tagihan->proyek->tipe==80)
+                              @if (@$proyek->tipe==80)
                               <a style="background-color: #D4AF37; color:#fff; padding:4px 6px; border-radius:10px;">
                                 Premium
                               </a>
-                              @elseif(@$tagihan->proyek->tipe==90)
+                              @elseif(@$proyek->tipe==90)
                                 <a style="background-color: grey; color:#fff; padding:4px 6px; border-radius:10px;">Prioritas</a>
-                              @elseif(@$tagihan->proyek->tipe==99)
+                              @elseif(@$proyek->tipe==99)
                                 <a style="background-color: #fff; color:#242424; padding:4px 6px; border-radius:10px;">Simple</a>
                               @else
                                 <p>Tidak ada</p>
@@ -339,18 +362,18 @@
                           </div>
                           <div class="row" style="padding-top:1rem">
                             <div class="col">
-                              <p>Hingga : <span style="font-weight: bold;">{{@$tagihan->proyek->masa_berlaku}}</span></p>
+                              <p>Hingga : <span style="font-weight: bold;">{{date('j F Y',strtotime(@$proyek->masa_berlaku))}}</span></p>
                             </div>
                           </div>
                           <div class="row" style="padding-top:1rem;">
                             <div class="col text-left">
-                              @if ($tagihan->status!='2')
+                              @if (@$proyek->tagihan->status!='2')
                               <p>Tagihan :</p>
-                              <h5 style="font-weight: bold;">Rp.{{@$tagihan->jml_tagih}},- </h5>  
+                              <h5 style="font-weight: bold;">Rp. {{number_format(@$proyek->tagihan->jml_tagih,0,',','.')}},- </h5>  
                               @endif
                             </div>
                             <div class="col text-right">
-                              @if ($tagihan->status!='2')
+                              @if (@$proyek->tagihan->status!='2')
                               <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
                                 <a href="/payment" class="btn btn-success" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                               </div>
@@ -365,36 +388,39 @@
                 @endif
           </div>
           <div class="mobile-tagihan">
-            <div class="slider owl-carousel">
-              @foreach ($tagihans as $tagihan)
-                <div class="col">
-                  <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee; width:10rem;">
+            @if (count($proyeks)>3)
+            <div class="owl-carousel owl-theme owl-loaded">
+              @foreach ($proyeks as $proyek)
+                <div class="col" style="display:flex; flex:1 0 auto; height:100%;">
+                  <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee; position:relative; over-flow:hidden; display:flex; flex-direction:column; align-item:stretch;">
                     <div class="card-body">
                       <div class="row">
                         <div class="col">
-                            <p id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{@$tagihan->nama_proyek}}</p>    
+                            <p id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{@$proyek->website}}</p>    
                           </div>
                         </div>
                         <div class="row">
                           <div class="col">
-                            @if ($tagihan->status=='0')
+                            @if (@$proyek->tagihan->status=='0')
                             <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Belum dibayar</a>
-                            @elseif($tagihan->status=='1')
-                            <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Terbayar Sebagian</a>
-                            @else
+                            @elseif(@$proyek->tagihan->status=='1')
+                            <a style="color:#fff; font-weight:bold; background-color: #ffaf42; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Terbayar Sebagian</a>
+                            @elseif(@$proyek->tagihan->status=='2')
                             <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Sudah dibayar</a>
+                            @else
+                            <a style="color:#fff; font-weight:bold; background-color: grey; border:black; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Belum Ada Tagihan</a>
                             @endif
                           </div>
                       </div>
                       <div class="row" style="padding-top:1rem;">
                         <div class="col">
-                          @if (@$tagihan->proyek->tipe==80)
+                          @if (@$proyek->tipe==80)
                           <a style="background-color: #D4AF37; color:#fff; padding:4px 6px; border-radius:10px;">
                             Premium
                           </a>
-                          @elseif(@$tagihan->proyek->tipe==90)
+                          @elseif(@$proyek->tipe==90)
                             <a style="background-color: grey; color:#fff; padding:4px 6px; border-radius:10px;">Prioritas</a>
-                          @elseif(@$tagihan->proyek->tipe==99)
+                          @elseif(@$proyek->tipe==99)
                             <a style="background-color: #fff; color:#242424; padding:4px 6px; border-radius:10px;">Simple</a>
                           @else
                             <p>Tidak ada</p>
@@ -403,20 +429,20 @@
                       </div>
                       <div class="row" style="padding-top:1rem">
                         <div class="col">
-                          <p>Hingga : <span style="font-weight: bold;">{{@$tagihan->proyek->masa_berlaku}}</span></p>
+                          <p>Hingga : <span style="font-weight: bold;">{{date('j F Y',strtotime(@$proyek->masa_berlaku))}}</span></p>
                         </div>
                       </div>
                       <div class="row" style="padding-top:1rem;">
                         <div class="col">
-                          @if ($tagihan->status!='2')
+                          @if ($proyek->tagihan->status!='2')
                           <p>Tagihan :</p>
-                          <p style="font-weight: bold;">Rp.{{@$tagihan->jml_tagih}},- </p>  
+                          <p style="font-weight: bold;">Rp.{{number_format(@$proyek->tagihan->jml_tagih,0,',','.')}},- </p>  
                           @endif
                         </div>
                       </div>
                       <div class="row">
                         <div class="col">
-                          @if ($tagihan->status!='2')
+                          @if ($proyek->tagihan->status!='2')
                           <div class="buttondetail" style="padding-bottom:5px;">
                             <a href="/payment" class="btn btn-success" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                           </div>
@@ -428,6 +454,76 @@
                 </div>
                 @endforeach
             </div>
+            <div class="owl-dots"></div>
+            @elseif(count($proyeks)<1)
+            <div class="row">
+              <div class="col">
+                <p style="text-align: center; padding-top:1rem;">Belum Ada Website Langganan</p>
+              </div>
+            </div>
+            @else
+            <div class="row">
+              @foreach ($proyeks as $proyek)
+                <div class="col">
+                  <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee;">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <h5 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{@$proyek->website}}</h5>
+                        </div>
+                      <div class="col text-right">
+                        @if (@$proyek->tagihan->status=='0')
+                        <a  style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px">Belum dibayar</a>
+                        @elseif(@$proyek->tagihan->status=='1')
+                        <a  style="color:#fff; font-weight:bold; background-color:#ffaf42; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px">Terbayar Sebagian</a>
+                        @elseif(@$proyek->tagihan->status=='2')
+                        <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Sudah dibayar</a>
+                        @else
+                        <a style="color:#fff; font-weight:bold; background-color: grey; border:black; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Belum Ada Tagihan</a>
+                        @endif  
+                      </div>
+                    </div>
+                    <div class="row" style="padding-top:1rem;">
+                      <div class="col">
+                        @if (@$proyek->tipe==80)
+                        <a style="background-color: #D4AF37; color:#fff; padding:4px 6px; border-radius:10px;">
+                          Premium
+                        </a>
+                        @elseif(@$proyek->tipe==90)
+                          <a style="background-color: grey; color:#fff; padding:4px 6px; border-radius:10px;">Prioritas</a>
+                        @elseif(@$proyek->tipe==99)
+                          <a style="background-color: #fff; color:#242424; padding:4px 6px; border-radius:10px;">Simple</a>
+                        @else
+                          <p>Tidak ada</p>
+                        @endif
+                      </div>
+                    </div>
+                    <div class="row" style="padding-top:1rem">
+                      <div class="col">
+                        <p>Hingga : <span style="font-weight: bold;">{{@$proyek->masa_berlaku}}</span></p>
+                      </div>
+                    </div>
+                    <div class="row" style="padding-top:1rem;">
+                      <div class="col text-left">
+                        @if (@$proyek->tagihan->status!='2')
+                        <p>Tagihan :</p>
+                        <h5 style="font-weight: bold;">Rp. {{number_format(@$proyek->tagihan->jml_tagih,0,',','.')}},- </h5>  
+                        @endif
+                      </div>
+                      <div class="col text-right">
+                        @if (@$proyek->tagihan->status!='2')
+                        <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
+                          <a href="/payment" class="btn btn-success" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                        </div>
+                        @endif 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              @endforeach
+            </div>
+            @endif
           </div>
         </div>
         <div class="wrap">
@@ -467,7 +563,7 @@
                           <div class="col">Tanggal input</div>
                           {{-- <div class="col">:</div> --}}
                           
-                          <div class="col">{{date('d-m-Y', strtotime($task->created_at))}}</div>
+                          <div class="col">{{date('j F Y', strtotime($task->created_at))}}</div>
                         </div>
                         <div class="row" style="padding-top:1rem;">
                           <div class="col">Keterangan</div>
@@ -512,7 +608,7 @@
                         </div>
                         <div class="row" style="padding-top:1rem;">
                           <div class="col">Tanggal input</div>
-                          <div class="col">{{date('d-m-Y', strtotime($task->created_at))}}</div>
+                          <div class="col">{{date('j F Y', strtotime($task->created_at))}}</div>
                         </div>
                         <div class="row" style="padding-top:1rem;">
                           <div class="col">Keterangan</div>
@@ -551,7 +647,7 @@
                             @if ($task->handler==null)
                               <p>Belum ada handler</p>
                             @else
-                              <p>{{$task->assign->nama}}</p>
+                              <p>{{@$task->assign->nama}}</p>
                             @endif
                           </div>
                         </div>
@@ -559,7 +655,7 @@
                           <div class="col">Tanggal input</div>
                           {{-- <div class="col">:</div> --}}
                           
-                          <div class="col">{{date('d-m-Y', strtotime($task->created_at))}}</div>
+                          <div class="col">{{date('j F Y', strtotime($task->created_at))}}</div>
                         </div>
                         <div class="row" style="padding-top:1rem;">
                           <div class="col">Keterangan</div>
@@ -607,7 +703,7 @@
                                     @if ($tagihan->status==0)
                                     <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Belum dibayar</a>
                                     @else
-                                    <a style="color:#fff; font-weight:bold; background-color: yellow; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar sebagian</a>
+                                    <a style="color:#fff; font-weight:bold; background-color: #ffaf42; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Terbayar sebagian</a>
                                     @endif
                                 </div>
                               </div>
@@ -616,15 +712,15 @@
                               <div class="row">
                                 <div class="col">
                                   <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Total Tagihan : </p>
-                                  <p style="padding: 0 0 10px 12px; font-size:16px;">Rp {{@$tagihan->jml_tagih+@$tagihan->jml_bayar}},-</p>
+                                  <p style="padding: 0 0 10px 12px; font-size:16px;">Rp {{number_format((@$tagihan->jml_tagih+@$tagihan->jml_bayar),0,',','.')}},-</p>
                                 </div>
                                 <div class="col">
                                   <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Sudah terbayar : </p>
-                                  <p style="padding: 0 0 10px 12px; font-size:16px;">Rp {{@$tagihan->jml_bayar}},-</p>
+                                  <p style="padding: 0 0 10px 12px; font-size:16px;">Rp {{number_format((@$tagihan->jml_bayar),0,',','.')}},-</p>
                                 </div>
                                 <div class="col">
                                   <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Harus dibayar : </p>
-                                  <p style="padding: 0 0 10px 12px; font-size:16px; font-weight:bold;">Rp {{@$tagihan->jml_tagih}},-</p>
+                                  <p style="padding: 0 0 10px 12px; font-size:16px; font-weight:bold;">Rp {{number_format((@$tagihan->jml_tagih),0,',','.')}},-</p>
                                 </div>
                               </div>
                               <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
@@ -671,12 +767,12 @@
                                   <div class="row">
                                     <div class="col">
                                       <p style="padding: 5px 0 10px 12px; font-size:16px;">Total Tagihan</p>
-                                      <p style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{$tagihan->jml_tagih}},-</p>
+                                      <p style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{number_format((@$tagihan->jml_tagih),0,',','.')}},-</p>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="col">
-                                      <p style="padding: 5px 0 10px 12px; font-size:16px; font-style:italic;">Dibayar pada {{date("Y-m-d", strtotime($tagihan->updated_at))}}</p>
+                                      <p style="padding: 5px 0 10px 12px; font-size:16px; font-style:italic;">Dibayar pada {{date("j F Y", strtotime($tagihan->updated_at))}}</p>
                                     </div>
                                   </div>
                                 </div>
@@ -713,7 +809,7 @@
                             <p style="font-weight:bold;">{{@$tagihan->invoice}}</p>
                           </div>
                           <div class="card-body">
-                            <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{@$tagihan->jml_tagih}}</p>
+                            <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{number_format((@$tagihan->jml_tagih),0,',','.')}},-</p>
                             <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
                               <a href="/payment" class="btn btn-success" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                             </div>  
@@ -757,12 +853,12 @@
                           <div class="row">
                             <div class="col">
                               <p style="padding: 5px 0 10px 12px; font-size:16px;">Total Tagihan</p>
-                              <p style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{$tagihan->jml_tagih}},-</p>
+                              <p style="padding: 5px 0 10px 12px; font-size:16px;">Rp {{number_format((@$tagihan->jml_tagih),0,',','.')}},-</p>
                             </div>
                           </div>
                           <div class="row">
                             <div class="col">
-                              <p style="padding: 5px 0 10px 12px; font-size:16px; font-style:italic;">Dibayar pada {{date("Y-m-d", strtotime($tagihan->updated_at))}}</p>
+                              <p style="padding: 5px 0 10px 12px; font-size:16px; font-style:italic;">Dibayar pada {{date("j F Y", strtotime($tagihan->updated_at))}}</p>
                             </div>
                           </div>
                         </div>
@@ -783,27 +879,13 @@
                     <h2>Pusat Bantuan</h2>
                     <div class="row">
                       <div class="col text-right">
-                        {{-- <button type="button" class="btn btn-success btn-sm">
-                          <img src="" alt="" class="rounded">
-                          <span class="material-icons" id="wa">
-                            sms
-                            </span>
-                          <p>Whatsapp</p>
-                        </button> --}}
                         <button type="button" style="background-color: #3EB772; border:none; border-radius:10px; padding:10px 20px;">
-                          <a href="https://wa.me/628112772788" target="_blank" rel="noopener noreferrer">
+                          <a href="https://wa.me/628112772788/?text=Halo%20nama%20saya%20{{\Auth::user()->nama}}%20ingin%20bertanya" target="_blank" rel="noopener noreferrer">
                             <img src="{{ URL::asset('global_assets/images/wanew.png') }}" height="34px">
                           </a>
                         </button>
                       </div>
                       <div class="col text-left">
-                        {{-- <button type="button" class="btn btn-primary btn-sm" id="btnmail">
-                          <img src="" alt="" class="rounded">
-                          <span class="material-icons" id="mail">
-                            mail
-                            </span>
-                          <p>Email</p>
-                        </button> --}}
                         <button type="button" style="background-color: #3EB772; border:none; border-radius:10px; padding:10px 20px;">
                           <a href="mailto:cs@nore.web.id">
                             <img src="{{ URL::asset('global_assets/images/mailnew.png') }}" height="34px">
@@ -825,68 +907,19 @@
     <!-- Bootstrap JS -->
     {{-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> --}}
     <script  src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-      <!-- jQuery Custom Scroller CDN -->
+    {{-- owlcarousel --}}
+    <script src=" {{asset('global_assets/owlcarousel/dist/owl.carousel.min.js') }}"></script>
+    <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script> --}}
     <script>
-      $(".slider").owlCarousel({
+      $(".owl-carousel").owlCarousel({
+        items : 3,
         loop: true,
+        stagePadding: 0
       });
-
-      $('#user_id').ready(function(){
-        var id_proyek = $('#user_id option:selected').val();
-        var pnama = $('#user_id option:selected').data('pnama');
-        
-        $('#nama').val(pnama);
-        $('#select_proyek').find('option').not(':first').remove();
-        $('#nama_proyek').val('');
-        
-        $.ajax({
-          type: 'get',
-          url : '{{url("getkadaluarsa")}}/'+id_proyek,
-          success : function(data){
-            // $('#kadaluarsa').val(data);
-            $('#kadaluarsa').text(data);
-            console.log('Success');
-          },
-          error:function(data){
-            console.log('Error',data);
-			}
-		});
-		
-		$.ajax({
-			url : '{{url("getproyek")}}/'+id_proyek,
-			type: 'get',
-			dataType: 'json',
-			success : function(res){
-				var len = 0;
-				if(res['data'] != null){
-					len = res['data'].length;
-				}
-				// alert(len);
-				if(len > 0){
-					// Read data and create <option >
-						for(var i=0; i<len; i++){
-							
-							var id = res['data'][i].id;
-							var website = res['data'][i].website;
-							
-							var option = "<option value='"+id+"'>"+website+"</option>"; 
-							
-							$("#select_proyek").append(option); 
-						}
-					}
-					console.log('Success2');
-				},
-				error:function(data){
-					console.log('Error2',data);
-				}
-			});
-			
-		});
 
     </script>
 </body>

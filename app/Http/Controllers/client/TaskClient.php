@@ -5,6 +5,7 @@ namespace App\Http\Controllers\client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Task;
+use App\Model\Tagihan;
 use App\Model\User;
 use App\Model\Proyek;
 
@@ -18,17 +19,18 @@ class TaskClient extends Controller
      */
     public function index()
     {
-        if(\Auth::user()->role > 20){
-            $tasks = Task::where('user_id',\Auth::user()->id)
-                        ->orderBy('tasks.status', 'ASC')
-                        ->orderBy('tasks.created_at', 'DESC')
-                        ->select('tasks.*')
-                        ->get();  //customer
-            // $taskcount = Task::where('user_id',\Auth::user()->id)->get()->count();
-            $users = User::where('id',\Auth::user()->id)->get();
-        } 
+        $tasks = Task::where('user_id',\Auth::user()->id)
+                    ->orderBy('tasks.status', 'ASC')
+                    ->orderBy('tasks.created_at', 'DESC')
+                    ->select('tasks.*')
+                    ->get(); 
+        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
+        $users = User::where('id',\Auth::user()->id)->get();
+        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
+        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+        $setting = User::where('id',\Auth::user()->id)->first();
 
-        return view('client.task.index',compact('tasks','users'));
+        return view('client.task.index',compact('tasks','users','highproyek','taskactives','tagihanactives','setting'));
     }
 
     /**
@@ -38,11 +40,13 @@ class TaskClient extends Controller
      */
     public function create()
     {
-        //
         $tasks = Task::where('user_id',\Auth::user()->id)->get();
         $proyeks = Proyek::where('user_id',\Auth::user()->id)->get();
-        // $taskuser = '';
-        return view('client.task.create',compact('tasks','proyeks'));
+        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
+        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
+        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+        $setting = User::where('id',\Auth::user()->id)->first();
+        return view('client.task.create',compact('tasks','proyeks','highproyek','taskactives','tagihanactives','setting'));
     }
 
     /**

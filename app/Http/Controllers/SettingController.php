@@ -10,7 +10,8 @@ class SettingController extends Controller
     public function index()
     {
         $setting = Setting::first();
-       
+        // $setting = strip_tags($setting);
+    
         return view('settings', compact('setting'));
     }
 

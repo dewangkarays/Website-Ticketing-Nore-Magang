@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Model\Payment;
 use App\Model\Tagihan;
 use App\Model\User;
+use App\Model\Proyek;
+use App\Model\Task;
 use App\Model\Setting;
 
 class PaymentClient extends Controller
@@ -20,7 +22,11 @@ class PaymentClient extends Controller
     {
         //
         $payments = Payment::where('user_id',\Auth::user()->id)->orderBy('tgl_bayar','desc')->get();
-        return view('client.bayar.bayar',compact('payments'));
+        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
+        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
+        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+        $setting = User::where('id',\Auth::user()->id)->first();
+        return view('client.bayar.bayar',compact('payments','highproyek','taskactives','tagihanactives','setting'));
     }
 
     /**
@@ -41,7 +47,11 @@ class PaymentClient extends Controller
         $tagihanuser = Tagihan::where('user_id', \Auth::user()->id)->get();
         $tagihanuser2 = '';
         $setting = Setting::first();
-        return view('client.bayar.pembayaran',compact('setting', 'users', 'tagihanuser','tagihanuser2'));
+        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
+        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
+        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+        $setting = User::where('id',\Auth::user()->id)->first();
+        return view('client.bayar.pembayaran',compact('setting', 'users', 'tagihanuser','tagihanuser2','highproyek','taskactives','tagihanactives','setting'));
     }
     /**
      * Store a newly created resource in storage.

@@ -68,7 +68,7 @@
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Masa Berlaku</label>
-						<span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">-</span>
+						<span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span>
 					</div>
 					{{-- <div class="form-group row">
 						<label class="col-form-label col-lg-2">Tipe</label>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\User;
 use App\Model\Task;
+use App\Model\Tagihan;
 use App\Model\Proyek;
 
 class AntrianClient extends Controller
@@ -20,23 +21,23 @@ class AntrianClient extends Controller
         
         $antrians = Task::join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
         ->orderBy('proyeks.tipe', 'ASC')
-        // ->where('tasks.status','!=','3')
         ->orderBy('tasks.status', 'DESC')
         ->orderBy('tasks.created_at', 'ASC')
-        ->select('tasks.*')
-        ->paginate(5);
-        // dd(request()->all());
-        // ->get();
-        // dd($antrians);
+        ->get();
 
-        // dd('/antrian?page=2');
-        // dd($antrians->toJson());
+        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
 
         $taskcount = Task::where('user_id',\Auth::user()->id)->get()->count();
 
         $task = User::where('id',\Auth::user()->id)->first();
 
-        return view('client.antrian.antrian',compact('antrians','taskcount','task'));
+        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
+
+        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+
+        $setting = User::where('id',\Auth::user()->id)->first();
+
+        return view('client.antrian.antrian',compact('antrians','taskcount','task','highproyek','taskactives','tagihanactives','setting'));
     }
 
     // public function fetch_data(Request $request)
@@ -120,4 +121,5 @@ class AntrianClient extends Controller
     {
         //
     }
+
 }

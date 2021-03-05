@@ -16,6 +16,7 @@
 	<link href="{{asset('assets/css/layout.min.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{asset('assets/css/components.min.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{asset('assets/css/colors.min.css') }}" rel="stylesheet" type="text/css">
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 	<style>
 		/* .nav-item{
 			padding
@@ -76,6 +77,7 @@
 <script src="{{asset('global_assets/js/main/jquery.min.js') }}"></script>
 <script src="{{asset('global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
 <script src="{{asset('global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
+
 <!-- /core JS files -->
 
 <script>

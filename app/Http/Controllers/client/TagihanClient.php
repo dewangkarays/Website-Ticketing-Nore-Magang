@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Tagihan;
 use App\Model\Payment;
+use App\Model\Proyek;
+use App\Model\Task;
+use App\Model\User;
 
 class TagihanClient extends Controller
 {
@@ -20,22 +23,32 @@ class TagihanClient extends Controller
         $tagihans = Tagihan::orderBy('created_at')->get();
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
         $tagihanhistories = Tagihan::where('user_id',\Auth::user()->id)->where('status','=','2')->get()->count();
-
-        return view('client.tagihan.tagihan',compact('tagihans','tagihanactives','tagihanhistories'));
+        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
+        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
+        $setting = User::where('id',\Auth::user()->id)->first();
+        return view('client.tagihan.tagihan',compact('tagihans','tagihanactives','tagihanhistories','highproyek','taskactives','setting'));
     }
 
     public function active()
     {
         //
         $tagihans = Tagihan::orderBy('created_at')->get();
-        return view('client.tagihan.tagihanaktif',['tagihans'=>$tagihans]);
+        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
+        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
+        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+        $setting = User::where('id',\Auth::user()->id)->first();
+        return view('client.tagihan.tagihanaktif',compact('tagihans','highproyek','tagihanactives','taskactives','setting'));
     }
 
     public function history()
     {
         //
         $tagihans = Tagihan::orderBy('created_at')->get();
-        return view('client.tagihan.tagihanriwayat',['tagihans'=>$tagihans]);
+        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
+        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
+        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+        $setting = User::where('id',\Auth::user()->id)->first();
+        return view('client.tagihan.tagihanriwayat',compact('tagihans','highproyek','taskactives','tagihanactives','setting'));
     }
 
     /**
@@ -103,41 +116,5 @@ class TagihanClient extends Controller
     {
         //
     }
-
-    public function getTagihan($id)
-    {
-        $tagihans = Tagihan::where('user_id', $id)->get();
-        $html = '<option value="">-- Pilih Tagihan --</option>';
-        foreach ($tagihans as $tagihan) {
-            $html .= '<option value="'.$tagihan->id.'" data-tagihan="'.$tagihan->jml_tagih.'" >'.$tagihan->invoice.' ('.$tagihan->jml_tagih.')</option>';
-        }
-
-        return $html;
-    }
-    
-    public function detailTagihan($id)
-    {
-        $tagihan = Tagihan::find($id);
-        $html = '
-        <table class="table table-striped">
-            <tr>
-                <td>Langganan</td>
-                <td>Ads</td>
-                <td>Lainnya</td>
-                <td>Sudah Dibayar</td>
-                <td>Total Tagihan</td>
-            </tr>
-            <tr>
-                <td>'.$tagihan->langganan.'</td>
-                <td>'.$tagihan->ads.'</td>
-                <td>'.$tagihan->lainnya.'</td>
-                <td>'.$tagihan->jml_bayar.'</td>
-                <td>'.$tagihan->jml_tagih.'</td>
-            </tr>
-        </table>';
-
-        return $html;
-    }
-
 
 }

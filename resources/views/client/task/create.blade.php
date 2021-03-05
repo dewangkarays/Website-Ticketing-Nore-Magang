@@ -104,6 +104,12 @@
       }
     }
 
+    @media (min-width: 1200px){
+      .container {
+      max-width: 100%;
+      }
+    }
+
     .navbar{
       padding: .5rem 0 !important;
     }
@@ -158,7 +164,7 @@
         <div class="form-group row">
           <label for="kebutuhan" class="col-sm-6 col-form-label">Kebutuhan</label>
           <div class="col-sm-6">
-            <input type="text" class="form-control" id="kebutuhan" name="kebutuhan">
+            <textarea type="text" class="form-control" id="kebutuhan" name="kebutuhan"></textarea>
           </div>
         </div>
         <div class="form-group row">

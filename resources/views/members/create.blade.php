@@ -165,12 +165,14 @@
 		                },
 		                email: {
 		                    required: 'Mohon diisi.'
+							unique: 'Email tidak boleh sama'
 		                },
 		                telp: {
 		                    required: 'Mohon diisi.'
 		                },
 		                username: {
 		                    required: 'Mohon diisi.'
+							unique: 'Username tidak boleh sama'
 		                },
 		                password: {
 		                    required: 'Mohon diisi.'

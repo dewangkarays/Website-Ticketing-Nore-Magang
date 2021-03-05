@@ -1,3 +1,6 @@
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+</head>
 @extends('layout')
 
 @section('content')
@@ -36,11 +39,9 @@
 						<label class="col-form-label col-lg-2">Alamat</label>
 						
 						<div class="col-lg-8">
-							<textarea class="form-control click2edit border-teal border-1 p-2 mb-2" name="alamat" id="alamat" cols="30" rows="5" readonly>
-								{!!$setting ? $setting->alamat : ""!!}
+							<textarea class="form-control click2edit border-teal border-1 p-2 mb-2 summernote" name="alamat" id="alamat" cols="30" rows="5" readonly>
+								{{$setting ? $setting->alamat : ""}}
 							</textarea>
-							<button type="button" id="edit" class="btn btn-primary"><i class="icon-pencil3 mr-2"></i> Edit</button>
-							<button type="button" id="save" class="btn btn-success"><i class="icon-checkmark3 mr-2"></i> Save</button>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -92,11 +93,9 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Catatan Tagihan</label>
 						<div class="col-lg-8">
-							<textarea class=" form-control click2edit2 border-teal border-1 p-2 mb-2" name="catatan_tagihan" id="catatan_tagihan" cols="30" rows="5" readonly>
-								{!!$setting ? $setting->catatan_tagihan : ""!!}
+							<textarea class=" form-control click2edit2 border-teal border-1 p-2 mb-2 summernote" name="catatan_tagihan" id="catatan_tagihan" cols="30" rows="5" readonly>
+								{{ ( @$setting ? $setting->catatan_tagihan : "")}}
 							</textarea>
-							<button type="button" id="edit2" class="btn btn-primary"><i class="icon-pencil3 mr-2"></i> Edit</button>
-							<button type="button" id="save2" class="btn btn-success"><i class="icon-checkmark3 mr-2"></i> Save</button>
 						</div>
 					</div>
 					
@@ -123,312 +122,12 @@
 	<script src="{{asset('global_assets/js/plugins/editors/summernote/summernote.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/loaders/blockui.min.js')}}"></script>
-	
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_checkboxes_radios.js')}}"></script>
-
-	{{-- <script type="text/javascript">
-				
-		var FormValidation = function() {
-			
-			// Validation config
-			var _componentValidation = function() {
-				if (!$().validate) {
-					console.warn('Warning - validate.min.js is not loaded.');
-					return;
-				}
-				
-				// Initialize
-				var validator = $('.form-validate-jquery').validate({
-					ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
-					errorClass: 'validation-invalid-label',
-					//successClass: 'validation-valid-label',
-					validClass: 'validation-valid-label',
-					highlight: function(element, errorClass) {
-						$(element).removeClass(errorClass);
-					},
-					unhighlight: function(element, errorClass) {
-						$(element).removeClass(errorClass);
-					},
-					// success: function(label) {
-						//    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
-						//},
-						
-						// Different components require proper error label placement
-						errorPlacement: function(error, element) {
-							
-							// Unstyled checkboxes, radios
-							if (element.parents().hasClass('form-check')) {
-								error.appendTo( element.parents('.form-check').parent() );
-							}
-							
-							// Input with icons and Select2
-							else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
-								error.appendTo( element.parent() );
-							}
-							
-							// Input group, styled file input
-							else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
-								error.appendTo( element.parent().parent() );
-							}
-							
-							// Other elements
-							else {
-								error.insertAfter(element);
-							}
-						},
-						messages: {
-							// logo: {
-							// 	required: 'Mohon diisi.'
-							// },
-							alamat: {
-								required: 'Mohon diisi.'
-							},
-							no_telp: {
-								required: 'Mohon diisi.'
-							},
-							penerima: {
-								required: 'Mohon diisi.'
-							},
-							ttd_penerima: {
-								required: 'Mohon diisi.'
-							},
-							ttd_pospenerima: {
-								required: 'Mohon diisi.'
-							},
-							penagih: {
-								required: 'Mohon diisi.'
-							},
-							pospenagih: {
-								required: 'Mohon diisi.'
-							},
-						},
-					});
-					
-					// Reset form
-					$('#reset').on('click', function() {
-						validator.resetForm();
-					});
-				};
-				
-				// Return objects assigned to module
-				return {
-					init: function() {
-						_componentValidation();
-					}
-				}
-			}();
-			
-			
-			// Initialize module
-			// ------------------------------
-			
-			document.addEventListener('DOMContentLoaded', function() {
-				FormValidation.init();
-			});
-		</script>
-
-	<script type="text/javascript">
-		$( document ).ready(function() {
-			
-			var $select = $('.form-control-select2').select2();
-			
-			// Default style
-			@if(session('error'))
-			new PNotify({
-				title: 'Error',
-				text: '{{ session('error') }}.',
-				icon: 'icon-blocked',
-				type: 'error'
-			});
-			@endif
-			@if ( session('success'))
-			new PNotify({
-				title: 'Success',
-				text: '{{ session('success') }}.',
-				icon: 'icon-checkmark3',
-				type: 'success'
-			});
-			@endif
-			@if ($errors->any())
-			@foreach ($errors->all() as $error)
-			new PNotify({
-				title: 'Error',
-				text: '{{ $error }}.',
-				icon: 'icon-blocked',
-				type: 'error'
-			});
-			@endforeach
-			@endif
-			
-		});
-	</script>
-	 --}}
 	<script>
-		var Summernote = function() {
-
-			//
-			// Setup module components
-			//
-			
-			// Summernote
-			var _componentSummernote = function() {
-				if (!$().summernote) {
-					console.warn('Warning - summernote.min.js is not loaded.');
-					return;
-				}
-
-				
-				
-				// Basic examples
-				// ------------------------------
-				
-				// Default initialization
-				$('.summernote').summernote();
-
-				
-				// Control editor height
-				$('.summernote-height').summernote({
-					height: 400
-				});
-				
-				// Air mode
-				$('.summernote-airmode').summernote({
-					airMode: true
-				});
-				
-				
-				// Click to edit
-				// ------------------------------
-				
-				// Edit
-				$('#edit').on('click', function() {
-					$('.click2edit').summernote({focus: true});
-				})
-				
-				// Save
-				$('#save').on('click', function() {
-					var aHTML = $('.click2edit').html(escape($('.click2edit').summernote('code')));
-					$('.click2edit').summernote('destroy');
-				});
-			};
-			
-			// Uniform
-			var _componentUniform = function() {
-				if (!$().uniform) {
-					console.warn('Warning - uniform.min.js is not loaded.');
-					return;
-				}
-				
-				// Styled file input
-				$('.note-image-input').uniform({
-					fileButtonClass: 'action btn bg-warning-400'
-				});
-			};
-			
-			
-			//
-			// Return objects assigned to module
-			//
-			
-			return {
-				init: function() {
-					_componentSummernote();
-					_componentUniform();
-				}
-			}
-		}();
-		
-		
-		// Initialize module
-		// ------------------------------
-		
-		document.addEventListener('DOMContentLoaded', function() {
-			Summernote.init();
+		$(document).ready(function() {
+			$('.summernote').summernote();
 		});
 	</script>
-
-<script>
-	var Summernote2 = function() {
-		
-		// $("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
-		//
-		// Setup module components
-		//
-		
-		// Summernote
-		var _componentSummernote2 = function() {
-			if (!$().summernote) {
-				console.warn('Warning - summernote.min.js is not loaded.');
-				return;
-			}
-			
-			// Basic examples
-			// ------------------------------
-			
-			// Default initialization
-			$('.summernote').summernote();
-			
-			// Control editor height
-			$('.summernote-height').summernote({
-				height: 400
-			});
-			
-			// Air mode
-			$('.summernote-airmode').summernote({
-				airMode: true
-			});
-			
-			
-			// Click to edit
-			// ------------------------------
-			
-			// Edit
-			$('#edit2').on('click', function() {
-				$('.click2edit2').summernote({focus: true});
-			})
-			
-			// Save
-			$('#save2').on('click', function() {
-				$('#summernote').summernote('code', '')
-				var aHTML = $('.click2edit2').html(escape($('.click2edit').summernote('code')));
-				$('.click2edit2').summernote('destroy');
-			});
-		};
-		
-		// Uniform
-		var _componentUniform2 = function() {
-			if (!$().uniform) {
-				console.warn('Warning - uniform.min.js is not loaded.');
-				return;
-			}
-			
-			// Styled file input
-			$('.note-image-input').uniform({
-				fileButtonClass: 'action btn bg-warning-400'
-			});
-		};
-		
-		
-		//
-		// Return objects assigned to module
-		//
-		
-		return {
-			init: function() {
-				_componentSummernote2();
-				_componentUniform2();
-			}
-		}
-	}();
-	
-	
-	// Initialize module
-	// ------------------------------
-	
-	document.addEventListener('DOMContentLoaded', function() {
-		Summernote2.init();
-	});
-</script>
 	@endsection

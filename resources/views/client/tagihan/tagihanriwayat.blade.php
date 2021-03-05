@@ -128,6 +128,12 @@
       
     }
 
+    @media (min-width: 1200px){
+      .container {
+      max-width: 100%;
+      }
+    }
+
     .navbar{
             padding: .5rem 0 !important;
         }
@@ -165,7 +171,7 @@
                   <div class="col">
                     <h5 class="card-title">{{$tagihan->proyek->website}}</h5>
                     <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
-                    <p class="card-text">Total tagihan Rp. {{ ((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar'])}},-</p>
+                    <p class="card-text">Total tagihan Rp. {{number_format(((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}},-</p>
                     <p class="card-text" style="font-style: italic;">Terbayar pada {{date("Y-m-d", strtotime($tagihan->updated_at))}}</p>
                 </div>
                   <div class="col">

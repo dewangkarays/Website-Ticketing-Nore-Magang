@@ -104,19 +104,19 @@ class AdminController extends Controller
         
         $new = Task::where('status', '=', '1')->where('user_id',\Auth::user()->id)->get()->count();
         $ongoing = Task::where('status', '=', '2')->where('user_id',\Auth::user()->id)->get()->count();
-        $done = Task::where('status', '=', '3')->where('user_id',\Auth::user()->id)->get()->count();
+        $done = Task::where('user_id',\Auth::user()->id)->where('status', '=', '3')->get()->count();
         $website = Proyek::where('user_id',\Auth::user()->id)->get()->count();
-        // $users = User::where('id',\Auth::user()->id)->get();
         $taskall = User::where('id',\Auth::user()->id)->value('task_count');
         $tagihans = Tagihan::where('user_id',\Auth::user()->id)->orderBy('created_at')->orderBy('status','desc')->get();
         $proyeks = Proyek::where('user_id',\Auth::user()->id)->orderBy('masa_berlaku','asc')->get();
+        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
         $taskcounts = Task::where('user_id',\Auth::user()->id)->get()->count();
         $tasks = Task::where('user_id',\Auth::user()->id)->get();
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
         $tagihanhistories = Tagihan::where('user_id',\Auth::user()->id)->where('status','=','2')->get();
-        // dd($tagihans->proyek);
-        return view("client.layout",compact('new','ongoing','done','website','taskall','proyeks','tagihans','taskcounts','tasks','tagihanactives','tagihanhistories'));
-        // return view("client.layout",compact('new','ongoing','done','tagihans'));
+        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
+        $setting = User::where('id',\Auth::user()->id)->first();
+        return view("client.layout",compact('new','ongoing','done','website','taskall','proyeks','tagihans','taskcounts','tasks','tagihanactives','tagihanhistories','highproyek','setting'));
     }
 
     // public function customer()

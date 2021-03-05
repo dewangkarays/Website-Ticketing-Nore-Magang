@@ -45,10 +45,10 @@ class MemberController extends Controller
             'username'=>'required|unique:users',
             'password'=>'required',
         ],
-            [
-                'email.unique'=>':attribute tidak boleh sama',
+             [
+                 'email.unique'=>':attribute tidak boleh sama',
                 'username.unique'=>':attribute tidak boleh sama'
-            ]
+             ]
         );
             
             $user = new User([

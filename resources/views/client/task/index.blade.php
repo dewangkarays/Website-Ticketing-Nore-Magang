@@ -162,6 +162,12 @@
 
     }
 
+    @media (min-width: 1200px){
+      .container {
+      max-width: 100%;
+      }
+    }
+
     .navbar{
       padding: .5rem 0 !important;
     }
@@ -262,7 +268,7 @@
                 <div class="card-header">
                   <div class="row">
                     <div class="col">
-                      <h5 style="font-weight:bold;">{{$task->proyek->website}}</h5>
+                      <h5 style="font-weight:bold;">{{@$task->proyek->website}}</h5>
                     </div>
                     <div class="col text-right">
                       @if ($task->status==1)
