@@ -772,7 +772,7 @@
                                   </div>
                                   <div class="row">
                                     <div class="col">
-                                      <p style="padding: 5px 0 10px 12px; font-size:16px; font-style:italic;">Dibayar pada {{date("j F Y", strtotime($tagihan->updated_at))}}</p>
+                                      <p style="padding: 5px 0 10px 12px; font-size:16px; font-style:italic;">Dibayar pada {{date("j F Y", strtotime(@$tagihan->updated_at))}}</p>
                                     </div>
                                   </div>
                                 </div>
@@ -801,7 +801,7 @@
                         @else
                         <?php $count = 0; ?>
                         @foreach ($tagihans as $tagihan)
-                        @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
+                        @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status!=2)
                         <?php if($count == 3) break; ?>
                         <div class="card">
                           <div class="card-header">
@@ -835,7 +835,7 @@
                       @else
                       <?php $count = 0; ?>
                       @foreach ($tagihans as $tagihan)
-                      @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
+                      @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status==2)
                       <?php if($count == 3) break; ?>
                       <div class="card">
                         <div class="card-header">
@@ -858,7 +858,7 @@
                           </div>
                           <div class="row">
                             <div class="col">
-                              <p style="padding: 5px 0 10px 12px; font-size:16px; font-style:italic;">Dibayar pada {{date("j F Y", strtotime($tagihan->updated_at))}}</p>
+                              <p style="padding: 5px 0 10px 12px; font-size:16px; font-style:italic;">Dibayar pada {{date("j F Y", strtotime(@$tagihan->updated_at))}}</p>
                             </div>
                           </div>
                         </div>

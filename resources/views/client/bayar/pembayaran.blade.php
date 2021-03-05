@@ -199,13 +199,13 @@
 						<label class="col-sm-4 col-form-label col-form-label-sm">Tagihan</label>
 						<div class="col-sm-8">
 							@if ($tagihanuser2 != null)	
-							<label class="col-form-label">{{$tagihanuser2->invoice}} - Rp. {{number_format($tagihanuser2->jml_tagih,0,',','.')}}</label>
-							<input class="form-control" type="hidden" name="tagihan_id" id="tagihan_id" value="{{$tagihanuser2->id}}">
+							<label class="col-form-label">{{@$tagihanuser2->invoice}} - Rp. {{number_format(@$tagihanuser2->jml_tagih,0,',','.')}}</label>
+							<input class="form-control" type="hidden" name="tagihan_id" id="tagihan_id" value="{{@$tagihanuser2->id}}">
 							@else
 							<select name="tagihan_id" id="tagihan_id" class="form-control select-search" data-fouc onchange="changeTagihan(this)" required>
 								<option value="">-- Pilih Tagihan --</option>
 								@foreach ($tagihanuser as $tagihan)
-								<option value="{{$tagihan->id}}" data-tagihan="{{$tagihan->jml_tagih}}" >{{$tagihan->invoice}} {{number_format($tagihan->jml_tagih,0,',','.')}}</option>'
+								<option value="{{@$tagihan->id}}" data-tagihan="{{@$tagihan->jml_tagih}}" >{{@$tagihan->invoice}} {{number_format(@$tagihan->jml_tagih,0,',','.')}}</option>'
 								@endforeach
 							</select>
 							@endif
@@ -224,11 +224,11 @@
 								</tr>
 								@if ($tagihanuser2 != null)	
 								<tr>
-									<td>{{number_format($tagihanuser2->langganan,0,',','.')}}</td>
-									<td>{{number_format($tagihanuser2->ads,0,',','.')}}</td>
-									<td>{{number_format($tagihanuser2->lainnya,0,',','.')}}</td>
-									<td>{{number_format($tagihanuser2->jml_bayar,0,',','.')}}</td>
-									<td>{{number_format($tagihanuser2->jml_tagih,0,',','.')}}</td>
+									<td>{{number_format(@$tagihanuser2->langganan,0,',','.')}}</td>
+									<td>{{number_format(@$tagihanuser2->ads,0,',','.')}}</td>
+									<td>{{number_format(@$tagihanuser2->lainnya,0,',','.')}}</td>
+									<td>{{number_format(@$tagihanuser2->jml_bayar,0,',','.')}}</td>
+									<td>{{number_format(@$tagihanuser2->jml_tagih,0,',','.')}}</td>
 								</tr>
 								@else
 								<tr>	

@@ -156,7 +156,7 @@
           <div class="col-sm-6">
             <select name="website" class="form-control select-search" data-fouc>
               @foreach($proyeks as $proyek)
-                <option value="{{$proyek->id}}">{{$proyek->website}}</option>
+                <option value="{{@$proyek->id}}">{{@$proyek->website}}</option>
               @endforeach
             </select>
           </div>

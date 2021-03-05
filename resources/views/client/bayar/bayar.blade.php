@@ -267,14 +267,14 @@
               <div class="card-header" style="font-weight: bold; font-size:24px;">
                 <div class="row">
                   <div class="col">
-                    <h5 style="font-weight: bold;">{{$payment->receipt_no}}</h5>
+                    <h5 style="font-weight: bold;">{{@$payment->receipt_no}}</h5>
                   </div>
                   <div class="col text-right">
-                    @if ($payment->status==0)
+                    @if (@$payment->status==0)
                     <a class="btn btn-warning rounded-pill" style="color:#fff;">Belum Terkonfirmasi</a>
-                    @elseif($payment->status==1)
+                    @elseif(@$payment->status==1)
                     <a class="btn btn-success rounded-pill" style="color:#fff;">Terkonfirmasi</a>
-                    @elseif($payment->status==2)
+                    @elseif(@$payment->status==2)
                     <a class="btn btn-danger rounded-pill" style="color:#fff;">Ditolak</a>
                     @else
                       <p>Kosong</p>
@@ -291,15 +291,15 @@
                     <p class="card-text">Keterangan</p>
                   </div>
                   <div class="col">
-                    <p class="card-text">{{$payment->tagihan->invoice}}</p>
-                    <p class="card-text">{{$payment->tgl_bayar}}</p>
-                    <p class="card-text">{{$payment->nominal}} </p>
-                    <p class="card-text">{{$payment->keterangan}}</p>
+                    <p class="card-text">{{@$payment->tagihan->invoice}}</p>
+                    <p class="card-text">{{@$payment->tgl_bayar}}</p>
+                    <p class="card-text">{{@$payment->nominal}} </p>
+                    <p class="card-text">{{@$payment->keterangan}}</p>
                   </div>
                 </div>
                 <div class="row" style="padding-top:1rem;">
                   <div class="col">
-                    @if ($payment->status==2)
+                    @if (@$payment->status==2)
                     <a href="/purchase" class="btn btn-success" id="bayar" style="border-radius:5px; font-weight:bold;">Re-konfirmasi</a>
                   @endif
                   </div>
@@ -324,11 +324,11 @@
                       <h5 style="font-weight: bold;">{{$payment->receipt_no}}</h5>
                     </div>
                   <div class="col text-right">
-                    @if ($payment->status==0)
+                    @if (@$payment->status==0)
                     <a class="btn btn-warning rounded-pill" style="color:#fff;">Belum Terkonfirmasi</a>
-                    @elseif($payment->status==1)
+                    @elseif(@$payment->status==1)
                     <a class="btn btn-success rounded-pill" style="color:#fff;">Terkonfirmasi</a>
-                    @elseif($payment->status==2)
+                    @elseif(@$payment->status==2)
                     <a class="btn btn-danger rounded-pill" style="color:#fff;">Ditolak</a>
                     @else
                       <p>Kosong</p>
@@ -345,15 +345,15 @@
                     <p class="card-text">Keterangan</p>
                   </div>
                   <div class="col">
-                    <p class="card-text">{{$payment->tagihan->invoice}}</p>
-                    <p class="card-text">{{$payment->tgl_bayar}}</p>
-                    <p class="card-text">{{$payment->nominal}} </p>
-                    <p class="card-text">{{$payment->keterangan}}</p>
+                    <p class="card-text">{{@$payment->tagihan->invoice}}</p>
+                    <p class="card-text">{{@$payment->tgl_bayar}}</p>
+                    <p class="card-text">{{@$payment->nominal}} </p>
+                    <p class="card-text">{{@$payment->keterangan}}</p>
                   </div>
                 </div>
                 <div class="row" style="padding-top:1rem;">
                   <div class="col">
-                    @if ($payment->status==2)
+                    @if (@$payment->status==2)
                     <a href="/purchase" class="btn btn-success" id="bayar" style="border-radius:5px; font-weight:bold;">Re-konfirmasi</a>
                   @endif
                   </div>

@@ -271,11 +271,11 @@
                       <h5 style="font-weight:bold;">{{@$task->proyek->website}}</h5>
                     </div>
                     <div class="col text-right">
-                      @if ($task->status==1)
+                      @if (@$task->status==1)
                       <a style="background-color:#4A708B; color:#fff; padding:5px 24px; border-radius:20px; font-weight:bold; ">Baru</a>
-                      @elseif($task->status==2)
+                      @elseif(@$task->status==2)
                       <a style="background-color:rgb(255, 196, 0); color:#fff; padding:5px 24px; border-radius:20px; font-weight:bold;">Dikerjakan</a>
-                      @elseif($task->status==3)
+                      @elseif(@$task->status==3)
                       <a style="background-color:grey; color:#fff; padding:5px 24px; border-radius:20px; font-weight:bold;">Selesai</a>
                       @else
                       <p>Tidak diketahui</p>
@@ -289,13 +289,13 @@
                       <p class="card-text">Kebutuhan :</p>
                     </div>
                     <div class="col">
-                      <p>{{$task->kebutuhan}}</p>
+                      <p>{{@$task->kebutuhan}}</p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col">
                       <p class="card-text">
-                      @if ($task->handler==null)
+                      @if (@$task->handler==null)
                         Belum ada handler
                       @else
                         Handler : {{@$task->assign->nama}}
@@ -305,7 +305,7 @@
                   </div>
                   <div class="row" style="padding-top:1rem;">
                     <div class="col">
-                      @if ($task->handler==null)
+                      @if (@$task->handler==null)
                         <form action="{{route('taskclients.destroy',$task->id)}}" method="post" class="d-inline">
                           @csrf
                           @method('delete')

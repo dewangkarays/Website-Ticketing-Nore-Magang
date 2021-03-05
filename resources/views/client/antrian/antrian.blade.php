@@ -187,28 +187,28 @@
               <th scope="row" style="text-align:center;">{{$i}}</th>
                   <td style="text-align:center;">{{date("Y-m-d", strtotime($antrian->created_at))}}</td>
                   <td style="text-align:center;">
-                    @if (\Auth::user()->id == $antrian->user_id)
-                        <p>{{$antrian->user->username}}</p>
+                    @if (\Auth::user()->id == @$antrian->user_id)
+                        <p>{{@$antrian->user->username}}</p>
                     @else
-                        <p>{{$alias = strtoupper(substr($antrian->user->username,0,2))}}</p>
+                        <p>{{$alias = strtoupper(substr(@$antrian->user->username,0,2))}}</p>
                     @endif
                   </td>
                   <td style="text-align:center;">
-                    @if (Auth::user()->id == $antrian->user_id)
-                      <p>{{$antrian->proyek->website}}</p>
+                    @if (Auth::user()->id == @$antrian->user_id)
+                      <p>{{@$antrian->proyek->website}}</p>
                     @else
                       <p>Proyek Lain</p>
                     @endif
                   </td>
-                  <td style="text-align:center;">@if ($antrian->proyek->tipe==80)
+                  <td style="text-align:center;">@if (@$antrian->proyek->tipe==80)
                     <a style="background-color: #D4AF37; color:#fff; padding:6px 12px; border-radius:10px;">
                       Premium
                     </a>
-                    @elseif($antrian->proyek->tipe==90)
+                    @elseif(@$antrian->proyek->tipe==90)
                     <a style="background-color: grey; color:#fff; padding:6px 16px; border-radius:10px;">
                       Prioritas
                     </a>
-                    @elseif($antrian->proyek->tipe==99)
+                    @elseif(@$antrian->proyek->tipe==99)
                     <a style="background-color: #FFFAFA; color:#242424; padding:6px 17px; border-radius:10px; border-style:solid; border-color:black; border-width:0.1px;">
                       Simple
                     </a>
@@ -216,21 +216,21 @@
                     Tidak ada
                   @endif
                   </td>
-                  <td style="text-align:center;">@if($antrian->status == 2 )
+                  <td style="text-align:center;">@if(@$antrian->status == 2 )
                     {{config('custom.status.'.$antrian->status)}}
                   @else
                     {{config('custom.status.'.$antrian->status)}}
                   @endif</td>
                   <td style="text-align:center;">
-                    @if ($antrian->handler==null)
+                    @if (@$antrian->handler==null)
                       <p>Belum ada handler</p>
                     @else
-                    <p>{{$antrian->assign->nama}}</p> 
+                    <p>{{@$antrian->assign->nama}}</p> 
                     @endif
                   </td>
                   <td style="text-align:center;">
                     <p>
-                      @if ($antrian->handler==null && \Auth::user()->id == $antrian->user_id)
+                      @if (@$antrian->handler==null && \Auth::user()->id == @$antrian->user_id)
                       <form action="{{route('taskclients.destroy',$antrian->id)}}" method="post" class="d-inline">
                         @csrf
                         @method('delete')

@@ -25,10 +25,10 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-4">
-			<div class="card bg-green-400">
+			<div class="card bg-blue-600">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-stack-plus icon-4x"></i>
+						<i class="icon-users icon-4x"></i>
 					</div>
 					
 					<div>
@@ -43,10 +43,10 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			<div class="card bg-orange-400">
+			<div class="card bg-blue-600">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-stack-plus icon-4x"></i>
+						<i class="icon-user icon-4x"></i>
 					</div>
 					
 					<div>
@@ -61,10 +61,10 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			<div class="card bg-green-400">
+			<div class="card bg-blue-600">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-stack-plus icon-4x"></i>
+						<i class="icon-user icon-4x"></i>
 					</div>
 					
 					<div>
@@ -84,10 +84,10 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-4">
-			<div class="card bg-green-400">
+			<div class="card bg-green-600">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-stack-plus icon-4x"></i>
+						<i class="icon-display icon-4x"></i>
 					</div>
 					<div>
 						<div class="d-flex">
@@ -101,10 +101,10 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			<div class="card bg-orange-400">
+			<div class="card bg-green-600">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-stack-plus icon-4x"></i>
+						<i class="icon-display icon-4x"></i>
 					</div>
 					<div>
 						<div class="d-flex">
@@ -118,10 +118,10 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			<div class="card bg-green-400">
+			<div class="card bg-green-600">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-stack-plus icon-4x"></i>
+						<i class="icon-display icon-4x"></i>
 					</div>
 					<div>
 						<div class="d-flex">
@@ -140,10 +140,10 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-4">
-			<div class="card bg-green-400">
+			<div class="card bg-orange-600">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-stack-plus icon-4x"></i>
+						<i class="icon-sphere icon-4x"></i>
 					</div>
 					<div>
 						<div class="d-flex">
@@ -157,10 +157,10 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			<div class="card bg-orange-400">
+			<div class="card bg-orange-600">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-stack-plus icon-4x"></i>
+						<i class="icon-sphere icon-4x"></i>
 					</div>
 					<div>
 						<div class="d-flex">
@@ -174,10 +174,10 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			<div class="card bg-green-400">
+			<div class="card bg-orange-600">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-stack-plus icon-4x"></i>
+						<i class="icon-sphere icon-4x"></i>
 					</div>
 					<div>
 						<div class="d-flex">
@@ -197,10 +197,10 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-4">
-				<div class="card bg-green-400">
+				<div class="card bg-slate-600">
 					<blockquote class="blockquote d-flex py-2 mb-0">
 						<div class="mr-4" style="padding-left: 1.875rem;">
-							<i class="icon-stack-plus icon-4x"></i>
+							<i class="icon-download icon-4x"></i>
 						</div>
 						<div>
 							<div class="d-flex">
@@ -208,7 +208,7 @@
 							@foreach ($pendapatans as $pendapatan)
 							@php($gross = $pendapatan->sum('nominal'))
 							@endforeach
-								<h3 class="font-weight-semibold mb-0">Rp {{ $gross }},-</h3>
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$gross),0,',','.')}}, -</h3>
 							</div>
 							<div>
 								Total Pendapatan
@@ -218,10 +218,10 @@
 				</div>
 			</div>
 			<div class="col-lg-4">
-				<div class="card bg-orange-400">
+				<div class="card bg-slate-600">
 					<blockquote class="blockquote d-flex py-2 mb-0">
 						<div class="mr-4" style="padding-left: 1.875rem;">
-							<i class="icon-stack-plus icon-4x"></i>
+							<i class="icon-download icon-4x"></i>
 						</div>
 						<div>
 							<div class="d-flex">
@@ -229,7 +229,7 @@
 									@foreach ($pendapatanthis as $pendapatanthis)
 										@php($grossthis = $pendapatanthis->sum('nominal'))
 									@endforeach
-								<h3 class="font-weight-semibold mb-0">Rp {{ $grossthis }},-</h3>
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$grossthis),0,',','.')}}, -</h3>
 							</div>
 							<div>
 								Total pendapatan bulan ini
@@ -239,10 +239,10 @@
 				</div>
 			</div>
 			<div class="col-lg-4">
-				<div class="card bg-green-400">
+				<div class="card bg-slate-600">
 					<blockquote class="blockquote d-flex py-2 mb-0">
 						<div class="mr-4" style="padding-left: 1.875rem;">
-							<i class="icon-stack-plus icon-4x"></i>
+							<i class="icon-download icon-4x"></i>
 						</div>
 						<div>
 							<div class="d-flex">
@@ -250,7 +250,7 @@
 									@foreach ($pendapatanlast as $pendapatanlast)
 										@php($grosslast = $pendapatanlast->sum('nominal'))
 									@endforeach
-								<h3 class="font-weight-semibold mb-0">Rp {{ $grosslast }},-</h3>
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$grosslast),0,',','.')}}, -</h3>
 							</div>
 							<div>
 								Total pendapatan bulan lalu
@@ -265,10 +265,10 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-4">
-				<div class="card bg-green-400">
+				<div class="card bg-grey-600">
 					<blockquote class="blockquote d-flex py-2 mb-0">
 						<div class="mr-4" style="padding-left: 1.875rem;">
-							<i class="icon-stack-plus icon-4x"></i>
+							<i class="icon-upload icon-4x"></i>
 						</div>
 						<div>
 							<div class="d-flex">
@@ -277,7 +277,7 @@
 								@php($total = $pengeluaran->sum('nominal'))
 								@endforeach
 								<h3 class="font-weight-semibold mb-0">
-									Rp {{$total}} ,-
+									Rp {{number_format((@$total),0,',','.')}}, -
 								</h3>
 							</div>
 							<div>
@@ -288,10 +288,10 @@
 				</div>
 			</div>
 			<div class="col-lg-4">
-				<div class="card bg-orange-400">
+				<div class="card bg-grey-600">
 					<blockquote class="blockquote d-flex py-2 mb-0">
 						<div class="mr-4" style="padding-left: 1.875rem;">
-							<i class="icon-stack-plus icon-4x"></i>
+							<i class="icon-upload icon-4x"></i>
 						</div>
 						<div>
 							<div class="d-flex">
@@ -299,7 +299,7 @@
 								@foreach ($pengeluaranthis as $pengeluaranthis)
 								@php($expendthis = $pengeluaranthis->sum('nominal'))
 								@endforeach
-								<h3 class="font-weight-semibold mb-0">Rp {{$expendthis}} ,-</h3>
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$expendthis),0,',','.')}}, -</h3>
 							</div>
 							<div>
 								Total pengeluaran bulan ini
@@ -309,10 +309,10 @@
 				</div>
 			</div>
 			<div class="col-lg-4">
-				<div class="card bg-green-400">
+				<div class="card bg-grey-600">
 					<blockquote class="blockquote d-flex py-2 mb-0">
 						<div class="mr-4" style="padding-left: 1.875rem;">
-							<i class="icon-stack-plus icon-4x"></i>
+							<i class="icon-upload icon-4x"></i>
 						</div>
 						<div>
 							<div class="d-flex">
@@ -320,7 +320,7 @@
 								@foreach ($pengeluaranlast as $pengeluaranlast)
 									@php($expendlast = $pengeluaranlast->sum('nominal'))
 								@endforeach
-								<h3 class="font-weight-semibold mb-0">Rp {{$expendlast}} ,-</h3>
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$expendlast),0,',','.')}}, -</h3>
 							</div>
 							<div>
 								Total pengeluaran bulan lalu
@@ -335,14 +335,14 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-4">
-				<div class="card bg-green-400">
+				<div class="card bg-brown-600">
 					<blockquote class="blockquote d-flex py-2 mb-0">
 						<div class="mr-4" style="padding-left: 1.875rem;">
-							<i class="icon-stack-plus icon-4x"></i>
+							<i class="icon-coin-dollar icon-4x"></i>
 						</div>
 						<div>
 							<div class="d-flex">
-								<h3 class="font-weight-semibold mb-0">Rp {{ $gross -  $total}} , -</h3>
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$gross - @$total),0,',','.')}}, -</h3>
 							</div>
 							<div>
 								Total nett/profit
@@ -352,14 +352,14 @@
 				</div>
 			</div>
 			<div class="col-lg-4">
-				<div class="card bg-orange-400">
+				<div class="card bg-brown-600">
 					<blockquote class="blockquote d-flex py-2 mb-0">
 						<div class="mr-4" style="padding-left: 1.875rem;">
-							<i class="icon-stack-plus icon-4x"></i>
+							<i class="icon-coin-dollar icon-4x"></i>
 						</div>
 						<div>
 							<div class="d-flex">
-								<h3 class="font-weight-semibold mb-0">Rp {{ $grossthis - $expendthis }},-</h3>
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$grossthis - @$expendthis),0,',','.')}}, -</h3>
 							</div>
 							<div>
 								Total nett/profit bulan ini
@@ -369,14 +369,14 @@
 				</div>
 			</div>
 			<div class="col-lg-4">
-				<div class="card bg-green-400">
+				<div class="card bg-brown-600">
 					<blockquote class="blockquote d-flex py-2 mb-0">
 						<div class="mr-4" style="padding-left: 1.875rem;">
-							<i class="icon-stack-plus icon-4x"></i>
+							<i class="icon-coin-dollar icon-4x"></i>
 						</div>
 						<div>
 							<div class="d-flex">
-								<h3 class="font-weight-semibold mb-0">Rp {{ $grosslast - $expendlast }},-</h3>
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$grosslast - @$expendlast),0,',','.')}}, - </h3>
 							</div>
 							<div>
 								Total nett/profit bulan lalu

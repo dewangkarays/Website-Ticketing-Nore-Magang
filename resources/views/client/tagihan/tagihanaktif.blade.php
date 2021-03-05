@@ -187,7 +187,7 @@
                 <div class="row">
                   <div class="col">
                     <h5 class="card-title">{{@$tagihan->proyek->website}}</h5>
-                    <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
+                    <p class="card-title" style="font-weight: bold;">Invoice {{@$tagihan->invoice}}</p>
                   </div>
                   <div class="col text-right">
                     @if ($tagihan->status==0)
@@ -206,13 +206,13 @@
                   </div>
                   <div class="col">
                     <p class="card-text">Sudah Dibayar</p>
-                    <p class="card-text desktop" style="font-weight:bold;">Rp. {{number_format($tagihan->jml_bayar,0,',','.')}},-</p>
-                    <p class="card-text mobile" style="font-weight:bold;">Rp.<br>{{number_format($tagihan->jml_bayar,0,',','.')}},-</p>
+                    <p class="card-text desktop" style="font-weight:bold;">Rp. {{number_format(@$tagihan->jml_bayar,0,',','.')}},-</p>
+                    <p class="card-text mobile" style="font-weight:bold;">Rp.<br>{{number_format(@$tagihan->jml_bayar,0,',','.')}},-</p>
                   </div>
                   <div class="col">
                     <p class="card-text">Harus dibayar</p>
-                    <p class="card-text desktop" style="font-weight:bold;">Rp. {{number_format($tagihan->jml_tagih,0,',','.')}},-</p>
-                    <p class="card-text mobile" style="font-weight:bold;">Rp.<br>{{number_format($tagihan->jml_tagih,0,',','.')}},-</p>
+                    <p class="card-text desktop" style="font-weight:bold;">Rp. {{number_format(@$tagihan->jml_tagih,0,',','.')}},-</p>
+                    <p class="card-text mobile" style="font-weight:bold;">Rp.<br>{{number_format(@$tagihan->jml_tagih,0,',','.')}},-</p>
                   </div>
                   <div class="col text-right desktop" id="tombol" style="margin-right:1.25rem;">
                     <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>

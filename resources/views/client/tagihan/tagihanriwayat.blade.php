@@ -163,16 +163,16 @@
         </div>
         <div class="cardContainer">
           @foreach ($tagihans as $tagihan)
-          @if (\Auth::user()->id == @$tagihan->user_id && $tagihan->status==2)
+          @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status==2)
           <div class="card" style="border:none; border-radius:5px; background-color:#eeee;">
             <div class="card-body">
               <div class="invoice" style="padding:1em;">
                 <div class="row">
                   <div class="col">
-                    <h5 class="card-title">{{$tagihan->proyek->website}}</h5>
-                    <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
+                    <h5 class="card-title">{{@$tagihan->proyek->website}}</h5>
+                    <p class="card-title" style="font-weight: bold;">Invoice {{@$tagihan->invoice}}</p>
                     <p class="card-text">Total tagihan Rp. {{number_format(((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}},-</p>
-                    <p class="card-text" style="font-style: italic;">Terbayar pada {{date("Y-m-d", strtotime($tagihan->updated_at))}}</p>
+                    <p class="card-text" style="font-style: italic;">Terbayar pada {{date("Y-m-d", strtotime(@$tagihan->updated_at))}}</p>
                 </div>
                   <div class="col">
                     <div class="col text-right" id="tombol">

@@ -208,7 +208,7 @@
                             <div class="row">
                               <div class="col">
                                 <h5 class="card-title">{{@$tagihan->proyek->website}}</h5>
-                                <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
+                                <p class="card-title" style="font-weight: bold;">Invoice {{@$tagihan->invoice}}</p>
                               </div>
                               <div class="col text-right">
                                 @if ($tagihan->status==0)
@@ -220,7 +220,7 @@
                             </div>
                             <div class="row" style="padding-bottom:1rem;">
                               <div class="col">
-                                <p class="card-text" style="font-style:italic;">{{$tagihan->keterangan}}</p>
+                                <p class="card-text" style="font-style:italic;">{{@$tagihan->keterangan}}</p>
                               </div>
                             </div>
                             <div class="row">
@@ -230,11 +230,11 @@
                               </div>
                               <div class="col">
                                 <p class="card-text">Sudah Dibayar</p>
-                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format($tagihan->jml_bayar,0,',','.')}}</p>
+                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format(@$tagihan->jml_bayar,0,',','.')}}</p>
                               </div>
                               <div class="col">
                                 <p class="card-text">Harus dibayar</p>
-                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format($tagihan->jml_tagih,0,',','.')}}</p>
+                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format(@$tagihan->jml_tagih,0,',','.')}}</p>
                               </div>
                               <div class="col text-right" id="tombol">
                                 <a href="/payment" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
@@ -269,7 +269,7 @@
                       <p style="text-align:center;">Tidak ada riwayat tagihan</p>
                     @else
                     @foreach ($tagihans as $tagihan)
-                    @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
+                    @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status==2)
                     <div class="col">
                       <div class="card" style="border:none; border-radius:5px; background-color:#eeee;">
                         <div class="card-body">
@@ -277,9 +277,9 @@
                             <div class="row">
                               <div class="col">
                                   <h5 class="card-title">{{@$tagihan->proyek->website}}</h5>
-                                  <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
+                                  <p class="card-title" style="font-weight: bold;">Invoice {{@$tagihan->invoice}}</p>
                                   <p class="card-text">Total tagihan Rp. {{number_format(((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}}</p>
-                                  <p class="card-text" style="font-style: italic;">Terbayar pada {{date("Y-m-d", strtotime($tagihan->updated_at))}}</p>
+                                  <p class="card-text" style="font-style: italic;">Terbayar pada {{date("Y-m-d", strtotime(@$tagihan->updated_at))}}</p>
                               </div>
                               <div class="col">
                                 <div class="col text-right" id="tombol">
