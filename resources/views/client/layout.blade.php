@@ -434,7 +434,7 @@
                       </div>
                       <div class="row" style="padding-top:1rem;">
                         <div class="col">
-                          @if ($proyek->tagihan->status!='2')
+                          @if (@$proyek->tagihan->status!='2')
                           <p>Tagihan :</p>
                           <p style="font-weight: bold;">Rp.{{number_format(@$proyek->tagihan->jml_tagih,0,',','.')}},- </p>  
                           @endif
@@ -442,7 +442,7 @@
                       </div>
                       <div class="row">
                         <div class="col">
-                          @if ($proyek->tagihan->status!='2')
+                          @if (@$proyek->tagihan->status!='2')
                           <div class="buttondetail" style="padding-bottom:5px;">
                             <a href="/payment" class="btn btn-success" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                           </div>
@@ -540,7 +540,7 @@
                 @else
                 <?php $count = 0; ?>
                 @foreach ($tasks as $task)
-                @if ($task->status=='1')
+                @if (@$task->status=='1')
                 <?php if($count == 2) break; ?>
                     <div class="card" style="background-color:#fff; border:none;">
                       <div class="card-header" style="background-color:#4A708B">
@@ -563,12 +563,12 @@
                           <div class="col">Tanggal input</div>
                           {{-- <div class="col">:</div> --}}
                           
-                          <div class="col">{{date('j F Y', strtotime($task->created_at))}}</div>
+                          <div class="col">{{date('j F Y', strtotime(@$task->created_at))}}</div>
                         </div>
                         <div class="row" style="padding-top:1rem;">
                           <div class="col">Keterangan</div>
                           {{-- <div class="col">:</div> --}}
-                          <div class="col">{{$task->kebutuhan}}</div>
+                          <div class="col">{{@$task->kebutuhan}}</div>
                         </div>
                       </div>
                     </div>
@@ -587,7 +587,7 @@
                   @else
                   <?php $count = 0; ?>
                   @foreach ($tasks as $task)
-                    @if ($task->status=='2')
+                    @if (@$task->status=='2')
                     <?php if($count == 2) break; ?>
                     <div class="card" style="background-color: #fff; border:none;">
                       <div class="card-header" style="background-color:rgb(255, 196, 0)">
@@ -599,21 +599,21 @@
                             <p style="">Handler</p>
                           </div>
                           <div class="col">
-                            @if ($task->handler==null)
+                            @if (@$task->handler==null)
                               <p>Belum ada handler</p>
                             @else
-                              <p><p>{{$task->assign->nama}}</p></p>
+                              <p><p>{{@$task->assign->nama}}</p></p>
                             @endif
                           </div>
                         </div>
                         <div class="row" style="padding-top:1rem;">
                           <div class="col">Tanggal input</div>
-                          <div class="col">{{date('j F Y', strtotime($task->created_at))}}</div>
+                          <div class="col">{{date('j F Y', strtotime(@$task->created_at))}}</div>
                         </div>
                         <div class="row" style="padding-top:1rem;">
                           <div class="col">Keterangan</div>
                           {{-- <div class="col">:</div> --}}
-                          <div class="col">{{$task->kebutuhan}}</div>
+                          <div class="col">{{@$task->kebutuhan}}</div>
                         </div>
                       </div>
                     </div>
@@ -632,7 +632,7 @@
                   @else
                   <?php $count = 0; ?>
                   @foreach ($tasks as $task)
-                    @if ($task->status=='3')
+                    @if (@$task->status=='3')
                     <?php if($count == 2) break; ?>
                     <div class="card" style="background-color: #fff; border:none">
                       <div class="card-header" style="background-color:	grey">
@@ -655,12 +655,12 @@
                           <div class="col">Tanggal input</div>
                           {{-- <div class="col">:</div> --}}
                           
-                          <div class="col">{{date('j F Y', strtotime($task->created_at))}}</div>
+                          <div class="col">{{date('j F Y', strtotime(@$task->created_at))}}</div>
                         </div>
                         <div class="row" style="padding-top:1rem;">
                           <div class="col">Keterangan</div>
                           {{-- <div class="col">:</div> --}}
-                          <div class="col">{{$task->kebutuhan}}</div>
+                          <div class="col">{{@$task->kebutuhan}}</div>
                         </div>
                       </div>
                     </div>
@@ -690,7 +690,7 @@
                           @else
                           <?php $count = 0; ?>
                           @foreach ($tagihans as $tagihan)
-                          @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
+                          @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status!=2)
                           <?php if($count == 3) break; ?>
                           <div class="card">
                             <div class="card-header">
@@ -749,7 +749,7 @@
                           @else
                           <?php $count = 0; ?>
                             @foreach ($tagihans as $tagihan)
-                              @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
+                              @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status==2)
                               <?php if($count == 3) break; ?>
                               <div class="card">
                                 <div class="card-header">

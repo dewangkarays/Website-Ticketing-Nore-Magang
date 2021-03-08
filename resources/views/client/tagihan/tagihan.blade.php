@@ -201,7 +201,7 @@
                       <p style="text-align:center;">Tidak ada tagihan aktif</p>
                     @else
                     @foreach ($tagihans as $tagihan)
-                    @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
+                    @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status!=2)
                       <div class="card" style="width:100%;">
                         <div class="card-body">
                           {{-- <div class="invoice"> --}}
@@ -211,7 +211,7 @@
                                 <p class="card-title" style="font-weight: bold;">Invoice {{@$tagihan->invoice}}</p>
                               </div>
                               <div class="col text-right">
-                                @if ($tagihan->status==0)
+                                @if (@$tagihan->status==0)
                                 <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Belum dibayar</a>
                                 @else
                                 <a style="color:#fff; font-weight:bold; background-color:#ffaf42; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar sebagian</a>

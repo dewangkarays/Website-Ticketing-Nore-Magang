@@ -321,7 +321,7 @@
                 <div class="card-header" style="font-weight: bold; font-size:24px;">
                   <div class="row">
                     <div class="col">
-                      <h5 style="font-weight: bold;">{{$payment->receipt_no}}</h5>
+                      <h5 style="font-weight: bold;">{{@$payment->receipt_no}}</h5>
                     </div>
                   <div class="col text-right">
                     @if (@$payment->status==0)

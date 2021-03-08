@@ -237,13 +237,13 @@
           @include('client.headerdesktop')
         </div>
         <div class="data-pembayaran" style="padding-bottom:0.5em;">
-          <form class="form-validate-jquery" action="{{route('settinguser.update',$user->id)}}" method="POST">
+          <form class="form-validate-jquery" action="{{route('settinguser.update',@$user->id)}}" method="POST">
             @method('PATCH')
             @csrf
             <div class="form-group row">
               <label class="col-sm-6 col-form-label">Nama</label>
               <div class="col-sm-6">
-                <input type="text" name="nama" class="form-control border-teal border-1" placeholder="Nama" required value="{{ $user->nama }}">
+                <input type="text" name="nama" class="form-control border-teal border-1" placeholder="Nama" required value="{{ @$user->nama }}">
               </div>
             </div>
             <div class="form-group row">
@@ -255,7 +255,7 @@
             <div class="form-group row">
               <label class="col-sm-6 col-form-label">Email</label>
               <div class="col-sm-6">
-                <input type="text" name="email" class="form-control border-teal border-1" placeholder="Email" required value="{{ $user->email }}">
+                <input type="text" name="email" class="form-control border-teal border-1" placeholder="Email" required value="{{ @$user->email }}">
               </div>
             </div>
             <div class="form-group row">

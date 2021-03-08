@@ -185,7 +185,7 @@
             @foreach ($antrians as $antrian)
             <tr>
               <th scope="row" style="text-align:center;">{{$i}}</th>
-                  <td style="text-align:center;">{{date("Y-m-d", strtotime($antrian->created_at))}}</td>
+                  <td style="text-align:center;">{{date("Y-m-d", strtotime(@$antrian->created_at))}}</td>
                   <td style="text-align:center;">
                     @if (\Auth::user()->id == @$antrian->user_id)
                         <p>{{@$antrian->user->username}}</p>

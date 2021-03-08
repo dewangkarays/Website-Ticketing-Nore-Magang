@@ -180,7 +180,7 @@
         </div>
         <div class="cardContainer">
           @foreach ($tagihans as $tagihan)
-          @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
+          @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status!=2)
           <div class="card w-100">
             <div class="card-body">
               <div class="invoice">
@@ -190,14 +190,14 @@
                     <p class="card-title" style="font-weight: bold;">Invoice {{@$tagihan->invoice}}</p>
                   </div>
                   <div class="col text-right">
-                    @if ($tagihan->status==0)
+                    @if (@$tagihan->status==0)
                     <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center;">Belum dibayar</a>
                     @else
                     <a style="color:#fff; font-weight:bold;background-color:#ffaf42; padding:5px 12px; border-radius:20px; text-align:center;">Terbayar sebagian</a>
                     @endif
                   </div>
                 </div>
-                <p class="card-text" style="font-style:italic;">{{$tagihan->keterangan}}</p>
+                <p class="card-text" style="font-style:italic;">{{@$tagihan->keterangan}}</p>
                 <div class="row">
                   <div class="col">
                     <p class="card-text">Total Tagihan</p>

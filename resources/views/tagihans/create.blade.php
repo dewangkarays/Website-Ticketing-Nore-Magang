@@ -68,7 +68,11 @@
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Masa Berlaku</label>
-						<span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span>
+						<div class="col-lg-10">
+							<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Berlaku">
+							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
+						</div>
+						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
 					</div>
 					{{-- <div class="form-group row">
 						<label class="col-form-label col-lg-2">Tipe</label>
@@ -116,13 +120,13 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Penagih</label>
 						<div class="col-lg-10">
-							<input type="text" id="penagih" name="penagih" class="form-control border-teal border-1" placeholder="Nama Penagih" value="{{$penagih->penagih}}">
+							<input type="text" id="penagih" name="penagih" class="form-control border-teal border-1" placeholder="Nama Penagih" value="{{@$penagih->penagih}}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Posisi Penagih</label>
 						<div class="col-lg-10">
-							<input type="text" id="pospenagih" name="pospenagih" class="form-control border-teal border-1" placeholder="Nama Penagih" value="{{$penagih->pospenagih}}">
+							<input type="text" id="pospenagih" name="pospenagih" class="form-control border-teal border-1" placeholder="Nama Penagih" value="{{@$penagih->pospenagih}}">
 						</div>
 					</div>
 					<div class="form-group row">
