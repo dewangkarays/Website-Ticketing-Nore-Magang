@@ -10,12 +10,14 @@
     {{-- font --}}
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+    {{-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"> --}}
+    {{-- <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css"> --}}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     {{-- fixed --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    {{-- wysiwig --}}
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <style>
         .bg-light {
         background-color: #3EB772 !important;
@@ -164,7 +166,8 @@
         <div class="form-group row">
           <label for="kebutuhan" class="col-sm-6 col-form-label">Kebutuhan</label>
           <div class="col-sm-6">
-            <textarea type="text" class="form-control" id="kebutuhan" name="kebutuhan"></textarea>
+            {{-- <textarea type="text" class="form-control" id="kebutuhan" name="kebutuhan"></textarea> --}}
+            <textarea id="summernote" name="kebutuhan"></textarea>
           </div>
         </div>
         <div class="form-group row">
@@ -198,7 +201,11 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
+      $(document).ready(function() {
+        $('#summernote').summernote();
+      });
     </script>
   </body>
 </html>

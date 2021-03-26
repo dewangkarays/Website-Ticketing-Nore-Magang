@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Model\Task;
 use App\Model\User;
+use App\Model\Proyek;
 use App\Model\Attachment;
 use App\Model\Notification;
 use Carbon\Carbon;
@@ -19,26 +20,23 @@ class TaskController extends Controller
      */
     public function index()
     {
-        if(\Auth::user()->role > 20){
-            $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id',)
-                        ->where('tasks.status','!=','3')
-                        ->where('user_id',\Auth::user()->id)
-                        ->orderBy('tasks.status', 'DESC')
-                        ->orderBy('users.role', 'ASC')
-                        ->orderBy('tasks.created_at', 'ASC')
-                        ->select('tasks.*')
-                        ->get();  //customer
-        } else {
-            $tasks = Task::join('users', 'users.id', '=', 'tasks.user_id')
-                        ->where('tasks.status','!=','3')
-                        ->orderBy('tasks.status', 'DESC')
-                        ->orderBy('users.role', 'ASC')
-                        ->orderBy('tasks.created_at', 'ASC')
-                        ->select('tasks.*','users.task_count')
-                        ->get(); //admin & karyawan & keuangan
-        }
+
+            $taskpremiums = Task::join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
+                            ->where('proyeks.tipe','=','80')
+                            ->orderBy('tasks.status', 'DESC')
+                            ->orderBy('tasks.created_at','ASC')
+                            // ->select('tasks*')
+                            ->get(); //premium
+
+            $tasks = Task::join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
+                    ->where('proyeks.tipe','!=','80')
+                    ->orderBy('tasks.status', 'DESC')
+                    ->orderBy('tasks.created_at','ASC')
+                    // ->select('tasks*')
+                    ->get(); //premium
+
         
-        return view('tasks.index', compact('tasks'));
+        return view('tasks.index', compact('tasks','taskpremiums'));
     }
 
     /**

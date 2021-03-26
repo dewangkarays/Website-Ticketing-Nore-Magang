@@ -237,7 +237,8 @@
           @include('client.headerdesktop')
         </div>
         <div class="data-pembayaran" style="padding-bottom:0.5em;">
-          <form class="form-validate-jquery" action="{{route('settinguser.update',@$user->id)}}" method="POST">
+          {{-- <form class="form-validate-jquery" action="{{route('users.update',$user->id)}}" method="POST"> --}}
+          <form class="form-validate-jquery" method="POST">
             @method('PATCH')
             @csrf
             <div class="form-group row">
@@ -274,6 +275,12 @@
               <label class="col-sm-6 col-form-label">Password</label>
               <div class="col-sm-6">
                 <input type="password" name="password" class="form-control border-teal border-1" placeholder="Password">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-6 col-form-label">Foto Profil</label>
+              <div class="col-sm-6">
+                <input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
               </div>
             </div>
             <div class="text-right">

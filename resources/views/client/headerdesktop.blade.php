@@ -54,7 +54,8 @@
 </style>
 <body>
     <div class="header-desktop" style="display: flex; justify-content: space-between; padding-bottom:3rem;">
-        @include('client.toogle')
+        {{-- @include('client.toogle') --}}
+        <div class="col"></div>
         <div class="account">
             <div class="dropdown"  style="padding-top:0.5rem;">
                 <div class="keterangan" style="display:flex;">
@@ -85,7 +86,8 @@
                     </div>
                 </div>
                 <div class="setting" id="dropdownlist">
-                    <a href="{{route('users.edit',$setting->id)}}">Pengaturan</a>
+                    {{-- <a href="{{url('/settinguser',$user->id)}}">Pengaturan</a> --}}
+                    <a href="{{url('/settinguser')}}">Pengaturan</a>
                     <a href="{{ url('/logout') }}">Sign Out</a>
                 </div>
             </div>

@@ -25,19 +25,12 @@
 <div class="content">
 	
 	<!-- Hover rows -->
+	{{-- Premium list table --}}
 	<div class="card">
-		<div class="card-header header-elements-inline">
-			
-			@if (\Auth::user()->role > 20 && \Auth::user()->task_count <= 0)
-			<button type="button" class="btn btn-danger rounded-round" disabled><i class="icon-cancel-circle2 mr-2"></i> Tambah</button>
-			<span class="text-danger font-weight-semibold">Jumlah pengoperasian anda 0.</span> 
-			
-			@else
-			<a href="{{ route('tasks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
-			
-			@endif
+		<div class="card-header">
+				<h4 style="font-weight:bold;">Task Premium</h4>
+				<a href="{{ route('tasks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
 		</div>
-
 		<table class="table datatable-basic table-hover">
 			<thead>
 				<tr>
@@ -47,13 +40,14 @@
 					<th>Kebutuhan</th>
 					<th>Handler</th>
 					<th class="text-center">Status</th>
+					<th>Tingkat Kesulitan</th>
 					<th class="text-center">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
-				@if(!$tasks->isEmpty())
+				@if(!$taskpremiums->isEmpty())
 				@php ($i = 1)
-				@foreach($tasks as $task)
+				@foreach($taskpremiums as $task)
 				
 				<tr>
 					<td>{{$i}}</td>
@@ -65,7 +59,11 @@
 							@if (\Auth::user()->role == 10)
 							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
 							@endif
-							{{@$task->assign->nama ? @$task->assign->nama : 'Belum ada handler'}} 
+							@if (@$task->assign->nama == NULL)
+								<p style="color:#ff0f0f;">Belum ada handler</p>
+							@else
+								{{@$task->assign->nama}}
+							@endif
 						</label>
 						</div>
 					</td>
@@ -76,6 +74,11 @@
 						{{config('custom.status.'.$task->status)}}
 						@endif
 					</td>
+
+					<td>
+
+					</td>
+
 					<td align="center">
 						<div class="list-icons">
 							<div class="dropdown">
@@ -107,7 +110,97 @@
 				@php ($i++)
 				@endforeach
 				@else
-				<tr><td align="center" colspan="5">Data Kosong</td></tr>
+				<tr><td align="center" colspan="8">Data Kosong</td></tr>
+				@endif
+			</tbody>
+		</table>
+	</div>
+	{{-- Prioritas and simple list table --}}
+	<div class="card">
+		<div class="card-header">
+				<h4 style="font-weight:bold;">Task Prioritas dan Simple</h4>
+				<a href="{{ route('tasks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+		</div>
+		<table class="table datatable-basic table-hover">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th>Tanggal</th>
+					<th>Username</th>
+					<th>Kebutuhan</th>
+					<th>Handler</th>
+					<th class="text-center">Status</th>
+					<th>Tingkat Kesulitan</th>
+					<th class="text-center">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				@if(!$tasks->isEmpty())
+				@php ($i = 1)
+				@foreach($tasks as $task)
+				
+				<tr>
+					<td>{{$i}}</td>
+					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
+					<td><div class="datatable-column-width">{{$task->user->username}}</div></td>
+					<td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
+					<td><div class="datatable-column-width form-check">
+						<label class="form-check-label">
+							@if (\Auth::user()->role == 10)
+							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
+							@endif
+							@if (@$task->assign->nama == NULL)
+								<p style="color:#ff0f0f;">Belum ada handler</p>
+							@else
+								{{@$task->assign->nama}}
+							@endif
+						</label>
+						</div>
+					</td>
+					
+					<td align="center">@if($task->status == 2 )
+						<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.status.'.$task->status)}}</span>
+						@else
+						{{config('custom.status.'.$task->status)}}
+						@endif
+					</td>
+
+					<td>
+
+					</td>
+
+					<td align="center">
+						<div class="list-icons">
+							<div class="dropdown">
+								<a href="#" class="list-icons-item" data-toggle="dropdown">
+									<i class="icon-menu9"></i>
+								</a>
+								
+								<div class="dropdown-menu dropdown-menu-right">
+									@if(\Auth::user()->role<=20)
+									<a href="https://wa.me/{{$task->user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
+									@endif
+									@if (\Auth::user()->role==1 )
+									<a href="{{ route('tasks.edit',$task->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+									@elseif (\Auth::user()->role==10 || \Auth::user()->id == $task->handler )
+									<a href="{{ route('tasks.edit',$task->id)}}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>
+									@endif
+									@if (\Auth::user()->role==1 || \Auth::user()->id == $task->user_id )
+									<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id=" {{ $task->id }} " data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>
+									@endif
+									
+									@if($task->status==1 || \Auth::user()->role==1)
+									<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tasks.destroy', $task->id)}}"><i class="icon-x"></i> Delete</a>
+									@endif
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				@php ($i++)
+				@endforeach
+				@else
+				<tr><td align="center" colspan="8">Data Kosong</td></tr>
 				@endif 
 			</tbody>
 		</table>
@@ -177,7 +270,7 @@
 
 <script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/forms/styling/switchery.min.js')}}"></script>
-// <script src="{{asset('global_assets/js/plugins/forms/styling/switch.min.js')}}"></script>
+<script src="{{asset('global_assets/js/plugins/forms/styling/switch.min.js')}}"></script>
 
 <script src="{{asset('assets/js/app.js') }}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_checkboxes_radios.js')}}"></script>

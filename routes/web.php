@@ -107,5 +107,6 @@ Route::group(['middleware' => ['auth']], function() {
 		// Route::post('/taskclient','client\TaskClient@store');
 		Route::get('/antrian','client\AntrianClient@index');
 		// Route::resource('settinguser','client\UserSetting');
+		Route::get('/settinguser','UserController@setting');
 	});
 });

@@ -12,8 +12,8 @@
     {{-- icon --}}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    {{-- <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css"> --}}
+    {{-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"> --}}
     {{-- carousel --}}
     <link rel="stylesheet" href="{{asset('global_assets/owlcarousel/dist/assets/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{asset('global_assets/owlcarousel/dist/assets/owl.theme.default.min.css') }}">

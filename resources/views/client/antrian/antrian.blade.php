@@ -165,89 +165,168 @@
           </div>
           {{-- <input type="text" id="myInput" placeholder="Cari"> --}}
           {{-- <br><br> --}}
+          @if ($highproyek->tipe=='80' && ($otherproyek>0 ||$otherproyek2>0))
           <div id="table_data">
-          <div class="table-responsive">
-          <table id="table_id">
-            <thead class="table-success">
-            <tr>
-              <th scope="col" style="text-align:center;" >No</th>
-                  <th scope="col" style="text-align:center;">Tanggal</th>
-                  <th scope="col" style="text-align:center;">Pelanggan</th>
-                  <th scope="col" style="text-align:center;">Proyek</th>
-                  <th scope="col" style="text-align:center;">Layanan</th>
-                  <th scope="col" style="text-align:center;">Status</th>
-                  <th scoper="col" style="text-align:center;">Handler</th>
-                  <th scoper="col" style="text-align:center;">Aksi</th>
-            </tr>
-            </thead>
-            <tbody id="myTable">
-            @php($i=1)
-            @foreach ($antrians as $antrian)
-            <tr>
-              <th scope="row" style="text-align:center;">{{$i}}</th>
-                  <td style="text-align:center;">{{date("Y-m-d", strtotime(@$antrian->created_at))}}</td>
-                  <td style="text-align:center;">
-                    @if (\Auth::user()->id == @$antrian->user_id)
-                        <p>{{@$antrian->user->username}}</p>
-                    @else
-                        <p>{{$alias = strtoupper(substr(@$antrian->user->username,0,2))}}</p>
-                    @endif
-                  </td>
-                  <td style="text-align:center;">
-                    @if (Auth::user()->id == @$antrian->user_id)
-                      <p>{{@$antrian->proyek->website}}</p>
-                    @else
-                      <p>Proyek Lain</p>
-                    @endif
-                  </td>
-                  <td style="text-align:center;">@if (@$antrian->proyek->tipe==80)
-                    <a style="background-color: #D4AF37; color:#fff; padding:6px 12px; border-radius:10px;">
-                      Premium
-                    </a>
-                    @elseif(@$antrian->proyek->tipe==90)
-                    <a style="background-color: grey; color:#fff; padding:6px 16px; border-radius:10px;">
-                      Prioritas
-                    </a>
-                    @elseif(@$antrian->proyek->tipe==99)
-                    <a style="background-color: #FFFAFA; color:#242424; padding:6px 17px; border-radius:10px; border-style:solid; border-color:black; border-width:0.1px;">
-                      Simple
-                    </a>
-                    @else
-                    Tidak ada
-                  @endif
-                  </td>
-                  <td style="text-align:center;">@if(@$antrian->status == 2 )
-                    {{config('custom.status.'.$antrian->status)}}
-                  @else
-                    {{config('custom.status.'.$antrian->status)}}
-                  @endif</td>
-                  <td style="text-align:center;">
-                    @if (@$antrian->handler==null)
-                      <p>Belum ada handler</p>
-                    @else
-                    <p>{{@$antrian->assign->nama}}</p> 
-                    @endif
-                  </td>
-                  <td style="text-align:center;">
-                    <p>
-                      @if (@$antrian->handler==null && \Auth::user()->id == @$antrian->user_id)
-                      <form action="{{route('taskclients.destroy',$antrian->id)}}" method="post" class="d-inline">
-                        @csrf
-                        @method('delete')
-                          <button type="submit" class="btn btn-danger" style="font-weight: bold;">Batalkan</button>
-                      </form>
+            <div class="table-responsive">
+            <table id="table_id">
+              <thead class="table-success">
+              <tr>
+                <th scope="col" style="text-align:center;" >No</th>
+                    <th scope="col" style="text-align:center;">Tanggal</th>
+                    <th scope="col" style="text-align:center;">Pelanggan</th>
+                    <th scope="col" style="text-align:center;">Proyek</th>
+                    <th scope="col" style="text-align:center;">Layanan</th>
+                    <th scope="col" style="text-align:center;">Status</th>
+                    <th scoper="col" style="text-align:center;">Handler</th>
+                    <th scoper="col" style="text-align:center;">Aksi</th>
+              </tr>
+              </thead>
+              <tbody id="myTable">
+              @php($i=1)
+              @foreach ($antrians as $antrian)
+              <tr>
+                <th scope="row" style="text-align:center;">{{$i}}</th>
+                    <td style="text-align:center;">{{date("Y-m-d", strtotime(@$antrian->created_at))}}</td>
+                    <td style="text-align:center;">
+                      @if (\Auth::user()->id == @$antrian->user_id)
+                          <p>{{@$antrian->user->username}}</p>
                       @else
-                      <p>Tidak ada aksi</p>
+                          <p>{{$alias = strtoupper(substr(@$antrian->user->username,0,2))}}</p>
                       @endif
-                    </p>
-                  </td>
-            </tr>
-            @php($i++)
-            @endforeach
-          </tbody>
-        </table>
+                    </td>
+                    <td style="text-align:center;">
+                      @if (Auth::user()->id == @$antrian->user_id)
+                        <p>{{@$antrian->proyek->website}}</p>
+                      @else
+                        <p>Proyek Lain</p>
+                      @endif
+                    </td>
+                    <td style="text-align:center;">@if (@$antrian->proyek->tipe==80)
+                      <a style="background-color: #D4AF37; color:#fff; padding:6px 12px; border-radius:10px;">
+                        Premium
+                      </a>
+                      @elseif(@$antrian->proyek->tipe==90)
+                      <a style="background-color: grey; color:#fff; padding:6px 16px; border-radius:10px;">
+                        Prioritas
+                      </a>
+                      @elseif(@$antrian->proyek->tipe==99)
+                      <a style="background-color: #FFFAFA; color:#242424; padding:6px 17px; border-radius:10px; border-style:solid; border-color:black; border-width:0.1px;">
+                        Simple
+                      </a>
+                      @else
+                      Tidak ada
+                    @endif
+                    </td>
+                    <td style="text-align:center;">@if(@$antrian->status == 2 )
+                      {{config('custom.status.'.$antrian->status)}}
+                    @else
+                      {{config('custom.status.'.$antrian->status)}}
+                    @endif</td>
+                    <td style="text-align:center;">
+                      @if (@$antrian->handler==null)
+                        <p>Belum ada handler</p>
+                      @else
+                      <p>{{@$antrian->assign->nama}}</p> 
+                      @endif
+                    </td>
+                    <td style="text-align:center;">
+                      <p>
+                        @if (@$antrian->handler==null && \Auth::user()->id == @$antrian->user_id)
+                        <form action="{{route('taskclients.destroy',$antrian->id)}}" method="post" class="d-inline">
+                          @csrf
+                          @method('delete')
+                            <button type="submit" class="btn btn-danger" style="font-weight: bold;">Batalkan</button>
+                        </form>
+                        @else
+                        <p>Tidak ada aksi</p>
+                        @endif
+                      </p>
+                    </td>
+              </tr>
+              @php($i++)
+              @endforeach
+            </tbody>
+          </table>
+          </div>
         </div>
-      </div>
+          @else
+          <div id="table_data">
+            <div class="table-responsive">
+            <table id="table_id">
+              <thead class="table-success">
+              <tr>
+                <th scope="col" style="text-align:center;" >No</th>
+                    <th scope="col" style="text-align:center;">Tanggal</th>
+                    <th scope="col" style="text-align:center;">Pelanggan</th>
+                    <th scope="col" style="text-align:center;">Proyek</th>
+                    <th scope="col" style="text-align:center;">Layanan</th>
+                    <th scope="col" style="text-align:center;">Status</th>
+                    <th scoper="col" style="text-align:center;">Handler</th>
+                    <th scoper="col" style="text-align:center;">Aksi</th>
+              </tr>
+              </thead>
+              <tbody id="myTable">
+              @php($i=1)
+              @foreach ($antrianpremiums as $antrianp)
+              <tr>
+                <th scope="row" style="text-align:center;">{{$i}}</th>
+                    <td style="text-align:center;">{{date("Y-m-d", strtotime(@$antrian->created_at))}}</td>
+                    <td style="text-align:center;">
+                      @if (\Auth::user()->id == @$antrianp->user_id)
+                          <p>{{@$antrianp->user->username}}</p>
+                      @else
+                          <p>{{$alias = strtoupper(substr(@$antrianp->user->username,0,2))}}</p>
+                      @endif
+                    </td>
+                    <td style="text-align:center;">
+                      @if (Auth::user()->id == @$antrianp->user_id)
+                        <p>{{@$antrianp->proyek->website}}</p>
+                      @else
+                        <p>Proyek Lain</p>
+                      @endif
+                    </td>
+                    <td style="text-align:center;">
+                      @if (@$antrianp->proyek->tipe==80)
+                      <a style="background-color: #D4AF37; color:#fff; padding:6px 12px; border-radius:10px;">
+                        Premium
+                      </a>
+                      @else
+                      Tidak ada
+                    @endif
+                    </td>
+                    <td style="text-align:center;">@if(@$antrianp->status == 2 )
+                      {{config('custom.status.'.$antrianp->status)}}
+                    @else
+                      {{config('custom.status.'.$antrianp->status)}}
+                    @endif</td>
+                    <td style="text-align:center;">
+                      @if (@$antrianp->handler==null)
+                        <p>Belum ada handler</p>
+                      @else
+                      <p>{{@$antrianp->assign->nama}}</p> 
+                      @endif
+                    </td>
+                    <td style="text-align:center;">
+                      <p>
+                        @if (@$antrianp->handler==null && \Auth::user()->id == @$antrianp->user_id)
+                        <form action="{{route('taskclients.destroy',$antrianp->id)}}" method="post" class="d-inline">
+                          @csrf
+                          @method('delete')
+                            <button type="submit" class="btn btn-danger" style="font-weight: bold;">Batalkan</button>
+                        </form>
+                        @else
+                        <p>Tidak ada aksi</p>
+                        @endif
+                      </p>
+                    </td>
+              </tr>
+              @php($i++)
+              @endforeach
+            </tbody>
+          </table>
+          </div>
+        </div>
+          @endif
           <div class="row">
             <div class="col"></div>
             <div class="col"></div>

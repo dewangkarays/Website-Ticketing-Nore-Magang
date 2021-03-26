@@ -13,8 +13,8 @@
    {{-- icon --}}
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
      rel="stylesheet">
-   <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
-   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+   {{-- <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css"> --}}
+   {{-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"> --}}
    {{-- carousel --}}
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     {{-- fixed --}}

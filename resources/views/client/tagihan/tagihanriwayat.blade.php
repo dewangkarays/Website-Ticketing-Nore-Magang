@@ -11,8 +11,8 @@
       {{-- font --}}
       <link rel="preconnect" href="https://fonts.gstatic.com">
       <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
-      <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-      <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+      {{-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"> --}}
+      {{-- <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css"> --}}
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet">
       {{-- fixed --}}

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User;
+use App\Model\Tagihan;
+use App\Model\Proyek;
 
 class UserController extends Controller
 {
@@ -105,6 +107,20 @@ class UserController extends Controller
             {
                 $user = User::find($id);
                 return view('users.edit', compact('user')); 
+            }
+
+            // public function setting($id){
+            //     $user = User::find($id);
+            //     return view('client.setting.setting', compact('user')); 
+            // }
+
+            public function setting(){
+                // $user = User::find($id);
+                // return view('client.setting.setting', compact('user'));
+                $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
+                $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+                // return view('client.setting.setting',compact('user','tagihanactives')); 
+                return view('client.setting.setting',compact('tagihanactives','highproyek'));  
             }
             
             /**
