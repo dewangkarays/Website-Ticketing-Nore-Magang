@@ -38,6 +38,7 @@
 					<th>Tanggal</th>
 					<th>Username</th>
 					<th>Kebutuhan</th>
+					<th>Severity</th>
 					<th>Handler</th>
 					<th class="text-center">Status</th>
 					<th>Tingkat Kesulitan</th>
@@ -54,6 +55,7 @@
 					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
 					<td><div class="datatable-column-width">{{$task->user->username}}</div></td>
 					<td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
+					<td><div class="datatable-column-width">{{config('custom.severity.'.$task->severity)}}</div></td>
 					<td><div class="datatable-column-width form-check">
 						<label class="form-check-label">
 							@if (\Auth::user()->role == 10)
@@ -128,6 +130,7 @@
 					<th>Tanggal</th>
 					<th>Username</th>
 					<th>Kebutuhan</th>
+					<th>Severity</th>
 					<th>Handler</th>
 					<th class="text-center">Status</th>
 					<th>Tingkat Kesulitan</th>
@@ -144,6 +147,7 @@
 					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
 					<td><div class="datatable-column-width">{{$task->user->username}}</div></td>
 					<td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
+					<td><div class="datatable-column-width">{{config('custom.severity.'.$task->severity)}}</div></td>
 					<td><div class="datatable-column-width form-check">
 						<label class="form-check-label">
 							@if (\Auth::user()->role == 10)

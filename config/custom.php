@@ -55,4 +55,10 @@ return [
         '5' => 'Lain-lain',
         '6' => 'Modal',
     ],
+
+    'severity' => [
+        '1' => 'Low',
+        '2' => 'Normal',
+        '3' => 'High',
+    ],
 ];

@@ -62,6 +62,17 @@
 						</div>
 						@if(\Auth::user()->role==1 || \Auth::user()->role==10 || \Auth::user()->role==20)
 						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Severity</label>
+							<div class="col-lg-10">
+								<select name="handler" class="form-control select-search" data-fouc>
+                                    <option value="">-- Pilih Severity --</option>
+									@foreach(config('custom.severity') as $key => $value)
+										<option value="{{$key}}">{{$value}}</option>
+				    				@endforeach
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Assign</label>
 							<div class="col-lg-10">
 								<select name="handler" class="form-control select-search" data-fouc>
