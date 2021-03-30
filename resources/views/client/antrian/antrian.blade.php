@@ -177,6 +177,7 @@
                     <th scope="col" style="text-align:center;">Proyek</th>
                     <th scope="col" style="text-align:center;">Layanan</th>
                     <th scope="col" style="text-align:center;">Status</th>
+                    <th scope="col" style="text-align:center;">Severity</th>
                     <th scoper="col" style="text-align:center;">Handler</th>
                     <th scoper="col" style="text-align:center;">Aksi</th>
               </tr>
@@ -221,7 +222,19 @@
                       {{config('custom.status.'.$antrian->status)}}
                     @else
                       {{config('custom.status.'.$antrian->status)}}
-                    @endif</td>
+                    @endif
+                    </td>
+                    <td style="text-align:center;">
+                      @if ($antrian->severity == 1)
+                        <p>Low</p>
+                      @elseif ($antrian->severity == 2)
+                      <p>Normal</p>
+                      @elseif($antrian->severity == 3)
+                      <p>High</p>
+                      @else
+                      <p>Tidak ditemukan</p>
+                      @endif
+                    </td>
                     <td style="text-align:center;">
                       @if (@$antrian->handler==null)
                         <p>Belum ada handler</p>
@@ -261,6 +274,7 @@
                     <th scope="col" style="text-align:center;">Proyek</th>
                     <th scope="col" style="text-align:center;">Layanan</th>
                     <th scope="col" style="text-align:center;">Status</th>
+                    <th scope="col" style="text-align:center;">Severity</th>
                     <th scoper="col" style="text-align:center;">Handler</th>
                     <th scoper="col" style="text-align:center;">Aksi</th>
               </tr>
@@ -299,6 +313,17 @@
                     @else
                       {{config('custom.status.'.$antrianp->status)}}
                     @endif</td>
+                    <td style="text-align:center;">
+                      @if ($antrian->severity == 1)
+                        <p>Low</p>
+                      @elseif ($antrian->severity == 2)
+                        <p>Normal</p>
+                      @elseif($antrian->severity == 3)
+                        <p>High</p>
+                      @else
+                        <p>Tidak ditemukan</p>
+                      @endif
+                    </td>
                     <td style="text-align:center;">
                       @if (@$antrianp->handler==null)
                         <p>Belum ada handler</p>

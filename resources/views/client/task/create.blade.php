@@ -171,7 +171,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-6 col-form-label">Lampiran</label>
+          <label for="inputEmail3" class="col-sm-6 col-form-label">Lampiran<br><p style="font-style:italic; font-size:12px;">*opsional, maksimal ukuran file 10mb</p></label>
           <div class="col-sm-6">
             <input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
           </div>
