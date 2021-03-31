@@ -5,6 +5,10 @@
 	.datatable-column-width{
 		overflow: hidden; text-overflow: ellipsis; max-width: 200px;
 	}
+
+	.form-check{
+		padding-left: 0px ;
+	}
 </style>
 @endsection
 
@@ -41,7 +45,6 @@
 					<th>Severity</th>
 					<th>Handler</th>
 					<th class="text-center">Status</th>
-					<th>Tingkat Kesulitan</th>
 					<th class="text-center">Actions</th>
 				</tr>
 			</thead>
@@ -75,10 +78,6 @@
 						@else
 						{{config('custom.status.'.$task->status)}}
 						@endif
-					</td>
-
-					<td>
-
 					</td>
 
 					<td align="center">
@@ -133,7 +132,6 @@
 					<th>Severity</th>
 					<th>Handler</th>
 					<th class="text-center">Status</th>
-					<th>Tingkat Kesulitan</th>
 					<th class="text-center">Actions</th>
 				</tr>
 			</thead>
@@ -167,10 +165,6 @@
 						@else
 						{{config('custom.status.'.$task->status)}}
 						@endif
-					</td>
-
-					<td>
-
 					</td>
 
 					<td align="center">

@@ -112,8 +112,8 @@
         padding-bottom:1.5rem;
       }
 
-      #task-selesai{
-        padding-bottom:1.5rem;
+      .grid-repeat{
+        
       }
       
     }
@@ -155,6 +155,7 @@
       /* .cardket{
         flex:1 0 auto;
       } */
+
     }
 
     @media (min-width: 1200px){
@@ -214,6 +215,15 @@
     } 
     /* --- */
 
+    /* grid repeat */
+
+    .grid-repeat{
+      display: grid;
+      grid-column-gap: 1rem;
+      grid-row-gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
     </style>
 </head>
 <body>
@@ -253,7 +263,7 @@
             </div>
               <div class="dekstop-tagihan">
                 @if (count($proyeks)>3)
-                  {{-- <div class="owl-carousel owl-theme owl-loaded"> --}}
+                  <div class="owl-carousel owl-theme owl-loaded">
                     <div class="row">
                     @foreach ($proyeks as $proyek)
                         <div class="col" style="display:flex;">
@@ -315,7 +325,7 @@
                         </div>
                         @endforeach
                       </div>
-                  {{-- </div> --}}
+                  </div>
                   <div class="owl-dots"></div>
                 @elseif(count($proyeks)<1)
                   <div class="row">
@@ -531,151 +541,149 @@
             <h2>Task</h2>
             <p style="padding-bottom:1rem;">Sisa Pengoperasian : <span style="font-weight: bold; font-size:24px;">{{@$taskall - @$taskcounts}}</span></p>
           </div>
-          <div class="row">
-            <div class="col">
-              <div class="task-baru">
-                <h5 style="font-weight: bold; text-align:center;" id="task-baru">Task Baru</h5>
-                @if ($new==0)
-                <p style="text-align: center; padding-top:1rem;">Belum ada task baru</p>
+          <div class="grid-repeat">
+            <div class="task-baru">
+              <h5 style="font-weight: bold; text-align:center;" id="task-baru">Task Baru</h5>
+              @if ($new==0)
+              <p style="text-align: center; padding-top:1rem;">Belum ada task baru</p>
+              @else
+              <?php $count = 0; ?>
+              @foreach ($tasks as $task)
+              @if (@$task->status=='1')
+              <?php if($count == 2) break; ?>
+                  <div class="card" style="background-color:#fff; border:none;">
+                    <div class="card-header" style="background-color:#4A708B">
+                      <p style="font-weight: bold; color:#fff;">{{@$task->proyek->website}}</p>
+                    </div>
+                    <div class="card-body" style="background-color:#fafafa;">
+                      <div class="row">
+                        <div class="col">
+                          <p style="">Handler</p>
+                        </div>
+                        <div class="col">
+                          @if ($task->handler==null)
+                            <p>Belum ada handler</p>
+                          @else
+                            <p>{{$task->assign->nama}}</p>
+                          @endif
+                        </div>
+                      </div>
+                      <div class="row" style="padding-top:1rem;">
+                        <div class="col">Tanggal input</div>
+                        {{-- <div class="col">:</div> --}}
+                        
+                        <div class="col">{{date('j F Y', strtotime(@$task->created_at))}}</div>
+                      </div>
+                      <div class="row" style="padding-top:1rem;">
+                        <div class="col">Keterangan</div>
+                        {{-- <div class="col">:</div> --}}
+                        <div class="col">{{@$task->kebutuhan}}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" style="padding-top:1em;"></div>
+                  <?php $count++; ?>
+                  @endif
+                  @endforeach
+                @endif
+              </div>
+              <div class="task-dikerjakan">
+                <h5 style="font-weight: bold; text-align:center;">Task Sedang Dikerjakan</h5>
+                @if ($ongoing==0)
+                <div class="card" style="margin-top:1rem; background-color:#fafafa; border:none; padding-top:1rem; padding-bottom:1rem; border-radius:10px;">
+                  <p style="text-align: center;">Belum ada task yang dikerjakan</p>
+                </div>
                 @else
                 <?php $count = 0; ?>
                 @foreach ($tasks as $task)
-                @if (@$task->status=='1')
-                <?php if($count == 2) break; ?>
-                    <div class="card" style="background-color:#fff; border:none;">
-                      <div class="card-header" style="background-color:#4A708B">
-                        <p style="font-weight: bold; color:#fff;">{{@$task->proyek->website}}</p>
+                  @if (@$task->status=='2')
+                  <?php if($count == 2) break; ?>
+                  <div class="card" style="background-color: #fff; border:none;">
+                    <div class="card-header" style="background-color:rgb(255, 196, 0)">
+                      <p style="font-weight: bold;">{{@$task->proyek->website}}</p>
+                    </div>
+                    <div class="card-body" style="background-color: #fafafa">
+                      <div class="row">
+                        <div class="col">
+                          <p style="">Handler</p>
+                        </div>
+                        <div class="col">
+                          @if (@$task->handler==null)
+                            <p>Belum ada handler</p>
+                          @else
+                            <p><p>{{@$task->assign->nama}}</p></p>
+                          @endif
+                        </div>
                       </div>
-                      <div class="card-body" style="background-color:#fafafa;">
-                        <div class="row">
-                          <div class="col">
-                            <p style="">Handler</p>
-                          </div>
-                          <div class="col">
-                            @if ($task->handler==null)
-                              <p>Belum ada handler</p>
-                            @else
-                              <p>{{$task->assign->nama}}</p>
-                            @endif
-                          </div>
-                        </div>
-                        <div class="row" style="padding-top:1rem;">
-                          <div class="col">Tanggal input</div>
-                          {{-- <div class="col">:</div> --}}
-                          
-                          <div class="col">{{date('j F Y', strtotime(@$task->created_at))}}</div>
-                        </div>
-                        <div class="row" style="padding-top:1rem;">
-                          <div class="col">Keterangan</div>
-                          {{-- <div class="col">:</div> --}}
-                          <div class="col">{{@$task->kebutuhan}}</div>
-                        </div>
+                      <div class="row" style="padding-top:1rem;">
+                        <div class="col">Tanggal input</div>
+                        <div class="col">{{date('j F Y', strtotime(@$task->created_at))}}</div>
+                      </div>
+                      <div class="row" style="padding-top:1rem;">
+                        <div class="col">Keterangan</div>
+                        {{-- <div class="col">:</div> --}}
+                        <div class="col">{{@$task->kebutuhan}}</div>
                       </div>
                     </div>
-                    <div class="row" style="padding-top:1em;"></div>
-                    <?php $count++; ?>
-                    @endif
-                    @endforeach
+                  </div>
+                  <div class="row" style="padding-top:1em;"></div>
+                  <?php $count++; ?>
                   @endif
-                </div>
+                @endforeach
+                @endif
               </div>
-              <div class="col">
-                <div class="task-dikerjakan">
-                  <h5 style="font-weight: bold; text-align:center;">Task Sedang Dikerjakan</h5>
-                  @if ($ongoing==0)
-                  <p style="text-align: center; padding-top:1rem;">Belum ada task yang dikerjakan</p>
-                  @else
-                  <?php $count = 0; ?>
-                  @foreach ($tasks as $task)
-                    @if (@$task->status=='2')
-                    <?php if($count == 2) break; ?>
-                    <div class="card" style="background-color: #fff; border:none;">
-                      <div class="card-header" style="background-color:rgb(255, 196, 0)">
-                        <p style="font-weight: bold;">{{@$task->proyek->website}}</p>
+              <div class="task-selesai">
+                <h5 style="font-weight: bold; text-align:center;">Task Selesai</h5>
+                @if ($done==0)
+                <div class="card" style="margin-top:1rem; background-color:#fafafa; border:none; padding-top:1rem; padding-bottom:1rem; border-radius:10px;">
+                  <p style="text-align: center;">Belum ada task selesai</p>
+                </div>
+                @else
+                <?php $count = 0; ?>
+                @foreach ($tasks as $task)
+                  @if (@$task->status=='3')
+                  <?php if($count == 2) break; ?>
+                  <div class="card" style="background-color: #fff; border:none">
+                    <div class="card-header" style="background-color:	grey">
+                      <p style="font-weight: bold; color:#ffff;">{{@$task->proyek->website}}</p>
+                    </div>
+                    <div class="card-body" style="background-color: #fafafa">
+                      <div class="row">
+                        <div class="col">
+                          <p style="">Handler</p>
+                        </div>
+                        <div class="col">
+                          @if ($task->handler==null)
+                            <p>Belum ada handler</p>
+                          @else
+                            <p>{{@$task->assign->nama}}</p>
+                          @endif
+                        </div>
                       </div>
-                      <div class="card-body" style="background-color: #fafafa">
-                        <div class="row">
-                          <div class="col">
-                            <p style="">Handler</p>
-                          </div>
-                          <div class="col">
-                            @if (@$task->handler==null)
-                              <p>Belum ada handler</p>
-                            @else
-                              <p><p>{{@$task->assign->nama}}</p></p>
-                            @endif
-                          </div>
-                        </div>
-                        <div class="row" style="padding-top:1rem;">
-                          <div class="col">Tanggal input</div>
-                          <div class="col">{{date('j F Y', strtotime(@$task->created_at))}}</div>
-                        </div>
-                        <div class="row" style="padding-top:1rem;">
-                          <div class="col">Keterangan</div>
-                          {{-- <div class="col">:</div> --}}
-                          <div class="col">{{@$task->kebutuhan}}</div>
-                        </div>
+                      <div class="row" style="padding-top:1rem;">
+                        <div class="col">Tanggal input</div>
+                        {{-- <div class="col">:</div> --}}
+                        
+                        <div class="col">{{date('j F Y', strtotime(@$task->created_at))}}</div>
+                      </div>
+                      <div class="row" style="padding-top:1rem;">
+                        <div class="col">Keterangan</div>
+                        {{-- <div class="col">:</div> --}}
+                        <div class="col">{{@$task->kebutuhan}}</div>
                       </div>
                     </div>
-                    <div class="row" style="padding-top:1em;"></div>
-                    <?php $count++; ?>
-                    @endif
-                  @endforeach
-                  @endif
-                </div>
+                  </div>
+                  <?php $count++; ?>
+                  @endif 
+                @endforeach  
+                @endif
               </div>
-              <div class="col">
-                <div class="task-selesai">
-                  <h5 style="font-weight: bold; text-align:center;" id="task-selesai">Task Selesai</h5>
-                  @if ($done==0)
-                  <p style="text-align: center; padding-top:1rem;">Belum ada task yang selesai</p>
-                  @else
-                  <?php $count = 0; ?>
-                  @foreach ($tasks as $task)
-                    @if (@$task->status=='3')
-                    <?php if($count == 2) break; ?>
-                    <div class="card" style="background-color: #fff; border:none">
-                      <div class="card-header" style="background-color:	grey">
-                        <p style="font-weight: bold; color:#ffff;">{{@$task->proyek->website}}</p>
-                      </div>
-                      <div class="card-body" style="background-color: #fafafa">
-                        <div class="row">
-                          <div class="col">
-                            <p style="">Handler</p>
-                          </div>
-                          <div class="col">
-                            @if ($task->handler==null)
-                              <p>Belum ada handler</p>
-                            @else
-                              <p>{{@$task->assign->nama}}</p>
-                            @endif
-                          </div>
-                        </div>
-                        <div class="row" style="padding-top:1rem;">
-                          <div class="col">Tanggal input</div>
-                          {{-- <div class="col">:</div> --}}
-                          
-                          <div class="col">{{date('j F Y', strtotime(@$task->created_at))}}</div>
-                        </div>
-                        <div class="row" style="padding-top:1rem;">
-                          <div class="col">Keterangan</div>
-                          {{-- <div class="col">:</div> --}}
-                          <div class="col">{{@$task->kebutuhan}}</div>
-                        </div>
-                      </div>
-                    </div>
-                    <?php $count++; ?>
-                    @endif 
-                  @endforeach  
-                  @endif
-                </div>
-              </div>
-            </div>
-            @if ($taskcounts>0)
-            <div class="col text-right" style="padding-top:1rem;">
-              <a href="/taskclients" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right; border-radius:5px;">Detail</a>
-            </div>
-            @endif
+          </div>
+          @if ($taskcounts>0)
+          <div class="col text-right" style="padding-top:1rem;">
+            <a href="/taskclients" id="detail" class="btn btn-warning" style="padding:6px 18px; justify-content:right; align-items:right; border-radius:5px;">Detail</a>
+          </div>
+          @endif
         </div>
                 <div class="hide-mobile">
                   <div class="wrap">
