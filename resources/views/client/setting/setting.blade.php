@@ -19,9 +19,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     {{-- fixed --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-   {{-- script --}}
-   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+   
    
     <style>
         .bg-light {
@@ -237,38 +235,36 @@
           @include('client.headerdesktop')
         </div>
         <div class="data-pembayaran" style="padding-bottom:0.5em;">
-          {{-- <form class="form-validate-jquery" action="{{route('users.update',$user->id)}}" method="POST"> --}}
-          <form class="form-validate-jquery" method="POST">
-            @method('PATCH')
+          <form action="{{route('settinguser',\Auth::user()->id)}}" class="form-validate-jquery" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group row">
               <label class="col-sm-6 col-form-label">Nama</label>
               <div class="col-sm-6">
-                <input type="text" name="nama" class="form-control border-teal border-1" placeholder="Nama" required value="{{ @$user->nama }}">
+                <input type="text" name="nama" class="form-control border-teal border-1" placeholder="Nama" required value="{{ $user->nama }}">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-sm-6 col-form-label">Username</label>
               <div class="col-sm-6">
-                <input type="text" name="username" class="form-control border-teal border-1" placeholder="Username" required value="{{ @$user->username }}">
+                <input type="text" name="username" class="form-control border-teal border-1" placeholder="Username" required value="{{ $user->username }}">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-sm-6 col-form-label">Email</label>
               <div class="col-sm-6">
-                <input type="text" name="email" class="form-control border-teal border-1" placeholder="Email" required value="{{ @$user->email }}">
+                <input type="text" name="email" class="form-control border-teal border-1" placeholder="Email" required value="{{ $user->email }}">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-sm-6 col-form-label">Telp</label>
               <div class="col-sm-6">
-                <input type="text" name="telp" class="form-control border-teal border-1" placeholder="Telp/WA" required value="{{ @$user->telp }}">
+                <input type="text" name="telp" class="form-control border-teal border-1" placeholder="Telp/WA" required value="{{ $user->telp }}">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-sm-6 col-form-label">Alamat</label>
               <div class="col-sm-6">
-                <input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat" required value="{{ @$user->alamat }}">
+                <input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat" required value="{{ $user->alamat }}">
               </div>
             </div>
             <div class="form-group row">
@@ -280,7 +276,7 @@
             <div class="form-group row">
               <label class="col-sm-6 col-form-label">Foto Profil</label>
               <div class="col-sm-6">
-                <input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
+                <input type="file" name="image" id="image" class="file-input" multiple="multiple" data-fouc>
               </div>
             </div>
             <div class="text-right">
@@ -296,18 +292,14 @@
         <div class="split"></div>
           @include('client.footer')
     </div>
-    <!-- Optional JavaScript; choose one of the two! -->
-
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     {{-- tambahan --}}
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-    -->
+    {{-- script --}}
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
   </body>
   <script>
 

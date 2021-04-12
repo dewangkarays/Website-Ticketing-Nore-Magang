@@ -86,7 +86,6 @@
                     </div>
                 </div>
                 <div class="setting" id="dropdownlist">
-                    {{-- <a href="{{url('/settinguser',$user->id)}}">Pengaturan</a> --}}
                     <a href="{{url('/settinguser')}}">Pengaturan</a>
                     <a href="{{ url('/logout') }}">Sign Out</a>
                 </div>

@@ -19,8 +19,8 @@ class UserSetting extends Controller
     public function index()
     {
         //
-        // $setting = User::find($id);
-       
+
+        
     }
 
     /**
@@ -54,6 +54,7 @@ class UserSetting extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**
@@ -65,13 +66,13 @@ class UserSetting extends Controller
     public function edit($id)
     {
         //
-        $setting = User::where('id',\Auth::user()->id)->first();
+        $user = User::where('id',\Auth::user()->id)->first();
         $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
         $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
 
 
-        return view('client.setting.setting',compact('setting','highproyek','taskactives','tagihanactives'));
+        return view('client.setting.setting',compact('user','highproyek','taskactives','tagihanactives'));
     }
 
     /**

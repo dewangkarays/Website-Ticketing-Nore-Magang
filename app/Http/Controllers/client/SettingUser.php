@@ -9,7 +9,7 @@ use App\Model\Task;
 use App\Model\Tagihan;
 use App\Model\Proyek;
 
-class AntrianClient extends Controller
+class SettingUser extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,37 +18,8 @@ class AntrianClient extends Controller
      */
     public function index()
     {
-        
-        $antrians = Task::join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
-        ->orderBy('proyeks.tipe', 'ASC')
-        ->orderBy('tasks.status', 'DESC')
-        ->orderBy('tasks.created_at', 'ASC')
-        ->get();
+        //
 
-        $antrianpremiums = Task::join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
-        ->where('proyeks.tipe', '80')
-        ->orderBy('tasks.status', 'DESC')
-        ->orderBy('tasks.created_at', 'ASC')
-        ->get();
-
-        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
-        // dd($highproyek);
-
-        $otherproyek = Proyek::where('user_id',\Auth::user()->id)->where('tipe','90')->count();
-
-        $otherproyek2 = Proyek::where('user_id',\Auth::user()->id)->where('tipe','99')->count();
-
-        $taskcount = Task::where('user_id',\Auth::user()->id)->get()->count();
-
-        $task = User::where('id',\Auth::user()->id)->first();
-
-        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
-
-        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
-
-        $setting = User::where('id',\Auth::user()->id)->first();
-
-        return view('client.antrian.antrian',compact('antrians','taskcount','task','highproyek','taskactives','tagihanactives','setting','otherproyek','otherproyek2','antrianpremiums'));
     }
 
     /**
@@ -92,6 +63,34 @@ class AntrianClient extends Controller
     public function edit($id)
     {
         //
+        
+
+    }
+
+    public function changesetting(){
+
+        $user = User::where('id',\Auth::user()->id)->first();
+        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
+        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
+        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+        
+        return view ('client.setting.setting',compact('user','highproyek','taskactives','tagihanactives'));
+    }
+
+    public function changesettingupdate(Request $request, $id){
+        $user = User::find($id);
+
+        $user->nama = e($request->input('nama'));
+        $user->username = e($request->input('username'));
+        $user->email = e($request->input('email'));
+        $user->telp = e($request->input('telp'));
+        $user->alamat = e($request->input('alamat'));
+        $user->password = bcrypt(e($request->input('password')));
+        $user->image = e($request->file('image'));
+
+        $user->save();
+
+        return redirect('/customer');
     }
 
     /**
@@ -116,5 +115,4 @@ class AntrianClient extends Controller
     {
         //
     }
-
 }

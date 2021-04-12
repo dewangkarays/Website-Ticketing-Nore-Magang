@@ -114,13 +114,13 @@ class UserController extends Controller
             //     return view('client.setting.setting', compact('user')); 
             // }
 
-            public function setting(){
+            public function setting($id){
                 // $user = User::find($id);
                 // return view('client.setting.setting', compact('user'));
                 $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
                 $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
                 // return view('client.setting.setting',compact('user','tagihanactives')); 
-                return view('client.setting.setting',compact('tagihanactives','highproyek'));  
+                return view('client.setting.setting',compact('tagihanactives','highproyek','id'));  
             }
             
             /**

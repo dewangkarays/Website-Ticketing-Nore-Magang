@@ -99,14 +99,12 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::resource('/paymentclients', 'client\PaymentClient');
 		Route::get('/payment','client\PaymentClient@index');
 		Route::get('/purchase','client\PaymentClient@create');
-		// Route::get('/purchase/{id}','client\PaymentClient@create');
-		// Route::view('/dashboard','/client/layout');
 		Route::resource('/taskclients', 'client\TaskClient');
 		Route::get('/taskclient','client\TaskClient@index');
 		Route::get('/taskcreate','client\TaskClient@create');
-		// Route::post('/taskclient','client\TaskClient@store');
 		Route::get('/antrian','client\AntrianClient@index');
-		// Route::resource('settinguser','client\UserSetting');
-		Route::get('/settinguser','UserController@setting');
+		Route::get('/settinguser','client\SettingUser@changesetting');
+		Route::post('/settinguser/{id}','client\SettingUser@changesettingupdate')->name('settinguser');
+
 	});
 });

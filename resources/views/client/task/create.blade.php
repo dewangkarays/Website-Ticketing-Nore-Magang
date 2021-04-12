@@ -151,7 +151,7 @@
           <p>{{\Auth::user()->nama}}</p>
         </div>
       </div>
-      <form method="POST" action="{{route('taskclients.store')}}">
+      <form method="POST" action="{{route('taskclients.store')}}" enctype="multipart/form-data">
         @csrf
         <div class="form-group row">
           <label class="col-sm-6 col-form-label">Website</label>
@@ -170,9 +170,9 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-6 col-form-label">Lampiran<br><p style="font-style:italic; font-size:12px;">*opsional, maksimal ukuran file 10mb</p></label>
+          <label for="lampiran" class="col-sm-6 col-form-label">Lampiran<br><p style="font-style:italic; font-size:12px;">*opsional, maksimal ukuran file 10mb</p></label>
           <div class="col-sm-6">
-            <input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
+            <input id="lampiran" type="file" name="lampiran" class="form-control">
           </div>
         </div>
       </div>

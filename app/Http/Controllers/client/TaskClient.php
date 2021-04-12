@@ -63,7 +63,12 @@ class TaskClient extends Controller
         $task->user_id = \Auth::user()->id;
         $task->kebutuhan = $request->kebutuhan;
         $task->id_proyek = $request->website;
+        $task->lampiran = $request->lampiran;
+        
         $task->save();
+
+        // dd($request->file('lampiran')); 
+        
         return redirect('/taskclient');
     }
 
