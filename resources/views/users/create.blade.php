@@ -6,7 +6,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Tambah User</h4>
+				<h4><span class="font-weight-semibold">Home</span> - Tambah Karyawan</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -21,7 +21,7 @@
 			<div class="card-header header-elements-inline">
 			</div>
 			<div class="card-body">
-				<form class="form-validate-jquery" action="{{ route('users.store')}}" method="post">
+				<form class="form-validate-jquery" id="form" action="{{ route('users.store')}}" method="post">
 					@csrf
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Data User</legend>
@@ -29,19 +29,19 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-								<input type="text" name="nama" class="form-control border-teal border-1" placeholder="Nama" required>
+								<input type="text" name="name" class="form-control border-teal border-1" placeholder="Nama">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Email</label>
 							<div class="col-lg-10">
-								<input type="email" name="email" class="form-control border-teal border-1" placeholder="Email" required>
+								<input type="text" name="mail" class="form-control border-teal border-1" placeholder="Email">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Telp</label>
 							<div class="col-lg-10">
-								<input type="text" name="telp" class="form-control border-teal border-1" placeholder="Telp/WA" required>
+								<input type="text" name="phone" class="form-control border-teal border-1" placeholder="Telp/WA">
 								<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
 							</div>
 						</div>
@@ -49,51 +49,34 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Alamat</label>
 							<div class="col-lg-10">
-								<input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat">
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Proyek</label>
-							<div class="col-lg-10">
-								<input type="text" name="website" class="form-control border-teal border-1" placeholder="Website">
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Masa Aktif</label>
-							<div class="col-lg-10">
-								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif">
+								<input type="text" name="address" class="form-control border-teal border-1" placeholder="Alamat">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Jumlah Update Task</label>
 							<div class="col-lg-10">
-								<input type="number" name="task_count" class="form-control border-teal border-1" placeholder="jumlah update task">
+								<input type="number" name="taskcount" class="form-control border-teal border-1" placeholder="jumlah update task">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Username</label>
 							<div class="col-lg-10">
-								<input type="text" name="username" class="form-control border-teal border-1" placeholder="Username" required>
+								<input type="text" name="username" class="form-control border-teal border-1" placeholder="Username">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Password</label>
 							<div class="col-lg-10">
-								<input type="password" name="password" class="form-control border-teal border-1" placeholder="Password" required>
+								<input type="password" name="password" class="form-control border-teal border-1" placeholder="Password">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Role</label>
 							<div class="col-lg-10">
-								<select name="role" class="form-control bg-teal-400 border-teal-400" required>
+								<select name="role" class="form-control bg-teal-400 border-teal-400">
                                     <option value="1">Super Admin</option>
 									<option value="10">Karyawan</option>
 									<option value="20">Keuangan</option>
-                                    <option value="80">Premium</option>
-                                    <option value="90">Prioritas</option>
-                                    <option value="99" selected>Simpel</option>
                                 </select>
 							</div>
 						</div>
@@ -140,98 +123,231 @@
             selectYears: true,
             format: 'yyyy-mm-dd',
         });
-				
-		var FormValidation = function() {
 
-		    // Validation config
-		    var _componentValidation = function() {
-		        if (!$().validate) {
-		            console.warn('Warning - validate.min.js is not loaded.');
-		            return;
-		        }
+		/* ------------------------------------------------------------------------------
+ *
+ *  # Form validation
+ *
+ *  Demo JS code for form_validation.html page
+ *
+ * ---------------------------------------------------------------------------- */
 
-		        // Initialize
-		        var validator = $('.form-validate-jquery').validate({
-		            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
-		            errorClass: 'validation-invalid-label',
-		            //successClass: 'validation-valid-label',
-		            validClass: 'validation-valid-label',
-		            highlight: function(element, errorClass) {
-		                $(element).removeClass(errorClass);
-		            },
-		            unhighlight: function(element, errorClass) {
-		                $(element).removeClass(errorClass);
-		            },
-		            // success: function(label) {
-		            //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
-		            //},
 
-		            // Different components require proper error label placement
-		            errorPlacement: function(error, element) {
+// Setup module
+// ------------------------------
 
-		                // Unstyled checkboxes, radios
-		                if (element.parents().hasClass('form-check')) {
-		                    error.appendTo( element.parents('.form-check').parent() );
-		                }
+var FormValidation = function() {
+		//
+		// Setup module components
+		//
 
-		                // Input with icons and Select2
-		                else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
-		                    error.appendTo( element.parent() );
-		                }
+		// Uniform
+		var _componentUniform = function() {
+			if (!$().uniform) {
+				console.warn('Warning - uniform.min.js is not loaded.');
+				return;
+			}
 
-		                // Input group, styled file input
-		                else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
-		                    error.appendTo( element.parent().parent() );
-		                }
+			// Initialize
+			$('.form-input-styled').uniform({
+				fileButtonClass: 'action btn bg-blue'
+			});
+		};
 
-		                // Other elements
-		                else {
-		                    error.insertAfter(element);
-		                }
-		            },
-		            messages: {
-		                nama: {
-		                    required: 'Mohon diisi.'
-		                },
-		                email: {
-		                    required: 'Mohon diisi.'
-		                },
-		                telp: {
-		                    required: 'Mohon diisi.'
-		                },
-		                username: {
-		                    required: 'Mohon diisi.'
-		                },
-		                password: {
-		                    required: 'Mohon diisi.'
-		                },
-		                role: {
-		                    required: 'Mohon diisi.'
-		                },
-		            },
-		        });
+		// Switchery
+		var _componentSwitchery = function() {
+			if (typeof Switchery == 'undefined') {
+				console.warn('Warning - switchery.min.js is not loaded.');
+				return;
+			}
 
-		        // Reset form
-		        $('#reset').on('click', function() {
-		            validator.resetForm();
-		        });
-		    };
+			// Initialize single switch
+			var elems = Array.prototype.slice.call(document.querySelectorAll('.form-input-switchery'));
+			elems.forEach(function(html) {
+				var switchery = new Switchery(html);
+			});
+		};
 
-		    // Return objects assigned to module
-		    return {
-		        init: function() {
-		            _componentValidation();
-		        }
-		    }
-		}();
+		// Bootstrap switch
+		var _componentBootstrapSwitch = function() {
+			if (!$().bootstrapSwitch) {
+				console.warn('Warning - bootstrap_switch.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			$('.form-input-switch').bootstrapSwitch({
+				onSwitchChange: function(state) {
+					if(state) {
+						$(this).valid(true);
+					}
+					else {
+						$(this).valid(false);
+					}
+				}
+			});
+		};
+
+		// Touchspin
+		var _componentTouchspin = function() {
+			if (!$().TouchSpin) {
+				console.warn('Warning - touchspin.min.js is not loaded.');
+				return;
+			}
+
+			// Define variables
+			var $touchspinContainer = $('.touchspin-postfix');
+
+			// Initialize
+			$touchspinContainer.TouchSpin({
+				min: 0,
+				max: 100,
+				step: 0.1,
+				decimals: 2,
+				postfix: '%'
+			});
+
+			// Trigger value change when +/- buttons are clicked
+			$touchspinContainer.on('touchspin.on.startspin', function() {
+				$(this).trigger('blur');
+			});
+		};
+
+		// Select2 select
+		var _componentSelect2 = function() {
+			if (!$().select2) {
+				console.warn('Warning - select2.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			var $select = $('.form-control-select2').select2({
+				minimumResultsForSearch: Infinity
+			});
+
+			// Trigger value change when selection is made
+			$select.on('change', function() {
+				$(this).trigger('blur');
+			});
+		};
+
+		// Validation config
+		var _componentValidation = function() {
+			if (!$().validate) {
+				console.warn('Warning - validate.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			var validator = $('#form').validate({
+				ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+				errorClass: 'validation-invalid-label',
+				successClass: 'validation-valid-label',
+				validClass: 'validation-valid-label',
+				highlight: function(element, errorClass) {
+					$(element).removeClass(errorClass);
+				},
+				unhighlight: function(element, errorClass) {
+					$(element).removeClass(errorClass);
+				},
+				success: function(label) {
+					label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+				},
+
+				// Different components require proper error label placement
+				errorPlacement: function(error, element) {
+
+					// Unstyled checkboxes, radios
+					if (element.parents().hasClass('form-check')) {
+						error.appendTo( element.parents('.form-check').parent() );
+					}
+
+					// Input with icons and Select2
+					else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+						error.appendTo( element.parent() );
+					}
+
+					// Input group, styled file input
+					else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+						error.appendTo( element.parent().parent() );
+					}
+
+					// Other elements
+					else {
+						error.insertAfter(element);
+					}
+				},
+				rules: {
+					name:{
+						required : true
+					}, 
+					mail:{
+						required : true,
+						email: true
+					},
+					phone:{
+						required : true,
+						number : true
+					},
+					username:{
+						required : true
+					},
+					password:{
+						required : true
+					}
+				},
+				messages: {
+					name:{
+						required : 'Mohon diisi.'
+					},
+					mail:{
+						required : 'Mohon diisi.',
+						email : 'Masukan alamat email dengan benar'
+					},
+					phone:{
+						required : 'Mohon diisi.',
+						number : 'Hanya mengandung angka'
+					}, 
+					username:{
+						required : 'Mohon diisi.'
+					}, 
+					password:{
+						required : 'Mohon diisi.'
+					}
+				}
+			});
+
+			// Reset form
+			$('#reset').on('click', function() {
+				validator.resetForm();
+			});
+		};
+
+
+		//
+		// Return objects assigned to module
+		//
+
+		return {
+			init: function() {
+				_componentUniform();
+				_componentSwitchery();
+				_componentBootstrapSwitch();
+				_componentTouchspin();
+				_componentSelect2();
+				_componentValidation();
+			}
+		}
+	}();
 
 
 		// Initialize module
 		// ------------------------------
 
-		document.addEventListener('DOMContentLoaded', function() {
-		    FormValidation.init();
-		});
+	document.addEventListener('DOMContentLoaded', function() {
+		FormValidation.init();
+	});
+
 	</script>
 	<script type="text/javascript">
 		$( document ).ready(function() {

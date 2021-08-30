@@ -45,28 +45,36 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama'=>'required',
-            'email'=>'required',
-            'telp'=>'required',
-            'username'=>'required',
-            'password'=>'required',
-            'role'=>'required'
+            // 'name'=>'required',
+            // 'mail'=>'required',
+            // 'phone'=>'required',
+            // 'username'=>'required',
+            // 'password'=>'required',
+            // 'role'=>'required'
             ]);
             
             $user = new User([
-                'nama' => $request->get('nama'),
+                // 'nama' => $request->get('name'),
+                // 'mail' => $request->get('email'),
+                // 'telp' => $request->get('phone'),
+                // 'alamat' => $request->get('address'),
+                // 'task_count' => $request->get('taskcount'),
+                // 'username' => $request->get('username'),
+                // 'password' => bcrypt($request->get('password')),
+                // 'role' => $request->get('role')
+
+                'nama' => $request->get('name'),
+                'email' => $request->get('mail'),
+                'telp' => $request->get('phone'),
+                'alamat' => $request->get('address'),
+                'task_count' => $request->get('taskcount'),
                 'username' => $request->get('username'),
-                'email' => $request->get('email'),
-                'telp' => $request->get('telp'),
-                'alamat' => $request->get('alamat'),
-                'website' => $request->get('website'),
-                'kadaluarsa' => $request->get('kadaluarsa'),
                 'password' => bcrypt($request->get('password')),
-                'role' => $request->get('role'),
-                'task_count' => $request->get('task_count'),
+                'role' => $request->get('role')
                 ]);
+
                 $user->save();
-                return redirect('/members')->with('success', 'Member saved!');
+                return redirect('/users')->with('success', 'Member saved!');
             }
 
             
@@ -132,13 +140,13 @@ class UserController extends Controller
             */
             public function update(Request $request, $id)
             {
-                $request->validate([
-                    // 'nama'=>'required',
-                    // 'email'=>'required',
-                    // 'telp'=>'required',
-                    // 'username'=>'required',
-                    // 'role'=>'required'
-                    ]);
+                // $request->validate([
+                //     'nama'=>'required',
+                //     'email'=>'required',
+                //     'telp'=>'required',
+                //     'username'=>'required',
+                //     'role'=>'required'
+                //     ]);
                     
                     $user = User::find($id);
                     $data = $request->except(['_token', '_method', 'password']);

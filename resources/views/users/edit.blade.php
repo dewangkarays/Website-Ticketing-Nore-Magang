@@ -6,7 +6,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Ubah User</h4>
+				<h4><span class="font-weight-semibold">Home</span> - Ubah User</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -47,26 +47,14 @@
 							</div>
 						</div>
 
+
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Alamat</label>
 							<div class="col-lg-10">
 								<input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat" value="{{ $user->alamat }} ">
 							</div>
 						</div>
-
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Proyek</label>
-							<div class="col-lg-10">
-								<input type="text" name="website" class="form-control border-teal border-1" placeholder="Website" value="{{ $user->website }} ">
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Masa Aktif</label>
-							<div class="col-lg-10">
-								<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif" value="{{ $user->kadaluarsa }}">
-							</div>
-						</div>
+						
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Jumlah Update Task</label>
 							<div class="col-lg-10">

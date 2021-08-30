@@ -73,7 +73,7 @@
     <li>
       <a href="/tagihanclient">Tagihan
         @if($tagihanactives>0)
-          <span style="margin-left:10px; font-size:12px; color:#3EB772; font-weight:bold; background:white; padding:5px 10px; border-radius:10px;">{{$tagihanactives}} belum terbayar</span>
+          <span style="margin-left:10px; font-size:12px; color:white; font-weight:bold; background:#F08080; padding:5px 10px; border-radius:10px;">{{$tagihanactives}} belum terbayar</span>
         @endif
       </a>
     </li>
@@ -83,7 +83,7 @@
     <li>
       <a href="/taskclient">Task
         @if($tagihanactives>0)
-          <span style="margin-left:10px; font-size:12px; color:#3EB772; font-weight:bold; background:white; padding:5px 10px; border-radius:10px;">{{$tagihanactives}} task aktif</span>
+          <span style="margin-left:10px; font-size:12px; color:white; font-weight:bold; background:#F08080; padding:5px 10px; border-radius:10px;">{{$tagihanactives}} task aktif</span>
         @endif
       </a>
     </li>

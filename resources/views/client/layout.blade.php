@@ -39,6 +39,10 @@
           font-weight: bold;
       }
 
+      p{
+        font-size:14px;
+      }
+
       .wrap{
         padding:1em 0;
       }
@@ -271,7 +275,7 @@
                             <div class="card-body cardket">
                               <div class="row">
                                 <div class="col">
-                                  <h5 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{$proyek->website}}</h5>
+                                  <h6 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{$proyek->website}}</h6>
                                 </div>
                                 <div class="col text-right">
                                   @if (@$proyek->tagihan->status=='0')
@@ -340,20 +344,20 @@
                         <div class="card" style="padding:10px;border:none; border-radius:10px; background-color:#eeee;">
                           <div class="card-body">
                             <div class="row">
-                              <div class="col">
-                                <h5 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{@$proyek->website}}</h5>
+                              <div class="col-sm-6">
+                                <h6 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{@$proyek->website}}</h6>
                               </div>
-                            <div class="col text-right">
-                              @if (@$proyek->tagihan->status=='0')
-                              <a  style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px">Belum dibayar</a>
-                              @elseif(@$proyek->tagihan->status=='1')
-                              <a  style="color:#fff; font-weight:bold; background-color:#ffaf42; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px">Terbayar Sebagian</a>
-                              @elseif(@$proyek->tagihan->status=='2')
-                              <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Sudah dibayar</a>
-                              @else
-                              <a style="color:#fff; font-weight:bold; background-color: grey; border:black; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Belum Ada Tagihan</a>
-                              @endif  
-                            </div>
+                              <div class="col-sm-6 text-right">
+                                @if (@$proyek->tagihan->status=='0')
+                                <a  style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:9px">Belum dibayar</a>
+                                @elseif(@$proyek->tagihan->status=='1')
+                                <a  style="color:#fff; font-weight:bold; background-color:#ffaf42; padding:5px 12px; border-radius:20px; text-align:center; font-size:9px">Terbayar Sebagian</a>
+                                @elseif(@$proyek->tagihan->status=='2')
+                                <a style="color:#fff; font-weight:bold; background-color: #3EB772; padding:5px 12px; border-radius:20px; text-align:center; font-size:9px;">Sudah dibayar</a>
+                                @else
+                                <a style="color:#fff; font-weight:bold; background-color: grey; border:black; padding:5px 12px; border-radius:20px; text-align:center; font-size:9px;">Belum Ada Tagihan</a>
+                                @endif  
+                              </div>
                           </div>
                           <div class="row" style="padding-top:1rem;">
                             <div class="col">
@@ -479,7 +483,7 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col">
-                          <h5 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{@$proyek->website}}</h5>
+                          <h6 id="namawebsite" class="card-title" style="margin-bottom: 0; padding: 0 0 2px 0; font-weight:bold; ">{{@$proyek->website}}</h6>
                         </div>
                       <div class="col text-right">
                         @if (@$proyek->tagihan->status=='0')
@@ -569,15 +573,15 @@
                         </div>
                       </div>
                       <div class="row" style="padding-top:1rem;">
-                        <div class="col">Tanggal input</div>
+                        <div class="col"><p>Tanggal input</p></div>
                         {{-- <div class="col">:</div> --}}
                         
-                        <div class="col">{{date('j F Y', strtotime(@$task->created_at))}}</div>
+                        <div class="col"><p>{{date('j F Y', strtotime(@$task->created_at))}}</p></div>
                       </div>
                       <div class="row" style="padding-top:1rem;">
-                        <div class="col">Keterangan</div>
+                        <div class="col"><p>Keterangan</p></div>
                         {{-- <div class="col">:</div> --}}
-                        <div class="col">{{@$task->kebutuhan}}</div>
+                        <div class="col"><p>{{@$task->kebutuhan}}</p></div>
                       </div>
                     </div>
                   </div>
@@ -591,7 +595,7 @@
                 <h5 style="font-weight: bold; text-align:center;">Task Sedang Dikerjakan</h5>
                 @if ($ongoing==0)
                 <div class="card" style="margin-top:1rem; background-color:#fafafa; border:none; padding-top:1rem; padding-bottom:1rem; border-radius:10px;">
-                  <p style="text-align: center;">Belum ada task yang dikerjakan</p>
+                  <p style="text-align: center; font-size:14px;">Belum ada task yang dikerjakan</p>
                 </div>
                 @else
                 <?php $count = 0; ?>
@@ -611,18 +615,18 @@
                           @if (@$task->handler==null)
                             <p>Belum ada handler</p>
                           @else
-                            <p><p>{{@$task->assign->nama}}</p></p>
+                            <p>{{@$task->assign->nama}}</p>
                           @endif
                         </div>
                       </div>
                       <div class="row" style="padding-top:1rem;">
-                        <div class="col">Tanggal input</div>
-                        <div class="col">{{date('j F Y', strtotime(@$task->created_at))}}</div>
+                        <div class="col"><p>Tanggal input</p></div>
+                        <div class="col"><p>{{date('j F Y', strtotime(@$task->created_at))}}</p></div>
                       </div>
                       <div class="row" style="padding-top:1rem;">
-                        <div class="col">Keterangan</div>
+                        <div class="col"><p>Keterangan</p></div>
                         {{-- <div class="col">:</div> --}}
-                        <div class="col">{{@$task->kebutuhan}}</div>
+                        <div class="col"><p>{{@$task->kebutuhan}}</p></div>
                       </div>
                     </div>
                   </div>
@@ -636,7 +640,7 @@
                 <h5 style="font-weight: bold; text-align:center;">Task Selesai</h5>
                 @if ($done==0)
                 <div class="card" style="margin-top:1rem; background-color:#fafafa; border:none; padding-top:1rem; padding-bottom:1rem; border-radius:10px;">
-                  <p style="text-align: center;">Belum ada task selesai</p>
+                  <p style="text-align: center; font-size:14px;">Belum ada task selesai</p>
                 </div>
                 @else
                 <?php $count = 0; ?>
@@ -650,7 +654,7 @@
                     <div class="card-body" style="background-color: #fafafa">
                       <div class="row">
                         <div class="col">
-                          <p style="">Handler</p>
+                          <p>Handler</p>
                         </div>
                         <div class="col">
                           @if ($task->handler==null)
@@ -661,15 +665,15 @@
                         </div>
                       </div>
                       <div class="row" style="padding-top:1rem;">
-                        <div class="col">Tanggal input</div>
+                        <div class="col"><p>Tanggal input</p></div>
                         {{-- <div class="col">:</div> --}}
                         
-                        <div class="col">{{date('j F Y', strtotime(@$task->created_at))}}</div>
+                        <div class="col"><p>{{date('j F Y', strtotime(@$task->created_at))}}</p></div>
                       </div>
                       <div class="row" style="padding-top:1rem;">
-                        <div class="col">Keterangan</div>
+                        <div class="col"><p>Keterangan</p></div>
                         {{-- <div class="col">:</div> --}}
-                        <div class="col">{{@$task->kebutuhan}}</div>
+                        <div class="col"><p>{{@$task->kebutuhan}}</p></div>
                       </div>
                     </div>
                   </div>
@@ -709,9 +713,9 @@
                                 </div>
                                 <div class="col text-right">
                                     @if ($tagihan->status==0)
-                                    <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Belum dibayar</a>
+                                    <a style="color:#fff; font-weight:bold; background-color: #BE1600; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Belum dibayar</a>
                                     @else
-                                    <a style="color:#fff; font-weight:bold; background-color: #ffaf42; padding:5px 12px; border-radius:20px; text-align:center; font-size:14px;">Terbayar sebagian</a>
+                                    <a style="color:#fff; font-weight:bold; background-color: #ffaf42; padding:5px 12px; border-radius:20px; text-align:center; font-size:12px;">Terbayar sebagian</a>
                                     @endif
                                 </div>
                               </div>
@@ -904,7 +908,7 @@
                   </div>
                 </div>
                 <div class="copyright">
-                  <p style="text-align: center">2020. Nore Inovasi.</p>
+                  <p style="text-align: center">2021. Nore Inovasi.</p>
                 </div>
                 <div class="footer">
                 <div class="split"></div>

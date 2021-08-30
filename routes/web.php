@@ -103,8 +103,8 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/taskclient','client\TaskClient@index');
 		Route::get('/taskcreate','client\TaskClient@create');
 		Route::get('/antrian','client\AntrianClient@index');
-		Route::get('/settinguser','client\SettingUser@changesetting');
-		Route::post('/settinguser/{id}','client\SettingUser@changesettingupdate')->name('settinguser');
+		Route::get('/settinguser','client\SettingClient@changesetting');
+		Route::post('/settinguser/{id}','client\SettingClient@changesettingupdate')->name('settinguser');
 
 	});
 });

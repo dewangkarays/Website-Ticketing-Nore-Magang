@@ -41,13 +41,16 @@ class MemberController extends Controller
         $request->validate([
             'nama'=>'required',
             'email'=>'required|unique:users',
-            'telp'=>'required',
+            'telp'=>'required|numeric|min:11|max:13',
             'username'=>'required|unique:users',
             'password'=>'required',
         ],
              [
-                 'email.unique'=>':attribute tidak boleh sama',
-                'username.unique'=>':attribute tidak boleh sama'
+                'email.unique'=>':attribute tidak boleh sama',
+                'username.unique'=>':attribute tidak boleh sama',
+                'telp.numeric'=>':attribute harus angka',
+                'telp.min'=>':attribute jumlah minimal 11 angka',
+                'telp.max'=>':attribute jumlah maksimal 13 angka',
              ]
         );
             
@@ -122,12 +125,13 @@ class MemberController extends Controller
             ]);
             
             $user = User::find($id);
-            $data = $request->except(['_token', '_method', 'password']);
             
             if($request->get('password')!=''){
                 $data['password'] = bcrypt($request->get('password'));
             }
-            
+
+            $data = $request->except(['_token', '_method','password']);
+
             $user->update($data);
             
             return redirect('/members')->with('success', 'Member updated!');

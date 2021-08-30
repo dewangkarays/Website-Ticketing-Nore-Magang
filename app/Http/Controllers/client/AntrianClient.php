@@ -20,7 +20,7 @@ class AntrianClient extends Controller
     {
         
         $antrians = Task::join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
-        ->orderBy('proyeks.tipe', 'ASC')
+        ->where('proyeks.tipe','!=','80')
         ->orderBy('tasks.status', 'DESC')
         ->orderBy('tasks.created_at', 'ASC')
         ->get();
@@ -32,11 +32,12 @@ class AntrianClient extends Controller
         ->get();
 
         $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
-        // dd($highproyek);
 
-        $otherproyek = Proyek::where('user_id',\Auth::user()->id)->where('tipe','90')->count();
+        $premiumproyek = Proyek::where('user_id',\Auth::user()->id)->where('tipe','80')->count();
+        // dd($premiumproyek);
 
-        $otherproyek2 = Proyek::where('user_id',\Auth::user()->id)->where('tipe','99')->count();
+        $otherproyek = Proyek::where('user_id',\Auth::user()->id)->where('tipe','!=','80')->count();
+        // dd($otherproyek);
 
         $taskcount = Task::where('user_id',\Auth::user()->id)->get()->count();
 
@@ -46,9 +47,9 @@ class AntrianClient extends Controller
 
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
 
-        $setting = User::where('id',\Auth::user()->id)->first();
+        $user = User::where('id',\Auth::user()->id)->first();
 
-        return view('client.antrian.antrian',compact('antrians','taskcount','task','highproyek','taskactives','tagihanactives','setting','otherproyek','otherproyek2','antrianpremiums'));
+        return view('client.antrian.antrian',compact('antrians','taskcount','task','highproyek','taskactives','tagihanactives','user','otherproyek','antrianpremiums','premiumproyek'));
     }
 
     /**

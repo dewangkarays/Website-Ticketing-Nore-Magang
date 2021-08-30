@@ -28,9 +28,9 @@ class TaskClient extends Controller
         $users = User::where('id',\Auth::user()->id)->get();
         $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
-        $setting = User::where('id',\Auth::user()->id)->first();
+        $user = User::where('id',\Auth::user()->id)->first();
 
-        return view('client.task.index',compact('tasks','users','highproyek','taskactives','tagihanactives','setting'));
+        return view('client.task.index',compact('tasks','users','highproyek','taskactives','tagihanactives','user'));
     }
 
     /**
@@ -45,8 +45,8 @@ class TaskClient extends Controller
         $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
         $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
-        $setting = User::where('id',\Auth::user()->id)->first();
-        return view('client.task.create',compact('tasks','proyeks','highproyek','taskactives','tagihanactives','setting'));
+        $user = User::where('id',\Auth::user()->id)->first();
+        return view('client.task.create',compact('tasks','proyeks','highproyek','taskactives','tagihanactives','user'));
     }
 
     /**
@@ -61,9 +61,21 @@ class TaskClient extends Controller
         // return $request;
         $task = new Task;
         $task->user_id = \Auth::user()->id;
-        $task->kebutuhan = $request->kebutuhan;
-        $task->id_proyek = $request->website;
-        $task->lampiran = $request->lampiran;
+        $task->kebutuhan = $request->input('kebutuhan');
+        $task->id_proyek = $request->input('website');
+
+        $tujuan_upload = config('app.upload_url').'global_assets/attachment';
+
+        if($request->hasFile('lampiran')){
+            $file = $request->file('lampiran'); 
+            $name = $file->getClientOriginalName();
+            $file_name = \Auth::user()->id."_".$name;
+            // $file_name = \Auth::user()->id."_".time().'.'.$ext;
+            $up1 = $file->move($tujuan_upload,$file_name);
+            if($up1){
+                $task->lampiran = $file_name;
+            }
+        }
         
         $task->save();
 

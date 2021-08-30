@@ -25,8 +25,8 @@ class TagihanClient extends Controller
         $tagihanhistories = Tagihan::where('user_id',\Auth::user()->id)->where('status','=','2')->get()->count();
         $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
         $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
-        $setting = User::where('id',\Auth::user()->id)->first();
-        return view('client.tagihan.tagihan',compact('tagihans','tagihanactives','tagihanhistories','highproyek','taskactives','setting'));
+        $user = User::where('id',\Auth::user()->id)->first();
+        return view('client.tagihan.tagihan',compact('tagihans','tagihanactives','tagihanhistories','highproyek','taskactives','user'));
     }
 
     public function active()
@@ -36,8 +36,8 @@ class TagihanClient extends Controller
         $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
         $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
-        $setting = User::where('id',\Auth::user()->id)->first();
-        return view('client.tagihan.tagihanaktif',compact('tagihans','highproyek','tagihanactives','taskactives','setting'));
+        $user = User::where('id',\Auth::user()->id)->first();
+        return view('client.tagihan.tagihanaktif',compact('tagihans','highproyek','tagihanactives','taskactives','user'));
     }
 
     public function history()
@@ -47,8 +47,8 @@ class TagihanClient extends Controller
         $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
         $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
-        $setting = User::where('id',\Auth::user()->id)->first();
-        return view('client.tagihan.tagihanriwayat',compact('tagihans','highproyek','taskactives','tagihanactives','setting'));
+        $user = User::where('id',\Auth::user()->id)->first();
+        return view('client.tagihan.tagihanriwayat',compact('tagihans','highproyek','taskactives','tagihanactives','user'));
     }
 
     /**

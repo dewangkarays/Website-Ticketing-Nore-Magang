@@ -5,22 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-   <!-- Bootstrap -->
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-   {{-- font --}}
-   <link rel="preconnect" href="https://fonts.gstatic.com">
-   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
-   {{-- icon --}}
-   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-     rel="stylesheet">
-   <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
-   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-   {{-- carousel --}}
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    {{-- fixed --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-   
-   
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {{-- font --}}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap" rel="stylesheet">
+    {{-- icon --}}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
     <style>
         .bg-light {
         background-color: #3EB772 !important;
@@ -235,7 +227,7 @@
           @include('client.headerdesktop')
         </div>
         <div class="data-pembayaran" style="padding-bottom:0.5em;">
-          <form action="{{route('settinguser',\Auth::user()->id)}}" class="form-validate-jquery" method="POST" enctype="multipart/form-data">
+          <form action="{{route('settinguser',\Auth::user()->id)}}" id="setting" class="form-validate-jquery" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group row">
               <label class="col-sm-6 col-form-label">Nama</label>
@@ -274,9 +266,9 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-6 col-form-label">Foto Profil</label>
+              <label class="col-sm-6 col-form-label">Foto Profil<br><span style="font-style:italic; font-size:12px;">* Maksimal 1 MB</label>
               <div class="col-sm-6">
-                <input type="file" name="image" id="image" class="file-input" multiple="multiple" data-fouc>
+                <input type="file" max="1000000" name="image" id="image" class="file-input" multiple="multiple" data-fouc>
               </div>
             </div>
             <div class="text-right">
@@ -285,7 +277,7 @@
           </form>
         </div>
         <div class="copyright">
-          <p style="text-align: center">2020. Nore Inovasi.</p>
+          <p style="text-align: center">2021. Nore Inovasi.</p>
         </div>
     </div>
     <div class="footer">
@@ -300,8 +292,89 @@
     {{-- script --}}
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-  </body>
-  <script>
+    {{-- jquery validate --}}
+    <script src="{{asset('global_assets/js/plugins/forms/validation/validate.min.js')}}"></script>
+    <script>
+      var FormValidation = function() {
+      // Validation config
+      var _componentValidation = function() {
+          if (!$().validate) {
+              console.warn('Warning - validate.min.js is not loaded.');
+              return;
+          }
 
-  </script>
+          // Initialize
+          var validator = $('.form-validate-jquery').validate({
+              ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+              errorClass: 'validation-invalid-label',
+              //successClass: 'validation-valid-label',
+              validClass: 'validation-valid-label',
+              highlight: function(element, errorClass) {
+                  $(element).removeClass(errorClass);
+              },
+              unhighlight: function(element, errorClass) {
+                  $(element).removeClass(errorClass);
+              },
+              // success: function(label) {
+              //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+              //},
+
+              // Different components require proper error label placement
+              errorPlacement: function(error, element) {
+
+                  // Unstyled checkboxes, radios
+                  if (element.parents().hasClass('form-check')) {
+                      error.appendTo( element.parents('.form-check').parent() );
+                  }
+
+                  // Input with icons and Select2
+                  else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+                      error.appendTo( element.parent() );
+                  }
+
+                  // Input group, styled file input
+                  else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+                      error.appendTo( element.parent().parent() );
+                  }
+
+                  // Other elements
+                  else {
+                      error.insertAfter(element);
+                  }
+              },
+              rules: {
+                      image:{
+                        accept:"application/pdf,image/jpeg,image/png",
+                        filesize: 1000000  //max size 1 MB
+                      }
+                  },
+              messages: {
+                    image:{
+                        accept:"Please upload .jpg or .png or .pdf file of notice.",
+                        filesize:" file size must be less than 1 MB.",
+                    }
+              },
+          });
+
+          // Reset form
+          $('#reset').on('click', function() {
+              validator.resetForm();
+          });
+      };
+
+      // Return objects assigned to module
+      return {
+          init: function() {
+              _componentValidation();
+          }
+      }
+      }();
+
+    // Initialize module
+        document.addEventListener('DOMContentLoaded', function() {
+            FormValidation.init();
+        });
+
+    </script>
+  </body>
 </html>

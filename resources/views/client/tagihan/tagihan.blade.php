@@ -410,7 +410,7 @@
             </div>
           </div>
           <div class="copyright">
-            <p style="text-align: center">2020. Nore Inovasi.</p>
+            <p style="text-align: center">2021. Nore Inovasi.</p>
           </div>
         </div>
       </div>

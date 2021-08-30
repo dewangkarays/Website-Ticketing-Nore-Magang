@@ -234,10 +234,6 @@
           <div class="task-head">
             <div class="row">
               <div class="col">
-                {{-- <button class="btn btn-success rounded-pill" style="font-weight: bold">TAMBAH</button> --}}
-                {{-- <a href="/taskcreate">
-                  <button type="button" class="btn btn-success btn-circle btn-xl" style="text-align: center">+</button> 
-                </a> --}}
                 <a href="/taskcreate">
                   <button class="btn btn-success" style="font-weight: bold; border:none; padding:12px 20px;">
                     Tambah
@@ -247,16 +243,6 @@
             </div>
             <div class="row">
               <div class="col" id="task"><h3 style="padding-top: 1em;">Data Task</h3></div>
-              {{-- <div class="col" style="text-align: right">
-                <div class="dropdown" style="padding-top:1em;">
-                  <button class="dropbtn">Sorting</button>
-                  <div class="dropdown-content" style="text-align: left !important;">
-                    <a href="#">Terbaru</a>
-                    <a href="#">Selesai</a>
-                    <a href="#">Sedang dikerjakan</a>
-                  </div>
-                </div>
-              </div> --}}
           </div>
           </div>
             <p>Sisa Task : <span style="font-weight:bold; font-size:26px !important;"> {{@$users->first()->task_count - count(@$tasks)}} </span></p>
@@ -303,6 +289,15 @@
                       </p>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col">
+                      <p class="card-text">
+                        @if ($task->lampiran!='')
+                          <p>{{$task->lampiran}}</p>
+                        @endif
+                      </p>
+                    </div>
+                  </div>
                   <div class="row" style="padding-top:1rem;">
                     <div class="col">
                       @if (@$task->handler==null)
@@ -314,30 +309,15 @@
                       @endif
                     </div>
                   </div>
-                  {{-- @if ($task->status!=3)
-                  <button type="button" id="btn-update" class="btn btn-secondary">Selesai</button>
-                  @else
-                  <input class="form-control" type="hidden" name="task_id" id="task_id" value=""/>
-                  <button type="button" id="btn-update" class="btn btn-primary">Selesai</button>
-                  @endif
-                  <form action="{{route('taskclients.destroy',$task->id)}}" method="post" class="d-inline">
-                    @csrf
-                    @method('delete')
-                    <button type="submit" class="btn btn-danger d-inline">
-                      Hapus
-                    </button>
-                  </form> --}}
                 </div>
               </div>
               <div class="divider"></div>
-              {{-- @endfor --}}
               @endforeach
-             @endif
-          {{-- </div> --}}
+            @endif
       </div>
       <div class="divider"></div>
       <div class="copyright">
-        <p style="text-align: center">2020. Nore Inovasi.</p>
+        <p style="text-align: center">2021. Nore Inovasi.</p>
       </div>
       <div class="footer">
         <div class="split"></div>

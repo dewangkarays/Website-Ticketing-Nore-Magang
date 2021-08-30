@@ -115,8 +115,9 @@ class AdminController extends Controller
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
         $tagihanhistories = Tagihan::where('user_id',\Auth::user()->id)->where('status','=','2')->get();
         $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
-        $setting = User::where('id',\Auth::user()->id)->first();
-        return view("client.layout",compact('new','ongoing','done','website','taskall','proyeks','tagihans','taskcounts','tasks','tagihanactives','tagihanhistories','highproyek','setting'));
+        $user = User::where('id',\Auth::user()->id)->first();
+        // dd($user);
+        return view("client.layout",compact('new','ongoing','done','website','taskall','proyeks','tagihans','taskcounts','tasks','tagihanactives','tagihanhistories','highproyek','user'));
     }
 
     // public function customer()

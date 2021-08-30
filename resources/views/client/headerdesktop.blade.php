@@ -79,8 +79,11 @@
                         @endif
                     </div>
                     <div class="ket-users" onclick="settingdropdown()" id="buttonsetting" style="display:flex;">
-                        <button type="button" class="btn btn-secondary btn-circle btn-xl">
-                                <img src="{{ URL::asset('global_assets/images/user-client-1.png') }}" height="34" alt="">
+                        {{-- <button type="button" class="btn btn-circle btn-xl" style="border:solid #bbbb;">
+                            <img src="{{url($user->image)}}" height="40" width="50">
+                        </button> --}}
+                        <button type="button" class="btn">
+                            <img src="{{url($user->image)}}" height="40" width="50">
                         </button>
                         <p style="padding-left:0.5rem; padding-top:0.6rem; font-weight:bold; color:black; cursor:pointer;">{{\Auth::user()->nama}}</p>
                     </div>

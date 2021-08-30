@@ -6,7 +6,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Tambah Member</h4>
+				<h4><span class="font-weight-semibold">Home</span> - Tambah Member</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -29,20 +29,19 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-								<input type="text" name="nama" class="form-control border-teal border-1" placeholder="Nama" required>
+								<input type="text" name="nama" class="form-control border-teal border-1" placeholder="Nama">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Email</label>
 							<div class="col-lg-10">
-								<input type="email" name="email" class="form-control border-teal border-1" placeholder="Email" required>
-								{{$errors->first('email')}}
+								<input type="email" name="email" class="form-control border-teal border-1" placeholder="Email">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Telp</label>
 							<div class="col-lg-10">
-								<input type="text" name="telp" class="form-control border-teal border-1" placeholder="Telp/WA" required>
+								<input type="text" name="telp" class="form-control border-teal border-1" placeholder="Telp/WA">
 								<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
 							</div>
 						</div>
@@ -56,14 +55,13 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Username</label>
 							<div class="col-lg-10">
-								<input type="text" name="username" class="form-control border-teal border-1" placeholder="Username" required>
-								{{$errors->first('username')}}
+								<input type="text" name="username" class="form-control border-teal border-1" placeholder="Username">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Password</label>
 							<div class="col-lg-10">
-								<input type="password" name="password" class="form-control border-teal border-1" placeholder="Password" required>
+								<input type="password" name="password" class="form-control border-teal border-1" placeholder="Password">
 							</div>
                         </div>
                         
@@ -111,98 +109,257 @@
             format: 'yyyy-mm-dd',
         });
 				
+		// Validation config
 		var FormValidation = function() {
 
-		    // Validation config
-		    var _componentValidation = function() {
-		        if (!$().validate) {
-		            console.warn('Warning - validate.min.js is not loaded.');
-		            return;
-		        }
 
-		        // Initialize
-		        var validator = $('.form-validate-jquery').validate({
-		            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
-		            errorClass: 'validation-invalid-label',
-		            //successClass: 'validation-valid-label',
-		            validClass: 'validation-valid-label',
-		            highlight: function(element, errorClass) {
-		                $(element).removeClass(errorClass);
-		            },
-		            unhighlight: function(element, errorClass) {
-		                $(element).removeClass(errorClass);
-		            },
-		            // success: function(label) {
-		            //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
-		            //},
+		//
+		// Setup module components
+		//
 
-		            // Different components require proper error label placement
-		            errorPlacement: function(error, element) {
+		// Uniform
+		var _componentUniform = function() {
+			if (!$().uniform) {
+				console.warn('Warning - uniform.min.js is not loaded.');
+				return;
+			}
 
-		                // Unstyled checkboxes, radios
-		                if (element.parents().hasClass('form-check')) {
-		                    error.appendTo( element.parents('.form-check').parent() );
-		                }
+			// Initialize
+			$('.form-input-styled').uniform({
+				fileButtonClass: 'action btn bg-blue'
+			});
+		};
 
-		                // Input with icons and Select2
-		                else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
-		                    error.appendTo( element.parent() );
-		                }
+		// Switchery
+		var _componentSwitchery = function() {
+			if (typeof Switchery == 'undefined') {
+				console.warn('Warning - switchery.min.js is not loaded.');
+				return;
+			}
 
-		                // Input group, styled file input
-		                else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
-		                    error.appendTo( element.parent().parent() );
-		                }
+			// Initialize single switch
+			var elems = Array.prototype.slice.call(document.querySelectorAll('.form-input-switchery'));
+			elems.forEach(function(html) {
+				var switchery = new Switchery(html);
+			});
+		};
 
-		                // Other elements
-		                else {
-		                    error.insertAfter(element);
-		                }
-		            },
-		            messages: {
-		                nama: {
-		                    required: 'Mohon diisi.'
-		                },
-		                email: {
-		                    required: 'Mohon diisi.'
-							unique: 'Email tidak boleh sama'
-		                },
-		                telp: {
-		                    required: 'Mohon diisi.'
-		                },
-		                username: {
-		                    required: 'Mohon diisi.'
-							unique: 'Username tidak boleh sama'
-		                },
-		                password: {
-		                    required: 'Mohon diisi.'
-		                },
-		                role: {
-		                    required: 'Mohon diisi.'
-		                },
-		            },
-		        });
+		// Bootstrap switch
+		var _componentBootstrapSwitch = function() {
+			if (!$().bootstrapSwitch) {
+				console.warn('Warning - bootstrap_switch.min.js is not loaded.');
+				return;
+			}
 
-		        // Reset form
-		        $('#reset').on('click', function() {
-		            validator.resetForm();
-		        });
-		    };
+			// Initialize
+			$('.form-input-switch').bootstrapSwitch({
+				onSwitchChange: function(state) {
+					if(state) {
+						$(this).valid(true);
+					}
+					else {
+						$(this).valid(false);
+					}
+				}
+			});
+		};
 
-		    // Return objects assigned to module
-		    return {
-		        init: function() {
-		            _componentValidation();
-		        }
-		    }
+		// Touchspin
+		var _componentTouchspin = function() {
+			if (!$().TouchSpin) {
+				console.warn('Warning - touchspin.min.js is not loaded.');
+				return;
+			}
+
+			// Define variables
+			var $touchspinContainer = $('.touchspin-postfix');
+
+			// Initialize
+			$touchspinContainer.TouchSpin({
+				min: 0,
+				max: 100,
+				step: 0.1,
+				decimals: 2,
+				postfix: '%'
+			});
+
+			// Trigger value change when +/- buttons are clicked
+			$touchspinContainer.on('touchspin.on.startspin', function() {
+				$(this).trigger('blur');
+			});
+		};
+
+		// Select2 select
+		var _componentSelect2 = function() {
+			if (!$().select2) {
+				console.warn('Warning - select2.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			var $select = $('.form-control-select2').select2({
+				minimumResultsForSearch: Infinity
+			});
+
+			// Trigger value change when selection is made
+			$select.on('change', function() {
+				$(this).trigger('blur');
+			});
+		};
+
+		// Validation config
+		var _componentValidation = function() {
+			if (!$().validate) {
+				console.warn('Warning - validate.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			var validator = $('.form-validate-jquery').validate({
+				ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+				errorClass: 'validation-invalid-label',
+				successClass: 'validation-valid-label',
+				validClass: 'validation-valid-label',
+				highlight: function(element, errorClass) {
+					$(element).removeClass(errorClass);
+				},
+				unhighlight: function(element, errorClass) {
+					$(element).removeClass(errorClass);
+				},
+				success: function(label) {
+					label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+				},
+
+				// Different components require proper error label placement
+				errorPlacement: function(error, element) {
+
+					// Unstyled checkboxes, radios
+					if (element.parents().hasClass('form-check')) {
+						error.appendTo( element.parents('.form-check').parent() );
+					}
+
+					// Input with icons and Select2
+					else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+						error.appendTo( element.parent() );
+					}
+
+					// Input group, styled file input
+					else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+						error.appendTo( element.parent().parent() );
+					}
+
+					// Other elements
+					else {
+						error.insertAfter(element);
+					}
+				},
+				rules: {
+					password: {
+						minlength: 5
+					},
+					repeat_password: {
+						equalTo: '#password'
+					},
+					email: {
+						email: true
+					},
+					repeat_email: {
+						equalTo: '#email'
+					},
+					minimum_characters: {
+						minlength: 10
+					},
+					maximum_characters: {
+						maxlength: 10
+					},
+					minimum_number: {
+						min: 10
+					},
+					maximum_number: {
+						max: 10
+					},
+					number_range: {
+						range: [10, 20]
+					},
+					url: {
+						url: true
+					},
+					date: {
+						date: true
+					},
+					date_iso: {
+						dateISO: true
+					},
+					numbers: {
+						number: true
+					},
+					digits: {
+						digits: true
+					},
+					creditcard: {
+						creditcard: true
+					},
+					basic_checkbox: {
+						minlength: 2
+					},
+					styled_checkbox: {
+						minlength: 2
+					},
+					switchery_group: {
+						minlength: 2
+					},
+					switch_group: {
+						minlength: 2
+					}
+				},
+				messages: {
+					custom: {
+						required: 'This is a custom error message'
+					},
+					basic_checkbox: {
+						minlength: 'Please select at least {0} checkboxes'
+					},
+					styled_checkbox: {
+						minlength: 'Please select at least {0} checkboxes'
+					},
+					switchery_group: {
+						minlength: 'Please select at least {0} switches'
+					},
+					switch_group: {
+						minlength: 'Please select at least {0} switches'
+					},
+					agree: 'Please accept our policy'
+				}
+			});
+
+			// Reset form
+			$('#reset').on('click', function() {
+				validator.resetForm();
+			});
+		};
+
+
+		//
+		// Return objects assigned to module
+		//
+
+		return {
+			init: function() {
+				_componentUniform();
+				_componentSwitchery();
+				_componentBootstrapSwitch();
+				_componentTouchspin();
+				_componentSelect2();
+				_componentValidation();
+			}
+		}
 		}();
 
 
 		// Initialize module
 		// ------------------------------
-
 		document.addEventListener('DOMContentLoaded', function() {
-		    FormValidation.init();
+			FormValidation.init();
 		});
 	</script>
 	<script type="text/javascript">

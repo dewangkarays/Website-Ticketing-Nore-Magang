@@ -23,8 +23,7 @@ class SettingController extends Controller
         
         $tujuan_upload = config('app.upload_url').'global_assets/images';
         if($file){
-                $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
-                // $name = \Auth::user()->id."_".time().".".$file->getClientOriginalExtension();
+                $name = \Auth::user()->id."_".time().".".$file->getClientOriginalExtension();
                 $up1 = $file->move($tujuan_upload,$name);
                 if($up1){
                     $data['logo'] = $tujuan_upload.'/'.$name;
