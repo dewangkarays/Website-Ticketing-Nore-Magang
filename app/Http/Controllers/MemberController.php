@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User;
 
@@ -38,32 +39,46 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        $request->validate([
-            'nama'=>'required',
-            'email'=>'required|unique:users',
-            'telp'=>'required|numeric|min:11|max:13',
-            'username'=>'required|unique:users',
-            'password'=>'required',
-            ],
-            [
-            'email.unique'=>':attribute tidak boleh sama',
-            'username.unique'=>':attribute tidak boleh sama',
-            'telp.numeric'=>':attribute harus angka',
-            'telp.min'=>':attribute jumlah minimal 11 angka',
-            'telp.max'=>':attribute jumlah maksimal 13 angka',
-            ]
-        );
+        // $request->validate([
+        //     'nama'=>'required',
+        //     'email'=>'required|unique:users',
+        //     'telp'=>'required|numeric|min:11|max:13',
+        //     'username'=>'required|unique:users',
+        //     'password'=>'required',
+        //     ],
+        //     [
+        //     'email.unique'=>':attribute tidak boleh sama',
+        //     'username.unique'=>':attribute tidak boleh sama',
+        //     'telp.numeric'=>':attribute harus angka',
+        //     'telp.min'=>':attribute jumlah minimal 11 angka',
+        //     'telp.max'=>':attribute jumlah maksimal 13 angka',
+        //     ]
+        // );
+
+            $validator = Validator::make($request->all(), [
+                'username'=>'unique:users',
+                'email'=>'unique:users'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('members/create')
+                            ->withErrors($validator)
+                            ->withInput();
+            }
             
             $user = new User([
-                'nama' => $request->get('nama'),
-                'username' => $request->get('username'),
+                'nama' => $request->get('name'),
                 'email' => $request->get('email'),
-                'telp' => $request->get('telp'),
+                'telp' => $request->get('phone'),
+                'alamat' => $request->get('address'),
+                'task_count' => $request->get('taskcount'),
+                'username' => $request->get('username'),
                 'password' => bcrypt($request->get('password')),
-                'task_count' => $request->get('task_count'),
+                'role' => $request->get('role')
                 ]);
-                $user->save();
-                return redirect('/users')->with('success', 'User saved!');
+
+            $user->save();
+            return redirect('/members')->with('success', 'User saved!');
     }
 
     /**

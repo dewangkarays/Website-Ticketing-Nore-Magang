@@ -21,41 +21,52 @@
 			<div class="card-header header-elements-inline">
 			</div>
 			<div class="card-body">
-				<form class="form-validate-jquery" action="{{ route('members.store')}}" method="post">
+				<form id="form_member" class="form-validate-jquery" action="{{ route('members.store')}}" method="post">
 					@csrf
 					<fieldset class="mb-3">
-						<legend class="text-uppercase font-size-sm font-weight-bold">Data Member</legend>
+						<legend class="text-uppercase font-size-sm font-weight-bold">Data Member Klien</legend>
 
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-								<input type="text" name="nama" class="form-control border-teal border-1" placeholder="Nama">
+								<input type="text" name="name" class="form-control border-teal border-1" placeholder="Nama">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Email</label>
 							<div class="col-lg-10">
-								<input type="email" name="email" class="form-control border-teal border-1" placeholder="Email">
+								<input type="text" name="email" class="form-control border-teal border-1" placeholder="Email">
+								@error('email')
+									<div style="margin-top:1rem;" class="alert alert-danger">{{ $message }}</div>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Telp</label>
 							<div class="col-lg-10">
-								<input type="text" name="telp" class="form-control border-teal border-1" placeholder="Telp/WA">
+								<input type="text" name="phone" class="form-control border-teal border-1" placeholder="Telp/WA">
 								<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
 							</div>
 						</div>
-
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Alamat</label>
+							<div class="col-lg-10">
+								<input type="text" name="address" class="form-control border-teal border-1" placeholder="Alamat">
+							</div>
+						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Jumlah Update Task</label>
 							<div class="col-lg-10">
-								<input type="number" name="task_count" class="form-control border-teal border-1" placeholder="jumlah update task">
+								<input type="number" name="taskcount" class="form-control border-teal border-1" placeholder="jumlah update task">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Username</label>
 							<div class="col-lg-10">
 								<input type="text" name="username" class="form-control border-teal border-1" placeholder="Username">
+								@error('username')
+								<div style="margin-top:1rem;" class="alert alert-danger">{{ $message }}</div>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
@@ -64,7 +75,17 @@
 								<input type="password" name="password" class="form-control border-teal border-1" placeholder="Password">
 							</div>
                         </div>
-                        
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Role</label>
+							<div class="col-lg-10">
+								<select name="role" class="form-control bg-teal-400 border-teal-400">
+									<option value="80">Premium</option>
+									<option value="90">Prioritas</option>
+									<option value="95">Klien</option>
+									<option value="99">Simpel</option>
+                                </select>
+							</div>
+						</div>
 					</fieldset>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
@@ -108,11 +129,20 @@
             selectYears: true,
             format: 'yyyy-mm-dd',
         });
-				
-		// Validation config
-		var FormValidation = function() {
+
+				/* ------------------------------------------------------------------------------
+ *
+ *  # Form validation
+ *
+ *  Demo JS code for form_validation.html page
+ *
+ * ---------------------------------------------------------------------------- */
 
 
+// Setup module
+// ------------------------------
+
+var FormValidation = function() {
 		//
 		// Setup module components
 		//
@@ -215,7 +245,7 @@
 			}
 
 			// Initialize
-			var validator = $('.form-validate-jquery').validate({
+			var validator = $('#form_member').validate({
 				ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
 				errorClass: 'validation-invalid-label',
 				successClass: 'validation-valid-label',
@@ -254,81 +284,50 @@
 					}
 				},
 				rules: {
-					password: {
-						minlength: 5
-					},
-					repeat_password: {
-						equalTo: '#password'
-					},
-					email: {
+					name:{
+						required : true
+					}, 
+					email:{
+						required : true,
 						email: true
 					},
-					repeat_email: {
-						equalTo: '#email'
+					phone:{
+						required : true,
+						number : true
 					},
-					minimum_characters: {
-						minlength: 10
+					taskcount:{
+						min : 0
 					},
-					maximum_characters: {
-						maxlength: 10
+					username:{
+						required : true
 					},
-					minimum_number: {
-						min: 10
-					},
-					maximum_number: {
-						max: 10
-					},
-					number_range: {
-						range: [10, 20]
-					},
-					url: {
-						url: true
-					},
-					date: {
-						date: true
-					},
-					date_iso: {
-						dateISO: true
-					},
-					numbers: {
-						number: true
-					},
-					digits: {
-						digits: true
-					},
-					creditcard: {
-						creditcard: true
-					},
-					basic_checkbox: {
-						minlength: 2
-					},
-					styled_checkbox: {
-						minlength: 2
-					},
-					switchery_group: {
-						minlength: 2
-					},
-					switch_group: {
-						minlength: 2
+					password:{
+						required : true,
+						minlength: 8
 					}
 				},
 				messages: {
-					custom: {
-						required: 'This is a custom error message'
+					name:{
+						required : 'Mohon diisi.'
 					},
-					basic_checkbox: {
-						minlength: 'Please select at least {0} checkboxes'
+					email:{
+						required : 'Mohon diisi.',
+						email : 'Masukan alamat email dengan benar'
 					},
-					styled_checkbox: {
-						minlength: 'Please select at least {0} checkboxes'
+					phone:{
+						required : 'Mohon diisi.',
+						number : 'Hanya mengandung angka'
 					},
-					switchery_group: {
-						minlength: 'Please select at least {0} switches'
-					},
-					switch_group: {
-						minlength: 'Please select at least {0} switches'
-					},
-					agree: 'Please accept our policy'
+					taskcount:{
+						min : 'Minimal task 0'
+					}, 
+					username:{
+						required : 'Mohon diisi.'
+					}, 
+					password:{
+						required : 'Mohon diisi.',
+						minlength : 'Minimal 8 karakter'
+					}
 				}
 			});
 
@@ -353,15 +352,18 @@
 				_componentValidation();
 			}
 		}
-		}();
+	}();
 
 
 		// Initialize module
 		// ------------------------------
-		document.addEventListener('DOMContentLoaded', function() {
-			FormValidation.init();
-		});
-	</script>
+
+	document.addEventListener('DOMContentLoaded', function() {
+		FormValidation.init();
+	});
+
+	</script>			
+		
 	<script type="text/javascript">
 		$( document ).ready(function() {
 	        // Default style

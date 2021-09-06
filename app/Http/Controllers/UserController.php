@@ -59,17 +59,10 @@ class UserController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-
-
-        // $request->validate([
-        //         'username'=>'unique:users',
-        //         'email'=>'unique:users'
-        //     ]
-        // );
         
         $user = new User([
             'nama' => $request->get('name'),
-            'email' => $request->get('mail'),
+            'email' => $request->get('email'),
             'telp' => $request->get('phone'),
             'alamat' => $request->get('address'),
             'task_count' => $request->get('taskcount'),
