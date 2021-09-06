@@ -44,14 +44,14 @@ class MemberController extends Controller
             'telp'=>'required|numeric|min:11|max:13',
             'username'=>'required|unique:users',
             'password'=>'required',
-        ],
-             [
-                'email.unique'=>':attribute tidak boleh sama',
-                'username.unique'=>':attribute tidak boleh sama',
-                'telp.numeric'=>':attribute harus angka',
-                'telp.min'=>':attribute jumlah minimal 11 angka',
-                'telp.max'=>':attribute jumlah maksimal 13 angka',
-             ]
+            ],
+            [
+            'email.unique'=>':attribute tidak boleh sama',
+            'username.unique'=>':attribute tidak boleh sama',
+            'telp.numeric'=>':attribute harus angka',
+            'telp.min'=>':attribute jumlah minimal 11 angka',
+            'telp.max'=>':attribute jumlah maksimal 13 angka',
+            ]
         );
             
             $user = new User([

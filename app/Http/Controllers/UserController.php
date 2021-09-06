@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User;
 use App\Model\Tagihan;
 use App\Model\Proyek;
+
 
 class UserController extends Controller
 {
@@ -44,6 +46,27 @@ class UserController extends Controller
     */
     public function store(Request $request)
     {            
+
+        $validator = Validator::make($request->all(), [
+            // 'title' => 'required|unique:posts|max:255',
+            // 'body' => 'required',
+            'username'=>'unique:users',
+            'email'=>'unique:users'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('users/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+
+        // $request->validate([
+        //         'username'=>'unique:users',
+        //         'email'=>'unique:users'
+        //     ]
+        // );
+        
         $user = new User([
             'nama' => $request->get('name'),
             'email' => $request->get('mail'),

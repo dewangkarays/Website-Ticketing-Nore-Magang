@@ -35,7 +35,10 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Email</label>
 							<div class="col-lg-10">
-								<input type="text" name="mail" class="form-control border-teal border-1" placeholder="Email">
+								<input type="text" name="email" class="form-control border-teal border-1" placeholder="Email">
+								@error('email')
+									<div style="margin-top:1rem;" class="alert alert-danger">{{ $message }}</div>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
@@ -62,6 +65,9 @@
 							<label class="col-form-label col-lg-2">Username</label>
 							<div class="col-lg-10">
 								<input type="text" name="username" class="form-control border-teal border-1" placeholder="Username">
+								@error('username')
+								<div style="margin-top:1rem;" class="alert alert-danger">{{ $message }}</div>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
@@ -281,7 +287,7 @@ var FormValidation = function() {
 					name:{
 						required : true
 					}, 
-					mail:{
+					email:{
 						required : true,
 						email: true
 					},
@@ -301,7 +307,7 @@ var FormValidation = function() {
 					name:{
 						required : 'Mohon diisi.'
 					},
-					mail:{
+					email:{
 						required : 'Mohon diisi.',
 						email : 'Masukan alamat email dengan benar'
 					},
