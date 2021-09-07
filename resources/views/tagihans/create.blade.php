@@ -21,7 +21,7 @@
 		<div class="card-header header-elements-inline">
 		</div>
 		<div class="card-body">
-			<form class="form-validate-jquery" action="{{ route('tagihans.store')}}" method="post">
+			<form id="form_tagihan" class="form-validate-jquery" action="{{ route('tagihans.store')}}" method="post">
 				@csrf
 				<fieldset class="mb-3">
 					<legend class="text-uppercase font-size-sm font-weight-bold">Data Tagihan</legend>
@@ -52,7 +52,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Pelanggan</label>
 						<div class="col-lg-10">
-							<select id="user_id" name="user_id" class="form-control select-search" required >
+							<select id="user_id" name="user_id" class="form-control select-search">
 								<option value="">-- Pilih Pelanggan --</option>
 								@foreach ($users as $user)
 								<option data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" value="{{$user->id}}" {{$user->id == old('user_id') ? 'selected' : ''}}>{{$user->username}}</option>
@@ -63,13 +63,13 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama</label>
 						<div class="col-lg-10">
-							<input type="text" id="nama" name="nama" class="form-control border-teal border-1" value="{{old('nama')}}">
+							<input type="text" id="nama" class="form-control border-teal border-1" value="{{old('nama')}}" readonly>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Masa Berlaku</label>
+						<label class="col-form-label col-lg-2">Update Masa Berlaku</label>
 						<div class="col-lg-10">
-							<input name="kadaluarsa" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Berlaku">
+							<input type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Berlaku">
 							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
 						</div>
 						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
@@ -105,7 +105,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Proyek</label>
 						<div class="col-lg-10">
-							<select id="select_proyek" name="select_proyek" class="form-control select-search" required >
+							<select id="select_proyek" name="select_proyek" class="form-control select-search">
 								<option value="">-- Pilih Proyek --</option>
 								
 							</select>
@@ -114,7 +114,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Proyek</label>
 						<div class="col-lg-10">
-							<input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}">
+							<input type="text" id="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -132,7 +132,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Keterangan</label>
 						<div class="col-lg-10">
-							<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}" required>
+							<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}">
 						</div>
 					</div>
 				</fieldset>
@@ -251,7 +251,7 @@
 				}
 				
 				// Initialize
-				var validator = $('.form-validate-jquery').validate({
+				var validator = $('#form_tagihan').validate({
 					ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
 					errorClass: 'validation-invalid-label',
 					//successClass: 'validation-valid-label',
@@ -289,25 +289,33 @@
 								error.insertAfter(element);
 							}
 						},
+						rules: {
+							select_proyek:{
+								required : true
+							},
+							langganan:{
+								required : true
+							},
+							ads:{
+								required : true
+							},
+							lainnya:{
+								required : true
+							}
+						},
 						messages: {
-							nama: {
-								required: 'Mohon diisi.'
+							select_proyek:{
+								required : 'Mohon diisi'
 							},
-							email: {
-								required: 'Mohon diisi.'
+							langganan:{
+								required : 'Mohon diisi'
 							},
-							telp: {
-								required: 'Mohon diisi.'
+							ads:{
+								required : 'Mohon diisi'
 							},
-							tagihanname: {
-								required: 'Mohon diisi.'
-							},
-							password: {
-								required: 'Mohon diisi.'
-							},
-							role: {
-								required: 'Mohon diisi.'
-							},
+							lainnya:{
+								required : 'Mohon diisi'
+							}
 						},
 					});
 					

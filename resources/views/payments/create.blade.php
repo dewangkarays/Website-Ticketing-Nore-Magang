@@ -21,7 +21,7 @@
 		<div class="card-header header-elements-inline">
 		</div>
 		<div class="card-body">
-			<form class="form-validate-jquery" action="{{ route('payments.store')}}" method="post">
+			<form id="form_payment" class="form-validate-jquery" action="{{ route('payments.store')}}" method="post">
 				@csrf
 				<fieldset class="mb-3">
 					<legend class="text-uppercase font-size-sm font-weight-bold">Data Payment</legend>
@@ -274,158 +274,268 @@
 					// 	$('#updtask').val('0');
 					// }
 					
-					$.ajax({
-						type: 'GET',
-						url: "{{ url('/gettagihan')}}/"+id,
-						success: function (data) {
-							$('#tagihan_id').html(data);
-						}
-					});
+		$.ajax({
+			type: 'GET',
+			url: "{{ url('/gettagihan')}}/"+id,
+			success: function (data) {
+				$('#tagihan_id').html(data);
+			}
+		});
+	}
+				
+	function changeTagihan(select){
+		var id = $(select).find(':selected').val();
+		var tagih = $(select).find(':selected').data('tagihan');
+		
+		$("#tertulis").prop('max',tagih);
+		
+		
+		$.ajax({
+			type: 'GET',
+			url: "{{ url('/detailtagihan')}}/"+id,
+			success: function (data) {
+				$('#detailTagihan').html(data);
+			}
+		});
+	}
+				
+	$(document).on("input", ".numeric", function() {
+		this.value = this.value.replace(/\D/g,'');
+	});
+				
+	$('#tertulis').focus(function() {
+		var angka = $('#nominal').val();
+		$('#tertulis').val(angka);
+	});
+	
+	$('#tertulis').focusout(function() {
+		var angka = $('#tertulis').val();
+		$('#nominal').val(angka);
+		var harga = angka.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		$('#tertulis').val(harga);
+		
+	});		
+</script>
+<script>
+	
+/* ------------------------------------------------------------------------------
+ *
+ *  # Form validation
+ *
+ *  Demo JS code for form_validation.html page
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Setup module
+// ------------------------------
+
+var FormValidation = function() {
+		//
+		// Setup module components
+		//
+
+		// Uniform
+		var _componentUniform = function() {
+			if (!$().uniform) {
+				console.warn('Warning - uniform.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			$('.form-input-styled').uniform({
+				fileButtonClass: 'action btn bg-blue'
+			});
+		};
+
+		// Switchery
+		var _componentSwitchery = function() {
+			if (typeof Switchery == 'undefined') {
+				console.warn('Warning - switchery.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize single switch
+			var elems = Array.prototype.slice.call(document.querySelectorAll('.form-input-switchery'));
+			elems.forEach(function(html) {
+				var switchery = new Switchery(html);
+			});
+		};
+
+		// Bootstrap switch
+		var _componentBootstrapSwitch = function() {
+			if (!$().bootstrapSwitch) {
+				console.warn('Warning - bootstrap_switch.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			$('.form-input-switch').bootstrapSwitch({
+				onSwitchChange: function(state) {
+					if(state) {
+						$(this).valid(true);
+					}
+					else {
+						$(this).valid(false);
+					}
 				}
-				
-				function changeTagihan(select){
-					var id = $(select).find(':selected').val();
-					var tagih = $(select).find(':selected').data('tagihan');
-					
-					$("#tertulis").prop('max',tagih);
-					
-					
-					$.ajax({
-						type: 'GET',
-						url: "{{ url('/detailtagihan')}}/"+id,
-						success: function (data) {
-							$('#detailTagihan').html(data);
-						}
-					});
+			});
+		};
+
+		// Touchspin
+		var _componentTouchspin = function() {
+			if (!$().TouchSpin) {
+				console.warn('Warning - touchspin.min.js is not loaded.');
+				return;
+			}
+
+			// Define variables
+			var $touchspinContainer = $('.touchspin-postfix');
+
+			// Initialize
+			$touchspinContainer.TouchSpin({
+				min: 0,
+				max: 100,
+				step: 0.1,
+				decimals: 2,
+				postfix: '%'
+			});
+
+			// Trigger value change when +/- buttons are clicked
+			$touchspinContainer.on('touchspin.on.startspin', function() {
+				$(this).trigger('blur');
+			});
+		};
+
+		// Select2 select
+		var _componentSelect2 = function() {
+			if (!$().select2) {
+				console.warn('Warning - select2.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			var $select = $('.form-control-select2').select2({
+				minimumResultsForSearch: Infinity
+			});
+
+			// Trigger value change when selection is made
+			$select.on('change', function() {
+				$(this).trigger('blur');
+			});
+		};
+
+		// Validation config
+		var _componentValidation = function() {
+			if (!$().validate) {
+				console.warn('Warning - validate.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			var validator = $('#form_payment').validate({
+				ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+				errorClass: 'validation-invalid-label',
+				successClass: 'validation-valid-label',
+				validClass: 'validation-valid-label',
+				highlight: function(element, errorClass) {
+					$(element).removeClass(errorClass);
+				},
+				unhighlight: function(element, errorClass) {
+					$(element).removeClass(errorClass);
+				},
+				success: function(label) {
+					label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+				},
+
+				// Different components require proper error label placement
+				errorPlacement: function(error, element) {
+
+					// Unstyled checkboxes, radios
+					if (element.parents().hasClass('form-check')) {
+						error.appendTo( element.parents('.form-check').parent() );
+					}
+
+					// Input with icons and Select2
+					else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+						error.appendTo( element.parent() );
+					}
+
+					// Input group, styled file input
+					else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+						error.appendTo( element.parent().parent() );
+					}
+
+					// Other elements
+					else {
+						error.insertAfter(element);
+					}
+				},
+				rules: {
+					nominal:{
+						min : 0,
+						maxlength : 9
+					},
+				},
+				messages: {
+					nominal:{
+						min : 'Minimal 0 rupiah',
+						maxlength: 'Melewati batas inputan'
+					}
 				}
-				
-				$(document).on("input", ".numeric", function() {
-					this.value = this.value.replace(/\D/g,'');
-				});
-				
-				$('#tertulis').focus(function() {
-					var angka = $('#nominal').val();
-					$('#tertulis').val(angka);
-				});
-				
-				$('#tertulis').focusout(function() {
-					var angka = $('#tertulis').val();
-					$('#nominal').val(angka);
-					var harga = angka.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-					$('#tertulis').val(harga);
-					
-				});
-				
-			</script>
-			<script type="text/javascript">
-				
-				var FormValidation = function() {
-					
-					// Validation config
-					var _componentValidation = function() {
-						if (!$().validate) {
-							console.warn('Warning - validate.min.js is not loaded.');
-							return;
-						}
-						
-						// Initialize
-						var validator = $('.form-validate-jquery').validate({
-							ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
-							errorClass: 'validation-invalid-label',
-							//successClass: 'validation-valid-label',
-							validClass: 'validation-valid-label',
-							highlight: function(element, errorClass) {
-								$(element).removeClass(errorClass);
-							},
-							unhighlight: function(element, errorClass) {
-								$(element).removeClass(errorClass);
-							},
-							// success: function(label) {
-								//    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
-								//},
-								
-								// Different components require proper error label placement
-								errorPlacement: function(error, element) {
-									
-									// Unstyled checkboxes, radios
-									if (element.parents().hasClass('form-check')) {
-										error.appendTo( element.parents('.form-check').parent() );
-									}
-									
-									// Input with icons and Select2
-									else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
-										error.appendTo( element.parent() );
-									}
-									
-									// Input group, styled file input
-									else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
-										error.appendTo( element.parent().parent() );
-									}
-									
-									// Other elements
-									else {
-										error.insertAfter(element);
-									}
-								},
-								messages: {
-									user_id: {
-										required: 'Mohon diisi.'
-									},
-									keterangan: {
-										required: 'Mohon diisi.'
-									},
-									nominal: {
-										required: 'Mohon diisi.'
-									},
-									kadaluarsa: {
-										required: 'Mohon diisi.'
-									},
-								},
-							});
-							
-							// Reset form
-							$('#reset').on('click', function() {
-								validator.resetForm();
-							});
-						};
-						
-						// Return objects assigned to module
-						return {
-							init: function() {
-								_componentValidation();
-							}
-						}
-					}();
-					
-					
-					// Initialize module
-					// ------------------------------
-					
-					document.addEventListener('DOMContentLoaded', function() {
-						FormValidation.init();
-					});
-				</script>
-				<script type="text/javascript">
-					$( document ).ready(function() {
-						// Default style
-						@if(session('error'))
-						new PNotify({
-							title: 'Error',
-							text: '{{ session('error') }}.',
-							icon: 'icon-blocked',
-							type: 'error'
-						});
-						@endif
-						@if ( session('success'))
-						new PNotify({
-							title: 'Success',
-							text: '{{ session('success') }}.',
-							icon: 'icon-checkmark3',
-							type: 'success'
-						});
-						@endif
-						
-					});
-				</script>
-				
-				@endsection
+			});
+
+			// Reset form
+			$('#reset').on('click', function() {
+				validator.resetForm();
+			});
+		};
+
+
+		//
+		// Return objects assigned to module
+		//
+
+		return {
+			init: function() {
+				_componentUniform();
+				_componentSwitchery();
+				_componentBootstrapSwitch();
+				_componentTouchspin();
+				_componentSelect2();
+				_componentValidation();
+			}
+		}
+	}();
+
+
+		// Initialize module
+		// ------------------------------
+
+	document.addEventListener('DOMContentLoaded', function() {
+		FormValidation.init();
+	});
+</script>
+<script type="text/javascript">
+	$( document ).ready(function() {
+		// Default style
+		@if(session('error'))
+		new PNotify({
+			title: 'Error',
+			text: '{{ session('error') }}.',
+			icon: 'icon-blocked',
+			type: 'error'
+		});
+		@endif
+		@if ( session('success'))
+		new PNotify({
+			title: 'Success',
+			text: '{{ session('success') }}.',
+			icon: 'icon-checkmark3',
+			type: 'success'
+		});
+		@endif
+		
+	});
+</script>	
+@endsection
