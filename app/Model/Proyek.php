@@ -3,9 +3,12 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Proyek extends Model
 {
+    use SoftDeletes;
+
     protected $guarded = [
         'id', 'created_at'
     ];
@@ -22,5 +25,5 @@ class Proyek extends Model
     public function task(){
         return $this->hasMany('App\Model\Task','id_proyek','id');
     }
-    
+
 }
