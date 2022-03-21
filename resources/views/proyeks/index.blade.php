@@ -35,6 +35,7 @@
             <thead>
                 <tr>
                     <th>No</th>
+                    <th>Client Name</th>
                     <th>Website</th>
                     <th>Tipe</th>
                     <th>Masa Berlaku</th>
@@ -48,6 +49,7 @@
                 @foreach($proyeks as $proyek)
                 <tr> 
                     <td>{{$i}}</td>
+                    <td><div class="datatable-column-width">{{@$proyek->user ? $proyek->user->nama : '-'}}</div></td>
                     <td><div class="datatable-column-width">{{$proyek->website}}</div></td>
                     <td><div class="datatable-column-width">{{config('custom.role.'.$proyek->tipe)}}</div></td>
                     <td><div class="datatable-column-width">{{$proyek->masa_berlaku}}</div></td>
@@ -143,7 +145,7 @@
                 columnDefs: [{ 
                     orderable: false,
                     width: 100,
-                    targets: [ 5 ]
+                    targets: [ 6 ]
                 }],
                 dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                 language: {

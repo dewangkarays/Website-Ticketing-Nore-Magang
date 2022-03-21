@@ -17,6 +17,7 @@ class ProyekController extends Controller
     public function index()
     {
         $proyeks = Proyek::all();
+        // dd($proyeks);
         return view('proyeks.index', compact('proyeks'));
     }
 

@@ -75,7 +75,7 @@
 								<input type="password" name="password" class="form-control border-teal border-1" placeholder="Password">
 							</div>
                         </div>
-						<div class="form-group row">
+						{{-- <div class="form-group row">
 							<label class="col-form-label col-lg-2">Role</label>
 							<div class="col-lg-10">
 								<select name="role" class="form-control bg-teal-400 border-teal-400">
@@ -85,7 +85,7 @@
 									<option value="99">Simpel</option>
                                 </select>
 							</div>
-						</div>
+						</div> --}}
 					</fieldset>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>

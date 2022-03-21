@@ -55,7 +55,7 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Jumlah Update Task</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{ ! empty($user->task_count) ? $user->task_count : '-' }} </span>
+                        <span class="form-text"> {{ @$user->task_count ? $user->task_count : '-' }} </span>
                     </div>
                 </div>
                 <div class="form-group row">

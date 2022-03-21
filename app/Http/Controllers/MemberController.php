@@ -74,7 +74,7 @@ class MemberController extends Controller
                 'task_count' => $request->get('taskcount'),
                 'username' => $request->get('username'),
                 'password' => bcrypt($request->get('password')),
-                'role' => $request->get('role')
+                'role' => 95
                 ]);
 
             $user->save();
