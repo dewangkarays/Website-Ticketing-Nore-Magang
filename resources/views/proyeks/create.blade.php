@@ -15,9 +15,14 @@
 
 <!-- Content area -->
 <div class="content">
-
     <!-- Hover rows -->
     <div class="card">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong>
+                Silakan pilih klien dahulu, ya!
+            </div>
+        @endif
         <div class="card-header header-elements-inline">
         </div>
         <div class="card-body">
@@ -37,10 +42,10 @@
                         </div>
                     </div> --}}
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-2">User / Klien</label>
+                        <label class="col-form-label col-lg-2">Klien</label>
                         <div class="col-lg-10">
-                            <select name="user_id" class="form-control select-search" required>
-                                <option value="">-- Pilih User --</option>
+                            <select name="user_id" class="form-control select-search" data-vouc>
+                                <option value="">-- Pilih Klien --</option>
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->nama}}</option>
                                 @endforeach

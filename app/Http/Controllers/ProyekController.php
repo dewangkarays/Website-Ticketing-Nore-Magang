@@ -59,8 +59,8 @@ class ProyekController extends Controller
             'masa_berlaku' => $request->get('masa_berlaku'),
             'keterangan' => $request->get('keterangan'),
             ]);
-            $proyek->save();
-            return redirect('/proyeks')->with('success', 'Proyek saved!');
+        $proyek->save();
+        return redirect('/proyeks')->with('success', 'Proyek saved!');
     }
 
     /**
@@ -97,7 +97,7 @@ class ProyekController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            // 'nama'=>'required',
+            'user_id'=>'required',
             // 'email'=>'required',
             // 'telp'=>'required',
             // 'username'=>'required',
