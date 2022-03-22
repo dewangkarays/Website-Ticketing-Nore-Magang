@@ -15,7 +15,7 @@
 
 <!-- Content area -->
 <div class="content">
-    
+
     <!-- Hover rows -->
     <div class="card">
         <div class="card-header header-elements-inline">
@@ -26,11 +26,21 @@
                 @csrf
                 <fieldset class="mb-3">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Data Proyek</legend>
-                    
+
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">User / Klien</label>
-                        <label class="col-form-label col-lg-10">{{$proyek->user->nama}}</label>
-                    
+                        @if(@$proyek->user->nama == null)
+                            <div class="col-lg-10">
+                                <select name="user_id" class="form-control select-search" required>
+                                    <option value="">-- Pilih User --</option>
+                                    @foreach($users as $user)
+                                        <option value="{{$user->id}}">{{$user->nama}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @else
+                            <label class="col-form-label col-lg-10">{{$proyek->user->nama}}</label>
+                        @endif
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Website</label>
@@ -40,22 +50,51 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Tipe</label>
+                        <label class="col-form-label col-lg-2">Jenis Proyek</label>
                         <div class="col-lg-10">
-                            <select name="tipe" class="form-control bg-teal-400 border-teal-400" required>
-                                
-                                <option value="80" {{$proyek->tipe == 80? 'selected' : ''}}>Premium</option>
-                                <option value="90" {{$proyek->tipe == 90? 'selected' : ''}}>Prioritas</option>
-                                <option value="92" {{$proyek->tipe == 92? 'selected' : ''}}>Mini</option>
-                                <option value="99" {{$proyek->tipe == 99? 'selected' : ''}}>Simpel</option>
+                            <select name="jenis_proyek" class="form-control bg-teal-400 border-teal-400" required>
+                                @if ($proyek->jenis_proyek == null)
+                                    <option value="">-- Pilih Jenis Proyek --</option>
+                                @endif
+                                @foreach (config('custom.jenis_proyek') as $key => $value)
+                                    <option {{ $proyek->jenis_proyek == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
-                    
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Jenis Layanan</label>
+                        <div class="col-lg-10">
+                            <select name="jenis_layanan" class="form-control bg-teal-400 border-teal-400" required>
+                                @if ($proyek->jenis_proyek == null)
+                                    <option value="">-- Pilih Jenis Layanan --</option>
+                                @endif
+                                @foreach (config('custom.jenis_layanan') as $key => $value)
+                                    <option {{ $proyek->jenis_layanan == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Kelas Layanan</label>
+                        <div class="col-lg-10">
+                            <select name="tipe" class="form-control bg-teal-400 border-teal-400" required>
+                                @if ($proyek->jenis_proyek == null)
+                                    <option value="">-- Pilih Kelas Layanan --</option>
+                                @endif
+                                @foreach (config('custom.kelas_layanan') as $key => $value)
+                                    <option {{ $proyek->tipe == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Masa Berlaku</label>
                         <div class="col-lg-10">
-                            <input name="masa_berlaku" type="text" class="form-control pickadate-accessibility" value="{{$proyek->masa_berlaku}}" placeholder="Tanggal Masa Berlaku">
+                            <input name="masa_berlaku" type="text" class="form-control pickadate-accessibility" value="{{$proyek->masa_berlaku}}" placeholder="Tanggal Masa Berlaku" required>
                         </div>
                     </div>
 
@@ -66,17 +105,18 @@
                         </div>
                     </div>
 
-                    
+
                 </fieldset>
                 <div class="text-right">
+                    <a href="{{ url('/proyeks') }}" class="btn btn-default">Back</a>
                     <button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
                 </div>
             </form>
         </div>
-        
+
     </div>
     <!-- /hover rows -->
-    
+
 </div>
 <!-- /content area -->
 @endsection
@@ -98,8 +138,9 @@
 
 <script src="{{asset('assets/js/app.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
+<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
 <script type="text/javascript">
-    
+
     // Accessibility labels
     $('.pickadate-accessibility').pickadate({
         labelMonthNext: 'Go to the next month',
@@ -110,16 +151,16 @@
         selectYears: true,
         format: 'yyyy-mm-dd',
     });
-    
+
     var FormValidation = function() {
-        
+
         // Validation config
         var _componentValidation = function() {
             if (!$().validate) {
                 console.warn('Warning - validate.min.js is not loaded.');
                 return;
             }
-            
+
             // Initialize
             var validator = $('.form-validate-jquery').validate({
                 ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
@@ -135,25 +176,25 @@
                 // success: function(label) {
                     //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
                     //},
-                    
+
                     // Different components require proper error label placement
                     errorPlacement: function(error, element) {
-                        
+
                         // Unstyled checkboxes, radios
                         if (element.parents().hasClass('form-check')) {
                             error.appendTo( element.parents('.form-check').parent() );
                         }
-                        
+
                         // Input with icons and Select2
                         else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
                             error.appendTo( element.parent() );
                         }
-                        
+
                         // Input group, styled file input
                         else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
                             error.appendTo( element.parent().parent() );
                         }
-                        
+
                         // Other elements
                         else {
                             error.insertAfter(element);
@@ -180,13 +221,13 @@
                         },
                     },
                 });
-                
+
                 // Reset form
                 $('#reset').on('click', function() {
                     validator.resetForm();
                 });
             };
-            
+
             // Return objects assigned to module
             return {
                 init: function() {
@@ -194,11 +235,11 @@
                 }
             }
         }();
-        
-        
+
+
         // Initialize module
         // ------------------------------
-        
+
         document.addEventListener('DOMContentLoaded', function() {
             FormValidation.init();
         });
@@ -222,7 +263,7 @@
                 type: 'success'
             });
             @endif
-            
+
         });
     </script>
     @endsection

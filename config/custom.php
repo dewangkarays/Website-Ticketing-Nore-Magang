@@ -21,10 +21,28 @@ return [
        	'1' => 'Super Admin',
         '10' => 'Karyawan',
         '20' => 'Keuangan',
-        '80' => 'Premium',
-        '90' => 'Prioritas',
         '95' => 'Klien',
-        '99' => 'Simpel',
+    ],
+
+    'jenis_proyek' => [
+        '1' => 'Website',
+        '2' => 'Iklan/Ads',
+        '3' => 'Sistem Informasi',
+        '4' => 'Mobile App',
+        '5' => 'Custom/Lainnya',
+    ],
+
+    'jenis_layanan' => [
+        '1' => 'Nore',
+        '2' => 'Mini',
+        '3' => 'Lepas',
+        '4' => 'Lainnya',
+    ],
+
+    'kelas_layanan' => [
+        '99' => 'Simple',
+        '90' => 'Prioritas',
+        '80' => 'Premium',
     ],
 
   'status' => [
@@ -62,3 +80,7 @@ return [
         '3' => 'High',
     ],
 ];
+
+
+
+

@@ -23,21 +23,23 @@
 
 <!-- Content area -->
 <div class="content">
-    
+
     <!-- Hover rows -->
     <div class="card">
         <div class="card-header header-elements-inline">
             <a href="{{ route('proyeks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
-            
+
         </div>
-        
+
         <table class="table datatable-basic table-hover">
             <thead>
                 <tr>
                     <th>No</th>
                     <th>Client Name</th>
                     <th>Website</th>
-                    <th>Tipe</th>
+                    <th>Jenis Proyek</th>
+                    <th>Jenis Layanan</th>
+                    <th>Kelas Layanan</th>
                     <th>Masa Berlaku</th>
                     <th>Keterangan</th>
                     <th class="text-center">Actions</th>
@@ -47,14 +49,16 @@
                 @if(!$proyeks->isEmpty())
                 @php ($i = 1)
                 @foreach($proyeks as $proyek)
-                <tr> 
+                <tr>
                     <td>{{$i}}</td>
                     <td><div class="datatable-column-width">{{@$proyek->user ? $proyek->user->nama : '-'}}</div></td>
                     <td><div class="datatable-column-width">{{$proyek->website}}</div></td>
-                    <td><div class="datatable-column-width">{{config('custom.role.'.$proyek->tipe)}}</div></td>
+                    <td><div class="datatable-column-width">{{config('custom.jenis_proyek.'.$proyek->jenis_proyek)}}</div></td>
+                    <td><div class="datatable-column-width">{{config('custom.jenis_layanan.'.$proyek->jenis_layanan)}}</div></td>
+                    <td><div class="datatable-column-width">{{config('custom.kelas_layanan.'.$proyek->tipe)}}</div></td>
                     <td><div class="datatable-column-width">{{$proyek->masa_berlaku}}</div></td>
                     <td><div class="datatable-column-width">{{$proyek->keterangan}}</div></td>
-                    
+
                 </td>
                 <td align="center">
                     <div class="list-icons">
@@ -62,7 +66,7 @@
                             <a href="#" class="list-icons-item" data-toggle="dropdown">
                                 <i class="icon-menu9"></i>
                             </a>
-                            
+
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="{{ route('proyeks.edit',$proyek->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
                                 <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('proyeks.destroy', $proyek->id)}}"><i class="icon-x"></i> Delete</a>
@@ -75,8 +79,8 @@
             @endforeach
             @else
             <tr><td align="center" colspan="6">Data Kosong</td></tr>
-            @endif 
-            
+            @endif
+
         </tbody>
     </table>
 </div>
@@ -92,14 +96,14 @@
             <div class="modal-header bg-danger" align="center">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            
+
             <form action="" method="post" id="delform">
                 @csrf
                 @method('DELETE')
                 <div class="modal-body" align="center">
                     <h2> Hapus Data? </h2>
                 </div>
-                
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn bg-danger">Hapus</button>
@@ -129,23 +133,23 @@
         var url = $(this).data('uri');
         $("#delform").attr("action", url);
     });
-    
+
     var DatatableBasic = function() {
-        
+
         // Basic Datatable examples
         var _componentDatatableBasic = function() {
             if (!$().DataTable) {
                 console.warn('Warning - datatables.min.js is not loaded.');
                 return;
             }
-            
+
             // Setting datatable defaults
             $.extend( $.fn.dataTable.defaults, {
                 autoWidth: false,
-                columnDefs: [{ 
+                columnDefs: [{
                     orderable: false,
                     width: 100,
-                    targets: [ 6 ]
+                    targets: [ 8 ]
                 }],
                 dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                 language: {
@@ -155,10 +159,10 @@
                     paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
                 }
             });
-            
+
             // Basic datatable
             $('.datatable-basic').DataTable();
-            
+
             // Alternative pagination
             $('.datatable-pagination').DataTable({
                 pagingType: "simple",
@@ -166,31 +170,31 @@
                     paginate: {'next': $('html').attr('dir') == 'rtl' ? 'Next &larr;' : 'Next &rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr; Prev' : '&larr; Prev'}
                 }
             });
-            
+
             // Datatable with saving state
             $('.datatable-save-state').DataTable({
                 stateSave: true
             });
-            
+
             // Scrollable datatable
             var table = $('.datatable-scroll-y').DataTable({
                 autoWidth: true,
                 scrollY: 300
             });
-            
+
             // Resize scrollable table when sidebar width changes
             $('.sidebar-control').on('click', function() {
                 table.columns.adjust().draw();
             });
         };
-        
+
         // Select2 for length menu styling
         var _componentSelect2 = function() {
             if (!$().select2) {
                 console.warn('Warning - select2.min.js is not loaded.');
                 return;
             }
-            
+
             // Initialize
             $('.dataTables_length select').select2({
                 minimumResultsForSearch: Infinity,
@@ -198,12 +202,12 @@
                 width: 'auto'
             });
         };
-        
-        
+
+
         //
         // Return objects assigned to module
         //
-        
+
         return {
             init: function() {
                 _componentDatatableBasic();
@@ -211,11 +215,11 @@
             }
         }
     }();
-    
-    
+
+
     // Initialize module
     // ------------------------------
-    
+
     document.addEventListener('DOMContentLoaded', function() {
         DatatableBasic.init();
     });
@@ -239,7 +243,7 @@
             type: 'success'
         });
         @endif
-        
+
     });
 </script>
 @endsection

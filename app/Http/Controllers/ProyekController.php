@@ -44,13 +44,17 @@ class ProyekController extends Controller
         $request->validate([
             'user_id'=>'required',
             'website'=>'required',
+            'jenis_proyek'=>'required',
+            'jenis_layanan'=>'required',
             'tipe'=>'required',
             'masa_berlaku'=>'required',
             ]);
-            
+
         $proyek = new Proyek([
             'user_id' => $request->get('user_id'),
             'website' => $request->get('website'),
+            'jenis_proyek' => $request->get('jenis_proyek'),
+            'jenis_layanan' => $request->get('jenis_layanan'),
             'tipe' => $request->get('tipe'),
             'masa_berlaku' => $request->get('masa_berlaku'),
             'keterangan' => $request->get('keterangan'),
@@ -79,7 +83,8 @@ class ProyekController extends Controller
     public function edit($id)
     {
         $proyek = Proyek::find($id);
-        return view('proyeks.edit', compact('proyek')); 
+        $users = User::where('role','>','20')->get();
+        return view('proyeks.edit', compact(['proyek','users']));
     }
 
     /**
@@ -98,12 +103,12 @@ class ProyekController extends Controller
             // 'username'=>'required',
             // 'role'=>'required'
             ]);
-            
+
             $proyek = Proyek::find($id);
             $data = $request->except(['_token', '_method']);
-            
+
             $proyek->update($data);
-            
+
             return redirect('/proyeks')->with('success', 'Proyek updated!');
     }
 
@@ -117,7 +122,7 @@ class ProyekController extends Controller
     {
         $proyek = Proyek::find($id);
         $proyek->delete();
-        
+
         return redirect('/proyeks')->with('success', 'Proyek deleted!');
     }
 }
