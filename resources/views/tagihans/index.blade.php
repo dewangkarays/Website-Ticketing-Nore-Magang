@@ -36,13 +36,14 @@
 					<tr>
 						<th>No</th>
 						<th>Nama</th>
-						<th>Username</th>
+						{{-- <th>Username</th> --}}
 						<th>Invoice</th>
 						<th>Nama Proyek</th>
 						<th>Tagihan</th>
-						<th>Terbayar</th>
+						<th>Keterangan</th>
+						{{-- <th>Terbayar</th>
 						<th>Sisa Tagihan</th>
-						<th class="text-center">Status</th>
+						<th class="text-center">Status</th> --}}
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
@@ -53,11 +54,13 @@
 				    <tr> 
 				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
-				        <td><div class="datatable-column-width">{{@$tagihan->user->username}}</div></td>
+				        {{-- <td><div class="datatable-column-width">{{@$tagihan->user->username}}</div></td> --}}
 				        <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
 				        <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
-				        <td><div class="datatable-column-width">Rp @angka(($tagihan->langganan)+($tagihan->ads)+($tagihan->lainnya))</div></td>
-						<td><div class="datatable-column-width">Rp @angka($tagihan->payment->sum('nominal'))</div></td>
+						<td><div class="datatable-column-width">Rp @angka($tagihan->nominal)</div></td>
+				        {{-- <td><div class="datatable-column-width">Rp @angka(($tagihan->langganan)+($tagihan->ads)+($tagihan->lainnya))</div></td> --}}
+						{{-- <td><div class="datatable-column-width">Rp @angka($tagihan->payment->sum('nominal'))</div></td>
+						<td><div class="datatable-column-width">Rp @angka($tagihan->jml_bayar)</div></td>
 						<td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
 						<td align="center">
 							@if ($tagihan->status == 2)
@@ -67,7 +70,8 @@
 							@else
 							<span style="font-size:100%;" class="badge badge-pill bg-info-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>
 							@endif
-						</td>
+						</td> --}}
+						<td><div class="datatable-column-width">{{$tagihan->keterangan}}</div></td>
 				        <td align="center">
 							<div class="list-icons">
 								<div class="dropdown">
@@ -159,7 +163,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 9 ]
+		                targets: [ 6 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {

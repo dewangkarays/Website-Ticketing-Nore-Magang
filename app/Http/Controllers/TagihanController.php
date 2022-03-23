@@ -199,7 +199,7 @@ class TagihanController extends Controller
             $data['jml_bayar'] = 0;
         }
 
-        $data['jml_tagih'] = $data['langganan'] + $data['ads'] + $data['lainnya'];
+        $data['jml_tagih'] = ($data['langganan'] + $data['ads'] + $data['lainnya'] - $data['jml_bayar']);
 
         $tagihan->update($data);
         

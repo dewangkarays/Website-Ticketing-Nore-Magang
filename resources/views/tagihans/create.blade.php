@@ -63,7 +63,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama</label>
 						<div class="col-lg-10">
-							<input type="text" id="nama" class="form-control border-teal border-1" value="{{old('nama')}}" readonly>
+							<input type="text" id="nama" name="nama" class="form-control border-teal border-1" value="{{old('nama')}}" readonly>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -73,6 +73,21 @@
 							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
 						</div>
 						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Proyek</label>
+						<div class="col-lg-10">
+							<select id="select_proyek" name="select_proyek" class="form-control select-search">
+								<option value="">-- Pilih Proyek --</option>
+								
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Nama Proyek</label>
+						<div class="col-lg-10">
+							<input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
+						</div>
 					</div>
 					{{-- <div class="form-group row">
 						<label class="col-form-label col-lg-2">Tipe</label>
@@ -84,7 +99,7 @@
 							</select>
 						</div>
 					</div> --}}
-					<div class="form-group row">
+					{{-- <div class="form-group row">
 						<label class="col-form-label col-lg-2">Langganan</label>
 						<div class="col-lg-10">
 							<input type="number" min="0" name="langganan" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('langganan')}}">
@@ -101,23 +116,14 @@
 						<div class="col-lg-10">
 							<input type="number" min="0" name="lainnya" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('lainnya')}}">
 						</div>
-					</div>
+					</div> --}}
 					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Proyek</label>
+						<label class="col-form-label col-lg-2">Nominal</label>
 						<div class="col-lg-10">
-							<select id="select_proyek" name="select_proyek" class="form-control select-search">
-								<option value="">-- Pilih Proyek --</option>
-								
-							</select>
+							<input type="number" min="0" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('nominal')}}">
 						</div>
 					</div>
-					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Nama Proyek</label>
-						<div class="col-lg-10">
-							<input type="text" id="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
-						</div>
-					</div>
-					<div class="form-group row">
+					{{-- <div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Penagih</label>
 						<div class="col-lg-10">
 							<input type="text" id="penagih" name="penagih" class="form-control border-teal border-1" placeholder="Nama Penagih" value="{{@$penagih->penagih}}">
@@ -128,7 +134,7 @@
 						<div class="col-lg-10">
 							<input type="text" id="pospenagih" name="pospenagih" class="form-control border-teal border-1" placeholder="Nama Penagih" value="{{@$penagih->pospenagih}}">
 						</div>
-					</div>
+					</div> --}}
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Keterangan</label>
 						<div class="col-lg-10">
