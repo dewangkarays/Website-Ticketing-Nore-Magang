@@ -28,7 +28,6 @@
     <div class="card">
         <div class="card-header header-elements-inline">
             <a href="{{ route('proyeks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
-
         </div>
 
         <table class="table datatable-basic table-hover">
@@ -40,13 +39,14 @@
                     <th>Jenis Proyek</th>
                     <th>Jenis Layanan</th>
                     <th>Kelas Layanan</th>
+                    <th>Jumlah Task</th>
                     <th>Masa Berlaku</th>
                     <th>Keterangan</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @if(!$proyeks->isEmpty())
+            @if(!$proyeks->isEmpty())
                 @php ($i = 1)
                 @foreach($proyeks as $proyek)
                 <tr>
@@ -56,34 +56,39 @@
                     <td><div class="datatable-column-width">{{config('custom.jenis_proyek.'.$proyek->jenis_proyek)}}</div></td>
                     <td><div class="datatable-column-width">{{config('custom.jenis_layanan.'.$proyek->jenis_layanan)}}</div></td>
                     <td><div class="datatable-column-width">{{config('custom.kelas_layanan.'.$proyek->tipe)}}</div></td>
+                    <td align="center">
+                        @if($proyek->task_count == null )
+                            <span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$proyek->task_count}}</span>
+                        @else
+                            <span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{$proyek->task_count}}</span>
+                        @endif
+                    </td>
                     <td><div class="datatable-column-width">{{$proyek->masa_berlaku}}</div></td>
                     <td><div class="datatable-column-width">{{$proyek->keterangan}}</div></td>
+                    <td align="center">
+                        <div class="list-icons">
+                            <div class="dropdown">
+                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                    <i class="icon-menu9"></i>
+                                </a>
 
-                </td>
-                <td align="center">
-                    <div class="list-icons">
-                        <div class="dropdown">
-                            <a href="#" class="list-icons-item" data-toggle="dropdown">
-                                <i class="icon-menu9"></i>
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a href="{{ route('proyeks.edit',$proyek->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-                                <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('proyeks.destroy', $proyek->id)}}"><i class="icon-x"></i> Delete</a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="{{ route('proyeks.edit',$proyek->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+                                    <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('proyeks.destroy', $proyek->id)}}"><i class="icon-x"></i> Delete</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-            @php ($i++)
-            @endforeach
+                    </td>
+                </tr>
+                @php ($i++)
+                @endforeach
             @else
-            <tr><td align="center" colspan="6">Data Kosong</td></tr>
+                <tr><td align="center" colspan="10">Data Kosong</td></tr>
             @endif
 
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
 <!-- /hover rows -->
 
 </div>
@@ -149,7 +154,7 @@
                 columnDefs: [{
                     orderable: false,
                     width: 100,
-                    targets: [ 8 ]
+                    targets: [ 9 ]
                 }],
                 dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                 language: {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User;
 use App\Model\Proyek;
+use Illuminate\Support\Facades\Validator;
 
 class ProyekController extends Controller
 {
@@ -41,14 +42,6 @@ class ProyekController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        $request->validate([
-            'user_id'=>'required',
-            'website'=>'required',
-            'jenis_proyek'=>'required',
-            'jenis_layanan'=>'required',
-            'tipe'=>'required',
-            'masa_berlaku'=>'required',
-            ]);
 
         $proyek = new Proyek([
             'user_id' => $request->get('user_id'),
@@ -59,8 +52,13 @@ class ProyekController extends Controller
             'masa_berlaku' => $request->get('masa_berlaku'),
             'keterangan' => $request->get('keterangan'),
             ]);
-            $proyek->save();
-            return redirect('/proyeks')->with('success', 'Proyek saved!');
+        $proyek->save();
+
+        $user = User::find($proyek->user_id);
+        $user->task_count = $user->proyek->sum('task_count');
+        $user->save();
+
+        return redirect('/proyeks')->with('success', 'Proyek saved!');
     }
 
     /**
@@ -84,6 +82,7 @@ class ProyekController extends Controller
     {
         $proyek = Proyek::find($id);
         $users = User::where('role','>','20')->get();
+
         return view('proyeks.edit', compact(['proyek','users']));
     }
 
@@ -96,20 +95,16 @@ class ProyekController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            // 'nama'=>'required',
-            // 'email'=>'required',
-            // 'telp'=>'required',
-            // 'username'=>'required',
-            // 'role'=>'required'
-            ]);
+        $proyek = Proyek::find($id);
+        $data = $request->except(['_token', '_method']);
 
-            $proyek = Proyek::find($id);
-            $data = $request->except(['_token', '_method']);
+        $proyek->update($data);
 
-            $proyek->update($data);
+        $user = User::find($proyek->user_id);
+        $user->task_count = $user->proyek->sum('task_count');
+        $user->save();
 
-            return redirect('/proyeks')->with('success', 'Proyek updated!');
+        return redirect('/proyeks')->with('success', 'Proyek updated!');
     }
 
     /**

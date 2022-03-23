@@ -65,13 +65,12 @@ class MemberController extends Controller
                             ->withErrors($validator)
                             ->withInput();
             }
-            
+
             $user = new User([
                 'nama' => $request->get('name'),
                 'email' => $request->get('email'),
                 'telp' => $request->get('phone'),
                 'alamat' => $request->get('address'),
-                'task_count' => $request->get('taskcount'),
                 'username' => $request->get('username'),
                 'password' => bcrypt($request->get('password')),
                 'role' => 95
@@ -90,7 +89,7 @@ class MemberController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-                
+
                 if ($user->role == '1') {
                     $roleuser = 'Super-Admin';
                 } elseif ($user->role == '10') {
@@ -119,7 +118,7 @@ class MemberController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('members.edit', compact('user')); 
+        return view('members.edit', compact('user'));
     }
 
     /**
@@ -138,9 +137,9 @@ class MemberController extends Controller
             // 'username'=>'required',
             // 'role'=>'required'
             ]);
-            
+
             $user = User::find($id);
-            
+
             if($request->get('password')!=''){
                 $data['password'] = bcrypt($request->get('password'));
             }
@@ -148,7 +147,7 @@ class MemberController extends Controller
             $data = $request->except(['_token', '_method','password']);
 
             $user->update($data);
-            
+
             return redirect('/members')->with('success', 'Member updated!');
     }
 
@@ -162,7 +161,7 @@ class MemberController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        
+
         return redirect('/members')->with('success', 'Member deleted!');
     }
 }

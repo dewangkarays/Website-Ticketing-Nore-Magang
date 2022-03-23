@@ -55,12 +55,6 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Jumlah Update Task</label>
-							<div class="col-lg-10">
-								<input type="number" name="taskcount" class="form-control border-teal border-1" placeholder="jumlah update task">
-							</div>
-						</div>
-						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Username</label>
 							<div class="col-lg-10">
 								<input type="text" name="username" class="form-control border-teal border-1" placeholder="Username">
@@ -88,6 +82,7 @@
 						</div> --}}
 					</fieldset>
 					<div class="text-right">
+                        <a href="{{ url('/members') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
 						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
 					</div>
 				</form>
@@ -118,7 +113,7 @@
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script type="text/javascript">
-		
+
         // Accessibility labels
         $('.pickadate-accessibility').pickadate({
             labelMonthNext: 'Go to the next month',
@@ -286,7 +281,7 @@ var FormValidation = function() {
 				rules: {
 					name:{
 						required : true
-					}, 
+					},
 					email:{
 						required : true,
 						email: true
@@ -320,10 +315,10 @@ var FormValidation = function() {
 					},
 					taskcount:{
 						min : 'Minimal task 0'
-					}, 
+					},
 					username:{
 						required : 'Mohon diisi.'
-					}, 
+					},
 					password:{
 						required : 'Mohon diisi.',
 						minlength : 'Minimal 8 karakter'
@@ -362,8 +357,8 @@ var FormValidation = function() {
 		FormValidation.init();
 	});
 
-	</script>			
-		
+	</script>
+
 	<script type="text/javascript">
 		$( document ).ready(function() {
 	        // Default style

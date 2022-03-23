@@ -21,38 +21,39 @@
         <div class="card-header header-elements-inline">
         </div>
         <div class="card-body">
-            <form class="form-validate-jquery" action="{{ route('proyeks.update',$proyek->id)}}" method="post">
+            <form id="form_proyek" class="form-validate-jquery" action="{{ route('proyeks.update',$proyek->id)}}" method="post">
                 @method('PATCH')
                 @csrf
                 <fieldset class="mb-3">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Data Proyek</legend>
 
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-2">User / Klien</label>
+                        <label class="col-form-label col-lg-2">Klien</label>
                         @if(@$proyek->user->nama == null)
                             <div class="col-lg-10">
-                                <select name="user_id" class="form-control select-search" required>
-                                    <option value="">-- Pilih User --</option>
+                                <select name="user_id" class="form-control select-search" >
+                                    <option value="">-- Pilih Klien --</option>
                                     @foreach($users as $user)
                                         <option value="{{$user->id}}">{{$user->nama}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         @else
+                            <input type="hidden" name="user_id" value={{$proyek->user_id}}>
                             <label class="col-form-label col-lg-10">{{$proyek->user->nama}}</label>
                         @endif
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Website</label>
                         <div class="col-lg-10">
-                        <input type="text" name="website" class="form-control border-teal border-1" placeholder="Website" value="{{$proyek->website}}" required>
+                        <input type="text" name="website" class="form-control border-teal border-1" placeholder="Website" value="{{$proyek->website}}" >
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Jenis Proyek</label>
                         <div class="col-lg-10">
-                            <select name="jenis_proyek" class="form-control bg-teal-400 border-teal-400" required>
+                            <select name="jenis_proyek" class="form-control bg-teal-400 border-teal-400" >
                                 @if ($proyek->jenis_proyek == null)
                                     <option value="">-- Pilih Jenis Proyek --</option>
                                 @endif
@@ -66,7 +67,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Jenis Layanan</label>
                         <div class="col-lg-10">
-                            <select name="jenis_layanan" class="form-control bg-teal-400 border-teal-400" required>
+                            <select name="jenis_layanan" class="form-control bg-teal-400 border-teal-400" >
                                 @if ($proyek->jenis_proyek == null)
                                     <option value="">-- Pilih Jenis Layanan --</option>
                                 @endif
@@ -80,7 +81,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Kelas Layanan</label>
                         <div class="col-lg-10">
-                            <select name="tipe" class="form-control bg-teal-400 border-teal-400" required>
+                            <select name="tipe" class="form-control bg-teal-400 border-teal-400" >
                                 @if ($proyek->jenis_proyek == null)
                                     <option value="">-- Pilih Kelas Layanan --</option>
                                 @endif
@@ -92,9 +93,16 @@
                     </div>
 
                     <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Jumlah Task</label>
+                        <div class="col-lg-10">
+                            <input name="task_count" type="number" class="form-control border-teal border-1" value="{{$proyek->task_count}}" placeholder="Tentukan Jumlah Task">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label class="col-form-label col-lg-2">Masa Berlaku</label>
                         <div class="col-lg-10">
-                            <input name="masa_berlaku" type="text" class="form-control pickadate-accessibility" value="{{$proyek->masa_berlaku}}" placeholder="Tanggal Masa Berlaku" required>
+                            <input name="masa_berlaku" type="text" class="form-control pickadate-accessibility" value="{{$proyek->masa_berlaku}}" placeholder="Tanggal Masa Berlaku" >
                         </div>
                     </div>
 
@@ -108,7 +116,7 @@
 
                 </fieldset>
                 <div class="text-right">
-                    <a href="{{ url('/proyeks') }}" class="btn btn-default">Back</a>
+                    <a href="{{ url('/proyeks') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
                 </div>
             </form>
@@ -138,8 +146,13 @@
 
 <script src="{{asset('assets/js/app.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
-<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
 <script type="text/javascript">
+
+    //select search
+    // $(document).ready(function() {
+    //     $('.form-control').materialSelect();
+    // });
+
 
     // Accessibility labels
     $('.pickadate-accessibility').pickadate({
@@ -154,6 +167,38 @@
 
     var FormValidation = function() {
 
+        var _componentUniform = function() {
+			if (!$().uniform) {
+				console.warn('Warning - uniform.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			$('.form-input-styled').uniform({
+				fileButtonClass: 'action btn bg-blue'
+			});
+		};
+
+		// Select2 select
+		var _componentSelect2 = function() {
+			if (!$().select2) {
+				console.warn('Warning - select2.min.js is not loaded.');
+				return;
+			}
+
+            var $select = $('.select-search').select2();
+
+			// Initialize
+			//var $select = $('.form-control-select2').select2({
+				//minimumResultsForSearch: Infinity
+			//});
+
+			// Trigger value change when selection is made
+			$select.on('change', function() {
+				$(this).trigger('blur');
+			});
+		};
+
         // Validation config
         var _componentValidation = function() {
             if (!$().validate) {
@@ -162,10 +207,10 @@
             }
 
             // Initialize
-            var validator = $('.form-validate-jquery').validate({
+            var validator = $('#form_proyek').validate({
                 ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
                 errorClass: 'validation-invalid-label',
-                //successClass: 'validation-valid-label',
+                successClass: 'validation-valid-label',
                 validClass: 'validation-valid-label',
                 highlight: function(element, errorClass) {
                     $(element).removeClass(errorClass);
@@ -173,97 +218,127 @@
                 unhighlight: function(element, errorClass) {
                     $(element).removeClass(errorClass);
                 },
-                // success: function(label) {
-                    //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
-                    //},
+                success: function(label) {
+                    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+                },
 
-                    // Different components require proper error label placement
-                    errorPlacement: function(error, element) {
+                // Different components require proper error label placement
+                errorPlacement: function(error, element) {
 
-                        // Unstyled checkboxes, radios
-                        if (element.parents().hasClass('form-check')) {
-                            error.appendTo( element.parents('.form-check').parent() );
-                        }
+                    // Unstyled checkboxes, radios
+                    if (element.parents().hasClass('form-check')) {
+                        error.appendTo( element.parents('.form-check').parent() );
+                    }
 
-                        // Input with icons and Select2
-                        else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
-                            error.appendTo( element.parent() );
-                        }
+                    // Input with icons and Select2
+                    else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+                        error.appendTo( element.parent() );
+                    }
 
-                        // Input group, styled file input
-                        else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
-                            error.appendTo( element.parent().parent() );
-                        }
+                    // Input group, styled file input
+                    else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+                        error.appendTo( element.parent().parent() );
+                    }
 
-                        // Other elements
-                        else {
-                            error.insertAfter(element);
-                        }
+                    // Other elements
+                    else {
+                        error.insertAfter(element);
+                    }
+                },
+                rules: {
+					user_id:{
+						required : true
+					},
+					website:{
+						required : true
+					},
+					jenis_proyek:{
+						required : true
+					},
+                    jenis_layanan:{
+						required : true
+					},
+                    tipe:{
+						required : true
+					},
+                    task_count:{
+						required : true
+					},
+                    masa_berlaku:{
+						required : true
+					},
+				},
+                messages: {
+                    user_id: {
+                        required: 'Mohon diisi.'
                     },
-                    messages: {
-                        nama: {
-                            required: 'Mohon diisi.'
-                        },
-                        email: {
-                            required: 'Mohon diisi.'
-                        },
-                        telp: {
-                            required: 'Mohon diisi.'
-                        },
-                        username: {
-                            required: 'Mohon diisi.'
-                        },
-                        password: {
-                            required: 'Mohon diisi.'
-                        },
-                        role: {
-                            required: 'Mohon diisi.'
-                        },
+                    website: {
+                        required: 'Mohon diisi.'
                     },
-                });
+                    jenis_proyek: {
+                        required: 'Mohon diisi.'
+                    },
+                    jenis_layanan: {
+                        required: 'Mohon diisi.'
+                    },
+                    tipe: {
+                        required: 'Mohon diisi.'
+                    },
+                    task_count:{
+                        required: 'Mohon diisi.',
+						min : 0
+					},
+                    masa_berlaku: {
+                        required: 'Mohon diisi.'
+                    },
+                },
+            });
 
-                // Reset form
-                $('#reset').on('click', function() {
-                    validator.resetForm();
-                });
-            };
+            // Reset form
+            $('#reset').on('click', function() {
+                validator.resetForm();
+            });
+        };
 
             // Return objects assigned to module
             return {
-                init: function() {
-                    _componentValidation();
-                }
-            }
-        }();
+			init: function() {
+				_componentUniform();
+				_componentSelect2();
+				_componentValidation();
+			}
+		}
+    }();
 
 
         // Initialize module
         // ------------------------------
 
-        document.addEventListener('DOMContentLoaded', function() {
-            FormValidation.init();
-        });
-    </script>
-    <script type="text/javascript">
-        $( document ).ready(function() {
-            // Default style
-            @if(session('error'))
-            new PNotify({
-                title: 'Error',
-                text: '{{ session('error') }}.',
-                icon: 'icon-blocked',
-                type: 'error'
-            });
-            @endif
-            @if ( session('success'))
-            new PNotify({
-                title: 'Success',
-                text: '{{ session('success') }}.',
-                icon: 'icon-checkmark3',
-                type: 'success'
-            });
-            @endif
+    document.addEventListener('DOMContentLoaded', function() {
+        FormValidation.init();
+    });
+</script>
 
+<script type="text/javascript">
+    $( document ).ready(function() {
+        // Default style
+        @if(session('error'))
+        new PNotify({
+            title: 'Error',
+            text: '{{ session('error') }}.',
+            icon: 'icon-blocked',
+            type: 'error'
         });
-    </script>
-    @endsection
+        @endif
+        @if ( session('success'))
+        new PNotify({
+            title: 'Success',
+            text: '{{ session('success') }}.',
+            icon: 'icon-checkmark3',
+            type: 'success'
+        });
+        @endif
+
+    });
+</script>
+@endsection
