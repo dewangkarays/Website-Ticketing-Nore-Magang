@@ -26,20 +26,8 @@
 
     <!-- Hover rows -->
     <div class="card">
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>
-                    <p>{{ $message }}</p>
-                </strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-
         <div class="card-header header-elements-inline">
             <a href="{{ route('proyeks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
-
         </div>
 
         <table class="table datatable-basic table-hover">
@@ -58,7 +46,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if(!$proyeks->isEmpty())
+            @if(!$proyeks->isEmpty())
                 @php ($i = 1)
                 @foreach($proyeks as $proyek)
                 <tr>
@@ -94,9 +82,9 @@
                 </tr>
                 @php ($i++)
                 @endforeach
-                @else
-                <tr><td align="center" colspan="6">Data Kosong</td></tr>
-                @endif
+            @else
+                <tr><td align="center" colspan="10">Data Kosong</td></tr>
+            @endif
 
             </tbody>
         </table>
@@ -166,7 +154,7 @@
                 columnDefs: [{
                     orderable: false,
                     width: 100,
-                    targets: [ 8 ]
+                    targets: [ 9 ]
                 }],
                 dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                 language: {
