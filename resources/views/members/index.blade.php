@@ -25,7 +25,7 @@
 	<div class="content">
 
 		<!-- Hover rows -->
-		
+
 		<div class="card">
 			<div class="card-header header-elements-inline">
 				<a href="{{ route('members.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
@@ -39,7 +39,7 @@
 						<th>Username</th>
 						<th>Email</th>
 						<th>Telpon</th>
-						<th class="text-center">Jml Op</th>
+						<th class="text-center">Total Task</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
@@ -47,20 +47,17 @@
 				@if(!$users->isEmpty())
 					@php ($i = 1)
 					@foreach($users as $user)
-				    <tr> 
+				    <tr>
 				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{$user->nama}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->email}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->telp}}</div></td>
-				        
 				        <td align="center">
-				        	@if($user->task_count < 0)
-								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->task_count}}</span>
-							@elseif($user->task_count == 0)
-								<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{$user->task_count}}</span>
+				        	@if($user->proyek->sum('task_count') == null )
+								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->proyek->sum('task_count')}}</span>
 							@else
-								{{$user->task_count}}
+                                <span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{$user->proyek->sum('task_count')}}</span>
 							@endif
 						</td>
 				        <td align="center">
@@ -87,8 +84,8 @@
 				    @endforeach
 				@else
 				  	<tr><td align="center" colspan="7">Data Kosong</td></tr>
-				@endif 
-				    
+				@endif
+
 				</tbody>
 			</table>
 		</div>
@@ -155,7 +152,7 @@
 		        // Setting datatable defaults
 		        $.extend( $.fn.dataTable.defaults, {
 		            autoWidth: false,
-		            columnDefs: [{ 
+		            columnDefs: [{
 		                orderable: false,
 		                width: 100,
 		                targets: [ 6 ]

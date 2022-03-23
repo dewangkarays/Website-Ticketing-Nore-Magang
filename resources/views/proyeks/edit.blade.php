@@ -45,6 +45,7 @@
                                 </select>
                             </div>
                         @else
+                            <input type="hidden" name="user_id" value={{$proyek->user_id}}>
                             <label class="col-form-label col-lg-10">{{$proyek->user->nama}}</label>
                         @endif
                     </div>
@@ -98,6 +99,13 @@
                     </div>
 
                     <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Jumlah Task</label>
+                        <div class="col-lg-10">
+                            <input name="task_count" type="number" class="form-control border-teal border-1" value="{{$proyek->task_count}}" placeholder="Tentukan Jumlah Task">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label class="col-form-label col-lg-2">Masa Berlaku</label>
                         <div class="col-lg-10">
                             <input name="masa_berlaku" type="text" class="form-control pickadate-accessibility" value="{{$proyek->masa_berlaku}}" placeholder="Tanggal Masa Berlaku" required>
@@ -114,7 +122,7 @@
 
                 </fieldset>
                 <div class="text-right">
-                    <a href="{{ url('/proyeks') }}" class="btn btn-default">Back</a>
+                    <a href="{{ url('/proyeks') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
                 </div>
             </form>

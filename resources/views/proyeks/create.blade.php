@@ -96,9 +96,16 @@
                     </div>
 
                     <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Jumlah Task</label>
+                        <div class="col-lg-10">
+                            <input name="task_count" type="number" class="form-control border-teal border-1" placeholder="Tentukan Jumlah Task">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label class="col-form-label col-lg-2">Masa Berlaku</label>
                         <div class="col-lg-10">
-                            <input name="masa_berlaku" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Berlaku" required>
+                            <input name="masa_berlaku" type="text" class="form-control border-teal pickadate-accessibility" placeholder="Tanggal Masa Berlaku" required>
                         </div>
                     </div>
 
@@ -112,7 +119,7 @@
 
                 </fieldset>
                 <div class="text-right">
-                    <a href="{{ url('/proyeks') }}" class="btn btn-default">Back</a>
+                    <a href="{{ url('/proyeks') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
                 </div>
             </form>

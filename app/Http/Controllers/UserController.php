@@ -22,7 +22,7 @@ class UserController extends Controller
         $users = User::where('role','<=','20')->get();
         return view('users.index', compact('users'));
     }
-    
+
     /**
     * Show the form for creating a new resource.
     *
@@ -37,7 +37,7 @@ class UserController extends Controller
     {
         return view('users.createmember');
     }
-    
+
     /**
     * Store a newly created resource in storage.
     *
@@ -45,7 +45,7 @@ class UserController extends Controller
     * @return \Illuminate\Http\Response
     */
     public function store(Request $request)
-    {            
+    {
 
         $validator = Validator::make($request->all(), [
             // 'title' => 'required|unique:posts|max:255',
@@ -59,13 +59,12 @@ class UserController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-        
+
         $user = new User([
             'nama' => $request->get('name'),
             'email' => $request->get('email'),
             'telp' => $request->get('phone'),
             'alamat' => $request->get('address'),
-            'task_count' => $request->get('taskcount'),
             'username' => $request->get('username'),
             'password' => bcrypt($request->get('password')),
             'role' => $request->get('role')
@@ -75,7 +74,7 @@ class UserController extends Controller
         return redirect('/users')->with('success', 'Member saved!');
     }
 
-            
+
     /**
     * Display the specified resource.
     *
@@ -85,7 +84,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        
+
         if ($user->role == '1') {
             $roleuser = 'Super-Admin';
         } elseif ($user->role == '10') {
@@ -102,7 +101,7 @@ class UserController extends Controller
 
         return view('users.show', compact('user','roleuser'));
     }
-    
+
     /**
     * Show the form for editing the specified resource.
     *
@@ -112,7 +111,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('users.edit', compact('user')); 
+        return view('users.edit', compact('user'));
     }
 
     public function setting($id){
@@ -120,10 +119,10 @@ class UserController extends Controller
         // return view('client.setting.setting', compact('user'));
         $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
-        // return view('client.setting.setting',compact('user','tagihanactives')); 
-        return view('client.setting.setting',compact('tagihanactives','highproyek','id'));  
+        // return view('client.setting.setting',compact('user','tagihanactives'));
+        return view('client.setting.setting',compact('tagihanactives','highproyek','id'));
     }
-    
+
     /**
     * Update the specified resource in storage.
     *
@@ -140,19 +139,19 @@ class UserController extends Controller
             'username'=>'required',
             'role'=>'required'
             ]);
-            
+
             $user = User::find($id);
             $data = $request->except(['_token', '_method', 'password']);
-            
+
             if($request->get('password')!=''){
                 $data['password'] = bcrypt($request->get('password'));
             }
-            
+
             $user->update($data);
-            
+
             return redirect('/users')->with('success', 'User updated!');
     }
-        
+
     /**
     * Remove the specified resource from storage.
     *
@@ -163,15 +162,15 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        
+
         return redirect('/users')->with('success', 'User deleted!');
     }
-    
+
     public function changePass()
     {
         return view('changepass');
     }
-    
+
     public function changePassSubmit(Request $request, $id)
     {
         $request->validate([
@@ -179,20 +178,19 @@ class UserController extends Controller
             'new_pass'=>'required',
             'con_pass'=>'required',
         ]);
-            
+
         $user = User::find($id);
         if($request->get('new_pass') != $request->get('con_pass')){
             return redirect('/changepass')->with('error', 'Password baru tidak sama dengan konfirmasi password');
         }
-            
+
         if(Hash::check($request->get('old_pass'), $user->password)){
             $user->password = bcrypt($request->get('new_pass'));
             $user->save();
-            
+
             return redirect('/changepass')->with('success', 'Password updated!');
         } else {
             return redirect('/changepass')->with('error', 'Password lama salah');
         }
     }
 }
-                

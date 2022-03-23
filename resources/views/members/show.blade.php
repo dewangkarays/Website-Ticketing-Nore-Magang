@@ -15,19 +15,19 @@
 
 <!-- Content area -->
 <div class="content">
-    
+
     <!-- Hover rows -->
     <div class="card">
         <div class="card-header header-elements-inline">
         </div>
         <div class="card-body">
-            
-            
+
+
             @method('PATCH')
             @csrf
             <fieldset class="mb-3">
                 <legend class="text-uppercase font-size-sm font-weight-bold">Data User</legend>
-                
+
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Nama</label>
                     <div class="col-lg-10">
@@ -47,15 +47,9 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Masa Aktif</label>
+                    <label class="col-form-label col-lg-2">Total Task</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{ $user->kadaluarsa }} </span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Jumlah Update Task</label>
-                    <div class="col-lg-10">
-                        <span class="form-text"> {{ ! empty($user->task_count) ? $user->task_count : '-' }} </span>
+                        <span class="form-text"> {{ $user->proyek->sum('task_count') }}</span>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -71,7 +65,7 @@
                                 {{ $roleuser }}
                         </span>
                     </div>
-                </div>                  
+                </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Tagihan yang belum dibayar</label>
                     <div class="col-lg-10">
@@ -86,17 +80,17 @@
                         <button type="submit" class="btn bg-slate"><i class="icon-undo2 mr-2"></i> Kembali</button>
                     </a>
                 </div>
-                
-                
+
+
             </div>
-            
+
         </div>
         <!-- /hover rows -->
-        
+
     </div>
     <!-- /content area -->
     @endsection
-    
+
     @section('js')
     <!-- Theme JS files -->
     <script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
@@ -111,11 +105,11 @@
     <script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
     <script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
     <script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
-    
+
     <script src="{{asset('assets/js/app.js')}}"></script>
     <script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
     <script type="text/javascript">
-        
+
         // Accessibility labels
         $('.pickadate-accessibility').pickadate({
             labelMonthNext: 'Go to the next month',
@@ -126,16 +120,16 @@
             selectYears: true,
             format: 'yyyy-mm-dd',
         });
-        
+
         var FormValidation = function() {
-            
+
             // Validation config
             var _componentValidation = function() {
                 if (!$().validate) {
                     console.warn('Warning - validate.min.js is not loaded.');
                     return;
                 }
-                
+
                 // Initialize
                 var validator = $('.form-validate-jquery').validate({
                     ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
@@ -151,25 +145,25 @@
                     // success: function(label) {
                         //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
                         //},
-                        
+
                         // Different components require proper error label placement
                         errorPlacement: function(error, element) {
-                            
+
                             // Unstyled checkboxes, radios
                             if (element.parents().hasClass('form-check')) {
                                 error.appendTo( element.parents('.form-check').parent() );
                             }
-                            
+
                             // Input with icons and Select2
                             else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
                                 error.appendTo( element.parent() );
                             }
-                            
+
                             // Input group, styled file input
                             else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
                                 error.appendTo( element.parent().parent() );
                             }
-                            
+
                             // Other elements
                             else {
                                 error.insertAfter(element);
@@ -196,13 +190,13 @@
                                 },
                             },
                         });
-                        
+
                         // Reset form
                         $('#reset').on('click', function() {
                             validator.resetForm();
                         });
                     };
-                    
+
                     // Return objects assigned to module
                     return {
                         init: function() {
@@ -210,11 +204,11 @@
                         }
                     }
                 }();
-                
-                
+
+
                 // Initialize module
                 // ------------------------------
-                
+
                 document.addEventListener('DOMContentLoaded', function() {
                     FormValidation.init();
                 });
@@ -238,8 +232,8 @@
                         type: 'success'
                     });
                     @endif
-                    
+
                 });
             </script>
-            
+
             @endsection

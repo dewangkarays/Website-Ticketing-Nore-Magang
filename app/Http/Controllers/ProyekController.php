@@ -60,6 +60,11 @@ class ProyekController extends Controller
             'keterangan' => $request->get('keterangan'),
             ]);
         $proyek->save();
+
+        $user = User::find($proyek->user_id);
+        $user->task_count = $user->proyek->sum('task_count');
+        $user->save();
+
         return redirect('/proyeks')->with('success', 'Proyek saved!');
     }
 
@@ -84,6 +89,7 @@ class ProyekController extends Controller
     {
         $proyek = Proyek::find($id);
         $users = User::where('role','>','20')->get();
+
         return view('proyeks.edit', compact(['proyek','users']));
     }
 
@@ -108,6 +114,10 @@ class ProyekController extends Controller
             $data = $request->except(['_token', '_method']);
 
             $proyek->update($data);
+
+            $user = User::find($proyek->user_id);
+            $user->task_count = $user->proyek->sum('task_count');
+            $user->save();
 
             return redirect('/proyeks')->with('success', 'Proyek updated!');
     }
