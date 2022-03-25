@@ -229,7 +229,7 @@ ul{
 
 				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','payments*','pengeluarans*','laporankeuangan')) ? 'block' : 'none' }};">
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','payments*','pengeluarans*','laporankeuangan','rekaptagihan')) ? 'block' : 'none' }};">
 					@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 					<li class="nav-item">
 						<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
@@ -243,6 +243,14 @@ ul{
 						</a>
 					</li>
 					@endif
+					<li class="nav-item">
+						<a href="{{ url('/rekaptagihan') }}" class="nav-link {{ (request()->is('rekaptagihan')) ? 'active' : '' }}">
+							<i class="icon-coin-dollar"></i>
+							<span>
+								Rekap Tagihan
+							</span>
+						</a>
+					</li>
 					<li class="nav-item">
 						<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
 							<i class="icon-coin-dollar"></i>

@@ -318,6 +318,22 @@ class TagihanController extends Controller
 
         return $html;
     }
+
+    public function rekaptagihan(Request $request)
+    {
+        $requestUser = '';
+        if($request->get('c'))
+        {
+            $requestUser = $request->get('c');
+            $tagihans = Tagihan::where('user_id',$requestUser)->orderBy('id')->get();
+        }
+        else
+        {
+            $tagihans = Tagihan::orderBy('id')->get();  
+        }
+        $users = User::where('role','>=',80)->get();
+        return view('tagihans.rekaptagihan', compact('users','tagihans','requestUser'));
+    }
     
     public function detailTagihan($id)
     {
