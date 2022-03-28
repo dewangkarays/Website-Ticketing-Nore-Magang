@@ -106,7 +106,7 @@
             
         </table>
         <div style="line-height: 0.1">
-            <h1 class="nore-fontcolor font-weight-bold" style="font-size: 40px;"><b>Invoice</b></h1>
+            <h1 class="nore-fontcolor font-weight-bold" style="font-size: 40px;"><b>Rekap Invoice</b></h1>
             <h4 style="color:#fabf16">Tanggal : {{date('d F Y')}} </h4>
         </div>
         
@@ -120,7 +120,7 @@
                         
                         <tr>
                             <td>
-                                {{$invoice->nama ? $invoice->nama : $invoice->user->nama}}
+                                {{$invoices[0]->nama ? $invoices[0]->nama : $invoices[0]->user->nama}}
                             </td>
                         </tr>
                         
@@ -134,7 +134,7 @@
                             <td style="font-size: 12px;">
                                 <span style="font-size: 12px !important">
                                     
-                                    {{$invoice->user->alamat}} 
+                                    {{$invoices[0]->user->alamat}} 
                                 </span>
                                 
                             </td>
@@ -143,57 +143,45 @@
                 </td>
                 <td style="width: 50%; vertical-align: top">
                     <table style="padding-left: 50px;">
-                        <tr>
-                            <td><b>Invoice</b>
-                                <br> <span style="font-size: 12px !important;">{{$invoice->invoice}}</span>
-                            </td>
-                            </tr>
-                            
-                            <tr>
-                                <td><b></b></td>
-                            </tr>
-                            <tr><td>&nbsp;</td></tr>
-                            <tr>
-                                <td style="line-height: 0.5;">
-                                    <b>Proyek</b>
-                                    {{-- <p>{{$invoice->nama_proyek ? $invoice->nama_proyek : $invoice->user->website}}</p> --}}
-                                    <p>
-                                        @if ($invoice->nama_proyek)
-                                        {{$invoice->nama_proyek}} 
-                                        @elseif ($invoice->user->website)
-                                        {{$invoice->user->website}}
-                                        @else
-                                        -
-                                        @endif
-                                    </p>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+                        
+                    </table>
+                </td>
+            </tr>
+        </table>
             
             <hr style="margin-top: -8px;margin-bottom: -8px">
             
             <table class="main-table" style="margin-top: 30px;margin-bottom: 5px;line-height: 0.7">
                 <tr>
-                    <th align="left" style="width: 65%" class="nore-fontcolor">Deskripsi</th>
-                    
-                    <th align="right" style="width: 35%">Total</th> 
+                    {{-- <th align="left" style="width: 30%" class="nore-fontcolor">No Invoices</th> --}}
+                    <th align="left" style="width: 15%" class="nore-fontcolor">Proyek</th>
+                    <th align="left" style="width: 55%" class="nore-fontcolor">Deskripsi</th>
+                    <th align="right" style="width: 30%">Total</th> 
                 </tr>
                 
-                <tbody> 
-                    
+                <tbody>
+                    @foreach ($invoices as $invoice)
                     <tr>
+                        {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
+                        <td><b>
+                            @if ($invoice->nama_proyek)
+                            {{$invoice->nama_proyek}} 
+                            @elseif ($invoice->user->website)
+                            {{$invoice->user->website}}
+                            @else
+                            -
+                            @endif
+                        </b></td>
                         <td><b>{{$invoice->keterangan}}</b></td>
-                        <td align="right">Rp @angka($invoice->jml_tagih)</td> 
+                        <td align="right">Rp @angka($invoice->nominal)</td> 
                     </tr>
                     <tr>
                         <td colspan="2" style="background-color: white">&nbsp;</td>
                     </tr>
+                    @endforeach
                     <tr>
                         <td align="right" class="nore-fontcolor">&nbsp;</td>
-                        <td align="right"><span class="nore-fontcolor" style="float: left">Subtotal</span> <b>Rp @angka($invoice->jml_tagih)</b></td> 
+                        <td align="right"><span class="nore-fontcolor" style="float: left">Subtotal</span> <b>Rp @angka($invoice->sum('nominal'))</b></td> 
                     </tr> 
                 </tbody>
                 
@@ -205,7 +193,7 @@
                         <span style="font-size: 12px;color: #b1acaa">Catatan :</span> <br>
                         <span style="font-size: 13px"><?php echo $setting->catatan_tagihan ?></span>
                     </td>
-                    <td align="right" style="color:#fabf16;vertical-align: top;font-size: 25px;font-weight: bold"><span>Rp @angka($invoice->jml_tagih) </span></td>
+                    <td align="right" style="color:#fabf16;vertical-align: top;font-size: 25px;font-weight: bold"><span>Rp @angka($invoices[0]->sum('nominal')) </span></td>
                     
                 </tr>
                 
@@ -240,8 +228,8 @@
                     </tr>
                 </table>
                 
-                
                 <br>
+                
                 @if ($lampirans != null)
                 
                 <table>

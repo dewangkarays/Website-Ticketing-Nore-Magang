@@ -381,12 +381,13 @@ class TagihanController extends Controller
     {
         $arrayid = $request->get('invoice');
         $findtagihan = Tagihan::whereIn('id', $arrayid)->get();
-        // $invoice = Tagihan::find($id);
+        $invoices = $findtagihan;
         $lampirans = Lampiran_gambar::where('tagihan_id')->orderBy('id', 'asc')->get();
         $setting = Setting::first();
-        dd($findtagihan);
-        $pdf = PDF::loadview('tagihans.cetakrekap', compact('lampirans','setting','arrayid','findtagihan'))->setPaper('a4', 'potrait');
-        return $pdf->stream();
+        // dd($invoices[0]);
+        $pdf = PDF::loadview('tagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'))->setPaper('a4', 'potrait');
+        // return $pdf->stream();
+        return view('tagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'));
     }
     
 }
