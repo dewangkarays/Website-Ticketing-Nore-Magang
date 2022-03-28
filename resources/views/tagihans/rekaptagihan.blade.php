@@ -28,7 +28,7 @@
                 <h5 class="card-title">Rekap Tagihan Klien</h5>
             </div>
             <div class="card-body">
-                <form>
+                <form method="GET">
                     @csrf
                     <div class="form-group row">
                         <div class="col-lg-3">
@@ -42,15 +42,15 @@
                         </div>
                     </div>
                 </form>
-                <a id="btn_submit" href="{{ url('rekaptagihan').'?c='.app('request')->input('c')}}" data-uri="{{ url('rekaptagihan') }}" class="btn btn-primary text-uppercase">Submit  <i class="icon-paperplane ml-2"></i></a>
-                <a id="btn_reset" href="{{ url('rekaptagihan') }}" class="btn btn-primary text-uppercase">Reset  <i class="icon-paperplane ml-2"></i></a>
+                <a id="btn_submit" href="{{ url('rekaptagihan').'?c='.app('request')->input('c')}}" data-uri="{{ url('rekaptagihan') }}" class="btn btn-success text-uppercase">Submit  <i class="icon-paperplane ml-2"></i></a>
+                <a id="btn_reset" href="{{ url('rekaptagihan') }}" class="btn btn-primary text-uppercase">Reset  <i class="icon-rotate-ccw2 ml-2"></i></a>
             </div>
         </div>
 
         <!-- Hover rows -->
 		<div class="card">
             <div class="card-body">
-                <form action="">
+                <form method="GET" action="{{ url('cetakrekap') }}">
     
                     <table class="table datatable-basic table-hover">
                         <thead>
@@ -58,14 +58,10 @@
                                 <th>No</th>
                                 <th><input type="checkbox" class="checked-all"></th>
                                 <th>Nama</th>
-                                {{-- <th>Username</th> --}}
                                 <th>Invoice</th>
                                 <th>Nama Proyek</th>
                                 <th>Tagihan</th>
                                 <th>Keterangan</th>
-                                {{-- <th>Terbayar</th>
-                                <th>Sisa Tagihan</th>
-                                <th class="text-center">Status</th> --}}
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
@@ -75,25 +71,11 @@
                             @foreach($tagihans as $tagihan)
                             <tr> 
                                 <td>{{$i}}</td>
-                                <td><input type="checkbox" name="[]" id="chk"></td>
+                                <td><input type="checkbox" name="invoice[]" id="chk" value="{{ $tagihan->id }}"></td>
                                 <td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
-                                {{-- <td><div class="datatable-column-width">{{@$tagihan->user->username}}</div></td> --}}
                                 <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
                                 <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
                                 <td><div class="datatable-column-width">Rp @angka($tagihan->nominal)</div></td>
-                                {{-- <td><div class="datatable-column-width">Rp @angka(($tagihan->langganan)+($tagihan->ads)+($tagihan->lainnya))</div></td> --}}
-                                {{-- <td><div class="datatable-column-width">Rp @angka($tagihan->payment->sum('nominal'))</div></td>
-                                <td><div class="datatable-column-width">Rp @angka($tagihan->jml_bayar)</div></td>
-                                <td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
-                                <td align="center">
-                                    @if ($tagihan->status == 2)
-                                    <span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>
-                                    @elseif ($tagihan->status == 1)
-                                    <span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>
-                                    @else
-                                    <span style="font-size:100%;" class="badge badge-pill bg-info-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>
-                                    @endif
-                                </td> --}}
                                 <td><div class="datatable-column-width">{{$tagihan->keterangan}}</div></td>
                                 <td align="center">
                                     <div class="list-icons">
@@ -121,7 +103,7 @@
                         </tbody>
                     </table>
                     <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Submit <i class="icon-paperplane ml-2"></i></button>
+                        <button type="submit" class="btn btn-success">Print <i class="icon-printer4 ml-2"></i></button>
                     </div>
                 </form>
             </div>

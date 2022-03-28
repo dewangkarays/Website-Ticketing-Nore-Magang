@@ -319,22 +319,6 @@ class TagihanController extends Controller
         return $html;
     }
 
-    public function rekaptagihan(Request $request)
-    {
-        $requestUser = '';
-        if($request->get('c'))
-        {
-            $requestUser = $request->get('c');
-            $tagihans = Tagihan::where('user_id',$requestUser)->orderBy('id')->get();
-        }
-        else
-        {
-            $tagihans = Tagihan::orderBy('id')->get();  
-        }
-        $users = User::where('role','>=',80)->get();
-        return view('tagihans.rekaptagihan', compact('users','tagihans','requestUser'));
-    }
-    
     public function detailTagihan($id)
     {
         $tagihan = Tagihan::find($id);
@@ -377,5 +361,32 @@ class TagihanController extends Controller
         return view('payments.create', compact('users', 'tagihanuser', 'tagihanuser2', 'setting'));
     }
 
+    public function rekaptagihan(Request $request)
+    {
+        $requestUser = '';
+        if($request->get('c'))
+        {
+            $requestUser = $request->get('c');
+            $tagihans = Tagihan::where('user_id',$requestUser)->orderBy('id')->get();
+        }
+        else
+        {
+            $tagihans = Tagihan::orderBy('id')->get();  
+        }
+        $users = User::where('role','>=',80)->get();
+        return view('tagihans.rekaptagihan', compact('users','tagihans','requestUser'));
+    }
+
+    public function cetakrekap(Request $request)
+    {
+        $arrayid = $request->get('invoice');
+        $findtagihan = Tagihan::whereIn('id', $arrayid)->get();
+        // $invoice = Tagihan::find($id);
+        $lampirans = Lampiran_gambar::where('tagihan_id')->orderBy('id', 'asc')->get();
+        $setting = Setting::first();
+        dd($findtagihan);
+        $pdf = PDF::loadview('tagihans.cetakrekap', compact('lampirans','setting','arrayid','findtagihan'))->setPaper('a4', 'potrait');
+        return $pdf->stream();
+    }
     
 }

@@ -245,7 +245,7 @@ ul{
 					@endif
 					<li class="nav-item">
 						<a href="{{ url('/rekaptagihan') }}" class="nav-link {{ (request()->is('rekaptagihan')) ? 'active' : '' }}">
-							<i class="icon-coin-dollar"></i>
+							<i class="icon-clipboard5"></i>
 							<span>
 								Rekap Tagihan
 							</span>
