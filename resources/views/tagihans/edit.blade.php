@@ -33,7 +33,7 @@
 							<select id="user_id" name="user_id" class="form-control select-search" required disabled>
 								<option value="">-- Pilih Pelanggan --</option>
 								@foreach ($users as $user)
-								<option data-name="{{$user->nama}}" {{ $tagihan->user_id == $user->id ? 'selected' : '' }} value="{{$user->id}}">{{$user->username}}</option>
+								<option data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" {{ $tagihan->user_id == $user->id ? 'selected' : '' }} value="{{$user->id}}">{{$user->username}}</option>
 								@endforeach
 
 							</select>
@@ -42,15 +42,14 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama</label>
 						<div class="col-lg-10">
-							<input type="text" id="nama" name="nama" class="form-control border-teal border-1" value="{{ $tagihan->nama }}">
+							<input type="text" id="nama" name="nama" class="form-control border-teal border-1" readonly value="{{ old('nama') }}" >
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Proyek</label>
 						<div class="col-lg-10">
-							<select id="select_proyek" name="select_proyek" class="form-control select-search">
-								<option value="">-- Pilih Proyek --</option>
-
+							<select id="select_proyek" name="select_proyek" class="form-control select-search" required disabled>
+								<option value="">{{ @$tagihan->proyek->website }}</option>
 							</select>
 						</div>
 					</div>
@@ -63,7 +62,7 @@
                     <div class="form-group row">
 						<label class="col-form-label col-lg-2">Update Masa Berlaku</label>
 						<div class="col-lg-10">
-							<input type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Berlaku">
+							<input type="text" name="masa_berlaku" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Berlaku" value="{{ $tagihan->masa_berlaku }}">
 							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
 						</div>
 						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
@@ -71,7 +70,7 @@
                     <div class="form-group row">
 						<label class="col-form-label col-lg-2">Nominal</label>
 						<div class="col-lg-10">
-							<input type="number" min="0" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('nominal')}}">
+							<input type="number" min="0" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" value="{{ $tagihan->nominal }}">
 						</div>
 					</div>
                     <div class="form-group row">
@@ -196,7 +195,7 @@
 		format: 'yyyy-mm-dd',
 	});
 
-	$('#user_id').on('change', function(){
+	$('#user_id').ready(function(){
 		var id_proyek = $('#user_id option:selected').val();
 		var pnama = $('#user_id option:selected').data('pnama');
 
@@ -248,9 +247,24 @@
 
 		});
 
-		$('#select_proyek').on('change',function() {
+		$('#select_proyek').ready(function() {
 			var proyek = $('#select_proyek option:selected').text();
 			$('#nama_proyek').val(proyek);
+            var id_proyek = $('#select_proyek option:selected').val();
+			$('#id_proyek').val(id_proyek);
+            $.ajax({
+                type: 'get',
+                url : '{{url("getmasa_berlaku")}}/'+id_proyek,
+                success : function(data){
+                    // $('#kadaluarsa').val(data);
+                    $('#masa_berlaku').val(data);
+                    $('#masa_berlaku').text(data);
+                    console.log('Success');
+                },
+                error:function(data){
+                    console.log('Error',data);
+                }
+            });
 		});
 
 	var FormValidation = function() {

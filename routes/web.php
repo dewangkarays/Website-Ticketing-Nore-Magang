@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
 	Route::get('getweb/{id}',  'TagihanController@getweb');
 	Route::get('getkadaluarsa/{nama_proyek}',  'TagihanController@getkadaluarsa');
+    Route::get('getmasa_berlaku/{id}',  'TagihanController@getmasa_berlaku');
 	Route::post('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
 	Route::post('tagihans/lampirandestroy/{id}/{idm}', 'TagihanController@lampirandestroy')->name('lampirandestroy');
 	Route::match(['get', 'post'], '/tagihanuser',  'TagihanController@tagihanuser')->name('tagihanuser');
