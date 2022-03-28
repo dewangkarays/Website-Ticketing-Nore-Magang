@@ -53,7 +53,7 @@ class TagihanController extends Controller
         return view('users.createtagihan',compact('fuser','users','proyeks','penagih','lastno'));
     }
 
-    public function export_excel() 
+    public function export_excel()
     {
         return Excel::download(new TagihanExport, 'Tagihan '.(date('Y-m-d')).'.xlsx' );
     }
@@ -124,7 +124,7 @@ class TagihanController extends Controller
                         $lastno = Nomor::create($lastno);
                     }
             }
-            
+
         } else {
             $lastno = Nomor::first();
                     if ($lastno) {
@@ -135,12 +135,12 @@ class TagihanController extends Controller
                         $lastno = Nomor::create($lastno);
                     }
         }
-        
+
         $data['jml_tagih'] = $data['langganan'] + $data['ads'] + $data['lainnya'];
-        
-        
+
+
         $tagihan = Tagihan::create($data);
-        
+
         return redirect('/tagihans')->with('success', 'Tagihan saved!');
     }
 
@@ -168,7 +168,7 @@ class TagihanController extends Controller
         $penagih = Setting::first();
         // $gambar = Lampiran_gambar::where('tagihan_id',$tagihan->id);
 
-        return view('tagihans.edit', compact('tagihan','users','penagih')); 
+        return view('tagihans.edit', compact('tagihan','users','penagih'));
     }
 
     /**
@@ -202,7 +202,7 @@ class TagihanController extends Controller
         $data['jml_tagih'] = ($data['langganan'] + $data['ads'] + $data['lainnya'] - $data['jml_bayar']);
 
         $tagihan->update($data);
-        
+
         return redirect('/tagihans')->with('success', 'Tagihan updated!');
     }
 
@@ -217,14 +217,14 @@ class TagihanController extends Controller
     public function getkadaluarsa($nama_proyek)
     {
         $data = User::find($nama_proyek);
-        $kadaluarsa = $data['kadaluarsa'];       
+        $kadaluarsa = $data['kadaluarsa'];
         return $kadaluarsa;
     }
 
     public function getproyek($id)
     {
         $proyek['data'] = Proyek::where('user_id',$id)->get();
-        // $proyek = $data['proyek'];       
+        // $proyek = $data['proyek'];
         // dd($data);
         return response()->json($proyek);
 
@@ -275,7 +275,7 @@ class TagihanController extends Controller
         }
 
         return redirect()->back()->with('success', 'File uploaded!');
-        
+
     }
 
     public function lampirandestroy(Request $request,$id,$idm)
@@ -307,7 +307,7 @@ class TagihanController extends Controller
 
         return redirect('/tagihans')->with('success', 'Tagihan deleted!');
     }
-    
+
     public function getTagihan($id)
     {
         $tagihans = Tagihan::where('user_id', $id)->get();
@@ -346,7 +346,7 @@ class TagihanController extends Controller
     public function tagihanuser()
     {
         $tagihans = Tagihan::where('user_id',\Auth::user()->id)->get( );
-       
+
         return view('tagihanuser', compact('tagihans'));
     }
 
@@ -371,7 +371,7 @@ class TagihanController extends Controller
         }
         else
         {
-            $tagihans = Tagihan::orderBy('id')->get();  
+            $tagihans = Tagihan::orderBy('id')->get();
         }
         $users = User::where('role','>=',80)->get();
         return view('tagihans.rekaptagihan', compact('users','tagihans','requestUser'));
@@ -386,8 +386,7 @@ class TagihanController extends Controller
         $setting = Setting::first();
         // dd($invoices[0]);
         $pdf = PDF::loadview('tagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'))->setPaper('a4', 'potrait');
-        // return $pdf->stream();
+        return $pdf->stream();
         return view('tagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'));
     }
-    
 }
