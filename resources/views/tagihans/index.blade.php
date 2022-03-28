@@ -39,6 +39,7 @@
 						{{-- <th>Username</th> --}}
 						<th>Invoice</th>
 						<th>Nama Proyek</th>
+                        <th>Masa Berlaku</th>
 						<th>Tagihan</th>
 						<th>Keterangan</th>
 						{{-- <th>Terbayar</th>
@@ -51,12 +52,13 @@
 				@if(!$tagihans->isEmpty())
 					@php ($i = 1)
 					@foreach($tagihans as $tagihan)
-				    <tr> 
+				    <tr>
 				        <td>{{$i}}</td>
 				        <td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
 				        {{-- <td><div class="datatable-column-width">{{@$tagihan->user->username}}</div></td> --}}
 				        <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
-				        <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
+				        <td><div class="datatable-column-width">{{@$tagihan->proyek->website}}</div></td>
+                        <td><div class="datatable-column-width">{{$tagihan->masa_berlaku}}</div></td>
 						<td><div class="datatable-column-width">Rp @angka($tagihan->nominal)</div></td>
 				        {{-- <td><div class="datatable-column-width">Rp @angka(($tagihan->langganan)+($tagihan->ads)+($tagihan->lainnya))</div></td> --}}
 						{{-- <td><div class="datatable-column-width">Rp @angka($tagihan->payment->sum('nominal'))</div></td>
@@ -93,8 +95,8 @@
 				    @endforeach
 				@else
 				  	<tr><td align="center" colspan="9">Data Kosong</td></tr>
-				@endif 
-				    
+				@endif
+
 				</tbody>
 			</table>
 		</div>
@@ -160,10 +162,10 @@
 		        // Setting datatable defaults
 		        $.extend( $.fn.dataTable.defaults, {
 		            autoWidth: false,
-		            columnDefs: [{ 
+		            columnDefs: [{
 		                orderable: false,
 		                width: 100,
-		                targets: [ 6 ]
+		                targets: [ 7 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
