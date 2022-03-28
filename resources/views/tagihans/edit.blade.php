@@ -15,7 +15,7 @@
 
 <!-- Content area -->
 <div class="content">
-	
+
 	<!-- Hover rows -->
 	<div class="card">
 		<div class="card-header header-elements-inline">
@@ -26,7 +26,7 @@
 				@csrf
 				<fieldset class="mb-3">
 					<legend class="text-uppercase font-size-sm font-weight-bold">Data Tagihan</legend>
-					
+
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Pelanggan</label>
 						<div class="col-lg-10">
@@ -35,7 +35,7 @@
 								@foreach ($users as $user)
 								<option data-name="{{$user->nama}}" {{ $tagihan->user_id == $user->id ? 'selected' : '' }} value="{{$user->id}}">{{$user->username}}</option>
 								@endforeach
-								
+
 							</select>
 						</div>
 					</div>
@@ -43,6 +43,41 @@
 						<label class="col-form-label col-lg-2">Nama</label>
 						<div class="col-lg-10">
 							<input type="text" id="nama" name="nama" class="form-control border-teal border-1" value="{{ $tagihan->nama }}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Proyek</label>
+						<div class="col-lg-10">
+							<select id="select_proyek" name="select_proyek" class="form-control select-search">
+								<option value="">-- Pilih Proyek --</option>
+
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Nama Proyek</label>
+						<div class="col-lg-10">
+							<input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
+						</div>
+					</div>
+                    <div class="form-group row">
+						<label class="col-form-label col-lg-2">Update Masa Berlaku</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Berlaku">
+							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
+						</div>
+						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
+					</div>
+                    <div class="form-group row">
+						<label class="col-form-label col-lg-2">Nominal</label>
+						<div class="col-lg-10">
+							<input type="number" min="0" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('nominal')}}">
+						</div>
+					</div>
+                    <div class="form-group row">
+						<label class="col-form-label col-lg-2">Keterangan</label>
+						<div class="col-lg-10">
+							<input type="text" name="keterangan" value="{{ $tagihan->keterangan }}" class="form-control border-teal border-1" placeholder="Keterangan">
 						</div>
 					</div>
 					{{-- <div class="form-group row">
@@ -54,7 +89,7 @@
 								<option>Lainnya</option>
 							</select>
 						</div>
-					</div> --}}
+					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Langganan</label>
 						<div class="col-lg-10">
@@ -80,23 +115,17 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Keterangan</label>
-						<div class="col-lg-10">
-							<input type="text" name="keterangan" value="{{ $tagihan->keterangan }}" class="form-control border-teal border-1" placeholder="Keterangan">
-						</div>
-					</div>
-					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Status</label>
 						<div class="col-lg-10">
 							<select name="status" class="form-control select-search" required>
 								@foreach (config('custom.tagihan_status') as $key => $val)
 								<option {{ $tagihan->status == $key ? 'selected' : '' }} value="{{$key}}">{{$val}}</option>
 								@endforeach
-								
+
 							</select>
 						</div>
 					</div>
-					
+
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Proyek</label>
 						<div class="col-lg-10">
@@ -114,19 +143,20 @@
 						<div class="col-lg-10">
 							<input type="text" id="pospenagih" name="pospenagih" class="form-control border-teal border-1" placeholder="Nama Penagih" value="{{$tagihan->pospenagih}}">
 						</div>
-					</div>
-					
-					
+					</div>  --}}
+
+
 				</fieldset>
 				<div class="text-right">
+                    <a href="{{ url('/tagihans') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
 					<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
 				</div>
 			</form>
 		</div>
-		
+
 	</div>
 	<!-- /hover rows -->
-	
+
 </div>
 <!-- /content area -->
 @endsection
@@ -154,7 +184,7 @@
 	let getToken = function() {
 		return $('meta[name=csrf-token]').attr('content')
 	}
-	
+
 	// Accessibility labels
 	$('.pickadate-accessibility').pickadate({
 		labelMonthNext: 'Go to the next month',
@@ -165,15 +195,15 @@
 		selectYears: true,
 		format: 'yyyy-mm-dd',
 	});
-	
+
 	$('#user_id').on('change', function(){
 		var id_proyek = $('#user_id option:selected').val();
 		var pnama = $('#user_id option:selected').data('pnama');
-		
+
 		$('#nama').val(pnama);
 		$('#select_proyek').find('option').not(':first').remove();
 		$('#nama_proyek').val('');
-		
+
 		$.ajax({
 			type: 'get',
 			url : '{{url("getkadaluarsa")}}/'+id_proyek,
@@ -186,7 +216,7 @@
 				console.log('Error',data);
 			}
 		});
-		
+
 		$.ajax({
 			url : '{{url("getproyek")}}/'+id_proyek,
 			type: 'get',
@@ -200,13 +230,13 @@
 				if(len > 0){
 					// Read data and create <option >
 						for(var i=0; i<len; i++){
-							
+
 							var id = res['data'][i].id;
 							var website = res['data'][i].website;
-							
-							var option = "<option value='"+id+"'>"+website+"</option>"; 
-							
-							$("#select_proyek").append(option); 
+
+							var option = "<option value='"+id+"'>"+website+"</option>";
+
+							$("#select_proyek").append(option);
 						}
 					}
 					console.log('Success2');
@@ -215,23 +245,23 @@
 					console.log('Error2',data);
 				}
 			});
-			
+
 		});
 
 		$('#select_proyek').on('change',function() {
 			var proyek = $('#select_proyek option:selected').text();
 			$('#nama_proyek').val(proyek);
 		});
-	
+
 	var FormValidation = function() {
-		
+
 		// Validation config
 		var _componentValidation = function() {
 			if (!$().validate) {
 				console.warn('Warning - validate.min.js is not loaded.');
 				return;
 			}
-			
+
 			// Initialize
 			var validator = $('.form-validate-jquery').validate({
 				ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
@@ -247,25 +277,25 @@
 				// success: function(label) {
 					//    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
 					//},
-					
+
 					// Different components require proper error label placement
 					errorPlacement: function(error, element) {
-						
+
 						// Unstyled checkboxes, radios
 						if (element.parents().hasClass('form-check')) {
 							error.appendTo( element.parents('.form-check').parent() );
 						}
-						
+
 						// Input with icons and Select2
 						else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
 							error.appendTo( element.parent() );
 						}
-						
+
 						// Input group, styled file input
 						else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
 							error.appendTo( element.parent().parent() );
 						}
-						
+
 						// Other elements
 						else {
 							error.insertAfter(element);
@@ -292,13 +322,13 @@
 							},
 						},
 					});
-					
+
 					// Reset form
 					$('#reset').on('click', function() {
 						validator.resetForm();
 					});
 				};
-				
+
 				// Return objects assigned to module
 				return {
 					init: function() {
@@ -306,11 +336,11 @@
 					}
 				}
 			}();
-			
-			
+
+
 			// Initialize module
 			// ------------------------------
-			
+
 			document.addEventListener('DOMContentLoaded', function() {
 				FormValidation.init();
 			});
@@ -334,8 +364,8 @@
 					type: 'success'
 				});
 				@endif
-				
+
 			});
 		</script>
-		
+
 		@endsection
