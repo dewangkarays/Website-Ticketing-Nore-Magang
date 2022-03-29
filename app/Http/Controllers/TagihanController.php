@@ -139,9 +139,9 @@ class TagihanController extends Controller
 
         $data['jml_tagih'] = $data['langganan'] + $data['ads'] + $data['lainnya'];
 
+        // dd($data);
 
         $tagihan = Tagihan::create($data);
-
         $proyek = Proyek::find($tagihan->id_proyek);
         $proyek->masa_berlaku = $proyek->tagihan->masa_berlaku;
         $proyek->save();

@@ -79,22 +79,6 @@
                                 <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
                                 <td><div class="datatable-column-width">Rp @angka($tagihan->nominal)</div></td>
                                 <td><div class="datatable-column-width">{{$tagihan->keterangan}}</div></td>
-                                <td align="center">
-                                    <div class="list-icons">
-                                        <div class="dropdown">
-                                            <a href="#" class="list-icons-item" data-toggle="dropdown">
-                                                <i class="icon-menu9"></i>
-                                            </a>
-
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="{{ route('tagihans.edit',$tagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-                                                <a href="{{url('/tagihans/cetak/'.$tagihan->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
-                                                <a href="{{url('/tagihans/lampiran/'.$tagihan->id)}}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a>
-                                                <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tagihans.destroy', $tagihan->id)}}"><i class="icon-x"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
                             </tr>
                             @php ($i++)
                             @endforeach
@@ -168,8 +152,7 @@
 		            autoWidth: false,
 		            columnDefs: [{
 		                orderable: false,
-		                width: 100,
-		                targets: [ 1,7 ]
+		                targets: [ 1,2,3,4,5,6 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
