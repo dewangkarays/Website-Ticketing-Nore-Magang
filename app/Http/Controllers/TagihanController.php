@@ -24,7 +24,8 @@ class TagihanController extends Controller
     public function index()
     {
         $tagihans = Tagihan::orderBy('id')->get();
-        return view('tagihans.index', compact('tagihans'));
+        $proyeks = Proyek::all();
+        return view('tagihans.index', compact('tagihans', 'proyeks'));
     }
 
     /**
@@ -141,6 +142,10 @@ class TagihanController extends Controller
 
         $tagihan = Tagihan::create($data);
 
+        $proyek = Proyek::find($tagihan->id_proyek);
+        $proyek->masa_berlaku = $proyek->tagihan->masa_berlaku;
+        $proyek->save();
+
         return redirect('/tagihans')->with('success', 'Tagihan saved!');
     }
 
@@ -203,6 +208,10 @@ class TagihanController extends Controller
 
         $tagihan->update($data);
 
+        $proyek = Proyek::find($tagihan->id_proyek);
+        $proyek->masa_berlaku = $proyek->tagihan->masa_berlaku;
+        $proyek->save();
+
         return redirect('/tagihans')->with('success', 'Tagihan updated!');
     }
 
@@ -219,6 +228,13 @@ class TagihanController extends Controller
         $data = User::find($nama_proyek);
         $kadaluarsa = $data['kadaluarsa'];
         return $kadaluarsa;
+    }
+
+    public function getmasa_berlaku($id)
+    {
+        $data = Proyek::find($id);
+        $masa_berlaku = $data['masa_berlaku'];
+        return $masa_berlaku;
     }
 
     public function getproyek($id)
