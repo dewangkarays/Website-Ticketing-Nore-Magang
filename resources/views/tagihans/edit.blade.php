@@ -72,7 +72,11 @@
                     <div class="form-group row">
 						<label class="col-form-label col-lg-2">Update Masa Berlaku</label>
 						<div class="col-lg-10">
-							<input type="text" name="masa_berlaku" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Berlaku" value="{{ $tagihan->masa_berlaku }}">
+                            @if ($tagihan->id_proyek == null)
+                                <input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control pickadate-accessibility"  value="{{old('masa_berlaku')}}" placeholder="Tanggal Masa Berlaku">
+                            @else
+							    <input type="text" name="masa_berlaku" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Berlaku" value="{{ $tagihan->masa_berlaku }}">
+                            @endif
 							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
 						</div>
 						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
