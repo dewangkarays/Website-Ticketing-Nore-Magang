@@ -204,10 +204,13 @@
                         <td colspan="2" style="background-color: white">&nbsp;</td>
                     </tr> --}}
                     @endforeach
+                    {{-- @php
+                        dd($invoice);
+                    @endphp --}}
                     <tr>
                         <td></td>
                         <td align="right" class="nore-fontcolor"><span class="nore-fontcolor" style="float: right">Subtotal</span>&nbsp;</td>
-                        <td align="right"><b>Rp @angka($invoice->sum('nominal'))</b></td>
+                        <td align="right"><b>Rp @angka($invoices->sum('nominal'))</b></td>
                     </tr> 
                 </tbody>
             </table>
@@ -297,7 +300,7 @@
                             </google-sheets-html-origin> --}}
                         </span>
                     </td>
-                    <td align="right" style="color:#fabf16;vertical-align: top;font-size: 25px;font-weight: bold"><span>Rp @angka($invoices[0]->sum('nominal')) </span></td>
+                    <td align="right" style="color:#fabf16;vertical-align: top;font-size: 25px;font-weight: bold"><span>Rp @angka($invoices->sum('nominal')) </span></td>
                     
                 </tr>
                 

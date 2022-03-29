@@ -400,7 +400,7 @@ class TagihanController extends Controller
         $invoices = $findtagihan;
         $lampirans = Lampiran_gambar::where('tagihan_id')->orderBy('id', 'asc')->get();
         $setting = Setting::first();
-        // dd($invoices[0]);
+        // dd($invoices->sum('nominal'));
         $pdf = PDF::loadview('tagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'))->setPaper('a4', 'potrait');
         return $pdf->stream();
         return view('tagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'));
