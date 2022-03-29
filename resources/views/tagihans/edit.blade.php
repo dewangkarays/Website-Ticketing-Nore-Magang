@@ -35,7 +35,6 @@
 								@foreach ($users as $user)
 								<option data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" {{ $tagihan->user_id == $user->id ? 'selected' : '' }} value="{{$user->id}}">{{$user->username}}</option>
 								@endforeach
-
 							</select>
 						</div>
 					</div>
@@ -48,15 +47,26 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Proyek</label>
 						<div class="col-lg-10">
-							<select id="select_proyek" name="select_proyek" class="form-control select-search" required disabled>
-								<option value="">{{ @$tagihan->proyek->website }}</option>
-							</select>
+                            @if ($tagihan->id_proyek == null)
+                                <select id="select_proyek" name="select_proyek" class="form-control select-search">
+                                    <option value="">-- Pilih Proyek --</option>
+                                </select>
+                            @else
+                                <select name="select_proyek" class="form-control select-search" required disabled>
+                                    <option value="">{{ $tagihan->nama_proyek }}</option>
+                                </select>
+                            @endif
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Proyek</label>
 						<div class="col-lg-10">
-							<input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
+                            @if ($tagihan->id_proyek == null)
+                                <input type="hidden" id="id_proyek" name="id_proyek" class="form-control border-teal border-1" value="{{old('id_proyek')}}">
+							    <input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
+                            @else
+                                <input type="text" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{ $tagihan->nama_proyek }}" readonly>
+                            @endif
 						</div>
 					</div>
                     <div class="form-group row">
@@ -247,7 +257,7 @@
 
 		});
 
-		$('#select_proyek').ready(function() {
+		$('#select_proyek').on('change',function() {
 			var proyek = $('#select_proyek option:selected').text();
 			$('#nama_proyek').val(proyek);
             var id_proyek = $('#select_proyek option:selected').val();
