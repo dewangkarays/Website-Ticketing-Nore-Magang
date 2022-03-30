@@ -72,8 +72,12 @@
 										<a href="{{ route('members.show',$user->id)}}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
 										<a href="https://wa.me/{{$user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
 										@if (Auth::user()->role==1)
-										<a href="{{ route('members.edit',$user->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('members.destroy', $user->id)}}"><i class="icon-x"></i> Delete</a>
+										    <a href="{{ route('members.edit',$user->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+                                            @if ($user->proyek->isEmpty())
+							                    <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_1_danger" data-uri="{{ route('members.destroy', $user->id)}}"><i class="icon-x"></i> Delete</a>
+                                            @else
+							                    <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_2_danger" data-uri="{{ route('members.destroy', $user->id)}}"><i class="icon-x"></i> Delete</a>
+                                            @endif
 										@endif
 									</div>
 								</div>
@@ -95,7 +99,7 @@
 	<!-- /content area -->
 
     <!-- Danger modal -->
-	<div id="modal_theme_danger" class="modal fade" tabindex="-1">
+	<div id="modal_1_danger" class="modal fade" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header bg-danger" align="center">
@@ -106,7 +110,31 @@
 				    @csrf
 				    @method('DELETE')
 					<div class="modal-body" align="center">
-						<h2> Hapus Data? </h2>
+                        <h2> Hapus Data </h2>
+                        <h5> Member ini tidak memiliki data proyek, ingin menghapusnya? </h5>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link" data-dismiss="modal">Batal</button>
+						<button type="submit" class="btn bg-danger">Hapus</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+    <div id="modal_2_danger" class="modal fade" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header bg-danger" align="center">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<form action="" method="post" id="delform">
+				    @csrf
+				    @method('DELETE')
+					<div class="modal-body" align="center">
+                        <h2> Hapus Data </h2>
+                        <h5> Member ini memiliki data proyek, yakin ingin menghapusnya? </h5>
 					</div>
 
 					<div class="modal-footer">

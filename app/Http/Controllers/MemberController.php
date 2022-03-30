@@ -17,6 +17,7 @@ class MemberController extends Controller
     public function index()
     {
         $users = User::where('role','>','20')->get();
+        $users = $users->sortBy('nama');
         return view('members.index', compact('users'));
     }
 
