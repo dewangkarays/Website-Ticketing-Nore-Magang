@@ -5,10 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Rekap Tagihan</title>
-    
-    
+
     <style type="text/css">
-        
+
         @page {
             margin: 50px 50px;
         }
@@ -31,7 +30,7 @@
             margin-left: 20px;
             margin-right: 20px;
         }
-        
+
         ul {
             width: 75%;
             list-style: none;
@@ -42,12 +41,12 @@
             margin-left: -20px;
             margin-right: 10px;
         }
-        
+
         .head-block {
             /* margin-left: -40px !important; */
             margin-right: -20px !important;
         }
-        
+
         .main-table{
             width: 100%;
             table-layout: fixed;
@@ -72,40 +71,41 @@
         .page-break {
             page-break-after: always;
         }
-        
+
         .nore-bgcolor {
             background-color: #39b873;
         }
-        
+
         .nore-fontcolor {
             color: #39b873;
         }
-        
+
     </style>
-    
-    
+
+
 </head>
 
 <body>
-    
+
     <main>
-        <table class="head-block" style="margin-bottom: 10px;">
+        {{--  <table class="head-block" style="margin-bottom: 10px;">
             <tr>
                 <td class="nore-bgcolor" style="height: 23px">&nbsp;</td>
             </tr>
-        </table>
+        </table>--}}
         <table>
             <tr>
-                <td rowspan="4" style="vertical-align: top">
-                    <img src="{{url($setting->logo)}}" alt="logo" height="60px">
-                    <h4 class="nore-fontcolor" style="font-weight: lighter">CV. NORE Inovasi</h4>
+                <td rowspan="5" style="vertical-align: top">
+                    <img src="{{url($setting->logo)}}" alt="logo" height="68px">
+                    <figcaption class="nore-fontcolor" style="font-weight: lighter; letter-spacing: 1px">&nbsp;&nbsp;&nbsp;&nbsp;CV. NORE INOVASI</figcaption>
                     <p><?php echo $setting->alamat ?></p>
                     <p> +{{$setting->no_telp}} </p>
                 </td>
-                
+
                 <td align="right" colspan="2" style="vertical-align: top">
                     <p>
-                        <b class="nore-fontcolor font-weight-bold" style="font-size: 30px">Rekap Invoice</b>
+                        DOKUMEN PENTING<br>
+                        <b class="nore-fontcolor font-weight-bold" style="font-size: 29px">Invoice</b>
                         {{-- <p class="nore-fontcolor font-weight-bold" style="font-size: 40px;"><b>Rekap Invoice</b></p> --}}
                     </p>
                     <br>
@@ -123,27 +123,23 @@
                     </p>
                 </td>
             </tr>
-            
+
         </table>
-        
+
         <hr style="margin-top: -130px;margin-bottom: -8px">
 
             <table style="margin-top: 20px;margin-bottom: 8px;font-size: 15px !important">
                 <tr>
                     <td style="width: 50%; vertical-align: top">
-                        <table style="padding-right: 50px">
+                        <table style="padding-right: 50px; line-height: 1.75;">
                             <tr>
                                 <td><b>Kepada Yth.</b></td>
                             </tr>
-                            
+
                             <tr>
                                 <td style="text-transform: uppercase;">
                                     {{$invoices[0]->nama ? $invoices[0]->nama : $invoices[0]->user->nama}}
                                 </td>
-                            </tr>
-
-                            <tr>
-                                <td></td>
                             </tr>
 
                             {{-- <tr>
@@ -151,46 +147,44 @@
                                     &nbsp;
                                 </td>
                             </tr> --}}
-                            
+
                             <tr>
                                 <td>
                                     {{$invoices[0]->username ? $invoices[0]->username : $invoices[0]->user->username}}
                                 </td>
                             </tr>
-                            
-                            <tr>
-                                <td></td>
-                            </tr>
-                            
-                            <tr style="width: 200px">
-                                <td style="font-size: 12px;">
-                                    <span style="font-size: 12px !important">
-                                        
-                                        {{$invoices[0]->user->alamat}} 
-                                    </span>
-                                    
+
+                            {{-- <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr> --}}
+
+                            <tr style="width: 200px;">
+                                <td>
+                                    {{$invoices[0]->user->alamat}}
                                 </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
             </table>
-            
-            <table class="main-table" style="margin-top: 30px;margin-bottom: 5px;line-height: 0.7">
+
+            <table class="main-table" style="margin-top: 15px; line-height: 1">
                 <tr>
                     {{-- <th align="left" style="width: 30%" class="nore-fontcolor">No Invoices</th> --}}
-                    <th align="left" style="width: 20%" class="nore-fontcolor">Proyek</th>
-                    <th align="left" style="width: 65%" class="nore-fontcolor">Keterangan</th>
-                    <th align="right" style="width: auto" class="nore-fontcolor">Total</th> 
+                    <th align="left" style="width: 20%; height: 20px" class="nore-fontcolor">PROYEK</th>
+                    <th align="left" style="width: 65%" class="nore-fontcolor">KETERANGAN</th>
+                    <th align="right" style="width: auto" class="nore-fontcolor">JUMLAH (Rp)</th>
                 </tr>
-                
+
                 <tbody>
                     @foreach ($invoices as $invoice)
                     <tr>
                         {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
                         <td>
                             @if ($invoice->nama_proyek)
-                            {{$invoice->nama_proyek}} 
+                            {{$invoice->nama_proyek}}
                             @elseif ($invoice->user->website)
                             {{$invoice->user->website}}
                             @else
@@ -198,7 +192,7 @@
                             @endif
                         </td>
                         <td>{{$invoice->keterangan}}</td>
-                        <td align="right">Rp @angka($invoice->nominal)</td>
+                        <td align="right">@angka($invoice->nominal)</td>
                     </tr>
                     {{-- <tr>
                         <td colspan="2" style="background-color: white">&nbsp;</td>
@@ -207,15 +201,42 @@
                     {{-- @php
                         dd($invoice);
                     @endphp --}}
-                    <tr>
-                        <td></td>
-                        <td align="right" class="nore-fontcolor"><span class="nore-fontcolor" style="float: right">Subtotal</span>&nbsp;</td>
-                        <td align="right"><b>Rp @angka($invoices->sum('nominal'))</b></td>
-                    </tr> 
                 </tbody>
             </table>
-            
-            <table style="line-height: 1.3;">
+
+            <table style="line-height: 1.5; padding: 5px 10px;">
+                <tr>
+                    <th style="width: 45%; height: 30px"></th>
+                    <th align="left" style="width: 40%">TOTAL</th>
+                    <th align="right" style="width: auto">@angka($invoices->sum('nominal'))</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="left">Pembayaran Uang Muka</td>
+                    <td align="right">0</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="left">Sisa Tagihan</td>
+                    <td align="right">@angka($invoices->sum('nominal'))</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="left">PPN 10%</td>
+                    <td align="right">0</td>
+                </tr>
+                <tr style="line-height: 2;">
+                    <td></td>
+                    <td align="left">
+                        <b class="nore-fontcolor" style="font-size: 12px">TOTAL YANG HARUS DIBAYAR</b>
+                    </td>
+                    <td align="right">
+                        <b class="nore-fontcolor" style="font-size: 12px">@angka($invoices->sum('nominal'))</b>
+                    </td>
+                </tr>
+            </table>
+
+            <table style="margin-top: 20px; line-height: 1.3;">
                 <tr>
                     <td style="vertical-align: top;">
                         <span style="font-size: 12px;color: #b1acaa">Catatan :</span> <br>
@@ -250,7 +271,7 @@
                             {{-- <google-sheets-html-origin>
                                 <table xmlns="http://www.w3.org/1999/xhtml" cellspacing="0" cellpadding="0" dir="ltr" style="table-layout: fixed; font-size: 10pt; font-family: Arial; width: 0px;">
                                     <colgroup>
-                                        <col width="81"><col width="141"><col width="100"><col width="100"> 
+                                        <col width="81"><col width="141"><col width="100"><col width="100">
                                     </colgroup>
                                     <tbody>
                                         <tr style="height: 21px;">
@@ -297,80 +318,83 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </google-sheets-html-origin> --}}
+                            </google-sheets-html-origin>
                         </span>
                     </td>
                     <td align="right" style="color:#fabf16;vertical-align: top;font-size: 25px;font-weight: bold"><span>Rp @angka($invoices->sum('nominal')) </span></td>
-                    
+                    --}}
                 </tr>
-                
+
             </table>
-            
+
             @if (count($lampirans)>0)
             <table class="page-break">
                 @else
-                
-                <table style="margin-right: 60px;">
+
+                <table style="margin-right: 60px; margin-top: 20px;">
                     @endif
                     <tr>
                         <td>&nbsp;</td>
-                        <td align="center" style="width:20%">Semarang,</td>
+                        <td align="center" style="width:30%; font-size: 12px">Semarang, {{ date('d F Y') }}</td>
                     </tr>
-                    <tr>
-                        <td colspan="2">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">&nbsp;</td>
-                    </tr>
-                    <tr>
+                    <tr style="line-height: 10;">
                         <td colspan="2">&nbsp;</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td align="center" style="width:20%;font-weight: bold">{{$invoice->penagih ? $invoice->penagih : $setting->penagih}},
-                            <br> {{$invoice->pospenagih ? $invoice->pospenagih : $setting->pospenagih}} </td>
+                        <td align="center" style="width:30%;font-size: 12px">
+                            <b>{{$invoice->penagih ? $invoice->penagih : $setting->penagih}}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td align="center" style="width:30%;font-size: 11px">
+                            {{$invoice->pospenagih ? $invoice->pospenagih : $setting->pospenagih}}
+                        </td>
+                    </tr>
+                    <tr style="line-height: 3;">
+                        <td>&nbsp;</td>
+                        <td align="center" style="width:30%;color: #918d8b">
+                            <i>"Terima kasih atas kerja sama Anda"</i>
+                        </td>
                     </tr>
                 </table>
-                
+
                 <br>
-                
+
                 @if ($lampirans != null)
-                
+
                 <table>
                     @php ($i = 1)
                     @foreach ($lampirans as $lampiran)
                     <tr>
                         <td>
-                            Lampiran {{$i}} : {{ $lampiran->keterangan}} 
+                            Lampiran {{$i}} : {{ $lampiran->keterangan}}
                         </td>
                     </tr>
                     <tr>
                         <td align="center">
                             <img src="{{url($lampiran->gambar)}}" style="width:50%;object-fit: cover;">
-                            
+
                         </td>
                     </tr>
                     <br>
                     <tr>
                         <td>&nbsp;</td>
                     </tr>
-                    
+
                     @php ($i++)
                     @endforeach
                 </table>
                 @endif
             </main>
-            
+
             <script>
                 $(".phone").text(function(i, text) {
                     text = text.replace(/(\d{2})(\d{3})(\d{4})(\d{4})/, "$1 $2 $3 $4");
                     return text;
                 });
             </script>
-            
+
         </body>
 </html>
-        
