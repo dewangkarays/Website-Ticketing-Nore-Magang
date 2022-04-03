@@ -43,15 +43,22 @@ class ProyekController extends Controller
     {
         // dd($request);
 
-        $proyek = new Proyek([
-            'user_id' => $request->get('user_id'),
-            'website' => $request->get('website'),
-            'jenis_proyek' => $request->get('jenis_proyek'),
-            'jenis_layanan' => $request->get('jenis_layanan'),
-            'tipe' => $request->get('tipe'),
-            'masa_berlaku' => $request->get('masa_berlaku'),
-            'keterangan' => $request->get('keterangan'),
-            ]);
+        $data = $request->except(['_token', '_method']);
+
+        if($request->get('tipe_web')!=''){
+            $data['tipe'] = $request->get('tipe_web');
+        }
+        if($request->get('tipe_app')!=''){
+            $data['tipe'] = $request->get('tipe_app');
+        }
+        if($request->get('jl_web')!=''){
+            $data['jenis_layanan'] = $request->get('jl_web');
+        }
+        if($request->get('jl_app')!=''){
+            $data['jenis_layanan'] = $request->get('jl_app');
+        }
+
+        $proyek = new Proyek($data);
         $proyek->save();
 
         $user = User::find($proyek->user_id);
@@ -97,6 +104,22 @@ class ProyekController extends Controller
     {
         $proyek = Proyek::find($id);
         $data = $request->except(['_token', '_method']);
+
+        if($request->get('tipe_web')!=''){
+            $data['tipe'] = $request->get('tipe_web');
+        }
+        if($request->get('tipe_app')!=''){
+            $data['tipe'] = $request->get('tipe_app');
+        }
+        if($request->get('jl_web')!=''){
+            $data['jenis_layanan'] = $request->get('jl_web');
+        }
+        if($request->get('jl_app')!=''){
+            $data['jenis_layanan'] = $request->get('jl_app');
+        }
+        if($request->get('new_mb')!=''){
+            $data['masa_berlaku'] = $request->get('new_mb');
+        }
 
         $proyek->update($data);
 
