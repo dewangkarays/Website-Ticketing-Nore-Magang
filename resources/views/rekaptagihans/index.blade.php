@@ -23,34 +23,12 @@
 
     <!-- Content area -->
     <div class="content">
-        <div class="card">
-            {{--<div class="card-header header-elements-inline">
-                <h5 class="card-title">Rekap Tagihan Klien</h5>
-            </div>--}}
-            <div class="card-body">
-                <form method="GET">
-                    @csrf
-                    <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Klien :</label>
-                        <div class="col-lg-10">
-                            <select id="user_id" name="user_id" class="form-control select-search">
-                                <option value="">-- Pilih Pelanggan --</option>
-								@foreach ($users as $user)
-								<option data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" value="{{$user->id}}" {{$user->id == $requestUser ? 'selected' : ''}}>{{$user->nama}}</option>
-								@endforeach
-                            </select>
-                        </div>
-                    </div>
-                </form>
-                <div class="text-right">
-                    <a id="btn_reset" href="{{ url('rekaptagihan') }}" class="btn bg-slate text-uppercase">Reset  <i class="icon-rotate-ccw2 mr-2"></i></a>
-                    <a id="btn_submit" href="{{ url('rekaptagihan').'?c='.app('request')->input('c')}}" data-uri="{{ url('rekaptagihan') }}" class="btn btn-success text-uppercase">Submit  <i class="icon-paperplane ml-2"></i></a>
-                </div>
-            </div>
-        </div>
-
         <!-- Hover rows -->
 		<div id="card-rekap" class="card" style="display:none">
+            <div class="card-header header-elements-inline">
+				<a href="{{ route('rekaptagihans.create') }}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+			</div>
+
             <div class="card-body">
                 <form method="GET" action="{{ url('cetakrekap') }}">
 
@@ -58,13 +36,13 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th><input type="checkbox" class="checked-all"></th>
+                                {{-- <th><input type="checkbox" class="checked-all"></th> --}}
                                 <th>Nama</th>
                                 <th>Invoice</th>
                                 <th>Nama Proyek</th>
                                 <th>Tagihan</th>
                                 <th>Keterangan</th>
-                                {{-- <th class="text-center">Actions</th> --}}
+                                <th class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,12 +51,28 @@
                             @foreach($tagihans as $tagihan)
                             <tr>
                                 <td>{{$i}}</td>
-                                <td><input type="checkbox" name="invoice[]" id="chk" value="{{ $tagihan->id }}"></td>
+                                {{-- <td><input type="checkbox" name="invoice[]" id="chk" value="{{ $tagihan->id }}"></td> --}}
                                 <td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
                                 <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
                                 <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
                                 <td><div class="datatable-column-width">Rp @angka($tagihan->nominal)</div></td>
                                 <td><div class="datatable-column-width">{{$tagihan->keterangan}}</div></td>
+                                <td align="center">
+                                    <div class="list-icons">
+                                        <div class="dropdown">
+                                            <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                                <i class="icon-menu9"></i>
+                                            </a>
+        
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a href="{{ route('tagihans.edit',$tagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+                                                <a href="{{url('/tagihans/cetak/'.$tagihan->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
+                                                <a href="{{url('/tagihans/lampiran/'.$tagihan->id)}}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a>
+                                                <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tagihans.destroy', $tagihan->id)}}"><i class="icon-x"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             @php ($i++)
                             @endforeach
@@ -227,14 +221,14 @@
             let val = $(this).val();
             let href = `${uri}?c=${val}`;
 
-            $('#btn_submit').attr('href', href);
+            // $('#btn_submit').attr('href', href);
 
-            if($('#btn_submit').click(function (){
-                $('#form-datatable').show();
-            }));
-            if($('#btn_reset').click(function (){
-                $('#form-datatable').hide();
-            }));
+            // if($('#btn_submit').click(function (){
+            //     $('#form-datatable').show();
+            // }));
+            // if($('#btn_reset').click(function (){
+            //     $('#form-datatable').hide();
+            // }));
         })
     </script>
 

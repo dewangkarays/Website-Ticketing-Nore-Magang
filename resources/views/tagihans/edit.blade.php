@@ -33,15 +33,9 @@
 							<select id="user_id" name="user_id" class="form-control select-search" required disabled>
 								<option value="">-- Pilih Pelanggan --</option>
 								@foreach ($users as $user)
-								<option data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" {{ $tagihan->user_id == $user->id ? 'selected' : '' }} value="{{$user->id}}">{{$user->username}}</option>
+								<option data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" {{ $tagihan->user_id == $user->id ? 'selected' : '' }} value="{{$user->id}}">{{$user->nama}}</option>
 								@endforeach
 							</select>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Nama</label>
-						<div class="col-lg-10">
-							<input type="text" id="nama" name="nama" class="form-control border-teal border-1" readonly value="{{ old('nama') }}" >
 						</div>
 					</div>
 					<div class="form-group row">
@@ -69,22 +63,45 @@
                             @endif
 						</div>
 					</div>
-                    <div class="form-group row">
-						<label class="col-form-label col-lg-2">Update Masa Berlaku</label>
-						<div class="col-lg-10">
-                            @if ($tagihan->id_proyek == null)
-                                <input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control pickadate-accessibility"  value="{{old('masa_berlaku')}}" placeholder="Tanggal Masa Berlaku">
-                            @else
-							    <input type="text" name="masa_berlaku" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Berlaku" value="{{ $tagihan->masa_berlaku }}">
-                            @endif
-							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
+					@if ($tagihan->proyek->jenis_layanan == 3)
+						<div class="form-group row" style="display: none;">
+							<label class="col-form-label col-lg-2">Update Masa Berlaku</label>
+							<div class="col-lg-10">
+								@if ($tagihan->id_proyek == null)
+									<input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control pickadate-accessibility"  value="{{old('masa_berlaku')}}" placeholder="Tanggal Masa Berlaku">
+								@else
+									<input type="text" name="masa_berlaku" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Berlaku" value="{{ $tagihan->masa_berlaku }}">
+								@endif
+								<span class="form-text text-muted">Ubah jika ingin perpanjang masa berlaku</span>
+								{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
+							</div>
+							{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
 						</div>
-						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
-					</div>
+					@else
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Update Masa Berlaku</label>
+							<div class="col-lg-10">
+								@if ($tagihan->id_proyek == null)
+									<input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control pickadate-accessibility"  value="{{old('masa_berlaku')}}" placeholder="Tanggal Masa Berlaku">
+								@else
+									<input type="text" name="masa_berlaku" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Berlaku" value="{{ $tagihan->masa_berlaku }}">
+								@endif
+								<span class="form-text text-muted">Ubah jika ingin perpanjang masa berlaku</span>
+								{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
+							</div>
+							{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
+						</div>
+					@endif
                     <div class="form-group row">
 						<label class="col-form-label col-lg-2">Nominal</label>
 						<div class="col-lg-10">
 							<input type="number" min="0" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" value="{{ $tagihan->nominal }}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Uang Muka</label>
+						<div class="col-lg-10">
+							<input type="number" min="0" name="uang_muka" class="form-control border-teal border-1" placeholder="Uang Muka" value="{{ $tagihan->uang_muka }}">
 						</div>
 					</div>
                     <div class="form-group row">
@@ -212,7 +229,6 @@
 	$('#user_id').ready(function(){
 		var id_proyek = $('#user_id option:selected').val();
 		var pnama = $('#user_id option:selected').data('pnama');
-
 		$('#nama').val(pnama);
 		$('#select_proyek').find('option').not(':first').remove();
 		$('#nama_proyek').val('');

@@ -67,11 +67,13 @@ class TagihanController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
-            'ninv'=>'bail|unique:nomors|required',
+            'nominal' => 'required',
         ]);
 
-        $data = $request->except(['_token', '_method','noinv','ninv','noakhir','nouser','select_proyek']);
+        $data = $request->except(['_token', '_method','noinv','ninv','noakhir','nouser','select_proyek','masa_berlaku']);
+
         if($request->get('langganan')==''){
             $data['langganan'] = 0;
         }
@@ -82,62 +84,73 @@ class TagihanController extends Controller
             $data['lainnya'] = 0;
         }
 
-        // FORMAT INVOICE
-        $invoiceno = 01;
-
-        $invawal = $request->get('noinv');
-        $nomorinv = $request->get('ninv');
-        $noakhir = $request->get('noakhir');
-        $nouser = $request->get('nouser');
-        $no = str_pad($nomorinv,3,"0",STR_PAD_LEFT);
-        $nouserpad = str_pad($nouser,2,"0",STR_PAD_LEFT);
-        $data['invoice'] = $invawal.'/'.$no.'/'.$noakhir.'/'.$nouserpad;
-        // $data['user_id'] = $request->get('user_id');
-        $lastinv = Tagihan::latest('id')->first();
-
-        // dd($data);
-
-        if ($lastinv) {
-            $diffinv = substr($lastinv->invoice,0,3);
-            if ($diffinv == 'INV') {
-                $different = 'no';
-            } else {
-                $different = 'yes';
-            }
-
-            if ($different == 'yes') {
-                $lastno = Nomor::first();
-                    if ($lastno) {
-                        $lastno->ninv = $nomorinv;
-                        $lastno->save();
-                    } else {
-                        $lastno['ninv'] = 1;
-                        $lastno = Nomor::create($lastno);
-                    }
-            } else {
-                // jika tidak sama
-                $lastno = Nomor::first();
-                    if ($lastno) {
-                        $lastno->ninv = $nomorinv;
-                        $lastno->save();
-                    } else {
-                        $lastno['ninv'] = 1;
-                        $lastno = Nomor::create($lastno);
-                    }
-            }
-
-        } else {
-            $lastno = Nomor::first();
-                    if ($lastno) {
-                        $lastno->ninv = $nomorinv;
-                        $lastno->save();
-                    } else {
-                        $lastno['ninv'] = 1;
-                        $lastno = Nomor::create($lastno);
-                    }
+        if($request->get('uang_muka')==''){
+            $data['uang_muka'] = 0;
         }
 
-        $data['jml_tagih'] = $data['langganan'] + $data['ads'] + $data['lainnya'];
+        if($request->get('masa_berlaku')!=''){
+            $data['masa_berlaku'] = $request->get('masa_berlaku');
+        }
+
+        // // FORMAT INVOICE
+        // $invoiceno = 01;
+
+        // $invawal = $request->get('noinv');
+        // $nomorinv = $request->get('ninv');
+        // $noakhir = $request->get('noakhir');
+        // $nouser = $request->get('nouser');
+        // $no = str_pad($nomorinv,3,"0",STR_PAD_LEFT);
+        // $nouserpad = str_pad($nouser,2,"0",STR_PAD_LEFT);
+        // $data['invoice'] = $invawal.'/'.$no.'/'.$noakhir.'/'.$nouserpad;
+        // // $data['user_id'] = $request->get('user_id');
+        // $lastinv = Tagihan::latest('id')->first();
+
+        // // dd($data);
+
+        // if ($lastinv) {
+        //     $diffinv = substr($lastinv->invoice,0,3);
+        //     if ($diffinv == 'INV') {
+        //         $different = 'no';
+        //     } else {
+        //         $different = 'yes';
+        //     }
+
+        //     if ($different == 'yes') {
+        //         $lastno = Nomor::first();
+        //         if ($lastno) {
+        //             $lastno->ninv = $nomorinv;
+        //             $lastno->save();
+        //         } else {
+        //             $lastno['ninv'] = 1;
+        //             $lastno = Nomor::create($lastno);
+        //         }
+        //     } else {
+        //         // jika tidak sama
+        //         $lastno = Nomor::first();
+        //         if ($lastno) {
+        //             $lastno->ninv = $nomorinv;
+        //             $lastno->save();
+        //         } else {
+        //             $lastno['ninv'] = 1;
+        //             $lastno = Nomor::create($lastno);
+        //         }
+        //     }
+
+        // } else {
+        //     $lastno = Nomor::first();
+        //     if ($lastno) {
+        //         $lastno->ninv = $nomorinv;
+        //         $lastno->save();
+        //     } else {
+        //         $lastno['ninv'] = 1;
+        //         $lastno = Nomor::create($lastno);
+        //     }
+        // }
+
+        $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
+        
+        $user = User::find($data['user_id']);
+        $data['nama'] = $user->nama;
 
         // dd($data);
 
@@ -172,7 +185,7 @@ class TagihanController extends Controller
         $tagihan = Tagihan::find($id);
         $penagih = Setting::first();
         // $gambar = Lampiran_gambar::where('tagihan_id',$tagihan->id);
-
+        // dd($tagihan->proyek->jenis_layanan);
         return view('tagihans.edit', compact('tagihan','users','penagih'));
     }
 
@@ -189,7 +202,7 @@ class TagihanController extends Controller
             //
         ]);
 
-        $data = $request->except(['_token', '_method']);
+        $data = $request->except(['_token', '_method','masa_berlaku']);
         $tagihan = Tagihan::find($id);
         if($request->get('langganan')==''){
             $data['langganan'] = 0;
@@ -200,11 +213,18 @@ class TagihanController extends Controller
         if($request->get('lainnya')==''){
             $data['lainnya'] = 0;
         }
-        if($request->get('jml_bayar')==''){
-            $data['jml_bayar'] = 0;
+
+        if($request->get('uang_muka')!=''){
+            $data['uang_muka'] = $request->get('uang_muka');
         }
 
-        $data['jml_tagih'] = ($data['langganan'] + $data['ads'] + $data['lainnya'] - $data['jml_bayar']);
+        if($request->get('masa_berlaku')!=''){
+            $data['masa_berlaku'] = $request->get('masa_berlaku');
+        }
+
+        $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
+
+        // dd($data);
 
         $tagihan->update($data);
 
@@ -377,6 +397,15 @@ class TagihanController extends Controller
         return view('payments.create', compact('users', 'tagihanuser', 'tagihanuser2', 'setting'));
     }
 
+    public function createrekaptagihan()
+    {
+        $users = User::where('role','>=',80)->get();
+        $users = $users->sortBy('kadaluarsa');
+        $penagih = Setting::first();
+        $lastno = Nomor::first();
+        return view('rekaptagihans.create',compact('users','penagih','lastno'));
+    }
+    
     public function rekaptagihan(Request $request)
     {
         $requestUser = '';
@@ -390,19 +419,6 @@ class TagihanController extends Controller
             $tagihans = Tagihan::orderBy('id')->get();
         }
         $users = User::where('role','>=',80)->get();
-        return view('tagihans.rekaptagihan', compact('users','tagihans','requestUser'));
-    }
-
-    public function cetakrekap(Request $request)
-    {
-        $arrayid = $request->get('invoice');
-        $findtagihan = Tagihan::whereIn('id', $arrayid)->get();
-        $invoices = $findtagihan;
-        $lampirans = Lampiran_gambar::where('tagihan_id')->orderBy('id', 'asc')->get();
-        $setting = Setting::first();
-        // dd($invoices->sum('nominal'));
-        $pdf = PDF::loadview('tagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'))->setPaper('a4', 'potrait');
-        return $pdf->stream();
-        return view('tagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'));
+        return view('rekaptagihans.index', compact('users','tagihans','requestUser'));
     }
 }

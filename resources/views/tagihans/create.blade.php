@@ -25,7 +25,7 @@
 				@csrf
 				<fieldset class="mb-3">
 					<legend class="text-uppercase font-size-sm font-weight-bold">Data Tagihan</legend>
-					<div class="form-group row">
+					{{-- <div class="form-group row">
 						<label class="col-form-label col-lg-2 font-weight-bold">Nomor Invoice</label>
 						<div class="col-lg-1">
 							<input type="text" id="noinv" name="noinv" class="form-control border-info border-1" value="INV" readonly>
@@ -45,9 +45,7 @@
 						<div class="col-lg-2">
 							<input type="text" id="nouser" name="nouser" class="form-control border-info border-1" value="{{\Auth::user()->id}}" readonly>
 						</div>
-					</div>
-
-					<hr>
+					</div> --}}
 
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Pelanggan</label>
@@ -55,17 +53,17 @@
 							<select id="user_id" name="user_id" class="form-control select-search">
 								<option value="">-- Pilih Pelanggan --</option>
 								@foreach ($users as $user)
-								<option data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" value="{{$user->id}}" {{$user->id == old('user_id') ? 'selected' : ''}}>{{$user->username}}</option>
+								<option name="nama" data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" value="{{$user->id}}" {{$user->id == old('user_id') ? 'selected' : ''}}>{{$user->nama}}</option>
 								@endforeach
 							</select>
 						</div>
 					</div>
-					<div class="form-group row">
+					{{-- <div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama</label>
 						<div class="col-lg-10">
 							<input type="text" id="nama" name="nama" class="form-control border-teal border-1" value="{{old('nama')}}" readonly>
 						</div>
-					</div>
+					</div> --}}
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Proyek</label>
 						<div class="col-lg-10">
@@ -81,10 +79,11 @@
 							<input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
 						</div>
 					</div>
-                    <div class="form-group row">
+                    <div class="form-group row" id="div-masaberlaku">
 						<label class="col-form-label col-lg-2">Update Masa Berlaku</label>
 						<div class="col-lg-10">
 							<input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control pickadate-accessibility"  value="{{old('masa_berlaku')}}" placeholder="Tanggal Masa Berlaku">
+							<span class="form-text text-muted">Ubah jika ingin perpanjang masa berlaku</span>
 							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
 						</div>
 						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
@@ -93,6 +92,12 @@
 						<label class="col-form-label col-lg-2">Nominal</label>
 						<div class="col-lg-10">
 							<input type="number" min="0" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('nominal')}}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Uang Muka</label>
+						<div class="col-lg-10">
+							<input type="number" min="0" name="uang_muka" class="form-control border-teal border-1" placeholder="Uang Muka" value="{{old('uang_muka')}}">
 						</div>
 					</div>
 					{{-- <div class="form-group row">
@@ -228,8 +233,9 @@
 
 							var id = res['data'][i].id;
 							var website = res['data'][i].website;
+							var jenis = res['data'][i].jenis_layanan;
 
-							var option = "<option value='"+id+"'>"+website+"</option>";
+							var option = "<option value='"+id+"' data-jenis='"+jenis+"'>"+website+"</option>";
 
 							$("#select_proyek").append(option);
 						}
@@ -245,22 +251,30 @@
 
 		$('#select_proyek').on('change',function() {
 			var proyek = $('#select_proyek option:selected').text();
+			var jenis = $('#select_proyek option:selected').data('jenis');
 			$('#nama_proyek').val(proyek);
             var id_proyek = $('#select_proyek option:selected').val();
 			$('#id_proyek').val(id_proyek);
-            $.ajax({
-                type: 'get',
-                url : '{{url("getmasa_berlaku")}}/'+id_proyek,
-                success : function(data){
-                    // $('#kadaluarsa').val(data);
-                    $('#masa_berlaku').val(data);
-                    $('#masa_berlaku').text(data);
-                    console.log('Success');
-                },
-                error:function(data){
-                    console.log('Error',data);
-                }
-            });
+			if (jenis==3) {
+				$('#div-masaberlaku').hide();
+				$('#masa-berlaku').prop('disabled', 'disabled');
+			}
+			else{
+				$('#div-masaberlaku').show();
+				$.ajax({
+					type: 'get',
+					url : '{{url("getmasa_berlaku")}}/'+id_proyek,
+					success : function(data){
+						// $('#kadaluarsa').val(data);
+						$('#masa_berlaku').val(data);
+						$('#masa_berlaku').text(data);
+						console.log('Success');
+					},
+					error:function(data){
+						console.log('Error',data);
+					}
+				});
+			}
 		});
 
 		var FormValidation = function() {
@@ -315,29 +329,17 @@
 							select_proyek:{
 								required : true
 							},
-							langganan:{
+							nominal:{
 								required : true
 							},
-							ads:{
-								required : true
-							},
-							lainnya:{
-								required : true
-							}
 						},
 						messages: {
 							select_proyek:{
 								required : 'Mohon diisi'
 							},
-							langganan:{
+							nominal:{
 								required : 'Mohon diisi'
 							},
-							ads:{
-								required : 'Mohon diisi'
-							},
-							lainnya:{
-								required : 'Mohon diisi'
-							}
 						},
 					});
 

@@ -229,7 +229,7 @@ ul{
 
 				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','payments*','pengeluarans*','laporankeuangan','rekaptagihan')) ? 'block' : 'none' }};">
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','payments*','pengeluarans*','laporankeuangan','rekaptagihans*')) ? 'block' : 'none' }};">
 					@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 					<li class="nav-item">
 						<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
@@ -237,14 +237,14 @@ ul{
 							<span>
 								Tagihan 
 								@if ($admunpaid)
-								<br><span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{$admunpaid}} Tagihan belum terbayar lunas</span>
+								{{-- <br><span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{$admunpaid}} Tagihan belum terbayar lunas</span> --}}
 								@endif
 							</span>
 						</a>
 					</li>
 					@endif
 					<li class="nav-item">
-						<a href="{{ url('/rekaptagihan') }}" class="nav-link {{ (request()->is('rekaptagihan')) ? 'active' : '' }}">
+						<a href="{{ url('/rekaptagihans') }}" class="nav-link {{ (request()->is('rekaptagihans*')) ? 'active' : '' }}">
 							<i class="icon-clipboard5"></i>
 							<span>
 								Rekap Tagihan

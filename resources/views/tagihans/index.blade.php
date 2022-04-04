@@ -37,9 +37,10 @@
 						<th>No</th>
 						<th>Nama</th>
 						{{-- <th>Username</th> --}}
-						<th>Invoice</th>
+						{{-- <th>Invoice</th> --}}
 						<th>Nama Proyek</th>
                         <th>Masa Berlaku</th>
+						<th>Uang Muka</th>
 						<th>Tagihan</th>
 						<th>Keterangan</th>
 						{{-- <th>Terbayar</th>
@@ -54,12 +55,13 @@
 					@foreach($tagihans as $tagihan)
 				    <tr>
 				        <td>{{$i}}</td>
-				        <td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
+				        <td><div class="datatable-column-width">{{$tagihan->nama}}</div></td>
 				        {{-- <td><div class="datatable-column-width">{{@$tagihan->user->username}}</div></td> --}}
-				        <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
-				        <td><div class="datatable-column-width">{{@$tagihan->proyek->website}}</div></td>
+				        {{-- <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td> --}}
+				        <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
                         <td><div class="datatable-column-width">{{$tagihan->masa_berlaku}}</div></td>
-						<td><div class="datatable-column-width">Rp @angka($tagihan->nominal)</div></td>
+						<td><div class="datatable-column-width">Rp @angka($tagihan->uang_muka)</div></td>
+						<td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
 				        {{-- <td><div class="datatable-column-width">Rp @angka(($tagihan->langganan)+($tagihan->ads)+($tagihan->lainnya))</div></td> --}}
 						{{-- <td><div class="datatable-column-width">Rp @angka($tagihan->payment->sum('nominal'))</div></td>
 						<td><div class="datatable-column-width">Rp @angka($tagihan->jml_bayar)</div></td>
