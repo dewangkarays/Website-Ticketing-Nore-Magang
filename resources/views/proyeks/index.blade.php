@@ -35,10 +35,11 @@
                 <tr>
                     <th>No</th>
                     <th>Client Name</th>
+                    <th>Nama Proyek</th>
                     <th>Website</th>
                     <th>Jenis Proyek</th>
-                    <th>Jenis Layanan</th>
                     <th>Kelas Layanan</th>
+                    <th>Jenis Layanan</th>
                     <th>Jumlah Task</th>
                     <th>Masa Berlaku</th>
                     <th>Keterangan</th>
@@ -52,10 +53,11 @@
                 <tr>
                     <td>{{$i}}</td>
                     <td><div class="datatable-column-width">{{@$proyek->user ? $proyek->user->nama : '-'}}</div></td>
+                    <td><div class="datatable-column-width">{{$proyek->nama_proyek}}</div></td>
                     <td><div class="datatable-column-width">{{$proyek->website}}</div></td>
                     <td><div class="datatable-column-width">{{config('custom.jenis_proyek.'.$proyek->jenis_proyek)}}</div></td>
-                    <td><div class="datatable-column-width">{{config('custom.jenis_layanan.'.$proyek->jenis_layanan)}}</div></td>
                     <td><div class="datatable-column-width">{{config('custom.kelas_layanan.'.$proyek->tipe)}}</div></td>
+                    <td><div class="datatable-column-width">{{config('custom.jenis_layanan.'.$proyek->jenis_layanan)}}</div></td>
                     <td align="center">
                         @if($proyek->task_count == null )
                             <span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$proyek->task_count}}</span>

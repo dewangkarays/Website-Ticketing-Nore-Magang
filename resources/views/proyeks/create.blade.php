@@ -37,17 +37,25 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2">Nama Proyek</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="nama_proyek" class="form-control border-teal border-1" placeholder="Contoh : Pembuatan Website" >
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Website</label>
                             <div class="col-lg-10">
-                                <input type="text" name="website" class="form-control border-teal border-1" placeholder="Website" >
+                                <input type="text" id="website" name="website" class="form-control border-teal border-1" placeholder="Contoh : nore.web.id" >
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Jenis Proyek</label>
                             <div class="col-lg-10">
-                                <select name="jenis_proyek" class="form-control bg-teal-400 border-teal-400" >
+                                <select id="jenis_proyek" name="jenis_proyek" class="form-control bg-teal-400 border-teal-400" >
                                     <option value="">-- Pilih Jenis Proyek --</option>
                                     @foreach (config('custom.jenis_proyek') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
@@ -56,26 +64,45 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label class="col-form-label col-lg-2">Jenis Layanan</label>
+                        <div id="div-tipe" class="form-group row" style="display:none">
+                            <label class="col-form-label col-lg-2">Kelas Layanan</label>
                             <div class="col-lg-10">
-                                <select name="jenis_layanan" class="form-control bg-teal-400 border-teal-400" >
-                                    <option value="">-- Pilih Jenis Layanan --</option>
-                                    @foreach (config('custom.jenis_layanan') as $key => $value)
+                                {{-- <select id="tipe" name="tipe" class="form-control bg-teal-400 border-teal-400" >
+                                    <option value="0">-- Pilih Kelas Layanan --</option>
+                                    @foreach (config('custom.kelas_layanan') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
+                                </select> --}}
+                                <select id="tipe_web" name="tipe_web" class="form-control bg-teal-400 border-teal-400" style="display:none">
+                                    <option value="">-- Pilih Kelas Layanan --</option>
+                                    <option value="99">Simple</option>
+                                    <option value="90">Prioritas</option>
+                                </select>
+                                <select id="tipe_app" name="tipe_app" class="form-control bg-teal-400 border-teal-400" style="display:none">
+                                    <option value="80">Premium</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label class="col-form-label col-lg-2">Kelas Layanan</label>
+                        <div id="div-jl" class="form-group row" style="display:none">
+                            <label class="col-form-label col-lg-2">Jenis Layanan</label>
                             <div class="col-lg-10">
-                                <select name="tipe" class="form-control bg-teal-400 border-teal-400" >
-                                    <option value="">-- Pilih Kelas Layanan --</option>
-                                    @foreach (config('custom.kelas_layanan') as $key => $value)
+                                {{-- <select id="jenis_layanan" name="jenis_layanan" class="form-control bg-teal-400 border-teal-400" >
+                                    <option value="0">-- Pilih Jenis Layanan --</option>
+                                    @foreach (config('custom.jenis_layanan') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
+                                </select> --}}
+                                <select id="jl_web" name="jl_web" class="form-control bg-teal-400 border-teal-400" style="display:none">
+                                    <option value="">-- Pilih Jenis Layanan --</option>
+                                    <option value="1">Nore</option>
+                                    <option value="2">Mini</option>
+                                    <option value="4">Beli/Lepas</option>
+                                </select>
+                                <select id="jl_app" name="jl_app" class="form-control bg-teal-400 border-teal-400" style="display:none">
+                                    <option value="">-- Pilih Jenis Layanan --</option>
+                                    <option value="3">Berlangganan</option>
+                                    <option value="4">Beli/Lepas</option>
                                 </select>
                             </div>
                         </div>
@@ -87,10 +114,10 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div id="div-masa" class="form-group row" style="display:none">
                             <label class="col-form-label col-lg-2">Masa Berlaku</label>
                             <div class="col-lg-10">
-                                <input name="masa_berlaku" type="text" class="form-control border-teal pickadate-accessibility" placeholder="Tanggal Masa Berlaku" >
+                                <input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control border-teal pickadate-accessibility" placeholder="Tanggal Masa Berlaku">
                             </div>
                         </div>
 
@@ -185,6 +212,48 @@
 			$select.on('change', function() {
 				$(this).trigger('blur');
 			});
+
+            $('#jenis_proyek').on('change', function() {
+                var dropdown = $('#jenis_proyek option:selected').val()
+                console.log(dropdown)
+                if (dropdown=="" || dropdown==0 || dropdown==5 || dropdown==2) {
+                    $('#div-tipe, #div-jl').hide()
+                    $('#tipe_web, #tipe_app, #jl_web, #jl_app, #website,#masa_berlaku').val("").attr("required", false)
+                    if (dropdown==5) {
+                        $('#div-masa').show()
+                    } else {
+                        $('#div-masa').hide()
+                    }
+                } else {
+                    $('#div-tipe, #div-jl').show()
+                    $('#div-masa').show()
+                    $('#masa_berlaku').val("").attr("required", false)
+                    if (dropdown==1) {
+                        $('#tipe_web, #jl_web').show().attr("required", true)
+                        $('#tipe_app, #jl_app').hide().val("").attr("required", false)
+                        $('#website').attr("required", true)
+                    } else {
+                        $('#tipe_web, #jl_web').hide().val("").attr("required", false)
+                        $('#tipe_app, #jl_app').show().attr("required", true)
+                        $('#tipe_app').val(80)
+                        $('#website').attr("required", false)
+                    }
+                }
+            });
+
+            $('#jl_app, #jl_web').on('change', function() {
+                var dropdown_app = $('#jl_app option:selected').val()
+                var dropdown_web = $('#jl_web option:selected').val()
+                console.log([dropdown_app, dropdown_web])
+                if (dropdown_app==4 || dropdown_web==4) {
+                    $('#div-masa').hide()
+                    $('#masa_berlaku').val("").attr("required", false)
+                } else {
+                    $('#div-masa').show()
+                    $('#masa_berlaku').attr("required", true)
+                }
+            });
+
 		};
 
         // Validation config
@@ -206,9 +275,9 @@
                 unhighlight: function(element, errorClass) {
                     $(element).removeClass(errorClass);
                 },
-                success: function(label) {
-                    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
-                },
+                //success: function(label) {
+                //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+                //},
 
                 // Different components require proper error label placement
                 errorPlacement: function(error, element) {
@@ -237,22 +306,13 @@
 					user_id:{
 						required : true
 					},
-					website:{
+                    nama_proyek:{
 						required : true
 					},
 					jenis_proyek:{
 						required : true
 					},
-                    jenis_layanan:{
-						required : true
-					},
-                    tipe:{
-						required : true
-					},
                     task_count:{
-						required : true
-					},
-                    masa_berlaku:{
 						required : true
 					},
 				},
@@ -260,20 +320,29 @@
                     user_id: {
                         required: 'Mohon diisi.'
                     },
+                    nama_proyek: {
+                        required: 'Mohon diisi.'
+                    },
                     website: {
                         required: 'Mohon diisi.'
                     },
                     jenis_proyek: {
-                        required: 'Mohon diisi.'
+                        required: 'Mohon pilih satu jenis proyek!'
                     },
-                    jenis_layanan: {
-                        required: 'Mohon diisi.'
+                    jl_web: {
+                        required: 'Mohon pilih satu jenis layanan!'
                     },
-                    tipe: {
-                        required: 'Mohon diisi.'
+                    jl_app: {
+                        required: 'Mohon pilih satu jenis layanan!'
+                    },
+                    tipe_web: {
+                        required: 'Mohon pilih satu kelas layanan!'
+                    },
+                    tipe_app: {
+                        required: 'Mohon pilih satu kelas layanan!'
                     },
                     task_count:{
-                        required: 'Mohon diisi.',
+                        required: 'Min : 0',
 						min : 0
 					},
                     masa_berlaku: {

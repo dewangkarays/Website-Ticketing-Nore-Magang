@@ -35,8 +35,8 @@ return [
     'jenis_layanan' => [
         '1' => 'Nore',
         '2' => 'Mini',
-        '3' => 'Lepas',
-        '4' => 'Lainnya',
+        '3' => 'Berlangganan',
+        '4' => 'Beli/Lepas',
     ],
 
     'kelas_layanan' => [

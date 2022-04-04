@@ -43,17 +43,25 @@
                             <label class="col-form-label col-lg-10">{{$proyek->user->nama}}</label>
                         @endif
                     </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Nama Proyek</label>
+                        <div class="col-lg-10">
+                            <input type="text" name="nama_proyek" class="form-control border-teal border-1" placeholder="Contoh : Pembuatan Website" value="{{$proyek->nama_proyek}}" >
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Website</label>
                         <div class="col-lg-10">
-                        <input type="text" name="website" class="form-control border-teal border-1" placeholder="Website" value="{{$proyek->website}}" >
+                        <input type="text" id="website" name="website" class="form-control border-teal border-1" placeholder="Contoh : nore.web.id" value="{{$proyek->website}}" >
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Jenis Proyek</label>
                         <div class="col-lg-10">
-                            <select name="jenis_proyek" class="form-control bg-teal-400 border-teal-400" >
+                            <select id="jenis_proyek" name="jenis_proyek" class="form-control bg-teal-400 border-teal-400" >
                                 @if ($proyek->jenis_proyek == null)
                                     <option value="">-- Pilih Jenis Proyek --</option>
                                 @endif
@@ -64,30 +72,49 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Jenis Layanan</label>
-                        <div class="col-lg-10">
-                            <select name="jenis_layanan" class="form-control bg-teal-400 border-teal-400" >
-                                @if ($proyek->jenis_proyek == null)
-                                    <option value="">-- Pilih Jenis Layanan --</option>
-                                @endif
-                                @foreach (config('custom.jenis_layanan') as $key => $value)
-                                    <option {{ $proyek->jenis_layanan == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
+                    <div id="div-tipe" class="form-group row" style="display:none">
                         <label class="col-form-label col-lg-2">Kelas Layanan</label>
                         <div class="col-lg-10">
-                            <select name="tipe" class="form-control bg-teal-400 border-teal-400" >
+                            {{-- <select name="tipe" class="form-control bg-teal-400 border-teal-400" >
                                 @if ($proyek->jenis_proyek == null)
                                     <option value="">-- Pilih Kelas Layanan --</option>
                                 @endif
                                 @foreach (config('custom.kelas_layanan') as $key => $value)
                                     <option {{ $proyek->tipe == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
                                 @endforeach
+                            </select> --}}
+                            <select id="tipe_web" name="tipe_web" class="form-control bg-teal-400 border-teal-400" style="display:none">
+                                <option value="">-- Pilih Kelas Layanan --</option>
+                                <option {{ $proyek->tipe == 99 ? 'selected' : '' }} value="99">Simple</option>
+                                <option {{ $proyek->tipe == 90 ? 'selected' : '' }} value="90">Prioritas</option>
+                            </select>
+                            <select id="tipe_app" name="tipe_app" class="form-control bg-teal-400 border-teal-400" style="display:none">
+                                <option {{ $proyek->tipe == 80 ? 'selected' : '' }} value="80">Premium</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="div-jl" class="form-group row" style="display:none">
+                        <label class="col-form-label col-lg-2">Jenis Layanan</label>
+                        <div class="col-lg-10">
+                            {{-- <select name="jenis_layanan" class="form-control bg-teal-400 border-teal-400" >
+                                @if ($proyek->jenis_proyek == null)
+                                    <option value="">-- Pilih Jenis Layanan --</option>
+                                @endif
+                                @foreach (config('custom.jenis_layanan') as $key => $value)
+                                    <option {{ $proyek->jenis_layanan == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
+                                @endforeach
+                            </select> --}}
+                            <select id="jl_web" name="jl_web" class="form-control bg-teal-400 border-teal-400" style="display:none">
+                                <option value="">-- Pilih Jenis Layanan --</option>
+                                <option {{ $proyek->jenis_layanan == 1 ? 'selected' : '' }} value="1">Nore</option>
+                                <option {{ $proyek->jenis_layanan == 2 ? 'selected' : '' }} value="2">Mini</option>
+                                <option {{ $proyek->jenis_layanan == 4 ? 'selected' : '' }} value="4">Beli/Lepas</option>
+                            </select>
+                            <select id="jl_app" name="jl_app" class="form-control bg-teal-400 border-teal-400" style="display:none">
+                                <option value="">-- Pilih Jenis Layanan --</option>
+                                <option {{ $proyek->jenis_layanan == 3 ? 'selected' : '' }} value="3">Berlangganan</option>
+                                <option {{ $proyek->jenis_layanan == 4 ? 'selected' : '' }} value="4">Beli/Lepas</option>
                             </select>
                         </div>
                     </div>
@@ -99,10 +126,17 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div id="div-masa" class="form-group row">
                         <label class="col-form-label col-lg-2">Masa Berlaku</label>
                         <div class="col-lg-10">
-                            <input name="masa_berlaku" type="text" class="form-control pickadate-accessibility" value="{{$proyek->masa_berlaku}}" placeholder="Tanggal Masa Berlaku" >
+                            <input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control" readonly value="{{$proyek->masa_berlaku}}" placeholder="Belum ada masa berlaku">
+                        </div>
+                    </div>
+
+                    <div id="new-masa" class="form-group row" style="display:none">
+                        <label class="col-form-label col-lg-2">Update Masa Berlaku</label>
+                        <div class="col-lg-10">
+                            <input id="new_mb" name="new_mb" type="text" class="form-control border-teal border-1 pickadate-accessibility" placeholder="Update Tanggal Masa Berlaku">
                         </div>
                     </div>
 
@@ -197,6 +231,98 @@
 			$select.on('change', function() {
 				$(this).trigger('blur');
 			});
+
+            $('#jenis_proyek').ready(function() {
+                var dropdown = $('#jenis_proyek option:selected').val()
+                console.log(dropdown)
+                if (dropdown==null || dropdown==0 || dropdown==5 || dropdown==2) {
+                    //$('#div-tipe, #div-jl').hide()
+                    $('#tipe_web, #tipe_app, #jl_web, #jl_app').val("").attr("required", false)
+                    if (dropdown==5) {
+                        $('#new-masa').show()
+                    } else {
+                        //$('#new-masa').hide()
+                        $('#masa_berlaku').val("").attr("placeholder", "Tidak ada masa berlaku")
+                    }
+                } else {
+                    $('#div-tipe, #div-jl, #new-masa').show()
+                    //$('#div-masa').hide()
+                    //$('#masa_berlaku').attr("required", false).val("")
+                    if (dropdown==1) {
+                        $('#tipe_web, #jl_web').show().attr("required", true)
+                        $('#tipe_app, #jl_app').hide().val("").attr("required", false)
+                        $('#website').attr("required", true)
+                    } else {
+                        $('#tipe_web, #jl_web').hide().val("").attr("required", false)
+                        $('#tipe_app, #jl_app').show().attr("required", true)
+                        $('#tipe_app').val(80)
+                        $('#website').attr("required", false)
+                    }
+                }
+            }).on('change', function() {
+                var dropdown = $('#jenis_proyek option:selected').val()
+                console.log(dropdown)
+                if (dropdown==null || dropdown==0 || dropdown==5 || dropdown==2) {
+                    $('#div-tipe, #div-jl').hide()
+                    $('#tipe_web, #tipe_app, #jl_web, #jl_app').val("").attr("required", false)
+                    $('#masa_berlaku, #new_mb').attr("required", false)
+                    if (dropdown==5) {
+                        $('#new-masa').show()
+                        $('#masa_berlaku').attr("placeholder")
+                    } else {
+                        $('#new-masa').hide()
+                        $('#masa_berlaku, #new_mb').val("").attr("placeholder", "Tidak ada masa berlaku")
+                    }
+                } else {
+                    $('#div-tipe, #div-jl').show()
+                    $('#masa_berlaku').attr((("required", false), "placeholder"))
+                    if (dropdown==1) {
+                        $('#tipe_web, #jl_web').show().attr("required", true)
+                        $('#tipe_app, #jl_app').hide().val("").attr("required", false)
+                        $('#website').attr("required", true)
+                    } else {
+                        $('#tipe_web, #jl_web').hide().val("").attr("required", false)
+                        $('#tipe_app, #jl_app').show().attr("required", true)
+                        $('#tipe_app').val(80)
+                        $('#website').attr("required", false)
+                    }
+                }
+            });
+
+            $('#jl_app, #jl_web').ready(function(){
+                var dropdown_app = $('#jl_app option:selected').val()
+                var dropdown_web = $('#jl_web option:selected').val()
+                console.log([dropdown_app, dropdown_web])
+                if (dropdown_app==4 || dropdown_web==4) {
+                    $('#new-masa').hide()
+                    $('#masa_berlaku, #new_mb').val("").attr("placeholder", "Tidak ada masa berlaku")
+                } else {
+                    if ($('#masa_berlaku').val()==""){
+                        $('#masa_berlaku').attr((("required", false), "placeholder"))
+                        $('#new_mb').attr("required", true)
+                    } else {
+                        $('#masa_berlaku').attr("required", true)
+                        $('#new_mb').attr("required", false)
+                    }
+                }
+            }).on('change', function() {
+                var dropdown_app = $('#jl_app option:selected').val()
+                var dropdown_web = $('#jl_web option:selected').val()
+                console.log([dropdown_app, dropdown_web])
+                if (dropdown_app==4 || dropdown_web==4) {
+                    $('#new-masa').hide()
+                    $('#masa_berlaku, #new_mb').val("").attr({"required": false,"placeholder": "Tidak ada masa berlaku"})
+                } else {
+                    $('#new-masa').show()
+                    if ($('#masa_berlaku').val()==""){
+                        $('#masa_berlaku').attr((("required", false), "placeholder"))
+                        $('#new_mb').attr("required", true)
+                    } else {
+                        $('#masa_berlaku').attr("required", true)
+                        $('#new_mb').attr("required", false)
+                    }
+                }
+            });
 		};
 
         // Validation config
@@ -218,11 +344,11 @@
                 unhighlight: function(element, errorClass) {
                     $(element).removeClass(errorClass);
                 },
-                success: function(label) {
-                    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
-                },
+                //success: function(label) {
+                //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+                //},
 
-                // Different components require proper error label placement
+                // Different components require attrer error label placement
                 errorPlacement: function(error, element) {
 
                     // Unstyled checkboxes, radios
@@ -249,22 +375,13 @@
 					user_id:{
 						required : true
 					},
-					website:{
+                    nama_proyek:{
 						required : true
 					},
 					jenis_proyek:{
 						required : true
 					},
-                    jenis_layanan:{
-						required : true
-					},
-                    tipe:{
-						required : true
-					},
                     task_count:{
-						required : true
-					},
-                    masa_berlaku:{
 						required : true
 					},
 				},
@@ -272,23 +389,32 @@
                     user_id: {
                         required: 'Mohon diisi.'
                     },
+                    nama_proyek: {
+                        required: 'Mohon diisi.'
+                    },
                     website: {
                         required: 'Mohon diisi.'
                     },
                     jenis_proyek: {
-                        required: 'Mohon diisi.'
+                        required: 'Mohon pilih satu jenis proyek!'
                     },
-                    jenis_layanan: {
-                        required: 'Mohon diisi.'
+                    jl_web: {
+                        required: 'Mohon pilih satu jenis layanan!'
                     },
-                    tipe: {
-                        required: 'Mohon diisi.'
+                    jl_app: {
+                        required: 'Mohon pilih satu jenis layanan!'
+                    },
+                    tipe_web: {
+                        required: 'Mohon pilih satu kelas layanan!'
+                    },
+                    tipe_app: {
+                        required: 'Mohon pilih satu kelas layanan!'
                     },
                     task_count:{
-                        required: 'Mohon diisi.',
+                        required: 'Min : 0',
 						min : 0
 					},
-                    masa_berlaku: {
+                    new_mb: {
                         required: 'Mohon diisi.'
                     },
                 },
