@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User;
 use App\Model\Proyek;
+use Carbon\Carbon;
+use \Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Validator;
 
 class ProyekController extends Controller
@@ -17,9 +19,31 @@ class ProyekController extends Controller
      */
     public function index()
     {
-        $proyeks = Proyek::all();
-        // dd($proyeks);
-        return view('proyeks.index', compact('proyeks'));
+        $date = Carbon::today();
+        $expired = Carbon::today()->addDays(-1);
+        $dateline = Carbon::today()->addDays(14);
+        $null = Proyek::whereNull('masa_berlaku')->orderBy('jenis_proyek')->get();
+        $yellow = Proyek::whereNotNull('masa_berlaku')
+                        ->whereDate('masa_berlaku', '>=', $date)
+                        ->whereDate('masa_berlaku', '<=', $dateline)
+                        ->orderBy('masa_berlaku')
+                        ->get();
+        $green = Proyek::whereNotNull('masa_berlaku')
+                        ->whereDate('masa_berlaku', '>', $dateline)
+                        ->orderBy('masa_berlaku')
+                        ->get();
+        $red = Proyek::whereNotNull('masa_berlaku')
+                        ->whereDate('masa_berlaku', '<', $date)
+                        ->orderBy('masa_berlaku')
+                        ->get();
+        $allItems = new Collection;
+        $allItems = $allItems->merge($yellow);
+        $allItems = $allItems->merge($green);
+        $allItems = $allItems->merge($null);
+        $allItems = $allItems->merge($red);
+        //dd($allItems);
+        //dd($proyeks, $yellow, $green, $red);
+        return view('proyeks.index', compact('allItems', 'expired', 'dateline'));
     }
 
     /**
@@ -105,11 +129,18 @@ class ProyekController extends Controller
         $proyek = Proyek::find($id);
         $data = $request->except(['_token', '_method']);
 
+
+        if($request->get('new_mb')!=''){
+            $data['masa_berlaku'] = $request->get('new_mb');
+        }
         if($request->get('tipe_web')!=''){
             $data['tipe'] = $request->get('tipe_web');
         }
         if($request->get('tipe_app')!=''){
             $data['tipe'] = $request->get('tipe_app');
+        }
+        if($request->get('tipe_app')=='' && $request->get('tipe_web')==''){
+            $data['tipe'] = null;
         }
         if($request->get('jl_web')!=''){
             $data['jenis_layanan'] = $request->get('jl_web');
@@ -117,9 +148,10 @@ class ProyekController extends Controller
         if($request->get('jl_app')!=''){
             $data['jenis_layanan'] = $request->get('jl_app');
         }
-        if($request->get('new_mb')!=''){
-            $data['masa_berlaku'] = $request->get('new_mb');
+        if($request->get('jl_app')=='' && $request->get('jl_web')==''){
+            $data['jenis_layanan'] = null;
         }
+
 
         $proyek->update($data);
 

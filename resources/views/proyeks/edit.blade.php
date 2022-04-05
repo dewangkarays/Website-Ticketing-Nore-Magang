@@ -129,14 +129,14 @@
                     <div id="div-masa" class="form-group row">
                         <label class="col-form-label col-lg-2">Masa Berlaku</label>
                         <div class="col-lg-10">
-                            <input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control" readonly value="{{$proyek->masa_berlaku}}" placeholder="Belum ada masa berlaku">
+                            <input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control" readonly value="{{$proyek->masa_berlaku}}">
                         </div>
                     </div>
 
                     <div id="new-masa" class="form-group row" style="display:none">
                         <label class="col-form-label col-lg-2">Update Masa Berlaku</label>
                         <div class="col-lg-10">
-                            <input id="new_mb" name="new_mb" type="text" class="form-control border-teal border-1 pickadate-accessibility" placeholder="Update Tanggal Masa Berlaku">
+                            <input id="new_mb" name="new_mb" type="text" class="form-control border-teal border-1 pickadate-accessibility">
                         </div>
                     </div>
 
@@ -240,6 +240,8 @@
                     $('#tipe_web, #tipe_app, #jl_web, #jl_app').val("").attr("required", false)
                     if (dropdown==5) {
                         $('#new-masa').show()
+                        $('#masa_berlaku').attr("placeholder", "Belum ada masa berlaku")
+                        $('#new_mb').attr("placeholder", "Update masa berlaku")
                     } else {
                         //$('#new-masa').hide()
                         $('#masa_berlaku').val("").attr("placeholder", "Tidak ada masa berlaku")
@@ -268,17 +270,19 @@
                     $('#masa_berlaku, #new_mb').attr("required", false)
                     if (dropdown==5) {
                         $('#new-masa').show()
-                        $('#masa_berlaku').attr("placeholder")
+                        $('#masa_berlaku').attr("placeholder", "Belum ada masa berlaku")
+                        $('#new_mb').attr("placeholder", "Update masa berlaku")
                     } else {
                         $('#new-masa').hide()
                         $('#masa_berlaku, #new_mb').val("").attr("placeholder", "Tidak ada masa berlaku")
                     }
                 } else {
-                    $('#div-tipe, #div-jl').show()
-                    $('#masa_berlaku').attr((("required", false), "placeholder"))
+                    $('#div-tipe, #div-jl, #new-masa').show()
+                    $('#masa_berlaku').attr({"required": false,"placeholder": "Belum ada masa berlaku"})
+                    $('#new_mb').attr({"required": true,"placeholder": "Update masa berlaku"})
                     if (dropdown==1) {
-                        $('#tipe_web, #jl_web').show().attr("required", true)
                         $('#tipe_app, #jl_app').hide().val("").attr("required", false)
+                        $('#tipe_web, #jl_web').show().attr("required", true)
                         $('#website').attr("required", true)
                     } else {
                         $('#tipe_web, #jl_web').hide().val("").attr("required", false)
@@ -296,9 +300,9 @@
                 if (dropdown_app==4 || dropdown_web==4) {
                     $('#new-masa').hide()
                     $('#masa_berlaku, #new_mb').val("").attr("placeholder", "Tidak ada masa berlaku")
-                } else {
+                } else if (dropdown_app==3 || dropdown_web==3 || dropdown_app==2 || dropdown_web==2 || dropdown_app==1 || dropdown_web==1 ) {
                     if ($('#masa_berlaku').val()==""){
-                        $('#masa_berlaku').attr((("required", false), "placeholder"))
+                        $('#masa_berlaku').attr({"required": false,"placeholder": "Belum ada masa berlaku"})
                         $('#new_mb').attr("required", true)
                     } else {
                         $('#masa_berlaku').attr("required", true)
@@ -315,7 +319,7 @@
                 } else {
                     $('#new-masa').show()
                     if ($('#masa_berlaku').val()==""){
-                        $('#masa_berlaku').attr((("required", false), "placeholder"))
+                        $('#masa_berlaku').attr("required", false)
                         $('#new_mb').attr("required", true)
                     } else {
                         $('#masa_berlaku').attr("required", true)
