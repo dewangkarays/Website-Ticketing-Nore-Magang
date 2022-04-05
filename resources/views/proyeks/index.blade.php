@@ -47,26 +47,38 @@
                 </tr>
             </thead>
             <tbody>
-            @if(!$proyeks->isEmpty())
+            @if(!$allItems->isEmpty())
                 @php ($i = 1)
-                @foreach($proyeks as $proyek)
+                @foreach($allItems as $proyek)
                 <tr>
                     <td>{{$i}}</td>
                     <td><div class="datatable-column-width">{{@$proyek->user ? $proyek->user->nama : '-'}}</div></td>
-                    <td><div class="datatable-column-width">{{$proyek->nama_proyek}}</div></td>
-                    <td><div class="datatable-column-width">{{$proyek->website}}</div></td>
-                    <td><div class="datatable-column-width">{{config('custom.jenis_proyek.'.$proyek->jenis_proyek)}}</div></td>
-                    <td><div class="datatable-column-width">{{config('custom.kelas_layanan.'.$proyek->tipe)}}</div></td>
-                    <td><div class="datatable-column-width">{{config('custom.jenis_layanan.'.$proyek->jenis_layanan)}}</div></td>
+                    <td><div class="datatable-column-width">{{$proyek->nama_proyek ? $proyek->nama_proyek : '-'}}</div></td>
+                    <td><div class="datatable-column-width">{{$proyek->website ? $proyek->website : '-'}}</div></td>
+                    <td><div class="datatable-column-width">{{$proyek->jenis_proyek ? config('custom.jenis_proyek.'.$proyek->jenis_proyek) : '-'}}</div></td>
+                    <td><div class="datatable-column-width">{{$proyek->tipe ? config('custom.kelas_layanan.'.$proyek->tipe) : '-'}}</div></td>
+                    <td><div class="datatable-column-width">{{$proyek->jenis_layanan ? config('custom.jenis_layanan.'.$proyek->jenis_layanan) : '-'}}</div></td>
                     <td align="center">
-                        @if($proyek->task_count == null )
-                            <span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$proyek->task_count}}</span>
+                        @if($proyek->task_count < 1 )
+                            <span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">0</span>
                         @else
                             <span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{$proyek->task_count}}</span>
                         @endif
                     </td>
-                    <td><div class="datatable-column-width">{{$proyek->masa_berlaku}}</div></td>
-                    <td><div class="datatable-column-width">{{$proyek->keterangan}}</div></td>
+                    <td>
+                        @if ($proyek->masa_berlaku == null)
+                            <div class="datatable-column-width text-center">-</div>
+                        @else
+                            @if ($proyek->masa_berlaku > $dateline)
+                                <span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{$proyek->masa_berlaku}}</span>
+                            @elseif ($proyek->masa_berlaku < $expired)
+                                <span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$proyek->masa_berlaku}}</span>
+                            @else
+                                <span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{$proyek->masa_berlaku}}</span>
+                            @endif
+                        @endif
+                    </td>
+                    <td><div class="datatable-column-width">{{$proyek->keterangan ? $proyek->keterangan : '-'}}</div></td>
                     <td align="center">
                         <div class="list-icons">
                             <div class="dropdown">
