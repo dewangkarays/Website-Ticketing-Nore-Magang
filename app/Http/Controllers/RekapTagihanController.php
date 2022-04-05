@@ -24,7 +24,7 @@ class RekapTagihanController extends Controller
      */
     public function index()
     {
-        $rekaptagihans = RekapTagihan::orderBy('jatuh_tempo')->get();
+        $rekaptagihans = RekapTagihan::all();
         $tagihans = Tagihan::all();
         $users = User::where('role','>=','80')->get();
         return view('rekaptagihans.index', compact('rekaptagihans','tagihans', 'users'));
@@ -48,7 +48,7 @@ class RekapTagihanController extends Controller
             $tagihans = Tagihan::orderBy('id')->get();
         }
         $users = User::where('role','>=',80)->get();
-        $users = $users->sortBy('kadaluarsa');
+        $users = $users->sortBy('nama');
         $penagih = Setting::first();
         $lastno = Nomor::first();
         return view('rekaptagihans.create',compact('users','penagih','lastno','requestUser','tagihans'));
@@ -125,10 +125,14 @@ class RekapTagihanController extends Controller
 
         $arrayid = $request->get('tagihan_id');
         $findtagihan = Tagihan::whereIn('id', $arrayid)->get();
-        $finduser = Tagihan::whereIn('user_id', $findtagihan)->get();
-        $data['tagihan_id'] = $findtagihan;
+        $finduser = $request->get('user_id');
+        // $data['tagihan_id'] = $arrayid;
+        $tagihans = $findtagihan;
+        $data['total'] = $tagihans->sum('jml_tagih');
+        foreach($tagihans as $tagihan){
+            $data['nama'] = $tagihan->nama;
+        }
         dd($data);
-
         $rekaptagihan = RekapTagihan::create($data);
         // dd($data);
         $rekaptagihan->save();

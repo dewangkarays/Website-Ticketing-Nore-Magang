@@ -57,11 +57,10 @@
                             <th>No</th>
                             <th><input type="checkbox" class="checked-all"></th>
                             <th>Nama</th>
-                            {{-- <th>Invoice</th> --}}
-                            <th>Nama Proyek</th>
+                            <th>Invoice</th>
                             <th>Tagihan</th>
                             <th>Keterangan</th>
-                            <th class="text-center">Actions</th>
+                            {{-- <th class="text-center">Actions</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -71,12 +70,11 @@
                         <tr>
                             <td>{{$i}}</td>
                             <td><input type="checkbox" name="tagihan_id[]" id="chk" value="{{ $tagihan->id }}"></td>
-                            <td><div class="datatable-column-width">{{@$tagihan->nama}}</div></td>
-                            {{-- <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td> --}}
-                            <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
+                            <td><div class="datatable-column-width">{{$tagihan->nama}}</div></td>
+                            <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
                             <td><div class="datatable-column-width">Rp @angka($tagihan->nominal)</div></td>
                             <td><div class="datatable-column-width">{{$tagihan->keterangan}}</div></td>
-                            <td align="center">
+                            {{-- <td align="center">
                                 <div class="list-icons">
                                     <div class="dropdown">
                                         <a href="#" class="list-icons-item" data-toggle="dropdown">
@@ -91,7 +89,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </td>
+                            </td> --}}
                         </tr>
                         @php ($i++)
                         @endforeach
@@ -106,9 +104,9 @@
 
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Pelanggan</label>
-						<div class="col-lg-10">
-                            <input type="hidden" name="user_id" value="{{ $tagihans[0]->user_id }}">
-                        </div>
+					<div class="col-lg-10">
+						<input type="hidden" name="user_id" value="{{ $tagihans[0]->user_id }}">
+					</div>
                 </div>
 
                 <div class="form-group row">
@@ -168,16 +166,158 @@
 <script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
+<script src="{{asset('global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+
 
 <script src="{{asset('assets/js/app.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
-<script type="text/javascript">
-	// get token
-	let getToken = function() {
-		return $('meta[name=csrf-token]').attr('content')
-	}
 
+<script type="text/javascript">
+
+	// Initialize
+	$('.select-search').select2();
+
+	// Initialize
+	var $select = $('.form-control-select2').select2({
+		minimumResultsForSearch: Infinity
+	});
+
+	// Trigger value change when selection is made
+	$('#user_id').ready(function() {
+		$(this).trigger('blur');
+		var dropdown=$('#user_id option:selected').val()
+		console.log(dropdown)
+		if (dropdown!=0) {
+			$('#card-rekap').show()
+		} else {
+			$('#card-rekap').hide()
+		}
+	});
+</script>
+<script>
+	//modal delete
+	$(document).on("click", ".delbutton", function () {
+		 var url = $(this).data('uri');
+		 $("#delform").attr("action", url);
+	});
+
+	var DatatableBasic = function() {
+
+		// Basic Datatable examples
+		var _componentDatatableBasic = function() {
+			if (!$().DataTable) {
+				console.warn('Warning - datatables.min.js is not loaded.');
+				return;
+			}
+
+			// Setting datatable defaults
+			$.extend( $.fn.dataTable.defaults, {
+				autoWidth: false,
+				columnDefs: [{
+					orderable: false,
+					// width: 100,
+					targets: [ 1,2,3,4,5 ],
+				}],
+				dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+				language: {
+					search: '<span>Filter:</span> _INPUT_',
+					searchPlaceholder: 'Type to filter...',
+					lengthMenu: '<span>Show:</span> _MENU_',
+					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
+				}
+			});
+
+			// Basic datatable
+			$('.datatable-basic').DataTable();
+
+			// Alternative pagination
+			$('.datatable-pagination').DataTable({
+				pagingType: "simple",
+				language: {
+					paginate: {'next': $('html').attr('dir') == 'rtl' ? 'Next &larr;' : 'Next &rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr; Prev' : '&larr; Prev'}
+				}
+			});
+
+			// Datatable with saving state
+			$('.datatable-save-state').DataTable({
+				stateSave: true
+			});
+
+			// Scrollable datatable
+			var table = $('.datatable-scroll-y').DataTable({
+				autoWidth: true,
+				scrollY: 300
+			});
+
+			// Resize scrollable table when sidebar width changes
+			$('.sidebar-control').on('click', function() {
+				table.columns.adjust().draw();
+			});
+		};
+
+		// Select2 for length menu styling
+		var _componentSelect2 = function() {
+			if (!$().select2) {
+				console.warn('Warning - select2.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			$('.dataTables_length select').select2({
+				minimumResultsForSearch: Infinity,
+				dropdownAutoWidth: true,
+				width: 'auto'
+			});
+		};
+
+
+		//
+		// Return objects assigned to module
+		//
+
+		return {
+			init: function() {
+				_componentDatatableBasic();
+				_componentSelect2();
+			}
+		}
+	}();
+
+
+	// Initialize module
+	// ------------------------------
+
+	document.addEventListener('DOMContentLoaded', function() {
+		DatatableBasic.init();
+	});
+</script>
+
+<script type="text/javascript">
+	$('.checked-all').on('change', function(e){
+		e.preventDefault()
+		$('input[id=chk]').prop('checked', this.checked)
+	});
+</script>
+
+<script type="text/javascript">
+	$('#user_id').change(function(){
+		let uri = $('#btn_submit').data('uri');
+		let val = $(this).val();
+		let href = `${uri}?c=${val}`;
+
+		$('#btn_submit').attr('href', href);
+
+		// if($('#btn_submit').click(function (){
+		//     $('#form-datatable').show();
+		// }));
+		// if($('#btn_reset').click(function (){
+		//     $('#form-datatable').hide();
+		// }));
+	})
+</script>
+
+<script>
 	// Accessibility labels
 	$('.pickadate-accessibility').pickadate({
 		labelMonthNext: 'Go to the next month',
@@ -188,228 +328,28 @@
 		selectYears: true,
 		format: 'yyyy-mm-dd',
 	});
+</script>
 
-	$('#user_id').on('change', function(){
-		var id_proyek = $('#user_id option:selected').val();
-		var pnama = $('#user_id option:selected').data('pnama');
-
-		$('#nama').val(pnama);
-		$('#select_proyek').find('option').not(':first').remove();
-		$('#nama_proyek').val('');
-
-		$.ajax({
-			type: 'get',
-			url : '{{url("getkadaluarsa")}}/'+id_proyek,
-			success : function(data){
-				// $('#kadaluarsa').val(data);
-				$('#kadaluarsa').text(data);
-				console.log('Success');
-			},
-			error:function(data){
-				console.log('Error',data);
-			}
-		});
-
-		$.ajax({
-			url : '{{url("getproyek")}}/'+id_proyek,
-			type: 'get',
-			dataType: 'json',
-			success : function(res){
-				var len = 0;
-				if(res['data'] != null){
-					len = res['data'].length;
-				}
-				// alert(len);
-				if(len > 0){
-					// Read data and create <option >
-						for(var i=0; i<len; i++){
-
-							var id = res['data'][i].id;
-							var website = res['data'][i].website;
-							var jenis = res['data'][i].jenis_layanan;
-
-							var option = "<option value='"+id+"' data-jenis='"+jenis+"'>"+website+"</option>";
-
-							$("#select_proyek").append(option);
-						}
-					}
-					console.log('Success2');
-				},
-				error:function(data){
-					console.log('Error2',data);
-				}
+<script type="text/javascript">
+	$( document ).ready(function() {
+		// Default style
+		@if(session('error'))
+			new PNotify({
+				title: 'Error',
+				text: '{{ session('error') }}.',
+				icon: 'icon-blocked',
+				type: 'error'
 			});
-
-		});
-
-		$('#select_proyek').on('change',function() {
-			var proyek = $('#select_proyek option:selected').text();
-			var jenis = $('#select_proyek option:selected').data('jenis');
-			$('#nama_proyek').val(proyek);
-            var id_proyek = $('#select_proyek option:selected').val();
-			$('#id_proyek').val(id_proyek);
-			if (jenis==3) {
-				$('#div-masaberlaku').hide();
-				$('#masa-berlaku').prop('disabled', true);
-			}
-			else{
-				$('#div-masaberlaku').show();
-				$.ajax({
-					type: 'get',
-					url : '{{url("getmasa_berlaku")}}/'+id_proyek,
-					success : function(data){
-						// $('#kadaluarsa').val(data);
-						$('#masa_berlaku').val(data);
-						$('#masa_berlaku').text(data);
-						console.log('Success');
-					},
-					error:function(data){
-						console.log('Error',data);
-					}
-				});
-			}
-		});
-
-		var FormValidation = function() {
-
-			// Validation config
-			var _componentValidation = function() {
-				if (!$().validate) {
-					console.warn('Warning - validate.min.js is not loaded.');
-					return;
-				}
-
-				// Initialize
-				var validator = $('#form_tagihan').validate({
-					ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
-					errorClass: 'validation-invalid-label',
-					//successClass: 'validation-valid-label',
-					validClass: 'validation-valid-label',
-					highlight: function(element, errorClass) {
-						$(element).removeClass(errorClass);
-					},
-					unhighlight: function(element, errorClass) {
-						$(element).removeClass(errorClass);
-					},
-					// success: function(label) {
-						//    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
-						//},
-
-						// Different components require proper error label placement
-						errorPlacement: function(error, element) {
-
-							// Unstyled checkboxes, radios
-							if (element.parents().hasClass('form-check')) {
-								error.appendTo( element.parents('.form-check').parent() );
-							}
-
-							// Input with icons and Select2
-							else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
-								error.appendTo( element.parent() );
-							}
-
-							// Input group, styled file input
-							else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
-								error.appendTo( element.parent().parent() );
-							}
-
-							// Other elements
-							else {
-								error.insertAfter(element);
-							}
-						},
-						rules: {
-							select_proyek:{
-								required : true
-							},
-							langganan:{
-								required : true
-							},
-							ads:{
-								required : true
-							},
-							lainnya:{
-								required : true
-							}
-						},
-						messages: {
-							select_proyek:{
-								required : 'Mohon diisi'
-							},
-							langganan:{
-								required : 'Mohon diisi'
-							},
-							ads:{
-								required : 'Mohon diisi'
-							},
-							lainnya:{
-								required : 'Mohon diisi'
-							}
-						},
-					});
-
-					// Reset form
-					$('#reset').on('click', function() {
-						validator.resetForm();
-					});
-				};
-
-				// Return objects assigned to module
-				return {
-					init: function() {
-						_componentValidation();
-					}
-				}
-			}();
-
-
-			// Initialize module
-			// ------------------------------
-
-			document.addEventListener('DOMContentLoaded', function() {
-				FormValidation.init();
+		@endif
+		@if ( session('success'))
+			new PNotify({
+				title: 'Success',
+				text: '{{ session('success') }}.',
+				icon: 'icon-checkmark3',
+				type: 'success'
 			});
-		</script>
-		<script type="text/javascript">
-			$( document ).ready(function() {
+		@endif
 
-				// Default style
-				@if(session('error'))
-				new PNotify({
-					title: 'Error',
-					text: '{{ session('error') }}.',
-					icon: 'icon-blocked',
-					type: 'error'
-				});
-				@endif
-				@if ( session('success'))
-				new PNotify({
-					title: 'Success',
-					text: '{{ session('success') }}.',
-					icon: 'icon-checkmark3',
-					type: 'success'
-				});
-				@endif
-				@if ($errors->any())
-				new PNotify({
-					title: 'Error',
-					text: 'Nomor Invoice Sudah Terambil, input kembali.',
-					icon: 'icon-blocked',
-					type: 'error'
-				});
-
-				@elseif ($errors->has('ninv'))
-				@foreach ($errors->all() as $error)
-				new PNotify({
-					title: 'Error',
-					text: '{{ $error }}.',
-					icon: 'icon-blocked',
-					type: 'error'
-				});
-				@endforeach
-
-				@endif
-
-			});
-		</script>
+	});
+</script>
 @endsection

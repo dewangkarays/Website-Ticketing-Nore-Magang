@@ -39,24 +39,24 @@
                                 {{-- <th><input type="checkbox" class="checked-all"></th> --}}
                                 <th>Nama</th>
                                 <th>Invoice</th>
-                                <th>Nama Proyek</th>
                                 <th>Tagihan</th>
                                 <th>Keterangan</th>
+                                <th>Status</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @if(!$tagihans->isEmpty())
+                        @if(!$rekaptagihans->isEmpty())
                             @php ($i = 1)
-                            @foreach($tagihans as $tagihan)
+                            @foreach($rekaptagihans as $rekaptagihan)
                             <tr>
                                 <td>{{$i}}</td>
                                 {{-- <td><input type="checkbox" name="invoice[]" id="chk" value="{{ $tagihan->id }}"></td> --}}
-                                <td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
-                                <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
-                                <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
-                                <td><div class="datatable-column-width">Rp @angka($tagihan->nominal)</div></td>
-                                <td><div class="datatable-column-width">{{$tagihan->keterangan}}</div></td>
+                                <td><div class="datatable-column-width">{{$rekaptagihan->nama}}</div></td>
+                                <td><div class="datatable-column-width">{{$rekaptagihan->invoice}}</div></td>
+                                <td><div class="datatable-column-width">Rp @angka($rekaptagihan->nominal)</div></td>
+                                <td><div class="datatable-column-width">{{$rekaptagihan->status}}</div></td>
+                                <td><div class="datatable-column-width">{{$rekaptagihan->keterangan}}</div></td>
                                 <td align="center">
                                     <div class="list-icons">
                                         <div class="dropdown">
@@ -65,10 +65,10 @@
                                             </a>
         
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="{{ route('tagihans.edit',$tagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-                                                <a href="{{url('/tagihans/cetak/'.$tagihan->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
-                                                <a href="{{url('/tagihans/lampiran/'.$tagihan->id)}}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a>
-                                                <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tagihans.destroy', $tagihan->id)}}"><i class="icon-x"></i> Delete</a>
+                                                <a href="{{ route('tagihans.edit',$rekaptagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+                                                <a href="{{url('/tagihans/cetak/'.$rekaptagihan->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
+                                                <a href="{{url('/tagihans/lampiran/'.$rekaptagihan->id)}}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a>
+                                                <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tagihans.destroy', $rekaptagihan->id)}}"><i class="icon-x"></i> Delete</a>
                                             </div>
                                         </div>
                                     </div>
@@ -82,9 +82,6 @@
 
                         </tbody>
                     </table>
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-success">Print <i class="icon-printer4 ml-2"></i></button>
-                    </div>
                 </form>
             </div>
 		</div>
@@ -146,7 +143,8 @@
 		            autoWidth: false,
 		            columnDefs: [{
 		                orderable: false,
-		                targets: [ 1,2,3,4,5,6 ]
+		                // width: 100,
+		                targets: [ 1,2,3,4,5,6 ],
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -186,6 +184,19 @@
 		    };
 
 		    // Select2 for length menu styling
+		    var _componentSelect2 = function() {
+		        if (!$().select2) {
+		            console.warn('Warning - select2.min.js is not loaded.');
+		            return;
+		        }
+
+		        // Initialize
+		        $('.dataTables_length select').select2({
+		            minimumResultsForSearch: Infinity,
+		            dropdownAutoWidth: true,
+		            width: 'auto'
+		        });
+		    };
 
 
 		    //
@@ -195,6 +206,7 @@
 		    return {
 		        init: function() {
 		            _componentDatatableBasic();
+		            _componentSelect2();
 		        }
 		    }
 		}();
