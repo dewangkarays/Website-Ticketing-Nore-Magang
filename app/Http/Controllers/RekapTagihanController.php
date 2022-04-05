@@ -41,7 +41,7 @@ class RekapTagihanController extends Controller
         if($request->get('c'))
         {
             $requestUser = $request->get('c');
-            $tagihans = Tagihan::where('user_id',$requestUser)->orderBy('id')->get();
+            $tagihans = Tagihan::where('user_id',$requestUser)->whereNull('rekap_tagihan_id')->orderBy('id')->get();
         }
         else
         {
@@ -125,17 +125,26 @@ class RekapTagihanController extends Controller
 
         $arrayid = $request->get('tagihan_id');
         $findtagihan = Tagihan::whereIn('id', $arrayid)->get();
-        $finduser = $request->get('user_id');
-        // $data['tagihan_id'] = $arrayid;
         $tagihans = $findtagihan;
+        $finduser = User::find($data['user_id']);
+        $data['nama'] = $finduser->nama;
         $data['total'] = $tagihans->sum('jml_tagih');
-        foreach($tagihans as $tagihan){
-            $data['nama'] = $tagihan->nama;
+        $uangmuka = $tagihans->sum('uang_muka');
+        $data['uang_muka'] = $uangmuka;
+        if($data['uang_muka'] != 0){
+            $data['status'] = 1;
         }
-        dd($data);
-        $rekaptagihan = RekapTagihan::create($data);
+        else{
+            $data['status'] = 0;
+        }
         // dd($data);
+        $rekaptagihan = RekapTagihan::create($data);
         $rekaptagihan->save();
+        foreach($tagihans as $tagihan){
+            $tagihan->update([
+                'rekap_tagihan_id'=> $rekaptagihan->id,
+            ]);
+        }
 
         return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan saved!');
     }
@@ -182,18 +191,19 @@ class RekapTagihanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 
-    public function cetakrekap(Request $request)
+    public function cetakrekap(Request $request, $id)
     {
-        $arrayid = $request->get('tagihan');
-        $findtagihan = Tagihan::whereIn('id', $arrayid)->get();
-        $invoices = $findtagihan;
+        $rekap = RekapTagihan::find($id);
+        // $arrayid = $request->get('tagihan');
+        $invoices = Tagihan::where('rekap_tagihan_id', $rekap->id)->get();
+        // dd($invoices);
         $lampirans = Lampiran_gambar::where('tagihan_id')->orderBy('id', 'asc')->get();
         $setting = Setting::first();
         // dd($invoices->sum('nominal'));
-        $pdf = PDF::loadview('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'))->setPaper('a4', 'potrait');
+        $pdf = PDF::loadview('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','rekap'))->setPaper('a4', 'potrait');
         return $pdf->stream();
         // return view('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'));
     }

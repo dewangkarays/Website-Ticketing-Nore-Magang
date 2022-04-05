@@ -23,7 +23,7 @@ class TagihanController extends Controller
      */
     public function index()
     {
-        $tagihans = Tagihan::orderBy('id')->get();
+        $tagihans = Tagihan::orderBy('id')->whereNull('rekap_tagihan_id')->get();
         $proyeks = Proyek::all();
         return view('tagihans.index', compact('tagihans', 'proyeks'));
     }

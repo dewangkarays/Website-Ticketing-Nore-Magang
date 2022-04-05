@@ -141,6 +141,12 @@
                     </div>
                     {{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
                 </div>
+				<div class="form-group row">
+					<label class="col-form-label col-lg-2">Keterangan</label>
+					<div class="col-lg-10">
+						<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}">
+					</div>
+				</div>
 
                 <div class="text-right">
                     <a href="{{ route('rekaptagihans.index') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>

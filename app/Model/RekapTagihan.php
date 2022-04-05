@@ -17,6 +17,6 @@ class RekapTagihan extends Model
     
     public function user()
     {
-        return $this->hasMany('App\Model\User', 'user_id', 'id');
+        return $this->belongsTo('App\Model\User', 'user_id', 'id');
     }
 }

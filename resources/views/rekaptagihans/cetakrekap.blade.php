@@ -111,7 +111,7 @@
                     <br>
                     <p>
                         <b>Nomor: <br></b>
-                        Nomor Invoice
+                        {{ $rekap->invoice }}
                     </p>
                     <p>
                         <b>Tanggal: <br></b>
@@ -119,7 +119,7 @@
                     </p>
                     <p>
                         <b>Jatuh Tempo: <br></b>
-                        Tanggal Jatuh Tempo
+                        {{ date('d F Y', strtotime($rekap->jatuh_tempo)) }}
                     </p>
                 </td>
             </tr>
@@ -132,13 +132,14 @@
                 <tr>
                     <td style="width: 50%; vertical-align: top">
                         <table style="padding-right: 50px; line-height: 1.75;">
+                            {{-- @foreach ($invoices as $invoice) --}}
                             <tr>
                                 <td><b>Kepada Yth.</b></td>
                             </tr>
 
                             <tr>
                                 <td style="text-transform: uppercase;">
-                                    {{$invoices[0]->nama ? $invoices[0]->nama : $invoices[0]->user->nama}}
+                                    {{$rekap->nama ? $rekap->nama : $rekap->user->nama}}
                                 </td>
                             </tr>
 
@@ -150,7 +151,7 @@
 
                             <tr>
                                 <td>
-                                    {{$invoices[0]->username ? $invoices[0]->username : $invoices[0]->user->username}}
+                                    {{$rekap->username ? $rekap->username : $rekap->user->username}}
                                 </td>
                             </tr>
 
@@ -162,9 +163,10 @@
 
                             <tr style="width: 200px;">
                                 <td>
-                                    {{$invoices[0]->user->alamat}}
+                                    {{$rekap->user->alamat}}
                                 </td>
                             </tr>
+                            {{-- @endforeach --}}
                         </table>
                     </td>
                 </tr>
@@ -213,12 +215,12 @@
                 <tr>
                     <td></td>
                     <td align="left">Pembayaran Uang Muka</td>
-                    <td align="right">0</td>
+                    <td align="right">@angka($invoices->sum('uang_muka'))</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td align="left">Sisa Tagihan</td>
-                    <td align="right">@angka($invoices->sum('nominal'))</td>
+                    <td align="right">@angka($invoices->sum('jml_tagih'))</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -231,7 +233,7 @@
                         <b class="nore-fontcolor" style="font-size: 12px">TOTAL YANG HARUS DIBAYAR</b>
                     </td>
                     <td align="right">
-                        <b class="nore-fontcolor" style="font-size: 12px">@angka($invoices->sum('nominal'))</b>
+                        <b class="nore-fontcolor" style="font-size: 12px">@angka($rekap->total)</b>
                     </td>
                 </tr>
             </table>
