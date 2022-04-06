@@ -54,25 +54,25 @@
                                 {{-- <td><input type="checkbox" name="invoice[]" id="chk" value="{{ $tagihan->id }}"></td> --}}
                                 <td><div class="datatable-column-width">{{$rekaptagihan->nama}}</div></td>
                                 <td><div class="datatable-column-width">{{$rekaptagihan->invoice}}</div></td>
-                                <td><div class="datatable-column-width">Rp @angka($rekaptagihan->nominal)</div></td>
+                                <td><div class="datatable-column-width">Rp @angka($rekaptagihan->total)</div></td>
                                 <td><div class="datatable-column-width">{{$rekaptagihan->keterangan}}</div></td>
                                 <td><div class="datatable-column-width">{{config('custom.tagihan_status.' .@$rekaptagihan->status)}}</div></td>
                                 <td align="center">
-									<a href="{{url('cetakrekap/'.$rekaptagihan->id)}}" class="btn btn-info"><i class="icon-printer2 mr-2"></i> Print</a>
-                                    {{-- <div class="list-icons">
+									{{-- <a href="{{url('cetakrekap/'.$rekaptagihan->id)}}" class="btn btn-info"><i class="icon-printer2 mr-2"></i> Print</a> --}}
+                                    <div class="list-icons">
                                         <div class="dropdown">
                                             <a href="#" class="list-icons-item" data-toggle="dropdown">
                                                 <i class="icon-menu9"></i>
                                             </a>
         
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="{{ route('tagihans.edit',$rekaptagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+                                                {{-- <a href="{{ route('tagihans.edit',$rekaptagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a> --}}
                                                 <a href="{{url('cetakrekap/'.$rekaptagihan->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
-                                                <a href="{{url('/tagihans/lampiran/'.$rekaptagihan->id)}}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a>
-                                                <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tagihans.destroy', $rekaptagihan->id)}}"><i class="icon-x"></i> Delete</a>
+                                                {{-- <a href="{{url('/tagihans/lampiran/'.$rekaptagihan->id)}}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a> --}}
+                                                <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('rekaptagihans.destroy', $rekaptagihan->id)}}"><i class="icon-x"></i> Delete</a>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                 </td>
                             </tr>
                             @php ($i++)
@@ -88,7 +88,32 @@
 		</div>
 		<!-- /hover rows -->
     </div>
-    <!-- Content Area -->
+    <!-- /content Area -->
+
+	<!-- Danger Modal -->
+	<div id="modal_theme_danger" class="modal fade" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header bg-danger" align="center">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<form action="" method="post" id="delform">
+				    @csrf
+				    @method('DELETE')
+					<div class="modal-body" align="center">
+						<h2> Hapus Data? </h2>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link" data-dismiss="modal">Batal</button>
+						<button type="submit" class="btn bg-danger">Hapus</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- /danger modal -->
 @endsection
 
 @section('js')

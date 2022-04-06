@@ -214,8 +214,8 @@ class TagihanController extends Controller
             $data['lainnya'] = 0;
         }
 
-        if($request->get('uang_muka')!=''){
-            $data['uang_muka'] = $request->get('uang_muka');
+        if($request->get('uang_muka')==''){
+            $data['uang_muka'] = 0;
         }
 
         if($request->get('masa_berlaku')!=''){

@@ -191,7 +191,17 @@ class RekapTagihanController extends Controller
      */
     public function destroy($id)
     {
-        
+        $rekaptagihan = RekapTagihan::find($id);
+        $tagihans = Tagihan::whereIn('rekap_tagihan_id', $rekaptagihan)->get();
+        // dd($tagihans);
+        $rekaptagihan->delete();
+        foreach($tagihans as $tagihan){
+            $tagihan->update([
+                'rekap_tagihan_id' => null,
+            ]);
+        }
+
+        return redirect('/rekaptagihans')->with('success', 'Rekap tagihan deleted!');
     }
 
     public function cetakrekap(Request $request, $id)
