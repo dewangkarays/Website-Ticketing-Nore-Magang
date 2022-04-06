@@ -63,7 +63,7 @@
                             @endif
 						</div>
 					</div>
-					@if ($tagihan->proyek->jenis_layanan == 3)
+					@if (@$tagihan->proyek->jenis_layanan == 3)
 						<div class="form-group row" style="display: none;">
 							<label class="col-form-label col-lg-2">Update Masa Berlaku</label>
 							<div class="col-lg-10">

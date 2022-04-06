@@ -259,7 +259,7 @@
             let val = $(this).val();
             let href = `${uri}?c=${val}`;
 
-            // $('#btn_submit').attr('href', href);
+            $('#btn_submit').attr('href', href);
 
             // if($('#btn_submit').click(function (){
             //     $('#form-datatable').show();

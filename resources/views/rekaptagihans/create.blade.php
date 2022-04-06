@@ -69,11 +69,11 @@
                         @foreach($tagihans as $tagihan)
                         <tr>
                             <td>{{$i}}</td>
-                            <td><input type="checkbox" name="tagihan_id[]" id="chk" value="{{ $tagihan->id }}"></td>
-                            <td><div class="datatable-column-width">{{$tagihan->nama}}</div></td>
-                            <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td>
-                            <td><div class="datatable-column-width">Rp @angka($tagihan->nominal)</div></td>
-                            <td><div class="datatable-column-width">{{$tagihan->keterangan}}</div></td>
+                            <td><input type="checkbox" name="tagihan_id[]" id="chk" value="{{ @$tagihan->id }}"></td>
+                            <td><div class="datatable-column-width">{{@$tagihan->nama}}</div></td>
+                            <td><div class="datatable-column-width">{{@$tagihan->invoice}}</div></td>
+                            <td><div class="datatable-column-width">Rp @angka(@$tagihan->nominal)</div></td>
+                            <td><div class="datatable-column-width">{{@$tagihan->keterangan}}</div></td>
                             {{-- <td align="center">
                                 <div class="list-icons">
                                     <div class="dropdown">
@@ -103,55 +103,58 @@
                 <hr>
 
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Pelanggan</label>
 					<div class="col-lg-10">
-						<input type="hidden" name="user_id" value="{{ $tagihans[0]->user_id }}">
+						<input type="hidden" name="user_id" value="{{ @$tagihans[0]->user_id }}">
 					</div>
                 </div>
-
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-2 font-weight-bold">Nomor Invoice</label>
-                    <div class="col-lg-1">
-                        <input type="text" id="noinv" name="noinv" class="form-control border-info border-1" value="INV" readonly>
-                    </div>
-                    <div class="col-lg-2">
-                        @if ($lastno)
-                        @if (isset($lastno->ninv))
-                        <input type="text" id="ninv" name="ninv" class="form-control border-info border-1" value="{{$lastno->ninv+1}}" required>
-                        @endif
-                        @else
-                        <input type="text" id="ninv" name="ninv" class="form-control border-info border-1" value="1" required>
-                        @endif
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="text" id="noakhir" name="noakhir" class="form-control border-info border-1" value="{{date('Ymd')}}" readonly>
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="text" id="nouser" name="nouser" class="form-control border-info border-1" value="{{\Auth::user()->id}}" readonly>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Jatuh Tempo</label>
-                    <div class="col-lg-10">
-                        <input id="jatuh_tempo" name="jatuh_tempo" type="text" class="form-control pickadate-accessibility"  value="{{old('jatuh_tempo')}}" placeholder="Tanggal Jatuh Tempo">
-                        {{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
-                    </div>
-                    {{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
-                </div>
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Keterangan</label>
-					<div class="col-lg-10">
-						<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}">
+				@if (!$tagihans->isEmpty())
+					<legend class="text-uppercase font-size-sm font-weight-bold">Data Rekap Tagihan</legend>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2 font-weight-bold">Nomor Invoice</label>
+						<div class="col-lg-1">
+							<input type="text" id="noinv" name="noinv" class="form-control border-info border-1" value="INV" readonly>
+						</div>
+						<div class="col-lg-2">
+							@if ($lastno)
+							@if (isset($lastno->ninv))
+							<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" value="{{$lastno->ninv+1}}" required>
+							@endif
+							@else
+							<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" value="1" required>
+							@endif
+						</div>
+						<div class="col-lg-2">
+							<input type="text" id="noakhir" name="noakhir" class="form-control border-info border-1" value="{{date('Ymd')}}" readonly>
+						</div>
+						<div class="col-lg-2">
+							<input type="text" id="nouser" name="nouser" class="form-control border-info border-1" value="{{\Auth::user()->id}}" readonly>
+						</div>
 					</div>
-				</div>
 
-                <div class="text-right">
-                    <a href="{{ route('rekaptagihans.index') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
-                    <button type="submit" class="btn btn-success">Submit <i class="icon-paperplane ml-2"></i></button>
-                </div>
+					<hr>
+
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Jatuh Tempo</label>
+						<div class="col-lg-10">
+							<input id="jatuh_tempo" name="jatuh_tempo" type="text" class="form-control pickadate-accessibility"  value="{{old('jatuh_tempo')}}" placeholder="Tanggal Jatuh Tempo">
+							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
+						</div>
+						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Keterangan</label>
+						<div class="col-lg-10">
+							<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}">
+						</div>
+					</div>
+
+					<div class="text-right">
+						<a href="{{ route('rekaptagihans.index') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
+						<button type="submit" class="btn btn-success">Submit <i class="icon-paperplane ml-2"></i></button>
+					</div>
+				@else
+					
+				@endif
             </form>
         </div>
     </div>
