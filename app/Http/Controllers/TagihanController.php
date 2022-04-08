@@ -88,8 +88,8 @@ class TagihanController extends Controller
             $data['uang_muka'] = 0;
         }
 
-        if($request->get('masa_berlaku')!=''){
-            $data['masa_berlaku'] = $request->get('masa_berlaku');
+        if($request->get('new_mb')!=''){
+            $data['masa_berlaku'] = $request->get('new_mb');
         }
 
         // // FORMAT INVOICE
@@ -148,7 +148,7 @@ class TagihanController extends Controller
         // }
 
         $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
-        
+
         $user = User::find($data['user_id']);
         $data['nama'] = $user->nama;
 
@@ -218,8 +218,8 @@ class TagihanController extends Controller
             $data['uang_muka'] = 0;
         }
 
-        if($request->get('masa_berlaku')!=''){
-            $data['masa_berlaku'] = $request->get('masa_berlaku');
+        if($request->get('new_mb')!=''){
+            $data['masa_berlaku'] = $request->get('new_mb');
         }
 
         $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
@@ -405,7 +405,7 @@ class TagihanController extends Controller
         $lastno = Nomor::first();
         return view('rekaptagihans.create',compact('users','penagih','lastno'));
     }
-    
+
     public function rekaptagihan(Request $request)
     {
         $requestUser = '';

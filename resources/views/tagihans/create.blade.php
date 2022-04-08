@@ -73,29 +73,42 @@
 						</div>
 					</div> --}}
 					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Proyek</label>
+						<label class="col-form-label col-lg-2">Nama Proyek</label>
 						<div class="col-lg-10">
 							<select id="select_proyek" name="select_proyek" class="form-control select-search">
 								<option value="">-- Pilih Proyek --</option>
 							</select>
+                            <input type="hidden" id="id_proyek" name="id_proyek" class="form-control border-teal border-1" value="{{old('id_proyek')}}">
+							<input type="hidden" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
 						</div>
 					</div>
-					<div class="form-group row">
+					{{--div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Proyek</label>
 						<div class="col-lg-10">
                             <input type="hidden" id="id_proyek" name="id_proyek" class="form-control border-teal border-1" value="{{old('id_proyek')}}">
 							<input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
 						</div>
-					</div>
+					</div> --}}
                     <div class="form-group row" id="div-masaberlaku">
-						<label class="col-form-label col-lg-2">Update Masa Berlaku</label>
+						<label class="col-form-label col-lg-2">Masa Berlaku</label>
 						<div class="col-lg-10">
-							<input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control pickadate-accessibility"  value="{{old('masa_berlaku')}}" placeholder="Tanggal Masa Berlaku">
-							<span class="form-text text-muted">Ubah jika ingin perpanjang masa berlaku</span>
+							<input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control"  readonly value="{{old('masa_berlaku')}}" placeholder="Tanggal Masa Berlaku">
 							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
 						</div>
 						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
 					</div>
+
+                    @if (@$tagihan->proyek->jenis_layanan==4 || @$tagihan->proyek->jenis_proyek==2)
+
+                    @else
+                        <div id="new-masa" class="form-group row">
+                            <label class="col-form-label col-lg-2">Update Masa Berlaku</label>
+                            <div class="col-lg-10">
+                                <input id="new_mb" name="new_mb" type="text" class="form-control border-teal border-1 pickadate-accessibility" placeholder="Ubah jika ingin perpanjang masa berlaku">
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="form-group row">
 						<label class="col-form-label col-lg-2">Nominal</label>
 						<div class="col-lg-10">
@@ -246,10 +259,10 @@
 						for(var i=0; i<len; i++){
 
 							var id = res['data'][i].id;
-							var website = res['data'][i].website;
+							var nama_proyek = res['data'][i].nama_proyek;
 							var jenis = res['data'][i].jenis_layanan;
 
-							var option = "<option value='"+id+"' data-jenis='"+jenis+"'>"+website+"</option>";
+							var option = "<option value='"+id+"' data-jenis='"+jenis+"'>"+nama_proyek+"</option>";
 
 							$("#select_proyek").append(option);
 						}
