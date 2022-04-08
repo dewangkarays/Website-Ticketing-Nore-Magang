@@ -49,7 +49,7 @@
     
     <div class="card" id="card-rekap">
         <div class="card-body">
-            <form method="POST" action="{{ route('rekaptagihans.store') }}">
+            <form id="form_rekap" class="form-validate-jquery" method="POST" action="{{ route('rekaptagihans.store') }}">
                 @csrf
                 <table class="table datatable-basic table-hover">
                     <thead>
@@ -136,7 +136,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Jatuh Tempo</label>
 						<div class="col-lg-10">
-							<input id="jatuh_tempo" name="jatuh_tempo" type="text" class="form-control pickadate-accessibility"  value="{{old('jatuh_tempo')}}" placeholder="Tanggal Jatuh Tempo">
+							<input id="jatuh_tempo" name="jatuh_tempo" type="text" class="form-control pickadate-accessibility" value="{{old('jatuh_tempo')}}" placeholder="Tanggal Jatuh Tempo" required>
 							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
 						</div>
 						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
@@ -144,7 +144,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Keterangan</label>
 						<div class="col-lg-10">
-							<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}">
+							<input id="keterangan" type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}">
 						</div>
 					</div>
 
@@ -204,7 +204,7 @@
 		}
 	});
 </script>
-<script>
+<script type="text/javascript">
 	//modal delete
 	$(document).on("click", ".delbutton", function () {
 		 var url = $(this).data('uri');
@@ -326,7 +326,10 @@
 	})
 </script>
 
-<script>
+<script type="text/javascript">
+	let getToken = function() {
+		return $('meta[name=csrf-token]').attr('content')
+	}
 	// Accessibility labels
 	$('.pickadate-accessibility').pickadate({
 		labelMonthNext: 'Go to the next month',
@@ -340,25 +343,126 @@
 </script>
 
 <script type="text/javascript">
+	var FormValidation = function() {
+
+		// Validation config
+		var _componentValidation = function() {
+			if (!$().validate) {
+				console.warn('Warning - validate.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			var validator = $('#form_rekap').validate({
+				ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+				errorClass: 'validation-invalid-label',
+				//successClass: 'validation-valid-label',
+				validClass: 'validation-valid-label',
+				highlight: function(element, errorClass) {
+					$(element).removeClass(errorClass);
+				},
+				unhighlight: function(element, errorClass) {
+					$(element).removeClass(errorClass);
+				},
+				// success: function(label) {
+				// 	label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+				// },
+
+				// Different components require proper error label placement
+				errorPlacement: function(error, element) {
+
+					// Unstyled checkboxes, radios
+					if (element.parents().hasClass('form-check')) {
+						error.appendTo( element.parents('.form-check').parent() );
+					}
+
+					// Input with icons and Select2
+					else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+						error.appendTo( element.parent() );
+					}
+
+					// Input group, styled file input
+					else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+						error.appendTo( element.parent().parent() );
+					}
+
+					// Other elements
+					else {
+						error.insertAfter(element);
+					}
+				},
+				rules: {
+					jatuh_tempo:{
+						required : true
+					},
+				},
+				messages: {
+					jatuh_tempo:{
+						required : 'Mohon diisi'
+					},
+				},
+			});
+
+			// Reset form
+			$('#reset').on('click', function() {
+				validator.resetForm();
+			});
+		};
+
+		// Return objects assigned to module
+		return {
+			init: function() {
+				_componentValidation();
+			}
+		}
+	}();
+
+	// Initialize module
+	// ------------------------------
+
+	document.addEventListener('DOMContentLoaded', function() {
+		FormValidation.init();
+	});
+</script>
+
+<script type="text/javascript">
 	$( document ).ready(function() {
+
 		// Default style
 		@if(session('error'))
-			new PNotify({
-				title: 'Error',
-				text: '{{ session('error') }}.',
-				icon: 'icon-blocked',
-				type: 'error'
-			});
+		new PNotify({
+			title: 'Error',
+			text: '{{ session('error') }}.',
+			icon: 'icon-blocked',
+			type: 'error'
+		});
 		@endif
-		@if ( session('success'))
-			new PNotify({
-				title: 'Success',
-				text: '{{ session('success') }}.',
-				icon: 'icon-checkmark3',
-				type: 'success'
-			});
+		@if (session('success'))
+		new PNotify({
+			title: 'Success',
+			text: '{{ session('success') }}.',
+			icon: 'icon-checkmark3',
+			type: 'success'
+		});
 		@endif
+		@if ($errors->any())
+		new PNotify({
+			title: 'Error',
+			text: 'Nomor Invoice Sudah Terambil, input kembali.',
+			icon: 'icon-blocked',
+			type: 'error'
+		});
+		@elseif ($errors->has('ninv'))
+		@foreach ($errors->all() as $error)
+		new PNotify({
+			title: 'Error',
+			text: '{{ $error }}.',
+			icon: 'icon-blocked',
+			type: 'error'
+		});
+		@endforeach
 
+		@endif
 	});
 </script>
 @endsection

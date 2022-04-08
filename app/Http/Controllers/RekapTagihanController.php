@@ -68,6 +68,22 @@ class RekapTagihanController extends Controller
 
         $data = $request->except(['_token', '_method','noinv','ninv','noakhir','nouser','tagihan_id']);
 
+        $arrayid = $request->get('tagihan_id');
+        $findtagihan = Tagihan::whereIn('id', $arrayid)->get();
+        $tagihans = $findtagihan;
+        $finduser = User::find($data['user_id']);
+        $data['nama'] = $finduser->nama;
+        $data['total'] = $tagihans->sum('jml_tagih');
+        $uangmuka = $tagihans->sum('uang_muka');
+        $data['uang_muka'] = $uangmuka;
+
+        if($data['uang_muka'] != 0){
+            $data['status'] = 1;
+        }
+        else{
+            $data['status'] = 0;
+        }
+
         // FORMAT INVOICE
         $invoiceno = 01;
 
@@ -122,21 +138,7 @@ class RekapTagihanController extends Controller
                 $lastno = Nomor::create($lastno);
             }
         }
-
-        $arrayid = $request->get('tagihan_id');
-        $findtagihan = Tagihan::whereIn('id', $arrayid)->get();
-        $tagihans = $findtagihan;
-        $finduser = User::find($data['user_id']);
-        $data['nama'] = $finduser->nama;
-        $data['total'] = $tagihans->sum('jml_tagih');
-        $uangmuka = $tagihans->sum('uang_muka');
-        $data['uang_muka'] = $uangmuka;
-        if($data['uang_muka'] != 0){
-            $data['status'] = 1;
-        }
-        else{
-            $data['status'] = 0;
-        }
+        
         // dd($data);
         $rekaptagihan = RekapTagihan::create($data);
         $rekaptagihan->save();

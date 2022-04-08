@@ -75,7 +75,7 @@
 							<span style="font-size:100%;" class="badge badge-pill bg-info-400 ml-auto ml-md-0">{{config('custom.tagihan_status.'.$tagihan->status)}}</span>
 							@endif
 						</td> --}}
-						<td><div class="datatable-column-width">{{$tagihan->keterangan}}</div></td>
+						<td><div class="datatable-column-width">{!! $tagihan->keterangan !!}</div></td>
 				        <td align="center">
 							<div class="list-icons">
 								<div class="dropdown">

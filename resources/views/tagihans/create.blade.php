@@ -1,5 +1,13 @@
 @extends('layout')
 
+@section('css')
+<style type="text/css">
+	.input-error {
+		outline: 1px solid red;
+	}
+</style>
+@endsection
+
 @section('content')
 
 <!-- Page header -->
@@ -91,13 +99,15 @@
                     <div class="form-group row">
 						<label class="col-form-label col-lg-2">Nominal</label>
 						<div class="col-lg-10">
-							<input type="number" min="0" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" value="{{old('nominal')}}">
+							<input id="datanominal" type="hidden" name="nominal" value="{{old('nominal')}}" class="form-control border-teal border-1">
+							<input id="nilainominal" type="text" class="form-control border-teal border-1" placeholder="Nominal" onkeyup="ribuan()" value="{{old('nominal')}}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Uang Muka</label>
 						<div class="col-lg-10">
-							<input type="number" min="0" name="uang_muka" class="form-control border-teal border-1" placeholder="Uang Muka" value="{{old('uang_muka')}}">
+							<input id="datauang_muka" type="hidden" name="uang_muka" value="{{old('uang_muka')}}" class="form-control border-teal border-1">
+							<input id="nilaiuang_muka" type="text" class="form-control border-teal border-1" placeholder="Uang Muka" onkeyup="ribuan()" value="{{old('uang_muka')}}">
 						</div>
 					</div>
 					{{-- <div class="form-group row">
@@ -143,7 +153,9 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Keterangan</label>
 						<div class="col-lg-10">
-							<input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}">
+							{{-- <div class="summernote form-control border-teal border-1" name="keterangan" placeholder="Keterangan" value="{{old('keterangan')}}"></div> --}}
+							{{-- <input type="text" name="keterangan" class="summernote form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}"> --}}
+							<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1"></textarea>
 						</div>
 					</div>
 				</fieldset>
@@ -175,10 +187,12 @@
 <script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
+<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
 
 <script src="{{asset('assets/js/app.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
+<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 <script type="text/javascript">
 	// get token
 	let getToken = function() {
@@ -302,68 +316,181 @@
 						//    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
 						//},
 
-						// Different components require proper error label placement
-						errorPlacement: function(error, element) {
+					// Different components require proper error label placement
+					errorPlacement: function(error, element) {
 
-							// Unstyled checkboxes, radios
-							if (element.parents().hasClass('form-check')) {
-								error.appendTo( element.parents('.form-check').parent() );
-							}
+						// Unstyled checkboxes, radios
+						if (element.parents().hasClass('form-check')) {
+							error.appendTo( element.parents('.form-check').parent() );
+						}
 
-							// Input with icons and Select2
-							else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
-								error.appendTo( element.parent() );
-							}
+						// Input with icons and Select2
+						else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+							error.appendTo( element.parent() );
+						}
 
-							// Input group, styled file input
-							else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
-								error.appendTo( element.parent().parent() );
-							}
+						// Input group, styled file input
+						else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+							error.appendTo( element.parent().parent() );
+						}
 
-							// Other elements
-							else {
-								error.insertAfter(element);
-							}
+						// Other elements
+						else {
+							error.insertAfter(element);
+						}
+					},
+					rules: {
+						select_proyek:{
+							required : true
 						},
-						rules: {
-							select_proyek:{
-								required : true
-							},
-							nominal:{
-								required : true
-							},
+						nominal:{
+							required : true
 						},
-						messages: {
-							select_proyek:{
-								required : 'Mohon diisi'
-							},
-							nominal:{
-								required : 'Mohon diisi'
-							},
+						user_id:{
+							required : true
 						},
-					});
+						keterangan:{
+							required : true
+						},
+					},
+					messages: {
+						select_proyek:{
+							required : 'Mohon diisi'
+						},
+						nominal:{
+							required : 'Mohon diisi'
+						},
+						user_id:{
+							required : 'Mohon diisi'
+						},
+						keterangan:{
+							required : 'Mohon diisi'
+						},
+					},
+				});
 
-					// Reset form
-					$('#reset').on('click', function() {
-						validator.resetForm();
-					});
-				};
+				// Reset form
+				$('#reset').on('click', function() {
+					validator.resetForm();
+				});
+			};
 
-				// Return objects assigned to module
-				return {
-					init: function() {
-						_componentValidation();
-					}
+			// Return objects assigned to module
+			return {
+				init: function() {
+					_componentValidation();
 				}
-			}();
+			}
+		}();
 
 
-			// Initialize module
-			// ------------------------------
+		// Initialize module
+		// ------------------------------
 
-			document.addEventListener('DOMContentLoaded', function() {
-				FormValidation.init();
-			});
+		document.addEventListener('DOMContentLoaded', function() {
+			FormValidation.init();
+		});
+		
+		var Summernote = function() {
+
+			//
+			// Setup module components
+			//
+
+			// Summernote
+			var _componentSummernote = function() {
+				if (!$().summernote) {
+					console.warn('Warning - summernote.min.js is not loaded.');
+					return;
+				}
+
+				// Basic examples
+				// ------------------------------
+
+				// Default initialization
+				$('.summernote').summernote();
+
+				// Control editor height
+				$('.summernote-height').summernote({
+					height: 400
+				});
+
+				// // Air mode
+				// $('.summernote-airmode').summernote({
+				// 	airMode: true
+				// });
+
+
+				// // // Click to edit
+				// // // ------------------------------
+
+				// // // Edit
+				// // $('#edit').on('click', function() {
+				// // 	$('.click2edit').summernote({focus: true});
+				// // })
+
+				// // // Save
+				// // $('#save').on('click', function() {
+				// // 	var aHTML = $('.click2edit').summernote('code');
+				// // 	$('.click2edit').summernote('destroy');
+				// // });
+			};
+
+			// Uniform
+			var _componentUniform = function() {
+				if (!$().uniform) {
+					console.warn('Warning - uniform.min.js is not loaded.');
+					return;
+				}
+
+				// Styled file input
+				$('.note-image-input').uniform({
+					fileButtonClass: 'action btn bg-warning-400'
+				});
+			};
+
+
+			//
+			// Return objects assigned to module
+			//
+
+			return {
+				init: function() {
+					_componentSummernote();
+					_componentUniform();
+				}
+			}
+		}();
+
+
+		// Initialize module
+		// ------------------------------
+
+		document.addEventListener('DOMContentLoaded', function() {
+			Summernote.init();
+		});
+
+		function ribuan(){
+			var val = $('#nilainominal').val();
+			var val1 = $('#nilaiuang_muka').val();
+			$('#datanominal').val(val.replace(new RegExp(/\./, 'g'), ''));
+			$('#datauang_muka').val(val1.replace(new RegExp(/\./, 'g'), ''));
+			val = val.replace(/[^0-9,]/g,'');
+			val1 = val1.replace(/[^0-9,]/g,'');
+
+			if(val != "") {
+				valArr = val.split('.');
+				valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
+				val = valArr.join('.');
+			}
+			if(val1 != "") {
+				valArr = val1.split('.');
+				valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
+				val1 = valArr.join('.');
+			}
+			$('#nilainominal').val(val);
+			$('#nilaiuang_muka').val(val1);
+		}
 		</script>
 		<script type="text/javascript">
 			$( document ).ready(function() {
@@ -386,14 +513,14 @@
 				});
 				@endif
 				@if ($errors->any())
-				new PNotify({
-					title: 'Error',
-					text: 'Nomor Invoice Sudah Terambil, input kembali.',
-					icon: 'icon-blocked',
-					type: 'error'
-				});
+				// new PNotify({
+				// 	title: 'Error',
+				// 	text: 'Nomor Invoice Sudah Terambil, input kembali.',
+				// 	icon: 'icon-blocked',
+				// 	type: 'error'
+				// });
 
-				@elseif ($errors->has('ninv'))
+				// @elseif ($errors->has('ninv'))
 				@foreach ($errors->all() as $error)
 				new PNotify({
 					title: 'Error',
