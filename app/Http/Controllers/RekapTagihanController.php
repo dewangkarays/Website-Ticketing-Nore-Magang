@@ -14,6 +14,7 @@ use App\Model\RekapTagihan;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\File;
 use PDF;
+use Illuminate\Support\Facades\Validator;
 
 class RekapTagihanController extends Controller
 {
@@ -74,15 +75,18 @@ class RekapTagihanController extends Controller
         $finduser = User::find($data['user_id']);
         $data['nama'] = $finduser->nama;
         $data['total'] = $tagihans->sum('jml_tagih');
-        $uangmuka = $tagihans->sum('uang_muka');
-        $data['uang_muka'] = $uangmuka;
+        $data['uang_muka'] = $tagihans->sum('uang_muka');
+        $data['status'] = 1;
+        $data['nama_tertagih'] = $request->get('nama_tertagih');
+        $data['alamat'] = $request->get('alamat');
+        // $data['uang_muka'] = $uangmuka;
 
-        if($data['uang_muka'] != 0){
-            $data['status'] = 1;
-        }
-        else{
-            $data['status'] = 0;
-        }
+        // if($data['uang_muka'] != 0){
+        //     $data['status'] = 1;
+        // }
+        // else{
+        //     $data['status'] = 0;
+        // }
 
         // FORMAT INVOICE
         $invoiceno = 01;
@@ -159,7 +163,9 @@ class RekapTagihanController extends Controller
      */
     public function show($id)
     {
-        //
+        $rekaptagihan = RekapTagihan::find($id);
+        $tagihans = Tagihan::where('rekap_tagihan_id', $id)->get();
+        return view('rekaptagihans.show', compact('rekaptagihan','tagihans'));
     }
 
     /**
@@ -182,7 +188,27 @@ class RekapTagihanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'status' => 'required',
+        ]);
+        if($validator->fails()) {
+            return redirect()->back()->with('error');
+        }
+        $data = $request->except(['_token', '_method']);
+
+        $tagihans =Tagihan::where('rekap_tagihan_id', $id)->get();
+
+        if($request->get('jml_terbayar')==''){
+            $data['jml_terbayar'] = 0;
+        }
+        $data['status'] = $request->get('status');
+
+        // dd($data);
+
+        $rekaptagihan = RekapTagihan::find($id);
+        $rekaptagihan->update($data);
+        return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan updated!');
+
     }
 
     /**

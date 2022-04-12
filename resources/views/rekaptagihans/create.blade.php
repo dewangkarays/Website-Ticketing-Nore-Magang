@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+<!-- Page header -->
 <div class="page-header page-header-light">
     <div class="page-header-content header-elements-md-inline">
         <div class="page-title d-flex">
@@ -57,7 +58,7 @@
                             <th>No</th>
                             <th><input type="checkbox" class="checked-all"></th>
                             <th>Nama</th>
-                            <th>Invoice</th>
+                            <th>Nama Proyek</th>
                             <th>Tagihan</th>
                             <th>Keterangan</th>
                             {{-- <th class="text-center">Actions</th> --}}
@@ -71,9 +72,9 @@
                             <td>{{$i}}</td>
                             <td><input type="checkbox" name="tagihan_id[]" id="chk" value="{{ @$tagihan->id }}"></td>
                             <td><div class="datatable-column-width">{{@$tagihan->nama}}</div></td>
-                            <td><div class="datatable-column-width">{{@$tagihan->invoice}}</div></td>
+                            <td><div class="datatable-column-width">{{@$tagihan->proyek->nama_proyek}}</div></td>
                             <td><div class="datatable-column-width">Rp @angka(@$tagihan->nominal)</div></td>
-                            <td><div class="datatable-column-width">{{@$tagihan->keterangan}}</div></td>
+                            <td><div class="datatable-column-width">{!! @$tagihan->keterangan !!}</div></td>
                             {{-- <td align="center">
                                 <div class="list-icons">
                                     <div class="dropdown">
@@ -110,7 +111,9 @@
 				@if (!$tagihans->isEmpty())
 					<legend class="text-uppercase font-size-sm font-weight-bold">Data Rekap Tagihan</legend>
 					<div class="form-group row">
-						<label class="col-form-label col-lg-2 font-weight-bold">Nomor Invoice</label>
+						<label class="col-form-label col-lg-2 font-weight-bold">Nomor Invoice
+							<span class="text-danger">*</span>
+						</label>
 						<div class="col-lg-1">
 							<input type="text" id="noinv" name="noinv" class="form-control border-info border-1" value="INV" readonly>
 						</div>
@@ -134,9 +137,27 @@
 					<hr>
 
 					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Jatuh Tempo</label>
+						<label class="col-form-label col-lg-2">Nama Tertagih
+							<span class="text-danger">*</span>
+						</label>
 						<div class="col-lg-10">
-							<input id="jatuh_tempo" name="jatuh_tempo" type="text" class="form-control pickadate-accessibility" value="{{old('jatuh_tempo')}}" placeholder="Tanggal Jatuh Tempo" required>
+							<input id="nama_tertagih" type="text" name="nama_tertagih" class="form-control border-teal border-1" placeholder="Contoh: Noer Prajitno" value="{{old('nama_tertagih')}}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Alamat
+							<span class="text-danger">*</span>
+						</label>
+						<div class="col-lg-10">
+							<input id="alamat" type="text" name="alamat" class="form-control border-teal border-1" placeholder="Contoh: Jl. Inspeksi Gajahmada Semarang 50133" value="{{old('alamat')}}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Jatuh Tempo
+							<span class="text-danger">*</span>
+						</label>
+						<div class="col-lg-10">
+							<input id="jatuh_tempo" name="jatuh_tempo" type="text" class="form-control pickadate-accessibility" value="{{old('jatuh_tempo')}}" placeholder="Contoh: 2022-04-08" required>
 							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
 						</div>
 						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
@@ -144,7 +165,9 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Keterangan</label>
 						<div class="col-lg-10">
-							<input id="keterangan" type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}">
+							{{-- <input id="keterangan" type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Contoh: " value="{{old('keterangan')}}"> --}}
+							<span class="form-text text-muted">Contoh: Rekap tagihan untuk pembayaran klien Noer Prajitno</span>
+							<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{ old('keterangan') }}</textarea>
 						</div>
 					</div>
 
@@ -176,11 +199,12 @@
 <script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
-
+<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
 
 <script src="{{asset('assets/js/app.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
+<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 
 <script type="text/javascript">
 
@@ -395,9 +419,21 @@
 					jatuh_tempo:{
 						required : true
 					},
+					nama_tertagih:{
+						required : true
+					},
+					alamat:{
+						required : true
+					},
 				},
 				messages: {
 					jatuh_tempo:{
+						required : 'Mohon diisi'
+					},
+					nama_tertagih:{
+						required : 'Mohon diisi'
+					},
+					alamat:{
 						required : 'Mohon diisi'
 					},
 				},
@@ -422,6 +458,85 @@
 
 	document.addEventListener('DOMContentLoaded', function() {
 		FormValidation.init();
+	});
+
+	var Summernote = function() {
+
+		//
+		// Setup module components
+		//
+
+		// Summernote
+		var _componentSummernote = function() {
+			if (!$().summernote) {
+				console.warn('Warning - summernote.min.js is not loaded.');
+				return;
+			}
+
+			// Basic examples
+			// ------------------------------
+
+			// Default initialization
+			$('.summernote').summernote();
+
+			// Control editor height
+			$('.summernote-height').summernote({
+				height: 400
+			});
+
+			// // Air mode
+			// $('.summernote-airmode').summernote({
+			// 	airMode: true
+			// });
+
+
+			// // // Click to edit
+			// // // ------------------------------
+
+			// // // Edit
+			// // $('#edit').on('click', function() {
+			// // 	$('.click2edit').summernote({focus: true});
+			// // })
+
+			// // // Save
+			// // $('#save').on('click', function() {
+			// // 	var aHTML = $('.click2edit').summernote('code');
+			// // 	$('.click2edit').summernote('destroy');
+			// // });
+		};
+
+		// Uniform
+		var _componentUniform = function() {
+			if (!$().uniform) {
+				console.warn('Warning - uniform.min.js is not loaded.');
+				return;
+			}
+
+			// Styled file input
+			$('.note-image-input').uniform({
+				fileButtonClass: 'action btn bg-warning-400'
+			});
+		};
+
+
+		//
+		// Return objects assigned to module
+		//
+
+		return {
+			init: function() {
+				_componentSummernote();
+				_componentUniform();
+			}
+		}
+	}();
+
+
+	// Initialize module
+	// ------------------------------
+
+	document.addEventListener('DOMContentLoaded', function() {
+		Summernote.init();
 	});
 </script>
 

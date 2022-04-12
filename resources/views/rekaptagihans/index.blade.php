@@ -40,7 +40,8 @@
                                 <th>Nama</th>
                                 <th>Invoice</th>
                                 <th>Tagihan</th>
-                                <th>Keterangan</th>
+                                <th>Jumlah Bayar</th>
+                                {{-- <th>Keterangan</th> --}}
                                 <th>Status</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -55,8 +56,9 @@
                                 <td><div class="datatable-column-width">{{$rekaptagihan->nama}}</div></td>
                                 <td><div class="datatable-column-width">{{$rekaptagihan->invoice}}</div></td>
                                 <td><div class="datatable-column-width">Rp @angka($rekaptagihan->total)</div></td>
-                                <td><div class="datatable-column-width">{{$rekaptagihan->keterangan}}</div></td>
-                                <td><div class="datatable-column-width">{{config('custom.tagihan_status.' .@$rekaptagihan->status)}}</div></td>
+                                <td><div class="datatable-column-width">Rp @angka($rekaptagihan->jml_tagih)</div></td>
+                                {{-- <td><div class="datatable-column-width">{!! $rekaptagihan->keterangan !!}</div></td> --}}
+                                <td><div class="datatable-column-width">{{config('custom.rekaptagihan_status.' .@$rekaptagihan->status)}}</div></td>
                                 <td align="center">
 									{{-- <a href="{{url('cetakrekap/'.$rekaptagihan->id)}}" class="btn btn-info"><i class="icon-printer2 mr-2"></i> Print</a> --}}
                                     <div class="list-icons">
@@ -67,8 +69,8 @@
         
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 {{-- <a href="{{ route('tagihans.edit',$rekaptagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a> --}}
+                                                <a href="{{route('rekaptagihans.show', $rekaptagihan->id)}}" class="dropdown-item"><i class="icon-images3"></i> Show</a>
                                                 <a href="{{url('cetakrekap/'.$rekaptagihan->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
-                                                {{-- <a href="{{url('/tagihans/lampiran/'.$rekaptagihan->id)}}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a> --}}
                                                 <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('rekaptagihans.destroy', $rekaptagihan->id)}}"><i class="icon-x"></i> Delete</a>
                                             </div>
                                         </div>

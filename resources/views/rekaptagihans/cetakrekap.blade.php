@@ -36,10 +36,40 @@
             list-style: none;
             word-break: break-all;
         }
-        ul li:before {
+        ul li::before {
             content: '- ';
             margin-left: -20px;
             margin-right: 10px;
+        }
+        li.note1::before {
+            content: '(*) ';
+            font-style: normal;
+        }
+        li.note2::before {
+            content: '(**) ';
+            font-style: normal;
+        }
+        li.note3:before {
+            content: '(***) ';
+            font-style: normal;
+        }
+        li.note4::before {
+            content: '(****) ';
+            font-style: normal;
+        }
+        li.note1,li.note2,li.note3,li.note4 {
+            font-style: italic;
+            font-weight: normal;
+        }
+        li.pay::before {
+            content: '- ';
+        }
+        li.pay1::before {
+            list-style-type: none;
+        }
+        li.pay,li.pay1 {
+            font-style: italic;
+            font-weight: normal;
         }
 
         .head-block {
@@ -66,6 +96,7 @@
             color: #39b873
         }
         .main-table th {
+            border: 1px solid #f3f3f3;
             background-color: #f3f3f3;
         }
         .page-break {
@@ -95,31 +126,32 @@
         </table>--}}
         <table>
             <tr>
-                <td rowspan="5" style="vertical-align: top">
+                <td align="left" rowspan="5" style="vertical-align: top">
                     <img src="{{url($setting->logo)}}" alt="logo" height="68px">
-                    <figcaption class="nore-fontcolor" style="font-weight: lighter; letter-spacing: 1px">&nbsp;&nbsp;&nbsp;&nbsp;CV. NORE INOVASI</figcaption>
-                    <p><?php echo $setting->alamat ?></p>
+                    <figcaption class="nore-fontcolor" style="font-weight: lighter; letter-spacing: 1px;">&nbsp;&nbsp;&nbsp;&nbsp;CV. NORE INOVASI</figcaption>
+                    <p style="margin-top: 17px">@nore.web.id</p>
+                    {!! $setting->alamat !!}
                     <p> +{{$setting->no_telp}} </p>
                 </td>
 
-                <td align="right" colspan="2" style="vertical-align: top">
-                    <p>
+                <td align="right" colspan="2" style="vertical-align: top;">
+                    <p style="margin-bottom: 30px">
                         DOKUMEN PENTING<br>
                         <b class="nore-fontcolor font-weight-bold" style="font-size: 29px">Invoice</b>
                         {{-- <p class="nore-fontcolor font-weight-bold" style="font-size: 40px;"><b>Rekap Invoice</b></p> --}}
                     </p>
-                    <br>
+                    {{-- <br> --}}
                     <p>
                         <b>Nomor: <br></b>
                         {{ $rekap->invoice }}
                     </p>
                     <p>
                         <b>Tanggal: <br></b>
-                        {{ date('d F Y') }}
+                        {{ date('d/m/Y') }}
                     </p>
                     <p>
                         <b>Jatuh Tempo: <br></b>
-                        {{ date('d F Y', strtotime($rekap->jatuh_tempo)) }}
+                        {{ date('d/m/Y', strtotime($rekap->jatuh_tempo)) }}
                     </p>
                 </td>
             </tr>
@@ -139,7 +171,7 @@
 
                             <tr>
                                 <td style="text-transform: uppercase;">
-                                    {{$rekap->nama ? $rekap->nama : $rekap->user->nama}}
+                                    {{$rekap->nama_tertagih}}
                                 </td>
                             </tr>
 
@@ -148,12 +180,6 @@
                                     &nbsp;
                                 </td>
                             </tr> --}}
-
-                            <tr>
-                                <td>
-                                    {{$rekap->username ? $rekap->username : $rekap->user->username}}
-                                </td>
-                            </tr>
 
                             {{-- <tr>
                                 <td>
@@ -163,7 +189,7 @@
 
                             <tr style="width: 200px;">
                                 <td>
-                                    {{$rekap->user->alamat}}
+                                    {{$rekap->alamat}}
                                 </td>
                             </tr>
                             {{-- @endforeach --}}
@@ -174,15 +200,18 @@
 
             <table class="main-table" style="margin-top: 15px; line-height: 1">
                 <tr>
-                    {{-- <th align="left" style="width: 30%" class="nore-fontcolor">No Invoices</th> --}}
-                    <th align="left" style="width: 20%; height: 20px" class="nore-fontcolor">PROYEK</th>
-                    <th align="left" style="width: 65%" class="nore-fontcolor">KETERANGAN</th>
+                    <th align="left" style="width: 20%; height: 20px" class="nore-fontcolor">DESKRIPSI</th>
+                    <th align="left" style="width: 15%; height: 20px" class="nore-fontcolor">PROYEK</th>
+                    <th align="left" style="width: 50%" class="nore-fontcolor">KETERANGAN</th>
                     <th align="right" style="width: auto" class="nore-fontcolor">JUMLAH (Rp)</th>
                 </tr>
 
                 <tbody>
                     @foreach ($invoices as $invoice)
                     <tr>
+                        <td>
+                            Layanan {{ config('custom.jenis_proyek.' .@$invoice->proyek->jenis_proyek) }} {{ $invoice->proyek->website }}
+                        </td>
                         {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
                         <td>
                             @if ($invoice->nama_proyek)
@@ -205,6 +234,8 @@
                     @endphp --}}
                 </tbody>
             </table>
+
+            <hr style="margin-bottom: -5px">
 
             <table style="line-height: 1.5; padding: 5px 10px;">
                 <tr>
@@ -240,91 +271,34 @@
 
             <table style="margin-top: 20px; line-height: 1.3;">
                 <tr>
-                    <td style="vertical-align: top;">
-                        <span style="font-size: 12px;color: #b1acaa">Catatan :</span> <br>
-                        <span style="font-size: 13px">
-                            <table>
-                                <tbody>
-                                    <tr style="height: 21px;">
-                                        <td style="overflow: hidden; padding: 2px 3px; vertical-align: bottom; color: rgb(67, 67, 67);">- Pembayaran dapat dilakukan ke nomor rekening</td>
-                                    </tr>
-                                    <tr style="height: 22px;">
-                                        <td style="border-right: 1px solid transparent; overflow: visible; padding: 2px 0px; vertical-align: bottom; font-weight: bold; color: rgb(67, 67, 67); white-space: nowrap; overflow: hidden; position: relative; width: 319px; left: 3px; float: left;">
-                                            BCA a/n Noer Tjahja Moekthi Prajitno 8985181108
-                                        </td>
-                                    </tr>
-                                    <tr style="height: 21px;">
-                                        <td style="border-right: 1px solid transparent; overflow: visible; padding: 2px 0px; vertical-align: bottom; color: rgb(67, 67, 67); white-space: nowrap; overflow: hidden; position: relative; width: 218px; left: 3px; float: left;">
-                                            - Bukti pengerjaan terlampir
-                                        </td>
-                                    </tr>
-                                    <tr style="height: 21px;">
-                                        <td style="border-right: 1px solid transparent; overflow: visible; padding: 2px 0px; vertical-align: bottom; color: rgb(67, 67, 67); white-space: nowrap; overflow: hidden; position: relative; width: 319px; left: 3px; float: left;">
-                                            - Nomor NPWP 95.225.490.2-503.000
-                                        </td>
-                                    </tr>
-                                    <tr style="height: 21px;">
-                                        <td style="font-size: 13.3333px; border-right: 1px solid transparent; overflow: visible; padding: 2px 0px; vertical-align: bottom; color: rgb(67, 67, 67); white-space: nowrap; overflow: hidden; position: relative; width: 218px; left: 3px; float: left;">
-                                            a/n CV Nore Inovasi
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            {{-- <google-sheets-html-origin>
-                                <table xmlns="http://www.w3.org/1999/xhtml" cellspacing="0" cellpadding="0" dir="ltr" style="table-layout: fixed; font-size: 10pt; font-family: Arial; width: 0px;">
-                                    <colgroup>
-                                        <col width="81"><col width="141"><col width="100"><col width="100">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr style="height: 21px;">
-                                            <td rowspan="1" colspan="4" data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;- Pembayaran dapat dilakukan ke nomor rekening &quot;}" style="overflow: hidden; padding: 2px 3px; vertical-align: bottom; color: rgb(67, 67, 67);">- Pembayaran dapat dilakukan ke nomor rekening</td>
-                                        </tr>
-                                        <tr style="height: 22px;">
-                                            <td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;  BCA a/n Noer Tjahja Moekthi Prajitno 8985181108&quot;}" style="border-right: 1px solid transparent; overflow: visible; padding: 2px 0px; vertical-align: bottom; font-weight: bold; color: rgb(67, 67, 67);">
-                                                <div style="white-space: nowrap; overflow: hidden; position: relative; width: 319px; left: 3px;">
-                                                    <div style="float: left;">BCA a/n Noer Tjahja Moekthi Prajitno 8985181108</div>
-                                                </div>
-                                            </td>
-                                            <td style="border-right: 1px solid transparent; overflow: hidden; padding: 2px 3px; vertical-align: bottom;"></td>
-                                            <td style="overflow: hidden; padding: 2px 3px; vertical-align: bottom;"></td>
-                                            <td style="overflow: hidden; padding: 2px 3px; vertical-align: bottom;"></td>
-                                        </tr>
-                                        <tr style="height: 21px;">
-                                            <td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;- Bukti pengerjaan terlampir&quot;}" style="border-right: 1px solid transparent; overflow: visible; padding: 2px 0px; vertical-align: bottom; color: rgb(67, 67, 67);">
-                                                <div style="white-space: nowrap; overflow: hidden; position: relative; width: 218px; left: 3px;">
-                                                    <div style="float: left;">- Bukti pengerjaan terlampir</div>
-                                                </div>
-                                            </td>
-                                            <td style="overflow: hidden; padding: 2px 3px; vertical-align: bottom;"></td>
-                                            <td style="overflow: hidden; padding: 2px 3px; vertical-align: bottom;"></td>
-                                            <td style="overflow: hidden; padding: 2px 3px; vertical-align: bottom;"></td>
-                                        </tr>
-                                        <tr style="height: 21px;">
-                                            <td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;- Nomor NPWP 95.225.490.2-503.000&quot;}" style="border-right: 1px solid transparent; overflow: visible; padding: 2px 0px; vertical-align: bottom; color: rgb(67, 67, 67);">
-                                                <div style="white-space: nowrap; overflow: hidden; position: relative; width: 319px; left: 3px;">
-                                                    <div style="float: left;">- Nomor NPWP 95.225.490.2-503.000</div>
-                                                </div>
-                                            </td>
-                                            <td style="border-right: 1px solid transparent; overflow: hidden; padding: 2px 3px; vertical-align: bottom;"></td>
-                                            <td style="overflow: hidden; padding: 2px 3px; vertical-align: bottom;"></td>
-                                            <td style="overflow: hidden; padding: 2px 3px; vertical-align: bottom;"></td>
-                                        </tr>
-                                        <tr style="height: 21px;">
-                                            <td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;  a/n CV Nore Inovasi&quot;}" style="font-size: 13.3333px; border-right: 1px solid transparent; overflow: visible; padding: 2px 0px; vertical-align: bottom; color: rgb(67, 67, 67);">
-                                                <div style="white-space: nowrap; overflow: hidden; position: relative; width: 218px; left: 3px;">
-                                                    <div style="float: left;">a/n CV Nore Inovasi</div>
-                                                </div>
-                                            </td>
-                                            <td style="color: rgb(0, 0, 0); font-size: 13.3333px; overflow: hidden; padding: 2px 3px; vertical-align: bottom;"></td>
-                                            <td style="color: rgb(0, 0, 0); font-size: 13.3333px; overflow: hidden; padding: 2px 3px; vertical-align: bottom;"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </google-sheets-html-origin>
-                        </span>
+                    <th align="left" style="font-weight: bold; width:50%">Catatan:</th>
+                    <th style="width:18%"></th>
+                    <th align="center" style="font-size: 12px; font-weight: normal; width:25%; margin-left:6px">Semarang, {{ date('d F Y') }}</th>
+                </tr>
+                <tr>
+                    <td align="left" rowspan="5" style="vertical-align: top;">
+                        {{-- <span style="font-weight:bold">Catatan:</span> --}}
+                        <li class="note1" style="list-style-type: none;">Jika pembayaran dilakukan melalui transfer bank, <b>mohon untuk menyertakan nomor invoice sebagai keterangan</b> kemudian kirimkan bukti pembayaran via Whatsapp/E-Mail agar pelunasan dapat segera kami catat.</li>
+                        <li class="note2" style="list-style-type: none;">Biaya transfer menjadi tanggung jawab pelanggan/pengirim dana.</li>
+                        <li class="note3" style="list-style-type: none;">Untuk layanan berlangganan perlu diketahui bahwa aset-code adalah hak milik CV. Nore Inovasi dan hanya dapat digunakan selama berlangganan.</li>
+                        <li class="note4" style="list-style-type: none;">Pastikan data pembayaran sudah benar, <b> dana yang telah dibayarkan tidak dapat ditarik kembali</b>.</li> <br>
+                        
+                        <span style="font-weight:bold">Pembayaran dapat dilakukan melalui:</span>
+                        <li class="pay" style="list-style-type: none;">NORE INOVASI CV</li>
+                        <li class="pay1" style="list-style-type: none; margin-left:6px;">BCA KCP Puri Anjasmoro</li>
+                        <li class="pay1" style="list-style-type: none; margin-left:6px;"><b>Acc. Number 898 589 9955</b></li>
+                        <li class="pay" style="list-style-type: none;">Nomor NPWP 95.225.490.2-503.000 a/n CV NORE INOVASI</li>
+                        {{-- {!! $setting->catatan_tagihan !!} --}}
                     </td>
-                    <td align="right" style="color:#fabf16;vertical-align: top;font-size: 25px;font-weight: bold"><span>Rp @angka($invoices->sum('nominal')) </span></td>
-                    --}}
+                    <td></td>
+                    <td align="center" style="vertical-align: top;">
+                        {{-- <p align="center" style="font-size: 12px">Semarang, {{ date('d F Y') }}</p> --}}
+                        <br style="line-height: 11;">
+                        <p align="center" style="font-size: 12px"><b>
+                            {{$invoice->penagih ? $invoice->penagih : $setting->penagih}}</b> <br> {{$invoice->pospenagih ? $invoice->pospenagih : $setting->pospenagih}}
+                        </p>
+                        <i align="center" style="color: #918d8b;">"Terima kasih atas kerja sama Anda"</i>
+                    </td>
                 </tr>
 
             </table>
@@ -335,31 +309,6 @@
 
                 <table style="margin-right: 60px; margin-top: 20px;">
                     @endif
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td align="center" style="width:30%; font-size: 12px">Semarang, {{ date('d F Y') }}</td>
-                    </tr>
-                    <tr style="line-height: 10;">
-                        <td colspan="2">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td align="center" style="width:30%;font-size: 12px">
-                            <b>{{$invoice->penagih ? $invoice->penagih : $setting->penagih}}</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td align="center" style="width:30%;font-size: 11px">
-                            {{$invoice->pospenagih ? $invoice->pospenagih : $setting->pospenagih}}
-                        </td>
-                    </tr>
-                    <tr style="line-height: 3;">
-                        <td>&nbsp;</td>
-                        <td align="center" style="width:30%;color: #918d8b">
-                            <i>"Terima kasih atas kerja sama Anda"</i>
-                        </td>
-                    </tr>
                 </table>
 
                 <br>

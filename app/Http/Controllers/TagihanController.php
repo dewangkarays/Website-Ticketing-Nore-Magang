@@ -92,61 +92,6 @@ class TagihanController extends Controller
             $data['masa_berlaku'] = $request->get('new_mb');
         }
 
-        // // FORMAT INVOICE
-        // $invoiceno = 01;
-
-        // $invawal = $request->get('noinv');
-        // $nomorinv = $request->get('ninv');
-        // $noakhir = $request->get('noakhir');
-        // $nouser = $request->get('nouser');
-        // $no = str_pad($nomorinv,3,"0",STR_PAD_LEFT);
-        // $nouserpad = str_pad($nouser,2,"0",STR_PAD_LEFT);
-        // $data['invoice'] = $invawal.'/'.$no.'/'.$noakhir.'/'.$nouserpad;
-        // // $data['user_id'] = $request->get('user_id');
-        // $lastinv = Tagihan::latest('id')->first();
-
-        // // dd($data);
-
-        // if ($lastinv) {
-        //     $diffinv = substr($lastinv->invoice,0,3);
-        //     if ($diffinv == 'INV') {
-        //         $different = 'no';
-        //     } else {
-        //         $different = 'yes';
-        //     }
-
-        //     if ($different == 'yes') {
-        //         $lastno = Nomor::first();
-        //         if ($lastno) {
-        //             $lastno->ninv = $nomorinv;
-        //             $lastno->save();
-        //         } else {
-        //             $lastno['ninv'] = 1;
-        //             $lastno = Nomor::create($lastno);
-        //         }
-        //     } else {
-        //         // jika tidak sama
-        //         $lastno = Nomor::first();
-        //         if ($lastno) {
-        //             $lastno->ninv = $nomorinv;
-        //             $lastno->save();
-        //         } else {
-        //             $lastno['ninv'] = 1;
-        //             $lastno = Nomor::create($lastno);
-        //         }
-        //     }
-
-        // } else {
-        //     $lastno = Nomor::first();
-        //     if ($lastno) {
-        //         $lastno->ninv = $nomorinv;
-        //         $lastno->save();
-        //     } else {
-        //         $lastno['ninv'] = 1;
-        //         $lastno = Nomor::create($lastno);
-        //     }
-        // }
-
         $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
 
         $user = User::find($data['user_id']);
