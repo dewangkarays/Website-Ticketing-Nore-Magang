@@ -64,4 +64,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Model\RekapTagihan','user_id', 'id');
     }
+
+    public function rekapdptagihan()
+    {
+        return $this->hasMany('App\Model\RekapDptagihan','user_id', 'id');
+    }
 }

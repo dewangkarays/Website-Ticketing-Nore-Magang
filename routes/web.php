@@ -46,8 +46,10 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('tagihans/lampirandestroy/{id}/{idm}', 'TagihanController@lampirandestroy')->name('lampirandestroy');
 	Route::match(['get', 'post'], '/tagihanuser',  'TagihanController@tagihanuser')->name('tagihanuser');
 	Route::resource('rekaptagihans','RekapTagihanController');
+	Route::resource('rekapdptagihans','RekapDptagihanController');
 	Route::get('createrekap', 'RekapTagihanController@createrekap')->name('createrekap');
 	Route::get('cetakrekap/{id}',  'RekapTagihanController@cetakrekap')->name('cetakrekap');
+	Route::get('cetakrekapdp/{id}',  'RekapDptagihanController@cetakrekap')->name('cetakrekapdp');
 	Route::get('/bayaruser/{id}', 'TagihanController@bayaruser')->name('bayaruser');
 	Route::resource('pengeluarans', 'PengeluaranController');
 	Route::get('export_excel_pengeluaran', 'PengeluaranController@export_excel_pengeluaran');

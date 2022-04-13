@@ -58,7 +58,7 @@
                                 <td><div class="datatable-column-width">Rp @angka($rekaptagihan->total)</div></td>
                                 <td><div class="datatable-column-width">Rp @angka($rekaptagihan->jml_tagih)</div></td>
                                 {{-- <td><div class="datatable-column-width">{!! $rekaptagihan->keterangan !!}</div></td> --}}
-                                <td><div class="datatable-column-width">{{config('custom.rekaptagihan_status.' .@$rekaptagihan->status)}}</div></td>
+                                <td><div class="datatable-column-width">{{config('custom.rekap_status.' .@$rekaptagihan->status)}}</div></td>
                                 <td align="center">
 									{{-- <a href="{{url('cetakrekap/'.$rekaptagihan->id)}}" class="btn btn-info"><i class="icon-printer2 mr-2"></i> Print</a> --}}
                                     <div class="list-icons">

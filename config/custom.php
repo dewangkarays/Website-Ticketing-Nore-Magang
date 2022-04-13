@@ -63,7 +63,7 @@ return [
         '2' => 'Lunas',
     ],
 
-    'rekaptagihan_status' => [
+    'rekap_status' => [
         '1' => 'Baru',
         '2' => 'Sudah Ditagih',
         '3' => 'Terbayar Sebagian',

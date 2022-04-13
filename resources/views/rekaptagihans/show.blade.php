@@ -89,36 +89,33 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label col-lg-2">List Tagihan</label>
+                            <label class="col-form-label col-lg-2">&nbsp;</label>
                             <div class="col-lg-10">
                                 <table class="main-table" style="line-height: 1">
+                                    @if (!$tagihans->isEmpty())
                                     <tr>
                                         <th>Nama Proyek</th>
                                         <th>Masa Berlaku</th>
-                                        <th>Uang Muka</th>
                                         <th>Tagihan</th>
                                         <th>Keterangan</th>
                                     </tr>
                                     <tbody>
-                                        @if (!$tagihans->isEmpty())
-                                            @foreach ($tagihans as $invoice)
-                                                <tr>
-                                                    <td>{{ $invoice->nama_proyek }}</td>
-                                                    <td>{{ $invoice->masa_berlaku }}</td>
-                                                    <td>Rp @angka($invoice->uang_muka)</td>
-                                                    <td>Rp @angka($invoice->jml_tagih)</td>
-                                                    <td>{{ $invoice->keterangan }}</td>
-                                                </tr>
-                                            @endforeach
-                                        @else
+                                        @foreach ($tagihans as $invoice)
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td>Data Kosong</td>
-                                                <td></td>
-                                                <td></td>
+                                                <td>{{ $invoice->nama_proyek }}</td>
+                                                <td>{{ date('d-m-Y', strtotime(@$invoice->proyek->masa_berlaku)) }}</td>
+                                                <td>Rp @angka($invoice->jml_tagih)</td>
+                                                <td>{{ $invoice->keterangan }}</td>
                                             </tr>
-                                        @endif
+                                        @endforeach
+                                    @else
+                                    <tr>
+                                        <th align="center">&nbsp;</th>
+                                    </tr>
+                                        <tr>
+                                            <td align="center">Data Kosong</td>
+                                        </tr>
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -157,7 +154,7 @@
                             <label class="col-form-label col-lg-2">Status</label>
                             <div class="col-lg-10">
                                 <select name="status" id="" class="form-control form-control-select2">
-                                    @foreach (config('custom.rekaptagihan_status') as $key => $value)
+                                    @foreach (config('custom.rekap_status') as $key => $value)
                                         <option {{ $rekaptagihan->status == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>

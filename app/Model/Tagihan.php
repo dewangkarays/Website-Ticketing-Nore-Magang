@@ -34,4 +34,8 @@ class Tagihan extends Model
     {
         return $this->belongsTo('App\Model\RekapTagihan', 'rekap_tagihan_id', 'id');
     }
+    public function rekapdptagihan()
+    {
+        return $this->belongsTo('App\Model\RekapDptagihan', 'rekap_dptagihan_id', 'id');
+    }
 }

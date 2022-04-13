@@ -38,7 +38,7 @@
 			<thead>
 				<tr>
 					<th>No</th>
-					<th>Username</th>
+					<th>Nama</th>
 					<th>Keterangan</th>
 					<th>Nominal</th>
 					<th>Nomor Tagihan</th>
@@ -55,7 +55,7 @@
 				@foreach($payments as $payment)
 				<tr>
 					<td>{{$i}}</td>
-					<td><div class="datatable-column-width">{{@$payment->user->username}}</div></td>
+					<td><div class="datatable-column-width">{{@$payment->user->nama}}</div></td>
 					<td><div class="datatable-column-width">{{$payment->keterangan}}</div></td>
 					<td style="font-size: 15px;">Rp @angka($payment->nominal)</td>
 					<td><div class="datatable-column-width">{{@$payment->tagihan->invoice}}</div></td>

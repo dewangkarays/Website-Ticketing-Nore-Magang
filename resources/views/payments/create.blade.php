@@ -33,7 +33,7 @@
 							<select id="user_id" name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
 								<option value="">-- Pilih Pelanggan --</option>
 								@foreach($users as $user)
-								<option data-name="{{$user->nama}}" value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" data-role="{{$user->role}}">{{$user->username}}</option>
+								<option data-name="{{$user->nama}}" value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" data-role="{{$user->role}}">{{$user->nama}}</option>
 								@endforeach
 							</select>
 						</div>
@@ -49,7 +49,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">User</label>
 						<div class="col-lg-10">
-							<label class="col-form-label col-lg-2">{{\Auth::user()->username}}</label>
+							<label class="col-form-label col-lg-2">{{\Auth::user()->name}}</label>
 							<input type="hidden" name="user_id" value="{{\Auth::user()->id}}">
 						</div>
 					</div>
@@ -444,9 +444,9 @@ var FormValidation = function() {
 				unhighlight: function(element, errorClass) {
 					$(element).removeClass(errorClass);
 				},
-				success: function(label) {
-					label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
-				},
+				// success: function(label) {
+				// 	label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+				// },
 
 				// Different components require proper error label placement
 				errorPlacement: function(error, element) {
@@ -516,6 +516,20 @@ var FormValidation = function() {
 		FormValidation.init();
 	});
 </script>
+{{-- <script type="text/javascript">
+	function ribuan(){
+		var val = $('#tertulis').val();
+		$('#nominal').val(val.replace(new RegExp(/\./, 'g'), ''));
+		val = val.replace(/[^0-9,]/g,'');
+
+		if(val != "") {
+			valArr = val.split('.');
+			valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
+			val = valArr.join('.');
+		}
+		$('#tertulis').val(val);
+	}
+</script> --}}
 <script type="text/javascript">
 	$( document ).ready(function() {
 		// Default style

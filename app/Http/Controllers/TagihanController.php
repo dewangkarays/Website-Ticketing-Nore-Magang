@@ -70,9 +70,10 @@ class TagihanController extends Controller
         // dd($request);
         $request->validate([
             'nominal' => 'required',
+            'keterangan' => 'required',
         ]);
 
-        $data = $request->except(['_token', '_method','noinv','ninv','noakhir','nouser','select_proyek','masa_berlaku']);
+        $data = $request->except(['_token', '_method','select_proyek','masa_berlaku']);
 
         if($request->get('langganan')==''){
             $data['langganan'] = 0;

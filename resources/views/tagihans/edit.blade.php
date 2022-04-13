@@ -21,7 +21,7 @@
 		<div class="card-header header-elements-inline">
 		</div>
 		<div class="card-body">
-			<form class="form-validate-jquery" enctype="multipart/form-data" action="{{ route('tagihans.update', $tagihan->id)}}" method="post">
+			<form id="form_tagihan" class="form-validate-jquery" enctype="multipart/form-data" action="{{ route('tagihans.update', $tagihan->id)}}" method="post">
 				@method('PATCH')
 				@csrf
 				<fieldset class="mb-3">
@@ -93,87 +93,23 @@
                     <div class="form-group row">
 						<label class="col-form-label col-lg-2">Nominal</label>
 						<div class="col-lg-10">
-							<input type="number" min="0" name="nominal" class="form-control border-teal border-1" placeholder="Nominal" value="{{ $tagihan->nominal }}">
+							<input id="datanominal" type="hidden" name="nominal" value="{{$tagihan->nominal}}" class="form-control border-teal border-1">
+							<input id="nilainominal" type="text" name="txtnominal" class="form-control border-teal border-1" placeholder="Nominal" onfocus="ribuan()" onkeyup="ribuan()" value="{{$tagihan->nominal}}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Uang Muka</label>
 						<div class="col-lg-10">
-							<input type="number" min="0" name="uang_muka" class="form-control border-teal border-1" placeholder="Uang Muka" value="{{ $tagihan->uang_muka }}">
+							<input id="datauang_muka" type="hidden" name="uang_muka" value="{{$tagihan->uang_muka}}" class="form-control border-teal border-1">
+							<input id="nilaiuang_muka" type="text" class="form-control border-teal border-1" placeholder="Uang Muka" onfocus="ribuan()" onkeyup="ribuan()" value="{{$tagihan->uang_muka}}">
 						</div>
 					</div>
                     <div class="form-group row">
 						<label class="col-form-label col-lg-2">Keterangan</label>
 						<div class="col-lg-10">
-							<input type="text" name="keterangan" value="{{ $tagihan->keterangan }}" class="form-control border-teal border-1" placeholder="Keterangan">
+							<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{ $tagihan->keterangan }}</textarea>
 						</div>
 					</div>
-					{{-- <div class="form-group row">
-						<label class="col-form-label col-lg-2">Tipe</label>
-						<div class="col-lg-10">
-							<select name="tipe" class="form-control select-search" required>
-								<option>Langganan</option>
-								<option>Ads</option>
-								<option>Lainnya</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Langganan</label>
-						<div class="col-lg-10">
-							<input type="number" min="0" name="langganan" value="{{ $tagihan->langganan }}" class="form-control border-teal border-1" placeholder="Nominal">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Ads</label>
-						<div class="col-lg-10">
-							<input type="number" min="0" name="ads" value="{{ $tagihan->ads }}" class="form-control border-teal border-1" placeholder="Nominal">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Lainnya</label>
-						<div class="col-lg-10">
-							<input type="number" min="0" name="lainnya" value="{{ $tagihan->lainnya }}" class="form-control border-teal border-1" placeholder="Nominal">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Jml Bayar</label>
-						<div class="col-lg-10">
-							<input type="text" name="jml_bayar" value="{{ $tagihan->jml_bayar }}" class="form-control border-teal border-1" placeholder="Nominal">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Status</label>
-						<div class="col-lg-10">
-							<select name="status" class="form-control select-search" required>
-								@foreach (config('custom.tagihan_status') as $key => $val)
-								<option {{ $tagihan->status == $key ? 'selected' : '' }} value="{{$key}}">{{$val}}</option>
-								@endforeach
-
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Nama Proyek</label>
-						<div class="col-lg-10">
-							<input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{$tagihan->nama_proyek}}" readonly>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Nama Penagih</label>
-						<div class="col-lg-10">
-							<input type="text" id="penagih" name="penagih" class="form-control border-teal border-1" placeholder="Nama Penagih" value="{{$tagihan->penagih}} ">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-form-label col-lg-2">Posisi Penagih</label>
-						<div class="col-lg-10">
-							<input type="text" id="pospenagih" name="pospenagih" class="form-control border-teal border-1" placeholder="Nama Penagih" value="{{$tagihan->pospenagih}}">
-						</div>
-					</div>  --}}
-
-
 				</fieldset>
 				<div class="text-right">
                     <a href="{{ url('/tagihans') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
@@ -203,10 +139,12 @@
 <script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
+<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
 
 <script src="{{asset('assets/js/app.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
+<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 <script type="text/javascript">
 	// get token
 	let getToken = function() {
@@ -305,7 +243,7 @@
 			}
 
 			// Initialize
-			var validator = $('.form-validate-jquery').validate({
+			var validator = $('#form_tagihan').validate({
 				ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
 				errorClass: 'validation-invalid-label',
 				//successClass: 'validation-valid-label',
@@ -321,93 +259,208 @@
 					//},
 
 					// Different components require proper error label placement
-					errorPlacement: function(error, element) {
+				errorPlacement: function(error, element) {
 
-						// Unstyled checkboxes, radios
-						if (element.parents().hasClass('form-check')) {
-							error.appendTo( element.parents('.form-check').parent() );
-						}
-
-						// Input with icons and Select2
-						else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
-							error.appendTo( element.parent() );
-						}
-
-						// Input group, styled file input
-						else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
-							error.appendTo( element.parent().parent() );
-						}
-
-						// Other elements
-						else {
-							error.insertAfter(element);
-						}
-					},
-					messages: {
-						nama: {
-							required: 'Mohon diisi.'
-						},
-						email: {
-							required: 'Mohon diisi.'
-						},
-						telp: {
-							required: 'Mohon diisi.'
-						},
-						tagihanname: {
-							required: 'Mohon diisi.'
-						},
-						// password: {
-							//     required: 'Mohon diisi.'
-							// },
-							role: {
-								required: 'Mohon diisi.'
-							},
-						},
-					});
-
-					// Reset form
-					$('#reset').on('click', function() {
-						validator.resetForm();
-					});
-				};
-
-				// Return objects assigned to module
-				return {
-					init: function() {
-						_componentValidation();
+					// Unstyled checkboxes, radios
+					if (element.parents().hasClass('form-check')) {
+						error.appendTo( element.parents('.form-check').parent() );
 					}
-				}
-			}();
+
+					// Input with icons and Select2
+					else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+						error.appendTo( element.parent() );
+					}
+
+					// Input group, styled file input
+					else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+						error.appendTo( element.parent().parent() );
+					}
+
+					// Other elements
+					else {
+						error.insertAfter(element);
+					}
+				},
+				rules: {
+					txtnominal:{
+						required : true
+					},
+					keterangan:{
+						required : true
+					},
+				},
+				messages: {
+					txtnominal:{
+						required : 'Mohon diisi'
+					},
+					keterangan:{
+						required : 'Mohon diisi'
+					},
+				},
+			});
+
+			// Reset form
+			$('#reset').on('click', function() {
+				validator.resetForm();
+			});
+		};
+
+		// Return objects assigned to module
+		return {
+			init: function() {
+				_componentValidation();
+			}
+		}
+	}();
 
 
-			// Initialize module
+	// Initialize module
+	// ------------------------------
+
+	document.addEventListener('DOMContentLoaded', function() {
+		FormValidation.init();
+	});
+
+	var Summernote = function() {
+
+		//
+		// Setup module components
+		//
+
+		// Summernote
+		var _componentSummernote = function() {
+			if (!$().summernote) {
+				console.warn('Warning - summernote.min.js is not loaded.');
+				return;
+			}
+
+			// Basic examples
 			// ------------------------------
 
-			document.addEventListener('DOMContentLoaded', function() {
-				FormValidation.init();
-			});
-		</script>
-		<script type="text/javascript">
-			$( document ).ready(function() {
-				// Default style
-				@if(session('error'))
-				new PNotify({
-					title: 'Error',
-					text: '{{ session('error') }}.',
-					icon: 'icon-blocked',
-					type: 'error'
-				});
-				@endif
-				@if ( session('success'))
-				new PNotify({
-					title: 'Success',
-					text: '{{ session('success') }}.',
-					icon: 'icon-checkmark3',
-					type: 'success'
-				});
-				@endif
+			// Default initialization
+			$('.summernote').summernote();
 
+			// Control editor height
+			$('.summernote-height').summernote({
+				height: 400
 			});
-		</script>
 
-		@endsection
+			// // Air mode
+			// $('.summernote-airmode').summernote({
+			// 	airMode: true
+			// });
+
+
+			// // // Click to edit
+			// // // ------------------------------
+
+			// // // Edit
+			// // $('#edit').on('click', function() {
+			// // 	$('.click2edit').summernote({focus: true});
+			// // })
+
+			// // // Save
+			// // $('#save').on('click', function() {
+			// // 	var aHTML = $('.click2edit').summernote('code');
+			// // 	$('.click2edit').summernote('destroy');
+			// // });
+		};
+
+		// Uniform
+		var _componentUniform = function() {
+			if (!$().uniform) {
+				console.warn('Warning - uniform.min.js is not loaded.');
+				return;
+			}
+
+			// Styled file input
+			$('.note-image-input').uniform({
+				fileButtonClass: 'action btn bg-warning-400'
+			});
+		};
+
+
+		//
+		// Return objects assigned to module
+		//
+
+		return {
+			init: function() {
+				_componentSummernote();
+				_componentUniform();
+			}
+		}
+	}();
+
+
+	// Initialize module
+	// ------------------------------
+
+	document.addEventListener('DOMContentLoaded', function() {
+		Summernote.init();
+	});
+</script>
+<script type="text/javascript">
+	function ribuan(){
+		var val = $('#nilainominal').val();
+		var val1 = $('#nilaiuang_muka').val();
+		$('#datanominal').val(val.replace(new RegExp(/\./, 'g'), ''));
+		$('#datauang_muka').val(val1.replace(new RegExp(/\./, 'g'), ''));
+		val = val.replace(/[^0-9,]/g,'');
+		val1 = val1.replace(/[^0-9,]/g,'');
+
+		if(val != "") {
+			valArr = val.split('.');
+			valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
+			val = valArr.join('.');
+		}
+		if(val1 != "") {
+			valArr = val1.split('.');
+			valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
+			val1 = valArr.join('.');
+		}
+		$('#nilainominal').val(val);
+		$('#nilaiuang_muka').val(val1);
+	}
+
+	$( document ).ready(function() {
+		// Default style
+		@if(session('error'))
+		new PNotify({
+			title: 'Error',
+			text: '{{ session('error') }}.',
+			icon: 'icon-blocked',
+			type: 'error'
+		});
+		@endif
+		@if ( session('success'))
+		new PNotify({
+			title: 'Success',
+			text: '{{ session('success') }}.',
+			icon: 'icon-checkmark3',
+			type: 'success'
+		});
+		@endif
+		@if ($errors->any())
+		// new PNotify({
+		// 	title: 'Error',
+		// 	text: 'Nomor Invoice Sudah Terambil, input kembali.',
+		// 	icon: 'icon-blocked',
+		// 	type: 'error'
+		// });
+
+		// @elseif ($errors->has('ninv'))
+		@foreach ($errors->all() as $error)
+		new PNotify({
+			title: 'Error',
+			text: '{{ $error }}.',
+			icon: 'icon-blocked',
+			type: 'error'
+		});
+		@endforeach
+
+		@endif
+	});
+</script>
+
+@endsection
