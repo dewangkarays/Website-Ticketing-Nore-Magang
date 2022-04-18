@@ -57,14 +57,19 @@
 
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Pelanggan</label>
-						<div class="col-lg-10">
-							<select id="user_id" name="user_id" class="form-control select-search">
-								<option value="">-- Pilih Pelanggan --</option>
-								@foreach ($users as $user)
-								<option name="nama" data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" value="{{$user->id}}" {{$user->id == old('user_id') ? 'selected' : ''}}>{{$user->nama}}</option>
-								@endforeach
-							</select>
-						</div>
+                        @if(!$proyeks)
+						    <div class="col-lg-10">
+                                <select id="user_id" name="user_id" class="form-control select-search">
+                                    <option value="">-- Pilih Pelanggan --</option>
+                                    @foreach ($users as $user)
+                                    <option name="nama" data-pnama="{{$user->nama}}" data-pproyek="{{$user->website}}" value="{{$user->id}}" {{$user->id == old('user_id') ? 'selected' : ''}}>{{$user->nama}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @else
+                            <input type="hidden" name="user_id" value={{@$proyeks->user_id}}>
+                            <label class="col-form-label col-lg-10">{{@$proyeks->user->nama}}</label>
+                        @endif
 					</div>
 					{{-- <div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama</label>
@@ -74,13 +79,19 @@
 					</div> --}}
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Proyek</label>
-						<div class="col-lg-10">
-							<select id="select_proyek" name="select_proyek" class="form-control select-search">
-								<option value="">-- Pilih Proyek --</option>
-							</select>
-                            <input type="hidden" id="id_proyek" name="id_proyek" class="form-control border-teal border-1" value="{{old('id_proyek')}}">
-							<input type="hidden" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
-						</div>
+                        @if(!@$proyeks)
+                            <div class="col-lg-10">
+                                <select id="select_proyek" name="select_proyek" class="form-control select-search">
+                                    <option value="">-- Pilih Proyek --</option>
+                                </select>
+                                <input type="hidden" id="id_proyek" name="id_proyek" class="form-control border-teal border-1" value="{{old('id_proyek')}}">
+                                <input type="hidden" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
+                            </div>
+                        @else
+                            <input type="hidden" name="id_proyek" value={{@$proyeks->id}}>
+                            <input type="hidden" name="nama_proyek"  value={{@$proyeks->nama_proyek}}>
+                            <label class="col-form-label col-lg-10">{{@$proyeks->nama_proyek}}</label>
+                        @endif
 					</div>
 					{{--div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Proyek</label>
@@ -92,13 +103,13 @@
                     <div class="form-group row" id="div-masaberlaku">
 						<label class="col-form-label col-lg-2">Masa Berlaku</label>
 						<div class="col-lg-10">
-							<input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control"  readonly value="{{old('masa_berlaku')}}" placeholder="Tanggal Masa Berlaku">
+							<input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control"  readonly value="{{!@$proyeks ? old('masa_berlaku') : $proyeks->masa_berlaku}}" placeholder="Tanggal Masa Berlaku">
 							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
 						</div>
 						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
 					</div>
 
-                    @if (@$tagihan->proyek->jenis_layanan==4 || @$tagihan->proyek->jenis_proyek==2)
+                    @if (@$tagihan->proyek->jenis_layanan==4 || @$tagihan->proyek->jenis_proyek==2 || @$proyeks->jenis_layanan==4 || @$proyeks->jenis_proyek==2)
 
                     @else
                         <div id="new-masa" class="form-group row">
@@ -403,7 +414,7 @@
 		document.addEventListener('DOMContentLoaded', function() {
 			FormValidation.init();
 		});
-		
+
 		var Summernote = function() {
 
 			//

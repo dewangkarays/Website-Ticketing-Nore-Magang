@@ -33,13 +33,24 @@ class TagihanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $requestUser = '';
+        if($request->get('c'))
+        {
+            $requestUser = $request->get('c');
+            $proyeks = Proyek::find($requestUser);
+        }
+        else
+        {
+            $proyeks = '';
+        }
         $users = User::where('role','>=',80)->get();
         $users = $users->sortBy('kadaluarsa');
         $penagih = Setting::first();
         $lastno = Nomor::first();
-        return view('tagihans.create',compact('users','penagih','lastno'));
+        //dd($proyeks);
+        return view('tagihans.create',compact('users','penagih','lastno', 'requestUser', 'proyeks'));
     }
 
     public function createtagihan($id)
@@ -89,6 +100,10 @@ class TagihanController extends Controller
             $data['uang_muka'] = 0;
         }
 
+        if($request->get('new_mb')==''){
+            $data['masa_berlaku'] = $request->get('masa_berlaku');
+        }
+
         if($request->get('new_mb')!=''){
             $data['masa_berlaku'] = $request->get('new_mb');
         }
@@ -102,7 +117,7 @@ class TagihanController extends Controller
 
         $tagihan = Tagihan::create($data);
         $proyek = Proyek::find($tagihan->id_proyek);
-        $proyek->masa_berlaku = $proyek->tagihan->masa_berlaku;
+        $proyek->masa_berlaku = $tagihan->masa_berlaku;
         $proyek->save();
 
         return redirect('/tagihans')->with('success', 'Tagihan saved!');
@@ -175,7 +190,7 @@ class TagihanController extends Controller
         $tagihan->update($data);
 
         $proyek = Proyek::find($tagihan->id_proyek);
-        $proyek->masa_berlaku = $proyek->tagihan->masa_berlaku;
+        $proyek->masa_berlaku = $tagihan->masa_berlaku;
         $proyek->save();
 
         return redirect('/tagihans')->with('success', 'Tagihan updated!');
