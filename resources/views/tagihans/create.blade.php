@@ -79,7 +79,7 @@
 					</div> --}}
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Proyek</label>
-                        @if(!@$proyeks)
+                        @if(!$proyeks)
                             <div class="col-lg-10">
                                 <select id="select_proyek" name="select_proyek" class="form-control select-search">
                                     <option value="">-- Pilih Proyek --</option>
@@ -88,8 +88,8 @@
                                 <input type="hidden" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
                             </div>
                         @else
-                            <input type="hidden" name="id_proyek" value={{@$proyeks->id}}>
-                            <input type="hidden" name="nama_proyek"  value={{@$proyeks->nama_proyek}}>
+                            <input type="hidden" name="id_proyek" value="{{@$proyeks->id}}">
+                            <input type="hidden" name="nama_proyek"  value="{{@$proyeks->nama_proyek}}">
                             <label class="col-form-label col-lg-10">{{@$proyeks->nama_proyek}}</label>
                         @endif
 					</div>
