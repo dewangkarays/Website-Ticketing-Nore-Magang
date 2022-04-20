@@ -111,7 +111,6 @@
 				    @method('DELETE')
 					<div class="modal-body" align="center">
                         <h2> Hapus Data </h2>
-                        <h5> Member ini tidak memiliki data proyek, ingin menghapusnya? </h5>
 					</div>
 
 					<div class="modal-footer">
