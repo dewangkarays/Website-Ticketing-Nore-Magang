@@ -222,8 +222,8 @@
                             -
                             @endif
                         </td>
-                        <td>{{$invoice->keterangan}} (Uang Muka)</td>
-                        <td align="right">@angka($invoice->uang_muka)</td>
+                        <td>{{$invoice->keterangan}} (Pembayaran uang muka)</td>
+                        <td align="right">@angka($invoice->nominal)</td>
                     </tr>
                     {{-- <tr>
                         <td colspan="2" style="background-color: white">&nbsp;</td>
@@ -241,11 +241,11 @@
                 <tr>
                     <th style="width: 45%; height: 30px"></th>
                     <th align="left" style="width: 40%">TOTAL</th>
-                    <th align="right" style="width: auto">@angka($invoices->sum('uang_muka'))</th>
+                    <th align="right" style="width: auto">@angka($invoices->sum('nominal'))</th>
                 </tr>
                 <tr>
                     <td></td>
-                    <td align="left">Sisa Tagihan</td>
+                    <td align="left">Uang Muka</td>
                     <td align="right">@angka($invoices->sum('uang_muka'))</td>
                 </tr>
                 <tr>

@@ -232,4 +232,27 @@ class RekapDptagihanController extends Controller
         return $pdf->stream();
         // return view('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'));
     }
+    public function detailRekapTagihan($id)
+    {
+        $tagihan = RekapDptagihan::find($id);
+        $html = '
+        <table class="table table-striped">
+            <tr>
+                <td>Langganan</td>
+                <td>Ads</td>
+                <td>Lainnya</td>
+                <td>Sudah Dibayar</td>
+                <td>Total Tagihan</td>
+            </tr>
+            <tr>
+                <td>'.number_format($tagihan->langganan,0,',','.').'</td>
+                <td>'.number_format($tagihan->ads,0,',','.').'</td>
+                <td>'.number_format($tagihan->lainnya,0,',','.').'</td>
+                <td>'.number_format($tagihan->jml_bayar,0,',','.').'</td>
+                <td>'.number_format($tagihan->jml_tagih,0,',','.').'</td>
+            </tr>
+        </table>';
+
+        return $tagihan->total;
+    }
 }

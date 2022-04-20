@@ -13,6 +13,8 @@ use App\Model\Setting;
 use App\Exports\PaymentExport; //plugin excel
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+use App\Model\RekapTagihan;
+use App\Model\RekapDptagihan;
 
 class PaymentController extends Controller
 {
@@ -38,10 +40,10 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $users = User::where('role','>','50')->get();
-        $tagihanuser = Tagihan::where('user_id', \Auth::user()->id)->get();
+        $tagihanuser = RekapTagihan::where('user_id', \Auth::user()->id)->get();
         $tagihanuser2 = '';
         $setting = Setting::first();
 
@@ -69,6 +71,7 @@ class PaymentController extends Controller
         }
         $cust = User::find($request->get('user_id'));
         $data['user_role'] = $cust->role;
+        $data['nama'] = $cust->nama;
 
         $receiptno = 01;
         $lastreceipt = Payment::latest('id')->first();
@@ -117,24 +120,21 @@ class PaymentController extends Controller
                 }
         } else{
             $lastno = Nomor::first();
-                    if ($lastno) {
-                        $no1 = $lastno->npay + 1;
-                        $lastno->npay = $no1;
-                        $no = str_pad($no1,3,"0",STR_PAD_LEFT);
-                        $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                        $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
-                        $lastno->save();
-                    } else {
-                        $lastno['npay'] = 1;
-                        $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
-                        $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                        $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
-                        $lastno = Nomor::create($lastno);
-                    }
+            if ($lastno) {
+                $no1 = $lastno->npay + 1;
+                $lastno->npay = $no1;
+                $no = str_pad($no1,3,"0",STR_PAD_LEFT);
+                $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                $lastno->save();
+            } else {
+                $lastno['npay'] = 1;
+                $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
+                $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                $lastno = Nomor::create($lastno);
+            }
         }
-        // dd($data);
-        
-        $payment = Payment::create($data);
         
         if($request->get('kadaluarsa')!=''){
 
@@ -147,16 +147,55 @@ class PaymentController extends Controller
             $cust->task_count += $request->get('task_count');
             $cust->save();
         }
-
-        $tagihan = Tagihan::find($request->get('tagihan_id'));
-        $tagihan->jml_tagih -= $request->get('nominal');
-        $tagihan->jml_bayar += $request->get('nominal');
-        if($tagihan->jml_tagih==0){
-            $tagihan->status=2;
-        } else {
-            $tagihan->status=1;
+        
+        if($request->get('rdtagihan') == 1){
+            $tagihan = RekapTagihan::find($request->get('tagihan_id'));
+            // $tagihan->jml_tagih -= $request->get('nominal');
+            $data['rekap_tagihan_id'] = $request->get('tagihan_id');
+            $tagihan->jml_terbayar += $request->get('nominal');
+            if($tagihan->jml_terbayar==$tagihan->total){
+                $tagihan->update([
+                    'status'=>4
+                ]);
+                // $tagihan->status=2;
+            } else {
+                $tagihan->update([
+                    'status'=>3
+                ]);
+                // $tagihan->status=1;
+            }
+            // $tagihan->save();
         }
-        $tagihan->save();
+
+        if($request->get('rdtagihan') == 2){
+            $tagihan = RekapDptagihan::find($request->get('tagihan_id'));
+            // $tagihan->jml_tagih -= $request->get('nominal');
+            $data['rekap_dptagihan_id'] = $request->get('tagihan_id');
+            $tagihan->jml_terbayar += $request->get('nominal');
+            if($tagihan->jml_terbayar==$tagihan->total){
+                $tagihan->update([
+                    'status'=>4
+                ]);
+                // $tagihan->status=2;
+            } else {
+                $tagihan->update([
+                    'status'=>3
+                ]);
+                // $tagihan->status=1;
+            }
+            // $tagihan->save();
+        }
+        // dd($data);
+        $payment = Payment::create($data);
+        // $tagihan = Tagihan::find($request->get('tagihan_id'));
+        // $tagihan->jml_tagih -= $request->get('nominal');
+        // $tagihan->jml_bayar += $request->get('nominal');
+        // if($tagihan->jml_tagih==0){
+        //     $tagihan->status=2;
+        // } else {
+        //     $tagihan->status=1;
+        // }
+        // $tagihan->save();
 
         //notifikasi
         // $users = User::whereIn('role', ['1','10'])->get(); //role admin & karyawan

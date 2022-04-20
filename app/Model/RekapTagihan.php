@@ -22,4 +22,9 @@ class RekapTagihan extends Model
     {
         return $this->belongsTo('App\Model\User', 'user_id', 'id');
     }
+    
+    public function payment()
+    {
+        return $this->hasMany('App\Model\Payment', 'rekap_tagihan_id', 'id');
+    }
 }

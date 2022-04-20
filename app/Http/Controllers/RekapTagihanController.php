@@ -11,10 +11,12 @@ use App\Model\Proyek;
 use App\Model\Lampiran_gambar;
 use App\Exports\TagihanExport; //plugin excel
 use App\Model\RekapTagihan;
+use App\Model\RekapDptagihan;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\File;
 use PDF;
 use Illuminate\Support\Facades\Validator;
+use LDAP\Result;
 
 class RekapTagihanController extends Controller
 {
@@ -251,5 +253,68 @@ class RekapTagihanController extends Controller
         }
         $users = User::where('role','>=',80)->get();
         return view('rekaptagihans.create', compact('requestUser','tagihans','users'));
+    }
+
+    public function getRekapTagihan($id)
+    {
+        $rekaptagihans = RekapTagihan::where('user_id', $id)->get();
+        $html = '<option value="">-- Pilih Tagihan --</option>';
+        foreach ($rekaptagihans as $tagihan) {
+            $html .= '<option value="'.$tagihan->id.'" data-tagihan="'.$tagihan->total.'" >'.$tagihan->invoice.' ('.number_format($tagihan->total,0,',','.').')</option>';
+        }
+
+        return $html;
+    }
+    
+    public function getRadBox(Request $request)
+    {
+        // return $request;
+        $user_id = $request->user_id;
+        if($request->rad == 1){
+            $rekaptagihans = RekapTagihan::where('user_id', $user_id)
+                ->whereIn('status', [2,3])->get();
+            // dd($rekaptagihans);
+            $html = '<option value="">-- Pilih Tagihan --</option>';
+            foreach ($rekaptagihans as $tagihan) {
+                $html .= '<option value="'.$tagihan->id.'" data-tagihan="'.$tagihan->total.'" data-jmlbayar="'.@$tagihan->jml_terbayar.'">'.$tagihan->invoice.' ('.number_format($tagihan->total,0,',','.').')</option>';
+            }
+        }
+        elseif($request->rad == 2){
+            $rekaptagihans = RekapDptagihan::where('user_id', $request->user_id)
+                ->whereIn('status', [2,3])->get();
+            $html = '<option value="">-- Pilih Tagihan --</option>';
+            foreach ($rekaptagihans as $tagihan) {
+                $html .= '<option value="'.$tagihan->id.'" data-tagihan="'.$tagihan->total.'" data-jmlbayar="'.@$tagihan->jml_terbayar.'">'.$tagihan->invoice.' ('.number_format($tagihan->total,0,',','.').')</option>';
+            }
+        }
+        else{
+            $html = '<option value="">-- Pilih Tagihan --</option>';
+        }
+        return $html;
+    }
+    public function detailRekapTagihan(Request $request, $id)
+    {
+        if($request->rad == 1){
+            $tagihan = RekapTagihan::find($id);
+        }
+        $html = '
+        <table class="table table-striped">
+            <tr>
+                <td>Langganan</td>
+                <td>Ads</td>
+                <td>Lainnya</td>
+                <td>Sudah Dibayar</td>
+                <td>Total Tagihan</td>
+            </tr>
+            <tr>
+                <td>'.number_format($tagihan->langganan,0,',','.').'</td>
+                <td>'.number_format($tagihan->ads,0,',','.').'</td>
+                <td>'.number_format($tagihan->lainnya,0,',','.').'</td>
+                <td>'.number_format($tagihan->jml_bayar,0,',','.').'</td>
+                <td>'.number_format($tagihan->jml_tagih,0,',','.').'</td>
+            </tr>
+        </table>';
+
+        return $html;
     }
 }

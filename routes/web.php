@@ -61,7 +61,9 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/notifikasi',  'NotificationController@index')->name('notifikasi');
 	Route::get('/gettagihan/{id}',  'TagihanController@getTagihan');
 	Route::get('/detailtagihan/{id}',  'TagihanController@detailTagihan');
-
+	Route::get('/getrekaptagihan/{id}',  'RekapTagihanController@getRekapTagihan');
+	Route::get('/detailrekaptagihan/{id}',  'RekapTagihanController@detailRekapTagihan');
+	Route::get('/getradbox',  'RekapTagihanController@getRadBox');
 	//admin
 	Route::group(['middleware' => ['role:1']], function() {
 		Route::get('/admin',  'AdminController@index')->name('admin');
