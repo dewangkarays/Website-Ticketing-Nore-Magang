@@ -15,7 +15,7 @@
 
 <!-- Content area -->
 <div class="content">
-	
+
 	<!-- Hover rows -->
 	<div class="card">
 		<div class="card-header header-elements-inline">
@@ -26,11 +26,11 @@
 				<fieldset class="mb-3">
 					<legend class="text-uppercase font-size-sm font-weight-bold">Data Payment</legend>
 					@if(\Auth::user()->role==1 || \Auth::user()->role==10)
-					
+
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">User</label>
 						<div class="col-lg-10">
-							<select id="user_id" name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
+							<select id="user_id" name="user_id" class="form-control select-search" data-fouc {{-- onchange="changeDate(this)" --}} required>
 								<option value="">-- Pilih Pelanggan --</option>
 								@foreach($users as $user)
 								<option data-name="{{$user->nama}}" data-kadaluarsa="{{$user->kadaluarsa}}" data-role="{{$user->role}}" value="{{$user->id}}">{{$user->nama}}</option>
@@ -39,7 +39,7 @@
 							</select>
 						</div>
 					</div>
-					
+
 					{{-- <div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama</label>
 						<div class="col-lg-10">
@@ -76,7 +76,7 @@
 							</div>
 						</div>
 					</div>
-					@if (\Auth::user()->role==1)	
+					@if (\Auth::user()->role==1)
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Tagihan</label>
 						<div class="col-lg-10">
@@ -89,7 +89,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Tagihan</label>
 						<div class="col-lg-10">
-							@if ($tagihanuser2 != null)	
+							@if ($tagihanuser2 != null)
 							<label class="col-form-label">{{$tagihanuser2->invoice}} - Rp. {{number_format($tagihanuser2->total,0,',','.')}}</label>
 							<input class="form-control" type="hidden" name="tagihan_id" id="tagihan_id" value="{{$tagihanuser2->id}}">
 							@else
@@ -130,17 +130,18 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Total Bayar</label>
 						<div class="col-lg-10">
-							<input type="text" min="1" id="tertulis" class="form-control border-teal border-1 numeric" placeholder="Contoh: 2.000.000" required>
+							<input type="text" min="1" id="tertulis" name="tertulis" class="form-control border-teal border-1 numeric" placeholder="Contoh: 2.000.000" required>
 							<input type="hidden" id="nominal" name="nominal" class="form-control border-teal border-1">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
 						<div class="col-lg-10">
-							<input name="tgl_bayar" type="text" class="form-control pickadate-accessibility" placeholder="Contoh: 2022-04-16" required>
+							<input name="tgl_bayar" type="text" class="form-control pickadate-accessibility" placeholder="Contoh: 2022-04-16" value="{{  date('Y-m-d') }}" required>
+							<span class="form-text text-muted">Ubah tanggal jika pembayaran tidak dilakukan HARI INI</span>
 						</div>
 					</div>
-					@if(\Auth::user()->role==1 || \Auth::user()->role==10)
+					{{-- @if(\Auth::user()->role==1 || \Auth::user()->role==10)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Masa Aktif</label>
 							<div class="col-lg-10">
@@ -151,7 +152,7 @@
 								<span class="form-text text-muted">Biarkan kosong jika tidak ada update masa aktif</span>
 							</div>
 						</div>
-						{{-- <div class="form-group row">
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Status</label>
 							<div class="col-lg-10">
 								<select name="status" class="form-control">
@@ -160,14 +161,14 @@
 									<option value="2">Ditolak</option>
 								</select>
 							</div>
-						</div> --}}
+						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Jumlah Update Task</label>
 							<div class="col-lg-10">
 								<input type="number" id="updtask" name="task_count" class="form-control border-teal border-1" placeholder="Contoh: 10">
 							</div>
 						</div>
-						{{-- <div class="form-group row">
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Penerima</label>
 							<div class="col-lg-10">
 								<input id="penerima" name="penerima" type="text" class="form-control" placeholder="Penerima" required value="{{$setting? $setting->penerima : ''}}">
@@ -184,7 +185,7 @@
 							<div class="col-lg-10">
 								<input id="ttd_pospenerima" name="ttd_pospenerima" type="text" class="form-control" placeholder="Posisi TTd Penerima" required value="{{$setting? $setting->ttd_pospenerima : ''}}">
 							</div>
-						</div> --}}
+						</div>
 					@elseif (\Auth::user()->role > 10)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Penerima</label>
@@ -194,23 +195,24 @@
 								<input id="ttd_pospenerima" name="ttd_pospenerima" type="hidden" class="form-control" placeholder="Posisi TTd Penerima" required value="{{$setting? $setting->ttd_pospenerima : ''}}" readonly>
 							</div>
 						</div>
-					@endif
+					@endif --}}
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Keterangan</label>
 						<div class="col-lg-10">
-							<textarea name="keterangan" rows="4" cols="3" class="form-control" placeholder="Keterangan" required></textarea>
+							<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1"></textarea>
 						</div>
 					</div>
 				</fieldset>
 				<div class="text-right">
+                    <a href="{{ url('/payments') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
 					<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
 				</div>
 			</form>
 		</div>
-		
+
 	</div>
 	<!-- /hover rows -->
-	
+
 </div>
 <!-- /content area -->
 @endsection
@@ -237,14 +239,16 @@
 <script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/notifications/jgrowl.min.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/loaders/blockui.min.js')}}"></script>
+<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
 
 <script src="{{asset('assets/js/app.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/uploader_bootstrap.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_checkboxes_radios.js')}}"></script>
+<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 <script>
-	
+
 	// Accessibility labels
 	$('.pickadate-accessibility').pickadate({
 		labelMonthNext: 'Go to the next month',
@@ -255,27 +259,27 @@
 		selectYears: true,
 		format: 'yyyy-mm-dd',
 	});
-	
+
 	$('#user_id').on('change', function(){
 		var nama = $('#user_id option:selected').data('name');
 		$('#nama').val(nama);
 		$('#nama').text(nama);
 		$('#total').val('');
-		
+
 	});
-	
-	function changeDate(select){
-		var id = $(select).find(':selected').val();
-		var str = $(select).find(':selected').data('kadaluarsa');
-		var tgl = str.split("-");
-		var picker = $(".kadaluarsa").pickadate('picker');
-		$(".uniform-choice").find("span").removeClass("checked");
-		
-		picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
-		picker.set('select', '');
-		picker.set('select', null);
-		picker.render();
-		
+
+	//function changeDate(select){
+	//	var id = $(select).find(':selected').val();
+	//	var str = $(select).find(':selected').data('kadaluarsa');
+	//	var tgl = str.split("-");
+	//	var picker = $(".kadaluarsa").pickadate('picker');
+	//	$(".uniform-choice").find("span").removeClass("checked");
+
+	//	picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
+	//	picker.set('select', '');
+	//	picker.set('select', null);
+	//	picker.render();
+
 		// var role = $(select).find(':selected').data('role');
 		// if(role==99){
 			// 	$('#updtask').val('3');
@@ -291,8 +295,8 @@
 		// 		$('#tagihan_id').html(data);
 		// 	}
 		// });
-	}
-				
+	//}
+
 	function changeTagihan(select){
 		var id = $(select).find(':selected').val();
 		var tagih = $(select).find(':selected').data('tagihan');
@@ -327,7 +331,7 @@
 		$('#total').val(val);
 		$('#sisa').val(val1);
 		$('#bayar').val(val2);
-		
+
 		// $.ajax({
 		// 	type: 'GET',
 		// 	url: "{{ url('/detailrekaptagihan')}}/"+id,
@@ -336,16 +340,16 @@
 		// 	}
 		// });
 	}
-				
+
 	$(document).on("input", ".numeric", function() {
 		this.value = this.value.replace(/\D/g,'');
 	});
-				
+
 	$('#tertulis').focus(function() {
 		var angka = $('#nominal').val();
 		$('#tertulis').val(angka);
 	});
-	
+
 	$('#tertulis').keyup(function() {
 		var angka = $('#tertulis').val();
 		$('#nominal').val(angka);
@@ -407,7 +411,7 @@
 	})
 </script>
 <script>
-	
+
 /* ------------------------------------------------------------------------------
  *
  *  # Form validation
@@ -562,16 +566,42 @@ var FormValidation = function() {
 					}
 				},
 				rules: {
-					nominal:{
-						min : 0,
-						maxlength : 9
+					//nominal:{
+					//	min : 1,
+					//	maxlength : 9
+					//},
+					//user_id:{
+					//	required : true
+                    //},
+                    //tagihan_id:{
+					//	required : true
+                    //},
+					tertulis:{
+						required : true,
+						min : 1
+					},
+					keterangan:{
+						required : true
 					},
 				},
 				messages: {
-					nominal:{
-						min : 'Minimal 0 rupiah',
-						maxlength: 'Melewati batas inputan'
-					}
+					//nominal:{
+					//	min : 'Minimal 1 rupiah',
+					//	maxlength: 'Melewati batas inputan'
+					//},
+                    user_id:{
+                        required : 'Mohon pilih user'
+                    },
+                    tagihan_id:{
+                        required : 'Mohon pilih tagihan'
+                    },
+					tertulis:{
+                        required : 'Mohon diisi',
+						min : 'Minimal 1 rupiah'
+                    },
+                    keterangan:{
+                        required : 'Mohon diisi'
+                    },
 				}
 			});
 
@@ -593,7 +623,7 @@ var FormValidation = function() {
 				// _componentBootstrapSwitch();
 				// _componentTouchspin();
 				_componentSelect2();
-				// _componentValidation();
+				_componentValidation();
 			}
 		}
 	}();
@@ -625,7 +655,7 @@ var FormValidation = function() {
 			type: 'success'
 		});
 		@endif
-		
+
 	});
 </script>
 <script>
@@ -733,5 +763,86 @@ var FormValidation = function() {
 	document.addEventListener('DOMContentLoaded', function() {
 		InputsCheckboxesRadios.initComponents();
 	});
+
+    var Summernote = function() {
+
+        //
+        // Setup module components
+        //
+
+        // Summernote
+        var _componentSummernote = function() {
+            if (!$().summernote) {
+                console.warn('Warning - summernote.min.js is not loaded.');
+                return;
+            }
+
+            // Basic examples
+            // ------------------------------
+
+            // Default initialization
+            $('.summernote').summernote();
+
+            // Control editor height
+            $('.summernote-height').summernote({
+                height: 400
+            });
+
+            // // Air mode
+            // $('.summernote-airmode').summernote({
+            // 	airMode: true
+            // });
+
+
+            // // // Click to edit
+            // // // ------------------------------
+
+            // // // Edit
+            // // $('#edit').on('click', function() {
+            // // 	$('.click2edit').summernote({focus: true});
+            // // })
+
+            // // // Save
+            // // $('#save').on('click', function() {
+            // // 	var aHTML = $('.click2edit').summernote('code');
+            // // 	$('.click2edit').summernote('destroy');
+            // // });
+        };
+
+        // Uniform
+        var _componentUniform = function() {
+            if (!$().uniform) {
+                console.warn('Warning - uniform.min.js is not loaded.');
+                return;
+            }
+
+            // Styled file input
+            $('.note-image-input').uniform({
+                fileButtonClass: 'action btn bg-warning-400'
+            });
+        };
+
+
+        //
+        // Return objects assigned to module
+        //
+
+        return {
+            init: function() {
+                _componentSummernote();
+                _componentUniform();
+            }
+        }
+    }();
+
+
+    // Initialize module
+    // ------------------------------
+
+    document.addEventListener('DOMContentLoaded', function() {
+        Summernote.init();
+    });
 </script>
 @endsection
+
+

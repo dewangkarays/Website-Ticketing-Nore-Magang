@@ -30,41 +30,61 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Receipt No.</label>
 							<div class="col-lg-10">
-								<input id="receipt" name="receipt" type="text" class="form-control" placeholder="Receipt No." value="{{$payment->receipt_no}}" disabled>
+								<input id="receipt" name="receipt" type="text" class="form-control" placeholder="Receipt No." value="{{$payment->receipt_no}}" readonly>
 							</div>
 						</div>
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">User</label>
 								<div class="col-lg-10">
-									<select id="user_id" name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
+									{{-- <select id="user_id" name="user_id" class="form-control select-search" data-fouc onchange="changeDate(this)" required>
 										@foreach($users as $user)
 											<option data-name="{{$user->nama}}" value="{{$user->id}}" data-kadaluarsa="{{$user->kadaluarsa}}" data-role="{{$user->role}}" {{ $payment->user_id == $user->id ? 'selected' : '' }}>{{$user->username}}</option>
 					    				@endforeach
 									</select>
 									<input type="hidden" id="user_kadaluarsa" value="{{$payment->user->kadaluarsa}}">
-									<input type="hidden" id="user_role" value="{{$payment->user->role}}">
+									<input type="hidden" id="user_role" value="{{$payment->user->role}}"> --}}
+                                    <input type="text" class="form-control" value={{$payment->nama}} readonly>
 								</div>
 							</div>
 
-							<div class="form-group row">
+							{{-- <div class="form-group row">
 								<label class="col-form-label col-lg-2">Nama</label>
 								<div class="col-lg-10">
 								<input id="nama" name="nama" type="text" class="form-control" placeholder="Nama User" required value="{{$payment->nama}}">
 								</div>
-							</div>
+							</div> --}}
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">Jenis (Tagihan/Uang Muka)</label>
+                                @if ($payment->rekap_tagihan_id==null && $payment->rekap_dptagihan_id > 0)
+                                    <label class="col-form-label col-lg-10">Uang Muka</label>
+                                @elseif ($payment->rekap_tagihan_id > 0 && $payment->rekap_dptagihan_id==null)
+                                    <label class="col-form-label col-lg-10">Tagihan</label>
+                                @else
+                                    <label class="col-form-label col-lg-10">-</label>
+                                @endif
+                            </div>
 
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Tagihan</label>
-								<div class="col-lg-10">
+                                {{-- @if ($payment->rekap_tagihan_id==null && $payment->rekap_dptagihan_id > 0)
+                                    <label class="col-form-label col-lg-10">{{ $rekap_dptagihan->invoice }} {{number_format($payment->rekap_dptagihan->total,0,',','.')}}</label>
+                                @elseif ($payment->rekap_tagihan_id > 0 && $payment->rekap_dptagihan_id==null)
+                                    <label class="col-form-label col-lg-10">Tagihan</label>
+                                @else
+                                    <label class="col-form-label col-lg-10">-</label>
+                                @endif --}}
+								{{-- <div class="col-lg-10">
 									<select name="tagihan_id" id="tagihan_id" class="form-control select-search" data-fouc onchange="changeTagihan(this)" required>
 										<option value="">-- Pilih Tagihan --</option>
 										@foreach($tagihans as $tagihan)
 											<option value="{{$tagihan->id}}" data-tagihan="{{$tagihan->jml_tagih}}" {{ $tagihan->id==$detailtagih->id ? 'selected' : ''}}>{{$tagihan->invoice}} ({{number_format($tagihan->jml_tagih,0,',','.')}})</option>
 					    				@endforeach
 									</select>
-								</div>
+								</div> --}}
 							</div>
-							<div class="form-group row">
+
+							{{-- <div class="form-group row">
 								<label class="col-form-label col-lg-2">&nbsp;</label>
 								<div class="col-lg-10" id="detailTagihan">
 									<table class="table table-striped">
@@ -84,7 +104,38 @@
 										</tr>
 									</table>
 								</div>
-							</div>
+							</div>  --}}
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">Total Tertagih</label>
+                                <div class="col-lg-10">
+                                    <input type="text" min="1" id="total" class="form-control border-teal border-1 numeric" placeholder="Total tagihan user, contoh: 2.000.000" readonly>
+                                    <input type="hidden" id="nomtotal" class="form-control border-teal border-1">
+                                    <span class="form-text text-muted">Total tagihan yang dimiliki user</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">Total Terbayar</label>
+                                <div class="col-lg-10">
+                                    <input type="text" min="1" id="bayar" class="form-control border-teal border-1 numeric" placeholder="Total pembayaran user, contoh: 2.000.000" readonly>
+                                    <input type="hidden" id="nombayar" class="form-control border-teal border-1">
+                                    <span class="form-text text-muted">Total pembayaran yang dilakukan user</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">Sisa Tagihan</label>
+                                <div class="col-lg-10">
+                                    <input type="text" min="1" id="sisa" class="form-control border-teal border-1 numeric" placeholder="Sisa tagihan user, contoh: 2.000.000" readonly>
+                                    <input type="hidden" id="nomsisa" class="form-control border-teal border-1">
+                                    <span class="form-text text-muted">Sisa tagihan yang dimiliki user</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">Total Bayar</label>
+                                <div class="col-lg-10">
+                                    <input type="text" min="1" id="tertulis" name="tertulis" class="form-control border-teal border-1 numeric" placeholder="Contoh: 2.000.000" required>
+                                    <input type="hidden" id="nominal" name="nominal" class="form-control border-teal border-1">
+                                </div>
+                            </div>
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
 								<div class="col-lg-10" required>
@@ -97,7 +148,7 @@
 									<textarea name="keterangan" rows="4" cols="3" class="form-control" placeholder="Keterangan" required>{{ $payment->keterangan }}</textarea>
 								</div>
 							</div>
-							<div class="form-group row">
+							{{-- <div class="form-group row">
 								<label class="col-form-label col-lg-2">Nominal</label>
 								<div class="col-lg-10">
 									<input type="text" id="tertulis" min="1" max="{{$detailtagih->jml_bayar+$detailtagih->jml_tagih}}" class="form-control border-teal border-1 numeric" placeholder="Nominal" style="font-size: 15px;" required value="{{ $payment->nominal }}">
@@ -120,7 +171,7 @@
 									@endif
 								</div>
 							</div>
-							{{-- <div class="form-group row">
+							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Status</label>
 								<div class="col-lg-10">
 									<select name="status" class="form-control">
@@ -129,7 +180,7 @@
 	                                    <option value="2" {{ $payment->status == "2" ? 'selected' : '' }}>Ditolak</option>
 	                                </select>
 								</div>
-							</div> --}}
+							</div>
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Jumlah Update Task</label>
 								<div class="col-lg-10">
@@ -158,8 +209,9 @@
 
 							</fieldset>
 							<div class="text-right">
+                                <a href="{{ url('/payments') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
 								<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
-							</div>
+							</div> --}}
 
 						{{-- @elseif($payment->status==0)
 							@if(\Auth::user()->role==10)
@@ -294,6 +346,10 @@
 							</div>
 
 						@endif --}}
+                        <div class="text-right">
+                            <a href="{{ url('/payments') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
+                            <button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
+                        </div>
 				</form>
 			</div>
 
@@ -339,9 +395,9 @@
 			var nama = $('#user_id option:selected').data('name');
 			$('#nama').val(nama);
 			$('#nama').text(nama);
-			
+
 		});
-		
+
 		$( document ).ready(function() {
 			var angka = $('#tertulis').val();
 			var harga = angka.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -355,7 +411,7 @@
 			// picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
 			// picker.set('select', new Date(tgl[0],tgl[1],tgl[2]));
 	        // picker.render();
-			
+
 			// var role = $('#user_role').val();
 			// if(role==99){
 			// 	$('#updtask').val('3');
@@ -383,12 +439,12 @@
 			var str = $(select).find(':selected').data('kadaluarsa');
 			var tgl = str.split("-");
 			var picker = $(".kadaluarsa").pickadate('picker');
-			
+
 			picker.set('min', new Date(tgl[0],tgl[1],tgl[2]));
 			picker.set('select', '');
 			picker.set('select', null);
 	        picker.render();
-			
+
 			// var role = $(select).find(':selected').data('role');
 			// if(role==99){
 			// 	$('#updtask').val('3');
@@ -441,7 +497,7 @@
 		});
 	</script>
 	<script type="text/javascript">
-				
+
 		var FormValidation = function() {
 
 		    // Validation config

@@ -30,7 +30,7 @@ class PaymentController extends Controller
         } else {
             // $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('tgl_bayar','desc')->get();
             $payments = Payment::orderBy('tgl_bayar','desc')->get();
-            
+
         }
         return view('payments.index', compact('payments'));
     }
@@ -47,7 +47,6 @@ class PaymentController extends Controller
         $tagihanuser2 = '';
         $setting = Setting::first();
 
-        
         return view('payments.create', compact('setting', 'users', 'tagihanuser','tagihanuser2'));
     }
 
@@ -59,11 +58,11 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        //$request->validate([
             // 'user_id'=>'required',
             // 'keterangan'=>'required',
             // 'nominal'=>'required',
-        ]);
+        //]);
 
         $data = $request->except(['_token', '_method']);
         if (\Auth::user()->role < 20) {
@@ -135,7 +134,7 @@ class PaymentController extends Controller
                 $lastno = Nomor::create($lastno);
             }
         }
-        
+
         if($request->get('kadaluarsa')!=''){
 
             $cust->kadaluarsa = $request->get('kadaluarsa');
@@ -147,7 +146,7 @@ class PaymentController extends Controller
             $cust->task_count += $request->get('task_count');
             $cust->save();
         }
-        
+
         if($request->get('rdtagihan') == 1){
             $tagihan = RekapTagihan::find($request->get('tagihan_id'));
             // $tagihan->jml_tagih -= $request->get('nominal');
@@ -222,7 +221,7 @@ class PaymentController extends Controller
         //
     }
 
-    public function export_excel() 
+    public function export_excel()
     {
         return Excel::download(new PaymentExport, 'Payment '.(date('Y-m-d')).'.xlsx' );
     }
@@ -299,7 +298,7 @@ class PaymentController extends Controller
         $tagihans = Tagihan::where('user_id', $payment->user_id)->get();
         $detailtagih = Tagihan::find($payment->tagihan_id);
         $users = User::where('role','>','50')->get();
-        return view('payments.edit', compact('payment','users','tagihans','detailtagih')); 
+        return view('payments.edit', compact('payment','users','tagihans','detailtagih', ));
     }
 
     /**
@@ -319,7 +318,7 @@ class PaymentController extends Controller
 
         $payment = Payment::find($id);
         $data = $request->except(['_token', '_method','kadaluarsa','updkadaluarsa','task_count']);
-        
+
         $user = User::find($request->get('user_id'));
         if($request->get('kadaluarsa')!='' && $request->get('updkadaluarsa')=='1'){
             $data['kadaluarsa'] = $request->get('kadaluarsa');
@@ -360,7 +359,7 @@ class PaymentController extends Controller
         //     }
 
         // }
-        
+
 
         $tagihan = Tagihan::find($request->get('tagihan_id'));
         $tagihan->jml_tagih -= ($request->get('nominal') - $payment->nominal);
@@ -386,7 +385,7 @@ class PaymentController extends Controller
     public function destroy($id)
     {
         $payment = Payment::find($id);
-        
+
         $tagihan = Tagihan::find($payment->tagihan_id);
         $tagihan->jml_tagih += $payment->nominal;
         $tagihan->jml_bayar -= $payment->nominal;
@@ -440,7 +439,7 @@ class PaymentController extends Controller
         $years = Payment::selectRaw('year(tgl_bayar) as tahun')->where('status','1')->groupBy('tahun')->orderBy('tahun','DESC')->get();
 
         $qry = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')->where('status','1')->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
-        
+
         foreach ($qry as $val) {
             // $chart[$val['user_role']][$val['bulan']] = $val['total'];
             $chart[0][$val['bulan']] += $val['total'];
@@ -450,7 +449,7 @@ class PaymentController extends Controller
 
         $clients = Payment::select('*')->orderBy('tgl_bayar','DESC')->offset(0)->limit(8)->get();
         $totals = Payment::selectRaw('user_id, SUM(nominal) as total')->groupBy('user_id')->orderBy('total','DESC')->get();
-        
+
         return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter','totals'));
     }
 }
