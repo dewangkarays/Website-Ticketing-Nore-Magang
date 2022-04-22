@@ -76,12 +76,12 @@
                         @else
                               <tr><td align="center" colspan="9">Data Kosong</td></tr>
                         @endif
-    
+
                         </tbody>
                     </table>
-    
+
                     <hr>
-    
+
                     <div class="form-group row">
                         <div class="col-lg-10">
                             <input type="hidden" name="user_id" value="{{ @$tagihans[0]->user_id }}">
@@ -112,15 +112,15 @@
                                 <input type="text" id="nouser" name="nouser" class="form-control border-info border-1" value="{{\Auth::user()->id}}" readonly>
                             </div>
                         </div>
-    
+
                         <hr>
-    
+
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Nama Tertagih
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-10">
-                                <input id="nama_tertagih" type="text" name="nama_tertagih" class="form-control border-teal border-1" placeholder="Contoh: Noer Prajitno" value="{{old('nama_tertagih')}}">
+                                <input id="nama_tertagih" type="text" name="nama_tertagih" class="form-control border-teal border-1" placeholder="Contoh: Noer Prajitno" value="{{@$tagihans[0]->user->nama}}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -128,7 +128,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-10">
-                                <input id="alamat" type="text" name="alamat" class="form-control border-teal border-1" placeholder="Contoh: Jl. Inspeksi Gajahmada Semarang 50133" value="{{old('alamat')}}">
+                                <input id="alamat" type="text" name="alamat" class="form-control border-teal border-1" placeholder="Contoh: Jl. Inspeksi Gajahmada Semarang 50133" value="{{@$tagihans[0]->user->alamat}}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -136,7 +136,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-10">
-                                <input id="jatuh_tempo" name="jatuh_tempo" type="text" class="form-control pickadate-accessibility" value="{{old('jatuh_tempo')}}" placeholder="Contoh: 2022-04-08" required>
+                                <input id="jatuh_tempo" name="jatuh_tempo" type="text" class="form-control pickadate-accessibility" value="{{  date('Y-m-d') }}" placeholder="Contoh: 2022-04-08" required>
                                 {{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
                             </div>
                             {{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
@@ -149,13 +149,13 @@
                                 <textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{ old('keterangan') }}</textarea>
                             </div>
                         </div>
-    
+
                         <div class="text-right">
                             <a href="{{ route('rekaptagihans.index') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
                             <button type="submit" class="btn btn-success">Submit <i class="icon-paperplane ml-2"></i></button>
                         </div>
                     @else
-                        
+
                     @endif
                 </form>
             </div>
@@ -184,7 +184,7 @@
     <script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
     <script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
     <script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
-    
+
     <script type="text/javascript">
         // Initialize
         $('.select-search').select2();

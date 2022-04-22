@@ -10,6 +10,7 @@ use App\Model\Nomor;
 use App\Model\Proyek;
 use App\Model\Lampiran_gambar;
 use App\Exports\TagihanExport; //plugin excel
+use App\Model\Payment;
 use App\Model\RekapTagihan;
 use App\Model\RekapDptagihan;
 use Maatwebsite\Excel\Facades\Excel;
@@ -136,7 +137,7 @@ class RekapTagihanController extends Controller
                 $lastno = Nomor::create($lastno);
             }
         }
-        
+
         // dd($data);
         $rekaptagihan = RekapTagihan::create($data);
         $rekaptagihan->save();
@@ -200,9 +201,22 @@ class RekapTagihanController extends Controller
         // dd($data);
 
         $rekaptagihan = RekapTagihan::find($id);
-        $rekaptagihan->update($data);
-        return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan updated!');
 
+        if(!$rekaptagihan->payment->isEmpty()){
+            $rekaptagihan->status = $request->get('status');
+            if($rekaptagihan->isDirty('status')){
+                return redirect()->back()
+                ->with('error','Tidak bisa mengubah status, rekap ini memiliki data pembayaran.');
+            }
+            else{
+                $rekaptagihan->update($data);
+                return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan updated!');
+            }
+        }
+        else{
+            $rekaptagihan->update($data);
+            return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan updated!');
+        }
     }
 
     /**
@@ -265,7 +279,7 @@ class RekapTagihanController extends Controller
 
         return $html;
     }
-    
+
     public function getRadBox(Request $request)
     {
         // return $request;
