@@ -55,7 +55,7 @@
 				@foreach($payments as $payment)
 				<tr>
 					<td>{{$i}}</td>
-					<td><div class="datatable-column-width">{{@$payment->user->nama}}</div></td>
+					<td><div class="datatable-column-width">{{$payment->nama}}</div></td>
 					<td><div class="datatable-column-width">{{$payment->receipt_no ? $payment->receipt_no : ''}}</div></td>
 					<td style="font-size: 15px;">Rp @angka($payment->nominal)</td>
 					<td align="center">
@@ -67,7 +67,7 @@
 						<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{config('custom.payment.'.$payment->status)}}</span>
 						@endif
 					</td>
-					<td><div class="datatable-column-width">{{$payment->keterangan}}</div></td>
+					<td><div class="datatable-column-width">{!! $payment->keterangan !!}</div></td>
 					<td>{{$payment->tgl_bayar}}</td>
 					@if(\Auth::user()->role<=20)
 					<td align="center">
@@ -90,6 +90,7 @@
 									@if($payment->status== 0 )
 									<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('payments.destroy', $payment->id)}}"><i class="icon-x"></i> Delete</a>
 									@endif
+									<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('payments.destroy', $payment->id)}}"><i class="icon-x"></i> Delete</a>
 								</div>
 							</div>
 						</div>

@@ -106,7 +106,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Total Tertagih</label>
 						<div class="col-lg-10">
-							<input type="text" min="1" id="total" class="form-control border-teal border-1 numeric" placeholder="Total tagihan user, contoh: 2.000.000" readonly>
+							<input type="text" id="total" class="form-control border-teal border-1 numeric" placeholder="Total tagihan user, contoh: 2.000.000" readonly>
 							<input type="hidden" id="nomtotal" class="form-control border-teal border-1">
 							<span class="form-text text-muted">Total tagihan yang dimiliki user</span>
 						</div>
@@ -114,7 +114,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Total Terbayar</label>
 						<div class="col-lg-10">
-							<input type="text" min="1" id="bayar" class="form-control border-teal border-1 numeric" placeholder="Total pembayaran user, contoh: 2.000.000" readonly>
+							<input type="text" id="bayar" class="form-control border-teal border-1 numeric" placeholder="Total pembayaran user, contoh: 2.000.000" readonly>
 							<input type="hidden" id="nombayar" class="form-control border-teal border-1">
 							<span class="form-text text-muted">Total pembayaran yang dilakukan user</span>
 						</div>
@@ -122,16 +122,25 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Sisa Tagihan</label>
 						<div class="col-lg-10">
-							<input type="text" min="1" id="sisa" class="form-control border-teal border-1 numeric" placeholder="Sisa tagihan user, contoh: 2.000.000" readonly>
+							<input type="text" id="sisa" class="form-control border-teal border-1 numeric" placeholder="Sisa tagihan user, contoh: 2.000.000" readonly>
 							<input type="hidden" id="nomsisa" class="form-control border-teal border-1">
 							<span class="form-text text-muted">Sisa tagihan yang dimiliki user</span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Total Bayar</label>
-						<div class="col-lg-10">
-							<input type="text" min="1" id="tertulis" name="tertulis" class="form-control border-teal border-1 numeric" placeholder="Contoh: 2.000.000" required>
+						<div class="col-lg-8">
+							<input type="text" id="tertulis" name="tertulis" class="form-control border-teal border-1 numeric" placeholder="Contoh: 2.000.000" required>
 							<input type="hidden" id="nominal" name="nominal" class="form-control border-teal border-1">
+						</div>
+						<div class="col-lg-2">
+							{{-- <a href="" id="lunas" class="btn btn-success">Pelunasan<i class="icon-checkmark4 ml-2"></i></a> --}}
+							<div class="form-check">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input-styled pelunasan" data-fouc>
+									Pelunasan
+								</label>
+							</div>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -227,6 +236,7 @@
 <script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/forms/styling/switch.min.js')}}"></script>
+<script src="{{asset('global_assets/js/plugins/forms/styling/switchery.min.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/uploaders/fileinput/plugins/purify.min.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/uploaders/fileinput/plugins/sortable.min.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script>
@@ -265,7 +275,10 @@
 		$('#nama').val(nama);
 		$('#nama').text(nama);
 		$('#total').val('');
-
+		$('#bayar').val('');
+		$('#sisa').val('');
+		$(".uniform-choice").find("span").removeClass("checked");
+		$(".uniform-checker").find("span").removeClass("checked");
 	});
 
 	//function changeDate(select){
@@ -356,18 +369,26 @@
 		var harga = angka.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 		$('#tertulis').val(harga);
 		var total = $("#tagihan_id option:selected").data('tagihan');
+		var bayar = $("#tagihan_id option:selected").data('jmlbayar');
+		var sisa = total - bayar
 		var nominal = $("#nominal").val();
-		// console.log(nominal);
+		console.log(sisa);
 
-		if(nominal > total){
+		if(nominal > sisa){
 			new PNotify({
 				title: 'Error',
 				text: 'Melebihi nominal tagihan',
 				icon: 'icon-blocked',
 				type: 'error'
 			});
-			$("#tertulis").val(null);
-			$("#nominal").val(null);
+			$("#tertulis").val('');
+			$("#nominal").val('');
+		}
+		else if(nominal == sisa){
+			$(".uniform-checker").find("span").addClass("checked");
+		}
+		else{
+			$(".uniform-checker").find("span").removeClass("checked");
 		}
 	});
 
@@ -408,7 +429,32 @@
 
 	$('.cek').change(function() {
 		$('#total').val('');
-	})
+		$('#bayar').val('');
+		$('#sisa').val('');
+	});
+
+	$(document).ready(function(){
+        $('input[type="checkbox"]').click(function(){
+            if($(this).prop("checked") == true){
+				var total = $("#tagihan_id option:selected").data('tagihan');
+				var bayar = $("#tagihan_id option:selected").data('jmlbayar');
+				var sisa = total - bayar
+				$("#tertulis").prop('value',sisa);
+				var val = $('#tertulis').val();
+				$('#nominal').val(val.replace(new RegExp(/\./, 'g'), ''));
+				if(val != "") {
+					valArr = val.split('.');
+					valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
+					val = valArr.join('.');
+				}
+				$('#tertulis').val(val);
+            }
+            else if($(this).prop("checked") == false){
+				$('#tertulis').val(null);
+                $('#nominal').val(null);
+            }
+        });
+    });
 </script>
 <script>
 
@@ -576,7 +622,7 @@ var FormValidation = function() {
                     //tagihan_id:{
 					//	required : true
                     //},
-					tertulis:{
+					nominal:{
 						required : true,
 						min : 1
 					},
@@ -595,7 +641,7 @@ var FormValidation = function() {
                     tagihan_id:{
                         required : 'Mohon pilih tagihan'
                     },
-					tertulis:{
+					nominal:{
                         required : 'Mohon diisi',
 						min : 'Minimal 1 rupiah'
                     },
@@ -667,7 +713,9 @@ var FormValidation = function() {
 			}
 
 			// Default initialization
-			$('.form-check-input-styled').uniform();
+			$('.form-check-input-styled').uniform({
+
+			});
 
 			//
 			// Contextual colors
@@ -781,12 +829,15 @@ var FormValidation = function() {
             // ------------------------------
 
             // Default initialization
-            $('.summernote').summernote();
+            $('.summernote').summernote({
+				toolbar: false,
+				height: 100,
+			});
 
             // Control editor height
-            $('.summernote-height').summernote({
-                height: 400
-            });
+            // $('.summernote-height').summernote({
+            //     height: 400
+            // });
 
             // // Air mode
             // $('.summernote-airmode').summernote({

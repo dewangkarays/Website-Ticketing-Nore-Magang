@@ -64,7 +64,7 @@ class PaymentController extends Controller
             // 'nominal'=>'required',
         //]);
 
-        $data = $request->except(['_token', '_method']);
+        $data = $request->except(['_token', '_method','tagihan_id']);
         if (\Auth::user()->role < 20) {
             $data['status'] = 1;
         }
@@ -134,6 +134,7 @@ class PaymentController extends Controller
                 $lastno = Nomor::create($lastno);
             }
         }
+        // dd($data);
 
         if($request->get('kadaluarsa')!=''){
 
@@ -386,15 +387,30 @@ class PaymentController extends Controller
     {
         $payment = Payment::find($id);
 
-        $tagihan = Tagihan::find($payment->tagihan_id);
-        $tagihan->jml_tagih += $payment->nominal;
-        $tagihan->jml_bayar -= $payment->nominal;
-        if($tagihan->jml_bayar==0){
-            $tagihan->status=0;
-        } else {
-            $tagihan->status=1;
+        if($payment->rekap_tagihan_id != null){
+            // dd($payment);
+            $tagihan = RekapTagihan::find($payment->rekap_tagihan_id);
+            // $tagihan->jml_tagih += $payment->nominal;
+            $tagihan->jml_terbayar -= $payment->nominal;
+            if($tagihan->jml_terbayar==0){
+                $tagihan->status=2;
+            } else {
+                $tagihan->status=3;
+            }
+            $tagihan->update();
         }
-        $tagihan->save();
+
+        else if($payment->rekap_dptagihan_id != null){
+            $tagihan = RekapDptagihan::find($payment->rekap_dptagihan_id);
+            // $tagihan->jml_tagih += $payment->nominal;
+            $tagihan->jml_terbayar -= $payment->nominal;
+            if($tagihan->jml_terbayar==0){
+                $tagihan->status=2;
+            } else {
+                $tagihan->status=3;
+            }
+            $tagihan->update();
+        }
 
         $payment->delete();
 

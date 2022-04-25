@@ -447,7 +447,10 @@
                 // ------------------------------
 
                 // Default initialization
-                $('.summernote').summernote();
+                $('.summernote').summernote({
+                    toolbar: false,
+				    height: 100,
+                });
 
                 // Control editor height
                 $('.summernote-height').summernote({

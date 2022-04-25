@@ -243,18 +243,18 @@ ul{
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="{{ url('/rekaptagihans') }}" class="nav-link {{ (request()->is('rekaptagihans*')) ? 'active' : '' }}">
-							<i class="icon-clipboard5"></i>
-							<span>
-								Rekap Tagihan
-							</span>
-						</a>
-					</li>
-					<li class="nav-item">
 						<a href="{{ url('/rekapdptagihans') }}" class="nav-link {{ (request()->is('rekapdptagihans*')) ? 'active' : '' }}">
 							<i class="icon-clipboard5"></i>
 							<span>
 								Rekap Uang Muka
+							</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ url('/rekaptagihans') }}" class="nav-link {{ (request()->is('rekaptagihans*')) ? 'active' : '' }}">
+							<i class="icon-clipboard5"></i>
+							<span>
+								Rekap Tagihan
 							</span>
 						</a>
 					</li>
