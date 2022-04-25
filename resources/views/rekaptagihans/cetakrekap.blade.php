@@ -225,7 +225,7 @@
                             <br/> {{ $invoice->proyek->website ? '('.$invoice->proyek->website.')': ''}}
                         </td>
                         {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
-                        <td>{{ preg_replace('#</?p.*?>#is', '', $invoice->keterangan) }}</td>
+                        <td>{!! $invoice->keterangan !!}</td>
                         <td align="right">@angka($invoice->nominal)</td>
                     </tr>
                     {{-- <tr>

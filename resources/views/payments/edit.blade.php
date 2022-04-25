@@ -145,7 +145,7 @@
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Keterangan</label>
 								<div class="col-lg-10">
-									<textarea name="keterangan" rows="4" cols="3" class="form-control" placeholder="Keterangan" required>{{ $payment->keterangan }}</textarea>
+									<textarea name="keterangan" rows="4" cols="3" class="summernote form-control border-teal border-1" placeholder="Keterangan" required>{{ $payment->keterangan }}</textarea>
 								</div>
 							</div>
 							{{-- <div class="form-group row">
@@ -383,12 +383,14 @@
 	<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/styling/switchery.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/styling/switch.min.js')}}"></script>
+	<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/uploader_bootstrap.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_checkboxes_radios.js')}}"></script>
+	<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 	<script>
 
 		$('#user_id').on('change', function(){
@@ -582,6 +584,88 @@
 
 		document.addEventListener('DOMContentLoaded', function() {
 		    FormValidation.init();
+		});
+
+		var Summernote = function() {
+
+			//
+			// Setup module components
+			//
+
+			// Summernote
+			var _componentSummernote = function() {
+				if (!$().summernote) {
+					console.warn('Warning - summernote.min.js is not loaded.');
+					return;
+				}
+
+				// Basic examples
+				// ------------------------------
+
+				// Default initialization
+				$('.summernote').summernote({
+					toolbar: false,
+					height: 100,
+				});
+
+				// Control editor height
+				// $('.summernote-height').summernote({
+				//     height: 400
+				// });
+
+				// // Air mode
+				// $('.summernote-airmode').summernote({
+				// 	airMode: true
+				// });
+
+
+				// // // Click to edit
+				// // // ------------------------------
+
+				// // // Edit
+				// // $('#edit').on('click', function() {
+				// // 	$('.click2edit').summernote({focus: true});
+				// // })
+
+				// // // Save
+				// // $('#save').on('click', function() {
+				// // 	var aHTML = $('.click2edit').summernote('code');
+				// // 	$('.click2edit').summernote('destroy');
+				// // });
+			};
+
+			// Uniform
+			var _componentUniform = function() {
+				if (!$().uniform) {
+					console.warn('Warning - uniform.min.js is not loaded.');
+					return;
+				}
+
+				// Styled file input
+				$('.note-image-input').uniform({
+					fileButtonClass: 'action btn bg-warning-400'
+				});
+			};
+
+
+			//
+			// Return objects assigned to module
+			//
+
+			return {
+				init: function() {
+					_componentSummernote();
+					_componentUniform();
+				}
+			}
+		}();
+
+
+		// Initialize module
+		// ------------------------------
+
+		document.addEventListener('DOMContentLoaded', function() {
+			Summernote.init();
 		});
 	</script>
 	<script type="text/javascript">

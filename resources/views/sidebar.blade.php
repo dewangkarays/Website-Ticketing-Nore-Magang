@@ -198,7 +198,7 @@ ul{
 				@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 
 				<li class="nav-item nav-item-submenu">
-					<a href="#" class="nav-link"><i class="icon-stack-text"></i><span>Pengoperasian</span></a>
+					<a href="#" class="nav-link {{ (request()->is('task*','history','antrian')) ? 'active' : 'none' }}"><i class="icon-stack-text"></i><span>Pengoperasian</span></a>
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('task*','history','antrian')) ? 'block' : 'none' }};">
 						<li class="nav-item">
 							<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
@@ -228,7 +228,7 @@ ul{
 				</li>
 
 				<li class="nav-item nav-item-submenu">
-					<a href="#" class="nav-link"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
+					<a href="#" class="nav-link {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan')) ? 'active' : 'none' }}"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan')) ? 'block' : 'none' }};">
 					@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 					<li class="nav-item">

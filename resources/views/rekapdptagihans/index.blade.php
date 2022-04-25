@@ -55,7 +55,7 @@
                                 <td><div class="datatable-column-width">{{$rekapdp->nama}}</div></td>
                                 <td><div class="datatable-column-width">{{$rekapdp->invoice}}</div></td>
                                 <td><div class="datatable-column-width">Rp @angka($rekapdp->total)</div></td>
-                                <td><div class="datatable-column-width">Rp @angka($rekapdp->jml_tagih)</div></td>
+                                <td><div class="datatable-column-width">Rp @angka($rekapdp->jml_terbayar)</div></td>
                                 {{-- <td><div class="datatable-column-width">{!! $rekaptagihan->keterangan !!}</div></td> --}}
                                 <td><div class="datatable-column-width">{{config('custom.rekap_status.' .@$rekapdp->status)}}</div></td>
                                 <td align="center">
