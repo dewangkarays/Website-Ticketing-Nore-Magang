@@ -66,12 +66,14 @@
                                             <a href="#" class="list-icons-item" data-toggle="dropdown">
                                                 <i class="icon-menu9"></i>
                                             </a>
-        
+
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 {{-- <a href="{{ route('tagihans.edit',$rekaptagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a> --}}
                                                 <a href="{{route('rekaptagihans.show', $rekaptagihan->id)}}" class="dropdown-item"><i class="icon-images3"></i> Show</a>
                                                 <a href="{{url('cetakrekap/'.$rekaptagihan->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
-                                                <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('rekaptagihans.destroy', $rekaptagihan->id)}}"><i class="icon-x"></i> Delete</a>
+                                                @if ($rekaptagihan->status == 1)
+                                                    <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('rekaptagihans.destroy', $rekaptagihan->id)}}"><i class="icon-x"></i> Delete</a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

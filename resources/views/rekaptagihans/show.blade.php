@@ -55,7 +55,7 @@
                                 <label class="col-form-label col-lg-10">{{$rekaptagihan->invoice}}</label>
                             </div>
                         </div>
-    
+
                         <hr>
 
                         <div class="form-group row">
@@ -105,7 +105,7 @@
                                                 <td>{{ $invoice->nama_proyek }}</td>
                                                 <td>{{ date('d-m-Y', strtotime(@$invoice->proyek->masa_berlaku)) }}</td>
                                                 <td>Rp @angka($invoice->jml_tagih)</td>
-                                                <td>{!! $invoice->keterangan !!}</td>
+                                                <td>{{ preg_replace('#</?p.*?>#is', '', $invoice->keterangan) }}</td>
                                             </tr>
                                         @endforeach
                                     @else

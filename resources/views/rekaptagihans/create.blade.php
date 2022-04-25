@@ -47,7 +47,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="card" id="card-rekap">
         <div class="card-body">
             <form id="form_rekap" class="form-validate-jquery" method="POST" action="{{ route('rekaptagihans.store') }}">
@@ -81,7 +81,7 @@
                                         <a href="#" class="list-icons-item" data-toggle="dropdown">
                                             <i class="icon-menu9"></i>
                                         </a>
-    
+
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a href="{{ route('tagihans.edit',$tagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
                                             <a href="{{url('/tagihans/cetak/'.$tagihan->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
@@ -141,7 +141,7 @@
 							<span class="text-danger">*</span>
 						</label>
 						<div class="col-lg-10">
-							<input id="nama_tertagih" type="text" name="nama_tertagih" class="form-control border-teal border-1" placeholder="Contoh: Noer Prajitno" value="{{old('nama_tertagih')}}">
+							<input id="nama_tertagih" type="text" name="nama_tertagih" class="form-control border-teal border-1" placeholder="Contoh: Noer Prajitno" value="{{@$tagihans[0]->user->nama}}">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -149,7 +149,7 @@
 							<span class="text-danger">*</span>
 						</label>
 						<div class="col-lg-10">
-							<input id="alamat" type="text" name="alamat" class="form-control border-teal border-1" placeholder="Contoh: Jl. Inspeksi Gajahmada Semarang 50133" value="{{old('alamat')}}">
+							<input id="alamat" type="text" name="alamat" class="form-control border-teal border-1" placeholder="Contoh: Jl. Inspeksi Gajahmada Semarang 50133" value="{{@$tagihans[0]->user->alamat}}">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -157,7 +157,7 @@
 							<span class="text-danger">*</span>
 						</label>
 						<div class="col-lg-10">
-							<input id="jatuh_tempo" name="jatuh_tempo" type="text" class="form-control pickadate-accessibility" value="{{old('jatuh_tempo')}}" placeholder="Contoh: 2022-04-08" required>
+							<input id="jatuh_tempo" name="jatuh_tempo" type="text" class="form-control pickadate-accessibility" value="{{  date('Y-m-d') }}" placeholder="Contoh: 2022-04-08" required>
 							{{-- <input type="text" id="kadaluarsa" name="kadaluarsa" class="form-control border-teal border-1"> --}}
 						</div>
 						{{-- <span id="kadaluarsa" name="kadaluarsa" class="col-form-label col-lg-10 font-weight-bold">{{@$}}</span> --}}
@@ -176,7 +176,7 @@
 						<button type="submit" class="btn btn-success">Submit <i class="icon-paperplane ml-2"></i></button>
 					</div>
 				@else
-					
+
 				@endif
             </form>
         </div>

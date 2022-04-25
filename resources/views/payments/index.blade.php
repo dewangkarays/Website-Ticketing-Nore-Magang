@@ -85,9 +85,9 @@
 									@if(\Auth::user()->role<=20)
 									<a href="https://wa.me/{{@$payment->user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
 									@endif
-									<a href="{{ route('payments.edit',$payment->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+									{{-- <a href="{{ route('payments.edit',$payment->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a> --}}
 									<a href="{{url('/payments/cetak/'.$payment->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
-									@if($payment->status== 0 )
+									@if(Auth::user()->role==1)
 									<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('payments.destroy', $payment->id)}}"><i class="icon-x"></i> Delete</a>
 									@endif
 									<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('payments.destroy', $payment->id)}}"><i class="icon-x"></i> Delete</a>
@@ -288,7 +288,11 @@
 					orderable: false,
 					// width: 100,
 					targets: [ 1, 2, 3, 4, 5, 7 ]
-				}],
+				},
+                {
+                    "targets": [ 4 ],
+                    "visible": false
+                }],
 				dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',

@@ -200,8 +200,8 @@
 
             <table class="main-table" style="margin-top: 15px; line-height: 1">
                 <tr>
-                    <th align="left" style="width: 20%; height: 20px" class="nore-fontcolor">DESKRIPSI</th>
                     <th align="left" style="width: 15%; height: 20px" class="nore-fontcolor">PROYEK</th>
+                    <th align="left" style="width: 20%; height: 20px" class="nore-fontcolor">DESKRIPSI</th>
                     <th align="left" style="width: 50%" class="nore-fontcolor">KETERANGAN</th>
                     <th align="right" style="width: auto" class="nore-fontcolor">JUMLAH (Rp)</th>
                 </tr>
@@ -210,19 +210,22 @@
                     @foreach ($invoices as $invoice)
                     <tr>
                         <td>
-                            Layanan {{ config('custom.jenis_proyek.' .@$invoice->proyek->jenis_proyek) }} {{ $invoice->proyek->website }}
-                        </td>
-                        {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
-                        <td>
                             @if ($invoice->nama_proyek)
                             {{$invoice->nama_proyek}}
-                            @elseif ($invoice->user->website)
-                            {{$invoice->user->website}}
+                            @elseif ($invoice->proyek->website)
+                            {{$invoice->proyek->website}}
                             @else
                             -
                             @endif
                         </td>
-                        <td>{{$invoice->keterangan}} (Pembayaran uang muka)</td>
+                        <td>
+                            Layanan {{ config('custom.jenis_proyek.' .@$invoice->proyek->jenis_proyek) }}
+                            {{ config('custom.kelas_layanan.' .@$invoice->proyek->kelas_layanan) }}
+                            {{ config('custom.jenis_layanan.' .@$invoice->proyek->jenis_layanan) }}
+                            <br/> {{ $invoice->proyek->website ? '('.$invoice->proyek->website.')': ''}}
+                        </td>
+                        {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
+                        <td>{{ preg_replace('#</?p.*?>#is', '', $invoice->keterangan) }}</td>
                         <td align="right">@angka($invoice->nominal)</td>
                     </tr>
                     {{-- <tr>
@@ -277,7 +280,7 @@
                         <li class="note2" style="list-style-type: none;">Biaya transfer menjadi tanggung jawab pelanggan/pengirim dana.</li>
                         <li class="note3" style="list-style-type: none;">Untuk layanan berlangganan perlu diketahui bahwa aset-code adalah hak milik CV. Nore Inovasi dan hanya dapat digunakan selama berlangganan.</li>
                         <li class="note4" style="list-style-type: none;">Pastikan data pembayaran sudah benar, <b> dana yang telah dibayarkan tidak dapat ditarik kembali</b>.</li> <br>
-                        
+
                         <span style="font-weight:bold">Pembayaran dapat dilakukan melalui:</span>
                         <li class="pay" style="list-style-type: none;">NORE INOVASI CV</li>
                         <li class="pay1" style="list-style-type: none; margin-left:6px;">BCA KCP Puri Anjasmoro</li>

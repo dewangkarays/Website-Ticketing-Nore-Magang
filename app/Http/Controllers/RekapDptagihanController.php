@@ -130,7 +130,7 @@ class RekapDptagihanController extends Controller
                 $lastno = Nomor::create($lastno);
             }
         }
-        
+
         // dd($data);
         $rekapdptagihan = RekapDptagihan::create($data);
         $rekapdptagihan->save();
@@ -194,8 +194,22 @@ class RekapDptagihanController extends Controller
         // dd($data);
 
         $rekapdp = RekapDptagihan::find($id);
-        $rekapdp->update($data);
-        return redirect('/rekapdptagihans')->with('success', 'Rekap uang muka updated!');
+
+        if(!$rekapdp->payment->isEmpty()){
+            $rekapdp->status = $request->get('status');
+            if($rekapdp->isDirty('status')){
+                return redirect()->back()
+                ->with('error','Tidak bisa mengubah status, rekap ini memiliki data pembayaran.');
+            }
+            else{
+                $rekapdp->update($data);
+                return redirect('/rekapdptagihans')->with('success', 'Rekap uang muka updated!');
+            }
+        }
+        else{
+            $rekapdp->update($data);
+            return redirect('/rekapdptagihans')->with('success', 'Rekap uang muka updated!');
+        }
     }
 
     /**
