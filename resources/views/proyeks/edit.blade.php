@@ -61,7 +61,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Jenis Proyek</label>
                         <div class="col-lg-10">
-                            <select id="jenis_proyek" name="jenis_proyek" class="form-control border-teal border-1" >
+                            <select id="jenis_proyek" name="jenis_proyek" class="form-control select-search border-teal border-1" >
                                 @if ($proyek->jenis_proyek == null)
                                     <option value="">-- Pilih Jenis Proyek --</option>
                                 @endif

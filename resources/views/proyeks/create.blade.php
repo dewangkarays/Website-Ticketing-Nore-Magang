@@ -55,7 +55,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Jenis Proyek</label>
                             <div class="col-lg-10">
-                                <select id="jenis_proyek" name="jenis_proyek" class="form-control border-teal border-1" >
+                                <select id="jenis_proyek" name="jenis_proyek" class="form-control select-search border-teal border-1" >
                                     <option value="">-- Pilih Jenis Proyek --</option>
                                     @foreach (config('custom.jenis_proyek') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
