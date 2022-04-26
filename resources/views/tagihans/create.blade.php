@@ -179,6 +179,7 @@
 						<div class="col-lg-10">
 							{{-- <div class="summernote form-control border-teal border-1" name="keterangan" placeholder="Keterangan" value="{{old('keterangan')}}"></div> --}}
 							{{-- <input type="text" name="keterangan" class="summernote form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}"> --}}
+							<span class="form-text text-muted">Contoh: Pembayaran berlangganan proyek website klien Noer Prajitno</span>
 							<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1"></textarea>
 						</div>
 					</div>

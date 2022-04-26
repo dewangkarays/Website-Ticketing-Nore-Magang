@@ -55,7 +55,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Jenis Proyek</label>
                             <div class="col-lg-10">
-                                <select id="jenis_proyek" name="jenis_proyek" class="form-control bg-teal-400 border-teal-400" >
+                                <select id="jenis_proyek" name="jenis_proyek" class="form-control border-teal border-1" >
                                     <option value="">-- Pilih Jenis Proyek --</option>
                                     @foreach (config('custom.jenis_proyek') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
@@ -67,18 +67,18 @@
                         <div id="div-tipe" class="form-group row" style="display:none">
                             <label class="col-form-label col-lg-2">Kelas Layanan</label>
                             <div class="col-lg-10">
-                                {{-- <select id="tipe" name="tipe" class="form-control bg-teal-400 border-teal-400" >
+                                {{-- <select id="tipe" name="tipe" class="form-control border-teal border-1" >
                                     <option value="0">-- Pilih Kelas Layanan --</option>
                                     @foreach (config('custom.kelas_layanan') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select> --}}
-                                <select id="tipe_web" name="tipe_web" class="form-control bg-teal-400 border-teal-400" style="display:none">
+                                <select id="tipe_web" name="tipe_web" class="form-control border-teal border-1" style="display:none">
                                     <option value="">-- Pilih Kelas Layanan --</option>
                                     <option value="99">Simple</option>
                                     <option value="90">Prioritas</option>
                                 </select>
-                                <select id="tipe_app" name="tipe_app" class="form-control bg-teal-400 border-teal-400" style="display:none">
+                                <select id="tipe_app" name="tipe_app" class="form-control border-teal border-1" style="display:none">
                                     <option value="80">Premium</option>
                                 </select>
                             </div>
@@ -87,19 +87,19 @@
                         <div id="div-jl" class="form-group row" style="display:none">
                             <label class="col-form-label col-lg-2">Jenis Layanan</label>
                             <div class="col-lg-10">
-                                {{-- <select id="jenis_layanan" name="jenis_layanan" class="form-control bg-teal-400 border-teal-400" >
+                                {{-- <select id="jenis_layanan" name="jenis_layanan" class="form-control border-teal border-1" >
                                     <option value="0">-- Pilih Jenis Layanan --</option>
                                     @foreach (config('custom.jenis_layanan') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select> --}}
-                                <select id="jl_web" name="jl_web" class="form-control bg-teal-400 border-teal-400" style="display:none">
+                                <select id="jl_web" name="jl_web" class="form-control border-teal border-1" style="display:none">
                                     <option value="">-- Pilih Jenis Layanan --</option>
                                     <option value="1">Nore</option>
                                     <option value="2">Mini</option>
                                     <option value="4">Beli/Lepas</option>
                                 </select>
-                                <select id="jl_app" name="jl_app" class="form-control bg-teal-400 border-teal-400" style="display:none">
+                                <select id="jl_app" name="jl_app" class="form-control border-teal border-1" style="display:none">
                                     <option value="">-- Pilih Jenis Layanan --</option>
                                     <option value="3">Berlangganan</option>
                                     <option value="4">Beli/Lepas</option>
@@ -124,7 +124,8 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Keterangan</label>
                             <div class="col-lg-10">
-                                <textarea class="form-control border-teal" name="keterangan" id="keterangan" cols="30" rows="5"></textarea>
+                                <span class="form-text text-muted">Contoh: Website blogspot Noer Prajitno</span>
+                                <textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{ old('keterangan') }}</textarea>
                             </div>
                         </div>
 
@@ -158,9 +159,11 @@
 <script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
 <script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
+<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
 
 <script src="{{asset('assets/js/app.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
+<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 <script type="text/javascript">
 
     //select search
@@ -373,6 +376,83 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         FormValidation.init();
+    });
+
+    //sumernote wysiwyg
+    var Summernote = function() {
+        var _componentSummernote = function() {
+            if (!$().summernote) {
+                console.warn('Warning - summernote.min.js is not loaded.');
+                return;
+            }
+
+            // Basic examples
+            // ------------------------------
+
+            // Default initialization
+            $('.summernote').summernote({
+                toolbar: false,
+                height: 100,
+            });
+
+            // Control editor height
+            $('.summernote-height').summernote({
+                height: 400
+            });
+
+            // // Air mode
+            // $('.summernote-airmode').summernote({
+            // 	airMode: true
+            // });
+
+
+            // // // Click to edit
+            // // // ------------------------------
+
+            // // // Edit
+            // // $('#edit').on('click', function() {
+            // // 	$('.click2edit').summernote({focus: true});
+            // // })
+
+            // // // Save
+            // // $('#save').on('click', function() {
+            // // 	var aHTML = $('.click2edit').summernote('code');
+            // // 	$('.click2edit').summernote('destroy');
+            // // });
+        };
+
+        // Uniform
+        var _componentUniform = function() {
+            if (!$().uniform) {
+                console.warn('Warning - uniform.min.js is not loaded.');
+                return;
+            }
+
+            // Styled file input
+            $('.note-image-input').uniform({
+                fileButtonClass: 'action btn bg-warning-400'
+            });
+        };
+
+
+        //
+        // Return objects assigned to module
+        //
+
+        return {
+            init: function() {
+                _componentSummernote();
+                _componentUniform();
+            }
+        }
+    }();
+
+
+    // Initialize module
+    // ------------------------------
+
+    document.addEventListener('DOMContentLoaded', function() {
+        Summernote.init();
     });
 </script>
 

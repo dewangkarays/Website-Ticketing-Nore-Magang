@@ -79,7 +79,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Role</label>
 							<div class="col-lg-10">
-								<select name="role" class="form-control bg-teal-400 border-teal-400">
+								<select name="role" class="form-control border-teal-1 border-teal">
                                     <option value="1">Super Admin</option>
 									<option value="10">Karyawan</option>
 									<option value="20">Keuangan</option>

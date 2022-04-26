@@ -191,11 +191,11 @@ class RekapTagihanController extends Controller
         }
         $data = $request->except(['_token', '_method']);
 
-        $tagihans =Tagihan::where('rekap_tagihan_id', $id)->get();
+        $tagihans = Tagihan::where('rekap_tagihan_id', $id)->get();
 
-        if($request->get('jml_terbayar')==''){
-            $data['jml_terbayar'] = 0;
-        }
+        // if($request->get('jml_terbayar')!=''){
+        //     $data['jml_terbayar'] = $request->get('jml_terbayar');
+        // }
         $data['status'] = $request->get('status');
 
         // dd($data);

@@ -150,16 +150,20 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label class="col-form-label col-lg-2">Status</label>
-                            <div class="col-lg-10">
-                                <select name="status" id="" class="form-control form-control-select2">
-                                    @foreach (config('custom.rekap_status') as $key => $value)
-                                        <option {{ $rekaptagihan->status == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
-                                    @endforeach
-                                </select>
+                        @if (in_array($rekaptagihan->status, [1,2]))
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">Status</label>
+                                <div class="col-lg-10">
+                                    <select name="status" id="" class="form-control form-control-select2">
+                                        @foreach (config('custom.rekap_status') as $key => $value)
+                                        @if (in_array($key,[1,2]))
+                                            <option {{ $rekaptagihan->status == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
+                                        @endif
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </fieldset>
                     <div class="text-right">
                         <a href="{{ route('rekaptagihans.index') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
@@ -302,7 +306,10 @@
             // ------------------------------
 
             // Default initialization
-            $('.summernote').summernote();
+            $('.summernote').summernote({
+                toolbar: false,
+                height: 100
+            });
 
             // Control editor height
             $('.summernote-height').summernote({
