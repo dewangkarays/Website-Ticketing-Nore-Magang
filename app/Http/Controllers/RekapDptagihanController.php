@@ -21,7 +21,7 @@ class RekapDptagihanController extends Controller
      */
     public function index()
     {
-        $rekapdps = RekapDptagihan::all();
+        $rekapdps = RekapDptagihan::all()->sortByDesc('created_at');
         $tagihans = Tagihan::all();
         $users = User::where('role','>=','80')->get();
         return view('rekapdptagihans.index', compact('rekapdps','tagihans', 'users'));

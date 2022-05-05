@@ -327,8 +327,8 @@
 </script>
 
 <script type="text/javascript">
-	$('.checked-all').on('change', function(e){
-		e.preventDefault()
+	$('.checked-all').on('click', function(e){
+		// e.preventDefault()
 		$('input[id=chk]').prop('checked', this.checked)
 	});
 </script>

@@ -79,15 +79,21 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Role</label>
 							<div class="col-lg-10">
-								<select name="role" class="form-control border-teal-1 border-teal">
-                                    <option value="1">Super Admin</option>
+								<select name="role" class="form-control form-control-select2 border-teal-1 border-teal">
+									@foreach (config("custom.role") as $key => $value)
+										@if (in_array($key, [1,10,20]))
+											<option value="{{ $key }}">{{ $value }}</option>
+										@endif
+									@endforeach
+                                    {{-- <option value="1">Super Admin</option>
 									<option value="10">Karyawan</option>
-									<option value="20">Keuangan</option>
+									<option value="20">Keuangan</option> --}}
                                 </select>
 							</div>
 						</div>
 					</fieldset>
 					<div class="text-right">
+						<a href="{{ url('/users') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
 						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
 					</div>
 				</form>
@@ -117,7 +123,15 @@
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
+	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
 	<script type="text/javascript">
+		// Initialize
+		$('.select-search').select2();
+
+		// Initialize
+		var $select = $('.form-control-select2').select2({
+			minimumResultsForSearch: Infinity
+		});
 		
         // Accessibility labels
         $('.pickadate-accessibility').pickadate({
@@ -256,9 +270,9 @@ var FormValidation = function() {
 				unhighlight: function(element, errorClass) {
 					$(element).removeClass(errorClass);
 				},
-				success: function(label) {
-					label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
-				},
+				// success: function(label) {
+				// 	label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+				// },
 
 				// Different components require proper error label placement
 				errorPlacement: function(error, element) {

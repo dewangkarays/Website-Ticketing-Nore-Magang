@@ -91,6 +91,7 @@
 						</div>
 					</fieldset>
 					<div class="text-right">
+						<a href="{{ url('/users') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
 						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
 					</div>
 				</form>
@@ -121,6 +122,13 @@
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script type="text/javascript">
+		// Initialize
+		$('.select-search').select2();
+
+		// Initialize
+		var $select = $('.form-control-select2').select2({
+			minimumResultsForSearch: Infinity
+		});
 		
         // Accessibility labels
         $('.pickadate-accessibility').pickadate({

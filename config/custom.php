@@ -2,20 +2,20 @@
 
 return [
 
-  'bulan' => [
-    '1' => 'Januari',
-    '2' => 'Februari',
-    '3' => 'Maret',
-    '4' => 'April',
-    '5' => 'Mei',
-    '6' => 'Juni',
-    '7' => 'Juli',
-    '8' => 'Agustus',
-    '9' => 'September',
-    '10' => 'Oktober',
-    '11' => 'November',
-    '12' => 'Desember',
-],
+    'bulan' => [
+        '1' => 'Januari',
+        '2' => 'Februari',
+        '3' => 'Maret',
+        '4' => 'April',
+        '5' => 'Mei',
+        '6' => 'Juni',
+        '7' => 'Juli',
+        '8' => 'Agustus',
+        '9' => 'September',
+        '10' => 'Oktober',
+        '11' => 'November',
+        '12' => 'Desember',
+    ],
 
 	'role' => [
        	'1' => 'Super Admin',
@@ -45,19 +45,19 @@ return [
         '80' => 'Premium',
     ],
 
-  'status' => [
+    'status' => [
         '1' => 'Baru',
         '2' => 'Sedang Dikerjakan',
         '3' => 'Selesai',
     ],
 
-  'payment' => [
+    'payment' => [
         '0' => 'Belum Dikonfirmasi',
         '1' => 'Sudah Dikonfirmasi',
         '2' => 'Ditolak',
     ],
 
-  'tagihan_status' => [
+    'tagihan_status' => [
         '0' => 'Belum Terbayar',
         '1' => 'Terbayar Sebagian',
         '2' => 'Lunas',
@@ -70,7 +70,7 @@ return [
         '4' => 'Lunas',
     ],
 
-  'pengeluaran' => [
+    'pengeluaran' => [
         '0' => 'Gaji',
         '1' => 'Aset',
         '2' => 'Non-Aset',
@@ -85,6 +85,24 @@ return [
         '1' => 'Low',
         '2' => 'Normal',
         '3' => 'High',
+    ],
+
+    'kat_pengeluaran' => [
+        '0' => 'Biaya Jasa',
+        '1' => 'Perlengkapan',
+        '2' => 'Biaya Admin dan Umum',
+        '3' => 'Biaya Asuransi',
+        '4' => 'Biaya Bunga',
+        '5' => 'Biaya Gaji',
+        '6' => 'Biaya Iklan',
+        '7' => 'Biaya Komunikasi',
+        '8' => 'Biaya Lain-lain',
+        '9' => 'Biaya Listrik dan Air',
+        '10' => 'Biaya Penyusutan',
+        '11' => 'Biaya Pajak',
+        '12' => 'Biaya Sewa',
+        '13' => 'Biaya Transportasi',
+        '14' => 'Aset',
     ],
 ];
 

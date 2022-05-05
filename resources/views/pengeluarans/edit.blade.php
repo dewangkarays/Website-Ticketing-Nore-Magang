@@ -33,25 +33,41 @@
 								<input name="tanggal" type="text" class="form-control pickadate-accessibility" value="{{ $epengeluaran->tanggal }}" placeholder="Tanggal Pengeluaran" required>
 							</div>
                         </div>
+
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Penanggung Jawab</label>
+							<div class="col-lg-10">
+								<input type="hidden" name="nama_pj" value="{{ @$epengeluaran->user->nama }}">
+								<select id="user_id" name="user_id" class="form-control select-search">
+									<option value="">-- Pilih Penanggung Jawab --</option>
+									@foreach ($users as $user)
+										<option {{ $epengeluaran->user_id == $user->id ? 'selected' : '' }} value="{{$user->id}}">{{ $user->nama }}</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
                         
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama Pengeluaran</label>
 							<div class="col-lg-10">
 								<input name="pengeluaran" type="text" class="form-control" value="{{ $epengeluaran->pengeluaran }}" placeholder="Nama Pengeluaran" required>
 							</div>
-						</div>
+						</div> --}}
 
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Jenis Pengeluaran</label>
 							<div class="col-lg-10">
-								<select name="jenis_pengeluaran" class="form-control bg-teal-400 border-teal-400" required>
-                                    <option value="0" {{ $epengeluaran->jenis_pengeluaran == '0' ? 'selected' : '' }}>Gaji</option>
+								<select name="jenis_pengeluaran" class="form-control select-search border-teal border-1" required>
+									@foreach (config("custom.kat_pengeluaran") as $key => $value)
+										<option {{ $epengeluaran->jenis_pengeluaran == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
+									@endforeach
+                                    {{-- <option value="0" {{ $epengeluaran->jenis_pengeluaran == '0' ? 'selected' : '' }}>Gaji</option>
                                     <option value="1" {{ $epengeluaran->jenis_pengeluaran == '1' ? 'selected' : '' }}>Aset</option>
                                     <option value="2" {{ $epengeluaran->jenis_pengeluaran == '2' ? 'selected' : '' }}>Non-Aset</option>
                                     <option value="3" {{ $epengeluaran->jenis_pengeluaran == '3' ? 'selected' : '' }}>Konsumsi</option>
                                     <option value="6" {{ $epengeluaran->jenis_pengeluaran == '6' ? 'selected' : '' }}>Modal</option>
                                     <option value="4" {{ $epengeluaran->jenis_pengeluaran == '4' ? 'selected' : '' }}>Bonus</option>
-                                    <option value="5" {{ $epengeluaran->jenis_pengeluaran == '5' ? 'selected' : '' }}>Lain - Lain</option>
+                                    <option value="5" {{ $epengeluaran->jenis_pengeluaran == '5' ? 'selected' : '' }}>Lain - Lain</option> --}}
                                 </select>
 							</div>
 						</div>
@@ -65,11 +81,14 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Keterangan</label>
 							<div class="col-lg-10">
-								<input type="text" name="keterangan" class="form-control border-teal border-1" value="{{ $epengeluaran->keterangan }}" placeholder="Keterangan">
+								{{-- <input type="text" name="keterangan" class="form-control border-teal border-1" value="{{ $epengeluaran->keterangan }}" placeholder="Keterangan"> --}}
+								<span class="form-text text-muted">Contoh: Pengeluaran untuk bonus bulan April</span>
+                                <textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{ $epengeluaran->keterangan }}</textarea>
 							</div>
 						</div>
 					</fieldset>
 					<div class="text-right">
+						<a href="{{ url('/pengeluarans') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
 						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
 					</div>
 				</form>
@@ -96,11 +115,20 @@
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
+	<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
+	<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 	<script type="text/javascript">
+		// Initialize
+		$('.select-search').select2();
+
+		// Initialize
+		var $select = $('.form-control-select2').select2({
+			minimumResultsForSearch: Infinity
+		});
 		
         // Accessibility labels
         $('.pickadate-accessibility').pickadate({
@@ -202,6 +230,83 @@
 		document.addEventListener('DOMContentLoaded', function() {
 		    FormValidation.init();
 		});
+
+		//sumernote wysiwyg
+        var Summernote = function() {
+            var _componentSummernote = function() {
+                if (!$().summernote) {
+                    console.warn('Warning - summernote.min.js is not loaded.');
+                    return;
+                }
+
+                // Basic examples
+                // ------------------------------
+
+                // Default initialization
+                $('.summernote').summernote({
+                    toolbar: false,
+				    height: 100,
+                });
+
+                // Control editor height
+                $('.summernote-height').summernote({
+                    height: 400
+                });
+
+                // // Air mode
+                // $('.summernote-airmode').summernote({
+                // 	airMode: true
+                // });
+
+
+                // // // Click to edit
+                // // // ------------------------------
+
+                // // // Edit
+                // // $('#edit').on('click', function() {
+                // // 	$('.click2edit').summernote({focus: true});
+                // // })
+
+                // // // Save
+                // // $('#save').on('click', function() {
+                // // 	var aHTML = $('.click2edit').summernote('code');
+                // // 	$('.click2edit').summernote('destroy');
+                // // });
+            };
+
+            // Uniform
+            var _componentUniform = function() {
+                if (!$().uniform) {
+                    console.warn('Warning - uniform.min.js is not loaded.');
+                    return;
+                }
+
+                // Styled file input
+                $('.note-image-input').uniform({
+                    fileButtonClass: 'action btn bg-warning-400'
+                });
+            };
+
+
+            //
+            // Return objects assigned to module
+            //
+
+            return {
+                init: function() {
+                    _componentSummernote();
+                    _componentUniform();
+                }
+            }
+        }();
+
+
+        // Initialize module
+        // ------------------------------
+
+        document.addEventListener('DOMContentLoaded', function() {
+            Summernote.init();
+        });
 	</script>
 	<script type="text/javascript">
 		$( document ).ready(function() {

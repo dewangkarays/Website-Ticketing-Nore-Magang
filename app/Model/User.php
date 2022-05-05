@@ -69,4 +69,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Model\RekapDptagihan','user_id', 'id');
     }
+
+    public function pengeluaran()
+    {
+        return $this->hasMany('App\Model\Pengeluaran','user_id', 'id');
+    }
 }

@@ -303,7 +303,7 @@
             DatatableBasic.init();
         });
 
-        $('.checked-all').on('change', function(e){
+        $('.checked-all').on('click', function(e){
             e.preventDefault()
             $('input[id=chk]').prop('checked', this.checked)
         });

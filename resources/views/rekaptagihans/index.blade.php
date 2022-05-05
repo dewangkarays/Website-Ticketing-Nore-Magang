@@ -58,7 +58,18 @@
                                 <td><div class="datatable-column-width">Rp @angka($rekaptagihan->total)</div></td>
                                 <td><div class="datatable-column-width">Rp @angka($rekaptagihan->jml_terbayar)</div></td>
                                 {{-- <td><div class="datatable-column-width">{!! $rekaptagihan->keterangan !!}</div></td> --}}
-                                <td><div class="datatable-column-width">{{config('custom.rekap_status.' .@$rekaptagihan->status)}}</div></td>
+                                <td>
+									@if ($rekaptagihan->status == 1)
+										<span style="font-size: 100%;" class="badge badge-pill badge-info">{{ config('custom.rekap_status.' .@$rekaptagihan->status) }}</span>
+									@elseif($rekaptagihan->status == 2)
+										<span style="font-size: 100%;" class="badge badge-pill badge-danger">{{ config('custom.rekap_status.' .@$rekaptagihan->status) }}</span>
+									@elseif($rekaptagihan->status == 3)
+										<span style="font-size: 100%;" class="badge badge-pill badge-warning">{{ config('custom.rekap_status.' .@$rekaptagihan->status) }}</span>
+									@else
+										<span style="font-size: 100%;" class="badge badge-pill badge-success">{{ config('custom.rekap_status.' .@$rekaptagihan->status) }}</span>
+									@endif
+									{{-- <div class="datatable-column-width">{{config('custom.rekap_status.' .@$rekaptagihan->status)}}</div> --}}
+								</td>
                                 <td align="center">
 									{{-- <a href="{{url('cetakrekap/'.$rekaptagihan->id)}}" class="btn btn-info"><i class="icon-printer2 mr-2"></i> Print</a> --}}
                                     <div class="list-icons">

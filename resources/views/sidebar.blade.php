@@ -232,31 +232,69 @@ ul{
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan')) ? 'block' : 'none' }};">
 					@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 					<li class="nav-item">
-						<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
-							<i class="icon-file-text"></i>
-							<span>
-								Tagihan 
-								{{-- @if ($admunpaid)
-								<br><span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{$admunpaid}} Tagihan belum terbayar lunas</span>
-								@endif --}}
-							</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="{{ url('/rekapdptagihans') }}" class="nav-link {{ (request()->is('rekapdptagihans*')) ? 'active' : '' }}">
-							<i class="icon-clipboard5"></i>
-							<span>
-								Rekap Uang Muka
-							</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="{{ url('/rekaptagihans') }}" class="nav-link {{ (request()->is('rekaptagihans*')) ? 'active' : '' }}">
-							<i class="icon-clipboard5"></i>
-							<span>
-								Rekap Tagihan
-							</span>
-						</a>
+						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link {{ (request()->is('tagihans*','rekapdptagihans*', 'rekaptagihans*')) ? 'active' : '' }}">
+								<i class="icon-paste"></i>
+								<span>
+									Tagihan & Rekap
+								</span>
+							</a>
+							<ul class="nav nav-group-sub" style="display: {{ (request()->is('tagihans*','rekapdptagihans*', 'rekaptagihans*')) ? 'block' : 'none' }};">
+								<li class="nav-item">
+									<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
+										<i class="icon-file-text"></i>
+										<span>
+											Tagihan 
+											{{-- @if ($admunpaid)
+											<br><span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{$admunpaid}} Tagihan belum terbayar lunas</span>
+											@endif --}}
+										</span>
+									</a>
+								</li>
+								<li class="nav-item nav-item-submenu">
+									<a href="#" class="nav-link {{ (request()->is('tagihans*','rekapdptagihans*', 'rekaptagihans*')) ? 'active' : '' }}">
+										<i class="icon-file-check"></i>
+										<span>
+											Rekap & History
+										</span>
+									</a>
+									<ul class="nav nav-group-sub" style="display: {{ (request()->is('tagihans*','rekapdptagihans*', 'rekaptagihans*')) ? 'block' : 'none' }};">
+										<li class="nav-item">
+											<a href="{{ url('/rekapdptagihans') }}" class="nav-link {{ (request()->is('rekapdptagihans*')) ? 'active' : '' }}">
+												<i class="icon-clipboard"></i>
+												<span>
+													Rekap Uang Muka
+												</span>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="#" class="nav-link {{ (request()->is('historydp*')) ? 'active' : '' }}">
+												<i class="icon-clipboard icon-clipboard2"></i>
+												<span>
+													History Uang Muka
+												</span>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="{{ url('/rekaptagihans') }}" class="nav-link {{ (request()->is('rekaptagihans*')) ? 'active' : '' }}">
+												<i class="icon-clipboard"></i>
+												<span>
+													Rekap Tagihan
+												</span>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="#" class="nav-link {{ (request()->is('historytagihan*')) ? 'active' : '' }}">
+												<i class="icon-clipboard icon-clipboard2"></i>
+												<span>
+													History Tagihan
+												</span>
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
 					</li>
 					@endif
 					<li class="nav-item">
