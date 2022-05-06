@@ -146,7 +146,11 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Keterangan</label>
                             <div class="col-lg-10">
-                                <textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{ $rekaptagihan->keterangan }}</textarea>
+                                @if ($rekaptagihan->status == 4)
+                                    <label class="col-form-label col-lg-10">{!! $rekaptagihan->keterangan !!}</label>
+                                @else
+                                    <textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{!! $rekaptagihan->keterangan !!}</textarea>
+                                @endif
                             </div>
                         </div>
 
@@ -166,8 +170,12 @@
                         @endif
                     </fieldset>
                     <div class="text-right">
-                        <a href="{{ route('rekaptagihans.index') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
-						<button type="submit" class="btn btn-success">Submit <i class="icon-paperplane ml-2"></i></button>
+                        @if ($rekaptagihan->status == 4)
+                            <a href="{{ route('historytagihan') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
+                        @else
+                            <a href="{{ route('rekaptagihans.index') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
+                            <button type="submit" class="btn btn-success">Submit <i class="icon-paperplane ml-2"></i></button>
+                        @endif
                     </div>
                 </form>
             </div>

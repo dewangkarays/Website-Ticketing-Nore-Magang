@@ -21,10 +21,18 @@ class RekapDptagihanController extends Controller
      */
     public function index()
     {
-        $rekapdps = RekapDptagihan::all()->sortByDesc('created_at');
+        $rekapdps = RekapDptagihan::where('status','<','4')->orderByDesc('created_at')->get();
         $tagihans = Tagihan::all();
         $users = User::where('role','>=','80')->get();
         return view('rekapdptagihans.index', compact('rekapdps','tagihans', 'users'));
+    }
+
+    public function history()
+    {
+        $rekapdps = RekapDptagihan::where('status','=','4')->orderByDesc('created_at')->get();
+        $tagihans = Tagihan::all();
+        $users = User::where('role','>=','80')->get();
+        return view('rekapdptagihans.history', compact('rekapdps','tagihans', 'users'));
     }
 
     /**
@@ -269,4 +277,5 @@ class RekapDptagihanController extends Controller
 
         return $tagihan->total;
     }
+
 }

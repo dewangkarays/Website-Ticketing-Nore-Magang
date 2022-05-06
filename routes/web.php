@@ -50,6 +50,8 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('createrekap', 'RekapTagihanController@createrekap')->name('createrekap');
 	Route::get('cetakrekap/{id}',  'RekapTagihanController@cetakrekap')->name('cetakrekap');
 	Route::get('cetakrekapdp/{id}',  'RekapDptagihanController@cetakrekap')->name('cetakrekapdp');
+    Route::get('/historytagihan',  'RekapTagihanController@history')->name('historytagihan');
+    Route::get('/historydp',  'RekapDptagihanController@history')->name('historydp');
 	Route::get('/bayaruser/{id}', 'TagihanController@bayaruser')->name('bayaruser');
 	Route::resource('pengeluarans', 'PengeluaranController');
 	Route::get('export_excel_pengeluaran', 'PengeluaranController@export_excel_pengeluaran');

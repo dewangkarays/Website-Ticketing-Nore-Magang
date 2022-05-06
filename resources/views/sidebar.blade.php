@@ -8,7 +8,7 @@ ul{
 
 
 <div class="sidebar sidebar-dark sidebar-main sidebar-expand-md" style="background-color: #229c59">
-	
+
 	<!-- Sidebar mobile toggler -->
 	<div class="sidebar-mobile-toggler text-center">
 		<a href="#" class="sidebar-mobile-main-toggle">
@@ -21,18 +21,18 @@ ul{
 		</a>
 	</div>
 	<!-- /sidebar mobile toggler -->
-	
-	
+
+
 	<!-- Sidebar content -->
 	<div class="sidebar-content">
-		
+
 		<!-- Main navigation -->
 		<div class="card card-sidebar-mobile">
 			<ul class="nav nav-sidebar" data-nav-type="accordion">
-				
+
 				<!-- Main -->
 				<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Menu</div> <i class="icon-menu" title="Main"></i></li>
-				
+
 				@if(Auth::user()->role==1)
 				<li class="nav-item">
 					<a href="{{ url('/admin') }}" class="nav-link {{ (request()->is('admin*')) ? 'active' : '' }}">
@@ -50,10 +50,10 @@ ul{
 						</span>
 					</a>
 				</li> -->
-				
+
 				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link {{ (request()->is('users*','members*','proyeks*')) ? 'active' : '' }}"><i class="icon-users"></i>
-						<span>Users 
+						<span>Users
 						</span>
 					</a>
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('users*','members*','proyeks*')) ? 'block' : 'none' }};">
@@ -180,7 +180,7 @@ ul{
 						</span>
 					</a>
 				</li>
-				
+
 				<li class="nav-item">
 					<a href="{{ url('/tagihanuser') }}" class="nav-link {{ (request()->is('tagihanuser*')) ? 'active' : '' }}">
 						<i class="icon-file-text"></i>
@@ -192,7 +192,7 @@ ul{
 						</span>
 					</a>
 				</li>
-				
+
 				@endif
 
 				@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
@@ -228,23 +228,23 @@ ul{
 				</li>
 
 				<li class="nav-item nav-item-submenu">
-					<a href="#" class="nav-link {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan')) ? 'active' : 'none' }}"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan')) ? 'block' : 'none' }};">
+					<a href="#" class="nav-link {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan')) ? 'active' : 'none' }}"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan')) ? 'block' : 'none' }};">
 					@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 					<li class="nav-item">
 						<li class="nav-item nav-item-submenu">
-							<a href="#" class="nav-link {{ (request()->is('tagihans*','rekapdptagihans*', 'rekaptagihans*')) ? 'active' : '' }}">
+							<a href="#" class="nav-link {{ (request()->is('tagihans*','rekapdptagihans*', 'rekaptagihans*', 'historydp', 'historytagihan')) ? 'active' : '' }}">
 								<i class="icon-paste"></i>
 								<span>
 									Tagihan & Rekap
 								</span>
 							</a>
-							<ul class="nav nav-group-sub" style="display: {{ (request()->is('tagihans*','rekapdptagihans*', 'rekaptagihans*')) ? 'block' : 'none' }};">
+							<ul class="nav nav-group-sub" style="display: {{ (request()->is('tagihans*','rekapdptagihans*', 'rekaptagihans*', 'historydp', 'historytagihan')) ? 'block' : 'none' }};">
 								<li class="nav-item">
 									<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
 										<i class="icon-file-text"></i>
 										<span>
-											Tagihan 
+											Tagihan
 											{{-- @if ($admunpaid)
 											<br><span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{$admunpaid}} Tagihan belum terbayar lunas</span>
 											@endif --}}
@@ -252,13 +252,13 @@ ul{
 									</a>
 								</li>
 								<li class="nav-item nav-item-submenu">
-									<a href="#" class="nav-link {{ (request()->is('tagihans*','rekapdptagihans*', 'rekaptagihans*')) ? 'active' : '' }}">
+									<a href="#" class="nav-link {{ (request()->is('rekapdptagihans*', 'rekaptagihans*', 'historydp', 'historytagihan')) ? 'active' : '' }}">
 										<i class="icon-file-check"></i>
 										<span>
 											Rekap & History
 										</span>
 									</a>
-									<ul class="nav nav-group-sub" style="display: {{ (request()->is('tagihans*','rekapdptagihans*', 'rekaptagihans*')) ? 'block' : 'none' }};">
+									<ul class="nav nav-group-sub" style="display: {{ (request()->is('rekapdptagihans*', 'rekaptagihans*', 'historydp', 'historytagihan')) ? 'block' : 'none' }};">
 										<li class="nav-item">
 											<a href="{{ url('/rekapdptagihans') }}" class="nav-link {{ (request()->is('rekapdptagihans*')) ? 'active' : '' }}">
 												<i class="icon-clipboard"></i>
@@ -268,7 +268,7 @@ ul{
 											</a>
 										</li>
 										<li class="nav-item">
-											<a href="#" class="nav-link {{ (request()->is('historydp*')) ? 'active' : '' }}">
+											<a href="{{ url('/historydp') }}" class="nav-link {{ (request()->is('historydp')) ? 'active' : '' }}">
 												<i class="icon-clipboard icon-clipboard2"></i>
 												<span>
 													History Uang Muka
@@ -284,7 +284,7 @@ ul{
 											</a>
 										</li>
 										<li class="nav-item">
-											<a href="#" class="nav-link {{ (request()->is('historytagihan*')) ? 'active' : '' }}">
+											<a href="{{ url('/historytagihan') }}" class="nav-link {{ (request()->is('historytagihan')) ? 'active' : '' }}">
 												<i class="icon-clipboard icon-clipboard2"></i>
 												<span>
 													History Tagihan
@@ -375,7 +375,7 @@ ul{
 								</span>
 							</a>
 						</li>
-						
+
 					</ul>
 				</li>
 				<li class="nav-item">
@@ -398,7 +398,7 @@ ul{
 					</a>
 				</li>
 				@endif
-				
+
 				<!-- ALL ROLE -->
 
 				<!-- <li class="nav-item">
@@ -409,7 +409,7 @@ ul{
 						</span>
 					</a>
 				</li> -->
-				
+
 				<!-- <li class="nav-item">
 					<a href="{{ url('/history') }}" class="nav-link {{ (request()->is('history')) ? 'active' : '' }}">
 						<i class="icon-history"></i>
@@ -418,7 +418,7 @@ ul{
 						</span>
 					</a>
 				</li> -->
-				
+
 				<!-- <li class="nav-item">
 					<a href="{{ url('/antrian') }}" class="nav-link {{ (request()->is('antrian')) ? 'active' : '' }}">
 						<i class="icon-list-ordered"></i>
@@ -427,21 +427,21 @@ ul{
 						</span>
 					</a>
 				</li> -->
-				
-				
-<!-- 				
+
+
+<!--
 				@if(Auth::user()->role>=1)
-				
+
 				@if (Auth::user()->role==1||Auth::user()->role==10)
 				<li class="nav-item">
 					<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
 						<i class="icon-file-text"></i>
 						<span>
-							Tagihan 
+							Tagihan
 							@if ($admunpaid)
 							<br><span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{$admunpaid}} Tagihan belum terbayar lunas</span>
 							@endif
-							
+
 						</span>
 					</a>
 				</li>
@@ -455,7 +455,7 @@ ul{
 						</span>
 					</a>
 				</li>
-				
+
 				@if (Auth::user()->role==1)
 				<li class="nav-item">
 					<a href="{{ url('/pengeluarans') }}" class="nav-link {{ (request()->is('pengeluarans*')) ? 'active' : '' }}">
@@ -465,7 +465,7 @@ ul{
 						</span>
 					</a>
 				</li>
-				
+
 				<li class="nav-item">
 					<a href="{{ url('/laporankeuangan') }}" class="nav-link {{ (request()->is('laporankeuangan')) ? 'active' : '' }}">
 						<i class="icon-balance"></i>
@@ -474,7 +474,7 @@ ul{
 						</span>
 					</a>
 				</li>
-				
+
 				<li class="nav-item nav-item-submenu {{ (request()->is('statistik*')) ? 'nav-item-open' : '' }}">
 					<a href="#" class="nav-link"><i class="icon-stats-dots"></i> <span>Statistik</span></a>
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('statistik*')) ? 'block' : 'none' }};">
@@ -492,18 +492,18 @@ ul{
 								</span>
 							</a>
 						</li>
-						
+
 					</ul>
 				</li>
 				@endif
-				
+
 				@endif
 				 -->
 			</ul>
 		</div>
 		<!-- /main navigation -->
-		
+
 	</div>
 	<!-- /sidebar content -->
-	
+
 </div>

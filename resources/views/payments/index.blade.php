@@ -37,15 +37,15 @@
 		<table class="table datatable-basic table-hover">
 			<thead>
 				<tr>
-					<th>No</th>
-					<th  style="width: 200px">Nama</th>
-					<th>No. Receipt</th>
-					<th style="width: 150px">Nominal</th>
+					<th style="width: 50px">No</th>
+					<th>Nama</th>
+					<th style="width: 200px">No. Receipt</th>
+					<th style="width: 200px">Nominal</th>
 					<th>Status</th>
-					<th style="width: 200px">Keterangan</th>
-					<th>Tgl Pembayaran</th>
+					<th style="width: 250px">Keterangan</th>
+					<th style="width: 100px">Tanggal Pembayaran</th>
 					@if(\Auth::user()->role<=20)
-					<th class="text-center">Actions</th>
+					<th class="text-center" style="width: 50px">Actions</th>
 					@endif
 				</tr>
 			</thead>
@@ -286,7 +286,7 @@
 				columnDefs: [{
 					orderable: false,
 					// width: 100,
-					targets: [ 1, 2, 3, 4, 5, 7 ]
+					targets: [ 4, 5, 7 ]
 				},
                 {
                     "targets": [ 4 ],

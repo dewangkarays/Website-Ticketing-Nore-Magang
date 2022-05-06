@@ -28,10 +28,18 @@ class RekapTagihanController extends Controller
      */
     public function index()
     {
-        $rekaptagihans = RekapTagihan::all()->sortByDesc('created_at');
+        $rekaptagihans = RekapTagihan::where('status','<','4')->orderByDesc('created_at')->get();
         $tagihans = Tagihan::all();
         $users = User::where('role','>=','80')->get();
         return view('rekaptagihans.index', compact('rekaptagihans','tagihans', 'users'));
+    }
+
+    public function history()
+    {
+        $rekaptagihans = RekapTagihan::where('status','=','4')->orderByDesc('created_at')->get();
+        $tagihans = Tagihan::all();
+        $users = User::where('role','>=','80')->get();
+        return view('rekaptagihans.history', compact('rekaptagihans','tagihans', 'users'));
     }
 
     /**
