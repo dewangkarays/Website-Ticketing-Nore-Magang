@@ -31,47 +31,6 @@
             margin-right: 20px;
         }
 
-        ul {
-            width: 75%;
-            list-style: none;
-            word-break: break-all;
-        }
-        ul li::before {
-            content: '- ';
-            margin-left: -20px;
-            margin-right: 10px;
-        }
-        li.note1::before {
-            content: '(*) ';
-            font-style: normal;
-        }
-        li.note2::before {
-            content: '(**) ';
-            font-style: normal;
-        }
-        li.note3:before {
-            content: '(***) ';
-            font-style: normal;
-        }
-        li.note4::before {
-            content: '(****) ';
-            font-style: normal;
-        }
-        li.note1,li.note2,li.note3,li.note4 {
-            font-style: italic;
-            font-weight: normal;
-        }
-        li.pay::before {
-            content: '- ';
-        }
-        li.pay1::before {
-            list-style-type: none;
-        }
-        li.pay,li.pay1 {
-            font-style: italic;
-            font-weight: normal;
-        }
-
         .head-block {
             /* margin-left: -40px !important; */
             margin-right: -20px !important;
@@ -173,17 +132,26 @@
                                         <td>
                                             {{ $data->jenis_pengeluaran ? config('custom.kat_pengeluaran.'.$data->jenis_pengeluaran) : 'Pendapatan Jasa' }}
                                         </td>
-                                        <td>
-                                            {{ $data->status==1 ? $data->nominal : '-' }}
+                                        <td align="right">
+                                            @angka($data->status==1 ? $data->nominal : '0')
                                         </td>
-                                        <td>
-                                            {{ $data->jenis_pengeluaran ? $data->nominal : '-' }}
+                                        <td align="right">
+                                            @angka($data->jenis_pengeluaran ? $data->nominal : '0')
                                         </td>
-                                        <td>
-                                            -
+                                        <td align="right">
+                                            0
                                         </td>
                                     </tr>
                                 @endforeach
+                            @else
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             @endif
                         </tbody>
                     </table>
@@ -196,7 +164,7 @@
                                 ASET
                             </td>
                             <td align="right" style="width : 40%">
-                                0.00
+                                @angka($pengeluaran->where('jenis_pengeluaran', 14)->sum('nominal'))
                             </td>
                         </tr>
                     </table>
@@ -206,7 +174,7 @@
                                 PENDAPATAN JASA
                             </td>
                             <td align="right" style="width : 40%">
-                                0.00
+                                @angka($p_jasa)
                             </td>
                         </tr>
                         <tr>
@@ -214,7 +182,7 @@
                                 PENDAPATAN BUNGA
                             </td>
                             <td align="right" style="width : 40%">
-                                0.00
+                                @angka($p_bunga)
                             </td>
                         </tr>
                         <tr>
@@ -222,7 +190,7 @@
                                 PENDAPATAN LAIN-LAIN
                             </td>
                             <td align="right" style="width : 40%">
-                                0.00
+                                @angka($p_lain2)
                             </td>
                         </tr>
                         <tr class="bg-green">
@@ -230,7 +198,7 @@
                                 <b>TOTAL PENDAPATAN</b>
                             </td>
                             <td align="right" style="width : 40%">
-                                <b>0.00</b>
+                                <b>@angka($pend_total)</b>
                             </td>
                         </tr>
                     </table>
@@ -241,13 +209,7 @@
                                     {{ strtoupper($value) }}
                                 </td>
                                 <td align="right" style="width : 40%">
-                                    @if ($key == 1)
-                                        1
-                                    @elseif ($key == 2)
-                                        2
-                                    @else
-                                        0.00
-                                    @endif
+                                    @angka($pengeluaran->where('jenis_pengeluaran', $key)->sum('nominal'))
                                 </td>
                             </tr>
 						@endforeach
@@ -256,7 +218,7 @@
                                 <b>TOTAL PENGELUARAN</b>
                             </td>
                             <td align="right" style="width : 40%">
-                                <b>0.00</b>
+                                <b>@angka($peng_total)</b>
                             </td>
                         </tr>
                     </table>
@@ -266,7 +228,7 @@
                                 <b>TOTAL PENDAPATAN</b>
                             </td>
                             <td align="right" style="width : 40%">
-                                <b>0.00</b>
+                                <b>@angka($pend_total)</b>
                             </td>
                         </tr>
                         <tr class="bg-pink">
@@ -274,7 +236,7 @@
                                 <b>TOTAL PENGELUARAN</b>
                             </td>
                             <td align="right" style="width : 40%">
-                                <b>0.00</b>
+                                <b>@angka($peng_total)</b>
                             </td>
                         </tr>
                         <tr class="bg-blue">
@@ -282,11 +244,11 @@
                                 <b>LABA/RUGI</b>
                             </td>
                             <td align="right" style="width : 40%">
-                                <b>0.00</b>
+                                <b>@angka($labarugi)</b>
                             </td>
                         </tr>
                     </table>
-                    <p align="center" style="font-size: 12px; margin-bottom: 100px; margin-top: 25px">Semarang, {{ date('d F Y') }}</p>
+                    <p align="center" style="font-size: 12px; margin-bottom: 100px; margin-top: 25px">Semarang, {{ date('d') }} {{ config('custom.bulan.' .date('n')) }} {{ date('Y') }}</p>
                     <p align="center" style="font-size: 12px;">
                         <b>{{$setting->penagih}}</b><br>
                         {{$setting->pospenagih}}
