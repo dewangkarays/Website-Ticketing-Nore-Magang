@@ -139,7 +139,7 @@
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
 								<div class="col-lg-10" required>
-									<input name="tgl_bayar" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pembayaran" value="{{ $payment->tgl_bayar }}" required>
+									<input name="tanggal" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pembayaran" value="{{ $payment->tanggal }}" required>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -226,7 +226,7 @@
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
 									<div class="col-lg-10">
-										<label class="col-form-label col-lg-2">{{ $payment->tgl_bayar }}</label>
+										<label class="col-form-label col-lg-2">{{ $payment->tanggal }}</label>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -285,7 +285,7 @@
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
 									<div class="col-lg-10" required>
-										<input name="tgl_bayar" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pembayaran" value="{{ $payment->tgl_bayar }}">
+										<input name="tanggal" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pembayaran" value="{{ $payment->tanggal }}">
 									</div>
 								</div>
 								<div class="form-group row">
@@ -319,7 +319,7 @@
 							<div class="form-group row">
 								<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
 								<div class="col-lg-10" required>
-									<label class="col-form-label col-lg-2">{{$payment->tgl_bayar}}</label>
+									<label class="col-form-label col-lg-2">{{$payment->tanggal}}</label>
 								</div>
 							</div>
 							<div class="form-group row">

@@ -146,7 +146,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Tanggal Pembayaran</label>
 						<div class="col-lg-10">
-							<input name="tgl_bayar" type="text" class="form-control pickadate-accessibility" placeholder="Contoh: 2022-04-16" value="{{  date('Y-m-d') }}" required>
+							<input name="tanggal" type="text" class="form-control pickadate-accessibility" placeholder="Contoh: 2022-04-16" value="{{  date('Y-m-d') }}" required>
 							<span class="form-text text-muted">Ubah tanggal jika pembayaran tidak dilakukan HARI INI</span>
 						</div>
 					</div>

@@ -28,7 +28,7 @@
             <td> {{$payment->kadaluarsa}} </td>
             <td> {{$payment->created_at}} </td>
             <td> {{$payment->updated_at}} </td>
-            <td> {{$payment->tgl_bayar}} </td>
+            <td> {{$payment->tanggal}} </td>
             <td> {{config('custom.payment.'.$payment->status)}} </td>
             <td> {{config('custom.role.'.$payment->user_role)}} </td>
             <td> {{$payment->task_count}} </td>

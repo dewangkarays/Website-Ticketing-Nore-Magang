@@ -89,6 +89,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::group(['middleware' => ['role:1,10']], function() {
 		Route::resource('laporankeuangan', 'LaporanKeuanganController');
 		Route::match(['get', 'post'], '/laporankeuangan',  'LaporanKeuanganController@index')->name('filterKeuangan');
+        Route::get('cetaklaporan/{filter}/{filterbulan}',  'LaporanKeuanganController@cetaklaporan')->name('cetaklaporan');
 		// Route::post('/laporankeuangan',  'LaporanKeuanganController@index')->name('filterbulan');
 	});
 	Route::group(['middleware' => ['role:1,10,20']], function() {

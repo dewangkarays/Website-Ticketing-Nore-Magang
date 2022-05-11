@@ -71,7 +71,6 @@ return [
     ],
 
     'pengeluaran' => [
-        '0' => 'Gaji',
         '1' => 'Aset',
         '2' => 'Non-Aset',
         // '3' => 'Tunjangan',
@@ -79,6 +78,7 @@ return [
         '4' => 'Bonus',
         '5' => 'Lain-lain',
         '6' => 'Modal',
+        '7' => 'Gaji',
     ],
 
     'severity' => [
@@ -88,7 +88,6 @@ return [
     ],
 
     'kat_pengeluaran' => [
-        '0' => 'Biaya Jasa',
         '1' => 'Perlengkapan',
         '2' => 'Biaya Admin dan Umum',
         '3' => 'Biaya Asuransi',
@@ -100,9 +99,10 @@ return [
         '9' => 'Biaya Listrik dan Air',
         '10' => 'Biaya Penyusutan',
         '11' => 'Biaya Pajak',
-        '12' => 'Biaya Sewa',
+        '12' => 'Biaya Sesowa',
         '13' => 'Biaya Transportasi',
         '14' => 'Aset',
+        '15' => 'Biaya Jasa',
     ],
 ];
 
