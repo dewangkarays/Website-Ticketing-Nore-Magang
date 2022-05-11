@@ -451,7 +451,7 @@ class LaporanKeuanganController extends Controller
 
         foreach ($qrypie2 as $pie2val) {
             // dump($pie2val);
-            $pie2[$pie2val['jenis_pengeluaran']] += $pie2val['total'];
+            $pie2val['jenis_pengeluaran'] += $pie2val['total'];
         }
         // dd($pie2);
         // die;
