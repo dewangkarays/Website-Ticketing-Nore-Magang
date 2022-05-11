@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Model\Payment;
 use App\Model\Pengeluaran;
 use App\Model\Tagihan;
+use App\Model\Setting;
 use Carbon\Carbon;
+use PDF;
+use \Illuminate\Database\Eloquent\Collection;
 
 
 class LaporanKeuanganController extends Controller
@@ -135,8 +138,8 @@ class LaporanKeuanganController extends Controller
 
         // chart 1, grafik pemasukan monthly
         // bruto
-        $qry10 = Payment::selectRaw('day(tgl_bayar) as hari, user_role, sum(nominal) as total ')
-        ->whereYear('tgl_bayar',$filter)->whereMonth('tgl_bayar', $filterbulan)
+        $qry10 = Payment::selectRaw('day(tanggal) as hari, user_role, sum(nominal) as total ')
+        ->whereYear('tanggal',$filter)->whereMonth('tanggal', $filterbulan)
         ->groupBy('hari', 'user_role')->get()->toArray();
 
         foreach ($qry10 as $val) {
@@ -153,8 +156,8 @@ class LaporanKeuanganController extends Controller
         }
 
         // neto
-        $qry12 = Payment::selectRaw('day(tgl_bayar) as hari, sum(nominal) as total ')
-        ->whereYear('tgl_bayar',$filter)->whereMonth('tgl_bayar', $filterbulan)
+        $qry12 = Payment::selectRaw('day(tanggal) as hari, sum(nominal) as total ')
+        ->whereYear('tanggal',$filter)->whereMonth('tanggal', $filterbulan)
         ->groupBy('hari')->get()->toArray();
 
         $qry13 = Pengeluaran::selectRaw('day(tanggal) as hari, sum(nominal) as total ')
@@ -181,9 +184,9 @@ class LaporanKeuanganController extends Controller
 // ------------------------------
 
         // chart q1
-        $qry15 = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')
-        ->whereRaw('month(tgl_bayar) >= 1 AND month(tgl_bayar) <= 3')
-        ->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
+        $qry15 = Payment::selectRaw('month(tanggal) as bulan, user_role, sum(nominal) as total ')
+        ->whereRaw('month(tanggal) >= 1 AND month(tanggal) <= 3')
+        ->whereYear('tanggal',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
 
         foreach ($qry15 as $val) {
             // $chart[$val['user_role']][$val['bulan']] = $val['total'];
@@ -201,8 +204,8 @@ class LaporanKeuanganController extends Controller
         }
         // dd($chartq2);
 
-        $qry17 = Payment::selectRaw('month(tgl_bayar) as bulan, sum(nominal) as total ')
-        ->whereRaw('month(tgl_bayar) >= 1 AND month(tgl_bayar) <= 3')->whereYear('tgl_bayar',$filter)->groupBy('bulan')->get()->toArray();
+        $qry17 = Payment::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')
+        ->whereRaw('month(tanggal) >= 1 AND month(tanggal) <= 3')->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
 
         $qry18 = Pengeluaran::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')
         ->whereRaw('month(tanggal) >= 1 AND month(tanggal) <= 3')->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
@@ -222,9 +225,9 @@ class LaporanKeuanganController extends Controller
 // ------------------------------
 
         // chart q2
-        $qry19 = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')
-        ->whereRaw('month(tgl_bayar) >= 4 AND month(tgl_bayar) <= 6')
-        ->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
+        $qry19 = Payment::selectRaw('month(tanggal) as bulan, user_role, sum(nominal) as total ')
+        ->whereRaw('month(tanggal) >= 4 AND month(tanggal) <= 6')
+        ->whereYear('tanggal',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
 
         foreach ($qry19 as $val) {
             // $chart[$val['user_role']][$val['bulan']] = $val['total'];
@@ -242,8 +245,8 @@ class LaporanKeuanganController extends Controller
         }
         // dd($chartq22);
 
-        $qry21 = Payment::selectRaw('month(tgl_bayar) as bulan, sum(nominal) as total ')
-        ->whereRaw('month(tgl_bayar) >= 4 AND month(tgl_bayar) <= 6')->whereYear('tgl_bayar',$filter)->groupBy('bulan')->get()->toArray();
+        $qry21 = Payment::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')
+        ->whereRaw('month(tanggal) >= 4 AND month(tanggal) <= 6')->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
 
         $qry22 = Pengeluaran::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')
         ->whereRaw('month(tanggal) >= 4 AND month(tanggal) <= 6')->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
@@ -264,9 +267,9 @@ class LaporanKeuanganController extends Controller
 // ------------------------------
 
         // chart q3
-        $qry23 = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')
-        ->whereRaw('month(tgl_bayar) >= 7 AND month(tgl_bayar) <= 9')
-        ->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
+        $qry23 = Payment::selectRaw('month(tanggal) as bulan, user_role, sum(nominal) as total ')
+        ->whereRaw('month(tanggal) >= 7 AND month(tanggal) <= 9')
+        ->whereYear('tanggal',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
 
         foreach ($qry23 as $val) {
             // $chart[$val['user_role']][$val['bulan']] = $val['total'];
@@ -284,8 +287,8 @@ class LaporanKeuanganController extends Controller
         }
         // dd($chartq22);
 
-        $qry25 = Payment::selectRaw('month(tgl_bayar) as bulan, sum(nominal) as total ')
-        ->whereRaw('month(tgl_bayar) >= 7 AND month(tgl_bayar) <= 9')->whereYear('tgl_bayar',$filter)->groupBy('bulan')->get()->toArray();
+        $qry25 = Payment::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')
+        ->whereRaw('month(tanggal) >= 7 AND month(tanggal) <= 9')->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
 
         $qry26 = Pengeluaran::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')
         ->whereRaw('month(tanggal) >= 7 AND month(tanggal) <= 9')->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
@@ -306,9 +309,9 @@ class LaporanKeuanganController extends Controller
 // ------------------------------
 
         // chart q4
-        $qry27 = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')
-        ->whereRaw('month(tgl_bayar) >= 10 AND month(tgl_bayar) <= 12')
-        ->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
+        $qry27 = Payment::selectRaw('month(tanggal) as bulan, user_role, sum(nominal) as total ')
+        ->whereRaw('month(tanggal) >= 10 AND month(tanggal) <= 12')
+        ->whereYear('tanggal',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
 
         foreach ($qry27 as $val) {
             // $chart[$val['user_role']][$val['bulan']] = $val['total'];
@@ -326,8 +329,8 @@ class LaporanKeuanganController extends Controller
         }
         // // dd($chartq22);
 
-        $qry29 = Payment::selectRaw('month(tgl_bayar) as bulan, sum(nominal) as total ')
-        ->whereRaw('month(tgl_bayar) >= 10 AND month(tgl_bayar) <= 12')->whereYear('tgl_bayar',$filter)->groupBy('bulan')->get()->toArray();
+        $qry29 = Payment::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')
+        ->whereRaw('month(tanggal) >= 10 AND month(tanggal) <= 12')->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
 
         $qry30 = Pengeluaran::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')
         ->whereRaw('month(tanggal) >= 10 AND month(tanggal) <= 12')->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
@@ -352,8 +355,8 @@ class LaporanKeuanganController extends Controller
 // ------------------------------
 
         // pemasukan bruto
-        $qry = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')
-        ->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
+        $qry = Payment::selectRaw('month(tanggal) as bulan, user_role, sum(nominal) as total ')
+        ->whereYear('tanggal',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
 
         foreach ($qry as $val) {
             // $chart[$val['user_role']][$val['bulan']] = $val['total'];
@@ -373,7 +376,7 @@ class LaporanKeuanganController extends Controller
 
 
         // pemasukan neto
-        $qry3 = Payment::selectRaw('month(tgl_bayar) as bulan, sum(nominal) as total ')->whereYear('tgl_bayar',$filter)->groupBy('bulan')->get()->toArray();
+        $qry3 = Payment::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
 
         $qry4 = Pengeluaran::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
 
@@ -392,7 +395,7 @@ class LaporanKeuanganController extends Controller
 * ---------------------------------------------------------------------------- */
 
         // tabel list bruto
-        $tblbruto = Payment::whereYear('tgl_bayar',$filter)->orderBy('tgl_bayar','DESC')->take(5)->get();
+        $tblbruto = Payment::whereYear('tanggal',$filter)->orderBy('tanggal','DESC')->take(5)->get();
         // dd($tblbruto);
 
         // tabel list pengeluaran
@@ -400,8 +403,8 @@ class LaporanKeuanganController extends Controller
         // dd($tblbruto);
 
         // tabel list pemasukan neto
-        $qry5 = Payment::selectRaw('month(tgl_bayar) as bulan, sum(nominal) as total ')
-        ->whereYear('tgl_bayar',$filter)->groupBy('bulan')->get()->toArray();
+        $qry5 = Payment::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')
+        ->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
 
         $qry6 = Pengeluaran::selectRaw('month(tanggal) as bulan, sum(nominal) as total ')
         ->whereYear('tanggal',$filter)->groupBy('bulan')->get()->toArray();
@@ -443,11 +446,11 @@ class LaporanKeuanganController extends Controller
         // dd($qrypie1);
 
         foreach ($qrypie2 as $pie2val) {
-            $pie2[$pie2val['jenis_pengeluaran']] += $pie2val['total'];
-            // dd($pie2);
+            $pie2val['jenis_pengeluaran'] += $pie2val['total'];
+            // dd($pie2val);
         }
 
-        $clients = Payment::select('*')->orderBy('tgl_bayar','DESC')->offset(0)->limit(8)->get();
+        $clients = Payment::select('*')->orderBy('tanggal','DESC')->offset(0)->limit(8)->get();
         $totals = Payment::selectRaw('user_id, SUM(nominal) as total')->groupBy('user_id')->orderBy('total','DESC')->get();
 
 
@@ -463,5 +466,27 @@ class LaporanKeuanganController extends Controller
             'chart', 'chart2', 'neto',
             'tblbruto', 'tblpengeluaran', 'brtbl', 'pgtbl', 'netotbl',
             'pie', 'pie2', 'clients', 'filter', 'filterbulan', 'totals'));
+    }
+    public function cetaklaporan($filter, $filterbulan)
+    {
+        $tahun = $filter;
+        $bulan = $filterbulan;
+        $firstdate = "01-".$bulan."-".$tahun;
+        $lastdate = date('t', strtotime($firstdate));
+        //dd($lastdate);
+
+        $payment = Payment::whereYear('tanggal',$tahun)->whereMonth('tanggal', $bulan)->orderBy('tanggal')->get();
+        $pengeluaran = Pengeluaran::whereYear('tanggal',$tahun)->whereMonth('tanggal', $bulan)->orderBy('tanggal')->get();
+        $allItems = new Collection;
+        $allItems = $allItems->merge($payment);
+        $allItems = $allItems->merge($pengeluaran)->sortBy('tanggal');
+
+        //dd($allItems);
+        $setting = Setting::first();
+
+        $bulan = strtoupper(config('custom.bulan.' .$bulan));
+        $pdf = PDF::loadview('pdflaporan', compact('pengeluaran','payment', 'tahun', 'bulan', 'lastdate', 'allItems', 'setting'))->setPaper('a4', 'potrait');
+        return $pdf->stream();
+        // return view('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'));
     }
 }

@@ -452,9 +452,9 @@ class PaymentController extends Controller
         $chart[0] = array_fill(1, 12, 0);
         $pie[80] = $pie[90] = $pie[99] = 0;
 
-        $years = Payment::selectRaw('year(tgl_bayar) as tahun')->where('status','1')->groupBy('tahun')->orderBy('tahun','DESC')->get();
+        $years = Payment::selectRaw('year(tanggal) as tahun')->where('status','1')->groupBy('tahun')->orderBy('tahun','DESC')->get();
 
-        $qry = Payment::selectRaw('month(tgl_bayar) as bulan, user_role, sum(nominal) as total ')->where('status','1')->whereYear('tgl_bayar',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
+        $qry = Payment::selectRaw('month(tanggal) as bulan, user_role, sum(nominal) as total ')->where('status','1')->whereYear('tanggal',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
 
         foreach ($qry as $val) {
             // $chart[$val['user_role']][$val['bulan']] = $val['total'];
@@ -463,7 +463,7 @@ class PaymentController extends Controller
             $pie[$val['user_role']] += $val['total'];
         }
 
-        $clients = Payment::select('*')->orderBy('tgl_bayar','DESC')->offset(0)->limit(8)->get();
+        $clients = Payment::select('*')->orderBy('tanggal','DESC')->offset(0)->limit(8)->get();
         $totals = Payment::selectRaw('user_id, SUM(nominal) as total')->groupBy('user_id')->orderBy('total','DESC')->get();
 
         return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter','totals'));

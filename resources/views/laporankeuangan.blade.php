@@ -41,6 +41,7 @@
 	<div class="card">
 		<div class="card-header header-elements-inline">
 			<h5 class="card-title">Filter</h5>
+            <a href="{{url('cetaklaporan/'.$filter.'/'.$filterbulan)}}" class="btn btn-success" target="_blank"><i class="icon-printer2"></i> Print</a>
 		</div>
 		<div class="card-body">
 			<form action="{{route('filterKeuangan')}}" method="post">
@@ -76,7 +77,7 @@
 
 						</select>
 					</div>
-					<div class="col-lg-3">
+					<div class="col-lg-2">
 						<button type="submit" class="btn btn-outline-primary active btnstat" style="bottom:0;">Pilih</button>
 					</div>
 				</div>
@@ -226,7 +227,7 @@
 								<tr>
 									<td>{{$i}}</td>
 									<td><div class="datatable-column-width">{{@$bruto->user->username}}</div></td>
-									<td><div class="datatable-column-width">{{$bruto->tgl_bayar}}
+									<td><div class="datatable-column-width">{{$bruto->tanggal}}
 									</div></td>
 									<td><div class="datatable-column-width">Rp {{number_format($bruto->nominal,0,',','.')}}
 									</div></td>

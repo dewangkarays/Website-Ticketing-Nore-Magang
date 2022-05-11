@@ -68,7 +68,7 @@
 						@endif
 					</td>
 					<td><div class="datatable-column-width">{!! $payment->keterangan !!}</div></td>
-					<td>{{$payment->tgl_bayar}}</td>
+					<td>{{$payment->tanggal}}</td>
 					@if(\Auth::user()->role<=20)
 					<td align="center">
 						<div class="list-icons">
