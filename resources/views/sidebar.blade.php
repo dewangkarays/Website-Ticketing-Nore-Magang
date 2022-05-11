@@ -244,7 +244,7 @@ ul{
 									<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
 										<i class="icon-file-text"></i>
 										<span>
-											Tagihan
+											Tagihan Client
 											{{-- @if ($admunpaid)
 											<br><span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{$admunpaid}} Tagihan belum terbayar lunas</span>
 											@endif --}}
@@ -297,13 +297,29 @@ ul{
 						</li>
 					</li>
 					@endif
-					<li class="nav-item">
-						<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
-							<i class="icon-coin-dollar"></i>
-							<span>
-								Pembayaran
+					<li class="nav-item nav-item-submenu">
+						<a href="#" class="nav-link {{ (request()->is('payments*','members*')) ? 'active' : '' }}"><i class="icon-coins"></i>
+							<span>Pembayaran
 							</span>
 						</a>
+						<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('payments*','members*')) ? 'block' : 'none' }};">
+							<li class="nav-item">
+								<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
+									<i class="icon-coin-dollar"></i>
+									<span>
+										Pembayaran Tagihan
+									</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link {{ (request()->is('#')) ? 'active' : '' }}">
+									<i class="icon-cash"></i>
+									<span>
+										Pembayaran Lain - Lain
+									</span>
+								</a>
+							</li>
+						</ul>
 					</li>
 					@if(Auth::user()->role==1||Auth::user()->role==20)
 					<li class="nav-item">
@@ -319,6 +335,14 @@ ul{
 						<i class="icon-balance"></i>
 						<span>
 							Laporan Keuangan
+						</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="{{ url('/setting') }}" class="nav-link {{ (request()->is('setting*')) ? 'active' : '' }}">
+						<i class="icon-gear"></i>
+						<span>
+							Setting Print
 						</span>
 					</a>
 				</li>
@@ -378,14 +402,14 @@ ul{
 
 					</ul>
 				</li>
-				<li class="nav-item">
+				{{-- <li class="nav-item">
 					<a href="{{ url('/setting') }}" class="nav-link {{ (request()->is('setting*')) ? 'active' : '' }}">
 						<i class="icon-gear"></i>
 						<span>
 							Setting Print
 						</span>
 					</a>
-				</li>
+				</li> --}}
 				@endif
 
 				@if(Auth::user()->role==20)

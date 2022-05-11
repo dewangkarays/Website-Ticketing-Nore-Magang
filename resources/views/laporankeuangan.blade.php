@@ -84,44 +84,6 @@
 		</div>
 	</div>
 
-	<!-- Zoom option -->
-	<div class="card">
-		<div class="card-header header-elements-inline">
-			<h5 class="card-title">Laporan Tahunan</h5>
-		</div>
-
-		<div class="card-body">
-
-			<ul class="nav nav-tabs nav-tabs-solid bg-primary border-0 nav-tabs-component rounded"">
-				<li class="nav-item"><a href="#tab1" class="nav-link active" data-toggle="tab"><i class="icon-graph mr-2"></i> Overall</a></li>
-				<li class="nav-item"><a href="#tab2" class="nav-link" data-toggle="tab"><i class="icon-cash4 mr-2"></i> Bruto</a></li>
-				<li class="nav-item"><a href="#tab3" class="nav-link" data-toggle="tab"><i class="icon-drawer-out mr-2"></i> Pengeluaran</a></li>
-				<li class="nav-item"><a href="#tab4" class="nav-link" data-toggle="tab"><i class="icon-cash3 mr-2"></i> Neto</a></li>
-
-			</ul>
-
-			<div class="tab-content">
-				<div class="tab-pane chart-container fade active show" id="tab1">
-					<div class="chart has-fixed-height" id="columns_yearly"></div>
-				</div>
-
-				<div class="tab-pane chart-container fade" id="tab2">
-					<div class="chart has-fixed-height" id="columns_yearly2"></div>
-				</div>
-
-				<div class="tab-pane chart-container fade" id="tab3">
-					<div class="chart has-fixed-height" id="columns_yearly3"></div>
-				</div>
-
-				<div class="tab-pane chart-container fade" id="tab4">
-					<div class="chart has-fixed-height" id="columns_yearly4"></div>
-				</div>
-			</div>
-
-		</div>
-	</div>
-	<!-- /zoom option -->
-
 	<div class="card">
 		<div class="card-header header-elements-inline">
 			<h5 class="card-title">Laporan Bulanan / {{config('custom.bulan.'.$filterbulan)}} </h5>
@@ -193,7 +155,43 @@
 	</div>
 	<!-- /zoom option -->
 
+	<!-- Zoom option -->
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">Laporan Tahunan</h5>
+		</div>
 
+		<div class="card-body">
+
+			<ul class="nav nav-tabs nav-tabs-solid bg-primary border-0 nav-tabs-component rounded"">
+				<li class="nav-item"><a href="#tab1" class="nav-link active" data-toggle="tab"><i class="icon-graph mr-2"></i> Overall</a></li>
+				<li class="nav-item"><a href="#tab2" class="nav-link" data-toggle="tab"><i class="icon-cash4 mr-2"></i> Bruto</a></li>
+				<li class="nav-item"><a href="#tab3" class="nav-link" data-toggle="tab"><i class="icon-drawer-out mr-2"></i> Pengeluaran</a></li>
+				<li class="nav-item"><a href="#tab4" class="nav-link" data-toggle="tab"><i class="icon-cash3 mr-2"></i> Neto</a></li>
+
+			</ul>
+
+			<div class="tab-content">
+				<div class="tab-pane chart-container fade active show" id="tab1">
+					<div class="chart has-fixed-height" id="columns_yearly"></div>
+				</div>
+
+				<div class="tab-pane chart-container fade" id="tab2">
+					<div class="chart has-fixed-height" id="columns_yearly2"></div>
+				</div>
+
+				<div class="tab-pane chart-container fade" id="tab3">
+					<div class="chart has-fixed-height" id="columns_yearly3"></div>
+				</div>
+
+				<div class="tab-pane chart-container fade" id="tab4">
+					<div class="chart has-fixed-height" id="columns_yearly4"></div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- /zoom option -->
 
 	<div class="card">
 		<div class="card-header header-elements-inline">
@@ -2235,7 +2233,7 @@ if (columns_basic_elementy4) {
 						left: 0,
 						data: [
 						@foreach($pie2 as $key => $val)
-						'{{config("custom.pengeluaran.".$key)}}',
+						'{{config("custom.kat_pengeluaran.".$key)}}',
 						@endforeach],
 						itemHeight: 8,
 						itemWidth: 8
@@ -2261,7 +2259,7 @@ if (columns_basic_elementy4) {
 						data: [
 						@foreach($pie2 as $key => $val)
 						@if($val>0)
-						{value: {{$val}}, name: '{{config("custom.pengeluaran.".$key)}}' },
+						{value: {{$val}}, name: '{{config("custom.kat_pengeluaran.".$key)}}' },
 						@endif
 						@endforeach
 						]

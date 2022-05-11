@@ -450,7 +450,7 @@ class PaymentController extends Controller
         $pie = array();
         // $chart[80] = $chart[90] = $chart[99] = array_fill(1, 12, 0);
         $chart[0] = array_fill(1, 12, 0);
-        $pie[80] = $pie[90] = $pie[99] = 0;
+        $pie[80] = $pie[95] = $pie[99] = 0;
 
         $years = Payment::selectRaw('year(tgl_bayar) as tahun')->where('status','1')->groupBy('tahun')->orderBy('tahun','DESC')->get();
 

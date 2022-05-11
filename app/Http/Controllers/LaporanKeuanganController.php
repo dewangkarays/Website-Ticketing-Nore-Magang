@@ -127,7 +127,11 @@ class LaporanKeuanganController extends Controller
         $qry13[0] = array_fill(1,$dateina_month,0);
         // $pie[80] = $pie[90] = $pie[99] = 0;
         // $pie['langgan'] = $pie['ad'] = $pie['lain'] = 0;
-        $pie2[0] = $pie2[1] = $pie2[2] = $pie2[3]= $pie2[4]= $pie2[5] = 0;
+        foreach(config("custom.kat_pengeluaran") as $key => $value)
+        {
+            $pie2[$key] = 0;
+        }
+        // $pie2[0] = $pie2[1] = $pie2[2] = $pie2[3]= $pie2[4]= $pie2[5] = 0;
 
 
 /* ------------------------------------------------------------------------------
@@ -430,7 +434,7 @@ class LaporanKeuanganController extends Controller
 
 
         // pie pemasukan
-        $qrypie1 = Tagihan::selectRaw('sum(langganan) as Langganan, sum(ads) as Ads, sum(lainnya) as Lainnya')->whereYear('created_at',$filter)->get()->toArray();
+        $qrypie1 = Tagihan::selectRaw('sum(nominal) as Tagihan, sum(uang_muka) as DP')->whereYear('created_at',$filter)->get()->toArray();
         // dd($qrypie1);
 
         foreach ($qrypie1 as $pie1) {
@@ -439,13 +443,15 @@ class LaporanKeuanganController extends Controller
         }
 
         // pie pengeluaran
-        $qrypie2 = Pengeluaran::selectRaw('jenis_pengeluaran, sum(nominal) as total ')->whereYear('tanggal',$filter)->groupBy('jenis_pengeluaran')->get()->toArray();
-        // dd($qrypie1);
+        $qrypie2 = Pengeluaran::selectRaw('jenis_pengeluaran, sum(nominal) as total')->whereYear('tanggal',$filter)->groupBy('jenis_pengeluaran')->get()->toArray();
+        // dd($qrypie2);
 
         foreach ($qrypie2 as $pie2val) {
+            // dump($pie2val);
             $pie2[$pie2val['jenis_pengeluaran']] += $pie2val['total'];
-            // dd($pie2);
         }
+        // dd($pie2);
+        // die;
 
         $clients = Payment::select('*')->orderBy('tgl_bayar','DESC')->offset(0)->limit(8)->get();
         $totals = Payment::selectRaw('user_id, SUM(nominal) as total')->groupBy('user_id')->orderBy('total','DESC')->get();

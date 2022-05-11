@@ -145,8 +145,8 @@
 		            autoWidth: false,
 		            columnDefs: [{ 
 		                orderable: false,
-		                width: 100,
-		                targets: [ 6 ]
+		                // width: 100,
+		                targets: [ 5,6 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
