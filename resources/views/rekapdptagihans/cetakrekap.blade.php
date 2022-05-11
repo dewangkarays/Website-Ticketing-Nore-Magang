@@ -271,7 +271,7 @@
                 <tr>
                     <th align="left" style="font-weight: bold; width:50%">Catatan:</th>
                     <th style="width:18%"></th>
-                    <th align="center" style="font-size: 12px; font-weight: normal; width:25%; margin-left:6px">Semarang, {{ date('d F Y') }}</th>
+                    <th align="center" style="font-size: 12px; font-weight: normal; width:25%; margin-left:6px">Semarang, {{ date('d') }} {{ config('custom.bulan.' .date('n')) }} {{ date('Y') }}</th>
                 </tr>
                 <tr>
                     <td align="left" rowspan="5" style="vertical-align: top;">
