@@ -42,7 +42,7 @@
         }
         .main-table td, .main-table th{
             border: 1px solid black;
-            padding: 5px 3px;
+            padding: 5px 5px;
         }
         .main-table th{
             overflow-wrap: break-word;
@@ -156,8 +156,8 @@
                         </tbody>
                     </table>
                 </td>
-                <td style="width: 1.5%;"></td>
-                <td align="center" style="vertical-align: bottom; width: 30%;">
+                <td style="width: 5%;"></td>
+                <td align="center" style="vertical-align: top; width: 20%;">
                     <table class="total-table bg-yellow" style="margin-top: 113px;">
                         <tr>
                             <td>

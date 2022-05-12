@@ -228,8 +228,8 @@ ul{
 				</li>
 
 				<li class="nav-item nav-item-submenu">
-					<a href="#" class="nav-link {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan')) ? 'active' : 'none' }}"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan')) ? 'block' : 'none' }};">
+					<a href="#" class="nav-link {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan', 'setting*')) ? 'active' : 'none' }}"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan', 'setting*')) ? 'block' : 'none' }};">
 					@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 					<li class="nav-item">
 						<li class="nav-item nav-item-submenu">

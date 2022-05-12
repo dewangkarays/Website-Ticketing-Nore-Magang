@@ -9,6 +9,8 @@ use App\Model\Tagihan;
 use App\Model\Setting;
 use Carbon\Carbon;
 use PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\LaporanKeuanganExport;
 use \Illuminate\Database\Eloquent\Collection;
 
 
@@ -503,8 +505,16 @@ class LaporanKeuanganController extends Controller
         $pdf = PDF::loadview('pdflaporan',
                             compact('pengeluaran','payment', 'tahun', 'bulan', 'lastdate', 'allItems', 'setting',
                                     'p_jasa', 'p_bunga', 'p_lain2', 'pend_total', 'peng_total', 'labarugi'))
-                    ->setPaper('a4', 'potrait');
+                    ->setPaper('a4', 'landscape');
         return $pdf->stream();
         // return view('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'));
     }
-}
+    public function exportlaporan($filter, $filterbulan)
+    {
+        $tahun = $filter;
+        $bulan = $filterbulan;
+        $bulan = config('custom.bulan.' .$bulan);
+
+        return Excel::download(new LaporanKeuanganExport($filter, $filterbulan), 'Laporan Keuangan '.$bulan.' '.$tahun.'.xlsx' );
+    }
+};
