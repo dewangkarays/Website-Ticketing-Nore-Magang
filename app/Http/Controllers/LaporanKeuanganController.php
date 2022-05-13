@@ -486,12 +486,13 @@ class LaporanKeuanganController extends Controller
         $payment = Payment::whereYear('tanggal',$tahun)->whereMonth('tanggal', $bulan)->orderBy('tanggal')->get();
         $pengeluaran = Pengeluaran::whereYear('tanggal',$tahun)->whereMonth('tanggal', $bulan)->orderBy('tanggal')->get();
 
-        $p_jasa = $payment->sum('nominal');
+        $p_jasa = $payment->where('jenis_pemasukan', '=', 1)->sum('nominal');
         $p_bunga = 0;
-        $p_lain2 = 0;
+        $p_lain2 = $payment->where('jenis_pemasukan', '=', 2)->sum('nominal');
         $pend_total = $p_jasa + $p_bunga + $p_lain2;
 
-        $peng_total = $pengeluaran->sum('nominal');
+        $aset = $pengeluaran->where('jenis_pengeluaran', '=', 15)->sum('nominal');
+        $peng_total = $pengeluaran->sum('nominal') - $aset;
         $labarugi = $pend_total - $peng_total;
 
         //dd($peng_total);
@@ -504,7 +505,7 @@ class LaporanKeuanganController extends Controller
         $bulan = strtoupper(config('custom.bulan.' .$bulan));
         $pdf = PDF::loadview('pdflaporan',
                             compact('pengeluaran','payment', 'tahun', 'bulan', 'lastdate', 'allItems', 'setting',
-                                    'p_jasa', 'p_bunga', 'p_lain2', 'pend_total', 'peng_total', 'labarugi'))
+                                    'p_jasa', 'p_bunga', 'p_lain2', 'pend_total', 'peng_total', 'labarugi', 'aset'))
                     ->setPaper('a4', 'landscape');
         return $pdf->stream();
         // return view('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'));

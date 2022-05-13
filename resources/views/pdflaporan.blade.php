@@ -9,7 +9,7 @@
     <style type="text/css">
 
         @page {
-            margin: 50px 50px;
+            margin: 20px 50px;
         }
         *{
             box-sizing: border-box;
@@ -25,7 +25,7 @@
         }
         body{
             font-family:Arial, Helvetica, sans-serif;
-            color: #595657;
+            color: black;
             background-color:#ffffff;
             margin-left: 20px;
             margin-right: 20px;
@@ -42,7 +42,7 @@
         }
         .main-table td, .main-table th{
             border: 1px solid black;
-            padding: 5px 5px;
+            padding: 3px 5px;
         }
         .main-table th{
             overflow-wrap: break-word;
@@ -111,8 +111,8 @@
                     </table>
                     <table class="main-table main-color main-font">
                         <tr align="center">
-                            <th style="width: 11%;" >Tanggal</th>
-                            <th style="width: 28%;" >Keterangan</th>
+                            <th style="width: 7%;" >Tanggal</th>
+                            <th style="width: 30%;" >Keterangan</th>
                             <th style="width: 19%" >Kategori</th>
                             <th style="width: auto" >Pendapatan (Rp)</th>
                             <th style="width: auto" >Pengeluaran (Rp)</th>
@@ -127,7 +127,7 @@
                                             {{ date('d/m/Y', strtotime($data->tanggal)) }}
                                         </td>
                                         <td>
-                                            {!! $data->keterangan !!}
+                                            {{strip_tags( $data->keterangan) }}
                                         </td>
                                         <td>
                                             {{ $data->jenis_pengeluaran ? config('custom.kat_pengeluaran.'.$data->jenis_pengeluaran) : 'Pendapatan Jasa' }}
@@ -156,15 +156,15 @@
                         </tbody>
                     </table>
                 </td>
-                <td style="width: 5%;"></td>
-                <td align="center" style="vertical-align: top; width: 20%;">
-                    <table class="total-table bg-yellow" style="margin-top: 113px;">
+                <td style="width: 7%;"></td>
+                <td align="center" style="vertical-align: top; width: 22%;">
+                    <table class="total-table bg-yellow" style="margin-top: 194px;">
                         <tr>
                             <td>
                                 ASET
                             </td>
                             <td align="right" style="width : 40%">
-                                @angka($pengeluaran->where('jenis_pengeluaran', 14)->sum('nominal'))
+                                @angka($aset)
                             </td>
                         </tr>
                     </table>
@@ -204,6 +204,10 @@
                     </table>
                     <table class="total-table" style="margin-bottom: 10px;">
                         @foreach (config("custom.kat_pengeluaran") as $key => $value)
+                            @if ($key == 15) {
+                                @break
+                            }
+                            @endif
                             <tr>
                                 <td>
                                     {{ strtoupper($value) }}
@@ -248,11 +252,16 @@
                             </td>
                         </tr>
                     </table>
-                    <p align="center" style="font-size: 12px; margin-bottom: 100px; margin-top: 25px">Semarang, {{ date('d') }} {{ config('custom.bulan.' .date('n')) }} {{ date('Y') }}</p>
-                    <p align="center" style="font-size: 12px;">
-                        <b>{{$setting->penagih}}</b><br>
-                        {{$setting->pospenagih}}
-                    </p>
+                    <table>
+                        <td align="center">
+                            <p style="margin-bottom: 100px; margin-top: 25px">Semarang, {{ date('d') }} {{ config('custom.bulan.' .date('n')) }} {{ date('Y') }}</p>
+                            <p style="font-size: 10px;">
+                                <b>{{$setting->penagih}}</b><br>
+                                {{$setting->pospenagih}}
+                            </p>
+                        </td>
+                        <td style="width : 40%"></td>
+                    </table>
                 </td>
             </tr>
         </table>

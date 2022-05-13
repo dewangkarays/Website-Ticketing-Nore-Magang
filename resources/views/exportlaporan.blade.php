@@ -1,4 +1,4 @@
-<h3><b>LAPORAN KEUANGAN CV. NORE INOVASI 01 {{ $bulan }} - {{ $lastdate }} {{ $bulan }} {{ $tahun }}</b></h3>
+<h3><b>LAPORAN KEUANGAN CV. NORE INOVASI 01 {{ $bulan }} - {{ $lastdate }} {{ $bulan }} {{ $tahun }}</b></h3><br>
 
 <table>
     <thead>
@@ -20,7 +20,7 @@
                         {{ date('d/m/Y', strtotime($data->tanggal)) }}
                     </td>
                     <td>
-                        {!! $data->keterangan !!}
+                        {{ strip_tags($data->keterangan) }}
                     </td>
                     <td>
                         {{ $data->jenis_pengeluaran ? config('custom.kat_pengeluaran.'.$data->jenis_pengeluaran) : 'Pendapatan Jasa' }}
@@ -48,3 +48,138 @@
         @endif
     </tbody>
 </table>
+<table>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <b>ASET</b>
+        </td>
+        <td align="right">
+            <b>@angka($aset)</b>
+        </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            PENDAPATAN JASA
+        </td>
+        <td align="right">
+            @angka($p_jasa)
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            PENDAPATAN BUNGA
+        </td>
+        <td align="right">
+            @angka($p_bunga)
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            PENDAPATAN LAIN-LAIN
+        </td>
+        <td align="right">
+            @angka($p_lain2)
+        </td>
+    </tr>
+    <tr class="bg-green">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <b>TOTAL PENDAPATAN</b>
+        </td>
+        <td align="right">
+            <b>@angka($pend_total)</b>
+        </td>
+    </tr>
+</table>
+<table>
+    @foreach (config("custom.kat_pengeluaran") as $key => $value)
+        @if ($key == 15) {
+            @break
+        }
+        @endif
+        <tr>
+            <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+                {{ strtoupper($value) }}
+            </td>
+            <td align="right">
+                @angka($pengeluaran->where('jenis_pengeluaran', $key)->sum('nominal'))
+            </td>
+        </tr>
+    @endforeach
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <b>TOTAL PENGELUARAN</b>
+        </td>
+        <td align="right">
+            <b>@angka($peng_total)</b>
+        </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <b>TOTAL PENDAPATAN</b>
+        </td>
+        <td align="right">
+            <b>@angka($pend_total)</b>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <b>TOTAL PENGELUARAN</b>
+        </td>
+        <td align="right">
+            <b>@angka($peng_total)</b>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <b>LABA/RUGI</b>
+        </td>
+        <td align="right">
+            <b>@angka($labarugi)</b>
+        </td>
+    </tr>
+</table>
+<table>

@@ -24,20 +24,30 @@ class LaporanKeuanganExport implements FromView, WithTitle
         $payment = Payment::whereYear('tanggal',$this->tahun)->whereMonth('tanggal', $this->bulan)->orderBy('tanggal')->get();
         $pengeluaran = Pengeluaran::whereYear('tanggal',$this->tahun)->whereMonth('tanggal', $this->bulan)->orderBy('tanggal')->get();
 
+        $p_jasa = $payment->where('jenis_pemasukan', '=', 1)->sum('nominal');
+        $p_bunga = 0;
+        $p_lain2 = $payment->where('jenis_pemasukan', '=', 2)->sum('nominal');
+        $pend_total = $p_jasa + $p_bunga + $p_lain2;
+
+        $aset = $pengeluaran->where('jenis_pengeluaran', '=', 15)->sum('nominal');
+        $peng_total = $pengeluaran->sum('nominal') - $aset;
+        $labarugi = $pend_total - $peng_total;
+
         $allItems = new Collection;
         $allItems = $allItems->merge($payment);
         $allItems = $allItems->merge($pengeluaran)->sortBy('tanggal');
 
         $firstdate = "01-".$this->bulan."-".$this->tahun;
         $lastdate = date('t', strtotime($firstdate));
-        $bulan = config('custom.bulan.' .$this->bulan);
+        $bulan = strtoupper(config('custom.bulan.' .$this->bulan));
         $tahun = $this->tahun;
 
-        return view('exportlaporan', compact('allItems', 'bulan', 'tahun', 'lastdate'));
+        return view('exportlaporan', compact('pengeluaran','allItems', 'bulan', 'tahun', 'lastdate', 'allItems', 'p_jasa',
+                                            'p_bunga', 'p_lain2', 'pend_total', 'peng_total', 'labarugi', 'aset'));
     }
 
     public function title(): string
     {
-        return 'Lporan Keuangan Export';
+        return 'Laporan Keuangan';
     }
 }

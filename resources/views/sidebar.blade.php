@@ -228,8 +228,8 @@ ul{
 				</li>
 
 				<li class="nav-item nav-item-submenu">
-					<a href="#" class="nav-link {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pemasukans*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan')) ? 'active' : 'none' }}"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pemasukans*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan')) ? 'block' : 'none' }};">
+					<a href="#" class="nav-link {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pemasukans*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan','setting*')) ? 'active' : 'none' }}"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pemasukans*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan', 'setting*')) ? 'block' : 'none' }};">
 					@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 					<li class="nav-item">
 						<li class="nav-item nav-item-submenu">
@@ -382,8 +382,8 @@ ul{
 				@endif
 
 				@if(Auth::user()->role==1)
-				<li class="nav-item nav-item-submenu {{ (request()->is('statistik*')) ? 'nav-item-open' : '' }}">
-					<a href="#" class="nav-link"><i class="icon-stats-dots"></i> <span>Statistik</span></a>
+				<li class="nav-item nav-item-submenu">
+					<a href="#" class="nav-link  {{ (request()->is('statistik*')) ? 'active' : '' }}"><i class="icon-stats-dots"></i> <span>Statistik</span></a>
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('statistik*')) ? 'block' : 'none' }};">
 						<li class="nav-item">
 							<a href="{{ url('/statistiktask') }}" class="nav-link {{ (request()->is('statistiktask*')) ? 'active' : '' }}">

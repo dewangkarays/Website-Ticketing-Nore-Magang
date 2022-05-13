@@ -41,8 +41,16 @@
 	<div class="card">
 		<div class="card-header header-elements-inline">
 			<h5 class="card-title">Filter</h5>
-            <a href="{{url('cetaklaporan/'.$filter.'/'.$filterbulan)}}" class="btn btn-success" target="_blank"><i class="icon-printer2 mr-2"></i> Print</a>
-		</div>
+            <div class="dropdown">
+                <a href="#" class="btn btn-success rounded-round" data-toggle="dropdown">
+                    <i class="icon-menu9"></i>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="{{url('cetaklaporan/'.$filter.'/'.$filterbulan)}}" class="dropdown-item" target="_blank"><i class="icon-file-pdf"></i> Print PDF</a>
+                    <a href="{{url('exportlaporan/'.$filter.'/'.$filterbulan)}}" class="dropdown-item" target="_blank"><i class="icon-file-excel"></i> Export Excel</a>
+                </div>
+            </div>		</div>
 		<div class="card-body">
 			<form action="{{route('filterKeuangan')}}" method="post">
 				@csrf
