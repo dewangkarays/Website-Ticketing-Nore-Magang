@@ -41,7 +41,7 @@
 	<div class="card">
 		<div class="card-header header-elements-inline">
 			<h5 class="card-title">Filter</h5>
-            <a href="{{url('cetaklaporan/'.$filter.'/'.$filterbulan)}}" class="btn btn-success" target="_blank"><i class="icon-printer2"></i> Print</a>
+            <a href="{{url('cetaklaporan/'.$filter.'/'.$filterbulan)}}" class="btn btn-success" target="_blank"><i class="icon-printer2 mr-2"></i> Print</a>
 		</div>
 		<div class="card-body">
 			<form action="{{route('filterKeuangan')}}" method="post">

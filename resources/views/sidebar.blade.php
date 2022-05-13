@@ -228,8 +228,8 @@ ul{
 				</li>
 
 				<li class="nav-item nav-item-submenu">
-					<a href="#" class="nav-link {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan')) ? 'active' : 'none' }}"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan')) ? 'block' : 'none' }};">
+					<a href="#" class="nav-link {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pemasukans*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan')) ? 'active' : 'none' }}"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pemasukans*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan')) ? 'block' : 'none' }};">
 					@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 					<li class="nav-item">
 						<li class="nav-item nav-item-submenu">
@@ -298,11 +298,11 @@ ul{
 					</li>
 					@endif
 					<li class="nav-item nav-item-submenu">
-						<a href="#" class="nav-link {{ (request()->is('payments*','members*')) ? 'active' : '' }}"><i class="icon-coins"></i>
+						<a href="#" class="nav-link {{ (request()->is('payments*','pemasukans*')) ? 'active' : '' }}"><i class="icon-coins"></i>
 							<span>Pembayaran
 							</span>
 						</a>
-						<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('payments*','members*')) ? 'block' : 'none' }};">
+						<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('payments*','pemasukans*')) ? 'block' : 'none' }};">
 							<li class="nav-item">
 								<a href="{{ url('/payments') }}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">
 									<i class="icon-coin-dollar"></i>
@@ -312,7 +312,7 @@ ul{
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="#" class="nav-link {{ (request()->is('#')) ? 'active' : '' }}">
+								<a href="{{ url('/pemasukans') }}" class="nav-link {{ (request()->is('pemasukans*')) ? 'active' : '' }}">
 									<i class="icon-cash"></i>
 									<span>
 										Pembayaran Lain - Lain

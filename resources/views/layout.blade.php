@@ -120,6 +120,18 @@
         });
     }); 
 
+	function ribuan(){
+		var val = $('#tertulis').val();
+		$('#nominal').val(val.replace(new RegExp(/\./, 'g'), ''));
+		val = val.replace(/[^0-9,]/g,'');
+
+		if(val != "") {
+			valArr = val.split('.');
+			valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
+			val = valArr.join('.');
+		}
+		$('#tertulis').val(val);
+	}	
 </script>
 
 @yield('js')

@@ -38,7 +38,7 @@
 						<th>Nama</th>
 						<th>Username</th>
 						<th>Email</th>
-						<th>Telpon</th>
+						<th>Alamat</th>
 						<th class="text-center">Total Task</th>
 						<th class="text-center">Actions</th>
 					</tr>
@@ -52,7 +52,7 @@
 				        <td><div class="datatable-column-width">{{$user->nama}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->email}}</div></td>
-				        <td><div class="datatable-column-width">{{$user->telp}}</div></td>
+				        <td><div class="datatable-column-width">{{$user->alamat ? $user->alamat : '-'}}</div></td>
 				        <td align="center">
 				        	@if($user->proyek->sum('task_count') == null )
 								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->proyek->sum('task_count')}}</span>

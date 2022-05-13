@@ -47,6 +47,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label class="col-form-label col-lg-2">Alamat</label>
+                    <div class="col-lg-10">
+                        <span class="form-text"> {{ $user->alamat ? $user->alamat : '-' }} </span>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label class="col-form-label col-lg-2">Total Task</label>
                     <div class="col-lg-10">
                         <span class="form-text"> {{ $user->proyek->sum('task_count') }}</span>

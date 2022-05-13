@@ -99,10 +99,15 @@ return [
         '9' => 'Biaya Listrik dan Air',
         '10' => 'Biaya Penyusutan',
         '11' => 'Biaya Pajak',
-        '12' => 'Biaya Sesowa',
+        '12' => 'Biaya Sewa',
         '13' => 'Biaya Transportasi',
         '14' => 'Aset',
         '15' => 'Biaya Jasa',
+    ],
+
+    'j_pemasukan' => [
+        '1' => 'Pemasukan Pembayaran Klien',
+        '2' => 'Pemasukan Lain-lain'
     ],
 ];
 
