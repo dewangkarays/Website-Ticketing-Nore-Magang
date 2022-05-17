@@ -25,14 +25,15 @@
 					@csrf
 					<fieldset class="mb-3">
                         <legend class="text-uppercase font-size-sm font-weight-bold">Data Tagihan</legend>
-                        
+
                         <div class="form-group row">
 							<label class="col-form-label col-lg-2">Tanggal</label>
 							<div class="col-lg-10">
-								<input name="tanggal" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pengeluaran" required>
+								<input name="tanggal" type="text" class="form-control pickadate-accessibility" placeholder="Tanggal Pengeluaran" value="{{  date('Y-m-d') }}" required>
+                                <span class="form-text text-muted">Ubah tanggal jika pengeluaran tidak dilakukan HARI INI</span>
 							</div>
                         </div>
-                        
+
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Penanggung Jawab</label>
 							<div class="col-lg-10">
@@ -70,7 +71,7 @@
                                 </select>
 							</div>
 						</div>
-						
+
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nominal</label>
 							<div class="col-lg-10">
@@ -129,7 +130,7 @@
 		var $select = $('.form-control-select2').select2({
 			minimumResultsForSearch: Infinity
 		});
-		
+
         // Accessibility labels
         $('.pickadate-accessibility').pickadate({
             labelMonthNext: 'Go to the next month',
@@ -140,7 +141,7 @@
             selectYears: true,
             format: 'yyyy-mm-dd',
         });
-				
+
 		var FormValidation = function() {
 
 		    // Validation config
@@ -205,7 +206,7 @@
 		                // keterangan: {
 		                //     required: 'Mohon diisi.'
 		                // },
-		                
+
 		            },
 		        });
 
