@@ -39,7 +39,7 @@
 						<th>Tanggal</th>
 						<th>Nama Penanggung Jawab</th>
 						<th>Jenis Pengeluaran</th>
-						<th>Nominal</th>
+						<th>Nominal (Rp)</th>
 						<th>Keterangan</th>
 						<th class="text-center">Actions</th>
 					</tr>
@@ -53,7 +53,7 @@
 				        <td><div class="datatable-column-width">{{$pengeluaran->tanggal}}</div></td>
 				        <td><div class="datatable-column-width">{{$pengeluaran->nama_pj}}</div></td>
 				        <td><div class="datatable-column-width">{{config('custom.kat_pengeluaran.'.$pengeluaran->jenis_pengeluaran)}}</div></td>
-				        <td><div class="datatable-column-width">Rp @angka($pengeluaran->nominal)</div></td>
+				        <td><div class="datatable-column-width">{{ number_format($pengeluaran->nominal, 0, ',', ',') }}</div></td>
 				        <td><div class="datatable-column-width">{!! $pengeluaran->keterangan !!}</div></td>
 				        
 						</td>

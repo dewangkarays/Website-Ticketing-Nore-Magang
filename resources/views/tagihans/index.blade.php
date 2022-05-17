@@ -40,8 +40,8 @@
 						{{-- <th>Invoice</th> --}}
 						<th>Nama Proyek</th>
                         <th>Masa Berlaku</th>
-						<th>Uang Muka</th>
-						<th>Tagihan</th>
+						<th>Uang Muka (Rp)</th>
+						<th>Tagihan (Rp)</th>
 						<th>Keterangan</th>
 						{{-- <th>Terbayar</th>
 						<th>Sisa Tagihan</th>
@@ -60,8 +60,8 @@
 				        {{-- <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td> --}}
 				        <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
                         <td><div class="datatable-column-width">{{$tagihan->masa_berlaku}}</div></td>
-						<td><div class="datatable-column-width">Rp @angka($tagihan->uang_muka)</div></td>
-						<td><div class="datatable-column-width">Rp @angka($tagihan->jml_tagih)</div></td>
+						<td><div class="datatable-column-width">{{ number_format($tagihan->uang_muka, 0, ',', ',') }}</div></td>
+						<td><div class="datatable-column-width">{{ number_format($tagihan->jml_tagih, 0, ',', ',') }}</div></td>
 				        {{-- <td><div class="datatable-column-width">Rp @angka(($tagihan->langganan)+($tagihan->ads)+($tagihan->lainnya))</div></td> --}}
 						{{-- <td><div class="datatable-column-width">Rp @angka($tagihan->payment->sum('nominal'))</div></td>
 						<td><div class="datatable-column-width">Rp @angka($tagihan->jml_bayar)</div></td>

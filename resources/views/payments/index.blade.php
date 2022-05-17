@@ -40,7 +40,7 @@
 					<th style="width: 50px">No</th>
 					<th>Nama</th>
 					<th style="width: 200px">No. Receipt</th>
-					<th style="width: 200px">Nominal</th>
+					<th style="width: 200px">Nominal (Rp)</th>
 					<th>Status</th>
 					<th style="width: 250px">Keterangan</th>
 					<th style="width: 100px">Tanggal Pembayaran</th>
@@ -57,7 +57,7 @@
 					<td>{{$i}}</td>
 					<td><div class="datatable-column-width">{{$payment->nama}}</div></td>
 					<td><div class="datatable-column-width">{{$payment->receipt_no ? $payment->receipt_no : ''}}</div></td>
-					<td style="font-size: 15px;">Rp @angka($payment->nominal)</td>
+					<td style="font-size: 15px;">{{ number_format($payment->nominal, 0, ',', ',') }}</td>
 					<td align="center">
 						@if($payment->status == 0 )
 						<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.payment.'.$payment->status)}}</span>

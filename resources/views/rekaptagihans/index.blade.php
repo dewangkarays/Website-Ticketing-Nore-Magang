@@ -39,8 +39,8 @@
                                 {{-- <th><input type="checkbox" class="checked-all"></th> --}}
                                 <th>Nama</th>
                                 <th>Invoice</th>
-                                <th>Tagihan</th>
-                                <th>Jumlah Bayar</th>
+                                <th>Tagihan (Rp)</th>
+                                <th>Jumlah Bayar (Rp)</th>
                                 {{-- <th>Keterangan</th> --}}
                                 <th>Status</th>
                                 <th class="text-center">Actions</th>
@@ -55,8 +55,8 @@
                                 {{-- <td><input type="checkbox" name="invoice[]" id="chk" value="{{ $tagihan->id }}"></td> --}}
                                 <td><div class="datatable-column-width">{{$rekaptagihan->nama}}</div></td>
                                 <td><div class="datatable-column-width">{{$rekaptagihan->invoice}}</div></td>
-                                <td><div class="datatable-column-width">Rp @angka($rekaptagihan->total)</div></td>
-                                <td><div class="datatable-column-width">Rp @angka($rekaptagihan->jml_terbayar)</div></td>
+                                <td><div class="datatable-column-width">{{ number_format($rekaptagihan->total, 0, ',', ',') }}</div></td>
+                                <td><div class="datatable-column-width">{{ number_format($rekaptagihan->jml_terbayar, 0, ',', ',') }}</div></td>
                                 {{-- <td><div class="datatable-column-width">{!! $rekaptagihan->keterangan !!}</div></td> --}}
                                 <td>
 									@if ($rekaptagihan->status == 1)
