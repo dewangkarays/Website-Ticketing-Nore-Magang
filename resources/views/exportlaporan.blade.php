@@ -23,16 +23,20 @@
                         {{ strip_tags($data->keterangan) }}
                     </td>
                     <td>
-                        {{ $data->jenis_pengeluaran ? config('custom.kat_pengeluaran.'.$data->jenis_pengeluaran) : 'Pendapatan Jasa' }}
+                        {{ $data->status==1 ? 'Pendapatan Jasa' : config('custom.kat_pengeluaran.'.$data->jenis_pengeluaran) }}
                     </td>
                     <td align="right">
                         @angka($data->status==1 ? $data->nominal : '0')
                     </td>
                     <td align="right">
-                        @angka($data->jenis_pengeluaran ? $data->nominal : '0')
+                        @if ($data->status==1)
+                            0
+                        @else
+                            @angka($data->jenis_pengeluaran < 14 ? $data->nominal : '0')
+                        @endif
                     </td>
                     <td align="right">
-                        0
+                        @angka($data->jenis_pengeluaran==14 ? $data->nominal : '0')
                     </td>
                 </tr>
             @endforeach
@@ -114,7 +118,7 @@
 </table>
 <table>
     @foreach (config("custom.kat_pengeluaran") as $key => $value)
-        @if ($key == 15) {
+        @if ($key == 14) {
             @break
         }
         @endif

@@ -491,7 +491,7 @@ class LaporanKeuanganController extends Controller
         $p_lain2 = $payment->where('jenis_pemasukan', '=', 2)->sum('nominal');
         $pend_total = $p_jasa + $p_bunga + $p_lain2;
 
-        $aset = $pengeluaran->where('jenis_pengeluaran', '=', 15)->sum('nominal');
+        $aset = $pengeluaran->where('jenis_pengeluaran', '=', 14)->sum('nominal');
         $peng_total = $pengeluaran->sum('nominal') - $aset;
         $labarugi = $pend_total - $peng_total;
 
