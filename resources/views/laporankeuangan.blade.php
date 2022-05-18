@@ -2076,7 +2076,7 @@ if (columns_basic_elementy4) {
 
 					// Add title
 					title: {
-						text: 'Persentase Pemasukan Tagihan',
+						text: 'Persentase Pemasukan',
 						left: 'center',
 						textStyle: {
 							fontSize: 17,
@@ -2106,7 +2106,7 @@ if (columns_basic_elementy4) {
 						left: 0,
 						data: [
 						@foreach($pie as $key => $val)
-						'{{$key}}',
+						'{{config("custom.j_pemasukan.".$key)}}',
 						@endforeach],
 						itemHeight: 8,
 						itemWidth: 8
@@ -2132,9 +2132,7 @@ if (columns_basic_elementy4) {
 						data: [
 						@foreach($pie as $key => $val)
 						@if($val>0)
-						{value: {{$val}}, name: '{{$key}}' },
-						@else
-						{value: 0, name:'{{$key}}' },
+						{value: {{$val}}, name: '{{config("custom.j_pemasukan.".$key)}}' },
 						@endif
 						@endforeach
 						]

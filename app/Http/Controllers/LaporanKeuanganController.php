@@ -132,6 +132,11 @@ class LaporanKeuanganController extends Controller
         $qry13[0] = array_fill(1,$dateina_month,0);
         // $pie[80] = $pie[90] = $pie[99] = 0;
         // $pie['langgan'] = $pie['ad'] = $pie['lain'] = 0;
+
+        foreach(config("custom.j_pemasukan") as $key => $value)
+        {
+            $pie[$key] = 0;
+        }
         foreach(config("custom.kat_pengeluaran") as $key => $value)
         {
             $pie2[$key] = 0;
@@ -439,21 +444,49 @@ class LaporanKeuanganController extends Controller
 
 
         // pie pemasukan
-        $qrypie1 = Tagihan::selectRaw('sum(nominal) as Tagihan, sum(uang_muka) as DP')->whereYear('created_at',$filter)->get()->toArray();
-        // dd($qrypie1);
-
-        foreach ($qrypie1 as $pie1) {
-            $pie += $pie1;
-            // dd($pie);
+        $qrypie1 = Payment::selectRaw('jenis_pemasukan, sum(nominal) as total');
+        
+        //filter tahun
+        if($filter){
+            $qrypie1 = $qrypie1->whereYear('tanggal',$filter);
         }
 
+        //filter bulan
+        // if($filterbulan){
+        //     $qrypie1 = $qrypie1->whereMonth('tanggal',$filterbulan);
+        // }
+
+        $qrypie1 = $qrypie1->groupBy('jenis_pemasukan')->get()->toArray();
+        // dd($qrypie1);
+
+        foreach ($qrypie1 as $pie1val) {
+            if($pie1val['total'] != 0){
+                $pie[$pie1val['jenis_pemasukan']] += $pie1val['total'];
+            }
+        }
+        // dd($pie);
+
         // pie pengeluaran
-        $qrypie2 = Pengeluaran::selectRaw('jenis_pengeluaran, sum(nominal) as total')->whereYear('tanggal',$filter)->groupBy('jenis_pengeluaran')->get()->toArray();
+        $qrypie2 = Pengeluaran::selectRaw('jenis_pengeluaran, sum(nominal) as total');
+
+        //filter tahun
+        if($filter){
+            $qrypie2 = $qrypie2->whereYear('tanggal',$filter);
+        }
+        
+        //filter bulan
+        // if($filterbulan){
+        //     $qrypie2 = $qrypie2->whereMonth('tanggal', $filterbulan);
+        // }
+
+        $qrypie2 = $qrypie2->groupBy('jenis_pengeluaran')->get()->toArray();
         // dd($qrypie2);
 
         foreach ($qrypie2 as $pie2val) {
             // dump($pie2val);
-            $pie2val['jenis_pengeluaran'] += $pie2val['total'];
+            if($pie2val['total'] != 0){
+                $pie2[$pie2val['jenis_pengeluaran']] += $pie2val['total'];
+            }
         }
         // dd($pie2);
         // die;
