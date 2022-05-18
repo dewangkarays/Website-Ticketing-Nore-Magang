@@ -467,6 +467,7 @@ class LaporanKeuanganController extends Controller
         // dd($pie);
 
         // pie pengeluaran
+<<<<<<< HEAD
         $qrypie2 = Pengeluaran::selectRaw('jenis_pengeluaran, sum(nominal) as total');
 
         //filter tahun
@@ -480,13 +481,20 @@ class LaporanKeuanganController extends Controller
         // }
 
         $qrypie2 = $qrypie2->groupBy('jenis_pengeluaran')->get()->toArray();
+=======
+        $qrypie2 = Pengeluaran::selectRaw('sum(nominal) as total, jenis_pengeluaran')->whereYear('tanggal',$filter)->groupBy('jenis_pengeluaran')->get()->toArray();
+>>>>>>> 356b8c3d1014e7acf5537aef5386fcf0423eceed
         // dd($qrypie2);
 
         foreach ($qrypie2 as $pie2val) {
             // dump($pie2val);
+<<<<<<< HEAD
             if($pie2val['total'] != 0){
                 $pie2[$pie2val['jenis_pengeluaran']] += $pie2val['total'];
             }
+=======
+            $pie2[$pie2val['jenis_pengeluaran']] += $pie2val['total'];
+>>>>>>> 356b8c3d1014e7acf5537aef5386fcf0423eceed
         }
         // dd($pie2);
         // die;
