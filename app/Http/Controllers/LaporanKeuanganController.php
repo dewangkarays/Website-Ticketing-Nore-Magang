@@ -448,12 +448,12 @@ class LaporanKeuanganController extends Controller
         }
 
         // pie pengeluaran
-        $qrypie2 = Pengeluaran::selectRaw('jenis_pengeluaran, sum(nominal) as total')->whereYear('tanggal',$filter)->groupBy('jenis_pengeluaran')->get()->toArray();
+        $qrypie2 = Pengeluaran::selectRaw('sum(nominal) as total, jenis_pengeluaran')->whereYear('tanggal',$filter)->groupBy('jenis_pengeluaran')->get()->toArray();
         // dd($qrypie2);
 
         foreach ($qrypie2 as $pie2val) {
             // dump($pie2val);
-            $pie2val['jenis_pengeluaran'] += $pie2val['total'];
+            $pie2[$pie2val['jenis_pengeluaran']] += $pie2val['total'];
         }
         // dd($pie2);
         // die;
