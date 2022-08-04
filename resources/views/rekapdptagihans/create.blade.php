@@ -65,9 +65,9 @@
                             @foreach($tagihans as $tagihan)
                             <tr>
                                 <td>{{$i}}</td>
-                                <td><input type="checkbox" name="tagihan_id[]" id="chk" value="{{ @$tagihan->id }}"></td>
-                                <td><div class="datatable-column-width">{{@$tagihan->nama}}</div></td>
-                                <td><div class="datatable-column-width">{{@$tagihan->nama_proyek}}</div></td>
+                                <td><input type="checkbox" name="tagihan_id[]" id="chk" value="{{ @$tagihan->id }}" required></td>
+                                <td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
+                                <td><div class="datatable-column-width">{{@$tagihan->proyek->nama_proyek}}</div></td>
                                 <td><div class="datatable-column-width">Rp @angka(@$tagihan->uang_muka)</div></td>
                                 <td><div class="datatable-column-width">{!! @$tagihan->keterangan !!}</div></td>
                             </tr>
