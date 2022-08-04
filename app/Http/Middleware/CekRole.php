@@ -16,7 +16,7 @@ class CekRole
     public function handle($request, Closure $next, $role)
     {
         if(\Auth::user()->role!=$role){
-            return route('login');
+            return redirect()->route('login');
         }
         return $next($request);
     }
