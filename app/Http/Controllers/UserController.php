@@ -140,16 +140,23 @@ class UserController extends Controller
             'role'=>'required'
             ]);
 
-            $user = User::find($id);
-            $data = $request->except(['_token', '_method', 'password']);
+        $user = User::find($id);
+        $data = $request->except(['_token', '_method', 'password']);
 
-            if($request->get('password')!=''){
-                $data['password'] = bcrypt($request->get('password'));
-            }
+        //Mencegah user memasukan username yang sama dengan user lain
+        if($request->username != $user->username) {
+            $request->validate([
+                'username' => 'unique:users',
+            ]);
+        }
 
-            $user->update($data);
+        if($request->get('password')!=''){
+            $data['password'] = bcrypt($request->get('password'));
+        }
 
-            return redirect('/users')->with('success', 'User updated!');
+        $user->update($data);
+
+        return redirect('/users')->with('success', 'User updated!');
     }
 
     /**
