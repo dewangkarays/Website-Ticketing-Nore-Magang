@@ -55,10 +55,10 @@
 					@foreach($tagihans as $tagihan)
 				    <tr>
 				        <td>{{$i}}</td>
-				        <td><div class="datatable-column-width">{{$tagihan->nama}}</div></td>
+				        <td><div class="datatable-column-width">{{$tagihan->user->nama}}</div></td>
 				        {{-- <td><div class="datatable-column-width">{{@$tagihan->user->username}}</div></td> --}}
 				        {{-- <td><div class="datatable-column-width">{{$tagihan->invoice}}</div></td> --}}
-				        <td><div class="datatable-column-width">{{$tagihan->nama_proyek}}</div></td>
+				        <td><div class="datatable-column-width">{{$tagihan->proyek->nama_proyek}}</div></td>
                         <td><div class="datatable-column-width">{{$tagihan->masa_berlaku}}</div></td>
 						<td><div class="datatable-column-width">{{ number_format($tagihan->uang_muka, 0, ',', ',') }}</div></td>
 						<td><div class="datatable-column-width">{{ number_format($tagihan->jml_tagih, 0, ',', ',') }}</div></td>
