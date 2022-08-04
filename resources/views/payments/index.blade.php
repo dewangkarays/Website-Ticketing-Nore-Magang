@@ -55,7 +55,7 @@
 				@foreach($payments as $payment)
 				<tr>
 					<td>{{$i}}</td>
-					<td><div class="datatable-column-width">{{$payment->nama}}</div></td>
+					<td><div class="datatable-column-width">{{$payment->user->nama}}</div></td>
 					<td><div class="datatable-column-width">{{$payment->receipt_no ? $payment->receipt_no : ''}}</div></td>
 					<td style="font-size: 15px;">{{ number_format($payment->nominal, 0, ',', ',') }}</td>
 					<td align="center">
