@@ -221,7 +221,8 @@
                 console.log(dropdown)
                 if (dropdown=="" || dropdown==0 || dropdown==5 || dropdown==2) {
                     $('#div-tipe, #div-jl').hide()
-                    $('#tipe_web, #tipe_app, #jl_web, #jl_app, #website,#masa_berlaku').val("").attr("required", false)
+                    // $('#tipe_web, #tipe_app, #jl_web, #jl_app, #website').val("").attr("required", false)
+                    $('#tipe_web, #tipe_app, #jl_web, #jl_app').val("").attr("required", false)
                     if (dropdown==5) {
                         $('#div-masa').show()
                     } else {
@@ -230,7 +231,7 @@
                 } else {
                     $('#div-tipe, #div-jl').show()
                     $('#div-masa').show()
-                    $('#masa_berlaku').val("").attr("required", false)
+                    // $('#masa_berlaku').val("").attr("required", false)
                     if (dropdown==1) {
                         $('#tipe_web, #jl_web').show().attr("required", true)
                         $('#tipe_app, #jl_app').hide().val("").attr("required", false)
@@ -250,10 +251,10 @@
                 console.log([dropdown_app, dropdown_web])
                 if (dropdown_app==4 || dropdown_web==4) {
                     $('#div-masa').hide()
-                    $('#masa_berlaku').val("").attr("required", false)
+                    // $('#masa_berlaku').val("").attr("required", false)
                 } else {
                     $('#div-masa').show()
-                    $('#masa_berlaku').attr("required", true)
+                    // $('#masa_berlaku').attr("required", true)
                 }
             });
 

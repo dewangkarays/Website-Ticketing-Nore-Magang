@@ -78,7 +78,7 @@
                             @endif
                         @endif
                     </td>
-                    <td><div class="datatable-column-width">{{$proyek->keterangan ? $proyek->keterangan : '-'}}</div></td>
+                    <td><div class="datatable-column-width">{{strip_tags($proyek->keterangan ? $proyek->keterangan : '-')}}</div></td>
                     <td align="center">
                         <div class="list-icons">
                             <div class="dropdown">
