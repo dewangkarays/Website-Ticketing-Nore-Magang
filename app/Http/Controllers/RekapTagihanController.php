@@ -85,7 +85,7 @@ class RekapTagihanController extends Controller
         $tagihans = $findtagihan;
         $finduser = User::find($data['user_id']);
         $data['nama'] = $finduser->nama;
-        $data['total'] = $tagihans->sum('nominal');
+        $data['total'] = $tagihans->sum('jml_tagih');
         $data['uang_muka'] = $tagihans->sum('uang_muka');
         $data['status'] = 1;
         $data['nama_tertagih'] = $request->get('nama_tertagih');
