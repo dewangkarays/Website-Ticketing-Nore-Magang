@@ -45,13 +45,13 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Proyek</label>
 						<div class="col-lg-10">
-                            @if ($tagihan->nama_proyek == null)
+                            @if ($tagihan->id_proyek == null)
                                 <select id="select_proyek" name="select_proyek" class="form-control select-search">
                                     <option value="">-- Pilih Proyek --</option>
                                 </select>
                             @else
                                 <select name="select_proyek" class="form-control select-search" required disabled>
-                                    <option value="">{{ $tagihan->nama_proyek }}</option>
+                                    <option value="">{{ $tagihan->proyek->nama_proyek }}</option>
                                 </select>
                             @endif
 						</div>
@@ -59,11 +59,11 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nama Proyek</label>
 						<div class="col-lg-10">
-                            @if ($tagihan->nama_proyek == null)
+                            @if ($tagihan->id_proyek == null)
                                 <input type="hidden" id="id_proyek" name="id_proyek" class="form-control border-teal border-1" value="{{old('id_proyek')}}">
 							    <input type="text" id="nama_proyek" name="nama_proyek" class="form-control border-teal border-1" placeholder="Nama Proyek" value="{{old('nama_proyek')}}" readonly>
                             @else
-                            <label class="col-form-label col-lg-10">{{$tagihan->nama_proyek}}</label>
+                            <label class="col-form-label col-lg-10">{{$tagihan->proyek->nama_proyek}}</label>
                             @endif
 						</div>
 					</div>
