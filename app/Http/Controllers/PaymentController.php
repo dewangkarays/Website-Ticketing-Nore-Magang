@@ -30,6 +30,7 @@ class PaymentController extends Controller
         } else {
             // $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('created_at','desc')->get();
             $payments = Payment::where('jenis_pemasukan','=',1)->orderBy('created_at','desc')->get();
+            //$payments = Payment::all();
 
         }
         return view('payments.index', compact('payments'));
@@ -71,7 +72,7 @@ class PaymentController extends Controller
         $cust = User::find($request->get('user_id'));
         $data['user_role'] = $cust->role;
         $data['nama'] = $cust->nama;
-        $data['jenis_pemasukan'] = 2;
+        $data['jenis_pemasukan'] = 1;
 
         $receiptno = 01;
         $lastreceipt = Payment::latest('id')->first();

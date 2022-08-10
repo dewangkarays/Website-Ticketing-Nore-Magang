@@ -37,7 +37,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Penanggung Jawab</label>
 							<div class="col-lg-10">
-								<select id="user_id" name="user_id" class="form-control select-search">
+								<select id="user_id" name="user_id" class="form-control select-search" required>
 									<option value="">-- Pilih Penanggung Jawab --</option>
 									@foreach ($users as $user)
 									<option value="{{$user->id}}">{{$user->nama}}</option>
@@ -75,7 +75,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nominal</label>
 							<div class="col-lg-10">
-								<input id="tertulis" type="text" onkeyup="ribuan()" class="form-control" placeholder="Nominal" required>
+								<input id="tertulis" type="text" name="tampilNominal" onkeyup="ribuan()" class="form-control" placeholder="Nominal" required>
 								<input id="nominal" type="hidden" name="nominal" value="{{old('nominal')}}">
 							</div>
 						</div>
@@ -84,7 +84,7 @@
 							<div class="col-lg-10">
 								{{-- <input type="text" name="keterangan" class="form-control border-teal border-1" placeholder="Keterangan"> --}}
 								<span class="form-text text-muted">Contoh: Pengeluaran untuk bonus bulan April</span>
-                                <textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{ old('keterangan') }}</textarea>
+                                <textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1" required>{{ old('keterangan') }}</textarea>
 							</div>
 						</div>
 					</fieldset>
@@ -194,18 +194,21 @@
 		                tanggal: {
 		                    required: 'Mohon diisi.'
 		                },
-		                pengeluaran: {
-		                    required: 'Mohon diisi.'
-		                },
-		                // jenis_pengeluaran: {
+						user_id:{
+							required : 'Mohon diisi.'
+						},
+		                // pengeluaran: {
 		                //     required: 'Mohon diisi.'
 		                // },
-		                nominal: {
+		                jenis_pengeluaran: {
 		                    required: 'Mohon diisi.'
 		                },
-		                // keterangan: {
-		                //     required: 'Mohon diisi.'
-		                // },
+		                tampilNominal: {
+		                    required: 'Mohon diisi.'
+		                },
+		                keterangan: {
+		                    required: 'Mohon diisi.'
+		                },
 
 		            },
 		        });
