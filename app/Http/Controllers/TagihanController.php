@@ -24,8 +24,8 @@ class TagihanController extends Controller
     public function index()
     {
         $tagihans = Tagihan::orderBy('id')->whereNull('rekap_tagihan_id')->get();
-        $proyeks = Proyek::all();
-        return view('tagihans.index', compact('tagihans', 'proyeks'));
+      //$proyeks = Proyek::all();
+        return view('tagihans.index', compact('tagihans'));
     }
 
     /**
@@ -191,7 +191,7 @@ class TagihanController extends Controller
 
         $proyek = Proyek::find($tagihan->id_proyek);
         $proyek->masa_berlaku = $tagihan->masa_berlaku;
-        $proyek->save();
+        $proyek->update();
 
         return redirect('/tagihans')->with('success', 'Tagihan updated!');
     }
