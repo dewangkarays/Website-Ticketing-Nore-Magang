@@ -54,10 +54,11 @@
 						</div>
 
 						<div class="form-group row">
-							<label class="col-lg-2 col-form-label font-weight-semibold">Attachment:</label>
+							<label class="col-lg-2 col-form-label font-weight-semibold">Attachment: <br><p><i class="text-muted">Opsional</i></p></label>
+							
 							<div class="col-lg-10">
 								<input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
-								<span class="form-text text-muted">Jumlah max ukuran file : 32MB</span><hr>
+								<span class="form-text text-muted">Jumlah max ukuran file : 200KB</span><hr>
 							</div>
 						</div>
 						@if(\Auth::user()->role==1 || \Auth::user()->role==10 || \Auth::user()->role==20)
@@ -263,6 +264,8 @@
 
 		        $('.file-input').fileinput({
 		            browseLabel: 'Browse',
+					maxFileSize: 256,
+					maxFilePreviewSize: 256,
 		            browseIcon: '<i class="icon-file-plus mr-2"></i>',
 		            showUpload: false,
 		            removeIcon: '<i class="icon-cross2 font-size-base mr-2"></i>',
