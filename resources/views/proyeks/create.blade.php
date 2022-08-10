@@ -125,7 +125,7 @@
                             <label class="col-form-label col-lg-2">Keterangan</label>
                             <div class="col-lg-10">
                                 <span class="form-text text-muted">Contoh: Website blogspot Noer Prajitno</span>
-                                <textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{ old('keterangan') }}</textarea>
+                                <textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1" required>{{ old('keterangan') }}</textarea>
                             </div>
                         </div>
 
@@ -319,6 +319,9 @@
                     task_count:{
 						required : true
 					},
+                    keterangan:{
+						required : true
+					},
 				},
                 messages: {
                     user_id: {
@@ -350,6 +353,9 @@
 						min : 0
 					},
                     masa_berlaku: {
+                        required: 'Mohon diisi.'
+                    },
+                    keterangan: {
                         required: 'Mohon diisi.'
                     },
                 },
