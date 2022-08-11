@@ -79,10 +79,15 @@ class TagihanController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        $request->validate([
-            'nominal' => 'required',
-            'keterangan' => 'required',
-        ]);
+        try {
+            $request->validate([
+                'nominal' => 'required|max:11',
+                'uang_muka' => 'max:11',
+                'keterangan' => 'required',
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Nominal melampaui batas!');
+        }
 
         $data = $request->except(['_token', '_method','select_proyek','masa_berlaku']);
 
@@ -109,6 +114,14 @@ class TagihanController extends Controller
         }
 
         $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
+        
+        if ($data['jml_tagih'] < 0) {
+            return redirect()->back()->with('error', 'Uang muka melebihi nominal!');
+        }
+
+        // if ($data['jml_tagih'] > )
+
+        //dd($data);
 
         $user = User::find($data['user_id']);
         $data['nama'] = $user->nama;
