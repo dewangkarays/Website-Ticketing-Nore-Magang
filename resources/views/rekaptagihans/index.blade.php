@@ -40,7 +40,8 @@
                                 <th>Nama</th>
                                 <th>Invoice</th>
                                 <th>Tagihan (Rp)</th>
-                                <th>Jumlah Bayar (Rp)</th>
+                                <th>Jumlah Terbayar (Rp)</th>
+								<th>Sisa Tagihan (Rp)</th>
                                 {{-- <th>Keterangan</th> --}}
                                 <th>Status</th>
                                 <th class="text-center">Actions</th>
@@ -57,6 +58,7 @@
                                 <td><div class="datatable-column-width">{{$rekaptagihan->invoice}}</div></td>
                                 <td><div class="datatable-column-width">{{ number_format($rekaptagihan->total, 0, ',', ',') }}</div></td>
                                 <td><div class="datatable-column-width">{{ number_format($rekaptagihan->jml_terbayar, 0, ',', ',') }}</div></td>
+								<td><div class="datatable-column-width">{{ number_format($rekaptagihan->total-$rekaptagihan->jml_terbayar, 0, ',', ',') }}</div></td>
                                 {{-- <td><div class="datatable-column-width">{!! $rekaptagihan->keterangan !!}</div></td> --}}
                                 <td>
 									@if ($rekaptagihan->status == 1)
