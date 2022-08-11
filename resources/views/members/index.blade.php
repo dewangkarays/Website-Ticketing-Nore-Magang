@@ -3,7 +3,10 @@
 @section('css')
 <style type="text/css">
 	.datatable-column-width{
-		overflow: hidden; text-overflow: ellipsis; max-width: 200px;
+		overflow: hidden; text-overflow: ellipsis; width: 200px; 
+	}
+	.datatable-column-width-small{
+		overflow: hidden; text-overflow: ellipsis; max-width: 100px; 
 	}
 </style>
 @endsection
@@ -39,8 +42,8 @@
 						<th>Username</th>
 						<th>Email</th>
 						<th>Alamat</th>
-						<th class="text-center">Total Task</th>
-						<th class="text-center">Actions</th>
+						<th class="text-center"><span>Total Task</span></th>
+						<th class="text-center"><span>Actions</span></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -49,7 +52,7 @@
 					@foreach($users as $user)
 				    <tr>
 				        <td>{{$i}}</td>
-				        <td><div class="datatable-column-width">{{$user->nama}}</div></td>
+				        <td><div class="datatable-column-width-small">{{$user->nama}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->email}}</div></td>
 				        <td><div class="datatable-column-width">{{$user->alamat ? $user->alamat : '-'}}</div></td>
