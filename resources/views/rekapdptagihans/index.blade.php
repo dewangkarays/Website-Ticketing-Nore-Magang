@@ -39,7 +39,8 @@
                                 <th>Nama</th>
                                 <th>Invoice</th>
                                 <th>Uang Muka Tagihan (Rp)</th>
-                                <th>Jumlah Bayar</th>
+                                <th>Jumlah Terbayar (Rp)</th>
+                                <th>Sisa Uang Muka Tagihan (Rp)</th>
                                 {{-- <th>Keterangan</th> --}}
                                 <th>Status</th>
                                 <th class="text-center">Actions</th>
@@ -56,6 +57,7 @@
                                 <td><div class="datatable-column-width">{{$rekapdp->invoice}}</div></td>
                                 <td><div class="datatable-column-width">{{ number_format($rekapdp->total, 0, ',', ',') }}</div></td>
                                 <td><div class="datatable-column-width">{{ number_format($rekapdp->jml_terbayar, 0, ',', ',') }}</div></td>
+                                <td><div class="datatable-column-width">{{ number_format($rekapdp->total-$rekapdp->jml_terbayar, 0, ',', ',') }}</div></td>
                                 {{-- <td><div class="datatable-column-width">{!! $rekaptagihan->keterangan !!}</div></td> --}}
                                 <td>
                                     @if ($rekapdp->status == 1)
