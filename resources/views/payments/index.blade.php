@@ -3,7 +3,10 @@
 @section('css')
 <style type="text/css">
 	.datatable-column-width{
-		overflow: hidden; text-overflow: ellipsis; max-width: 200px;
+		overflow: hidden; text-overflow: ellipsis; max-width: 100px;
+	}
+	.datatable-column-width-large{
+		overflow: hidden; text-overflow: ellipsis; width: 150px;
 	}
 </style>
 @endsection
@@ -37,15 +40,15 @@
 		<table class="table datatable-basic table-hover">
 			<thead>
 				<tr>
-					<th style="width: 50px">No</th>
+					<th>No</th>
 					<th>Nama</th>
-					<th style="width: 200px">No. Receipt</th>
-					<th style="width: 200px">Nominal (Rp)</th>
+					<th>No. Receipt</th>
+					<th>Nominal (Rp)</th>
 					<th>Status</th>
-					<th style="width: 250px">Keterangan</th>
-					<th style="width: 100px">Tanggal Pembayaran</th>
+					<th>Keterangan</th>
+					<th>Tanggal Pembayaran</th>
 					@if(\Auth::user()->role<=20)
-					<th class="text-center" style="width: 50px">Actions</th>
+					<th class="text-center">Actions</th>
 					@endif
 				</tr>
 			</thead>
@@ -56,8 +59,8 @@
 				<tr>
 					<td>{{$i}}</td>
 					<td><div class="datatable-column-width">{{$payment->user->nama}}</div></td>
-					<td><div class="datatable-column-width">{{$payment->receipt_no ? $payment->receipt_no : ''}}</div></td>
-					<td style="font-size: 15px;">{{ number_format($payment->nominal, 0, ',', ',') }}</td>
+					<td><div class="datatable-column-width-large">{{$payment->receipt_no ? $payment->receipt_no : ''}}</div></td>
+					<td style="font-size: 15px;"><div class="datatable-column-width">{{ number_format($payment->nominal, 0, ',', ',') }}</div></td>
 					<td align="center">
 						@if($payment->status == 0 )
 						<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.payment.'.$payment->status)}}</span>
@@ -68,7 +71,7 @@
 						@endif
 					</td>
 					<td><div class="datatable-column-width">{!! $payment->keterangan !!}</div></td>
-					<td>{{$payment->tanggal}}</td>
+					<td><div class="datatable-column-width">{{$payment->tanggal}}</div></td>
 					@if(\Auth::user()->role<=20)
 					<td align="center">
 						<div class="list-icons">
@@ -285,13 +288,9 @@
 				autoWidth: false,
 				columnDefs: [{
 					orderable: false,
-					// width: 100,
-					targets: [ 4, 5, 7 ]
-				},
-                {
-                    "targets": [ 4 ],
-                    "visible": false
-                }],
+					width: 100,
+					targets: [ 7 ]
+				}],
 				dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
