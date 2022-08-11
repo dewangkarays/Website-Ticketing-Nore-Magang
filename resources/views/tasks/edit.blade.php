@@ -48,7 +48,7 @@
 									<label class="col-lg-2 col-form-label font-weight-semibold">Attachment:</label>
 									<div class="col-lg-10">
 										<input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
-										<span class="form-text text-muted">Jumlah max ukuran file : 200KB</span><hr>
+										<span class="form-text text-muted">Jumlah max ukuran file : 32MB</span><hr>
 										<div id="attachdiv">
 											@foreach($attachment as $attach)
 												<span class="form-text text-muted"><a href="{{ asset('storage/attachment/'.$attach->file)}}">{{$attach->file}}</a> <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('attachments.destroy', $attach->id)}}" style="display: inline;"><i class="icon-x"></i></a></span>
@@ -433,6 +433,8 @@
 
 		        $('.file-input').fileinput({
 		            browseLabel: 'Browse',
+					maxFileSize: 32000,
+					maxFilePreviewSize: 32000,
 		            browseIcon: '<i class="icon-file-plus mr-2"></i>',
 		            showUpload: false,
 		            removeIcon: '<i class="icon-cross2 font-size-base mr-2"></i>',

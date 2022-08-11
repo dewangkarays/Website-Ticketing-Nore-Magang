@@ -58,7 +58,7 @@
 							
 							<div class="col-lg-10">
 								<input type="file" name="file[]" class="file-input" multiple="multiple" data-fouc>
-								<span class="form-text text-muted">Jumlah max ukuran file : 200KB</span><hr>
+								<span class="form-text text-muted">Jumlah max ukuran file : 32MB</span><hr>
 							</div>
 						</div>
 						@if(\Auth::user()->role==1 || \Auth::user()->role==10 || \Auth::user()->role==20)
@@ -264,8 +264,8 @@
 
 		        $('.file-input').fileinput({
 		            browseLabel: 'Browse',
-					maxFileSize: 256,
-					maxFilePreviewSize: 256,
+					maxFileSize: 32000,
+					maxFilePreviewSize: 32000,
 		            browseIcon: '<i class="icon-file-plus mr-2"></i>',
 		            showUpload: false,
 		            removeIcon: '<i class="icon-cross2 font-size-base mr-2"></i>',
