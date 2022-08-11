@@ -271,7 +271,7 @@
 							<td><div class="datatable-column-width">{{config('custom.pengeluaran.'.$pengeluaran->jenis_pengeluaran)}}</div></td>
 							<td><div class="datatable-column-width">Rp {{number_format($pengeluaran->nominal,0,',','.')}}
 							</div></td>
-							<td><div class="datatable-column-width">{{$pengeluaran->keterangan}}
+							<td><div class="datatable-column-width">{{strip_tags($pengeluaran->keterangan)}}
 							</div></td>
 						</tr>
 						@php ($i++)
