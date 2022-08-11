@@ -36,14 +36,15 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Gambar</label>
                         <div class="col-lg-10">
-                            <input id="gambar" name="gambar" type="file" class="form-control" required>
+                            <input id="gambar" name="gambar" type="file" class="form-control" onchange="upload_check()" accept="image/gif, image/jpeg" required>
+                            <span class="form-text text-muted">Jumlah max ukuran file : 200KB</span>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Keterangan</label>
+                        <label class="col-form-label col-lg-2">Keterangan<p><i class="text-muted">Opsional</i></p></label>
                         <div class="col-lg-10">
-                            <input id="keterangan" name="keterangan" type="text" class="form-control" required>
+                            <input id="keterangan" name="keterangan" type="text" class="form-control">
                         </div>
                     </div>
         
@@ -141,6 +142,20 @@
     
     <script src="{{asset('assets/js/app.js')}}"></script>
     <script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
+    <script>
+        //max file size
+        function upload_check()
+{
+        var upl = document.getElementById("gambar");
+        var maxAllowedSize = 200000;
+
+        if(upl.files[0].size > maxAllowedSize)
+        {
+        alert("Ukuran File Terlalu Besar!");
+        upl.value = "";
+        }
+    };
+    </script>
     <script>
         //modal delete
         $(document).on("click", ".delbutton", function () {
