@@ -304,7 +304,7 @@
         });
 
         $('.checked-all').on('click', function(e){
-            e.preventDefault()
+            //e.preventDefault()
             $('input[id=chk]').prop('checked', this.checked)
         });
     </script>
