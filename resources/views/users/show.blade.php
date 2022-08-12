@@ -46,12 +46,12 @@
                         <span class="form-text"> {{ $user->telp }} </span>
                     </div>
                 </div>
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label class="col-form-label col-lg-2">Masa Aktif</label>
                     <div class="col-lg-10">
                         <span class="form-text"> {{ $user->kadaluarsa }} </span>
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Jumlah Update Task</label>
                     <div class="col-lg-10">
