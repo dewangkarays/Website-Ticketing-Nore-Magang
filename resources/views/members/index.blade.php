@@ -3,10 +3,10 @@
 @section('css')
 <style type="text/css">
 	.datatable-column-width{
-		overflow: hidden; text-overflow: ellipsis; width: 200px; 
+		overflow: hidden; text-overflow: ellipsis; max-width: 200px; 
 	}
 	.datatable-column-width-small{
-		overflow: hidden; text-overflow: ellipsis; max-width: 100px; 
+		overflow: hidden; text-overflow: ellipsis; width: 100px; 
 	}
 </style>
 @endsection
