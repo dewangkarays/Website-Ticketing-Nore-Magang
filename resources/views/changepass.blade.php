@@ -30,14 +30,14 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-3">Password Lama <span class="text-danger">*</span></label>
 							<div class="col-lg-9">
-								<input type="password" name="old_pass" id="old_pass" class="form-control" required placeholder="minimal 6 karakter">
+								<input type="password" name="old_pass" id="old_pass" class="form-control" required placeholder="password lama">
 							</div>
 						</div>
 
 						<div class="form-group row">
 							<label class="col-form-label col-lg-3">Password Baru <span class="text-danger">*</span></label>
 							<div class="col-lg-9">
-								<input type="password" name="new_pass" id="new_pass" class="form-control" required placeholder="minimal 6 karakter">
+								<input type="password" name="new_pass" id="new_pass" class="form-control" required placeholder="minimal 8 karakter">
 							</div>
 						</div>
 
@@ -125,10 +125,10 @@
 		            },
 		            rules: {
 		                old_pass: {
-		                    minlength: 6
+		                    minlength: 8
 		                },
 		                new_pass: {
-		                    minlength: 6
+		                    minlength: 8
 		                },
 		                con_pass: {
 		                    equalTo: '#new_pass'
