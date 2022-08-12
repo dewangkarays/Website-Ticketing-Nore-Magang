@@ -78,7 +78,10 @@
 							<div class="col-lg-10">
 								<select name="role" class="form-control form-control-select2 border-teal border-1" required>
 									@foreach (config('custom.role') as $key => $value)
+										{{-- <option {{ $user->role == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option> --}}
+										@if (in_array($key, [1,10,20]))
 										<option {{ $user->role == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
+										@endif
 									@endforeach
                                     {{-- <option value="1" {{ $user->role == '1' ? 'selected' : '' }}>Super Admin</option>
 									<option value="10" {{ $user->role == '10' ? 'selected' : '' }}>Karyawan</option>
