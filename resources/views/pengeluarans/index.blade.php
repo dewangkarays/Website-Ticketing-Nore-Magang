@@ -66,7 +66,9 @@
 
 									<div class="dropdown-menu dropdown-menu-right">
 										<a href="{{ route('pengeluarans.edit',$pengeluaran->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+										@if (Auth::user()->role==1)
 							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('pengeluarans.destroy', $pengeluaran->id)}}"><i class="icon-x"></i> Delete</a>
+										@endif
 									</div>
 								</div>
 							</div>

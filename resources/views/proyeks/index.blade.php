@@ -95,7 +95,9 @@
                                         <a href="{{ route('tagihans.create').'?c='.$proyek->id}}" class="dropdown-item"><i class="icon-file-text"></i> Create Tagihan</a>
                                     @endif
                                     <a href="{{ route('proyeks.edit',$proyek->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+                                    @if (Auth::user()->role==1)
                                     <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('proyeks.destroy', $proyek->id)}}"><i class="icon-x"></i> Delete</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
