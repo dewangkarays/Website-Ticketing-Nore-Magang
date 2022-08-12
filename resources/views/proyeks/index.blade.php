@@ -3,7 +3,7 @@
 @section('css')
 <style type="text/css">
     .datatable-column-width{
-        overflow: hidden; text-overflow: ellipsis; max-width: 200px;
+        overflow: hidden; text-overflow: ellipsis; max-width: 100px;
     }
 </style>
 @endsection
@@ -37,9 +37,9 @@
                     <th>Client Name</th>
                     <th>Nama Proyek</th>
                     <th>Website</th>
-                    <th>Jenis Proyek</th>
-                    <th>Kelas Layanan</th>
-                    <th>Jenis Layanan</th>
+                    <th>Detail Proyek</th>
+                    {{-- <th>Kelas Layanan</th>
+                    <th>Jenis Layanan</th> --}}
                     <th>Jumlah Task</th>
                     <th>Masa Berlaku</th>
                     <th>Keterangan</th>
@@ -55,9 +55,13 @@
                     <td><div class="datatable-column-width">{{@$proyek->user ? $proyek->user->nama : '-'}}</div></td>
                     <td><div class="datatable-column-width">{{$proyek->nama_proyek ? $proyek->nama_proyek : '-'}}</div></td>
                     <td><div class="datatable-column-width">{{$proyek->website ? $proyek->website : '-'}}</div></td>
-                    <td><div class="datatable-column-width">{{$proyek->jenis_proyek ? config('custom.jenis_proyek.'.$proyek->jenis_proyek) : '-'}}</div></td>
-                    <td><div class="datatable-column-width">{{$proyek->tipe ? config('custom.kelas_layanan.'.$proyek->tipe) : '-'}}</div></td>
-                    <td><div class="datatable-column-width">{{$proyek->jenis_layanan ? config('custom.jenis_layanan.'.$proyek->jenis_layanan) : '-'}}</div></td>
+                    <td>
+                        <div class="datatable-column-width">{{$proyek->jenis_proyek ? config('custom.jenis_proyek.'.$proyek->jenis_proyek) : '-'}}</div>
+                        <div class="datatable-column-width">{{$proyek->tipe ? config('custom.kelas_layanan.'.$proyek->tipe) : '-'}}</div>
+                        <div class="datatable-column-width">{{$proyek->jenis_layanan ? config('custom.jenis_layanan.'.$proyek->jenis_layanan) : '-'}}</div>
+                    </td>
+                    {{-- <td><div class="datatable-column-width">{{$proyek->tipe ? config('custom.kelas_layanan.'.$proyek->tipe) : '-'}}</div></td>
+                    <td><div class="datatable-column-width">{{$proyek->jenis_layanan ? config('custom.jenis_layanan.'.$proyek->jenis_layanan) : '-'}}</div></td> --}}
                     <td align="center">
                         @if($proyek->task_count < 1 )
                             <span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">0</span>
@@ -171,7 +175,7 @@
                 columnDefs: [{
                     orderable: false,
                     width: 100,
-                    targets: [ 9 ]
+                    targets: [ 7 ]
                 }],
                 dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                 language: {
