@@ -41,6 +41,7 @@
 					<th>No</th>
 					<th>Tanggal</th>
 					<th>Username</th>
+					<th>Nama Proyek</th>
 					<th>Kebutuhan</th>
 					<th>Severity</th>
 					<th>Handler</th>
@@ -57,6 +58,7 @@
 					<td>{{$i}}</td>
 					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
 					<td><div class="datatable-column-width">{{$task->user->username}}</div></td>
+					<td><div class="datatable-column-width">{{$task->proyek->nama_proyek}}</div></td>
 					<td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
 					<td><div class="datatable-column-width">{{config('custom.severity.'.$task->severity)}}</div></td>
 					<td><div class="datatable-column-width form-check">
@@ -128,6 +130,7 @@
 					<th>No</th>
 					<th>Tanggal</th>
 					<th>Username</th>
+					<th>Nama Proyek</th>
 					<th>Kebutuhan</th>
 					<th>Severity</th>
 					<th>Handler</th>
@@ -136,14 +139,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				@if(!$tasks->isEmpty())
+				@if(!$tasksp->isEmpty())
 				@php ($i = 1)
-				@foreach($tasks as $task)
+				@foreach($tasksp as $task)
 				
 				<tr>
 					<td>{{$i}}</td>
 					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
 					<td><div class="datatable-column-width">{{$task->user->username}}</div></td>
+					<td><div class="datatable-column-width">{{$task->proyek->nama_proyek}}</div></td>
 					<td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
 					<td><div class="datatable-column-width">{{config('custom.severity.'.$task->severity)}}</div></td>
 					<td><div class="datatable-column-width form-check">

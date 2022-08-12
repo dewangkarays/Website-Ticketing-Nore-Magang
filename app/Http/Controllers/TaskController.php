@@ -21,22 +21,19 @@ class TaskController extends Controller
     public function index()
     {
 
-            $taskpremiums = Task::join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
+            $taskpremiums = Task::join('users','users.id', '=', 'tasks.user_id')
+                            ->join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
                             ->where('proyeks.tipe','=','80')
-                            ->orderBy('tasks.status', 'DESC')
-                            ->orderBy('tasks.created_at','ASC')
-                            // ->select('tasks*')
+                            ->where('tasks.status', '!=', '3')
                             ->get(); //premium
 
-            $tasks = Task::join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
-                    ->where('proyeks.tipe','!=','80')
-                    ->orderBy('tasks.status', 'DESC')
-                    ->orderBy('tasks.created_at','ASC')
-                    // ->select('tasks*')
-                    ->get(); //premium
-
+            $tasksp = Task::join('users','users.id', '=', 'tasks.user_id')
+                            ->join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
+                            ->where('proyeks.tipe','!=','80')
+                            ->where('tasks.status', '!=', '3')
+                            ->get(); //simple dan prioritas
         
-        return view('tasks.index', compact('tasks','taskpremiums'));
+        return view('tasks.index', compact('tasksp','taskpremiums'));
     }
 
     /**
@@ -46,11 +43,15 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $users = User::where('role','>','20')->where('task_count','>','0')->get(); //role customer
+        $users = User::join('proyeks','proyeks.id','=','users.id')
+        ->where('users.role','>','20')
+        ->where('users.task_count','>','0')
+        ->get(); //role customer
+        $proyeks = Proyek::all();
         $handlers = User::where('role','10')->get(); //role karyawan
         $finances = User::where('role','20')->get(); //keuangan
 
-        return view('tasks.create', compact('users','handlers','finances'));
+        return view('tasks.create', compact('users','proyeks','handlers','finances'));
     }
 
     /**
@@ -73,6 +74,9 @@ class TaskController extends Controller
 
         if($request->get('handler')!=''){
             $task->handler = $request->get('handler');
+        }
+        if($request->get('proyek')!=''){
+            $task['id_proyek'] = $request->get('proyek');
         }
 
         $task->save();

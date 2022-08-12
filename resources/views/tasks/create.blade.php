@@ -47,6 +47,17 @@
 						</div>
 						@endif
 						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Proyek</label>
+							<div class="col-lg-10">
+								<select id="proyek" name="proyek" class="form-control select-search" data-fouc>
+                                    <option value="">-- Pilih Proyek --</option>
+									@foreach($proyeks as $proyek)
+										<option value="{{$proyek->id}}">{{$proyek->nama_proyek}}</option>
+				    				@endforeach
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Kebutuhan</label>
 							<div class="col-lg-10">
 								<textarea name="kebutuhan" rows="4" cols="3" class="form-control" placeholder="Kebutuhan User" required></textarea>
