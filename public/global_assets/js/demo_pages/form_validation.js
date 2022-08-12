@@ -155,7 +155,7 @@ var FormValidation = function() {
             },
             rules: {
                 password: {
-                    minlength: 5
+                    minlength: 8
                 },
                 repeat_password: {
                     equalTo: '#password'
