@@ -42,7 +42,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Telp</label>
 							<div class="col-lg-10">
-								<input type="text" name="telp" class="form-control border-teal border-1" placeholder="Telp/WA" required value="{{ $user->telp }}">
+								<input type="text" name="telp" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA" required value="{{ $user->telp }}">
 								<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
 							</div>
 						</div>
@@ -200,6 +200,12 @@
 
 		document.addEventListener('DOMContentLoaded', function() {
 		    FormValidation.init();
+		});
+
+		$(function() {
+			$(".phone-number").on("keyup", function(event) {
+				$(this).val($(this).val().replace(/[^0-9]/g, ""));
+			})
 		});
 	</script>
 	<script type="text/javascript">
