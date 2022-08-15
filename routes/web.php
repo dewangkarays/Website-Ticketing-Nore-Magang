@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 	//TaskController
 	Route::get('/tasks', 'TaskController@index')->name('tasks');
-	Route::get('/tasks/create', 'TaskController@create')->name('tasks.edit');
+	Route::get('/tasks/create', 'TaskController@create')->name('tasks.create');
 	Route::post('/tasks/store', 'TaskController@store')->name('tasks.store');
 	Route::get('/tasks/{id}/edit', 'TaskController@edit')->name('tasks.edit');
 	Route::post('/tasks/{id}/update', 'TaskController@update')->name('tasks.update');
