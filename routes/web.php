@@ -26,10 +26,10 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::resource('setting', 'SettingController');
 	Route::get('/changepass',  'UserController@changePass');
 	Route::post('/changepass/{id}',  'UserController@changePassSubmit')->name('changepass');
-	Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');
+	// Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');
 	Route::resource('attachments', 'AttachmentController');
-	Route::resource('tasks', 'TaskController');
-	Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
+	// Route::resource('tasks', 'TaskController');
+	// Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
 	Route::resource('payments', 'PaymentController');
 	Route::resource('pemasukans', 'PemasukanLainController');
 	Route::post('/terimapayment', 'PaymentController@statuspayment')->name('terimapayment');
@@ -67,6 +67,17 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/getrekaptagihan/{id}',  'RekapTagihanController@getRekapTagihan');
 	Route::get('/detailrekaptagihan/{id}',  'RekapTagihanController@detailRekapTagihan');
 	Route::get('/getradbox',  'RekapTagihanController@getRadBox');
+
+	//TaskController
+	Route::get('/tasks', 'TaskController@index')->name('tasks');
+	Route::get('/tasks/create', 'TaskController@create')->name('tasks.edit');
+	Route::post('/tasks/store', 'TaskController@store')->name('tasks.store');
+	Route::get('/tasks/{id}/edit', 'TaskController@edit')->name('tasks.edit');
+	Route::post('/tasks/{id}/update', 'TaskController@update')->name('tasks.update');
+	Route::post('/tasks/{id}/destroy', 'TaskController@destroy')->name('tasks.destroy');
+	Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');
+	Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
+
 	//admin
 	Route::group(['middleware' => ['role:1']], function() {
 		Route::get('/admin',  'AdminController@index')->name('admin');
