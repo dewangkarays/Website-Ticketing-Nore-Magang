@@ -124,9 +124,9 @@
 		                }
 		            },
 		            rules: {
-		                old_pass: {
-		                    minlength: 8
-		                },
+		                // old_pass: {
+		                //     minlength: 8
+		                // },
 		                new_pass: {
 		                    minlength: 8
 		                },
