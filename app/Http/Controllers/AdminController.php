@@ -24,8 +24,8 @@ class AdminController extends Controller
         $ongoing = Task::where('status', '=', '2')->get()->count();
         $done = Task::where('status', '=', '3')->get()->count();
         $todaynew = Task::where('status', '=', '1')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
-        $todayongoing = Task::where('status', '=', '2')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
-        $todaydone = Task::where('status', '=', '3')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
+        $todayongoing = Task::where('status', '=', '2')->whereDate('updated_at', '=', Carbon::today()->toDateString())->get()->count();
+        $todaydone = Task::where('status', '=', '3')->whereDate('updated_at', '=', Carbon::today()->toDateString())->get()->count();
         $member = User::where('role','>','20')->get()->count();
         $proyek = Proyek::all();
         $simple = Proyek::where('tipe','=','99')->get()->count();
@@ -51,8 +51,8 @@ class AdminController extends Controller
         $ongoing = Task::where('status', '=', '2')->get()->count();
         $done = Task::where('status', '=', '3')->get()->count();
         $todaynew = Task::where('status', '=', '1')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
-        $todayongoing = Task::where('status', '=', '2')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
-        $todaydone = Task::where('status', '=', '3')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
+        $todayongoing = Task::where('status', '=', '2')->whereDate('updated_at', '=', Carbon::today()->toDateString())->get()->count();
+        $todaydone = Task::where('status', '=', '3')->whereDate('updated_at', '=', Carbon::today()->toDateString())->get()->count();
         $member = User::where('role','>','20')->get()->count();
         $proyek = Proyek::all();
         $simple = Proyek::where('tipe','=','99')->get()->count();
@@ -72,8 +72,8 @@ class AdminController extends Controller
         $ongoing = Task::where('status', '=', '2')->get()->count();
         $done = Task::where('status', '=', '3')->get()->count();
         $todaynew = Task::where('status', '=', '1')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
-        $todayongoing = Task::where('status', '=', '2')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
-        $todaydone = Task::where('status', '=', '3')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
+        $todayongoing = Task::where('status', '=', '2')->whereDate('updated_at', '=', Carbon::today()->toDateString())->get()->count();
+        $todaydone = Task::where('status', '=', '3')->whereDate('updated_at', '=', Carbon::today()->toDateString())->get()->count();
         $member = User::where('role','>','20')->get()->count();
         $proyek = Proyek::all();
         $simple = Proyek::where('tipe','=','99')->get()->count();
