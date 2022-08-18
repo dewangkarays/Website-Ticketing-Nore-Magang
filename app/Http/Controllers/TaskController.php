@@ -41,7 +41,7 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($kelas)
     {
         $users = User::join('proyeks','proyeks.id','=','users.id')
         ->where('users.role','>','20')
@@ -50,8 +50,9 @@ class TaskController extends Controller
         $proyeks = Proyek::all();
         $handlers = User::where('role','10')->get(); //role karyawan
         $finances = User::where('role','20')->get(); //keuangan
+        $kelas_proyek = $kelas;
 
-        return view('tasks.create', compact('users','proyeks','handlers','finances'));
+        return view('tasks.create', compact('users','proyeks','handlers','finances', 'kelas_proyek'));
     }
 
     /**
@@ -438,5 +439,21 @@ class TaskController extends Controller
         }
 
         // dd($chart);
+    }
+
+    public function getproyekpremium($id)
+    {
+        $proyek['data'] = Proyek::where('user_id',$id)->where('tipe', '=' , '80')->get();
+        // $proyek = $data['proyek'];
+        // dd($data);
+        return response()->json($proyek);
+    }
+
+    public function getproyeksp($id)
+    {
+        $proyek['data'] = Proyek::where('user_id',$id)->where('tipe', '!=', '80')->get();
+        // $proyek = $data['proyek'];
+        // dd($data);
+        return response()->json($proyek);
     }
 }
