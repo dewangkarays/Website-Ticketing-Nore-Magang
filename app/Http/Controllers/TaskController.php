@@ -21,17 +21,21 @@ class TaskController extends Controller
     public function index()
     {
 
-            $taskpremiums = Task::join('users','users.id', '=', 'tasks.user_id')
+            $taskpremiums = Task::select('tasks.id', 'tasks.user_id', 'tasks.kebutuhan', 'tasks.severity', 'tasks.handler', 'tasks.status', 'tasks.created_at', 'proyeks.nama_proyek', 'users.username')
+                            ->join('users','users.id', '=', 'tasks.user_id')
                             ->join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
                             ->where('proyeks.tipe','=','80')
                             ->where('tasks.status', '!=', '3')
                             ->get(); //premium
+                            // dd($taskpremiums);
 
-            $tasksp = Task::join('users','users.id', '=', 'tasks.user_id')
+            $tasksp = Task::select('tasks.id', 'tasks.user_id', 'tasks.kebutuhan', 'tasks.severity', 'tasks.handler', 'tasks.status', 'tasks.created_at', 'proyeks.nama_proyek', 'users.username')
+                            ->join('users','users.id', '=', 'tasks.user_id')
                             ->join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
                             ->where('proyeks.tipe','!=','80')
                             ->where('tasks.status', '!=', '3')
                             ->get(); //simple dan prioritas
+                            // dd($tasksp);
         
         return view('tasks.index', compact('tasksp','taskpremiums'));
     }
@@ -77,9 +81,9 @@ class TaskController extends Controller
             $task->handler = $request->get('handler');
         }
         if($request->get('proyek')!=''){
-            $task['id_proyek'] = $request->get('proyek');
+            $task->id_proyek = $request->get('proyek');
         }
-
+        // dd($task);
         $task->save();
 
         if($request->hasfile('file'))
@@ -146,12 +150,17 @@ class TaskController extends Controller
     public function edit($id)
     {
         $users = User::where('role','>','20')->get(); //role customer
+        $proyeks = Proyek::find($id);
         $handlers = User::where('role','10')->get(); //role karyawan
         $finances = User::where('role','20')->get(); //role keuangan
         // $handlersname = Task::find($id)->value('handler');
         // dd($handlersname);
         $attachment = Attachment::where('task_id', '=', $id)->get();
         $task = Task::find($id);
+        // $task = Task::select('*')
+        // ->where('id', $id)
+        // ->get();
+        // dd($task);
         // dd($handlersname);
         if (\Auth::user()->role>20 && $task->user_id != \Auth::user()->id) {
             return redirect('/tasks')->with('error', 'Akses tidak diperbolehkan');
@@ -161,7 +170,7 @@ class TaskController extends Controller
         //     return redirect('/tasks')->with('error', 'Task Sedang Dikerjakan');
         // }
 
-        return view('tasks.edit', compact('task', 'users', 'handlers','attachment','finances')); 
+        return view('tasks.edit', compact('task', 'users','proyeks', 'handlers','attachment','finances')); 
     }
 
     /**

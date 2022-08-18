@@ -57,8 +57,8 @@
 				<tr>
 					<td>{{$i}}</td>
 					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
-					<td><div class="datatable-column-width">{{$task->user->username}}</div></td>
-					<td><div class="datatable-column-width">{{$task->proyek->nama_proyek}}</div></td>
+					<td><div class="datatable-column-width">{{$task->username}}</div></td>
+					<td><div class="datatable-column-width">{{$task->nama_proyek}}</div></td>
 					<td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
 					<td><div class="datatable-column-width">{{config('custom.severity.'.$task->severity)}}</div></td>
 					<td><div class="datatable-column-width form-check">
@@ -102,7 +102,8 @@
 									<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id=" {{ $task->id }} " data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>
 									@endif
 									
-									@if($task->status==1 || \Auth::user()->role==1)
+									{{-- @if($task->status==1 || \Auth::user()->role==1) --}}
+									@if(\Auth::user()->role==1)
 									<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tasks.destroy', $task->id)}}"><i class="icon-x"></i> Delete</a>
 									@endif
 								</div>
@@ -146,8 +147,8 @@
 				<tr>
 					<td>{{$i}}</td>
 					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
-					<td><div class="datatable-column-width">{{$task->user->username}}</div></td>
-					<td><div class="datatable-column-width">{{$task->proyek->nama_proyek}}</div></td>
+					<td><div class="datatable-column-width">{{$task->username}}</div></td>
+					<td><div class="datatable-column-width">{{$task->nama_proyek}}</div></td>
 					<td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
 					<td><div class="datatable-column-width">{{config('custom.severity.'.$task->severity)}}</div></td>
 					<td><div class="datatable-column-width form-check">
@@ -191,7 +192,8 @@
 									<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id=" {{ $task->id }} " data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>
 									@endif
 									
-									@if($task->status==1 || \Auth::user()->role==1)
+									{{-- @if($task->status==1 || \Auth::user()->role==1) --}}
+									@if(\Auth::user()->role==1)
 									<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tasks.destroy', $task->id)}}"><i class="icon-x"></i> Delete</a>
 									@endif
 								</div>

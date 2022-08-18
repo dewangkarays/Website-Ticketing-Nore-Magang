@@ -29,7 +29,7 @@ Route::group(['middleware' => ['auth']], function() {
 	// Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');
 	Route::resource('attachments', 'AttachmentController');
 	// Route::resource('tasks', 'TaskController');
-	// Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
+	Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
 	Route::resource('payments', 'PaymentController');
 	Route::resource('pemasukans', 'PemasukanLainController');
 	Route::post('/terimapayment', 'PaymentController@statuspayment')->name('terimapayment');
