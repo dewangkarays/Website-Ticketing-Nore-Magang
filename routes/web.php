@@ -99,6 +99,8 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/keuangan',  'AdminController@keuangan')->name('keuangan');
 	});
 
+
+
 	//admin && karyawan
 	Route::group(['middleware' => ['role:1,10']], function() {
 		Route::resource('laporankeuangan', 'LaporanKeuanganController');
@@ -117,7 +119,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 	//customer
 	Route::group(['middleware' => ['role:80,90,99']], function() {
-		Route::get('/customer',  'AdminController@customer')->name('customer');
+		// Route::get('/customer',  'AdminController@customer')->name('customer');
 		Route::get('/tagihanclient','client\TagihanClient@index');
 		Route::get('/tagihanaktif','client\TagihanClient@active');
 		Route::get('/tagihanriwayat','client\TagihanClient@history');
@@ -130,6 +132,9 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/antrian','client\AntrianClient@index');
 		Route::get('/settinguser','client\SettingClient@changesetting');
 		Route::post('/settinguser/{id}','client\SettingClient@changesettingupdate')->name('settinguser');
+	});
 
+	Route::group(['middleware' => ['role:95']], function() {
+		Route::get('/customer', 'AdminController@customer')->name('customer');
 	});
 });
