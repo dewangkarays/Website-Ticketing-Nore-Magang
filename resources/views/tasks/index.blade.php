@@ -33,7 +33,7 @@
 	<div class="card">
 		<div class="card-header">
 				<h4 style="font-weight:bold;">Task Premium</h4>
-				<a href="{{ route('tasks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+				<a href="{{ route('tasks.create', 'premium')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
 		</div>
 		<table class="table datatable-basic table-hover">
 			<thead>
@@ -122,7 +122,7 @@
 	<div class="card">
 		<div class="card-header">
 				<h4 style="font-weight:bold;">Task Prioritas dan Simple</h4>
-				<a href="{{ route('tasks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+				<a href="{{ route('tasks.create', 'simple_prioritas')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
 		</div>
 		<table class="table datatable-basic table-hover">
 			<thead>
