@@ -83,7 +83,7 @@
                             <img src="{{url($user->image)}}" height="40" width="50">
                         </button> --}}
                         <button type="button" class="btn">
-                            <img src="{{url($user->image)}}" height="40" width="50">
+                            <img src="{{$user->image}}" height="40" width="50">
                         </button>
                         <p style="padding-left:0.5rem; padding-top:0.6rem; font-weight:bold; color:black; cursor:pointer;">{{\Auth::user()->nama}}</p>
                     </div>
@@ -100,20 +100,20 @@
 
      // dropdown setting
     function settingdropdown() {
-    document.getElementById("dropdownlist").classList.toggle("show");
+        document.getElementById("dropdownlist").classList.toggle("show");
     }
 
     window.onclick = function(event) {
-    if (!event.target.matches('#buttonsetting')) {
-        var dropdowns = document.getElementById("dropdownlist");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
+        if (!event.target.matches('#buttonsetting')) {
+            var dropdowns = document.getElementById("dropdownlist");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
         }
-        }
-    }
     }
       // ---
 </script>
