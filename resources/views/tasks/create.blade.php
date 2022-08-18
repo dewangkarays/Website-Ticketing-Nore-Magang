@@ -29,9 +29,10 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">User</label>
 							<div class="col-lg-10">
-								<select name="user_id" class="form-control select-search" data-fouc>
+								<select id="user_id" name="user_id" class="form-control select-search" data-fouc>
+									<option value="">-- Pilih Pelanggan --</option>
 									@foreach($users as $user)
-										<option value="{{$user->id}}">{{$user->username}} </option>
+										<option data-pnama="{{$user->nama}}" value="{{$user->id}}">{{$user->nama}} </option>
 				    				@endforeach
 								</select>
 								<span class="form-text text-danger">User tidak akan muncul jika jumlah pengoperasian 0.</span>
@@ -41,12 +42,26 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">User</label>
 							<div class="col-lg-10">
-								<label class="col-form-label col-lg-2">{{\Auth::user()->username}}</label>
-								<input type="hidden" name="user_id" value="{{\Auth::user()->id}}">
+								<label class="col-form-label col-lg-2">{{\Auth::user()->nama}}</label>
+								<input type="hidden" data-pnama="{{\Auth::user()->nama}}" id="user_id" name="user_id" value="{{\Auth::user()->id}}">
 							</div>
 						</div>
 						@endif
+						<input type="hidden" id="kelas_proyek" name="kelas_proyek" value="{{$kelas_proyek}}">
+						{{-- get data using Ajax --}}
 						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Proyek</label>
+							<div class="col-lg-10">
+								<select id="select_proyek" name="proyek" class="form-control select-search" data-fouc>
+                                    <option value="">-- Pilih Proyek --</option>
+									{{-- @foreach($proyeks as $proyek)
+										<option value="{{$proyek->id}}">{{$proyek->nama_proyek}}</option>
+				    				@endforeach --}}
+								</select>
+							</div>
+						</div>
+						{{-- End get data using Ajax --}}
+						{{-- <div class="form-group row">
 							<label class="col-form-label col-lg-2">Proyek</label>
 							<div class="col-lg-10">
 								<select id="proyek" name="proyek" class="form-control select-search" data-fouc>
@@ -56,7 +71,7 @@
 				    				@endforeach
 								</select>
 							</div>
-						</div>
+						</div> --}}
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Kebutuhan</label>
 							<div class="col-lg-10">
@@ -206,6 +221,86 @@
 		        }
 		    }
 		}();
+
+		// Mengambil data proyek sesuai user
+	$('#user_id').on('change', function(){
+		var id_proyek = $('#user_id option:selected').val();
+		var pnama = $('#user_id option:selected').data('pnama');
+		var kelas_proyek = $('#kelas_proyek').val();
+
+		$('#nama').val(pnama);
+		$('#select_proyek').find('option').not(':first').remove();
+		$('#nama_proyek').val('');
+
+		if (kelas_proyek == 'premium') {
+			$.ajax({
+			url : '{{url("getproyekpreimum")}}/'+id_proyek,
+			type: 'get',
+			dataType: 'json',
+			success : function(res){
+				var len = 0;
+				console.log("res");
+				console.log(res);
+				if(res['data'] != null){
+					len = res['data'].length;
+				}
+				// alert(len);
+				if(len > 0){
+					// Read data and create <option >
+						for(var i=0; i<len; i++){
+
+							var id = res['data'][i].id;
+							var nama_proyek = res['data'][i].nama_proyek;
+							var jenis = res['data'][i].jenis_layanan;
+
+							var option = "<option value='"+id+"' data-jenis='"+jenis+"'>"+nama_proyek+"</option>";
+
+							$("#select_proyek").append(option);
+							console.log('dijalankan');
+						}
+					}
+					console.log('Success2');
+				},
+				error:function(data){
+					console.log('Error2',data);
+				}
+			});
+		} else {
+			$.ajax({
+			url : '{{url("getproyeksp")}}/'+id_proyek,
+			type: 'get',
+			dataType: 'json',
+			success : function(res){
+				var len = 0;
+				console.log("res");
+				console.log(res);
+				if(res['data'] != null){
+					len = res['data'].length;
+				}
+				// alert(len);
+				if(len > 0){
+					// Read data and create <option >
+						for(var i=0; i<len; i++){
+
+							var id = res['data'][i].id;
+							var nama_proyek = res['data'][i].nama_proyek;
+							var jenis = res['data'][i].jenis_layanan;
+
+							var option = "<option value='"+id+"' data-jenis='"+jenis+"'>"+nama_proyek+"</option>";
+							console.log('dijalankan');
+
+							$("#select_proyek").append(option);
+							// $('#dummy').append('<p>'+res['data'][i]+'</p>');
+						}
+					}
+					console.log('Success2');
+				},
+				error:function(data){
+					console.log('Error2',data);
+				}
+			});
+		}
+	});
 
 
 		// Initialize module
