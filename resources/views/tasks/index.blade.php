@@ -315,7 +315,7 @@
 				columnDefs: [{ 
 					orderable: false,
 					// width: 100,
-					targets: [ 0, 1, 2, 3, 4, 5, 6 ]
+					targets: [ 0, 1, 2, 3, 4, 5, 6, 8 ]
 				}],
 				dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 				language: {
