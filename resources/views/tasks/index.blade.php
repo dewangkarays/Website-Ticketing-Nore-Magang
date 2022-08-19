@@ -45,6 +45,9 @@
 					<th>Kebutuhan</th>
 					<th>Severity</th>
 					<th>Handler</th>
+					@if (\Auth::user()->role == 10)
+					<th>Assign</th>
+					@endif
 					<th class="text-center">Status</th>
 					<th class="text-center">Actions</th>
 				</tr>
@@ -63,9 +66,9 @@
 					<td><div class="datatable-column-width">{{config('custom.severity.'.$task->severity)}}</div></td>
 					<td><div class="datatable-column-width form-check">
 						<label class="form-check-label">
-							@if (\Auth::user()->role == 10)
+							{{-- @if (\Auth::user()->role == 10)
 							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
-							@endif
+							@endif --}}
 							@if (@$task->assign->nama == NULL)
 								<p style="color:#ff0f0f;">Belum ada handler</p>
 							@else
@@ -73,6 +76,11 @@
 							@endif
 						</label>
 						</div>
+					</td>
+					<td>
+						@if (\Auth::user()->role == 10 && @$task->assign->nama == false)
+							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
+						@endif
 					</td>
 					
 					<td align="center">@if($task->status == 2 )
@@ -135,6 +143,9 @@
 					<th>Kebutuhan</th>
 					<th>Severity</th>
 					<th>Handler</th>
+					@if (\Auth::user()->role == 10)
+					<th>Assign</th>
+					@endif
 					<th class="text-center">Status</th>
 					<th class="text-center">Actions</th>
 				</tr>
@@ -153,9 +164,9 @@
 					<td><div class="datatable-column-width">{{config('custom.severity.'.$task->severity)}}</div></td>
 					<td><div class="datatable-column-width form-check">
 						<label class="form-check-label">
-							@if (\Auth::user()->role == 10)
+							{{-- @if (\Auth::user()->role == 10)
 							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
-							@endif
+							@endif --}}
 							@if (@$task->assign->nama == NULL)
 								<p style="color:#ff0f0f;">Belum ada handler</p>
 							@else
@@ -163,6 +174,11 @@
 							@endif
 						</label>
 						</div>
+					</td>
+					<td>
+						@if (\Auth::user()->role == 10 && @$task->assign->nama == false)
+							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
+						@endif
 					</td>
 					
 					<td align="center">@if($task->status == 2 )
@@ -315,7 +331,7 @@
 				columnDefs: [{ 
 					orderable: false,
 					// width: 100,
-					targets: [ 0, 1, 2, 3, 4, 5, 6, 8 ]
+					targets: [ 0, 1, 2, 3, 4, 5, 6, 7, 9 ]
 				}],
 				dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 				language: {
