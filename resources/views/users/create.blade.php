@@ -314,7 +314,7 @@ var FormValidation = function() {
 					},
 					password:{
 						required : true,
-						minlength: 8
+						minlength: 5
 					}
 				},
 				messages: {

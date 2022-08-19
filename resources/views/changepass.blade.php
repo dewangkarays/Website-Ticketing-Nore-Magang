@@ -128,7 +128,7 @@
 		                //     minlength: 8
 		                // },
 		                new_pass: {
-		                    minlength: 8
+		                    minlength: 5
 		                },
 		                con_pass: {
 		                    equalTo: '#new_pass'

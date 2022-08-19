@@ -192,6 +192,11 @@
 		                    error.insertAfter(element);
 		                }
 		            },
+					rules: {
+						password: {
+							minlength: 5
+						}
+					},
 		            messages: {
 		                nama: {
 		                    required: 'Mohon diisi.'
