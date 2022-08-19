@@ -113,7 +113,7 @@
 								<div class="form-group row">
 									<label class="col-form-label col-lg-2">Severity</label>
 									<div class="col-lg-10">
-										<select name="handler" class="form-control select-search" data-fouc>
+										<select name="severity" class="form-control select-search" data-fouc>
 											<option value="">-- Pilih Severity --</option>
 											@foreach(config('custom.severity') as $key => $value)
 												<option value="{{$key}}" {{ $task->severity == $key ? 'selected' : '' }}>{{$value}}</option>
