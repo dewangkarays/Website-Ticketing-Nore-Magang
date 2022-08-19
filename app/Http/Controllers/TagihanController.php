@@ -243,16 +243,16 @@ class TagihanController extends Controller
 
     }
 
-    public function cetak($id)
-    {
-        $invoice = Tagihan::find($id);
-        $lampirans = Lampiran_gambar::where('tagihan_id', $id)->orderBy('id', 'asc')->get();
-        $setting = Setting::first();
-        // dd($lampirans);
+    // public function cetak($id)
+    // {
+    //     $invoice = Tagihan::find($id);
+    //     $lampirans = Lampiran_gambar::where('tagihan_id', $id)->orderBy('id', 'asc')->get();
+    //     $setting = Setting::first();
+    //     // dd($lampirans);
 
-        $pdf = PDF::loadview('tagihans.invoice', compact('invoice','lampirans','setting'))->setPaper('a4', 'potrait');
-        return $pdf->stream();
-    }
+    //     $pdf = PDF::loadview('tagihans.invoice', compact('invoice','lampirans','setting'))->setPaper('a4', 'potrait');
+    //     return $pdf->stream();
+    // }
 
     public function lampiran(Request $request,$id)
     {
