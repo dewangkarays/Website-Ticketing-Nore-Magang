@@ -53,7 +53,10 @@
 									</a>
 
 									<div class="dropdown-menu dropdown-menu-right">
-										<a href="{{ route('tasks.show',$task->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Show</a>
+										<a href="{{ route('tasks.show',$task->id)}}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
+										@if (\Auth::user()->role==1 )
+										<a href="{{ route('tasks.edit',$task->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+										@endif
 									</div>
 								</div>
 							</div>
