@@ -80,12 +80,12 @@
 						</label>
 						</div>
 					</td>
+					@if (\Auth::user()->role == 10 && @$task->assign->nama == false)
 					<td>
-						@if (\Auth::user()->role == 10 && @$task->assign->nama == false)
 							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
-						@endif
 					</td>
-					
+					@endif
+
 					<td align="center">@if($task->status == 2 )
 						<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.status.'.$task->status)}}</span>
 						@else
@@ -178,12 +178,12 @@
 						</label>
 						</div>
 					</td>
-					<td>
-						@if (\Auth::user()->role == 10 && @$task->assign->nama == false)
+					@if (\Auth::user()->role == 10 && @$task->assign->nama == false)
+					<td>	
 							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
-						@endif
+						
 					</td>
-					
+					@endif
 					<td align="center">@if($task->status == 2 )
 						<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.status.'.$task->status)}}</span>
 						@else
