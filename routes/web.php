@@ -70,15 +70,14 @@ Route::group(['middleware' => ['auth']], function() {
 
 	//TaskController
 	Route::get('/tasks', 'TaskController@index')->name('tasks');
-	Route::get('/tasks/create/{kelas}', 'TaskController@create')->name('tasks.create');
+	Route::get('/tasks/create/', 'TaskController@create')->name('tasks.create');
 	Route::post('/tasks/store', 'TaskController@store')->name('tasks.store');
 	Route::get('/tasks/{id}/edit', 'TaskController@edit')->name('tasks.edit');
 	Route::post('/tasks/{id}/update', 'TaskController@update')->name('tasks.update');
 	Route::post('/tasks/{id}/destroy', 'TaskController@destroy')->name('tasks.destroy');
 	Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');
 	Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
-	Route::get('getproyekpremium/{kelas}', 'TaskController@getproyekpremium');
-	Route::get('getproyeksp/{kelas}', 'TaskController@getproyeksp');
+	// Route::get('getdataproyek', 'TaskController@getdataproyek');
 
 	//admin
 	Route::group(['middleware' => ['role:1']], function() {
