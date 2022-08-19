@@ -42,7 +42,7 @@
 					@foreach($tasks as $task)
 				    <tr>
 				        <td><div class="datatable-column-width">{{@$task->user->username}}</div></td>
-				        <td><div class="datatable-column-width">{{$task->kebutuhan}}</div></td>
+				        <td><div class="datatable-column-width">{{Str::words($task->kebutuhan, 100)}}</div></td>
 				        <td><div class="datatable-column-width">{{@$task->assign->nama}}</div></td>
 				        <td align="center">{{config('custom.status.'.$task->status)}}</td>
 				        <td align="center">
