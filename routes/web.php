@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('payments/cetak/{id}',  'PaymentController@cetak')->name('cetak');
 	Route::get('export_excel', 'PaymentController@export_excel');
 	Route::resource('tagihans', 'TagihanController');
-	Route::get('tagihans/cetak/{id}',  'TagihanController@cetak')->name('cetak');
+	// Route::get('tagihans/cetak/{id}',  'TagihanController@cetak')->name('cetak');
 	Route::get('exporttagihan', 'TagihanController@export_excel');
 	Route::get('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
 	Route::get('getweb/{id}',  'TagihanController@getweb');
