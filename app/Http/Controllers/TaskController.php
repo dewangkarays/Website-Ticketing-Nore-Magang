@@ -80,6 +80,9 @@ class TaskController extends Controller
         if($request->get('handler')!=''){
             $task->handler = $request->get('handler');
         }
+        if($request->get('severity')!=''){
+            $task->severity = $request->get('severity');
+        }
         if($request->get('proyek')!=''){
             $task->id_proyek = $request->get('proyek');
         }
