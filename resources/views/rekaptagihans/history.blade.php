@@ -65,9 +65,11 @@
 										<span style="font-size: 100%;" class="badge badge-pill badge-danger">{{ config('custom.rekap_status.' .@$rekaptagihan->status) }}</span>
 									@elseif($rekaptagihan->status == 3)
 										<span style="font-size: 100%;" class="badge badge-pill badge-warning">{{ config('custom.rekap_status.' .@$rekaptagihan->status) }}</span>
-									@else
+									@elseif($rekaptagihan->status == 4)
 										<span style="font-size: 100%;" class="badge badge-pill badge-success">{{ config('custom.rekap_status.' .@$rekaptagihan->status) }}</span>
-									@endif
+									@else
+                                        <span style="font-size: 100%;" class="badge badge-pill badge-secondary">{{ config('custom.rekap_status.' .@$rekaptagihan->status) }}</span>                                    
+                                    @endif
 									{{-- <div class="datatable-column-width">{{config('custom.rekap_status.' .@$rekaptagihan->status)}}</div> --}}
 								</td>
                                 <td align="center">

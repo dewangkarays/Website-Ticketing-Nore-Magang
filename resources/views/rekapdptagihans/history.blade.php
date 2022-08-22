@@ -64,9 +64,11 @@
 										<span style="font-size: 100%;" class="badge badge-pill badge-danger">{{ config('custom.rekap_status.' .@$rekapdp->status) }}</span>
 									@elseif($rekapdp->status == 3)
 										<span style="font-size: 100%;" class="badge badge-pill badge-warning">{{ config('custom.rekap_status.' .@$rekapdp->status) }}</span>
-									@else
+									@elseif($rekapdp->status == 4)
 										<span style="font-size: 100%;" class="badge badge-pill badge-success">{{ config('custom.rekap_status.' .@$rekapdp->status) }}</span>
-									@endif
+									@else
+                                        <span style="font-size: 100%;" class="badge badge-pill badge-secondary">{{ config('custom.rekap_status.' .@$rekapdp->status) }}</span>                                    
+                                    @endif
                                     {{-- <div class="datatable-column-width">{{config('custom.rekap_status.' .@$rekapdp->status)}}</div> --}}
                                 </td>
                                 <td align="center">
