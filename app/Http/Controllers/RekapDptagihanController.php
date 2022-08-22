@@ -29,7 +29,7 @@ class RekapDptagihanController extends Controller
 
     public function history()
     {
-        $rekapdps = RekapDptagihan::where('status','=','4')->orderByDesc('created_at')->get();
+        $rekapdps = RekapDptagihan::where('status','>=','4')->orderByDesc('created_at')->get();
         $tagihans = Tagihan::all();
         $users = User::where('role','>=','80')->get();
         return view('rekapdptagihans.history', compact('rekapdps','tagihans', 'users'));
