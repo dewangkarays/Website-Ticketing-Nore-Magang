@@ -151,8 +151,6 @@ class PaymentController extends Controller
         }
 
         if($request->get('rdtagihan') == 1){
-            $dataTagihan = Tagihan::where('rekap_tagihan_id', $request->get('tagihan_id'));
-            // dd($dataTagihan);
             $tagihan = RekapTagihan::find($request->get('tagihan_id'));
             // $tagihan->jml_tagih -= $request->get('nominal');
             $data['rekap_tagihan_id'] = $request->get('tagihan_id');
@@ -161,25 +159,15 @@ class PaymentController extends Controller
                 $tagihan->update([
                     'status'=>4
                 ]);
-                // $tagihan->status=2;
-                $dataTagihan->update([
-                    'status' => 1
-                ]);
             } else {
                 $tagihan->update([
                     'status'=>3
-                ]);
-                // $tagihan->status=1;
-                $dataTagihan->update([
-                    'status' => 1
                 ]);
             }
             // $tagihan->save();
         }
 
         if($request->get('rdtagihan') == 2){
-            $dataTagihan = Tagihan::where('rekap_dptagihan_id', $request->get('tagihan_id'));
-            // dd($dataTagihan);
             $tagihan = RekapDptagihan::find($request->get('tagihan_id'));
             // $tagihan->jml_tagih -= $request->get('nominal');
             $data['rekap_dptagihan_id'] = $request->get('tagihan_id');
@@ -189,17 +177,11 @@ class PaymentController extends Controller
                     'status'=>4
                 ]);
                 // $tagihan->status=2;
-                $dataTagihan->update([
-                    'status' => 1
-                ]);
             } else {
                 $tagihan->update([
                     'status'=>3
                 ]);
                 // $tagihan->status=1;
-                $dataTagihan->update([
-                    'status' => 2
-                ]);
             }
             // $tagihan->save();
         }
