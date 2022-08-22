@@ -51,6 +51,8 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('createrekap', 'RekapTagihanController@createrekap')->name('createrekap');
 	Route::get('cetakrekap/{id}',  'RekapTagihanController@cetakrekap')->name('cetakrekap');
 	Route::get('cetakrekapdp/{id}',  'RekapDptagihanController@cetakrekap')->name('cetakrekapdp');
+	Route::get('rekapinvalid/{id}', 'RekapTagihanController@invalid')->name('rekapinvalid');
+	Route::get('rekapdpinvalid/{id}', 'RekapDptagihanController@invalid')->name('rekapdpinvalid');
     Route::get('/historytagihan',  'RekapTagihanController@history')->name('historytagihan');
     Route::get('/historydp',  'RekapDptagihanController@history')->name('historydp');
 	Route::get('/bayaruser/{id}', 'TagihanController@bayaruser')->name('bayaruser');
