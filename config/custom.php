@@ -68,6 +68,7 @@ return [
         '2' => 'Sudah Ditagih',
         '3' => 'Terbayar Sebagian',
         '4' => 'Lunas',
+        '5' => 'Invalid',
     ],
 
     'pengeluaran' => [
