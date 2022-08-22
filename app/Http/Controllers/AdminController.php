@@ -33,14 +33,16 @@ class AdminController extends Controller
         $premium = Proyek::where('tipe','=','80')->get()->count();
         $pengeluarans = Pengeluaran::all();
         $pendapatans = Payment::all();
-        $memberthis = User::where('role','>','20')->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
-        $memberlast = User::where('role','>','20')->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
+        $memberthis = User::where('role','>','20')->whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
+        $memberlast = User::where('role','>','20')->whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
         $proyekthis =  Proyek::whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
         $proyeklast =  Proyek::whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
         $pengeluaranthis = Pengeluaran::whereMonth('created_at','=',Carbon::now()->today()->month)->get();
         $pengeluaranlast =  Pengeluaran::whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get();
         $pendapatanthis = Payment::whereMonth('created_at','=',Carbon::now()->today()->month)->get();
         $pendapatanlast =  Payment::whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get();
+
+        // dd($memberthis);
         return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone','member','proyek','simple','prioritas','premium',
         'pengeluarans','pendapatans','memberlast','memberthis','proyekthis','proyeklast','pengeluaranthis','pengeluaranlast','pendapatanthis','pendapatanlast'));
     }
