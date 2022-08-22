@@ -278,4 +278,20 @@ class RekapDptagihanController extends Controller
         return $tagihan->total;
     }
 
+    public function invalid($id) {
+        $rekapdp = RekapDptagihan::find($id);
+        $rekapdp->status = 5;
+        $rekapdp->update();
+
+        $tagihans = Tagihan::whereIn('rekap_dptagihan_id', $rekapdp)->get();
+        // dd($tagihans);
+        foreach($tagihans as $tagihan){
+            $tagihan->update([
+                'rekap_dptagihan_id' => null,
+            ]);
+        }
+
+        return redirect()->route('rekapdptagihans.index')->with('error', 'Data dijadikan invalid!');
+    }
+
 }

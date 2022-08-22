@@ -339,4 +339,20 @@ class RekapTagihanController extends Controller
 
         return $html;
     }
+
+    public function invalid($id) {
+        $rekap = RekapTagihan::find($id);
+        $rekap->status = 5;
+        $rekap->update();
+
+        $tagihans = Tagihan::whereIn('rekap_tagihan_id', $rekap)->get();
+        // dd($tagihans);
+        foreach($tagihans as $tagihan){
+            $tagihan->update([
+                'rekap_tagihan_id' => null,
+            ]);
+        }
+
+        return redirect()->route('rekaptagihans.index')->with('error', 'Data dijadikan invalid!');
+    }
 }
