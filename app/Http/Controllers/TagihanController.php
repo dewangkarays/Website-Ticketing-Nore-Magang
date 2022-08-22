@@ -316,8 +316,9 @@ class TagihanController extends Controller
     public function destroy($id)
     {
         $tagihan = Tagihan::find($id);
-        if($tagihan->status > 0) {
-            return redirect()->back()->with('error', 'Sudah ada pembayaran!');
+
+        if($tagihan->rekap_dptagihan_id > 0 || $tagihan->rekap_tagihan_id > 0) {
+            return redirect()->back()->with('error', 'Sudah ada invoice penagihan!');
         }
         $tagihan->delete();
 
