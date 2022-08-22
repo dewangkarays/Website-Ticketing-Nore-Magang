@@ -298,7 +298,7 @@ var FormValidation = function() {
 					},
 					password:{
 						required : true,
-						minlength: 8
+						minlength: 5
 					}
 				},
 				messages: {
@@ -321,7 +321,7 @@ var FormValidation = function() {
 					},
 					password:{
 						required : 'Mohon diisi.',
-						minlength : 'Minimal 8 karakter'
+						minlength : 'Minimal 5 karakter'
 					}
 				}
 			});
