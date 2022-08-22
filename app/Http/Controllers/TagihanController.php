@@ -256,6 +256,13 @@ class TagihanController extends Controller
 
     public function lampiran(Request $request,$id)
     {
+        // $this->validate($request, [
+        //     'gambar' => 'image|mimes:jpeg,png,jpg,gif,svg',
+        // ]);
+        $request->validate([
+            'gambar' => 'mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
         if ($request->isMethod('GET')) {
             $tagihan = Tagihan::find($id);
             $lampirans = Lampiran_gambar::where('tagihan_id', $id)->orderBy('id', 'desc')->get();
@@ -272,19 +279,38 @@ class TagihanController extends Controller
         $file = $request->file('gambar');
         if($file){
                 $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
+                // $destinationPath = public_path('/thumbnail');
+                
+                $imgsize = $file->getSize();
+                $imgsize = number_format($imgsize / 1048576,2);
+                $img = \Image::make($file->getRealPath());
+                // dd($imgsize);
+                
+                //compress file
+                if(filesize($file) < 204800){
+                    $img->save($tujuan_upload.'/'.$name, 'jpg');
+                }
+                elseif(filesize($file) < 1048576){
+                    $img->save($tujuan_upload.'/'.$name, 80, 'jpg');
+                } else{
+                    $img->save($tujuan_upload.'/'.$name, 10, 'jpg');
+                }
+                // $img->move($tujuan_upload, $name);
                 // $name = \Auth::user()->id."_".time().".".$file->getClientOriginalExtension();
-                $up1 = $file->move($tujuan_upload,$name);
-                if($up1){
+                // $up1 = $file->move($tujuan_upload,$name);
+                if($img){
                     $data['gambar'] = $tujuan_upload.'/'.$name;
                 }
         }
-
-        Lampiran_gambar::create([
+        
+        //upload data lampiran to database
+        $lampiran = Lampiran_gambar::create([
             'tagihan_id' => $id,
             'gambar' => $data['gambar'],
             'keterangan' => $data['keterangan']
-
+        
         ]);
+        $lampiran->save();
         }
 
         return redirect()->back()->with('success', 'File uploaded!');

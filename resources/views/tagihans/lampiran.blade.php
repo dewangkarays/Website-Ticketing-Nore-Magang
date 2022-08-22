@@ -36,8 +36,8 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Gambar</label>
                         <div class="col-lg-10">
-                            <input id="gambar" name="gambar" type="file" class="form-control" onchange="upload_check()" accept="image/gif, image/jpeg" required>
-                            <span class="form-text text-muted">Jumlah max ukuran file : 200KB</span>
+                            <input id="gambar" name="gambar" type="file" class="form-control" onchange="upload_check()" required>
+                            <span class="form-text text-muted">Jumlah max ukuran file : 5MB</span>
                         </div>
                     </div>
 
@@ -147,7 +147,7 @@
         function upload_check()
 {
         var upl = document.getElementById("gambar");
-        var maxAllowedSize = 200000;
+        var maxAllowedSize = 5 * 1024 * 1024; //5mb
 
         if(upl.files[0].size > maxAllowedSize)
         {
@@ -156,6 +156,18 @@
         }
     };
     </script>
+    <script>
+            //validate file extension
+
+        var upl = document.getElementById("gambar");
+        $("#gambar").change(function () {
+       var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'svg'];
+       if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+           alert("Only formats are allowed : "+fileExtension.join(', '));
+        upl.value = "";
+       }
+   });
+   </script>
     <script>
         //modal delete
         $(document).on("click", ".delbutton", function () {
@@ -191,8 +203,8 @@
                     autoWidth: false,
                     columnDefs: [{ 
                         orderable: false,
-                        width: 100,
-                        targets: [ 6 ]
+                        // width: 100,
+                        targets: [ 1, 2, 3 ]
                     }],
                     dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                     language: {
