@@ -85,6 +85,8 @@
                                                 <a href="{{url('cetakrekapdp/'.$rekapdp->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
                                                 @if ($rekapdp->status == 1)
                                                     <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('rekapdptagihans.destroy', $rekapdp->id)}}"><i class="icon-x"></i> Delete</a>
+                                                @elseif($rekapdp->status < 5)
+                                                    <a href="{{url('rekapdpinvalid', $rekapdp->id)}}" class="dropdown-item"><i class="icon-x"></i> Invalid</a>
                                                 @endif
                                             </div>
                                         </div>
