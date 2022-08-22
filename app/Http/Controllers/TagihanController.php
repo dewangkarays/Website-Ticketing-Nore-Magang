@@ -23,7 +23,7 @@ class TagihanController extends Controller
      */
     public function index()
     {
-        $tagihans = Tagihan::orderBy('id')->whereNull('rekap_tagihan_id')->get();
+        $tagihans = Tagihan::orderBy('id')->where('status', '!=', '2')->get();
       //$proyeks = Proyek::all();
         return view('tagihans.index', compact('tagihans'));
     }
@@ -316,6 +316,9 @@ class TagihanController extends Controller
     public function destroy($id)
     {
         $tagihan = Tagihan::find($id);
+        if($tagihan->status > 0) {
+            return redirect()->back()->with('error', 'Sudah ada pembayaran!');
+        }
         $tagihan->delete();
 
         return redirect('/tagihans')->with('success', 'Tagihan deleted!');
