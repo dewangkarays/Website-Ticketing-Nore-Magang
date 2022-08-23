@@ -204,11 +204,11 @@
 						</div>
 						<div>
 							<div class="d-flex">
-							@php($gross=0)
+							{{-- @php($gross=0)
 							@foreach ($pendapatans as $pendapatan)
 							@php($gross = $pendapatan->sum('nominal'))
-							@endforeach
-								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$gross),0,',','.')}}, -</h3>
+							@endforeach --}}
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$pendapatans),0,',','.')}}, -</h3>
 							</div>
 							<div>
 								Total Pendapatan
@@ -225,11 +225,11 @@
 						</div>
 						<div>
 							<div class="d-flex">
-								@php($grossthis=0)
+								{{-- @php($grossthis=0)
 									@foreach ($pendapatanthis as $pendapatanthis)
 										@php($grossthis = $pendapatanthis->sum('nominal'))
-									@endforeach
-								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$grossthis),0,',','.')}}, -</h3>
+									@endforeach --}}
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$pendapatanthis),0,',','.')}}, -</h3>
 							</div>
 							<div>
 								Total pendapatan bulan ini
@@ -246,11 +246,11 @@
 						</div>
 						<div>
 							<div class="d-flex">
-								@php($grosslast=0)
+								{{-- @php($grosslast=0)
 									@foreach ($pendapatanlast as $pendapatanlast)
 										@php($grosslast = $pendapatanlast->sum('nominal'))
-									@endforeach
-								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$grosslast),0,',','.')}}, -</h3>
+									@endforeach --}}
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$pendapatanlast),0,',','.')}}, -</h3>
 							</div>
 							<div>
 								Total pendapatan bulan lalu
@@ -272,12 +272,12 @@
 						</div>
 						<div>
 							<div class="d-flex">
-								@php($total=0)
+								{{-- @php($total=0)
 								@foreach ($pengeluarans as $pengeluaran)
 								@php($total = $pengeluaran->sum('nominal'))
-								@endforeach
+								@endforeach --}}
 								<h3 class="font-weight-semibold mb-0">
-									Rp {{number_format((@$total),0,',','.')}}, -
+									Rp {{number_format((@$pengeluarans),0,',','.')}}, -
 								</h3>
 							</div>
 							<div>
@@ -295,11 +295,11 @@
 						</div>
 						<div>
 							<div class="d-flex">
-								@php($expendthis=0)
+								{{-- @php($expendthis=0)
 								@foreach ($pengeluaranthis as $pengeluaranthis)
 								@php($expendthis = $pengeluaranthis->sum('nominal'))
-								@endforeach
-								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$expendthis),0,',','.')}}, -</h3>
+								@endforeach --}}
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$pengeluaranthis),0,',','.')}}, -</h3>
 							</div>
 							<div>
 								Total pengeluaran bulan ini
@@ -316,11 +316,11 @@
 						</div>
 						<div>
 							<div class="d-flex">
-								@php($expendlast=0)
+								{{-- @php($expendlast=0)
 								@foreach ($pengeluaranlast as $pengeluaranlast)
 									@php($expendlast = $pengeluaranlast->sum('nominal'))
-								@endforeach
-								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$expendlast),0,',','.')}}, -</h3>
+								@endforeach --}}
+								<h3 class="font-weight-semibold mb-0">Rp {{number_format((@$pengeluaranlast),0,',','.')}}, -</h3>
 							</div>
 							<div>
 								Total pengeluaran bulan lalu
