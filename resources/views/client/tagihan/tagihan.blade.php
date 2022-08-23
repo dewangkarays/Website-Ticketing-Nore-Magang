@@ -220,7 +220,7 @@
                             </div>
                             <div class="row" style="padding-bottom:1rem;">
                               <div class="col">
-                                <p class="card-text" style="font-style:italic;">{{@$tagihan->keterangan}}</p>
+                                <p class="card-text" style="font-style:italic;">{!!$tagihan->keterangan!!}</p>
                               </div>
                             </div>
                             <div class="row">
