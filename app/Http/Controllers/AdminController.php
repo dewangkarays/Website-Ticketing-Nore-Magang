@@ -31,18 +31,18 @@ class AdminController extends Controller
         $simple = Proyek::where('tipe','=','99')->get()->count();
         $prioritas = Proyek::where('tipe','=','90')->get()->count();
         $premium = Proyek::where('tipe','=','80')->get()->count();
-        $pengeluarans = Pengeluaran::all();
-        $pendapatans = Payment::all();
+        $pengeluarans = Pengeluaran::all()->sum('nominal');
+        $pendapatans = Payment::all()->sum('nominal');
         $memberthis = User::where('role','>','20')->whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
         $memberlast = User::where('role','>','20')->whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
-        $proyekthis =  Proyek::whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
-        $proyeklast =  Proyek::whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
-        $pengeluaranthis = Pengeluaran::whereMonth('created_at','=',Carbon::now()->today()->month)->get();
-        $pengeluaranlast =  Pengeluaran::whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get();
-        $pendapatanthis = Payment::whereMonth('created_at','=',Carbon::now()->today()->month)->get();
-        $pendapatanlast =  Payment::whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get();
+        $proyekthis =  Proyek::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
+        $proyeklast =  Proyek::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
+        $pengeluaranthis = Pengeluaran::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->sum('nominal');
+        $pengeluaranlast =  Pengeluaran::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->sum('nominal');
+        $pendapatanthis = Payment::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->sum('nominal');
+        $pendapatanlast =  Payment::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->sum('nominal');
 
-        // dd($memberthis);
+        // dd($pendapatanthis);
         return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone','member','proyek','simple','prioritas','premium',
         'pengeluarans','pendapatans','memberlast','memberthis','proyekthis','proyeklast','pengeluaranthis','pengeluaranlast','pendapatanthis','pendapatanlast'));
     }
