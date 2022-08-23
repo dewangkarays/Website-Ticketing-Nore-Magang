@@ -72,7 +72,7 @@ class RekapDptagihanController extends Controller
             'ninv'=>'bail|unique:nomors|required',
         ]);
 
-        $data = $request->except(['_token', '_method','noinv','ninv','noakhir','nouser','tagihan_id']);
+        $data = $request->except(['_token', '_method','noinv','ninv','noakhir','tagihan_id']);
 
         $arrayid = $request->get('tagihan_id');
         $findtagihan = Tagihan::whereIn('id', $arrayid)->get();
@@ -90,11 +90,8 @@ class RekapDptagihanController extends Controller
         $invawal = $request->get('noinv');
         $nomorinv = $request->get('ninv');
         $noakhir = $request->get('noakhir');
-        $nouser = $request->get('nouser');
         $no = str_pad($nomorinv,3,"0",STR_PAD_LEFT);
-        $nouserpad = str_pad($nouser,2,"0",STR_PAD_LEFT);
-        $data['invoice'] = $invawal.'/'.$no.'/'.$noakhir.'/'.$nouserpad;
-        // $data['user_id'] = $request->get('user_id');
+        $data['invoice'] = $invawal.'/'.$no.'/'.$noakhir;
         $lastinv = Tagihan::latest('id')->first();
 
         // dd($data);
