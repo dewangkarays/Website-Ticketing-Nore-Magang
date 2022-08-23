@@ -119,7 +119,7 @@ class AdminController extends Controller
         $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
         $user = User::where('id',\Auth::user()->id)->first();
         // dd($user);
-        return view("client.layout",compact('new','ongoing','done','website','taskall','proyeks','tagihans','taskcounts','tasks','tagihanactives','tagihanhistories','highproyek','user'));
+        return view("client.layout",compact('new','ongoing','done','website','taskall','proyeks','tagihans','taskcounts','tasks','tagihanactives','tagihanhistories','taskactives','highproyek','user'));
     }
 
     // public function customer()
