@@ -9,7 +9,7 @@
     <style type="text/css">
 
         @page {
-            margin: 50px 50px;
+            margin: 2.54cm 2.55cm 2.54cm 2.54cm;
         }
         *{
             box-sizing: border-box;
@@ -27,8 +27,8 @@
             font-family:Arial, Helvetica, sans-serif;
             color: #595657;
             background-color:#ffffff;
-            margin-left: 20px;
-            margin-right: 20px;
+            /* margin-left: 20px;
+            margin-right: 20px; */
         }
 
         ul {
