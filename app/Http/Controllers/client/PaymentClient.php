@@ -21,7 +21,7 @@ class PaymentClient extends Controller
     public function index()
     {
         //
-        $payments = Payment::where('user_id',\Auth::user()->id)->orderBy('tgl_bayar','desc')->get();
+        $payments = Payment::where('user_id',\Auth::user()->id)->orderBy('tanggal','desc')->get();
         $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
         $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
