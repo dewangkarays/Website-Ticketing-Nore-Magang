@@ -108,9 +108,9 @@
                             <div class="col-lg-2">
                                 <input type="text" id="noakhir" name="noakhir" class="form-control border-info border-1" value="{{date('Ymd')}}" readonly>
                             </div>
-                            <div class="col-lg-2">
+                            {{-- <div class="col-lg-2">
                                 <input type="text" id="nouser" name="nouser" class="form-control border-info border-1" value="{{\Auth::user()->id}}" readonly>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <hr>
