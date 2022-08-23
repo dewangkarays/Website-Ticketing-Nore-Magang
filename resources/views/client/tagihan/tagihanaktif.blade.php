@@ -215,10 +215,10 @@
                     <p class="card-text mobile" style="font-weight:bold;">Rp.<br>{{number_format(@$tagihan->jml_tagih,0,',','.')}},-</p>
                   </div>
                   <div class="col text-right desktop" id="tombol" style="margin-right:1.25rem;">
-                    <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
+                    <a href="{{url('purchase')}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
                   </div>
                   <div class="col text-center mobile"  style="margin-top:1rem;">
-                    <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" style="border-radius:5px; font-weight:bold; padding:10px 40px;">Bayar</a>
+                    <a href="{{url('purchase')}}" class="btn btn-success" style="border-radius:5px; font-weight:bold; padding:10px 40px;">Bayar</a>
                   </div>
                 </div>
               </div>
