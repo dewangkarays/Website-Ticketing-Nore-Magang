@@ -257,7 +257,7 @@
           <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm" id="nominal">Nominal Pembayaran</label>
             <div class="col">
-              <input name="nominal" type="text" class="form-control form-control-sm-8" id="jumlah" placeholder="Input Nominal">
+              <input name="nominal" type="number" class="form-control form-control-sm-8" id="jumlah" placeholder="Input Nominal">
             </div>
           </div>
           <div class="col text-center">
