@@ -197,7 +197,7 @@
                     @endif
                   </div>
                 </div>
-                <p class="card-text" style="font-style:italic;">{{@$tagihan->keterangan}}</p>
+                <p class="card-text" style="font-style:italic;">{{strip_tags(@$tagihan->keterangan)}}</p>
                 <div class="row">
                   <div class="col">
                     <p class="card-text">Total Tagihan</p>
