@@ -53,58 +53,6 @@
 				</tr>
 			</thead>
 			<tbody>
-				@if(!$payments->isEmpty())
-				@php ($i = 1)
-				@foreach($payments as $payment)
-				<tr>
-					<td>{{$i}}</td>
-					<td><div class="datatable-column-width">{{$payment->user->nama}}</div></td>
-					<td><div class="datatable-column-width-large">{{$payment->receipt_no ? $payment->receipt_no : ''}}</div></td>
-					<td style="font-size: 15px;"><div class="datatable-column-width">{{ number_format($payment->nominal, 0, ',', ',') }}</div></td>
-					<td align="center">
-						@if($payment->status == 0 )
-						<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.payment.'.$payment->status)}}</span>
-						@elseif($payment->status == 1)
-						<span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{config('custom.payment.'.$payment->status)}}</span>
-						@else
-						<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{config('custom.payment.'.$payment->status)}}</span>
-						@endif
-					</td>
-					<td><div class="datatable-column-width">{!! $payment->keterangan !!}</div></td>
-					<td><div class="datatable-column-width">{{$payment->tanggal}}</div></td>
-					@if(\Auth::user()->role<=20)
-					<td align="center">
-						<div class="list-icons">
-							<div class="dropdown">
-								<a href="#" class="list-icons-item" data-toggle="dropdown">
-									<i class="icon-menu9"></i>
-								</a>
-
-								<div class="dropdown-menu dropdown-menu-right">
-									@if(\Auth::user()->role<=20 && $payment->status == 0)
-									<button type="button" class="btn dropdown-item bg-success open-modal-accept" id="statusbtn" data-id=" {{ $payment->id }} " data-toggle="modal" data-target="#modal_terima"><i class="icon-checkmark-circle"></i> Terima</button>
-									<button type="button" class="btn dropdown-item bg-danger open-modal-reject" id="statusbtn" data-id=" {{ $payment->id }} " data-payment=" {{ $payment->nominal }} " data-toggle="modal" data-target="#modal_tolak"><i class="icon-cancel-circle2"></i> Tolak</button>
-									@endif
-									@if(\Auth::user()->role<=20)
-									<a href="https://wa.me/{{@$payment->user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
-									@endif
-									{{-- <a href="{{ route('payments.edit',$payment->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a> --}}
-									{{-- <a href="{{url('/payments/cetak/'.$payment->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a> --}}
-									@if(Auth::user()->role==1)
-									<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('payments.destroy', $payment->id)}}"><i class="icon-x"></i> Delete</a>
-									@endif
-								</div>
-							</div>
-						</div>
-					</td>
-					@endif
-				</tr>
-				@php ($i++)
-				@endforeach
-				@else
-				<tr><td align="center" colspan="6">Data Kosong</td></tr>
-				@endif
-
 			</tbody>
 		</table>
 	</div>
@@ -276,6 +224,36 @@
 
 	var DatatableBasic = function() {
 
+		const payment = {
+			'0': 'Belum Dikonfirmasi',
+			'1': 'Sudah Dikonfirmasi',
+			'2': 'Ditolak',
+		};
+
+		function number_format (number, decimals, dec_point, thousands_sep) {
+			// Strip all characters but numerical ones.
+			number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+			var n = !isFinite(+number) ? 0 : +number,
+				prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+				sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+				dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+				s = '',
+				toFixedFix = function (n, prec) {
+					var k = Math.pow(10, prec);
+					return '' + Math.round(n * k) / k;
+				};
+			// Fix for IE parseFloat(0.55).toFixed(0) = 0;
+			s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+			if (s[0].length > 3) {
+				s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+			}
+			if ((s[1] || '').length < prec) {
+				s[1] = s[1] || '';
+				s[1] += new Array(prec - s[1].length + 1).join('0');
+			}
+			return s.join(dec);
+		};
+
 		// Basic Datatable examples
 		var _componentDatatableBasic = function() {
 			if (!$().DataTable) {
@@ -301,7 +279,109 @@
 			});
 
 			// Basic datatable
-			$('.datatable-basic').DataTable();
+			$('.datatable-basic').DataTable({
+				processing: true,
+				serverSide: true,
+				ajax: {
+					'type': 'GET',
+					'url': `{{url('getpayments')}}`,
+				},
+				columns: [
+					{
+						data: null,
+						name: null,
+						render: (data, type, row) => {
+							return row.DT_RowIndex;
+						}
+					},
+					{
+						data: null,
+						name: null,
+						render: (data, type, row) => {
+							return data?.nama;
+						}
+					},
+					{
+						data: 'receipt_no',
+						name: 'receipt_no',
+					},
+					{
+						data: null,
+						name: null,
+						render: (data, type, row) => {
+							return number_format(data?.nominal, 0, ',', ',');
+						}
+					},
+					{
+						data: null,
+						name: null,
+						render: (data, type, row) => {
+							let paymentStyle = '';
+
+							if(data?.status == 0 )
+								paymentStyle = `<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">${payment[data?.status]}</span>`
+							else if(data?.status == 1)
+								paymentStyle = `<span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">${payment[data?.status]}</span>`
+							else
+								paymentStyle = `<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">${payment[data?.status]}</span>`
+
+							return paymentStyle;
+						}
+					},
+					{
+						data: 'keterangan',
+						name: 'keterangan',
+					},
+					{
+						data: 'tanggal',
+						name: 'tanggal',
+					},
+					{
+						data: null,
+						name: null,
+						render: (data, type, row) => {
+
+							let id = data?.id;
+							let paymentData = data?.nominal;
+							let telpRef = data?.telp;
+							let editRef = "{{route('payments.edit', ':id')}}";
+							editRef = editRef.replace(':id', id);
+							let printRef = "{{route('cetak', ':id')}}";
+							printRef = printRef.replace(':id', id);
+							let delUri = "{{ route('payments.destroy', ':id')}}";
+							delUri = delUri.replace(':id', id);
+
+							let actionButtons = `
+								<div class="dropdown">
+									<a href="#" class="list-icons-item" data-toggle="dropdown">
+										<i class="icon-menu9"></i>
+									</a>
+
+									<div class="dropdown-menu dropdown-menu-right">`
+										
+								@if(Auth::user()->role<=20)
+									if (data?.status == 0) {
+										actionButtons +=
+											`<button type="button" class="btn dropdown-item bg-success open-modal-accept" id="statusbtn" data-id="${id}" data-toggle="modal" data-target="#modal_terima"><i class="icon-checkmark-circle"></i> Terima</button>
+											<button type="button" class="btn dropdown-item bg-danger open-modal-reject" id="statusbtn" data-id="${id}" data-payment="${paymentData}" data-toggle="modal" data-target="#modal_tolak"><i class="icon-cancel-circle2"></i> Tolak</button>`
+									}
+								@endif
+								@if(Auth::user()->role<=20)
+										actionButtons += `<a href="https://wa.me/${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
+								@endif
+								@if(Auth::user()->role==1)
+									actionButtons += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
+								@endif
+									actionButtons +=
+												`</div>
+											</div>
+										`;
+
+							return actionButtons;
+						}
+					}
+				]
+			});
 
 			// Alternative pagination
 			$('.datatable-pagination').DataTable({
