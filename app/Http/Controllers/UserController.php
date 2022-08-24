@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Model\User;
 use App\Model\Tagihan;
 use App\Model\Proyek;
-
+use Datatables;
 
 class UserController extends Controller
 {
@@ -199,5 +199,9 @@ class UserController extends Controller
         } else {
             return redirect('/changepass')->with('error', 'Password lama salah');
         }
+    }
+
+    public function getkaryawans() {
+        return Datatables::of(User::where('role', '<=', '20')->get())->addIndexColumn()->make(true);
     }
 }
