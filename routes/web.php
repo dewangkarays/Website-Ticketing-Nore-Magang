@@ -128,7 +128,7 @@ Route::group(['middleware' => ['auth']], function() {
 		// Route::get('getrekapdp/{status}', 'RekapDptagihanController@getrekapdp');
 		// Route::get('getrekap/{status}', 'RekapTagihanController@getrekap');
 		// Route::get('getpayments/{jenis}', 'PaymentController@getpayments');
-		// Route::get('pengeluarans', 'PengeluaranController@getpengeluarans');
+		Route::get('getpengeluarans', 'PengeluaranController@getpengeluarans');
 	});
 
 	//customer
