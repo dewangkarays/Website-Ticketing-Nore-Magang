@@ -118,6 +118,19 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('getproyek/{id}', 'TagihanController@getproyek');
 	});
 
+	// url ajax server side datatables
+	Route::group(['middleware' => ['role:1,10,20']], function() {
+		Route::get('getkaryawans', 'UserController@getkaryawans');
+		Route::get('getmembers', 'MemberController@getmembers');
+		Route::get('getproyeks', 'ProyekController@getproyeks');
+		Route::get('gettasks/{status}', 'TaskController@gettasks');
+		Route::get('gettagihans', 'TagihanController@gettagihans');
+		Route::get('getrekapdp/{status}', 'RekapDptagihanController@getrekapdp');
+		Route::get('getrekap/{status}', 'RekapTagihanController@getrekap');
+		Route::get('getpayments/{jenis}', 'PaymentController@getpayments');
+		Route::get('pengeluarans', 'PengeluaranController@getpengeluarans');
+	});
+
 	//customer
 	Route::group(['middleware' => ['role:95']], function() {
 		Route::get('/customer',  'AdminController@customer')->name('customer');
