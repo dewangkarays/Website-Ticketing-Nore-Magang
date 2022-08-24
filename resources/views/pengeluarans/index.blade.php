@@ -45,41 +45,6 @@
 					</tr>
 				</thead>
 				<tbody>
-				@if(!$pengeluarans->isEmpty())
-					@php ($i = 1)
-					@foreach($pengeluarans as $pengeluaran)
-				    <tr> 
-				        <td>{{$i}}</td>
-				        <td><div class="datatable-column-width">{{$pengeluaran->tanggal}}</div></td>
-				        <td><div class="datatable-column-width">{{$pengeluaran->nama_pj}}</div></td>
-				        <td><div class="datatable-column-width">{{config('custom.kat_pengeluaran.'.$pengeluaran->jenis_pengeluaran)}}</div></td>
-				        <td><div class="datatable-column-width">{{ number_format($pengeluaran->nominal, 0, ',', ',') }}</div></td>
-				        <td><div class="datatable-column-width">{!! $pengeluaran->keterangan !!}</div></td>
-				        
-						</td>
-				        <td align="center">
-							<div class="list-icons">
-								<div class="dropdown">
-									<a href="#" class="list-icons-item" data-toggle="dropdown">
-										<i class="icon-menu9"></i>
-									</a>
-
-									<div class="dropdown-menu dropdown-menu-right">
-										<a href="{{ route('pengeluarans.edit',$pengeluaran->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-										@if (Auth::user()->role==1)
-							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('pengeluarans.destroy', $pengeluaran->id)}}"><i class="icon-x"></i> Delete</a>
-										@endif
-									</div>
-								</div>
-							</div>
-				        </td>
-				    </tr>
-				    @php ($i++)
-				    @endforeach
-				@else
-				  	<tr><td align="center" colspan="7">Data Kosong</td></tr>
-				@endif 
-				    
 				</tbody>
 			</table>
 		</div>
@@ -135,6 +100,48 @@
 
 		var DatatableBasic = function() {
 
+			const kat_pengeluaran = {
+				'0': 'Biaya Jasa',
+				'1': 'Perlengkapan',
+				'2': 'Biaya Admin dan Umum',
+				'3': 'Biaya Asuransi',
+				'4': 'Biaya Bunga',
+				'5': 'Biaya Gaji',
+				'6': 'Biaya Iklan',
+				'7': 'Biaya Komunikasi',
+				'8': 'Biaya Lain-lain',
+				'9': 'Biaya Listrik dan Air',
+				'10': 'Biaya Penyusutan',
+				'11': 'Biaya Pajak',
+				'12': 'Biaya Sewa',
+				'13': 'Biaya Transportasi',
+				'14': 'Aset',
+			};
+
+			function number_format (number, decimals, dec_point, thousands_sep) {
+				// Strip all characters but numerical ones.
+				number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+				var n = !isFinite(+number) ? 0 : +number,
+					prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+					sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+					dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+					s = '',
+					toFixedFix = function (n, prec) {
+						var k = Math.pow(10, prec);
+						return '' + Math.round(n * k) / k;
+					};
+				// Fix for IE parseFloat(0.55).toFixed(0) = 0;
+				s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+				if (s[0].length > 3) {
+					s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+				}
+				if ((s[1] || '').length < prec) {
+					s[1] = s[1] || '';
+					s[1] += new Array(prec - s[1].length + 1).join('0');
+				}
+				return s.join(dec);
+			};
+
 		    // Basic Datatable examples
 		    var _componentDatatableBasic = function() {
 		        if (!$().DataTable) {
@@ -160,7 +167,82 @@
 		        });
 
 		        // Basic datatable
-		        $('.datatable-basic').DataTable();
+		        $('.datatable-basic').DataTable({
+					processing: true,
+					serverSide: true,
+					ajax: {
+						'type': 'GET',
+						'url': `{{url('getpengeluarans')}}`,
+					},
+					columns: [
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return row.DT_RowIndex;
+							}
+						},
+						{
+							data: 'tanggal',
+							name: 'tanggal',
+						},
+						{
+							data: 'nama_pj',
+							name: 'nama_pj',
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return kat_pengeluaran[data?.jenis_pengeluaran];
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return number_format(data?.nominal, 0, ',', ',');
+							}
+						},
+						{
+							data: null,
+							name: 'keterangan',
+							render: (data, type, row) => {
+								return data?.keterangan;
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let editRef = "{{route('pengeluarans.edit', ':id')}}";
+								editRef = editRef.replace(':id', data?.id);
+								let delUri = "{{route('pengeluarans.destroy', ':id')}}";
+								delUri = delUri.replace(':id', data?.id);
+
+								let actionButtons = 
+									`<div class="list-icons">
+										<div class="dropdown">
+											<a href="#" class="list-icons-item" data-toggle="dropdown">
+												<i class="icon-menu9"></i>
+											</a>
+
+											<div class="dropdown-menu dropdown-menu-right">
+												<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
+												@if (Auth::user()->role==1)
+													+
+													`<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
+												@endif
+												+
+											`</div>
+										</div>
+									</div>`
+								
+								return actionButtons;
+							}
+						}
+					]
+				});
 
 		        // Alternative pagination
 		        $('.datatable-pagination').DataTable({
