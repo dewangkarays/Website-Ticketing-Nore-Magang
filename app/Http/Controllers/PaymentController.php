@@ -15,6 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 use App\Model\RekapTagihan;
 use App\Model\RekapDptagihan;
+use Datatables;
 
 class PaymentController extends Controller
 {
@@ -467,5 +468,22 @@ class PaymentController extends Controller
         $totals = Payment::selectRaw('user_id, SUM(nominal) as total')->groupBy('user_id')->orderBy('total','DESC')->get();
 
         return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter','totals'));
+    }
+
+    public function getpayments() {
+        if(\Auth::user()->role > 20){
+            $payments = Payment::where('user_id',\Auth::user()->id)
+                ->join('users', 'users.id', '=', 'payments.user_id')
+                ->orderBy('payments.created_at','desc')->get();
+        } else {
+            // $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('created_at','desc')->get();
+            $payments = Payment::where('jenis_pemasukan','=',1)
+                ->join('users', 'users.id', '=', 'payments.user_id')
+                ->orderBy('payments.created_at','desc')->get();
+            //$payments = Payment::all();
+
+        }
+
+        return Datatables::of($payments)->addIndexColumn()->make(true);
     }
 }
