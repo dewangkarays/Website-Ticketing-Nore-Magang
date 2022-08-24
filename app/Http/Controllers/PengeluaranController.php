@@ -7,6 +7,7 @@ use App\Model\Pengeluaran;
 use App\Exports\PengeluaranExport;
 use App\Model\User;
 use Maatwebsite\Excel\Facades\Excel;
+use Datatables;
 
 class PengeluaranController extends Controller
 {
@@ -101,6 +102,8 @@ class PengeluaranController extends Controller
         return Excel::download(new PengeluaranExport, 'Pengeluaran '.(date('Y-m-d')).'.xlsx' );
     }
 
-    
+    public function getpengeluarans() {
+        return Datatables::of(Pengeluaran::all()->sortByDesc('created_at'))->addIndexColumn()->make(true);
+    }
 
 }
