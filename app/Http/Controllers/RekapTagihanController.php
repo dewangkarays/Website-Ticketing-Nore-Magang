@@ -197,7 +197,7 @@ class RekapTagihanController extends Controller
         }
         $data = $request->except(['_token', '_method']);
 
-        $tagihans = Tagihan::where('rekap_tagihan_id', $id)->get();
+        $tagihans = Tagihan::where('rekap_tagihan_id', $id)->first();
 
         // if($request->get('jml_terbayar')!=''){
         //     $data['jml_terbayar'] = $request->get('jml_terbayar');
@@ -206,7 +206,19 @@ class RekapTagihanController extends Controller
 
         // dd($data);
 
-        $rekaptagihan = RekapTagihan::find($id);
+        $rekaptagihan = RekapTagihan::where('id',$id)->first();
+
+        $langganan = Proyek::where('user_id', $tagihans->user_id)
+                        ->where('jenis_layanan','=','3') //jumlah langganan
+                        ->count();
+        $ads = Proyek::where('user_id', $tagihans->user_id)
+                        ->where('jenis_proyek','=','2') //jumlah ads
+                        ->count();
+        $lainnya = Proyek::where('user_id', $tagihans->user_id)
+                        ->where('jenis_proyek','=','5') //jumlah lainnya
+                        ->count();
+
+        // dd($rekaptagihan);
 
         if(!$rekaptagihan->payment->isEmpty()){
             $rekaptagihan->status = $request->get('status');
@@ -215,11 +227,22 @@ class RekapTagihanController extends Controller
                 ->with('error','Tidak bisa mengubah status, rekap ini memiliki data pembayaran.');
             }
             else{
+                $tagihans->langganan = $langganan;
+                $tagihans->ads = $ads;
+                $tagihans->lainnya = $lainnya;
+                $tagihans->invoice = $rekaptagihan->invoice;
+                $tagihans->save();
                 $rekaptagihan->update($data);
                 return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan updated!');
             }
         }
         else{
+            $tagihans->langganan = $langganan;
+            $tagihans->ads = $ads;
+            $tagihans->lainnya = $lainnya;
+            $tagihans->invoice = $rekaptagihan->invoice;
+            // dd($tagihans);
+            $tagihans->save();
             $rekaptagihan->update($data);
             return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan updated!');
         }
