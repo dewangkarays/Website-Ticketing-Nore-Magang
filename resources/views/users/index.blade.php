@@ -41,39 +41,6 @@
 					</tr>
 				</thead>
 				<tbody>
-				@if(!$users->isEmpty())
-					@php ($i = 1)
-					@foreach($users as $user)
-				    <tr> 
-				        <td>{{$i}}</td>
-				        <td><div class="datatable-column-width">{{$user->nama}}</div></td>
-				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
-				        <td>{{config('custom.role.'.$user->role)}}</td>
-				        <td align="center">
-							<div class="list-icons">
-								<div class="dropdown">
-									<a href="#" class="list-icons-item" data-toggle="dropdown">
-										<i class="icon-menu9"></i>
-									</a>
-
-									<div class="dropdown-menu dropdown-menu-right">
-										<a href="{{ route('users.show',$user->id)}}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
-										<a href="https://wa.me/{{$user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
-										@if (Auth::user()->role==1)
-										<a href="{{ route('users.edit',$user->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-							            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('users.destroy', $user->id)}}"><i class="icon-x"></i> Delete</a>
-										@endif
-									</div>
-								</div>
-							</div>
-				        </td>
-				    </tr>
-				    @php ($i++)
-				    @endforeach
-				@else
-				  	<tr><td align="center" colspan="7">Data Kosong</td></tr>
-				@endif 
-				    
 				</tbody>
 			</table>
 		</div>
