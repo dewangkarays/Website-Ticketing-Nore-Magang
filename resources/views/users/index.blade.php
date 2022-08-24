@@ -154,7 +154,83 @@
 		        });
 
 		        // Basic datatable
-		        $('.datatable-basic').DataTable();
+		        $('.datatable-basic').DataTable({
+					processing: true,
+					serverSide: true,
+					// "order": true,
+					ajax: {
+						'type': 'GET',
+						'url': `{{url('getkaryawans')}}`,
+					},
+					columns: [
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return row.DT_RowIndex;
+							}
+						},
+						{
+							data: 'nama',
+							name: 'nama',
+						},
+						{
+							data: 'username',
+							name: 'username',
+						},
+						{
+							data: null,
+							name: 'role',
+							render: (data, type, row) => {
+								const role = {
+									'1': 'Super Admin',
+									'10': 'Karyawan',
+									'20': 'Keuangan',
+									'95': 'Klien',
+								}
+								return role[data?.role];
+							}
+						},
+						{
+							data: null,
+							name: 'actions',
+							render: (data, type, row) => {
+								let showRef = "{{route('users.show', ':id')}}";
+								showRef = showRef.replace(':id', data?.id);
+
+								let telpRef = "https://wa.me/{{':telp'}}";
+								telpRef = telpRef.replace(':telp', data?.telp);
+
+								let editRef = "{{route('users.edit', ':id')}}";
+								editRef = editRef.replace(':id', data?.id);
+
+								let delUri = "{{route('users.destroy', ':id')}}";
+								delUri = delUri.replace(':id', data?.id);
+
+								let actionButtons =
+									`
+										<div class="dropdown">
+											<a href="#" class="list-icons-item" data-toggle="dropdown">
+												<i class="icon-menu9"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right" style="z-index:5">
+												<a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a> 
+												<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
+												+
+												@if (Auth::user()->role==1)
+												`<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+						            			<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
+												@endif
+												+
+											`</div>
+										</div>
+									`
+
+								return actionButtons;
+							}
+						}
+					]
+				});
 
 		        // Alternative pagination
 		        $('.datatable-pagination').DataTable({
