@@ -59,6 +59,9 @@ class TaskClient extends Controller
     {
         //
         // return $request;
+        $request->validate([
+            'kebutuhan'=>'required'
+        ]);
         $task = new Task;
         $task->user_id = \Auth::user()->id;
         $task->kebutuhan = $request->input('kebutuhan');

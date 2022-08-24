@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     {{-- wysiwig --}}
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link href="{{asset('assets/css/components.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{asset('global_assets/css/icons/icomoon/styles.min.css') }}" rel="stylesheet" type="text/css">
     <style>
         .bg-light {
         background-color: #3EB772 !important;
@@ -98,6 +100,7 @@
 
       .website h2, .task h2, .tagihan h2, .history h2{
         padding-bottom: 1em;
+        opacity: 1;
       }
 
       .container{
@@ -123,6 +126,9 @@
     .container{
       padding-left:15px !important;
       padding-right:15px !important;
+    }
+    #website{
+      opacity: 1;
     }
 
     </style>
@@ -151,12 +157,12 @@
           <p>{{\Auth::user()->nama}}</p>
         </div>
       </div>
-      <form method="POST" action="{{route('taskclients.store')}}" enctype="multipart/form-data">
+      <form class="form-validate-jquery" method="POST" action="{{route('taskclients.store')}}" enctype="multipart/form-data">
         @csrf
         <div class="form-group row">
           <label class="col-sm-6 col-form-label">Website</label>
           <div class="col-sm-6">
-            <select name="website" class="form-control select-search" data-fouc>
+            <select id="website" name="website" class="form-control select-search" data-fouc>
               @foreach($proyeks as $proyek)
                 <option value="{{@$proyek->id}}">{{@$proyek->website}}</option>
               @endforeach
@@ -164,9 +170,9 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="kebutuhan" class="col-sm-6 col-form-label">Kebutuhan</label>
+          <label class="col-sm-6 col-form-label">Kebutuhan</label>
           <div class="col-sm-6">
-            <textarea class="form-control summernote" name="kebutuhan"></textarea>
+            <textarea name="kebutuhan" class="form-control summernote"  required></textarea>
           </div>
         </div>
         <div class="form-group row">
@@ -203,11 +209,93 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script> --}}
     {{-- Summernote --}}
     <script src="{{asset('global_assets/js/plugins/editors/summernote/summernote.min.js')}}"></script>
+    <script src="{{asset('global_assets/js/plugins/forms/validation/validate.min.js')}}"></script>
+	  <script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+    
 
-    <script>
-      $(document).ready(function() {
-        $('.summernote').summernote();
-      });
-    </script>
+    
+    	<script type="text/javascript">
+				
+        var FormValidation = function() {
+    
+            // Validation config
+            var _componentValidation = function() {
+                if (!$().validate) {
+                    console.warn('Warning - validate.min.js is not loaded.');
+                    return;
+                }
+    
+                // Initialize
+                var validator = $('.form-validate-jquery').validate({
+                    ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+                    errorClass: 'validation-invalid-label',
+                    //successClass: 'validation-valid-label',
+                    validClass: 'validation-valid-label',
+                    highlight: function(element, errorClass) {
+                        $(element).removeClass(errorClass);
+                    },
+                    unhighlight: function(element, errorClass) {
+                        $(element).removeClass(errorClass);
+                    },
+                    // success: function(label) {
+                    //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+                    //},
+    
+                    // Different components require proper error label placement
+                    errorPlacement: function(error, element) {
+    
+                        // // Unstyled checkboxes, radios
+                        // if (element.parents().hasClass('form-check')) {
+                        //     error.appendTo( element.parents('.form-check').parent() );
+                        // }
+    
+                        // // Input with icons and Select2
+                        // else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+                        //     error.appendTo( element.parent() );
+                        // }
+    
+                        // // Input group, styled file input
+                        // else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+                        //     error.appendTo( element.parent().parent() );
+                        // }
+    
+                        // Other elements
+                        // else {
+                            error.insertAfter(element);
+                        // }
+                    },
+                    messages: {
+                        kebutuhan: {
+                            required: 'Mohon diisi.'
+                        },
+                    },
+                });
+    
+                // Reset form
+                $('#reset').on('click', function() {
+                    validator.resetForm();
+                });
+            };
+    
+            // Return objects assigned to module
+            return {
+                init: function() {
+                    _componentValidation();
+                }
+            }
+        }();
+    
+        // Initialize module
+        // ------------------------------
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            FormValidation.init();
+        });
+      </script>
+      <script>
+        $(document).ready(function() {
+          $('.summernote').summernote();
+        });
+      </script>
   </body>
 </html>
