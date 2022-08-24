@@ -275,7 +275,7 @@
                       <p class="card-text">Kebutuhan :</p>
                     </div>
                     <div class="col">
-                      <p>{{@$task->kebutuhan}}</p>
+                      <p>{!!$task->kebutuhan!!}</p>
                     </div>
                   </div>
                   <div class="row">
