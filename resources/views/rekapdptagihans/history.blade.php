@@ -46,57 +46,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @if(!$rekapdps->isEmpty())
-                            @php ($i = 1)
-                            @foreach($rekapdps as $rekapdp)
-                            <tr>
-                                <td>{{$i}}</td>
-                                {{-- <td><input type="checkbox" name="invoice[]" id="chk" value="{{ $tagihan->id }}"></td> --}}
-                                <td><div class="datatable-column-width">{{$rekapdp->nama}}</div></td>
-                                <td><div class="datatable-column-width">{{$rekapdp->invoice}}</div></td>
-                                <td><div class="datatable-column-width">{{ number_format($rekapdp->total, 0, ',', ',') }}</div></td>
-                                {{-- <td><div class="datatable-column-width">Rp @angka($rekapdp->jml_terbayar)</div></td>
-                                <td><div class="datatable-column-width">{!! $rekaptagihan->keterangan !!}</div></td> --}}
-                                <td>
-                                    @if ($rekapdp->status == 1)
-										<span style="font-size: 100%;" class="badge badge-pill badge-info">{{ config('custom.rekap_status.' .@$rekapdp->status) }}</span>
-									@elseif($rekapdp->status == 2)
-										<span style="font-size: 100%;" class="badge badge-pill badge-danger">{{ config('custom.rekap_status.' .@$rekapdp->status) }}</span>
-									@elseif($rekapdp->status == 3)
-										<span style="font-size: 100%;" class="badge badge-pill badge-warning">{{ config('custom.rekap_status.' .@$rekapdp->status) }}</span>
-									@elseif($rekapdp->status == 4)
-										<span style="font-size: 100%;" class="badge badge-pill badge-success">{{ config('custom.rekap_status.' .@$rekapdp->status) }}</span>
-									@else
-                                        <span style="font-size: 100%;" class="badge badge-pill badge-secondary">{{ config('custom.rekap_status.' .@$rekapdp->status) }}</span>                                    
-                                    @endif
-                                    {{-- <div class="datatable-column-width">{{config('custom.rekap_status.' .@$rekapdp->status)}}</div> --}}
-                                </td>
-                                <td align="center">
-									{{-- <a href="{{url('cetakrekap/'.$rekaptagihan->id)}}" class="btn btn-info"><i class="icon-printer2 mr-2"></i> Print</a> --}}
-                                    <div class="list-icons">
-                                        <div class="dropdown">
-                                            <a href="#" class="list-icons-item" data-toggle="dropdown">
-                                                <i class="icon-menu9"></i>
-                                            </a>
-
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                {{-- <a href="{{ route('tagihans.edit',$rekaptagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a> --}}
-                                                <a href="{{route('rekapdptagihans.show', $rekapdp->id)}}" class="dropdown-item"><i class="icon-images3"></i> Show</a>
-                                                <a href="{{url('cetakrekapdp/'.$rekapdp->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
-                                                @if ($rekapdp->status == 1)
-                                                    <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('rekapdptagihans.destroy', $rekapdp->id)}}"><i class="icon-x"></i> Delete</a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            @php ($i++)
-                            @endforeach
-                        @else
-                            <tr><td align="center" colspan="9">Data Kosong</td></tr>
-                        @endif
-
                         </tbody>
                     </table>
                 </form>
@@ -140,6 +89,7 @@
     <script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
     <script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
     <script src="{{asset('assets/js/app.js')}}"></script>
+    <script src="{{asset('assets/js/custom.js')}}"></script>
     <script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
 
     <script type="text/javascript">
@@ -149,6 +99,14 @@
 		     $("#delform").attr("action", url);
 		});
         var DatatableBasic = function() {
+
+            const rekapStatus = {
+                '1': 'Baru',
+                '2': 'Sudah Ditagih',
+                '3': 'Terbayar Sebagian',
+                '4': 'Lunas',
+                '5': 'Invalid',
+            }
 
             // Basic Datatable examples
             var _componentDatatableBasic = function() {
@@ -175,7 +133,89 @@
                 });
 
                 // Basic datatable
-                $('.datatable-basic').DataTable();
+                $('.datatable-basic').DataTable({
+                    "scrollX": true,
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        'type': 'GET',
+                        'url': "/getrekapdp/history",
+                    },
+                    columns: [
+                        {
+                            data: null,
+                            name: null,
+                            render: (data, type, row) => {
+                                return row.DT_RowIndex;
+                            }
+                        },
+                        {
+                            data: 'nama',
+                            name: 'nama',
+                        },
+                        {
+                            data: 'invoice',
+                            name: 'invoice',
+                        },
+                        {
+                            data: null,
+                            name: null,
+                            render: (data, type, row) => {
+                                return number_format(data?.total, 0, ',', ',')
+                            }
+                        },
+                        {
+                            data: null,
+                            name: null,
+                            render: (data, type, row) => {
+                                let status = ''
+                                if(data?.status == 4)
+									status = `<span style="font-size: 100%;" class="badge badge-pill badge-success">${rekapStatus[data?.status]}</span>`
+                                else
+                                    status = `<span style="font-size: 100%;" class="badge badge-pill badge-secondary">${rekapStatus[data?.status]}</span>`
+
+                                return status
+                            }
+                        },
+                        {
+                            data: null,
+                            name: null,
+                            render: (data, type, row) => {
+                                let showRef = "{{route('rekapdptagihans.show', ':id')}}"
+                                showRef = showRef.replace(':id', data?.id)
+
+                                let cetakRef = "{{route('cetakrekapdp', ':id')}}"
+                                cetakRef = cetakRef.replace(':id', data?.id)
+
+                                let delUri = "{{route('rekapdptagihans.destroy', ':id')}}"
+                                delUri = delUri.replace(':id', data?.id)
+
+                                let invalidUri = "{{route('rekapdpinvalid', ':id')}}"
+                                invalidUri = invalidUri.replace(':id', data?.id)
+
+                                let actionButtons = 
+                                    `
+                                        <dropdown">
+                                            <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                                <i class="icon-menu9"></i>
+                                            </a>
+
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a href="${showRef}" class="dropdown-item"><i class="icon-images3"></i> Show</a>
+                                                <a href="${cetakRef}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>`
+                                if (data?.status == 1)
+                                    actionButtons += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
+                                else if(data?.status < 5)
+                                    actionButtons += `<a href="${invalidUri}" class="dropdown-item"><i class="icon-x"></i> Invalid</a>`
+                                actionButtons += `</div>
+                                        </div>
+                                    `
+
+                                return actionButtons
+                            }
+                        }
+                    ]
+                });
 
                 // Alternative pagination
                 $('.datatable-pagination').DataTable({
