@@ -283,11 +283,9 @@ var FormValidation = function() {
 						required : true
 					},
 					email:{
-						required : true,
 						email: true
 					},
 					phone:{
-						required : true,
 						number : true
 					},
 					taskcount:{
@@ -306,11 +304,9 @@ var FormValidation = function() {
 						required : 'Mohon diisi.'
 					},
 					email:{
-						required : 'Mohon diisi.',
 						email : 'Masukan alamat email dengan benar'
 					},
 					phone:{
-						required : 'Mohon diisi.',
 						number : 'Hanya mengandung angka'
 					},
 					taskcount:{

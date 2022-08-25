@@ -36,13 +36,13 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Email</label>
 							<div class="col-lg-10">
-								<input type="email" name="email" class="form-control border-teal border-1" placeholder="Email" required value="{{ $user->email }}">
+								<input type="email" name="email" class="form-control border-teal border-1" placeholder="Email" value="{{ $user->email }}">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Telp</label>
 							<div class="col-lg-10">
-								<input type="text" name="telp" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA" required value="{{ $user->telp }}">
+								<input type="text" name="telp" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA" value="{{ $user->telp }}">
 								<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
 							</div>
 						</div>
@@ -160,12 +160,6 @@
 		            },
 		            messages: {
 		                nama: {
-		                    required: 'Mohon diisi.'
-		                },
-		                email: {
-		                    required: 'Mohon diisi.'
-		                },
-		                telp: {
 		                    required: 'Mohon diisi.'
 		                },
 		                username: {
