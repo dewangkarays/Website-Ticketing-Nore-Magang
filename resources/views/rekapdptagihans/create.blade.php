@@ -106,7 +106,7 @@
                                 @endif
                             </div>
                             <div class="col-lg-2">
-                                <input type="text" id="noakhir" name="noakhir" class="form-control border-info border-1" value="{{date('Ymd')}}" readonly>
+                                <input type="text" id="noakhir" name="noakhir" class="form-control border-info border-1" value="{{date('dmY')}}" readonly>
                             </div>
                             {{-- <div class="col-lg-2">
                                 <input type="text" id="nouser" name="nouser" class="form-control border-info border-1" value="{{\Auth::user()->id}}" readonly>
