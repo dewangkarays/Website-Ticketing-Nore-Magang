@@ -34,6 +34,18 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Jenis Lampiran</label>
+                        <div class="col-lg-10">
+                            <select name="jenis_lampiran" class="form-control select-search">
+                                <option value="">-- Jenis Lampiran --</option>
+                                @foreach(config('custom.jenis_lampiran') as $key => $value)
+                                    <option value="{{$key}}">{{$value}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label class="col-form-label col-lg-2">Gambar</label>
                         <div class="col-lg-10">
                             <input id="gambar" name="gambar" type="file" class="form-control" onchange="upload_check()" required>
@@ -64,6 +76,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th class="text-center">Jenis Lampiran</th>
                         <th class="text-center">Gambar</th>
                         <th class="text-center">Keterangan</th>
                         <th class="text-center">Actions</th>
@@ -75,6 +88,11 @@
                     @foreach($lampirans as $lampiran)
                     <tr> 
                         <td>{{$i}}</td>
+                        <td align="center">
+                            <div class="datatable-column-width">
+                                {{ config('custom.jenis_lampiran.'.$lampiran->jenis_lampiran) }}
+                            </div>
+                        </td>
                         <td align="center">
                             <div class="card-img-actions m-1">
                                 <img class="card-img img-fluid" src="{{url($lampiran->gambar)}}" alt="" style="height:150px;width:150px;object-fit: cover;">

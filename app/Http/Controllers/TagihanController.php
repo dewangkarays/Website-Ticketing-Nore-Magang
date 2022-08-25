@@ -307,7 +307,8 @@ class TagihanController extends Controller
         $lampiran = Lampiran_gambar::create([
             'tagihan_id' => $id,
             'gambar' => $data['gambar'],
-            'keterangan' => $data['keterangan']
+            'keterangan' => $data['keterangan'],
+            'jenis_lampiran' => $data['jenis_lampiran']
         
         ]);
         $lampiran->save();

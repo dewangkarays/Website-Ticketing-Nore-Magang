@@ -110,6 +110,14 @@ return [
         '1' => 'Pemasukan Pembayaran Klien',
         '2' => 'Pemasukan Lain-lain'
     ],
+
+    'jenis_lampiran' => [
+        '1' => 'NPWP',
+        '2' => 'Screenshot',
+        '3' => 'Kode Billing Pajak',
+        '4' => 'Bukti Bayar Pajak',
+        '5' => 'Keterangan UMKM'
+    ],
 ];
 
 
