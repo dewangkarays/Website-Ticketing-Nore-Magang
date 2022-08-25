@@ -8,6 +8,7 @@ use App\Model\User;
 use App\Model\Nomor;
 use App\Model\Setting;
 use App\Model\Lampiran_gambar;
+use App\Model\Proyek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PDF;
@@ -159,7 +160,13 @@ class RekapDptagihanController extends Controller
     {
         $rekapdp = RekapDpTagihan::find($id);
         $tagihans = Tagihan::where('rekap_dptagihan_id', $id)->get();
-        return view('rekapdptagihans.show', compact('rekapdp','tagihans'));
+        foreach($tagihans as $tagihan){
+            $tagihan->id;
+        };
+        $proyek_id = $tagihan->id_proyek;
+        $namaproyek = Proyek::where('id', $proyek_id)->get();
+        // dd($namaproyek);
+        return view('rekapdptagihans.show', compact('rekapdp','tagihans','proyek_id','namaproyek'));
     }
 
     /**
