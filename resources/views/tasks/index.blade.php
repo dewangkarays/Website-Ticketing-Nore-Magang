@@ -65,7 +65,7 @@
 					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
 					<td><div class="datatable-column-width">{{$task->username}}</div></td>
 					<td><div class="datatable-column-width">{{$task->nama_proyek}}</div></td>
-					<td><div class="datatable-column-width">{{Str::words($task->kebutuhan, 100)}}</div></td>
+					<td><div class="datatable-column-width">{{Str::words($task->kebutuhan, 50)}}</div></td>
 					<td><div class="datatable-column-width">{{config('custom.severity.'.$task->severity)}}</div></td>
 					<td><div class="datatable-column-width form-check">
 						<label class="form-check-label">
@@ -163,7 +163,7 @@
 					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
 					<td><div class="datatable-column-width">{{$task->username}}</div></td>
 					<td><div class="datatable-column-width">{{$task->nama_proyek}}</div></td>
-					<td><div class="datatable-column-width">{{Str::words($task->kebutuhan, 100)}}</div></td>
+					<td><div class="datatable-column-width">{{Str::words($task->kebutuhan, 50)}}</div></td>
 					<td><div class="datatable-column-width">{{config('custom.severity.'.$task->severity)}}</div></td>
 					<td><div class="datatable-column-width form-check">
 						<label class="form-check-label">
