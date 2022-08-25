@@ -42,7 +42,6 @@
                                 <th>Tagihan (Rp)</th>
                                 <th>Jumlah Terbayar (Rp)</th>
 								<th>Sisa Tagihan (Rp)</th>
-                                {{-- <th>Keterangan</th> --}}
                                 <th>Status</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -159,7 +158,7 @@
 
 		        // Basic datatable
 		        $('.datatable-basic').DataTable({
-                    "scrollX": true,
+                    // "scrollX": true,
                     processing: true,
                     serverSide: true,
                     ajax: {
