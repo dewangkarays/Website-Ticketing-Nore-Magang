@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\File;
 use PDF;
 use Illuminate\Support\Facades\Validator;
 use LDAP\Result;
+use Datatables;
 
 class RekapTagihanController extends Controller
 {
@@ -375,5 +376,14 @@ class RekapTagihanController extends Controller
         }
 
         return redirect()->route('rekaptagihans.index')->with('error', 'Data dijadikan invalid!');
+    }
+
+    public function getrekap($status) {
+        if ($status == 'aktif') {
+            $rekaptagihans = RekapTagihan::where('status','<','4')->orderByDesc('created_at')->get();
+        } else if ($status == 'history') {
+            $rekaptagihans = RekapTagihan::where('status','>=','4')->orderByDesc('created_at')->get();
+        }
+        return Datatables::of($rekaptagihans)->addIndexColumn()->make(true);
     }
 }
