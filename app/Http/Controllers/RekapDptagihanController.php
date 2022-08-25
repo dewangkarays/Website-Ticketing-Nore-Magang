@@ -11,6 +11,7 @@ use App\Model\Lampiran_gambar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PDF;
+use Datatables;
 
 class RekapDptagihanController extends Controller
 {
@@ -289,6 +290,16 @@ class RekapDptagihanController extends Controller
         }
 
         return redirect()->route('rekapdptagihans.index')->with('error', 'Data dijadikan invalid!');
+    }
+
+    public function getrekapdp($status) {
+        if ($status == 'aktif') {
+            $rekapdps = RekapDptagihan::where('status','<','4')->orderByDesc('created_at')->get();
+            return Datatables::of($rekapdps)->addIndexColumn()->make(true);
+        } else if ($status == 'history') {
+            $rekapdps = RekapDptagihan::where('status','>=','4')->orderByDesc('created_at')->get();
+            return Datatables::of($rekapdps)->addIndexColumn()->make(true);
+        }
     }
 
 }
