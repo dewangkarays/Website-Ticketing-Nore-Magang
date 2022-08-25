@@ -48,11 +48,12 @@ class MemberController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'username'=>'unique:users',
-                'email'=>'unique:users'
+                'email'=>'unique:users',
+                'telp'=>'unique:users',
             ]);
 
             if ($validator->fails()) {
-                return redirect('members/create')
+                return redirect()->back()
                             ->withErrors($validator)
                             ->withInput();
             }
@@ -121,13 +122,29 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            // 'nama'=>'required',
-            // 'email'=>'required',
-            // 'telp'=>'required',
-            // 'username'=>'required',
-            // 'role'=>'required'
-            ]);
+            if ($request->email != null) {
+                $validator = Validator::make($request->all(), [
+                    'email'=>'unique:users',
+                ]);
+    
+                if ($validator->fails()) {
+                    return redirect()->back()
+                                ->withErrors($validator)
+                                ->withInput();
+                }
+            }
+
+            if ($request->telp != null) {
+                $validator = Validator::make($request->all(), [
+                    'telp'=>'unique:users',
+                ]);
+    
+                if ($validator->fails()) {
+                    return redirect()->back()
+                                ->withErrors($validator)
+                                ->withInput();
+                }
+            }
 
             $user = User::find($id);
 
