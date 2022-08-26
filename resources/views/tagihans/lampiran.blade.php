@@ -36,7 +36,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Jenis Lampiran</label>
                         <div class="col-lg-10">
-                            <select name="jenis_lampiran" class="form-control select-search">
+                            <select name="jenis_lampiran" class="form-control select-search" required>
                                 <option value="">-- Jenis Lampiran --</option>
                                 @foreach(config('custom.jenis_lampiran') as $key => $value)
                                     <option value="{{$key}}">{{$value}}</option>

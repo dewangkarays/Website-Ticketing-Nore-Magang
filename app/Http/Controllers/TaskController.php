@@ -68,7 +68,8 @@ class TaskController extends Controller
     {
         $request->validate([
             'user_id'=>'required',
-            'kebutuhan'=>'required'
+            'kebutuhan'=>'required',
+            'id_proyek'=>'required'
         ]);
 
         $task = new Task([
