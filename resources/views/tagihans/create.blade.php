@@ -134,16 +134,32 @@
 							<input id="nilaiuang_muka" type="text" class="form-control border-teal border-1" placeholder="Uang Muka" onkeyup="ribuan()" value="{{old('uang_muka')}}">
 						</div>
 					</div>
-					{{-- <div class="form-group row">
-						<label class="col-form-label col-lg-2">Tipe</label>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Potongan Harga</label>
 						<div class="col-lg-10">
-							<select name="tipe" class="form-control select-search" required>
-								<option>Langganan</option>
-								<option>Ads</option>
-								<option>Lainnya</option>
+							<select name="jenis_diskon" class="form-control select" id="jenis_diskon">
+								<option>-- Berikan Potongan Harga --</option>
+								<option value="persen_diskon">Persentase</option>
+								<option value="nominal_diskon">Nominal</option>
 							</select>
 						</div>
-					</div> --}}
+					</div>
+					<div id="div-persen-diskon" class="form-group row" style="display: none">
+						<label class="col-form-label col-lg-2">Persentase Potongan</label>
+						<div class="col-lg-10">
+							<input id="persentase_diskon" type="number" name="persen_diskon" class="form-control border-teal border-1" placeholder="Persentase potongan, contoh: 10 untuk 10%">
+						</div>
+					</div>
+					<div id="div-nominal-diskon" class="form-group row" style="display: none">
+						<label class="col-form-label col-lg-2">Nominal Potongan</label>
+						<div class="col-lg-10">
+							<input id="datadiskon" type="hidden" name="nominal_diskon_alter" value="{{old('nominal_diskon')}}" class="form-control border-teal border-1">
+							<input id="nilai_diskon" type="text" name="nominal_diskon" class="form-control border-teal border-1" placeholder="Nominal Diskon, contoh: 100000" onkeyup="ribuan()" value="{{old('nominal_diskon')}}">
+						</div>
+					</div>
+					<div class="form-group row" style="display: none">
+						<input type="hidden" name="diskon">
+					</div>
 					{{-- <div class="form-group row">
 						<label class="col-form-label col-lg-2">Langganan</label>
 						<div class="col-lg-10">
@@ -315,6 +331,18 @@
 				});
 			}
 		});
+
+		$('#jenis_diskon').on('change', function() {
+                var dropdown = $('#jenis_diskon option:selected').val()
+                if (dropdown=="persen_diskon" ) {
+                    $('#div-persen-diskon').show()
+					$('#div-nominal-diskon').hide()
+				} else if (dropdown=='nominal_diskon') {
+					$('#div-persen-diskon').hide()
+					$('#div-nominal-diskon').show()
+				}
+            });
+
 
 		var FormValidation = function() {
 
@@ -501,10 +529,13 @@
 		function ribuan(){
 			var val = $('#nilainominal').val();
 			var val1 = $('#nilaiuang_muka').val();
+			var val2 = $('#nilaidiskon').val();
 			$('#datanominal').val(val.replace(new RegExp(/\./, 'g'), ''));
 			$('#datauang_muka').val(val1.replace(new RegExp(/\./, 'g'), ''));
+			$('#datadiskon').val(val2.replace(new RegExp(/\./, 'g'), ''));
 			val = val.replace(/[^0-9,]/g,'');
 			val1 = val1.replace(/[^0-9,]/g,'');
+			val2 = val2.replace(/[^0-9,]/g,'');
 
 			if(val != "") {
 				valArr = val.split('.');
@@ -516,8 +547,14 @@
 				valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
 				val1 = valArr.join('.');
 			}
+			if(val2 != "") {
+				valArr = val2.split('.');
+				valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
+				val2 = valArr.join('.');
+			}
 			$('#nilainominal').val(val);
 			$('#nilaiuang_muka').val(val1);
+			$('#nilaidiskon').val(val2);
 		}
 		</script>
 		<script type="text/javascript">
