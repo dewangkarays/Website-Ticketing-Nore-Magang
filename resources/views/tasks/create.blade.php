@@ -52,7 +52,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Proyek</label>
 							<div class="col-lg-10">
-								<select id="select_proyek" name="proyek" class="form-control select-search" data-fouc>
+								<select id="select_proyek" name="proyek" class="form-control select-search" data-fouc required>
                                     <option value="">-- Pilih Proyek --</option>
 									{{-- @foreach($proyeks as $proyek)
 										<option value="{{$proyek->id}}">{{$proyek->nama_proyek}}</option>
@@ -204,6 +204,9 @@
 		            messages: {
 		                kebutuhan: {
 		                    required: 'Mohon diisi.'
+		                },
+		                proyek: {
+		                    required: 'Pilih salah satu.'
 		                },
 		            },
 		        });
