@@ -102,7 +102,9 @@
                                     <tbody>
                                         @foreach ($tagihans as $invoice)
                                             <tr>
-                                                <td>{{ $invoice->nama_proyek }}</td>
+                                                @foreach ($namaproyek as $nama_proyek)
+                                                <td>{{ $nama_proyek->nama_proyek }}</td>
+                                                @endforeach
                                                 <td>{{ date('d-m-Y', strtotime(@$invoice->proyek->masa_berlaku)) }}</td>
                                                 <td>Rp @angka($invoice->jml_tagih)</td>
                                                 <td>{!! $invoice->keterangan !!}</td>
