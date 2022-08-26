@@ -160,13 +160,7 @@ class RekapDptagihanController extends Controller
     {
         $rekapdp = RekapDpTagihan::find($id);
         $tagihans = Tagihan::where('rekap_dptagihan_id', $id)->get();
-        foreach($tagihans as $tagihan){
-            $tagihan->id;
-        };
-        $proyek_id = $tagihan->id_proyek;
-        $namaproyek = Proyek::where('id', $proyek_id)->get();
-        // dd($namaproyek);
-        return view('rekapdptagihans.show', compact('rekapdp','tagihans','proyek_id','namaproyek'));
+        return view('rekapdptagihans.show', compact('rekapdp','tagihans'));
     }
 
     /**
