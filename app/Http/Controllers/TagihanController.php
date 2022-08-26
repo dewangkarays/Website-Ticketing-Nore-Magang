@@ -110,6 +110,14 @@ class TagihanController extends Controller
             $data['masa_berlaku'] = $request->get('new_mb');
         }
 
+        if($request->get('jenis_diskon')!=''){
+            if($request->get('persen_diskon')!=''){
+                $data['diskon'] = $data['persen_diskon'] * $data['nominal'] / 100;
+            } else if ($request->get('nominal_diskon')!='') {
+                $data['diskon'] = $data['nominal_diskon'];
+            }
+        }
+
         $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
         
         if ($data['jml_tagih'] < 0) {
@@ -118,7 +126,7 @@ class TagihanController extends Controller
 
         // if ($data['jml_tagih'] > )
 
-        //dd($data);
+        // dd($data);
 
         $user = User::find($data['user_id']);
         $data['nama'] = $user->nama;
