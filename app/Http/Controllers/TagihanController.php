@@ -261,6 +261,7 @@ class TagihanController extends Controller
         // ]);
         $request->validate([
             'gambar' => 'mimes:jpeg,png,jpg,gif,svg',
+            'jenis_lampiran =>required'
         ]);
 
         if ($request->isMethod('GET')) {
@@ -288,7 +289,7 @@ class TagihanController extends Controller
                 
                 //compress file
                 if(filesize($file) < 204800){
-                    $img->save($tujuan_upload.'/'.$name, 'jpg');
+                    $img->save($tujuan_upload.'/'.$name, 90, 'jpg');
                 }
                 elseif(filesize($file) < 1048576){
                     $img->save($tujuan_upload.'/'.$name, 80, 'jpg');
