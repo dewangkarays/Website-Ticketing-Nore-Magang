@@ -26,4 +26,14 @@ class Proyek extends Model
         return $this->hasMany('App\Model\Task','id_proyek','id');
     }
 
+    public function rekapDpTagihan()
+    {
+        return $this->belongsTo('App\Model\RekapDptagihan', 'user_id', 'user_id');
+    }
+
+    public function rekapTagihan()
+    {
+        return $this->belongsTo('App\Model\RekapTagihan', 'user_id', 'user_id');
+    }
+
 }
