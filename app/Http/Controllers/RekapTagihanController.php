@@ -380,9 +380,15 @@ class RekapTagihanController extends Controller
 
     public function getrekap($status) {
         if ($status == 'aktif') {
-            $rekaptagihans = RekapTagihan::where('status','<','4')->orderByDesc('created_at')->get();
+            $rekaptagihans = RekapTagihan::where('status','<','4')
+                ->with('proyeks')
+                ->orderByDesc('created_at')
+                ->get();
         } else if ($status == 'history') {
-            $rekaptagihans = RekapTagihan::where('status','>=','4')->orderByDesc('created_at')->get();
+            $rekaptagihans = RekapTagihan::where('status','>=','4')
+                ->with('proyeks')
+                ->orderByDesc('created_at')
+                ->get();
         }
         return Datatables::of($rekaptagihans)->addIndexColumn()->make(true);
     }
