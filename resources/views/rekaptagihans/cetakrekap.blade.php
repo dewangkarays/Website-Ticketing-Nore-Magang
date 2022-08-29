@@ -321,7 +321,7 @@
                 <table>
                     @php ($i = 1)
                     @foreach ($lampirans as $lampiran)
-                        <h5>Lampiran {{$i}} - {{ config('custom.jenis_lampiran.'.$lampiran->jenis_lampiran) }} {{ $lampiran->keterangan}}</h5>
+                    <h5>Lampiran {{$i}} - {{ config('custom.jenis_lampiran.'.$lampiran->jenis_lampiran) }} {{ $lampiran->keterangan}}</h5>
                         <h5 align="center">
                         <img src="{{url($lampiran->gambar)}}" style="width:50%;object-fit: cover;">
                         </h5> 
@@ -332,7 +332,6 @@
                     <div class="page-break"></div>
                     @php ($i++)
                     @endforeach
-                    
                 </table>
                 @endif
             </main>
