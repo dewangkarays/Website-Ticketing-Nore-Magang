@@ -295,10 +295,16 @@ class RekapDptagihanController extends Controller
 
     public function getrekapdp($status) {
         if ($status == 'aktif') {
-            $rekapdps = RekapDptagihan::where('status','<','4')->orderByDesc('created_at')->get();
+            $rekapdps = RekapDptagihan::where('status','<','4')
+                ->with('proyeks')
+                ->orderByDesc('created_at')
+                ->get();
             return Datatables::of($rekapdps)->addIndexColumn()->make(true);
         } else if ($status == 'history') {
-            $rekapdps = RekapDptagihan::where('status','>=','4')->orderByDesc('created_at')->get();
+            $rekapdps = RekapDptagihan::where('status','>=','4')
+                ->with('proyeks')
+                ->orderByDesc('created_at')
+                ->get();
             return Datatables::of($rekapdps)->addIndexColumn()->make(true);
         }
     }
