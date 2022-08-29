@@ -52,6 +52,13 @@
 							<label class="col-form-label">Gunakan format kode negara 62. Contoh: 6281335625529</label>
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Email Customer Service</label>
+						<div class="col-lg-8">
+							<input type="email" id="email" name="email" class="form-control border-teal border-1" required
+							value="{{$setting ? $setting->email : ""}}">
+						</div>
+					</div>
 					<br>
 					<h4><b>Payment Receipt</b></h4>
 					<hr>
