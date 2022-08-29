@@ -321,22 +321,14 @@
                 <table>
                     @php ($i = 1)
                     @foreach ($lampirans as $lampiran)
-                    <tr>
-                        <td>
-                            Lampiran {{$i}} : {{ $lampiran->keterangan}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <img src="{{url($lampiran->gambar)}}" style="width:50%;object-fit: cover;">
-
-                        </td>
-                    </tr>
+                        <h5>Lampiran {{$i}} - {{ config('custom.jenis_lampiran.'.$lampiran->jenis_lampiran) }} {{ $lampiran->keterangan}}</h5>
+                        <h5 align="center">
+                        <img src="{{url($lampiran->gambar)}}" style="width:50%;object-fit: cover;">
+                        </h5> 
                     <br>
                     <tr>
                         <td>&nbsp;</td>
                     </tr>
-
                     @php ($i++)
                     @endforeach
                 </table>
