@@ -146,7 +146,12 @@
 		                orderable: false,
 		                // width: 100,
 		                targets: [ 7 ],
-		            }],
+                        },
+                        {
+                            width: 100,
+                            targets: '__all'
+                        }
+                    ],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
 		                search: '<span>Filter:</span> _INPUT_',
