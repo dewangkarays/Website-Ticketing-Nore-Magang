@@ -118,7 +118,11 @@ class TagihanController extends Controller
             }
         }
 
-        $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
+        if($data['diskon'] != '') {
+            $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'] - $data['diskon'];
+        } else {
+            $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
+        }
         
         if ($data['jml_tagih'] < 0) {
             return redirect()->back()->with('error', 'Uang muka melebihi nominal!');
