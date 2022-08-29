@@ -27,4 +27,9 @@ class RekapTagihan extends Model
     {
         return $this->hasMany('App\Model\Payment', 'rekap_tagihan_id', 'id');
     }
+
+    public function proyeks()
+    {
+        return $this->hasMany('App\Model\Proyek', 'user_id', 'user_id');
+    }
 }
