@@ -113,7 +113,7 @@ return [
 
     'jenis_lampiran' => [
         '1' => 'NPWP',
-        '2' => 'Tampilan',
+        '2' => 'Screenshot',
         '3' => 'Kode Billing Pajak',
         '4' => 'Bukti Bayar Pajak',
         '5' => 'Keterangan UMKM'
