@@ -219,7 +219,7 @@
                     @foreach ($lampirans as $lampiran)
                         <h5>Lampiran {{$i}} - {{ config('custom.jenis_lampiran.'.$lampiran->jenis_lampiran) }} {{ $lampiran->keterangan}}</h5>
                         <h5 align="center">
-                        <img src="{{url($lampiran->gambar)}}" style="width:50%;object-fit: cover;">
+                        <img src="{{url($lampiran->gambar)}}" style="max-width:100%;object-fit: cover;">
                         </h5> 
                     <br>
                     <tr>
