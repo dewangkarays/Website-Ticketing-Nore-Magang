@@ -104,6 +104,38 @@
 							<input id="nilaiuang_muka" type="text" class="form-control border-teal border-1" placeholder="Uang Muka" onfocus="ribuan()" onkeyup="ribuan()" value="{{$tagihan->uang_muka}}">
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Potongan Harga</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control border-teal border-1" value="{{$tagihan->diskon ? $tagihan->diskon : '0'}}" readonly>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2"></label>
+						<div class="col-lg-10">
+							<select name="jenis_diskon" class="form-control select" id="jenis_diskon">
+								<option>-- Berikan Potongan Harga --</option>
+								<option value="persen_diskon">Persentase</option>
+								<option value="nominal_diskon">Nominal</option>
+							</select>
+						</div>
+					</div>
+					<div id="div-persen-diskon" class="form-group row" style="display: none">
+						<label class="col-form-label col-lg-2">Persentase Potongan</label>
+						<div class="col-lg-10">
+							<input id="persentase_diskon" type="number" name="persen_diskon" class="form-control border-teal border-1" placeholder="Persentase potongan, contoh: 10 untuk 10%">
+						</div>
+					</div>
+					<div id="div-nominal-diskon" class="form-group row" style="display: none">
+						<label class="col-form-label col-lg-2">Nominal Potongan</label>
+						<div class="col-lg-10">
+							<input id="datadiskon" type="hidden" name="nominal_diskon_alter" value="{{old('nominal_diskon')}}" class="form-control border-teal border-1">
+							<input id="nilai_diskon" type="text" name="nominal_diskon" class="form-control border-teal border-1" placeholder="Nominal Diskon, contoh: 100000" onkeyup="ribuan()" value="{{old('nominal_diskon')}}">
+						</div>
+					</div>
+					<div class="form-group row" style="display: none">
+						<input type="hidden" name="diskon">
+					</div>
                     <div class="form-group row">
 						<label class="col-form-label col-lg-2">Keterangan</label>
 						<div class="col-lg-10">
@@ -232,6 +264,17 @@
                 }
             });
 		});
+
+		$('#jenis_diskon').on('change', function() {
+            var dropdown = $('#jenis_diskon option:selected').val()
+            if (dropdown=="persen_diskon" ) {
+                $('#div-persen-diskon').show()
+				$('#div-nominal-diskon').hide()
+			} else if (dropdown=='nominal_diskon') {
+				$('#div-persen-diskon').hide()
+				$('#div-nominal-diskon').show()
+			}
+        });
 
 	var FormValidation = function() {
 
