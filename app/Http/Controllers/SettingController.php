@@ -37,6 +37,7 @@ class SettingController extends Controller
             'logo' => $data['logo'],
             'alamat' => $data['alamat'],
             'no_telp' => $data['no_telp'],
+            'email' => $data['email'],
             'penerima' => $data['penerima'],
             'ttd_penerima' => $data['ttd_penerima'],
             'ttd_pospenerima' => $data['ttd_pospenerima'],
