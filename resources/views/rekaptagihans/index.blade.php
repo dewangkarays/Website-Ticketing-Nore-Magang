@@ -38,6 +38,7 @@
                                 <th>No</th>
                                 {{-- <th><input type="checkbox" class="checked-all"></th> --}}
                                 <th>Nama</th>
+                                <th>Nama Proyek</th>
                                 <th>Invoice</th>
                                 <th>Tagihan (Rp)</th>
                                 <th>Jumlah Terbayar (Rp)</th>
@@ -147,10 +148,6 @@
 		                // width: 100,
 		                targets: [ 7 ],
                         },
-                        {
-                            width: 100,
-                            targets: '__all'
-                        }
                     ],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -163,7 +160,7 @@
 
 		        // Basic datatable
 		        $('.datatable-basic').DataTable({
-                    // "scrollX": true,
+                    "scrollX": true,
                     processing: true,
                     serverSide: true,
                     ajax: {
@@ -181,6 +178,20 @@
                         {
                             data: 'nama',
                             name: 'nama',
+                        },
+                        {
+                            data: null,
+                            name: null,
+                            render: (data, type, name) => {
+                                let namaProyek = ''
+                                const showNamaProyek = (proyek) => {
+                                    namaProyek += proyek.nama_proyek + '<br>'
+                                }
+
+                                data?.proyeks?.map(showNamaProyek)
+
+                                return namaProyek
+                            }
                         },
                         {
                             data: 'invoice',

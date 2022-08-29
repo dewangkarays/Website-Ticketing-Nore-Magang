@@ -38,6 +38,7 @@
                                 <th>No</th>
                                 {{-- <th><input type="checkbox" class="checked-all"></th> --}}
                                 <th>Nama</th>
+								<th>Nama proyek</th>
                                 <th>Invoice</th>
                                 <th>Tagihan (Rp)</th>
                                 {{-- <th>Jumlah Bayar</th>
@@ -176,6 +177,20 @@
                         {
                             data: 'nama',
                             name: 'nama',
+                        },
+						{
+                            data: null,
+                            name: null,
+                            render: (data, type, name) => {
+                                let namaProyek = ''
+                                const showNamaProyek = (proyek) => {
+                                    namaProyek += proyek.nama_proyek + '<br>'
+                                }
+
+                                data?.proyeks?.map(showNamaProyek)
+
+                                return namaProyek
+                            }
                         },
                         {
                             data: 'invoice',
