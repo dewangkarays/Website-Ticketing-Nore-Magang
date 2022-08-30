@@ -222,7 +222,7 @@
                     columnDefs: [{ 
                         orderable: false,
                         // width: 100,
-                        targets: [ 1, 2, 3 ]
+                        targets: [ 1, 2, 3, 4 ]
                     }],
                     dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                     language: {

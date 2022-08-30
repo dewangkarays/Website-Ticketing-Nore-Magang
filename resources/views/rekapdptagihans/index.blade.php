@@ -123,7 +123,7 @@
                     columnDefs: [{
                         orderable: false,
                         // width: 100,
-                        targets: [ 7 ],
+                        targets: [ 8 ],
                         },
                     ],
                     dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
