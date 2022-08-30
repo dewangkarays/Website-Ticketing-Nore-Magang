@@ -13,6 +13,7 @@ use App\Exports\TagihanExport; //plugin excel
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\File;
 use PDF;
+use Datatables;
 
 class TagihanController extends Controller
 {
@@ -23,9 +24,9 @@ class TagihanController extends Controller
      */
     public function index()
     {
-        $tagihans = Tagihan::orderBy('id')->where('status', '!=', '2')->get();
-      //$proyeks = Proyek::all();
-        return view('tagihans.index', compact('tagihans'));
+    //     $tagihans = Tagihan::orderBy('id')->where('status', '!=', '2')->get();
+    //   //$proyeks = Proyek::all();
+        return view('tagihans.index');
     }
 
     /**
@@ -449,5 +450,14 @@ class TagihanController extends Controller
         }
         $users = User::where('role','>=',80)->get();
         return view('rekaptagihans.index', compact('users','tagihans','requestUser'));
+    }
+
+    public function gettagihans() {
+        $tagihans = Tagihan::orderBy('id')
+            ->where('status', '!=', '2')
+            ->with('user')
+            ->with('proyek')
+            ->get();
+        return Datatables::of($tagihans)->addIndexColumn()->make(true);
     }
 }
