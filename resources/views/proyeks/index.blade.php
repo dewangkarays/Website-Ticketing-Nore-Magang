@@ -34,7 +34,7 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Client Name</th>
+                    <th>Nama Klien</th>
                     <th>Nama Proyek</th>
                     <th>Website</th>
                     <th>Detail Proyek</th>
@@ -47,68 +47,6 @@
                 </tr>
             </thead>
             <tbody>
-            @if(!$allItems->isEmpty())
-                @php ($i = 1)
-                @foreach($allItems as $proyek)
-                <tr>
-                    <td>{{$i}}</td>
-                    <td><div class="datatable-column-width">{{@$proyek->user ? $proyek->user->nama : '-'}}</div></td>
-                    <td><div class="datatable-column-width">{{$proyek->nama_proyek ? $proyek->nama_proyek : '-'}}</div></td>
-                    <td><div class="datatable-column-width">{{$proyek->website ? $proyek->website : '-'}}</div></td>
-                    <td>
-                        <div class="datatable-column-width">{{$proyek->jenis_proyek ? config('custom.jenis_proyek.'.$proyek->jenis_proyek) : '-'}}</div>
-                        <div class="datatable-column-width">{{$proyek->tipe ? config('custom.kelas_layanan.'.$proyek->tipe) : '-'}}</div>
-                        <div class="datatable-column-width">{{$proyek->jenis_layanan ? config('custom.jenis_layanan.'.$proyek->jenis_layanan) : '-'}}</div>
-                    </td>
-                    {{-- <td><div class="datatable-column-width">{{$proyek->tipe ? config('custom.kelas_layanan.'.$proyek->tipe) : '-'}}</div></td>
-                    <td><div class="datatable-column-width">{{$proyek->jenis_layanan ? config('custom.jenis_layanan.'.$proyek->jenis_layanan) : '-'}}</div></td> --}}
-                    <td align="center">
-                        @if($proyek->task_count < 1 )
-                            <span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">0</span>
-                        @else
-                            <span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{$proyek->task_count}}</span>
-                        @endif
-                    </td>
-                    <td>
-                        @if ($proyek->masa_berlaku == null)
-                            <div class="datatable-column-width text-center">-</div>
-                        @else
-                            @if ($proyek->masa_berlaku > $dateline)
-                                <span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{$proyek->masa_berlaku}}</span>
-                            @elseif ($proyek->masa_berlaku < $expired)
-                                <span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$proyek->masa_berlaku}}</span>
-                            @else
-                                <span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{$proyek->masa_berlaku}}</span>
-                            @endif
-                        @endif
-                    </td>
-                    <td><div class="datatable-column-width">{!! ($proyek->keterangan ? $proyek->keterangan : '-') !!}</div></td>
-                    <td align="center">
-                        <div class="list-icons">
-                            <div class="dropdown">
-                                <a href="#" class="list-icons-item" data-toggle="dropdown">
-                                    <i class="icon-menu9"></i>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    @if ($proyek->masa_berlaku < $dateline && $proyek->masa_berlaku > $expired)
-                                        <a href="{{ route('tagihans.create').'?c='.$proyek->id}}" class="dropdown-item"><i class="icon-file-text"></i> Create Tagihan</a>
-                                    @endif
-                                    <a href="{{ route('proyeks.edit',$proyek->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-                                    @if (Auth::user()->role==1)
-                                    <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('proyeks.destroy', $proyek->id)}}"><i class="icon-x"></i> Delete</a>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                @php ($i++)
-                @endforeach
-            @else
-                <tr><td align="center" colspan="10">Data Kosong</td></tr>
-            @endif
-
             </tbody>
         </table>
     </div>
@@ -163,6 +101,26 @@
     });
 
     var DatatableBasic = function() {
+        const jenisProyek = {
+            '1': 'Website',
+            '2': 'Iklan/Ads',
+            '3': 'Sistem Informasi',
+            '4': 'Mobile App',
+            '5': 'Custom/Lainnya',
+        }
+
+        const jenisLayanan = {
+            '1': 'Nore',
+            '2': 'Mini',
+            '3': 'Berlangganan',
+            '4': 'Beli/Lepas',
+        }
+
+        const kelasLayanan = {
+            '99': 'Simple',
+            '90': 'Prioritas',
+            '80': 'Premium',
+        }
 
         // Basic Datatable examples
         var _componentDatatableBasic = function() {
@@ -177,7 +135,7 @@
                 columnDefs: [{
                     orderable: false,
                     width: 100,
-                    targets: [ 8 ]
+                    targets: "_all"
                 }],
                 dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                 language: {
@@ -189,7 +147,128 @@
             });
 
             // Basic datatable
-            $('.datatable-basic').DataTable();
+            $('.datatable-basic').DataTable({
+                "order": true,
+                "scrollX": true,
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    "type": "GET",
+                    "url": "/getproyeks",
+                },
+                columns: [
+                    {
+                        data: null,
+                        name: null,
+                        render: (data, type, row) => {
+                            return row.DT_RowIndex
+                        }
+                    },
+                    {
+                        data: null,
+                        name: null,
+                        render: (data, type, row) => {
+                            return data?.user ? data?.user?.nama : '-'
+                        }
+                    },
+                    {
+                        data: "nama_proyek",
+                        name: "nama_proyek",
+                    },
+                    {
+                        data: "website",
+                        name: "website",
+                    },
+                    {
+                        data: null,
+                        name: null,
+                        render: (data, type, row) => {
+                            let detailProyek = 
+                                `<div>
+                                    ${data?.jenis_proyek ? jenisProyek[data?.jenis_proyek] : '-'} <br>
+                                    ${data?.tipe ? kelasLayanan[data?.tipe] : '-'} <br>
+                                    ${data?.jenis_layanan ? jenisLayanan[data?.jenis_layanan] : '-'} <br>
+                                </div>`
+
+                            return detailProyek
+                        }
+                    },
+                    {
+                        data: null,
+                        name: null,
+                        render: (data, type, row) => {
+                            let taskCount = ''
+                            if (data?.task_count < 1) {
+                                taskCount = `<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">0</span>`
+                            } else {
+                                taskCount = `<span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">${data?.task_count}</span>`
+                            }
+
+                            return taskCount
+                        }
+                    },
+                    {
+                        data: null,
+                        name: null,
+                        render: (data, type, row) => {
+                            let masaBerlaku = ''
+                            if (data?.masa_berlaku == null) {
+                                masaBerlaku = `<div class="datatable-column-width text-center">-</div>`
+                            } else {
+                                if (data?.masa_berlaku > data?.dateline) {
+                                    masaBerlaku = `<span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">${data?.masa_berlaku}</span>`
+                                } else if (data?.masa_berlaku < data?.expired) {
+                                    masaBerlaku = `<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">${data?.masa_berlaku}</span>`
+                                } else {
+                                    masaBerlaku = `<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">${data?.masa_berlaku}</span>`
+                                }
+                            }
+
+                            console.log(masaBerlaku)
+
+                            return masaBerlaku
+                        }
+                    },
+                    {
+                        data: null,
+                        name: null,
+                        render: (data, type, row) => {
+                            return data?.keterangan ? data?.keterangan : '-'
+                        }
+                    },
+                    {
+                        data: null,
+                        name: null,
+                        render: (data, type, row) => {
+                            let createRef = `/tagihans/create?c=${data?.id}`
+                            // createRef = createRef.replace(':id', data?.id)
+                            let editRef = "{{route('proyeks.edit', ':id')}}"
+                            editRef = editRef.replace(':id', data?.id)
+                            let delUri = "{{route('proyeks.destroy', ':id')}}"
+                            delUri = delUri.replace(':id', data?.id)
+
+                            let actionsButton = 
+                                `<div class="dropdown">
+                                    <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                        <i class="icon-menu9"></i>
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right">`
+                            if ((data?.masa_berlaku < data?.dateline) && (data?.masa_berlaku > data?.expired)) {
+                                actionsButton += `<a href="${createRef}" class="dropdown-item"><i class="icon-file-text"></i> Create Tagihan</a>`
+                            }
+                                actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
+                            @if (Auth::user()->role==1)
+                                actionsButton += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
+                            @endif
+                                actionsButton += `</div>
+                                    </div>`
+
+                            return actionsButton
+                        }
+                    }
+                ]
+            });
 
             // Alternative pagination
             $('.datatable-pagination').DataTable({
