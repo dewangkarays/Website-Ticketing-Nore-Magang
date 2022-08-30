@@ -9,6 +9,7 @@ use App\Model\Proyek;
 use Carbon\Carbon;
 use \Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Validator;
+use Datatables;
 
 class ProyekController extends Controller
 {
@@ -22,28 +23,36 @@ class ProyekController extends Controller
         $date = Carbon::today();
         $expired = Carbon::today()->addDays(-1);
         $dateline = Carbon::today()->addDays(14);
-        $null = Proyek::whereNull('masa_berlaku')->orderBy('jenis_proyek')->get();
+        $null = Proyek::whereNull('masa_berlaku')
+                        ->with('user')
+                        ->orderBy('jenis_proyek')
+                        ->get();
         $yellow = Proyek::whereNotNull('masa_berlaku')
                         ->whereDate('masa_berlaku', '>=', $date)
                         ->whereDate('masa_berlaku', '<=', $dateline)
+                        ->with('user')
                         ->orderBy('masa_berlaku')
                         ->get();
         $green = Proyek::whereNotNull('masa_berlaku')
                         ->whereDate('masa_berlaku', '>', $dateline)
+                        ->with('user')
                         ->orderBy('masa_berlaku')
                         ->get();
         $red = Proyek::whereNotNull('masa_berlaku')
                         ->whereDate('masa_berlaku', '<', $date)
+                        ->with('user')
                         ->orderBy('masa_berlaku')
                         ->get();
+
         $allItems = new Collection;
         $allItems = $allItems->merge($yellow);
         $allItems = $allItems->merge($green);
         $allItems = $allItems->merge($null);
         $allItems = $allItems->merge($red);
-        //dd($allItems);
+        // dd($allItems);
         //dd($proyeks, $yellow, $green, $red);
-        return view('proyeks.index', compact('allItems', 'expired', 'dateline'));
+        // dd($allItems->toJson());
+        return view('proyeks.index');
     }
 
     /**
@@ -174,5 +183,54 @@ class ProyekController extends Controller
         $proyek->delete();
 
         return redirect('/proyeks')->with('success', 'Proyek deleted!');
+    }
+
+    public function getproyeks() {
+        $date = Carbon::today();
+        $expired = Carbon::today()->addDays(-1);
+        $dateline = Carbon::today()->addDays(14);
+        $null = Proyek::whereNull('masa_berlaku')
+                        ->with('user')
+                        ->orderBy('jenis_proyek')
+                        ->get();
+        $yellow = Proyek::whereNotNull('masa_berlaku')
+                        ->whereDate('masa_berlaku', '>=', $date)
+                        ->whereDate('masa_berlaku', '<=', $dateline)
+                        ->with('user')
+                        ->orderBy('masa_berlaku')
+                        ->get();
+        $green = Proyek::whereNotNull('masa_berlaku')
+                        ->whereDate('masa_berlaku', '>', $dateline)
+                        ->with('user')
+                        ->orderBy('masa_berlaku')
+                        ->get();
+        $red = Proyek::whereNotNull('masa_berlaku')
+                        ->whereDate('masa_berlaku', '<', $date)
+                        ->with('user')
+                        ->orderBy('masa_berlaku')
+                        ->get();
+                        
+        $allItems = new Collection;
+        $allItems = $allItems->merge($yellow);
+        $allItems = $allItems->merge($green);
+        $allItems = $allItems->merge($null);
+        $allItems = $allItems->merge($red);
+
+        // $collections = collect([
+        //     $yellow, $green, $null, $red
+        // ]);
+        // dd($allItems);
+        // foreach ($allItems as $item) {
+        //     dump($item->nama_proyek);
+        // }
+        // die;
+        // $allItems = $collections->values()->all();
+        
+
+        return Datatables::of($allItems)
+            ->addColumn('expired', $expired)
+            ->addColumn('dateline', $dateline)
+            ->addIndexColumn()
+            ->make(true);
     }
 }
