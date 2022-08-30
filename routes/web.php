@@ -122,7 +122,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::group(['middleware' => ['role:1,10,20']], function() {
 		Route::get('getkaryawans', 'UserController@getkaryawans');
 		// Route::get('getmembers', 'MemberController@getmembers');
-		// Route::get('getproyeks', 'ProyekController@getproyeks');
+		Route::get('getproyeks', 'ProyekController@getproyeks');
 		// Route::get('gettasks/{status}', 'TaskController@gettasks');
 		Route::get('gettagihans', 'TagihanController@gettagihans');
 		Route::get('getrekapdp/{status}', 'RekapDptagihanController@getrekapdp');
