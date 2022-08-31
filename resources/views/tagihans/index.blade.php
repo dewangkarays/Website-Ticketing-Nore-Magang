@@ -197,7 +197,7 @@
 							render: (data, type, row) => {
 								let editRef = "{{route('tagihans.edit', ':id')}}"
 								editRef = editRef.replace(':id', data?.id)
-								let lampiranRef = "{{url('tagihans/cetak/:id')}}"
+								let lampiranRef = "{{url('tagihans/lampiran/:id')}}"
 								lampiranRef = lampiranRef.replace(':id', data?.id)
 								let delUri = "{{route('tagihans.destroy', ':id')}}"
 								delUri = delUri.replace(':id', data?.id)
