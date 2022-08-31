@@ -28,3 +28,7 @@ function number_format (number, decimals, dec_point, thousands_sep) {
     }
     return s.join(dec);
 };
+
+function truncate_strings (str, max) {
+    return str.slice(0, max)
+}
