@@ -215,19 +215,51 @@
 
                 @if ($lampirans != null)
                 <table>
+                    @php ($jenis_terakhir = '')
                     @php ($i = 1)
                     @foreach ($lampirans as $lampiran)
+                    @if (!$loop->first)
+                        @if ($lampiran->jenis_lampiran != $jenis_terakhir)
+                     <div class="page-break"></div>   
+                    @endif
+                    @endif
+                    
+                    @if ($lampiran->jenis_lampiran != $jenis_terakhir)
                         <h5>Lampiran {{$i}} - {{ config('custom.jenis_lampiran.'.$lampiran->jenis_lampiran) }} {{ $lampiran->keterangan}}</h5>
+                    @endif
+                        
                         <h5 align="center">
-                        <img src="{{url($lampiran->gambar)}}" style="max-width:100%;object-fit: cover;">
+                        <img src="{{url($lampiran->gambar)}}" style="max-width:90%;object-fit: cover;">
                         </h5> 
                     <br>
                     <tr>
                         <td>&nbsp;</td>
                     </tr>
-                    <div class="page-break"></div>
+                    
+                    @if ($lampiran->jenis_lampiran != $jenis_terakhir)
                     @php ($i++)
+                    @endif
+                    @php ($jenis_terakhir = $lampiran->jenis_lampiran)
+                    
                     @endforeach
+                    {{-- @php ($i = 1)
+                    @foreach ($lampirans[$i] as $key => $value)
+                        @switch($key)
+                            @case(1)
+                                <h2>test1</h2>
+                                @php ($i++)
+                                @break
+                            @case(2)
+                                <h2>test2</h2>
+                                @php ($i++)
+                                @break
+                            @default
+                            <h5 align="center">
+                                <img src="{{url($lampirans['gambar'])}}" style="max-width:100%;object-fit: cover;">
+                                </h5> 
+                                @php ($i++)
+                        @endswitch
+                    @endforeach --}}
                     
                 </table>
                 @endif
