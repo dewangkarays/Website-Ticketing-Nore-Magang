@@ -32,3 +32,10 @@ function number_format (number, decimals, dec_point, thousands_sep) {
 function truncate_strings (str, max) {
     return str.slice(0, max)
 }
+
+function stripHtml(html)
+{
+    let tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+}
