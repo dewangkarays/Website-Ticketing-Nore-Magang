@@ -143,6 +143,7 @@
 
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 <script src="{{ URL::asset('global_assets/js/demo_pages/components_modals.js') }}"></script>
+<script src="{{asset('assets/js/custom.js')}}"></script>
 <script>
 	let getToken = function() {
 		return $('meta[name=csrf-token]').attr('content')
@@ -329,8 +330,11 @@
 						}
 					},
 					{
-						data: 'keterangan',
+						data: null,
 						name: 'keterangan',
+						render: (data, type, row) => {
+							return stripHtml(data?.keterangan);
+							}
 					},
 					{
 						data: 'tanggal',
