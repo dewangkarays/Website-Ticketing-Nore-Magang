@@ -97,6 +97,7 @@
 	<script src="{{asset('assets/js/custom.js')}}"></script>
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
+	<script src="{{asset('assets/js/custom.js')}}"></script>
 	<script>
 		//modal delete
 		$(document).on("click", ".delbutton", function () {
@@ -186,9 +187,9 @@
 						},
 						{
 							data: null,
-							name: null,
-							render: (data, type, row) => {
-								return data?.keterangan ? data?.keterangan : '-'
+						name: 'keterangan',
+						render: (data, type, row) => {
+							return stripHtml(data?.keterangan);
 							}
 						},
 						{
