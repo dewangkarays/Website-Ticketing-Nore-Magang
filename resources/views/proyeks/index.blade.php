@@ -93,12 +93,20 @@
 
 <script src="{{asset('assets/js/app.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
+{{-- <script src="{{asset('assets/js/custom.js')}}"></script> --}}
 <script>
     //modal delete
     $(document).on("click", ".delbutton", function () {
         var url = $(this).data('uri');
         $("#delform").attr("action", url);
     });
+
+    function stripHtml(html)
+    {
+        let tmp = document.createElement("DIV");
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || "";
+    }
 
     var DatatableBasic = function() {
         const jenisProyek = {
@@ -231,9 +239,9 @@
                     },
                     {
                         data: null,
-                        name: null,
+                        name: "keterangan",
                         render: (data, type, row) => {
-                            return data?.keterangan ? data?.keterangan : '-'
+                            return data?.keterangan ? stripHtml(data?.keterangan) : '-'
                         }
                     },
                     {
