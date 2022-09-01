@@ -123,7 +123,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('getkaryawans', 'UserController@getkaryawans');
 		// Route::get('getmembers', 'MemberController@getmembers');
 		Route::get('getproyeks', 'ProyekController@getproyeks');
-		// Route::get('gettasks/{status}', 'TaskController@gettasks');
+		Route::get('gettasks/{type}', 'TaskController@gettasks');
 		Route::get('gettagihans', 'TagihanController@gettagihans');
 		Route::get('getrekapdp/{status}', 'RekapDptagihanController@getrekapdp');
 		Route::get('getrekap/{status}', 'RekapTagihanController@getrekap');
@@ -151,4 +151,5 @@ Route::group(['middleware' => ['auth']], function() {
 	// Route::group(['middleware' => ['role:95']], function() {
 	// 	Route::get('/customer', 'AdminController@customer')->name('customer');
 	// });
+	// Route::get('gettasks/{type}', 'TaskController@gettasks');
 });
