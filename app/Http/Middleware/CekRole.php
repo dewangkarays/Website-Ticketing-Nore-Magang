@@ -13,9 +13,9 @@ class CekRole
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, ...$role)
     {
-        if(\Auth::user()->role!=$role){
+        if(!in_array(\Auth::user()->role, $role)){
             return redirect()->route('login');
         }
         return $next($request);
