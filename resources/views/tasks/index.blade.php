@@ -220,6 +220,10 @@
 				}
 			});
 			
+			function shorten(str, maxLen, separator = ' ') {
+				if (str.length <= maxLen) return str;
+				return str.substr(0, str.lastIndexOf(separator, maxLen)) + '...';
+			};
 			// Premium datatable
 			@if(Auth::user()->role == 10)
 				$('.datatable-p').DataTable({
@@ -266,7 +270,7 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								return data?.kebutuhan ? truncate_strings(data?.kebutuhan, 50) : "-"
+								return data?.kebutuhan ? shorten(data?.kebutuhan, 100) : "-"
 							}
 						},
 						{
@@ -416,7 +420,7 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								return data?.kebutuhan ? truncate_strings(data?.kebutuhan, 50) : "-"
+								return data?.kebutuhan ? shorten(data?.kebutuhan, 100) : "-"
 							}
 						},
 						{
@@ -556,7 +560,7 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								return data?.kebutuhan ? truncate_strings(data?.kebutuhan) : '-'
+								return data?.kebutuhan ? shorten(data?.kebutuhan, 100) : '-'
 							}
 						},
 						{
@@ -706,7 +710,7 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								return data?.kebutuhan ? truncate_strings(data?.kebutuhan) : '-'
+								return data?.kebutuhan ? shorten(data?.kebutuhan, 100) : '-'
 							}
 						},
 						{
