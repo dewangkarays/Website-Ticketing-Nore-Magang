@@ -453,7 +453,7 @@ class TagihanController extends Controller
     }
 
     public function gettagihans() {
-        $tagihans = Tagihan::orderBy('id')
+        $tagihans = Tagihan::orderBy('id', 'desc')
             ->where('status', '!=', '2')
             ->with('user')
             ->with('proyek')
