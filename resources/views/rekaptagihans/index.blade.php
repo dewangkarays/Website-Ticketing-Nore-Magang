@@ -160,7 +160,7 @@
 
 		        // Basic datatable
 		        $('.datatable-basic').DataTable({
-                    "scrollX": true,
+                    // "scrollX": true,
                     processing: true,
                     serverSide: true,
                     ajax: {

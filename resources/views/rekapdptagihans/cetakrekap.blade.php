@@ -50,30 +50,21 @@
             {{$rekapdp->alamat}}
         </td>
     </tr>
-    <tr>
-        <td class="nore-fontcolor">
-            <b>Proyek</b>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            @foreach ($invoices as $invoice)
-                @if ($invoice->nama_proyek)
-                    {{$invoice->nama_proyek}}
-                @elseif ($invoice->proyek->website)
-                    {{$invoice->proyek->website}}
-                @else
-                    -
-                @endif
-            @endforeach
-        </td>
-    </tr>
 @endsection
 
 @section('sub-2')
     <tbody>
         @foreach ($invoices as $invoice)
         <tr>
+            <td>
+                @if ($invoice->nama_proyek)
+                {{$invoice->nama_proyek}}
+                @elseif ($invoice->proyek->website)
+                {{$invoice->proyek->website}}
+                @else
+                -
+                @endif
+            </td>
             <td>
                 Layanan {{ config('custom.jenis_proyek.' .@$invoice->proyek->jenis_proyek) }}
                 {{ config('custom.kelas_layanan.' .@$invoice->proyek->kelas_layanan) }}

@@ -157,6 +157,24 @@
 							<input id="nilai_diskon" type="text" name="nominal_diskon" class="form-control border-teal border-1" placeholder="Nominal Diskon, contoh: 100000" onkeyup="ribuan()" value="{{old('nominal_diskon')}}">
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Status Rekap</label>
+						<div class="col-lg-10">
+							<select name="buat_rekap" class="form-control select" id="status_rekap">
+								<option value="0">Buatkan nanti</option>
+								<option value="1">Buatkan sekarang</option>
+							</select>
+						</div>
+					</div>
+					<div id="div-status-invoice" class="form-group row" style="display: none">
+						<label class="col-form-label col-lg-2">Status Invoice</label>
+						<div class="col-lg-10">
+							<select name="buat_invoice" class="form-control select">
+								<option value="0">Tanpa invoice</option>
+								<option value="1">Buatkan invoice</option>
+							</select>
+						</div>
+					</div>
 					<div class="form-group row" style="display: none">
 						<input type="hidden" name="diskon">
 					</div>
@@ -333,15 +351,24 @@
 		});
 
 		$('#jenis_diskon').on('change', function() {
-                var dropdown = $('#jenis_diskon option:selected').val()
-                if (dropdown=="persen_diskon" ) {
-                    $('#div-persen-diskon').show()
-					$('#div-nominal-diskon').hide()
-				} else if (dropdown=='nominal_diskon') {
-					$('#div-persen-diskon').hide()
-					$('#div-nominal-diskon').show()
-				}
-            });
+            var dropdown = $('#jenis_diskon option:selected').val()
+            if (dropdown=="persen_diskon" ) {
+                $('#div-persen-diskon').show()
+				$('#div-nominal-diskon').hide()
+			} else if (dropdown=='nominal_diskon') {
+				$('#div-persen-diskon').hide()
+				$('#div-nominal-diskon').show()
+			}
+        });
+
+		$('#status_rekap').on('change', function() {
+            var dropdown = $('#status_rekap option:selected').val()
+            if (dropdown=="1" ) {
+                $('#div-status-invoice').show()
+			} else {
+				$('#div-status-invoice').hide()
+			}
+        });
 
 
 		var FormValidation = function() {

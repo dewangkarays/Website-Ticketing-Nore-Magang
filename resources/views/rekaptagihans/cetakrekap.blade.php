@@ -50,48 +50,39 @@
             {{$rekap->alamat}}
         </td>
     </tr>
-    <tr>
-        <td class="nore-fontcolor">
-            <b>Proyek</b>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            @foreach ($invoices as $invoice)
-                @if ($invoice->nama_proyek)
-                    {{$invoice->nama_proyek}}
-                @elseif ($invoice->proyek->website)
-                    {{$invoice->proyek->website}}
-                @else
-                    -
-                @endif
-            @endforeach
-        </td>
-    </tr>
 @endsection
 
 @section('sub-2')
     {{-- Sub 2 --}}
     <tbody>
         @foreach ($invoices as $invoice)
-            <tr>
-                <td>
-                    Layanan {{ config('custom.jenis_proyek.' .@$invoice->proyek->jenis_proyek) }}
-                    {{ config('custom.kelas_layanan.' .@$invoice->proyek->kelas_layanan) }}
-                    {{ config('custom.jenis_layanan.' .@$invoice->proyek->jenis_layanan) }}
-                    <br/> {{ $invoice->proyek->website ? '('.$invoice->proyek->website.')': ''}}
-                </td>
-                {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
-                <td>{!! $invoice->keterangan !!}</td>
-                <td align="right">@angka($invoice->nominal)</td>
-            </tr>
-            {{-- <tr>
-                <td colspan="2" style="background-color: white">&nbsp;</td>
-            </tr> --}}
+        <tr>
+            <td>
+                @if ($invoice->nama_proyek)
+                {{$invoice->nama_proyek}}
+                @elseif ($invoice->proyek->website)
+                {{$invoice->proyek->website}}
+                @else
+                -
+                @endif
+            </td>
+            <td>
+                Layanan {{ config('custom.jenis_proyek.' .@$invoice->proyek->jenis_proyek) }}
+                {{ config('custom.kelas_layanan.' .@$invoice->proyek->kelas_layanan) }}
+                {{ config('custom.jenis_layanan.' .@$invoice->proyek->jenis_layanan) }}
+                <br/> {{ $invoice->proyek->website ? '('.$invoice->proyek->website.')': ''}}
+            </td>
+            {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
+            <td>{!! $invoice->keterangan !!}</td>
+            <td align="right">@angka($invoice->nominal)</td>
+        </tr>
+        {{-- <tr>
+            <td colspan="2" style="background-color: white">&nbsp;</td>
+        </tr> --}}
         @endforeach
-            {{-- @php
-                dd($invoice);
-            @endphp --}}
+        {{-- @php
+            dd($invoice);
+        @endphp --}}
     </tbody>
 @endsection
 

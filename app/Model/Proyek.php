@@ -28,12 +28,12 @@ class Proyek extends Model
 
     public function rekapDpTagihan()
     {
-        return $this->belongsTo('App\Model\RekapDptagihan', 'user_id', 'user_id');
+        return $this->belongsTo('App\Model\RekapDptagihan', 'rekap_dptagihan_id');
     }
 
     public function rekapTagihan()
     {
-        return $this->belongsTo('App\Model\RekapTagihan', 'user_id', 'user_id');
+        return $this->belongsTo('App\Model\RekapTagihan', 'rekap_tagihan_id');
     }
 
 }

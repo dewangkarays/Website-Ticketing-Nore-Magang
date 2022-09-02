@@ -10,6 +10,8 @@ use App\Model\Proyek;
 use App\Model\Attachment;
 use App\Model\Notification;
 use Carbon\Carbon;
+use Datatables;
+use Auth;
 
 class TaskController extends Controller
 {
@@ -37,7 +39,7 @@ class TaskController extends Controller
                             ->get(); //simple dan prioritas
                             // dd($tasksp);
         
-        return view('tasks.index', compact('tasksp','taskpremiums'));
+        return view('tasks.index');
     }
 
     /**
@@ -453,19 +455,31 @@ class TaskController extends Controller
         // dd($chart);
     }
 
-    // public function getproyekpremium($id)
-    // {
-    //     $proyek['data'] = Proyek::where('user_id',$id)->where('tipe', '=' , '80')->get();
-    //     // $proyek = $data['proyek'];
-    //     // dd($data);
-    //     return response()->json($proyek);
-    // }
+    public function gettasks($type) {
+        if ($type == 'premium') {
+            $tasks = Task::select('tasks.id', 'tasks.user_id', 'tasks.kebutuhan', 'tasks.severity', 'tasks.handler', 'tasks.status', 'tasks.created_at', 'proyeks.nama_proyek', 'users.username')
+                            ->join('users','users.id', '=', 'tasks.user_id')
+                            ->join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
+                            ->where('proyeks.tipe','=','80')
+                            ->where('tasks.status', '!=', '3')
+                            ->with('user')
+                            ->with('assign')
+                            ->get(); //premium
+                            // dd($taskpremiums);
+        } else if ($type == 'simpleprioritas') {
+            $tasks = Task::select('tasks.id', 'tasks.user_id', 'tasks.kebutuhan', 'tasks.severity', 'tasks.handler', 'tasks.status', 'tasks.created_at', 'proyeks.nama_proyek', 'users.username')
+                            ->join('users','users.id', '=', 'tasks.user_id')
+                            ->join('proyeks', 'proyeks.id', '=', 'tasks.id_proyek')
+                            ->where('proyeks.tipe','!=','80')
+                            ->where('tasks.status', '!=', '3')
+                            ->with('user')
+                            ->with('assign')
+                            ->get(); //simple dan prioritas
+                            // dd($tasksp);
+        }
 
-    // public function getproyeksp($id)
-    // {
-    //     $proyek['data'] = Proyek::where('user_id',$id)->where('tipe', '!=', '80')->get();
-    //     // $proyek = $data['proyek'];
-    //     // dd($data);
-    //     return response()->json($proyek);
-    // }
+        $userId = Auth::user()->id;
+
+        return Datatables::of($tasks)->addColumn("current_user", $userId)->addIndexColumn()->make(true);
+    }
 }

@@ -145,6 +145,14 @@ class RekapDptagihanController extends Controller
             $tagihan->update([
                 'rekap_dptagihan_id'=> $rekapdptagihan->id,
             ]);
+
+            $proyek_id = $tagihan->id_proyek;
+            $proyeks = Proyek::where('id', $proyek_id)->get();
+            foreach ($proyeks as $proyek) {
+                $proyek->update([
+                    'rekap_dptagihan_id' => $rekapdptagihan->id,
+                ]);
+            }
         }
 
         return redirect('/rekapdptagihans')->with('success', 'Rekap uang muka saved!');

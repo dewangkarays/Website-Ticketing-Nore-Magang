@@ -151,21 +151,22 @@
                 </td>
             </tr>
         </table>
-
-        <div style="margin-top: 20px; margin-bottom: 15px;">
-            <hr>
-        </div>
         
         <table class="main-table" style="margin-top: 15px; line-height: 1">
             <tr>
-                <th align="left" style="width: 33%; height: 20px" class="nore-fontcolor">DESKRIPSI</th>
-                <th align="left" style="width: 33%" class="nore-fontcolor"></th>
-                <th align="right" style="width: 33%" class="nore-fontcolor">JUMLAH (Rp)</th>
+                <th align="left" style="width: 15%; height: 20px" class="nore-fontcolor">PROYEK</th>
+                <th align="left" style="width: 20%; height: 20px" class="nore-fontcolor">DESKRIPSI</th>
+                <th align="left" style="width: 50%" class="nore-fontcolor">KETERANGAN</th>
+                <th align="right" style="width: auto" class="nore-fontcolor">JUMLAH (Rp)</th>
             </tr>
 
             @yield('sub-2')
             
         </table>
+
+        <div style="margin-top: 20px; margin-bottom: 15px;">
+            <hr>
+        </div>
 
         @yield('sub-3')
 

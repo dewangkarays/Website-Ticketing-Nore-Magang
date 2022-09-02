@@ -38,7 +38,7 @@
 				<h4 style="font-weight:bold;">Task Premium</h4>
 				{{-- <a href="{{ route('tasks.create', 'premium')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a> --}}
 		</div>
-		<table class="table datatable-basic table-hover">
+		<table class="table datatable-p table-hover">
 			<thead>
 				<tr>
 					<th>No</th>
@@ -56,77 +56,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				@if(!$taskpremiums->isEmpty())
-				@php ($i = 1)
-				@foreach($taskpremiums as $task)
 				
-				<tr>
-					<td>{{$i}}</td>
-					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
-					<td><div class="datatable-column-width">{{$task->username}}</div></td>
-					<td><div class="datatable-column-width">{{$task->nama_proyek}}</div></td>
-					<td><div class="datatable-column-width">{{Str::words($task->kebutuhan, 50)}}</div></td>
-					<td><div class="datatable-column-width">{{config('custom.severity.'.$task->severity)}}</div></td>
-					<td><div class="datatable-column-width form-check">
-						<label class="form-check-label">
-							{{-- @if (\Auth::user()->role == 10)
-							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
-							@endif --}}
-							@if (@$task->assign->nama == NULL)
-								<p style="color:#ff0f0f;">Belum ada handler</p>
-							@else
-								{{@$task->assign->nama}}
-							@endif
-						</label>
-						</div>
-					</td>
-					@if (\Auth::user()->role == 10 && @$task->assign->nama == false)
-					<td>
-							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
-					</td>
-					@endif
-
-					<td align="center">@if($task->status == 2 )
-						<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.status.'.$task->status)}}</span>
-						@else
-						{{config('custom.status.'.$task->status)}}
-						@endif
-					</td>
-
-					<td align="center">
-						<div class="list-icons">
-							<div class="dropdown">
-								<a href="#" class="list-icons-item" data-toggle="dropdown">
-									<i class="icon-menu9"></i>
-								</a>
-								
-								<div class="dropdown-menu dropdown-menu-right">
-									@if(\Auth::user()->role<=20)
-									<a href="https://wa.me/{{$task->user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
-									@endif
-									@if (\Auth::user()->role==1 )
-									<a href="{{ route('tasks.edit',$task->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-									@elseif (\Auth::user()->role==10 || \Auth::user()->id == $task->handler )
-									<a href="{{ route('tasks.edit',$task->id)}}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>
-									@endif
-									@if (\Auth::user()->role==1 || \Auth::user()->id == $task->user_id )
-									<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id=" {{ $task->id }} " data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>
-									@endif
-									
-									{{-- @if($task->status==1 || \Auth::user()->role==1) --}}
-									@if(\Auth::user()->role==1)
-									<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tasks.destroy', $task->id)}}"><i class="icon-x"></i> Delete</a>
-									@endif
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				@php ($i++)
-				@endforeach
-				@else
-				<tr><td align="center" colspan="8">Data Kosong</td></tr>
-				@endif
 			</tbody>
 		</table>
 	</div>
@@ -136,7 +66,7 @@
 				<h4 style="font-weight:bold;">Task Prioritas dan Simple</h4>
 				{{-- <a href="{{ route('tasks.create', 'simple_prioritas')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a> --}}
 		</div>
-		<table class="table datatable-basic table-hover">
+		<table class="table datatable-sp table-hover">
 			<thead>
 				<tr>
 					<th>No</th>
@@ -154,77 +84,6 @@
 				</tr>
 			</thead>
 			<tbody>
-				@if(!$tasksp->isEmpty())
-				@php ($i = 1)
-				@foreach($tasksp as $task)
-				
-				<tr>
-					<td>{{$i}}</td>
-					<td><div class="datatable-column-width">{{date("Y-m-d", strtotime($task->created_at))}}</div></td>
-					<td><div class="datatable-column-width">{{$task->username}}</div></td>
-					<td><div class="datatable-column-width">{{$task->nama_proyek}}</div></td>
-					<td><div class="datatable-column-width">{{Str::words($task->kebutuhan, 50)}}</div></td>
-					<td><div class="datatable-column-width">{{config('custom.severity.'.$task->severity)}}</div></td>
-					<td><div class="datatable-column-width form-check">
-						<label class="form-check-label">
-							{{-- @if (\Auth::user()->role == 10)
-							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
-							@endif --}}
-							@if (@$task->assign->nama == NULL)
-								<p style="color:#ff0f0f;">Belum ada handler</p>
-							@else
-								{{@$task->assign->nama}}
-							@endif
-						</label>
-						</div>
-					</td>
-					@if (\Auth::user()->role == 10 && @$task->assign->nama == false)
-					<td>	
-							<input data-id="{{$task->id}}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $task->handler == \Auth::user()->id ? 'checked' : '' }}>
-						
-					</td>
-					@endif
-					<td align="center">@if($task->status == 2 )
-						<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.status.'.$task->status)}}</span>
-						@else
-						{{config('custom.status.'.$task->status)}}
-						@endif
-					</td>
-
-					<td align="center">
-						<div class="list-icons">
-							<div class="dropdown">
-								<a href="#" class="list-icons-item" data-toggle="dropdown">
-									<i class="icon-menu9"></i>
-								</a>
-								
-								<div class="dropdown-menu dropdown-menu-right">
-									@if(\Auth::user()->role<=20)
-									<a href="https://wa.me/{{$task->user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
-									@endif
-									@if (\Auth::user()->role==1 )
-									<a href="{{ route('tasks.edit',$task->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-									@elseif (\Auth::user()->role==10 || \Auth::user()->id == $task->handler )
-									<a href="{{ route('tasks.edit',$task->id)}}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>
-									@endif
-									@if (\Auth::user()->role==1 || \Auth::user()->id == $task->user_id )
-									<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id=" {{ $task->id }} " data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>
-									@endif
-									
-									{{-- @if($task->status==1 || \Auth::user()->role==1) --}}
-									@if(\Auth::user()->role==1)
-									<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tasks.destroy', $task->id)}}"><i class="icon-x"></i> Delete</a>
-									@endif
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				@php ($i++)
-				@endforeach
-				@else
-				<tr><td align="center" colspan="8">Data Kosong</td></tr>
-				@endif 
 			</tbody>
 		</table>
 		
@@ -296,6 +155,7 @@
 <script src="{{asset('global_assets/js/plugins/forms/styling/switch.min.js')}}"></script>
 
 <script src="{{asset('assets/js/app.js') }}"></script>
+<script src="{{asset('assets/js/custom.js') }}"></script>
 <script src="{{asset('global_assets/js/demo_pages/form_checkboxes_radios.js')}}"></script>
 <script src="{{asset('global_assets/js/demo_pages/components_modals.js') }}"></script>
 <script>
@@ -320,6 +180,21 @@
 	});
 	
 	var DatatableBasic = function() {
+		// const data?.current_user = Auth::user()->id
+
+		// const data?.current_user = @php Auth::user()->id @endphp
+
+		const severity = {
+			'1': 'Low',
+			'2': 'Normal',
+			'3': 'High',
+		}
+
+		const status = {
+			'1': 'Baru',
+			'2': 'Sedang Dikerjakan',
+			'3': 'Selesai',
+		}
 		
 		// Basic Datatable examples
 		var _componentDatatableBasic = function() {
@@ -334,7 +209,7 @@
 				columnDefs: [{ 
 					orderable: false,
 					// width: 100,
-					targets: [ 0, 1, 2, 3, 4, 5, 6, 7, 9 ]
+					targets: "_all"
 				}],
 				dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 				language: {
@@ -345,8 +220,589 @@
 				}
 			});
 			
-			// Basic datatable
-			$('.datatable-basic').DataTable();
+			function shorten(str, maxLen, separator = ' ') {
+				if (str.length <= maxLen) return str;
+				return str.substr(0, str.lastIndexOf(separator, maxLen)) + '...';
+			};
+			// Premium datatable
+			@if(Auth::user()->role == 10)
+				$('.datatable-p').DataTable({
+					// "scrollX": true,
+					processing: true,
+					serverSide: true,
+					ajax: {
+						"type": "GET",
+						"url": "/gettasks/premium",
+					},
+					columns: [
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return row.DT_RowIndex
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let date = new Date(data?.created_at)
+								let dd = date.getDate()
+								let mm = date.getMonth()
+								let yyyy = date.getFullYear()
+
+								if (dd < 10) dd = '0' + dd
+								if (mm < 10) mm = '0' + mm
+								if (yyyy < 10) yyyy = '0' + yyyy
+
+								return `${yyyy}-${mm}-${dd}`
+							}
+						},
+						{
+							data: "username",
+							name: "username"
+						},
+						{
+							data: "nama_proyek",
+							name: "nama_proyek"
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return data?.kebutuhan ? shorten(data?.kebutuhan, 100) : "-"
+							}
+						},
+						{
+							data: null,
+							name: "severity",
+							render: (data, type, row) => {
+								return data?.severity ? severity[data?.severity] : '-'
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let formCheck = 
+									`<div class="form-check">
+										<label class="form-check-label">`
+								if (data?.assign?.nama == null) {
+									formCheck += `<p style="color:#ff0f0f;">Belum ada handler</p>`
+								} else {
+									formCheck += data?.assign?.nama
+								}
+								formCheck += 
+										`</label>
+									</div>`
+								
+								return formCheck
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let checkbox = ''
+								if (data?.assign?.nama) {
+										checkbox = `<input data-id="${data?.id}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" checked>`
+								} else {
+										checkbox = `<input data-id="${data?.id}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive">`										
+								}
+								return checkbox
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let spanStatus = ''
+
+								if (data?.status == 2) {
+									spanStatus = `<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">${status[data?.status]}</span>`
+								} else {
+									spanStatus = status[data?.status]
+								}
+								return spanStatus
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let dataId = data?.id
+								let telpRef = "https://wa.me/{{':telp'}}"
+								telpRef = telpRef.replace(':telp', data?.user?.telp)
+								let editRef = "{{ route('tasks.edit', ':id')}}"
+								editRef = editRef.replace(':id', dataId)
+								let delUri = "{{ route('tasks.destroy', ':id')}}"
+								delUri = delUri.replace(':id', dataId)
+								
+								let actionsButton =
+									`<div class="dropdown">
+										<a href="#" class="list-icons-item" data-toggle="dropdown">
+											<i class="icon-menu9"></i>
+										</a>
+										
+										<div class="dropdown-menu dropdown-menu-right">`
+								@if(\Auth::user()->role<=20)
+											actionsButton += `<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
+								@endif
+								@if (\Auth::user()->role==1 )
+											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
+								@elseif (\Auth::user()->role==10)
+											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>`
+								@else
+											if (data?.current_user == data?.handler) {
+												actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>`
+											}
+								@endif
+								@if (\Auth::user()->role==1)
+										actionsButton += `<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id="${dataId}" data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>`
+								@else
+											if (data?.current_user == data?.user_id) {
+												actionsButton += `<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id="${dataId}" data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>`
+											}
+								@endif
+								@if(\Auth::user()->role==1)
+										actionsButton += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
+								@endif
+									actionsButton += `</div>
+								</div>`
+
+								return actionsButton
+							}
+						}
+					]
+				});
+			@else
+				$('.datatable-p').DataTable({
+					// "scrollX": true,
+					processing: true,
+					serverSide: true,
+					ajax: {
+						"type": "GET",
+						"url": "/gettasks/premium",
+					},
+					columns: [
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return row.DT_RowIndex
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let date = new Date(data?.created_at)
+								let dd = date.getDate()
+								let mm = date.getMonth()
+								let yyyy = date.getFullYear()
+
+								if (dd < 10) dd = '0' + dd
+								if (mm < 10) mm = '0' + mm
+								if (yyyy < 10) yyyy = '0' + yyyy
+
+								return `${yyyy}-${mm}-${dd}`
+							}
+						},
+						{
+							data: "username",
+							name: "username"
+						},
+						{
+							data: "nama_proyek",
+							name: "nama_proyek"
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return data?.kebutuhan ? shorten(data?.kebutuhan, 100) : "-"
+							}
+						},
+						{
+							data: null,
+							name: "severity",
+							render: (data, type, row) => {
+								return data?.severity ? severity[data?.severity] : '-'
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let formCheck = 
+									`<div class="form-check">
+										<label class="form-check-label">`
+								if (data?.assign?.nama == null) {
+									formCheck += `<p style="color:#ff0f0f;">Belum ada handler</p>`
+								} else {
+									formCheck += data?.assign?.nama
+								}
+								formCheck += 
+										`</label>
+									</div>`
+								
+								return formCheck
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let spanStatus = ''
+
+								if (data?.status == 2) {
+									spanStatus = `<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">${status[data?.status]}</span>`
+								} else {
+									spanStatus = status[data?.status]
+								}
+								return spanStatus
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let dataId = data?.id
+								let telpRef = "https://wa.me/{{':telp'}}"
+								telpRef = telpRef.replace(':telp', data?.user?.telp)
+								let editRef = "{{ route('tasks.edit', ':id')}}"
+								editRef = editRef.replace(':id', dataId)
+								let delUri = "{{ route('tasks.destroy', ':id')}}"
+								delUri = delUri.replace(':id', dataId)
+								
+								let actionsButton =
+									`<div class="dropdown">
+										<a href="#" class="list-icons-item" data-toggle="dropdown">
+											<i class="icon-menu9"></i>
+										</a>
+										
+										<div class="dropdown-menu dropdown-menu-right">`
+								@if(\Auth::user()->role<=20)
+											actionsButton += `<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
+								@endif
+								@if (\Auth::user()->role==1 )
+											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
+								@elseif (\Auth::user()->role==10)
+											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>`
+								@else
+											if (data?.current_user == data?.handler) {
+												actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>`
+											}
+								@endif
+								@if (\Auth::user()->role==1)
+										actionsButton += `<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id="${dataId}" data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>`
+								@else
+											if (data?.current_user == data?.user_id) {
+												actionsButton += `<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id="${dataId}" data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>`
+											}
+								@endif
+								@if(\Auth::user()->role==1)
+										actionsButton += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
+								@endif
+									actionsButton += `</div>
+								</div>`
+
+								return actionsButton
+							}
+						}
+					]
+				});
+			@endif
+			
+			// Simple Priorites datatable
+			@if(Auth::user()->role == 10)
+				$('.datatable-sp').DataTable({
+					// "scrollX": true,
+					processing: true,
+					serverSide: true,
+					ajax: {
+						"type": "GET",
+						"url": "/gettasks/simpleprioritas",
+					},
+					columns: [
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return row.DT_RowIndex
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let date = new Date(data?.created_at)
+								let dd = date.getDate()
+								let mm = date.getMonth()
+								let yyyy = date.getFullYear()
+
+								if (dd < 10) dd = '0' + dd
+								if (mm < 10) mm = '0' + mm
+								if (yyyy < 10) yyyy = '0' + yyyy
+
+								return `${yyyy}-${mm}-${dd}`
+							}
+						},
+						{
+							data: "username",
+							name: "username"
+						},
+						{
+							data: "nama_proyek",
+							name: "nama_proyek"
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return data?.kebutuhan ? shorten(data?.kebutuhan, 100) : '-'
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return data?.severity ? severity[data?.severity] : '-'
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let formCheck = 
+									`<div class="form-check">
+										<label class="form-check-label">`
+								if (data?.assign?.nama == null) {
+									formCheck += `<p style="color:#ff0f0f;">Belum ada handler</p>`
+								} else {
+									formCheck += data?.assign?.nama
+								}
+								formCheck += 
+										`</label>
+									</div>`
+								
+								return formCheck
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let checkbox = ''
+								if (data?.assign?.nama) {
+										checkbox = `<input data-id="${data?.id}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" checked>`
+								} else {
+										checkbox = `<input data-id="${data?.id}" class="form-check-input-styled-success toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive">`										
+								}
+								return checkbox
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let spanStatus = ''
+
+								if (data?.status == 2) {
+									spanStatus = `<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">${status[data?.status]}</span>`
+								} else {
+									spanStatus = status[data?.status]
+								}
+								return spanStatus
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let dataId = data?.id
+								let telpRef = "https://wa.me/:id"
+								telpRef = telpRef.replace(':id', data?.user?.telp)
+								let editRef = "{{ route('tasks.edit', ':id')}}"
+								editRef = editRef.replace(':id', dataId)
+								let delUri = "{{ route('tasks.destroy', ':id')}}"
+								delUri = delUri.replace(':id', dataId)
+								
+								let actionsButton =
+									`<div class="dropdown">
+										<a href="#" class="list-icons-item" data-toggle="dropdown">
+											<i class="icon-menu9"></i>
+										</a>
+										
+										<div class="dropdown-menu dropdown-menu-right">`
+								@if(\Auth::user()->role<=20)
+											actionsButton += `<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
+								@endif
+								@if (\Auth::user()->role==1 )
+											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
+								@elseif (\Auth::user()->role==10)
+											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>`
+								@else
+											if (data?.current_user == data?.handler) {
+												actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>`
+											}
+								@endif
+								@if (\Auth::user()->role==1)
+										actionsButton += `<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id="${dataId}" data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>`
+								@else
+											if (data?.current_user ==data?.user_id) {
+												actionsButton += `<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id="${dataId}" data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>`											
+											}
+								@endif
+								@if(\Auth::user()->role==1)
+										actionsButton += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
+								@endif
+									actionsButton += `</div>
+								</div>`
+
+								return actionsButton
+							}
+						}
+					]
+				});
+			@else
+				$('.datatable-sp').DataTable({
+					// "scrollX": true,
+					processing: true,
+					serverSide: true,
+					ajax: {
+						"type": "GET",
+						"url": "/gettasks/simpleprioritas",
+					},
+					columns: [
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return row.DT_RowIndex
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let date = new Date(data?.created_at)
+								let dd = date.getDate()
+								let mm = date.getMonth()
+								let yyyy = date.getFullYear()
+
+								if (dd < 10) dd = '0' + dd
+								if (mm < 10) mm = '0' + mm
+								if (yyyy < 10) yyyy = '0' + yyyy
+
+								return `${yyyy}-${mm}-${dd}`
+							}
+						},
+						{
+							data: "username",
+							name: "username"
+						},
+						{
+							data: "nama_proyek",
+							name: "nama_proyek"
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return data?.kebutuhan ? shorten(data?.kebutuhan, 100) : '-'
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return data?.severity ? severity[data?.severity] : '-'
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let formCheck = 
+									`<div class="form-check">
+										<label class="form-check-label">`
+								if (data?.assign?.nama == null) {
+									formCheck += `<p style="color:#ff0f0f;">Belum ada handler</p>`
+								} else {
+									formCheck += data?.assign?.nama
+								}
+								formCheck += 
+										`</label>
+									</div>`
+								
+								return formCheck
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let spanStatus = ''
+
+								if (data?.status == 2) {
+									spanStatus = `<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">${status[data?.status]}</span>`
+								} else {
+									spanStatus = status[data?.status]
+								}
+								return spanStatus
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let dataId = data?.id
+								let telpRef = "https://wa.me/:id"
+								telpRef = telpRef.replace(':id', data?.user?.telp)
+								let editRef = "{{ route('tasks.edit', ':id')}}"
+								editRef = editRef.replace(':id', dataId)
+								let delUri = "{{ route('tasks.destroy', ':id')}}"
+								delUri = delUri.replace(':id', dataId)
+								
+								let actionsButton =
+									`<div class="dropdown">
+										<a href="#" class="list-icons-item" data-toggle="dropdown">
+											<i class="icon-menu9"></i>
+										</a>
+										
+										<div class="dropdown-menu dropdown-menu-right">`
+								@if(\Auth::user()->role<=20)
+											actionsButton += `<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
+								@endif
+								@if (\Auth::user()->role==1 )
+											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
+								@elseif (\Auth::user()->role==10)
+											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>`
+								@else
+											if (data?.current_user == data?.handler) {
+												actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>`
+											}
+								@endif
+								@if (\Auth::user()->role==1)
+										actionsButton += `<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id="${dataId}" data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>`
+								@else
+											if (data?.current_user ==data?.user_id) {
+												actionsButton += `<button type="button" class="btn dropdown-item open-modal-task" id="statusbtn" data-id="${dataId}" data-toggle="modal" data-target="#modal_task"><i class="icon-check"></i> Selesai</button>`											
+											}
+								@endif
+								@if(\Auth::user()->role==1)
+										actionsButton += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
+								@endif
+									actionsButton += `</div>
+								</div>`
+
+								return actionsButton
+							}
+						}
+					]
+				});
+			@endif
 			
 			// Alternative pagination
 			$('.datatable-pagination').DataTable({
