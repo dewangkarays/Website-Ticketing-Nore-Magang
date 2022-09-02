@@ -127,7 +127,7 @@
 							@endif
 						</div>
 						<div class="col-lg-2">
-							<input type="text" id="noakhir" name="noakhir" class="form-control border-info border-1" value="{{date('dmY')}}" readonly>
+							<input type="text" id="noakhir" name="noakhir" class="form-control border-info border-1" value="{{date('dmY')}}" required>
 						</div>
 						{{-- <div class="col-lg-2">
 							<input type="text" id="nouser" name="nouser" class="form-control border-info border-1" value="{{\Auth::user()->id}}" readonly>
@@ -234,6 +234,13 @@
 		 var url = $(this).data('uri');
 		 $("#delform").attr("action", url);
 	});
+
+	// Regex for validating noakhir invoice number
+	$(function() {
+        $("#noakhir").on("keyup", function(event) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ""));
+        })
+    });
 
 	var DatatableBasic = function() {
 
