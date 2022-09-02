@@ -151,10 +151,6 @@
                 </td>
             </tr>
         </table>
-
-        <div style="margin-top: 20px; margin-bottom: 15px;">
-            <hr>
-        </div>
         
         <table class="main-table" style="margin-top: 15px; line-height: 1">
             <tr>
@@ -167,6 +163,10 @@
             
         </table>
 
+        <div style="margin-top: 20px; margin-bottom: 15px;">
+            <hr>
+        </div>
+        
         @yield('sub-3')
 
             <table>
