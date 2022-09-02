@@ -313,6 +313,15 @@ class TagihanController extends Controller
             $last_tagihan->rekap_dptagihan_id = $last_rekapdptagihan->id;
             $last_tagihan->rekap_tagihan_id = $last_rekaptagihan->id;
             $last_tagihan->update();
+
+            //Memperbarui nilai rekap dp tagihan dan rekap tagihan id ke proyek
+            $proyek_id = $last_tagihan->id_proyek;
+            $proyeks = Proyek::where('id', $proyek_id)->get();
+            foreach ($proyeks as $proyek) {
+                $proyek->rekap_dptagihan_id = $last_rekapdptagihan->id;
+                $proyek->rekap_tagihan_id = $last_rekaptagihan->id;
+                $proyek->update();
+            }
         }
 
         return redirect('/tagihans')->with('success', 'Tagihan saved!');
