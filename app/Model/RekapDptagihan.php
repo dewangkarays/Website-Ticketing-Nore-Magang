@@ -30,6 +30,6 @@ class RekapDptagihan extends Model
 
     public function proyeks()
     {
-        return $this->hasMany('App\Model\Proyek', 'user_id', 'user_id');
+        return $this->hasMany('App\Model\Proyek', 'rekap_dptagihan_id');
     }
 }
