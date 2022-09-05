@@ -82,6 +82,11 @@ class TaskClient extends Controller
         
         $task->save();
 
+        //Mengupdate jumlah task di proyek
+        $proyek = Proyek::find($task->id_proyek);
+        $proyek->task_count = $proyek->task_count - 1;
+        $proyek->update();
+
         // dd($request->file('lampiran')); 
         
         return redirect('/taskclient');
@@ -132,6 +137,8 @@ class TaskClient extends Controller
     {
         //
         $tasks = Task::find($id);
+        $proyek = Proyek::find($tasks->id);
+        $proyek->task_count  = $proyek->task_count + 1;
         $tasks->delete();
         return redirect('/taskclient');
     }
