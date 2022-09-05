@@ -26,7 +26,8 @@
 			<form class="form-validate-jquery" action="{{route('setting.store')}}" method="post" enctype="multipart/form-data">
 				@csrf
 				<fieldset class="mb-3">
-					<legend class="text-uppercase font-size-sm font-weight-bold">General</legend>
+					<h4><b>General</b></h4>
+					<hr>
 					
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Logo</label>
@@ -105,7 +106,26 @@
 							</textarea>
 						</div>
 					</div>
-					
+					<br>
+
+					<h4><b>Lampiran</b></h4>
+					<hr>
+
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">NPWP</label>
+						<div class="col-lg-8">
+							<img class="card-img img-fluid" src="{{$setting ? $setting->npwp : url("global_assets/images/image.png")}}" alt="" style="height:150px;width:150px;object-fit: contain;">
+							<input id="npwp" name="npwp" type="file" class="form-control border-teal border-1">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">UMKM</label>
+						<div class="col-lg-8">
+							<img class="card-img img-fluid" src="{{$setting ? $setting->umkm : url("global_assets/images/image.png")}}" alt="" style="height:150px;width:150px;object-fit: contain;">
+							<input id="umkm" name="umkm" type="file" class="form-control border-teal border-1">
+						</div>
+					</div>
+
 				</fieldset>
 				<div class="text-right">
 					<button type="submit" class="btn btn-success">Simpan<i
