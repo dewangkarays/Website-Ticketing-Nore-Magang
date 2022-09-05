@@ -46,56 +46,6 @@
                 </tr>
             </thead>
             <tbody>
-                @if(!$payments->isEmpty())
-                @php ($i = 1)
-                @foreach($payments as $payment)
-                <tr>
-                    <td>{{$i}}</td>
-                    <td>{{$payment->tanggal}}</td>
-                    <td style="font-size: 15px;">{{ number_format($payment->nominal, 0, ',', ',') }}</td>
-                    {{-- <td align="center">
-                        @if($payment->status == 0 )
-                        <span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">{{config('custom.payment.'.$payment->status)}}</span>
-                        @elseif($payment->status == 1)
-                        <span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{config('custom.payment.'.$payment->status)}}</span>
-                        @else
-                        <span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{config('custom.payment.'.$payment->status)}}</span>
-                        @endif
-                    </td> --}}
-                    <td><div class="datatable-column-width">{!! $payment->keterangan !!}</div></td>
-                    @if(\Auth::user()->role<=20)
-                    <td align="center">
-                        <div class="list-icons">
-                            <div class="dropdown">
-                                <a href="#" class="list-icons-item" data-toggle="dropdown">
-                                    <i class="icon-menu9"></i>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    @if(\Auth::user()->role<=20 && $payment->status == 0)
-                                    <button type="button" class="btn dropdown-item bg-success open-modal-accept" id="statusbtn" data-id=" {{ $payment->id }} " data-toggle="modal" data-target="#modal_terima"><i class="icon-checkmark-circle"></i> Terima</button>
-                                    <button type="button" class="btn dropdown-item bg-danger open-modal-reject" id="statusbtn" data-id=" {{ $payment->id }} " data-payment=" {{ $payment->nominal }} " data-toggle="modal" data-target="#modal_tolak"><i class="icon-cancel-circle2"></i> Tolak</button>
-                                    @endif
-                                    {{-- @if(\Auth::user()->role<=20)
-                                    <a href="https://wa.me/{{@$payment->user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
-                                    @endif --}}
-                                    {{-- <a href="{{ route('payments.edit',$payment->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a> --}}
-                                    {{-- <a href="{{url('/payments/cetak/'.$payment->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a> --}}
-                                    @if(Auth::user()->role==1)
-                                    <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('pemasukans.destroy', $payment->id)}}"><i class="icon-x"></i> Delete</a>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    @endif
-                </tr>
-                @php ($i++)
-                @endforeach
-                @else
-                <tr><td align="center" colspan="6">Data Kosong</td></tr>
-                @endif
-
             </tbody>
         </table>
     </div>
@@ -140,6 +90,7 @@
 <script src="{{ URL::asset('global_assets/js/plugins/buttons/ladda.min.js') }}"></script>
 
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+<script src="{{ URL::asset('assets/js/custom.js') }}"></script>
 <script src="{{ URL::asset('global_assets/js/demo_pages/components_modals.js') }}"></script>
 
 <script>
@@ -179,7 +130,71 @@
             });
 
             // Basic datatable
-            $('.datatable-basic').DataTable()
+            $('.datatable-basic').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "/getpemasukans",
+                columns: [
+                    {
+                        data: null,
+                        name: null,
+                        render: (data, type, row) => {
+                            return row.DT_RowIndex
+                        }
+                    },
+                    {
+                        data: "tanggal",
+                        name: "tanggal"
+                    },
+                    {
+                        data: null,
+                        name: "nominal",
+                        render: (data, type, row) => {
+                            return number_format(data?.nominal);
+                        }
+                    },
+                    {
+                        data: null,
+                        name: "keterangan",
+                        render: (data, type, row) => {
+                            return data?.keterangan ? stripHtml(data?.keterangan) : "-"
+                        }
+                    },
+                    {
+                        data: null,
+                        name: null,
+                        render: (data, type, row) => {
+                            let paymentId = data?.id
+                            let paymentNominal = data?.nominal
+                            let deleteUri = "{{route('pemasukans.destroy', ':id')}}"
+                            deleteUri = deleteUri.replace(':id', paymentId)
+
+                            let actionsButton = 
+                                `<div class="dropdown">
+                                    <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                        <i class="icon-menu9"></i>
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right">`
+                            @if(\Auth::user()->role<=20)
+                                if (data?.status == 0) {
+                                    actionsButton += 
+                                        `<button type="button" class="btn dropdown-item bg-success open-modal-accept" id="statusbtn" data-id=" ${paymentId} " data-toggle="modal" data-target="#modal_terima"><i class="icon-checkmark-circle"></i> Terima</button>
+                                        <button type="button" class="btn dropdown-item bg-danger open-modal-reject" id="statusbtn" data-id=" ${paymentId} " data-payment=" ${paymentNominal} " data-toggle="modal" data-target="#modal_tolak"><i class="icon-cancel-circle2"></i> Tolak</button>`
+                                }
+                            @endif
+                            @if(Auth::user()->role==1)
+                                actionsButton += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${deleteUri}"><i class="icon-x"></i> Delete</a>`
+                            @endif
+                            actionsButton += 
+                                    `</div>
+                                </div>`
+                            
+                            return actionsButton
+                        }
+                    }
+                ]
+            })
 
             // Alternative pagination
             $('.datatable-pagination').DataTable({
