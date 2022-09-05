@@ -16,7 +16,7 @@ class PemasukanLainController extends Controller
     public function index()
     {
         $payments = Payment::where('jenis_pemasukan','=',2)->orderBy('created_at','desc')->get();
-        return view('pemasukans.index', compact('payments'));
+        return view('pemasukans.index');
     }
 
     /**
