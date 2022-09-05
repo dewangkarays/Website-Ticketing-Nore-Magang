@@ -1,12 +1,5 @@
 @extends('printlayout')
-@section('sub-0')
-<td align="right" colspan="2" style="vertical-align: top;">
-    <p style="margin-bottom: 30px">
-        DOKUMEN PENTING<br>
-        <b class="nore-fontcolor font-weight-bold" style="font-size: 29px">Invoice</b>
-        {{-- <p class="nore-fontcolor font-weight-bold" style="font-size: 40px;"><b>Rekap Invoice</b></p> --}}
-    </p>
-    {{-- <br> --}}
+@section('keterangan-invoice')
     <p>
         <b>Nomor: <br></b>
         {{ $rekap->invoice }}
@@ -19,9 +12,8 @@
         <b>Jatuh Tempo: <br></b>
         {{ date('d/m/Y', strtotime($rekap->jatuh_tempo)) }}
     </p>
-</td>
 @endsection
-@section('sub-1')
+@section('tertagih')
     {{-- Sub 1 --}}
     <tr>
         <td><b>Kepada Yth.</b></td>
@@ -52,7 +44,7 @@
     </tr>
 @endsection
 
-@section('sub-2')
+@section('deskripsi-proyek')
     {{-- Sub 2 --}}
     <tbody>
         @foreach ($invoices as $invoice)
@@ -86,7 +78,7 @@
     </tbody>
 @endsection
 
-@section('sub-3')
+@section('nominal-bayar')
     {{-- Sub 3 --}}
             <table style="line-height: 1.5; padding: 5px 10px;">
                 <tr>

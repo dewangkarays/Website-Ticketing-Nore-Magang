@@ -1,50 +1,27 @@
 @extends('printlayout')
-@section('sub-0')
-    <td align="right" colspan="2" style="vertical-align: top;">
-        <p style="margin-bottom: 30px">
-            DOKUMEN PENTING<br>
-            <b class="nore-fontcolor font-weight-bold" style="font-size: 29px">Invoice</b>
-            {{-- <p class="nore-fontcolor font-weight-bold" style="font-size: 40px;"><b>Rekap Invoice</b></p> --}}
-        </p>
-        {{-- <br> --}}
-        <p>
-            <b>Nomor: <br></b>
-            {{ $rekapdp->invoice }}
-        </p>
-        <p>
-            <b>Tanggal: <br></b>
-            {{ date('d/m/Y') }}
-        </p>
-        <p>
-            <b>Jatuh Tempo: <br></b>
-            {{ date('d/m/Y', strtotime($rekapdp->jatuh_tempo)) }}
-        </p>
-    </td>
+@section('keterangan-invoice')
+    <p>
+        <b>Nomor: <br></b>
+        {{ $rekapdp->invoice }}
+    </p>
+    <p>
+        <b>Tanggal: <br></b>
+        {{ date('d/m/Y') }}
+    </p>
+    <p>
+        <b>Jatuh Tempo: <br></b>
+        {{ date('d/m/Y', strtotime($rekapdp->jatuh_tempo)) }}
+    </p>
 @endsection
-@section('sub-1')
-    {{-- Sub 1 --}}
+@section('tertagih')
     <tr>
         <td><b>Kepada Yth.</b></td>
     </tr>
-
     <tr>
         <td style="text-transform: uppercase;">
             {{$rekapdp->nama_tertagih}}
         </td>
     </tr>
-
-    {{-- <tr>
-        <td>
-            &nbsp;
-        </td>
-    </tr> --}}
-
-    {{-- <tr>
-        <td>
-            &nbsp;
-        </td>
-    </tr> --}}
-
     <tr style="width: 200px;">
         <td>
             {{$rekapdp->alamat}}
@@ -52,7 +29,7 @@
     </tr>
 @endsection
 
-@section('sub-2')
+@section('deskripsi-proyek')
     <tbody>
         @foreach ($invoices as $invoice)
         <tr>
@@ -85,7 +62,7 @@
     </tbody>
 @endsection
 
-@section('sub-3')
+@section('nominal-bayar')
     <table style="line-height: 1.5; padding: 5px 10px;">
         <tr>
             <th style="width: 45%; height: 30px"></th>
