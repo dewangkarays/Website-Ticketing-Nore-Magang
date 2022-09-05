@@ -47,52 +47,6 @@
 					</tr>
 				</thead>
 				<tbody>
-				@if(!$users->isEmpty())
-					@php ($i = 1)
-					@foreach($users as $user)
-				    <tr>
-				        <td>{{$i}}</td>
-				        <td><div class="datatable-column-width-small">{{$user->nama}}</div></td>
-				        <td><div class="datatable-column-width">{{$user->username}}</div></td>
-				        <td><div class="datatable-column-width">{{$user->email}}</div></td>
-				        <td><div class="datatable-column-width">{{$user->alamat ? $user->alamat : '-'}}</div></td>
-				        <td align="center">
-				        	@if($user->proyek->sum('task_count') == null )
-								<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">{{$user->proyek->sum('task_count')}}</span>
-							@else
-                                <span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">{{$user->proyek->sum('task_count')}}</span>
-							@endif
-						</td>
-				        <td align="center">
-							<div class="list-icons">
-								<div class="dropdown">
-									<a href="#" class="list-icons-item" data-toggle="dropdown">
-										<i class="icon-menu9"></i>
-									</a>
-
-									<div class="dropdown-menu dropdown-menu-right">
-										<a href="{{ url('createtagihan',$user->id)}}" class="dropdown-item"><i class="icon-file-text"></i> Buat Tagihan</a>
-										<a href="{{ route('members.show',$user->id)}}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
-										<a href="https://wa.me/{{$user->telp}}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
-										@if (Auth::user()->role==1)
-										    <a href="{{ route('members.edit',$user->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-                                            @if ($user->proyek->isEmpty())
-							                    <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_1_danger" data-uri="{{ route('members.destroy', $user->id)}}"><i class="icon-x"></i> Delete</a>
-                                            @else
-							                    <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_2_danger" data-uri="{{ route('members.destroy', $user->id)}}"><i class="icon-x"></i> Delete</a>
-                                            @endif
-										@endif
-									</div>
-								</div>
-							</div>
-				        </td>
-				    </tr>
-				    @php ($i++)
-				    @endforeach
-				@else
-				  	<tr><td align="center" colspan="7">Data Kosong</td></tr>
-				@endif
-
 				</tbody>
 			</table>
 		</div>
@@ -162,6 +116,7 @@
 	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
+	<script src="{{asset('assets/js/custom.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
 	<script>
 		//modal delete
@@ -197,7 +152,91 @@
 		        });
 
 		        // Basic datatable
-		        $('.datatable-basic').DataTable();
+		        $('.datatable-basic').DataTable({
+					processing: true,
+					serverSide: true,
+					ajax: "/getmembers",
+					columns: [
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return row.DT_RowIndex;
+							}
+						},
+						{
+							data: "nama",
+							name: "nama",
+						},
+						{
+							data: "username",
+							name: "username",
+						},
+						{
+							data: "email",
+							name: "email",
+						},
+						{
+							data: null,
+							name: "alamat",
+							render: (data, type, row) => {
+								return data?.alamat ? stripHtml(data?.alamat) : "-"
+							}
+						},
+						{
+							data: null,
+							name: "total_task",
+							render: (data, type, row) => {
+								let totalTask = 0
+								if (data?.proyek != null) {
+									data?.proyek?.map(proyek => {
+										totalTask += proyek.task_count
+									})
+								}
+								return totalTask
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let createRef = "{{route('createtagihan', ':id')}}"
+								createRef = createRef.replace(':id', data?.id)
+								let showRef = "{{route('members.show', ':id')}}"
+								showRef = showRef.replace(':id', data?.id)
+								let telpRef = "https://wa.me/{{':telp'}}"
+								telpRef = telpRef.replace(':telp', data?.telp)
+								let editRef = "{{route('members.edit', ':id')}}"
+								editRef = editRef.replace(':id', data?.id)
+								let deleteUri = "{{route('members.destroy', ':id')}}"
+								deleteUri = deleteUri.replace(':id', data?.id)
+
+								let actionsButton = 
+									`<div class="dropdown">
+										<a href="#" class="list-icons-item" data-toggle="dropdown">
+											<i class="icon-menu9"></i>
+										</a>
+
+										<div class="dropdown-menu dropdown-menu-right">
+											<a href="${createRef}" class="dropdown-item"><i class="icon-file-text"></i> Buat Tagihan</a>
+											<a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
+											<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
+											@if (Auth::user()->role==1)
+												actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
+											if (data?.proyek?.length <= 0) {
+												actionsButton += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_1_danger" data-uri="${deleteUri}"><i class="icon-x"></i> Delete</a>`	
+											} else {
+												actionsButton += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_2_danger" data-uri="${deleteUri}"><i class="icon-x"></i> Delete</a>`
+											}
+											@endif
+										actionsButton += `</div>
+									</div>`
+
+								return actionsButton
+							}
+						}
+					]
+				});
 
 		        // Alternative pagination
 		        $('.datatable-pagination').DataTable({
