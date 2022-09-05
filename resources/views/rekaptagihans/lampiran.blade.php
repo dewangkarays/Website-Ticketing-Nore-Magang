@@ -105,7 +105,7 @@
                         </td>
                         <td align="center">{{$lampiran->keterangan}}</td>
                         <td align="center">
-                            <button class="btn btn-danger btn-lg delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{url('/rekap/lampirandestroy/'. $lampiran->id,$rekap->id)}}"><i class="icon-x"></i> Delete</button>
+                            <button class="btn btn-danger btn-lg delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{url('/rekaptagihan/lampirandestroy/'. $lampiran->id,$rekap->id)}}"><i class="icon-x"></i> Delete</button>
                         </td>
                     </tr>
                     @php ($i++)
