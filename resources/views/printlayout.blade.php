@@ -9,24 +9,28 @@
     <style type="text/css">
 
         @page {
-            margin: 2.54cm 2.55cm 2.54cm 2.54cm;
+            margin: 2cm 2.54cm 2cm 2.54cm;
         }
         *{
             box-sizing: border-box;
         }
         table{
             border-collapse: collapse;
+            margin: 0;
+            padding: 0;
             width: 100%;
-            line-height: 1.2;
         }
         table tr td,
         table tr th{
             font-size: 10px;
         }
+        tr, td {
+            padding: 0;
+        }
         body{
             font-family:Arial, Helvetica, sans-serif;
             color: #595657;
-            background-color:#ffffff;
+            background-color:white;
             /* margin-left: 20px;
             margin-right: 20px; */
         }
@@ -115,37 +119,90 @@
             margin-bottom: 0;
         }
 
+        main table td {
+            padding: 0;
+            margin: 0;
+        }
+
+        .header-table {
+            border-collapse: collapse;
+            /* border: 1px solid black; */
+            width: auto !important;
+        }
+
+        .header-table tr td {
+            margin: 0px;
+            padding: 4px;
+            vertical-align: top;
+            /* border: 1px solid black; */
+            /* width: auto !important; */
+        }
+
+        .header-table p {
+            margin: 0px
+            padding: 0px;
+        }
+
     </style>
 </head>
 
 <body>
-    <header>
-        <table>
-            <tr>
-                <td align="left" rowspan="5" style="vertical-align: top; line-height: 0.75">
-                    <img src="{{url($setting->logo)}}" alt="logo" height="68px">
-                    {{-- <figcaption class="nore-fontcolor" style="font-weight: lighter; letter-spacing: 1px;">&nbsp;&nbsp;&nbsp;&nbsp;CV. NORE INOVASI</figcaption> --}}
-                    <p style="margin-top: 17px"><img src="{{asset('/global_assets/images/icons/instagram.png')}}" height="10pt" alt=""> @nore.web.id</p>
-                    <p><img src="{{asset('/global_assets/images/icons/building.png')}}" height="10pt" alt=""> {!! $setting->alamat !!}</p>
-                    <p><img src="{{asset('/global_assets/images/icons/phone.png')}}" height="10pt" alt=""> +{{$setting->no_telp}} </p>
-                    <p><img src="{{asset('/global_assets/images/icons/mail.png')}}" height="10pt" alt=""> {{$setting->email}}</p>
+    <main>
+        <table style="margin-top: 0px">
+            <tr style="padding: 0cm">
+                <td align="left" style="vertical-align: top;">
+                    <img src="{{url($setting->logo)}}" alt="logo" height="64px">
                 </td>
-
-                @yield('sub-0')
+                <td align="right" style="vertical-align: top;">
+                    <p>
+                        DOKUMEN PENTING<br>
+                        <b class="nore-fontcolor font-weight-bold" style="font-size: 29px">Invoice</b>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="vertical-align: top; padding-top: 8px">
+                    <table  class="header-table">
+                        <tr>
+                            <td>
+                                <img src="{{asset('/global_assets/images/icons/instagram.png')}}" height="10pt" alt="">
+                            </td>
+                            <td>@nore.web.id</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="{{asset('/global_assets/images/icons/building.png')}}" height="10pt" alt="">
+                            </td>
+                            <td>{!! $setting->alamat !!}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="{{asset('/global_assets/images/icons/phone.png')}}" height="10pt" alt="">
+                            </td>
+                            <td>+{{$setting->no_telp}}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="{{asset('/global_assets/images/icons/mail.png')}}" height="10pt" alt="">
+                            </td>
+                            <td>{{$setting->email}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td align="right" style="vertical-align: top">
+                    @yield('keterangan-invoice')
+                </td>
             </tr>
         </table>
-        <div style="margin-top: -120px; margin-bottom: -5px;">
+        <div style="margin-top: 20px; margin-bottom: 20px;">
             <hr>
         </div>
-    </header>
-
-    <main>
         <table style="margin-top: 20px;margin-bottom: 8px;font-size: 15px !important">
             <tr>
                 <td style="width: 50%; vertical-align: top">
                     <table style="padding-right: 50px; line-height: 1.75;">
                         {{-- @foreach ($invoices as $invoice) --}}
-                        @yield('sub-1')
+                        @yield('tertagih')
                         {{-- @endforeach --}}
                     </table>
                 </td>
@@ -160,7 +217,7 @@
                 <th align="right" style="width: auto" class="nore-fontcolor">JUMLAH (Rp)</th>
             </tr>
 
-            @yield('sub-2')
+            @yield('deskripsi-proyek')
             
         </table>
 
@@ -170,14 +227,14 @@
 
         @yield('sub-3')
 
-            <table>
+            <table style="margin-top: 2cm">
                 <tr>
                     <th align="left" style="font-weight: bold; width:50%">Catatan:</th>
-                    <th style="width:18%"></th>
-                    <th align="center" style="font-size: 12px; font-weight: normal; width:25%; margin-left:6px">Semarang, {{ date('d') }} {{ config('custom.bulan.' .date('n')) }} {{ date('Y') }}</th>
+                    <th style="width:20%"></th>
+                    <th align="center" style="font-size: 12px; font-weight: normal; width:auto; margin-left:6px">Semarang, {{ date('d') }} {{ config('custom.bulan.' .date('n')) }} {{ date('Y') }}</th>
                 </tr>
                 <tr>
-                    <td align="left" rowspan="5" style="vertical-align: top;">
+                    <td align="left" style="vertical-align: top;">
                         {{-- <span style="font-weight:bold">Catatan:</span> --}}
                         <li class="note1" style="list-style-type: none;">Jika pembayaran dilakukan melalui transfer bank, <b>mohon untuk menyertakan nomor invoice sebagai keterangan</b> kemudian kirimkan bukti pembayaran via Whatsapp/E-Mail agar pelunasan dapat segera kami catat.</li>
                         <li class="note2" style="list-style-type: none;">Biaya transfer menjadi tanggung jawab pelanggan/pengirim dana.</li>
