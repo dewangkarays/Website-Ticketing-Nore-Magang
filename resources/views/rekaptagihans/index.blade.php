@@ -242,7 +242,7 @@
                                 let showRef = "{{route('rekaptagihans.show', ':id')}}"
                                 showRef = showRef.replace(':id', data?.id)
 
-                                let lampiranRef = "{{route('lampiran', ':id')}}"
+                                let lampiranRef = "{{route('lampiran_rt', ':id')}}"
 								lampiranRef = lampiranRef.replace(':id', data?.id)
 
                                 let cetakRef = "{{route('cetakrekap', ':id')}}"

@@ -390,6 +390,87 @@ class RekapTagihanController extends Controller
         return redirect()->route('rekaptagihans.index')->with('error', 'Data dijadikan invalid!');
     }
 
+    public function lampiran(Request $request,$id)
+    {
+        // $this->validate($request, [
+        //     'gambar' => 'image|mimes:jpeg,png,jpg,gif,svg',
+        // ]);
+        $request->validate([
+            'gambar' => 'mimes:jpeg,png,jpg,gif,svg',
+            'jenis_lampiran =>required'
+        ]);
+
+        if ($request->isMethod('GET')) {
+            $rekap = RekapTagihan::find($id);
+            $lampirans = Lampiran_gambar::where('rekap_tagihan_id', $id)->orderBy('id', 'desc')->get();
+            // dd($lampirans);
+            return view('rekaptagihans.lampiran', compact('rekap', 'lampirans'));
+        }
+
+        if ($request->isMethod('POST')) {
+        $data = $request->except(['_token', '_method','gambar']);
+        // $tagihan = Tagihan::find($id);
+        // dd($tagihan);
+
+        $tujuan_upload = config('app.upload_url').'attachment/lampiran';
+        $file = $request->file('gambar');
+        if($file){
+                $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
+                // $destinationPath = public_path('/thumbnail');
+                
+                $imgsize = $file->getSize();
+                $imgsize = number_format($imgsize / 1048576,2);
+                $img = \Image::make($file->getRealPath());
+                // dd($imgsize);
+                
+                //compress file
+                if(filesize($file) < 204800){
+                    $img->save($tujuan_upload.'/'.$name, 90, 'jpg');
+                }
+                elseif(filesize($file) < 1048576){
+                    $img->save($tujuan_upload.'/'.$name, 80, 'jpg');
+                } else{
+                    $img->save($tujuan_upload.'/'.$name, 10, 'jpg');
+                }
+                // $img->move($tujuan_upload, $name);
+                // $name = \Auth::user()->id."_".time().".".$file->getClientOriginalExtension();
+                // $up1 = $file->move($tujuan_upload,$name);
+                if($img){
+                    $data['gambar'] = $tujuan_upload.'/'.$name;
+                }
+        }
+        
+        //upload data lampiran to database
+        $lampiran = Lampiran_gambar::create([
+            'rekap_tagihan_id' => $id,
+            'gambar' => $data['gambar'],
+            'keterangan' => $data['keterangan'],
+            'jenis_lampiran' => $data['jenis_lampiran']
+        
+        ]);
+        $lampiran->save();
+        }
+
+        return redirect()->back()->with('success', 'File uploaded!');
+
+    }
+
+    public function lampirandestroy(Request $request,$id,$idm)
+    {
+        $data = $request->except(['_token', '_method']);
+        $lampiran = Lampiran_gambar::find($id);
+        $path = $lampiran->gambar;
+        // dd($idm);
+
+        if(File::exists($path)) {
+            File::delete($path);
+        }
+
+        $lampiran->delete();
+
+        return redirect()->back()->with('success', 'File deleted!');
+    }
+
     public function getrekap($status) {
         if ($status == 'aktif') {
             $rekaptagihans = RekapTagihan::where('status','<','4')

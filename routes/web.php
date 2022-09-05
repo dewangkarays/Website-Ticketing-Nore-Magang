@@ -39,12 +39,15 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::resource('tagihans', 'TagihanController');
 	// Route::get('tagihans/cetak/{id}',  'TagihanController@cetak')->name('cetak');
 	Route::get('exporttagihan', 'TagihanController@export_excel');
-	Route::get('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
+	// Route::get('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
 	Route::get('getweb/{id}',  'TagihanController@getweb');
 	Route::get('getkadaluarsa/{nama_proyek}',  'TagihanController@getkadaluarsa');
     Route::get('getmasa_berlaku/{id}',  'TagihanController@getmasa_berlaku');
-	Route::post('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
-	Route::post('tagihans/lampirandestroy/{id}/{idm}', 'TagihanController@lampirandestroy')->name('lampirandestroy');
+	// Route::post('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
+	// Route::post('tagihans/lampirandestroy/{id}/{idm}', 'TagihanController@lampirandestroy')->name('lampirandestroy');
+	Route::get('rekaptagihan/lampiran/{id}',  'RekapTagihanController@lampiran')->name('lampiran_rt');
+	Route::post('rekaptagihan/lampiran/{id}',  'RekapTagihanController@lampiran')->name('lampiran_rt');
+	Route::post('rekap/lampirandestroy/{id}/{idm}', 'RekapTagihanController@lampirandestroy')->name('lampirandestroy');
 	Route::match(['get', 'post'], '/tagihanuser',  'TagihanController@tagihanuser')->name('tagihanuser');
 	Route::resource('rekaptagihans','RekapTagihanController');
 	Route::resource('rekapdptagihans','RekapDptagihanController');
