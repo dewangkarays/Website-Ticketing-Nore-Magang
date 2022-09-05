@@ -198,8 +198,8 @@
 							render: (data, type, row) => {
 								let editRef = "{{route('tagihans.edit', ':id')}}"
 								editRef = editRef.replace(':id', data?.id)
-								let lampiranRef = "{{url('tagihans/lampiran/:id')}}"
-								lampiranRef = lampiranRef.replace(':id', data?.id)
+								// let lampiranRef = "{{url('tagihans/lampiran/:id')}}"
+								// lampiranRef = lampiranRef.replace(':id', data?.id)
 								let delUri = "{{route('tagihans.destroy', ':id')}}"
 								delUri = delUri.replace(':id', data?.id)
 
@@ -210,8 +210,8 @@
 
 									<div class="dropdown-menu dropdown-menu-right">
 										<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-										{{-- <a href="{{url('/tagihans/cetak/'.$tagihan->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a> --}}
-										<a href="${lampiranRef}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a>`
+										{{-- <a href="{{url('/tagihans/cetak/'.$tagihan->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a> --}}`
+										// <a href="${lampiranRef}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a>`
 								@if (Auth::user()->role==1)
 							        actionsButton += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
 								@endif
