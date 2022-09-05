@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User;
+use Datatables;
 
 class MemberController extends Controller
 {
@@ -18,7 +19,7 @@ class MemberController extends Controller
     {
         $users = User::where('role','>','20')->orderBy('nama')->get();
         //dd($users);
-        return view('members.index', compact('users'));
+        return view('members.index');
     }
 
     /**
@@ -171,5 +172,10 @@ class MemberController extends Controller
         $user->delete();
 
         return redirect('/members')->with('success', 'Member deleted!');
+    }
+
+    public function getmembers() {
+        $users = User::where('role','>','20')->orderBy('nama')->with('proyek')->get();
+        return Datatables::of($users)->addIndexColumn()->make(true);
     }
 }
