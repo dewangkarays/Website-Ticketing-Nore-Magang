@@ -137,8 +137,9 @@ class TaskClient extends Controller
     {
         //
         $tasks = Task::find($id);
-        $proyek = Proyek::find($tasks->id);
+        $proyek = Proyek::find($tasks->id_proyek);
         $proyek->task_count  = $proyek->task_count + 1;
+        $proyek->update();
         $tasks->delete();
         return redirect('/taskclient');
     }
