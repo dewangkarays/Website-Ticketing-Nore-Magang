@@ -129,6 +129,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('getrekap/{status}', 'RekapTagihanController@getrekap');
 		Route::get('getpayments', 'PaymentController@getpayments');
 		Route::get('getpengeluarans', 'PengeluaranController@getpengeluarans');
+		Route::get('getpemasukans', 'PemasukanLainController@getpemasukans');
 	});
 
 	//customer
