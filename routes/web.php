@@ -121,7 +121,7 @@ Route::group(['middleware' => ['auth']], function() {
 	// url ajax server side datatables
 	Route::group(['middleware' => ['role:1,10,20']], function() {
 		Route::get('getkaryawans', 'UserController@getkaryawans');
-		// Route::get('getmembers', 'MemberController@getmembers');
+		Route::get('getmembers', 'MemberController@getmembers');
 		Route::get('getproyeks', 'ProyekController@getproyeks');
 		Route::get('gettasks/{type}', 'TaskController@gettasks');
 		Route::get('gettagihans', 'TagihanController@gettagihans');
