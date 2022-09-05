@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Payment;
+use Datatables;
 
 class PemasukanLainController extends Controller
 {
@@ -15,7 +16,7 @@ class PemasukanLainController extends Controller
     public function index()
     {
         $payments = Payment::where('jenis_pemasukan','=',2)->orderBy('created_at','desc')->get();
-        return view('pemasukans.index', compact('payments'));
+        return view('pemasukans.index');
     }
 
     /**
@@ -94,5 +95,10 @@ class PemasukanLainController extends Controller
         $payment->delete();
 
         return redirect('/pemasukans')->with('success', 'Income deleted!');
+    }
+
+    public function getpemasukans() {
+        $payments = Payment::where('jenis_pemasukan','=',2)->orderBy('created_at','desc')->get();
+        return Datatables::of($payments)->addIndexColumn()->make(true);
     }
 }

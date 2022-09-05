@@ -270,7 +270,7 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								return data?.kebutuhan ? shorten(data?.kebutuhan, 100) : "-"
+								return data?.kebutuhan ? shorten(stripHtml(data?.kebutuhan), 100) : "-"
 							}
 						},
 						{
@@ -420,7 +420,7 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								return data?.kebutuhan ? shorten(data?.kebutuhan, 100) : "-"
+								return data?.kebutuhan ? shorten(stripHtml(data?.kebutuhan), 100) : "-"
 							}
 						},
 						{
@@ -560,7 +560,7 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								return data?.kebutuhan ? shorten(data?.kebutuhan, 100) : '-'
+								return data?.kebutuhan ? shorten(stripHtml(data?.kebutuhan), 100) : "-"
 							}
 						},
 						{
@@ -710,7 +710,7 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								return data?.kebutuhan ? shorten(data?.kebutuhan, 100) : '-'
+								return data?.kebutuhan ? shorten(stripHtml(data?.kebutuhan), 100) : "-"
 							}
 						},
 						{
