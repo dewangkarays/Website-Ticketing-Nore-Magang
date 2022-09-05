@@ -242,6 +242,9 @@
                                 let showRef = "{{route('rekaptagihans.show', ':id')}}"
                                 showRef = showRef.replace(':id', data?.id)
 
+                                let lampiranRef = "{{route('lampiran', ':id')}}"
+								lampiranRef = lampiranRef.replace(':id', data?.id)
+
                                 let cetakRef = "{{route('cetakrekap', ':id')}}"
                                 cetakRef = cetakRef.replace(':id', data?.id)
 
@@ -259,7 +262,8 @@
                                             </a>
 
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="${showRef}" class="dropdown-item"><i class="icon-images3"></i> Show</a>
+                                                <a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
+                                                <a href="${lampiranRef}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a>
                                                 <a href="${cetakRef}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>`
                                 if (data?.status == 1)
                                     actionButtons += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
