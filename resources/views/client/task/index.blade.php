@@ -245,7 +245,7 @@
               <div class="col" id="task"><h3 style="padding-top: 1em;">Data Task</h3></div>
           </div>
           </div>
-            <p>Sisa Task : <span style="font-weight:bold; font-size:26px !important;"> {{@$users->first()->task_count - count(@$tasks)}} </span></p>
+            <p>Sisa Task : <span style="font-weight:bold; font-size:26px !important;"> {{$user->task_count}} </span></p>
             @if (count($tasks)==0)
               <p style="text-align: center;">Belum ada Task</p>
             @else
