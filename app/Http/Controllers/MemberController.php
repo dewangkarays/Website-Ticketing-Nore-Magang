@@ -123,41 +123,43 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-            if ($request->email != null) {
-                $validator = Validator::make($request->all(), [
-                    'email'=>'unique:users',
-                ]);
+        $member = User::find($id);
+
+        if ($request->email != $member->email) {
+            $validator = Validator::make($request->all(), [
+                'email'=>'unique:users',
+            ]);
     
-                if ($validator->fails()) {
-                    return redirect()->back()
-                                ->withErrors($validator)
-                                ->withInput();
-                }
+            if ($validator->fails()) {
+                return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
             }
+        }
 
-            if ($request->telp != null) {
-                $validator = Validator::make($request->all(), [
-                    'telp'=>'unique:users',
-                ]);
+        if ($request->telp != $member->telp) {
+            $validator = Validator::make($request->all(), [
+                'telp'=>'unique:users',
+            ]);
     
-                if ($validator->fails()) {
-                    return redirect()->back()
-                                ->withErrors($validator)
-                                ->withInput();
-                }
+            if ($validator->fails()) {
+                return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
             }
+        }
 
-            $user = User::find($id);
+        $user = User::find($id);
 
-            if($request->get('password')!=''){
-                $data['password'] = bcrypt($request->get('password'));
-            }
+        if($request->get('password')!=''){
+            $data['password'] = bcrypt($request->get('password'));
+        }
 
-            $data = $request->except(['_token', '_method','password']);
+        $data = $request->except(['_token', '_method','password']);
 
-            $user->update($data);
+        $user->update($data);
 
-            return redirect('/members')->with('success', 'Member updated!');
+        return redirect('/members')->with('success', 'Member updated!');
     }
 
     /**
