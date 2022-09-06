@@ -61,16 +61,14 @@ class PaymentClient extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // $payment = new Payment;
-        // $payment->user_id = \Auth::user()->id;
-        // $payment->tgl_bayar = $request->tgl_bayar;
-        // $payment->keterangan = $request->keterangan;
-        // $payment->nominal = $request->nominal;
-        // $payment->save();
-    
-        // return redirect('/payment')->with('success', 'Payment saved!');
-
+        
+        $tagihans = Tagihan::orderBy('created_at')->get();
+        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+        $tagihanhistories = Tagihan::where('user_id',\Auth::user()->id)->where('status','=','2')->get()->count();
+        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
+        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
+        $user = User::where('id',\Auth::user()->id)->first();
+        return view('client.tagihan.tagihan',compact('tagihans','tagihanactives','tagihanhistories','highproyek','taskactives','user'));
         
 
     }
