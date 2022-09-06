@@ -245,7 +245,7 @@
           <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Tanggal Pembayaran</label>
             <div class="col-sm-8">
-              <input name="tgl_bayar" type="date" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif">
+              <input name="tgl_bayar" type="date" class="form-control pickadate-accessibility datepicker" placeholder="Tanggal Masa Aktif">
             </div>
           </div>
           <div class="form-group row">
@@ -287,6 +287,12 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
+    <script type="text/javascript">
+      window.onload=function() {
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementsByName("tgl_bayar")[0].setAttribute('min', today);
+      }
+        </script> 
     <script>
       $.ajax({
 						type: 'GET',
@@ -295,7 +301,6 @@
 							$('#tagihan_id').html(data);
 						}
 					});
-        }
         
       function changeTagihan(select){
         var id = $(select).find(':selected').val();
