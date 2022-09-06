@@ -217,20 +217,17 @@ class RekapTagihanController extends Controller
 
         $rekaptagihan = RekapTagihan::where('id',$id)->first();
 
-        foreach ($tagihans as $tagihan)
-        {
-
-        
-
-        $langganan = Proyek::where('user_id', $tagihan->user_id)
-                        ->where('jenis_layanan','=','3') //jumlah langganan
-                        ->count();
-        $ads = Proyek::where('user_id', $tagihan->user_id)
-                        ->where('jenis_proyek','=','2') //jumlah ads
-                        ->count();
-        $lainnya = Proyek::where('user_id', $tagihan->user_id)
-                        ->where('jenis_proyek','=','5') //jumlah lainnya
-                        ->count();
+        // foreach ($tagihans as $tagihan)
+        // {
+        // $langganan = Proyek::where('user_id', $tagihan->user_id)
+        //                 ->where('jenis_layanan','=','3') //jumlah langganan
+        //                 ->count();
+        // $ads = Proyek::where('user_id', $tagihan->user_id)
+        //                 ->where('jenis_proyek','=','2') //jumlah ads
+        //                 ->count();
+        // $lainnya = Proyek::where('user_id', $tagihan->user_id)
+        //                 ->where('jenis_proyek','=','5') //jumlah lainnya
+        //                 ->count();
 
         // dd($rekaptagihan);
 
@@ -241,28 +238,27 @@ class RekapTagihanController extends Controller
                 ->with('error','Tidak bisa mengubah status, rekap ini memiliki data pembayaran.');
             }
             else{
-                $tagihan->langganan = $langganan;
-                $tagihan->ads = $ads;
-                $tagihan->lainnya = $lainnya;
-                $tagihan->invoice = $rekaptagihan->invoice;
-                $tagihan->save();
+                // $tagihan->langganan = $langganan;
+                // $tagihan->ads = $ads;
+                // $tagihan->lainnya = $lainnya;
+                // $tagihan->invoice = $rekaptagihan->invoice;
+                // $tagihan->save();
                 $rekaptagihan->update($data);
-                
+                return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan updated!');
             }
         }
         else{
-            $tagihan->langganan = $langganan;
-            $tagihan->ads = $ads;
-            $tagihan->lainnya = $lainnya;
-            $tagihan->invoice = $rekaptagihan->invoice;
-            // dd($tagihans);
-            $tagihan->save();
+            // $tagihan->langganan = $langganan;
+            // $tagihan->ads = $ads;
+            // $tagihan->lainnya = $lainnya;
+            // $tagihan->invoice = $rekaptagihan->invoice;
+            // // dd($tagihans);
+            // $tagihan->save();
             $rekaptagihan->update($data);
-            // return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan updated!');
+            return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan updated!');
         }
     }
-    return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan updated!');
-    }
+    
 
     /**
      * Remove the specified resource from storage.
