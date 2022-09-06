@@ -41,7 +41,7 @@ class TaskClient extends Controller
     public function create()
     {
         $tasks = Task::where('user_id',\Auth::user()->id)->get();
-        $proyeks = Proyek::where('user_id',\Auth::user()->id)->get();
+        $proyeks = Proyek::where('user_id',\Auth::user()->id)->where('task_count', '>', '0')->get();
         $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
         $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
