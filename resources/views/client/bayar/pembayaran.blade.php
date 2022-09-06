@@ -245,7 +245,7 @@
           <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Tanggal Pembayaran</label>
             <div class="col-sm-8">
-              <input name="tgl_bayar" type="date" class="form-control pickadate-accessibility datepicker" placeholder="Tanggal Masa Aktif">
+              <input name="tgl_bayar" type="date" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif">
             </div>
           </div>
           <div class="form-group row">
@@ -292,15 +292,15 @@
         var today = new Date().toISOString().split('T')[0];
         document.getElementsByName("tgl_bayar")[0].setAttribute('min', today);
       }
-        </script> 
+    </script> 
     <script>
       $.ajax({
-						type: 'GET',
-						url: "{{ url('/gettagihan')}}/"+id,
-						success: function (data) {
-							$('#tagihan_id').html(data);
-						}
-					});
+				type: 'GET',
+				url: "{{ url('/gettagihan')}}/"+id,
+				success: function (data) {
+					$('#tagihan_id').html(data);
+				}
+			});
         
       function changeTagihan(select){
         var id = $(select).find(':selected').val();
