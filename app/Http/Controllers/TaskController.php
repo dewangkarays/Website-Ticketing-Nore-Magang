@@ -491,4 +491,15 @@ class TaskController extends Controller
 
         return Datatables::of($tasks)->addColumn("current_user", $userId)->addIndexColumn()->make(true);
     }
+
+    public function gettaskshistory() {
+        // if(\Auth::user()->role > 20){
+        //     $tasks = Task::where('status','=','3')->where('user_id',\Auth::user()->id)->with('user')->with('assign')->get(); //customer
+        // } else {
+        //     $tasks = Task::where('status','=','3')->with('user')->with('assign')->get(); //admin & karyawan
+        // }
+        $tasks = Task::where('status','=','3')->orderByDesc('id')->with('user')->with('assign')->get(); //admin & karyawan
+
+        return Datatables::of($tasks)->addIndexColumn()->make(true);
+    }
 }

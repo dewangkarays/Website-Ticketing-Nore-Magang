@@ -30,6 +30,7 @@
 			<table class="table datatable-basic table-hover">
 				<thead>
 					<tr>
+						<th>No</th>
 						<th>Username</th>
 						<th>Kebutuhan</th>
 						<th>Handler</th>
@@ -38,34 +39,7 @@
 					</tr>
 				</thead>
 				<tbody>
-				@if(!$tasks->isEmpty())
-					@foreach($tasks as $task)
-				    <tr>
-				        <td><div class="datatable-column-width">{{@$task->user->username}}</div></td>
-				        <td><div class="datatable-column-width">{{Str::words($task->kebutuhan, 50)}}</div></td>
-				        <td><div class="datatable-column-width">{{@$task->assign->nama}}</div></td>
-				        <td align="center">{{config('custom.status.'.$task->status)}}</td>
-				        <td align="center">
-							<div class="list-icons">
-								<div class="dropdown">
-									<a href="#" class="list-icons-item" data-toggle="dropdown">
-										<i class="icon-menu9"></i>
-									</a>
-
-									<div class="dropdown-menu dropdown-menu-right">
-										<a href="{{ route('tasks.show',$task->id)}}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
-										@if (\Auth::user()->role==1 )
-										<a href="{{ route('tasks.edit',$task->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-										@endif
-									</div>
-								</div>
-							</div>
-				        </td>
-				    </tr>
-				    @endforeach
-				@else
-				  	<tr><td align="center" colspan="5">Data Kosong</td></tr>
-				@endif 
+				
 				</tbody>
 			</table>
 		</div>
@@ -110,6 +84,7 @@
 	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js') }}"></script>
 
 	<script src="{{asset('assets/js/app.js') }}"></script>
+	<script src="{{asset('assets/js/custom.js') }}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/components_modals.js') }}"></script>
 	<script>
 		//modal delete
@@ -119,6 +94,17 @@
 		});
 
 		var DatatableBasic = function() {
+
+			const status = {
+				'1': 'Baru',
+				'2': 'Sedang Dikerjakan',
+				'3': 'Selesai',
+			}
+
+			function shorten(str, maxLen, separator = ' ') {
+				if (str.length <= maxLen) return str;
+				return str.substr(0, str.lastIndexOf(separator, maxLen)) + '...';
+			};
 
 		    // Basic Datatable examples
 		    var _componentDatatableBasic = function() {
@@ -133,7 +119,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 4 ]
+		                targets: [ 5 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -145,7 +131,75 @@
 		        });
 
 		        // Basic datatable
-		        $('.datatable-basic').DataTable();
+		        $('.datatable-basic').DataTable({
+					processing: true,
+					serverSide: true,
+					ajax: "/gettaskshistory",
+					columns: [
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return row.DT_RowIndex
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return data?.user?.nama ? data?.user.nama : "-"
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return data?.kebutuhan ? shorten(stripHtml(data?.kebutuhan), 100) : "-"
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return data?.assign?.nama
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return status[data?.status]
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								let id = data?.id
+								let showRef = "{{ route('tasks.show', ':id')}}"
+								showRef = showRef.replace(':id', id)
+								let editRef = "{{ route('tasks.edit', ':id')}}"
+								editRef = editRef.replace(':id', id)
+
+								let actionsButton =
+									`<div class="dropdown">
+										<a href="#" class="list-icons-item" data-toggle="dropdown">
+											<i class="icon-menu9"></i>
+										</a>
+
+										<div class="dropdown-menu dropdown-menu-right">
+											<a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a>`
+								@if (\Auth::user()->role==1 )
+											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
+								@endif
+										actionsButton += `</div>
+									</div>`
+								
+								return actionsButton
+							}
+						}
+					]
+				});
 
 		        // Alternative pagination
 		        $('.datatable-pagination').DataTable({
