@@ -276,6 +276,15 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $task = Task::find($id);
+
+        $proyek = Proyek::find($task->id_proyek);
+        $proyek->task_count = $proyek->task_count + 1;
+        $proyek->update();
+
+        $member = User::find($task->user_id);
+        $member->task_count = $member->task_count + 1;
+        $member->update();
+
         $task->delete();
 
         $attachment = Attachment::where('task_id', '=', $id);
