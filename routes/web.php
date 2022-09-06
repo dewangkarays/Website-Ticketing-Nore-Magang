@@ -23,70 +23,93 @@ Route::get('/del/{id}',  'AttachmentController@destroy');
 
 
 Route::group(['middleware' => ['auth']], function() {
-	Route::resource('setting', 'SettingController');
-	Route::get('/changepass',  'UserController@changePass');
-	Route::post('/changepass/{id}',  'UserController@changePassSubmit')->name('changepass');
-	// Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');
-	Route::resource('attachments', 'AttachmentController');
-	// Route::resource('tasks', 'TaskController');
-	Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
-	Route::resource('payments', 'PaymentController');
-	Route::resource('pemasukans', 'PemasukanLainController');
-	Route::post('/terimapayment', 'PaymentController@statuspayment')->name('terimapayment');
-	Route::post('/tolakpayment', 'PaymentController@statuspayment')->name('tolakpayment');
-	Route::get('payments/cetak/{id}',  'PaymentController@cetak')->name('cetak');
-	Route::get('export_excel', 'PaymentController@export_excel');
-	Route::resource('tagihans', 'TagihanController');
-	// Route::get('tagihans/cetak/{id}',  'TagihanController@cetak')->name('cetak');
-	Route::get('exporttagihan', 'TagihanController@export_excel');
-	// Route::get('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
-	Route::get('getweb/{id}',  'TagihanController@getweb');
-	Route::get('getkadaluarsa/{nama_proyek}',  'TagihanController@getkadaluarsa');
-    Route::get('getmasa_berlaku/{id}',  'TagihanController@getmasa_berlaku');
-	// Route::post('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
-	// Route::post('tagihans/lampirandestroy/{id}/{idm}', 'TagihanController@lampirandestroy')->name('lampirandestroy');
-	Route::get('rekapdptagihan/lampiran/{id}',  'RekapDpTagihanController@lampiran')->name('lampiran_rdp');
-	Route::post('rekapdptagihan/lampiran/{id}',  'RekapDpTagihanController@lampiran')->name('lampiran_rdp');
-	Route::post('rekapdptagihan/lampirandestroy/{id}/{idm}', 'RekapDpTagihanController@lampirandestroy')->name('lampirandestroy');
+	//Kantor
+	Route::group(['middleware' => ['role:1,10,20']], function() {
+		Route::resource('setting', 'SettingController');
+		Route::get('/changepass',  'UserController@changePass');
+		Route::post('/changepass/{id}',  'UserController@changePassSubmit')->name('changepass');
+		// Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');
+		Route::resource('attachments', 'AttachmentController');
+		// Route::resource('tasks', 'TaskController');
+		Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
+		Route::resource('payments', 'PaymentController');
+		Route::resource('pemasukans', 'PemasukanLainController');
+		Route::post('/terimapayment', 'PaymentController@statuspayment')->name('terimapayment');
+		Route::post('/tolakpayment', 'PaymentController@statuspayment')->name('tolakpayment');
+		Route::get('payments/cetak/{id}',  'PaymentController@cetak')->name('cetak');
+		Route::get('export_excel', 'PaymentController@export_excel');
+		Route::resource('tagihans', 'TagihanController');
+		// Route::get('tagihans/cetak/{id}',  'TagihanController@cetak')->name('cetak');
+		Route::get('exporttagihan', 'TagihanController@export_excel');
+		// Route::get('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
+		Route::get('getweb/{id}',  'TagihanController@getweb');
+		Route::get('getkadaluarsa/{nama_proyek}',  'TagihanController@getkadaluarsa');
+		Route::get('getmasa_berlaku/{id}',  'TagihanController@getmasa_berlaku');
+		// Route::post('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
+		// Route::post('tagihans/lampirandestroy/{id}/{idm}', 'TagihanController@lampirandestroy')->name('lampirandestroy');
+		Route::get('rekapdptagihan/lampiran/{id}',  'RekapDpTagihanController@lampiran')->name('lampiran_rdp');
+		Route::post('rekapdptagihan/lampiran/{id}',  'RekapDpTagihanController@lampiran')->name('lampiran_rdp');
+		Route::post('rekapdptagihan/lampirandestroy/{id}/{idm}', 'RekapDpTagihanController@lampirandestroy')->name('lampirandestroy');
 
-	Route::get('rekaptagihan/lampiran/{id}',  'RekapTagihanController@lampiran')->name('lampiran_rt');
-	Route::post('rekaptagihan/lampiran/{id}',  'RekapTagihanController@lampiran')->name('lampiran_rt');
-	Route::post('rekaptagihan/lampirandestroy/{id}/{idm}', 'RekapTagihanController@lampirandestroy')->name('lampirandestroy');
-	Route::match(['get', 'post'], '/tagihanuser',  'TagihanController@tagihanuser')->name('tagihanuser');
-	Route::resource('rekaptagihans','RekapTagihanController');
-	Route::resource('rekapdptagihans','RekapDptagihanController');
-	Route::get('createrekap', 'RekapTagihanController@createrekap')->name('createrekap');
-	Route::get('cetakrekap/{id}',  'RekapTagihanController@cetakrekap')->name('cetakrekap');
-	Route::get('cetakrekapdp/{id}',  'RekapDptagihanController@cetakrekap')->name('cetakrekapdp');
-	Route::get('rekapinvalid/{id}', 'RekapTagihanController@invalid')->name('rekapinvalid');
-	Route::get('rekapdpinvalid/{id}', 'RekapDptagihanController@invalid')->name('rekapdpinvalid');
-    Route::get('/historytagihan',  'RekapTagihanController@history')->name('historytagihan');
-    Route::get('/historydp',  'RekapDptagihanController@history')->name('historydp');
-	Route::get('/bayaruser/{id}', 'TagihanController@bayaruser')->name('bayaruser');
-	Route::resource('pengeluarans', 'PengeluaranController');
-	Route::get('export_excel_pengeluaran', 'PengeluaranController@export_excel_pengeluaran');
-	Route::get('/antrian',  'TaskController@antrian');
-	Route::get('/history',  'TaskController@history')->name('history');
-	Route::get('/getnotif',  'NotificationController@getNotif')->name('getnotif');
-	Route::get('/clicknotif/{id}',  'NotificationController@clickNotif')->name('clicknotif');
-	Route::get('/clearnotif',  'NotificationController@clearNotif')->name('clearnotif');
-	Route::get('/notifikasi',  'NotificationController@index')->name('notifikasi');
-	Route::get('/gettagihan/{id}',  'TagihanController@getTagihan');
-	Route::get('/detailtagihan/{id}',  'TagihanController@detailTagihan');
-	Route::get('/getrekaptagihan/{id}',  'RekapTagihanController@getRekapTagihan');
-	Route::get('/detailrekaptagihan/{id}',  'RekapTagihanController@detailRekapTagihan');
-	Route::get('/getradbox',  'RekapTagihanController@getRadBox');
+		Route::get('rekaptagihan/lampiran/{id}',  'RekapTagihanController@lampiran')->name('lampiran_rt');
+		Route::post('rekaptagihan/lampiran/{id}',  'RekapTagihanController@lampiran')->name('lampiran_rt');
+		Route::post('rekaptagihan/lampirandestroy/{id}/{idm}', 'RekapTagihanController@lampirandestroy')->name('lampirandestroy');
+		Route::match(['get', 'post'], '/tagihanuser',  'TagihanController@tagihanuser')->name('tagihanuser');
+		Route::resource('rekaptagihans','RekapTagihanController');
+		Route::resource('rekapdptagihans','RekapDptagihanController');
+		Route::get('createrekap', 'RekapTagihanController@createrekap')->name('createrekap');
+		Route::get('cetakrekap/{id}',  'RekapTagihanController@cetakrekap')->name('cetakrekap');
+		Route::get('cetakrekapdp/{id}',  'RekapDptagihanController@cetakrekap')->name('cetakrekapdp');
+		Route::get('rekapinvalid/{id}', 'RekapTagihanController@invalid')->name('rekapinvalid');
+		Route::get('rekapdpinvalid/{id}', 'RekapDptagihanController@invalid')->name('rekapdpinvalid');
+		Route::get('/historytagihan',  'RekapTagihanController@history')->name('historytagihan');
+		Route::get('/historydp',  'RekapDptagihanController@history')->name('historydp');
+		Route::get('/bayaruser/{id}', 'TagihanController@bayaruser')->name('bayaruser');
+		Route::resource('pengeluarans', 'PengeluaranController');
+		Route::get('export_excel_pengeluaran', 'PengeluaranController@export_excel_pengeluaran');
+		Route::get('/antrian',  'TaskController@antrian');
+		Route::get('/history',  'TaskController@history')->name('history');
+		Route::get('/getnotif',  'NotificationController@getNotif')->name('getnotif');
+		Route::get('/clicknotif/{id}',  'NotificationController@clickNotif')->name('clicknotif');
+		Route::get('/clearnotif',  'NotificationController@clearNotif')->name('clearnotif');
+		Route::get('/notifikasi',  'NotificationController@index')->name('notifikasi');
+		Route::get('/gettagihan/{id}',  'TagihanController@getTagihan');
+		Route::get('/detailtagihan/{id}',  'TagihanController@detailTagihan');
+		Route::get('/getrekaptagihan/{id}',  'RekapTagihanController@getRekapTagihan');
+		Route::get('/detailrekaptagihan/{id}',  'RekapTagihanController@detailRekapTagihan');
+		Route::get('/getradbox',  'RekapTagihanController@getRadBox');
 
-	//TaskController
-	Route::get('/tasks', 'TaskController@index')->name('tasks');
-	Route::get('/tasks/create/', 'TaskController@create')->name('tasks.create');
-	Route::post('/tasks/store', 'TaskController@store')->name('tasks.store');
-	Route::get('/tasks/{id}/edit', 'TaskController@edit')->name('tasks.edit');
-	Route::post('/tasks/{id}/update', 'TaskController@update')->name('tasks.update');
-	Route::post('/tasks/{id}/destroy', 'TaskController@destroy')->name('tasks.destroy');
-	Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');
-	Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
-	// Route::get('getdataproyek', 'TaskController@getdataproyek');
+		//TaskController
+		Route::get('/tasks', 'TaskController@index')->name('tasks');
+		Route::get('/tasks/create/', 'TaskController@create')->name('tasks.create');
+		Route::post('/tasks/store', 'TaskController@store')->name('tasks.store');
+		Route::get('/tasks/{id}/edit', 'TaskController@edit')->name('tasks.edit');
+		Route::post('/tasks/{id}/update', 'TaskController@update')->name('tasks.update');
+		Route::post('/tasks/{id}/destroy', 'TaskController@destroy')->name('tasks.destroy');
+		Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');
+		Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
+		// Route::get('getdataproyek', 'TaskController@getdataproyek');
+
+		Route::get('createtagihan/{id}',  'TagihanController@createtagihan')->name('createtagihan');
+		Route::resource('users', 'UserController');
+		Route::resource('members', 'MemberController');
+		Route::resource('proyeks', 'ProyekController');
+		Route::get('getproyek/{id}', 'TagihanController@getproyek');
+
+		// url ajax serverside datatables
+		Route::get('getkaryawans', 'UserController@getkaryawans');
+		Route::get('getmembers', 'MemberController@getmembers');
+		Route::get('getproyeks', 'ProyekController@getproyeks');
+		Route::get('gettasks/{type}', 'TaskController@gettasks');
+		Route::get('gettaskshistory', 'TaskController@gettaskshistory');
+		Route::get('gettagihans', 'TagihanController@gettagihans');
+		Route::get('getrekapdp/{status}', 'RekapDptagihanController@getrekapdp');
+		Route::get('getrekap/{status}', 'RekapTagihanController@getrekap');
+		Route::get('getpayments', 'PaymentController@getpayments');
+		Route::get('getpengeluarans', 'PengeluaranController@getpengeluarans');
+		Route::get('getpemasukans', 'PemasukanLainController@getpemasukans');
+
+	});
 
 	//admin
 	Route::group(['middleware' => ['role:1']], function() {
@@ -116,28 +139,6 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('cetaklaporan/{filter}/{filterbulan}',  'LaporanKeuanganController@cetaklaporan')->name('cetaklaporan');
         Route::get('exportlaporan/{filter}/{filterbulan}',  'LaporanKeuanganController@exportlaporan')->name('exportlaporan');
 		// Route::post('/laporankeuangan',  'LaporanKeuanganController@index')->name('filterbulan');
-	});
-	Route::group(['middleware' => ['role:1,10,20']], function() {
-		Route::get('createtagihan/{id}',  'TagihanController@createtagihan')->name('createtagihan');
-		Route::resource('users', 'UserController');
-		Route::resource('members', 'MemberController');
-		Route::resource('proyeks', 'ProyekController');
-		Route::get('getproyek/{id}', 'TagihanController@getproyek');
-	});
-
-	// url ajax server side datatables
-	Route::group(['middleware' => ['role:1,10,20']], function() {
-		Route::get('getkaryawans', 'UserController@getkaryawans');
-		Route::get('getmembers', 'MemberController@getmembers');
-		Route::get('getproyeks', 'ProyekController@getproyeks');
-		Route::get('gettasks/{type}', 'TaskController@gettasks');
-		Route::get('gettaskshistory', 'TaskController@gettaskshistory');
-		Route::get('gettagihans', 'TagihanController@gettagihans');
-		Route::get('getrekapdp/{status}', 'RekapDptagihanController@getrekapdp');
-		Route::get('getrekap/{status}', 'RekapTagihanController@getrekap');
-		Route::get('getpayments', 'PaymentController@getpayments');
-		Route::get('getpengeluarans', 'PengeluaranController@getpengeluarans');
-		Route::get('getpemasukans', 'PemasukanLainController@getpemasukans');
 	});
 
 	//customer
