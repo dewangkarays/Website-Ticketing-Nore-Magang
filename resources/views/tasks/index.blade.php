@@ -123,7 +123,7 @@
 			
 			<form action="" method="post" id="delform">
 				@csrf
-				@method('DELETE')
+				{{-- @method('DELETE') --}}
 				<div class="modal-body" align="center">
 					<h2> Hapus Data? </h2>
 				</div>
