@@ -97,6 +97,11 @@ class TaskClient extends Controller
         $proyek->task_count = $proyek->task_count - 1;
         $proyek->update();
 
+        //Mengupdate jumlah task di member
+        $user = User::find($task->user_id);
+        $user->task_count = $user->task_count - 1;
+        $user->update();
+
         // dd($request->file('lampiran')); 
         
         return redirect('/taskclient');
@@ -147,9 +152,15 @@ class TaskClient extends Controller
     {
         //
         $tasks = Task::find($id);
+
         $proyek = Proyek::find($tasks->id_proyek);
         $proyek->task_count  = $proyek->task_count + 1;
         $proyek->update();
+
+        $user = User::find($tasks->user_id);
+        $user->task_count = $user->task_count + 1;
+        $user->update();
+
         $tasks->delete();
         return redirect('/taskclient');
     }
