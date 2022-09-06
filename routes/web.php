@@ -131,6 +131,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('getmembers', 'MemberController@getmembers');
 		Route::get('getproyeks', 'ProyekController@getproyeks');
 		Route::get('gettasks/{type}', 'TaskController@gettasks');
+		Route::get('gettaskshistory', 'TaskController@gettaskshistory');
 		Route::get('gettagihans', 'TagihanController@gettagihans');
 		Route::get('getrekapdp/{status}', 'RekapDptagihanController@getrekapdp');
 		Route::get('getrekap/{status}', 'RekapTagihanController@getrekap');
