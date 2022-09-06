@@ -283,14 +283,14 @@ class RekapTagihanController extends Controller
         $rekap = RekapTagihan::find($id);
         // $arrayid = $request->get('tagihan');
         $invoices = Tagihan::where('rekap_tagihan_id', $rekap->id)->get();
-        // dd($invoices);
-        foreach($invoices as $tagihan_id)
+        // dd($rekap);
+        foreach($invoices as $rekap_id)
         {
-            $tagihan_id->id;
+            $rekap_id->id;
         }
-        $lampirans = Lampiran_gambar::where('tagihan_id', $tagihan_id->id)->orderBy('jenis_lampiran', 'asc')->get();
+        $lampirans = Lampiran_gambar::where('rekap_tagihan_id', $rekap->id)->orderBy('jenis_lampiran', 'asc')->get();
         $setting = Setting::first();
-        // dd($invoices->sum('nominal'));
+        // dd(count($lampirans));
         $pdf = PDF::loadview('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','rekap'))->setPaper('a4', 'potrait');
         return $pdf->stream();
         // return view('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'));

@@ -271,7 +271,7 @@
 
                 <br>
 
-                @if ($lampirans != null)
+                {{-- @if ($lampirans != null)
                 <table>
                     @php ($jenis_terakhir = '')
                     @php ($i = 1)
@@ -296,7 +296,8 @@
                     
                     @endforeach
                 </table>
-                @endif
+                @endif --}}
+                @yield('lampiran')
             </main>
 
             <script>

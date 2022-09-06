@@ -119,3 +119,59 @@
 
 @endsection
 
+@section('lampiran')
+@if (count($lampirans) != 0)
+<table style="margin-right: 60px; margin-top: 20px;">
+    @php ($jenis_terakhir = '')
+    @php ($i = 1)
+    <h5>Lampiran {{$i}} - NPWP CV.NORE INOVASI</h5>
+    <div align="center">
+        <img src="{{ url($setting->npwp) }}" alt="" style="max-width:60%;object-fit: cover;">
+    </div>
+    <div class="page-break"></div>  
+    @php ($i++)
+    @foreach ($lampirans as $lampiran)
+    @if (!$loop->first)
+        @if ($lampiran->jenis_lampiran != $jenis_terakhir)
+        <div class="page-break"></div>   
+        @endif
+    @endif
+    
+    @if ($lampiran->jenis_lampiran != $jenis_terakhir)
+        <h5>Lampiran {{$i}} - {{ config('custom.jenis_lampiran.'.$lampiran->jenis_lampiran) }} {{ $lampiran->keterangan}}</h5>
+    @endif
+        <div align="center">
+            <img src="{{url($lampiran->gambar)}}" style="max-width:90%;object-fit: cover;">
+        </div>
+
+    @if ($lampiran->jenis_lampiran != $jenis_terakhir)
+    @php ($i++)
+    @endif
+
+    @php ($jenis_terakhir = $lampiran->jenis_lampiran)
+    @endforeach
+
+    <div class="page-break"></div>   
+    <h5>Lampiran {{$i}} - Keterangan UMKM</h5>
+    <div align="center">
+        <img src="{{ url($setting->umkm) }}" alt="" style="max-width:90%;object-fit: cover;">
+    </div>
+</table>
+@else
+<table style="margin-right: 60px; margin-top: 20px;">
+{{-- @php ($i = 1) --}}
+    <div class="page-break"></div>  
+    <h5>Lampiran 1 - NPWP CV.NORE INOVASI</h5>
+    <div align="center">
+        <img src="{{ url($setting->npwp) }}" alt="" style="max-width:60%;object-fit: cover;">
+    </div>
+    <div class="page-break"></div>  
+{{-- @php ($i++) --}}
+
+    <h5>Lampiran 2 - Keterangan UMKM</h5>
+    <div align="center">
+        <img src="{{ url($setting->umkm) }}" alt="" style="max-width:90%;object-fit: cover;">
+    </div>
+</table>
+@endif
+@endsection
