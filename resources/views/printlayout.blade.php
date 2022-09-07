@@ -225,9 +225,29 @@
             <hr>
         </div>
 
-        @yield('sub-3')
+        @yield('nominal-bayar')
 
-            <table style="margin-top: 2cm">
+        @php
+            $page_break = false;
+        @endphp
+
+        @if ($jenis_rekap == "dp_tagihan")
+            @if ($invoices->count() > 4)
+                <p class="page-break"></p>
+                @php
+                    $page_break = true;
+                @endphp
+            @endif
+        @elseif ($jenis_rekap == "tagihan")
+            @if ($invoices->count() > 3)
+                <p class="page-break"></p>
+                @php
+                    $page_break = true;
+                @endphp
+            @endif
+        @endif
+
+            <table @if ($page_break) style="margin-top: 0cm" @else style="margin-top: 2cm" @endif>
                 <tr>
                     <th align="left" style="font-weight: bold; width:50%">Catatan:</th>
                     <th style="width:20%"></th>
