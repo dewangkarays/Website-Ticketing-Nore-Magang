@@ -235,7 +235,13 @@
 		 $("#delform").attr("action", url);
 	});
 
-	// Regex for validating noakhir invoice number
+	// Regex for validating ninv and noakhir invoice number
+	$(function() {
+        $("#ninv").on("keyup", function(event) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ""));
+        })
+    });
+
 	$(function() {
         $("#noakhir").on("keyup", function(event) {
             $(this).val($(this).val().replace(/[^0-9]/g, ""));
