@@ -44,7 +44,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Telp</label>
 							<div class="col-lg-10">
-								<input type="text" name="phone" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA">
+								<input type="text" name="telp" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA">
 								<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
 							</div>
 						</div>
@@ -285,7 +285,7 @@ var FormValidation = function() {
 					email:{
 						email: true
 					},
-					phone:{
+					telp:{
 						number : true
 					},
 					taskcount:{
@@ -306,7 +306,7 @@ var FormValidation = function() {
 					email:{
 						email : 'Masukan alamat email dengan benar'
 					},
-					phone:{
+					telp:{
 						number : 'Hanya mengandung angka'
 					},
 					taskcount:{
