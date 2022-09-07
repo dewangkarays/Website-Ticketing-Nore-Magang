@@ -62,7 +62,8 @@
                 Layanan {{ config('custom.jenis_proyek.' .@$invoice->proyek->jenis_proyek) }}
                 {{ config('custom.kelas_layanan.' .@$invoice->proyek->kelas_layanan) }}
                 {{ config('custom.jenis_layanan.' .@$invoice->proyek->jenis_layanan) }}
-                <br/> {{ $invoice->proyek->website ? '('.$invoice->proyek->website.')': ''}}
+                {{-- <br/> --}}
+                {{ $invoice->proyek->website ? '('.$invoice->proyek->website.')': ''}}
             </td>
             {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
             <td>{!! $invoice->keterangan !!}</td>
