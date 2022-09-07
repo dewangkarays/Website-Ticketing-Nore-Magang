@@ -46,10 +46,30 @@ class MemberController extends Controller
         //     'username'=>'unique:users',
         //     ]
         // );
+        $validator = Validator::make($request->all(), [
+            'username'=>'unique:users',
+        ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        if ($request->get('email') != null) {
             $validator = Validator::make($request->all(), [
-                'username'=>'unique:users',
                 'email'=>'unique:users',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+            }
+        }
+
+        if ($request->get('telp') != null) {
+            $validator = Validator::make($request->all(), [
                 'telp'=>'unique:users',
             ]);
 
@@ -58,19 +78,25 @@ class MemberController extends Controller
                             ->withErrors($validator)
                             ->withInput();
             }
+        }
+        // $validator = Validator::make($request->all(), [
+        //     'username'=>'unique:users',
+        //     'email'=>'unique:users',
+        //     'telp'=>'unique:users',
+        // ]);
 
-            $user = new User([
-                'nama' => $request->get('name'),
-                'email' => $request->get('email'),
-                'telp' => $request->get('phone'),
-                'alamat' => $request->get('address'),
-                'username' => $request->get('username'),
-                'password' => bcrypt($request->get('password')),
-                'role' => 95
-                ]);
+        $user = new User([
+            'nama' => $request->get('name'),
+            'email' => $request->get('email'),
+            'telp' => $request->get('phone'),
+            'alamat' => $request->get('address'),
+            'username' => $request->get('username'),
+            'password' => bcrypt($request->get('password')),
+            'role' => 95
+        ]);
 
-            $user->save();
-            return redirect('/members')->with('success', 'User saved!');
+        $user->save();
+        return redirect('/members')->with('success', 'User saved!');
     }
 
     /**
