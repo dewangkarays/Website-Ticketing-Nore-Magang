@@ -94,6 +94,9 @@
             </td>
         </tr>
     </table>
+    @php
+        $jenis_rekap = "dp_tagihan";
+    @endphp
 @endsection
 
 @section('lampiran')
