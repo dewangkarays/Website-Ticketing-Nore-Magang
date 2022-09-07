@@ -41,8 +41,8 @@
 		<table class="table datatable-p table-hover">
 			<thead>
 				<tr>
-					<th>No</th>
-					<th>Tanggal</th>
+					<th style="width: 10px">No</th>
+					<th style="width: 110px">Tanggal</th>
 					<th>Username</th>
 					<th>Nama Proyek</th>
 					<th>Kebutuhan</th>
@@ -69,8 +69,8 @@
 		<table class="table datatable-sp table-hover">
 			<thead>
 				<tr>
-					<th>No</th>
-					<th>Tanggal</th>
+					<th style="width: 10px">No</th>
+					<th style="width: 110px">Tanggal</th>
 					<th>Username</th>
 					<th>Nama Proyek</th>
 					<th>Kebutuhan</th>
