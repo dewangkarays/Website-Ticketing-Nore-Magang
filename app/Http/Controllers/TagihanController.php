@@ -149,6 +149,8 @@ class TagihanController extends Controller
             //Tagihan terakhir
             $last_tagihan = Tagihan::all()->last();
 
+            // dd($last_tagihan);
+
             //Menyimpan data ke rekap dp tagihan
             $rekapdptagihan = new RekapDptagihan;
             $rekapdptagihan->user_id = $user->id;
@@ -157,7 +159,8 @@ class TagihanController extends Controller
             $rekapdptagihan->status = 2;
             $rekapdptagihan->nama_tertagih = $user->nama;
             $rekapdptagihan->alamat = $user->alamat;
-            $rekapdptagihan->jatuh_tempo = $last_tagihan->masa_berlaku;
+            $rekapdptagihan->jatuh_tempo = $last_tagihan->masa_berlaku ? $last_tagihan->masa_berlaku : date('Y-m-d');
+
             if ($request->buat_invoice == 1) {
                 // FORMAT INVOICE
 
@@ -236,7 +239,8 @@ class TagihanController extends Controller
             $rekaptagihan->status = 2;
             $rekaptagihan->nama_tertagih = $user->nama;
             $rekaptagihan->alamat = $user->alamat;
-            $rekaptagihan->jatuh_tempo = $last_tagihan->masa_berlaku;
+            $rekaptagihan->jatuh_tempo = $last_tagihan->masa_berlaku ? $last_tagihan->masa_berlaku : date('Y-m-d');
+
             if ($request->buat_invoice == 1) {
                 // FORMAT INVOICE
 
