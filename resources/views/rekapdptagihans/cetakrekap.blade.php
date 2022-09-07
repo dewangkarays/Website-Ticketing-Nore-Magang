@@ -103,7 +103,11 @@
     @php ($i = 1)
     <h5>Lampiran {{$i}} - NPWP CV.NORE INOVASI</h5>
     <div align="center">
-        <img src="{{ url($setting->npwp) }}" alt="" style="max-width:60%;object-fit: cover;">
+        @if ($setting->npwp)
+            <img src="{{ url($setting->npwp) }}" alt="" style="max-width:60%;object-fit: cover;">
+        @else
+            <h2><em>Lampiran NPWP Belum di upload!</em></h2>
+        @endif
     </div>
     <div class="page-break"></div>  
     @php ($i++)
@@ -131,7 +135,11 @@
     <div class="page-break"></div>   
     <h5>Lampiran {{$i}} - Keterangan UMKM</h5>
     <div align="center">
-        <img src="{{ url($setting->umkm) }}" alt="" style="max-width:90%;object-fit: cover;">
+        @if ($setting->umkm)
+            <img src="{{ url($setting->umkm) }}" alt="" style="max-width:90%;object-fit: cover;">
+        @else
+            <h2><em>Lampiran UMKM Belum di upload!</em></h2>
+        @endif
     </div>
 </table>
 @else
@@ -140,14 +148,22 @@
     <div class="page-break"></div>  
     <h5>Lampiran 1 - NPWP CV.NORE INOVASI</h5>
     <div align="center">
-        <img src="{{ url($setting->npwp) }}" alt="" style="max-width:60%;object-fit: cover;">
+        @if ($setting->npwp)
+            <img src="{{ url($setting->npwp) }}" alt="" style="max-width:60%;object-fit: cover;">
+        @else
+            <h2><em>Lampiran NPWP Belum di upload!</em></h2>
+        @endif
     </div>
     <div class="page-break"></div>  
 {{-- @php ($i++) --}}
 
     <h5>Lampiran 2 - Keterangan UMKM</h5>
     <div align="center">
-        <img src="{{ url($setting->umkm) }}" alt="" style="max-width:90%;object-fit: cover;">
+        @if ($setting->umkm)
+            <img src="{{ url($setting->umkm) }}" alt="" style="max-width:90%;object-fit: cover;">
+        @else
+            <h2><em>Lampiran UMKM Belum di upload!</em></h2>
+        @endif
     </div>
 </table>
 @endif
