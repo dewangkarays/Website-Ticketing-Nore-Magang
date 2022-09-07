@@ -47,9 +47,9 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('getmasa_berlaku/{id}',  'TagihanController@getmasa_berlaku');
 		// Route::post('tagihans/lampiran/{id}',  'TagihanController@lampiran')->name('lampiran');
 		// Route::post('tagihans/lampirandestroy/{id}/{idm}', 'TagihanController@lampirandestroy')->name('lampirandestroy');
-		Route::get('rekapdptagihan/lampiran/{id}',  'RekapDpTagihanController@lampiran')->name('lampiran_rdp');
-		Route::post('rekapdptagihan/lampiran/{id}',  'RekapDpTagihanController@lampiran')->name('lampiran_rdp');
-		Route::post('rekapdptagihan/lampirandestroy/{id}/{idm}', 'RekapDpTagihanController@lampirandestroy')->name('lampirandestroy');
+		Route::get('rekapdptagihan/lampiran/{id}',  'RekapDptagihanController@lampiran')->name('lampiran_rdp');
+		Route::post('rekapdptagihan/lampiran/{id}',  'RekapDptagihanController@lampiran')->name('lampiran_rdp');
+		Route::post('rekapdptagihan/lampirandestroy/{id}/{idm}', 'RekapDptagihanController@lampirandestroy')->name('lampirandestroy');
 
 		Route::get('rekaptagihan/lampiran/{id}',  'RekapTagihanController@lampiran')->name('lampiran_rt');
 		Route::post('rekaptagihan/lampiran/{id}',  'RekapTagihanController@lampiran')->name('lampiran_rt');
