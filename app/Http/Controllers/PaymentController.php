@@ -220,7 +220,16 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-        //
+        $payment = Payment::find($id);
+        $member = User::find($payment->user_id);
+        if ($payment->rekap_dptagihan_id != null) {
+            $invoice = RekapDptagihan::find($payment->rekap_dptagihan_id);
+            $tagihans = Tagihan::where('rekap_dptagihan_id', $payment->rekap_dptagihan_id)->get();
+        } else {
+            $invoice = RekapTagihan::find($payment->rekap_tagihan_id);
+            $tagihans = Tagihan::where('rekap_tagihan_id', $payment->rekap_tagihan_id)->get();
+        }
+        return view('payments.show', compact('payment', 'member', 'invoice', 'tagihans'));
     }
 
     public function export_excel()
