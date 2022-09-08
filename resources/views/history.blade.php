@@ -31,6 +31,7 @@
 				<thead>
 					<tr>
 						<th>No</th>
+						<th>Tanggal Selesai</th>
 						<th>Username</th>
 						<th>Kebutuhan</th>
 						<th>Handler</th>
@@ -119,7 +120,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 5 ]
+		                targets: [ 6 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -147,6 +148,22 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
+								let date = new Date(data?.updated_at)
+								let dd = date.getDate()
+								let mm = date.getMonth()
+								let yyyy = date.getFullYear()
+
+								if (dd < 10) dd = '0' + dd
+								if (mm < 10) mm = '0' + mm
+								if (yyyy < 10) yyyy = '0' + yyyy
+
+								return `${yyyy}-${mm}-${dd}`
+							}
+						},
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
 								return data?.user?.nama ? data?.user.nama : "-"
 							}
 						},
@@ -161,7 +178,7 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								return data?.assign?.nama
+								return data?.assign?.nama ? data?.assign?.nama : "-"
 							}
 						},
 						{
