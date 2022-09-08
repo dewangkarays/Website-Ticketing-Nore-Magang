@@ -142,7 +142,8 @@
             margin: 0px
             padding: 0px;
         }
-
+        li {font-size:8.8px;
+        }
     </style>
 </head>
 

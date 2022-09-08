@@ -69,8 +69,8 @@ class PaymentClient extends Controller
         $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
         $user = User::where('id',\Auth::user()->id)->first();
         return view('client.tagihan.tagihan',compact('tagihans','tagihanactives','tagihanhistories','highproyek','taskactives','user'));
-        
-
+   
+   
     }
 
     /**

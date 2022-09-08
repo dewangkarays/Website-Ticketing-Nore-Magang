@@ -554,7 +554,10 @@
               <?php $count = 0; ?>
               @foreach ($tasks as $task)
               @if (@$task->status=='1')
-              <?php if($count == 2) break; ?>
+             
+              @if ($count == 2)
+              @break
+              @endif
                   <div class="card" style="background-color:#fff; border:none;">
                     <div class="card-header" style="background-color:#4A708B">
                       <p style="font-weight: bold; color:#fff;">{{@$task->proyek->website}}</p>
@@ -601,7 +604,10 @@
                 <?php $count = 0; ?>
                 @foreach ($tasks as $task)
                   @if (@$task->status=='2')
-                  <?php if($count == 2) break; ?>
+               
+                  @if ($count == 2)
+              @break
+              @endif
                   <div class="card" style="background-color: #fff; border:none;">
                     <div class="card-header" style="background-color:rgb(255, 196, 0)">
                       <p style="font-weight: bold;">{{@$task->proyek->website}}</p>
@@ -646,7 +652,10 @@
                 <?php $count = 0; ?>
                 @foreach ($tasks as $task)
                   @if (@$task->status=='3')
-                  <?php if($count == 2) break; ?>
+             
+                    @if ($count == 2)
+              @break
+              @endif
                   <div class="card" style="background-color: #fff; border:none">
                     <div class="card-header" style="background-color:	grey">
                       <p style="font-weight: bold; color:#ffff;">{{@$task->proyek->website}}</p>
@@ -703,7 +712,10 @@
                           <?php $count = 0; ?>
                           @foreach ($tagihans as $tagihan)
                           @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status!=2)
-                          <?php if($count == 3) break; ?>
+                          
+                          @if ($count == 2)
+                        @break
+                        @endif
                           <div class="card">
                             <div class="card-header">
                               <div class="row">
@@ -762,7 +774,10 @@
                           <?php $count = 0; ?>
                             @foreach ($tagihans as $tagihan)
                               @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status==2)
-                              <?php if($count == 3) break; ?>
+                              
+                              @if ($count == 2)
+              @break
+              @endif
                               <div class="card">
                                 <div class="card-header">
                                   <div class="row">
@@ -814,7 +829,10 @@
                         <?php $count = 0; ?>
                         @foreach ($tagihans as $tagihan)
                         @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status!=2)
-                        <?php if($count == 3) break; ?>
+              
+                        @if ($count == 2)
+              @break
+              @endif
                         <div class="card">
                           <div class="card-header">
                             <h5 style="font-weight:bold;">{{@$tagihan->nama_proyek}}</h5>
@@ -848,7 +866,10 @@
                       <?php $count = 0; ?>
                       @foreach ($tagihans as $tagihan)
                       @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status==2)
-                      <?php if($count == 3) break; ?>
+                     
+                      @if ($count == 2)
+              @break
+              @endif
                       <div class="card">
                         <div class="card-header">
                           <div class="row">
