@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth']], function() {
 		// Route::resource('tasks', 'TaskController');
 		Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
 		Route::resource('payments', 'PaymentController');
+		Route::post('payments/changestatus', 'PaymentController@changestatus')->name('payments.changestatus');
 		Route::resource('pemasukans', 'PemasukanLainController');
 		Route::post('/terimapayment', 'PaymentController@statuspayment')->name('terimapayment');
 		Route::post('/tolakpayment', 'PaymentController@statuspayment')->name('tolakpayment');
