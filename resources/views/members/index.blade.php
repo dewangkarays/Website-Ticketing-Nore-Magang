@@ -153,6 +153,7 @@
 
 		        // Basic datatable
 		        $('.datatable-basic').DataTable({
+					'order':true,
 					processing: true,
 					serverSide: true,
 					ajax: "/getmembers",

@@ -498,7 +498,7 @@ class TaskController extends Controller
         // } else {
         //     $tasks = Task::where('status','=','3')->with('user')->with('assign')->get(); //admin & karyawan
         // }
-        $tasks = Task::where('status','=','3')->orderByDesc('id')->with('user')->with('assign')->get(); //admin & karyawan
+        $tasks = Task::where('status','=','3')->orderByDesc('updated_at')->with('user')->with('assign')->get(); //admin & karyawan
 
         return Datatables::of($tasks)->addIndexColumn()->make(true);
     }

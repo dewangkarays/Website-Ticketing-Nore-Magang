@@ -225,7 +225,7 @@
                                 }
                             }
 
-                            console.log(masaBerlaku)
+                            // console.log(masaBerlaku)
 
                             return masaBerlaku
                         }
