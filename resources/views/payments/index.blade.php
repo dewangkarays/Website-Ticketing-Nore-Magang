@@ -299,7 +299,7 @@
 						data: null,
 						name: null,
 						render: (data, type, row) => {
-							return data?.nama;
+							return data?.user?.nama;
 						}
 					},
 					{
@@ -344,10 +344,12 @@
 						data: null,
 						name: null,
 						render: (data, type, row) => {
-
 							let id = data?.id;
+							console.log(id)
 							let paymentData = data?.nominal;
 							let telpRef = data?.telp;
+							let showRef = "{{route('payments.show', ':id')}}";
+                            showRef = showRef.replace(':id', id);
 							let editRef = "{{route('payments.edit', ':id')}}";
 							editRef = editRef.replace(':id', id);
 							let printRef = "{{route('cetak', ':id')}}";
@@ -365,9 +367,10 @@
 										
 								@if(Auth::user()->role<=20)
 									if (data?.status == 0) {
-										actionButtons +=
-											`<button type="button" class="btn dropdown-item bg-success open-modal-accept" id="statusbtn" data-id="${id}" data-toggle="modal" data-target="#modal_terima"><i class="icon-checkmark-circle"></i> Terima</button>
-											<button type="button" class="btn dropdown-item bg-danger open-modal-reject" id="statusbtn" data-id="${id}" data-payment="${paymentData}" data-toggle="modal" data-target="#modal_tolak"><i class="icon-cancel-circle2"></i> Tolak</button>`
+										actionButtons += `<a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a>`
+										// actionButtons +=
+										// 	`<button type="button" class="btn dropdown-item bg-success open-modal-accept" id="statusbtn" data-id="${id}" data-toggle="modal" data-target="#modal_terima"><i class="icon-checkmark-circle"></i> Terima</button>
+										// 	<button type="button" class="btn dropdown-item bg-danger open-modal-reject" id="statusbtn" data-id="${id}" data-payment="${paymentData}" data-toggle="modal" data-target="#modal_tolak"><i class="icon-cancel-circle2"></i> Tolak</button>`
 									}
 								@endif
 								@if(Auth::user()->role<=20)
