@@ -46,15 +46,6 @@ class TaskClient extends Controller
         $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
         $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
         $user = User::where('id',\Auth::user()->id)->first();
-
-        $task_count = 0;
-        foreach ($proyeks as $proyek) {
-            $task_count += $proyek->task_count;
-        }
-
-        if ($task_count < 1) {
-            return redirect()->back();
-        }
         
         return view('client.task.create',compact('tasks','proyeks','highproyek','taskactives','tagihanactives','user'));
     }
@@ -67,6 +58,15 @@ class TaskClient extends Controller
      */
     public function store(Request $request)
     {
+        $proyeks = Proyek::where('user_id',\Auth::user()->id)->where('task_count', '>', '0')->get();
+        $task_count = 0;
+        foreach ($proyeks as $proyek) {
+            $task_count += $proyek->task_count;
+        }
+
+        if ($task_count < 1) {
+            return redirect()->back();
+        }
         //
         // return $request;
         $request->validate([
