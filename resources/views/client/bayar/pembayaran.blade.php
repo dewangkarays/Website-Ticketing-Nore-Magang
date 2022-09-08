@@ -290,7 +290,7 @@
     <script type="text/javascript">
       window.onload=function() {
         var today = new Date().toISOString().split('T')[0];
-        document.getElementsByName("tgl_bayar")[0].setAttribute('min', today);
+        document.getElementsByName("tgl_bayar")[0].setAttribute('max', today);
       }
     </script> 
     <script>
