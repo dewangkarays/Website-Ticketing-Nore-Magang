@@ -232,6 +232,13 @@ class PaymentController extends Controller
         return view('payments.show', compact('payment', 'member', 'invoice', 'tagihans'));
     }
 
+    public function changestatus(Request $request) {
+        $payment = Payment::find($request->id);
+        $payment->status = $request->status;
+        $payment->update();
+        return redirect('/payments')->with('success', 'Status updated!');
+    }
+
     public function export_excel()
     {
         return Excel::download(new PaymentExport, 'Payment '.(date('Y-m-d')).'.xlsx' );
