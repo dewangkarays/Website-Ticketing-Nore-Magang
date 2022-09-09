@@ -10,6 +10,7 @@ use App\Model\User;
 use App\Model\Proyek;
 use App\Model\Task;
 use App\Model\Setting;
+use Illuminate\Support\Facades\File;
 
 class PaymentClient extends Controller
 {
@@ -62,6 +63,40 @@ class PaymentClient extends Controller
     public function store(Request $request)
     {
         // dd($request);
+        // $request->validate([
+        //     'bukti_pembayaran' => 'mimes:jpeg,png,jpg,gif,svg',
+        //     'tgl_bayar => required'
+        // ]);
+
+        $tujuan_upload = config('app.upload_url').'bukti_pembayaran';
+        $file = $request->file('bukti_pembayaran');
+        // dd($file);
+        if($file){
+                $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
+                // $destinationPath = public_path('/thumbnail');
+                
+                $imgsize = $file->getSize();
+                $imgsize = number_format($imgsize / 1048576,2);
+                $img = \Image::make($file->getRealPath());
+                // dd($imgsize);
+                
+                //compress file
+                if(filesize($file) < 204800){
+                    $img->save($tujuan_upload.'/'.$name, 90, 'jpg');
+                }
+                elseif(filesize($file) < 1048576){
+                    $img->save($tujuan_upload.'/'.$name, 80, 'jpg');
+                } else{
+                    $img->save($tujuan_upload.'/'.$name, 10, 'jpg');
+                }
+                // $img->move($tujuan_upload, $name);
+                // $name = \Auth::user()->id."_".time().".".$file->getClientOriginalExtension();
+                // $up1 = $file->move($tujuan_upload,$name);
+                // if($img){
+                //     $data['bukti_pembayaran'] = $tujuan_upload.'/'.$name;
+                // }
+        }
+
         $tagihan = Tagihan::find($request->tagihan_id);
 
         $payment = new Payment;
@@ -78,6 +113,8 @@ class PaymentClient extends Controller
             $payment->rekap_tagihan_id = $tagihan->rekap_tagihan_id;
         }
         $payment->tagihan_id = $tagihan->id;
+        $payment->bukti_pembayaran = $tujuan_upload.'/'.$name;
+        // dd($payment);
         $payment->save();
         return redirect('/customer');
         // dd($payment);

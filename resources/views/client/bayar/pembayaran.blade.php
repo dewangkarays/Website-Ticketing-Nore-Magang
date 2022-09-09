@@ -177,7 +177,7 @@
             <p>{{\Auth::user()->nama}}</p>
           </div>
         </div>
-        <form method="POST" action="{{route('paymentclients.store')}}">
+        <form method="POST" action="{{route('paymentclients.store')}}" enctype="multipart/form-data">
           @csrf
           {{-- <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Invoice</label>
@@ -221,7 +221,6 @@
 						<label class="col-form-label col-lg-4">&nbsp;</label>
 						<div class="col-lg-8" id="detailTagihan">
 							<table class="table table-striped">
-                <thead>
 								<tr>
 									<td>Langganan</td>
 									<td>Ads</td>
@@ -229,7 +228,6 @@
 									<td>Sudah Dibayar</td>
 									<td>Total Tagihan</td>
 								</tr>
-              </thead>
 								{{-- @if ($tagihanuser2 != null)	
 								<tr>
 									<td>{{number_format(@$tagihanuser2->langganan,0,',','.')}}</td>
@@ -253,7 +251,7 @@
           <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Tanggal Pembayaran</label>
             <div class="col-sm-8">
-              <input name="tgl_bayar" type="date" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif">
+              <input name="tgl_bayar" type="date" class="form-control pickadate-accessibility" placeholder="Tanggal Masa Aktif"  required>
             </div>
           </div>
           <div class="form-group row">
@@ -263,11 +261,19 @@
             </div>
           </div>
           <div class="form-group row">
+            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm" >Bukti Pembayaran</label>
+            <div class="col">
+                <input id="bukti_pembayaran" name="bukti_pembayaran" type="file" class="form-control" onchange="upload_check()" required>
+                <span class="form-text text-muted">Jumlah max ukuran file : 5MB</span>
+            </div>
+        </div>
+          <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm" id="nominal">Nominal Pembayaran</label>
             <div class="col">
               <input name="nominal" type="number" class="form-control form-control-sm-8" id="jumlah" placeholder="Input Nominal">
             </div>
           </div>
+          
           <div class="col text-center">
             <button type="submit" class="btn btn-success btn-lg btn-block" href="/payment">Bayar</button>
           </div>
@@ -290,7 +296,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     {{-- tambahan --}}
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="{{asset('global_assets/js/main/jquery.min.js') }}"></script>
     <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -332,7 +338,7 @@
 
         $("input[name='jenis_rekap']").val(jenis);
 
-        $("#tertulis").prop('max',tagih);
+        // $("#tertulis").prop('max',tagih);
         
         
         $.ajax({
@@ -350,5 +356,33 @@
 
 
     </script>
+    <script>
+      //max file size
+      function upload_check()
+{
+      var upl = document.getElementById("bukti_pembayaran");
+      var maxAllowedSize = 5 * 1024 * 1024; //5mb
+
+      console.log(upl);
+
+      if(upl.files[0].size > maxAllowedSize)
+      {
+      alert("Ukuran File Terlalu Besar!");
+      upl.value = "";
+      }
+  };
+  </script>
+  <script>
+    //validate file extension
+
+    var upl = document.getElementById("bukti_pembayaran");
+    $("#bukti_pembayaran").change(function () {
+    var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'svg'];
+    if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+      alert("Only formats are allowed : "+fileExtension.join(', '));
+    upl.value = "";
+    }
+    });
+</script>
   </body>
 </html>
