@@ -168,7 +168,7 @@
                             <td>
                                 <img src="{{asset('/global_assets/images/icons/instagram.png')}}" height="10pt" alt="">
                             </td>
-                            <td>@nore.web.id</td>
+                            <td>{{$setting->instagram}}</td>
                         </tr>
                         <tr>
                             <td>
