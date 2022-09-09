@@ -131,7 +131,11 @@
                             <label class="col-form-label col-lg-2">Bukti Pembayaran</label>
                             <div class="col-lg-10">
                                 <label class="col-form-label col-lg-10">
-                                    <img src="" alt="Bukti Pembayaran">
+                                    @if ($payment->bukti_pembayaran != null)
+                                        <img src="{{url($payment->bukti_pembayaran)}}" alt="Bukti Pembayaran" class="img-fluid">
+                                    @else
+                                        <em>Not Found</em>
+                                    @endif
                                 </label>
                             </div>
                         </div>
