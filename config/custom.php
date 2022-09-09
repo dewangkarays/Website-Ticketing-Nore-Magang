@@ -114,7 +114,8 @@ return [
     'jenis_lampiran' => [
         '1' => 'Tampilan',
         '2' => 'Kode Billing Pajak',
-        '3' => 'Bukti Bayar Pajak'
+        '3' => 'Bukti Bayar Pajak',
+        '4' => 'Lain-lain'
     ],
 ];
 

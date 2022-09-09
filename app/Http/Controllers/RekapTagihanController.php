@@ -413,7 +413,7 @@ class RekapTagihanController extends Controller
         if ($request->isMethod('POST')) {
         $data = $request->except(['_token', '_method','gambar']);
         // $tagihan = Tagihan::find($id);
-        // dd($tagihan);
+        // dd($data);
 
         $tujuan_upload = config('app.upload_url').'attachment/lampiran';
         $file = $request->file('gambar');
@@ -444,6 +444,19 @@ class RekapTagihanController extends Controller
         }
         
         //upload data lampiran to database
+        if($request->judul != null)
+        {
+        $lampiran = Lampiran_gambar::create([
+            'rekap_tagihan_id' => $id,
+            'gambar' => $data['gambar'],
+            'keterangan' => $data['keterangan'],
+            'judul' => $data['judul'],
+            'jenis_lampiran' => $data['jenis_lampiran']
+        
+        ]);
+        }
+        else
+        {
         $lampiran = Lampiran_gambar::create([
             'rekap_tagihan_id' => $id,
             'gambar' => $data['gambar'],
@@ -451,7 +464,8 @@ class RekapTagihanController extends Controller
             'jenis_lampiran' => $data['jenis_lampiran']
         
         ]);
-        $lampiran->save();
+        }
+        $lampiran->save();  
         }
 
         return redirect()->back()->with('success', 'File uploaded!');

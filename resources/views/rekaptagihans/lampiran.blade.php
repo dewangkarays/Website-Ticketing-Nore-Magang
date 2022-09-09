@@ -36,12 +36,19 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Jenis Lampiran</label>
                         <div class="col-lg-10">
-                            <select name="jenis_lampiran" class="form-control select-search" required>
+                            <select id="jenis_lampiran" name="jenis_lampiran" class="form-control select-search" required>
                                 <option value="">-- Jenis Lampiran --</option>
                                 @foreach(config('custom.jenis_lampiran') as $key => $value)
                                     <option value="{{$key}}">{{$value}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+
+                    <div id="div-judul" class="form-group row" style="display: none">
+                        <label class="col-form-label col-lg-2">Judul</label>
+                        <div class="col-lg-10">
+                            <input id="judul" name="judul" type="text" class="form-control">
                         </div>
                     </div>
 
@@ -77,6 +84,7 @@
                     <tr>
                         <th>No</th>
                         <th class="text-center">Jenis Lampiran</th>
+                        <th class="text-center">Judul</th>
                         <th class="text-center">Gambar</th>
                         <th class="text-center">Keterangan</th>
                         <th class="text-center">Actions</th>
@@ -91,6 +99,11 @@
                         <td align="center">
                             <div class="datatable-column-width">
                                 {{ config('custom.jenis_lampiran.'.$lampiran->jenis_lampiran) }}
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="datatable-column-width">
+                                {{ $lampiran->judul }}
                             </div>
                         </td>
                         <td align="center">
@@ -205,6 +218,15 @@
                 padding: 3
             });
         };
+
+        $('#jenis_lampiran').on('change', function() {
+            var dropdown = $('#jenis_lampiran option:selected').val()
+            if (dropdown=="4" ) {
+                $('#div-judul').show()
+			} else {
+				$('#div-judul').hide()
+			}
+        });
         
         
         var DatatableBasic = function() {
