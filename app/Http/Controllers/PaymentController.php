@@ -234,7 +234,74 @@ class PaymentController extends Controller
 
     public function changestatus(Request $request) {
         $payment = Payment::find($request->id);
+
         $payment->status = $request->status;
+        if ($request->status == 1) {
+            $receiptno = 01;
+            $lastreceipt = Payment::latest('id')->first();
+            if ($lastreceipt) {
+                $diffpay = substr($lastreceipt->receipt_no,0,3);
+                if ($diffpay == 'PAY') {
+                    $different = 'no';
+                } else {
+                    $different = 'yes';
+                }
+                // $data['receipt_no'] = 'PAY/'.$receiptno.'/'.date('dmY');
+
+                    if ($different == 'yes') {
+                        $lastno = Nomor::first();
+                        if ($lastno) {
+                            $no1 = $lastno->npay + 1;
+                            $lastno->npay = $no1;
+                            $no = str_pad($no1,3,"0",STR_PAD_LEFT);
+                            $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                            $paynumber = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                            $lastno->save();
+                        } else {
+                            $lastno['npay'] = 1;
+                            $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
+                            $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                            $paynumber = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                            $lastno = Nomor::create($lastno);
+                        }
+                    } else {
+                        // jika tidak sama
+                        $lastno = Nomor::first();
+                        if ($lastno) {
+                            $no1 = $lastno->npay + 1;
+                            $lastno->npay = $no1;
+                            $no = str_pad($no1,3,"0",STR_PAD_LEFT);
+                            $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                            $paynumber = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                            $lastno->save();
+                        } else {
+                            $lastno['npay'] = 1;
+                            $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
+                            $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                            $paynumber = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                            $lastno = Nomor::create($lastno);
+                        }
+                    }
+            } else{
+                $lastno = Nomor::first();
+                if ($lastno) {
+                    $no1 = $lastno->npay + 1;
+                    $lastno->npay = $no1;
+                    $no = str_pad($no1,3,"0",STR_PAD_LEFT);
+                    $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                    $paynumber = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                    $lastno->save();
+                } else {
+                    $lastno['npay'] = 1;
+                    $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
+                    $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
+                    $paynumber = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                    $lastno = Nomor::create($lastno);
+                }
+            }
+            $payment->receipt_no = $paynumber;
+        }
+
         $payment->update();
         return redirect('/payments')->with('success', 'Status updated!');
     }
