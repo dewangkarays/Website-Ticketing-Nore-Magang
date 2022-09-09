@@ -154,7 +154,7 @@
 						<label class="col-form-label col-lg-2">Nominal Potongan</label>
 						<div class="col-lg-10">
 							<input id="datadiskon" type="hidden" name="nominal_diskon_alter" value="{{old('nominal_diskon')}}" class="form-control border-teal border-1">
-							<input id="nilai_diskon" type="text" name="nominal_diskon" class="form-control border-teal border-1" placeholder="Nominal Diskon, contoh: 100000" onkeyup="ribuan()" value="{{old('nominal_diskon')}}">
+							<input id="nilaidiskon" type="text" name="nominal_diskon" class="form-control border-teal border-1" placeholder="Nominal Diskon, contoh: 100000" onkeyup="ribuan()" value="{{old('nominal_diskon')}}">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -429,9 +429,6 @@
 						user_id:{
 							required : true
 						},
-						keterangan:{
-							required : true
-						},
 					},
 					messages: {
 						select_proyek:{
@@ -441,9 +438,6 @@
 							required : 'Mohon diisi'
 						},
 						user_id:{
-							required : 'Mohon diisi'
-						},
-						keterangan:{
 							required : 'Mohon diisi'
 						},
 					},

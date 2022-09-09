@@ -228,7 +228,14 @@ ul{
 				</li>
 
 				<li class="nav-item nav-item-submenu">
-					<a href="#" class="nav-link {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pemasukans*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan','setting*')) ? 'active' : 'none' }}"><i class="icon-coin-dollar"></i><span>Keuangan</span></a>
+					<a href="#" class="nav-link {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pemasukans*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan','setting*')) ? 'active' : 'none' }}"><i class="icon-coin-dollar"></i>
+							<span>
+								Keuangan
+								@if($confirmpayments>0)
+									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $confirmpayments}}</span>
+								@endif
+							</span>
+					</a>
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pemasukans*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan', 'setting*')) ? 'block' : 'none' }};">
 					@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 					<li class="nav-item">
@@ -299,7 +306,11 @@ ul{
 					@endif
 					<li class="nav-item nav-item-submenu">
 						<a href="#" class="nav-link {{ (request()->is('payments*','pemasukans*')) ? 'active' : '' }}"><i class="icon-coins"></i>
-							<span>Pembayaran
+							<span>
+								Pembayaran
+								@if($confirmpayments>0)
+									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $confirmpayments}}</span>
+								@endif
 							</span>
 						</a>
 						<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('payments*','pemasukans*')) ? 'block' : 'none' }};">
@@ -308,6 +319,9 @@ ul{
 									<i class="icon-coin-dollar"></i>
 									<span>
 										Pembayaran Tagihan
+										@if($confirmpayments>0)
+											<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $confirmpayments}} konfirmasi</span>
+										@endif
 									</span>
 								</a>
 							</li>

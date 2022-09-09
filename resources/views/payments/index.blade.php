@@ -231,30 +231,6 @@
 			'2': 'Ditolak',
 		};
 
-		function number_format (number, decimals, dec_point, thousands_sep) {
-			// Strip all characters but numerical ones.
-			number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
-			var n = !isFinite(+number) ? 0 : +number,
-				prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-				sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-				dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-				s = '',
-				toFixedFix = function (n, prec) {
-					var k = Math.pow(10, prec);
-					return '' + Math.round(n * k) / k;
-				};
-			// Fix for IE parseFloat(0.55).toFixed(0) = 0;
-			s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-			if (s[0].length > 3) {
-				s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-			}
-			if ((s[1] || '').length < prec) {
-				s[1] = s[1] || '';
-				s[1] += new Array(prec - s[1].length + 1).join('0');
-			}
-			return s.join(dec);
-		};
-
 		// Basic Datatable examples
 		var _componentDatatableBasic = function() {
 			if (!$().DataTable) {
@@ -299,7 +275,7 @@
 						data: null,
 						name: null,
 						render: (data, type, row) => {
-							return data?.nama;
+							return data?.user?.nama;
 						}
 					},
 					{
@@ -310,7 +286,7 @@
 						data: null,
 						name: null,
 						render: (data, type, row) => {
-							return number_format(data?.nominal, 0, ',', ',');
+							return number_format(data?.nominal, 0, '.', '.');
 						}
 					},
 					{
@@ -344,10 +320,12 @@
 						data: null,
 						name: null,
 						render: (data, type, row) => {
-
 							let id = data?.id;
+							console.log(id)
 							let paymentData = data?.nominal;
 							let telpRef = data?.telp;
+							let showRef = "{{route('payments.show', ':id')}}";
+                            showRef = showRef.replace(':id', id);
 							let editRef = "{{route('payments.edit', ':id')}}";
 							editRef = editRef.replace(':id', id);
 							let printRef = "{{route('cetak', ':id')}}";
@@ -365,9 +343,10 @@
 										
 								@if(Auth::user()->role<=20)
 									if (data?.status == 0) {
-										actionButtons +=
-											`<button type="button" class="btn dropdown-item bg-success open-modal-accept" id="statusbtn" data-id="${id}" data-toggle="modal" data-target="#modal_terima"><i class="icon-checkmark-circle"></i> Terima</button>
-											<button type="button" class="btn dropdown-item bg-danger open-modal-reject" id="statusbtn" data-id="${id}" data-payment="${paymentData}" data-toggle="modal" data-target="#modal_tolak"><i class="icon-cancel-circle2"></i> Tolak</button>`
+										actionButtons += `<a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a>`
+										// actionButtons +=
+										// 	`<button type="button" class="btn dropdown-item bg-success open-modal-accept" id="statusbtn" data-id="${id}" data-toggle="modal" data-target="#modal_terima"><i class="icon-checkmark-circle"></i> Terima</button>
+										// 	<button type="button" class="btn dropdown-item bg-danger open-modal-reject" id="statusbtn" data-id="${id}" data-payment="${paymentData}" data-toggle="modal" data-target="#modal_tolak"><i class="icon-cancel-circle2"></i> Tolak</button>`
 									}
 								@endif
 								@if(Auth::user()->role<=20)

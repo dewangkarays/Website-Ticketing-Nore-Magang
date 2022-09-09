@@ -86,7 +86,6 @@ class TagihanController extends Controller
         $request->validate([
             'nominal' => 'required|max:11',
             'uang_muka' => 'max:11',
-            'keterangan' => 'required',
         ]);
 
         $data = $request->except(['_token', '_method','select_proyek','masa_berlaku']);
@@ -370,7 +369,6 @@ class TagihanController extends Controller
         $request->validate([
             'nominal' => 'required|max:11',
             'uang_muka' => 'max:11',
-            'keterangan' => 'required',
         ]);
 
         $data = $request->except(['_token', '_method','masa_berlaku']);

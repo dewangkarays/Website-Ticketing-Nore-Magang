@@ -220,7 +220,23 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-        //
+        $payment = Payment::find($id);
+        $member = User::find($payment->user_id);
+        if ($payment->rekap_dptagihan_id != null) {
+            $invoice = RekapDptagihan::find($payment->rekap_dptagihan_id);
+            $tagihans = Tagihan::where('rekap_dptagihan_id', $payment->rekap_dptagihan_id)->get();
+        } else {
+            $invoice = RekapTagihan::find($payment->rekap_tagihan_id);
+            $tagihans = Tagihan::where('rekap_tagihan_id', $payment->rekap_tagihan_id)->get();
+        }
+        return view('payments.show', compact('payment', 'member', 'invoice', 'tagihans'));
+    }
+
+    public function changestatus(Request $request) {
+        $payment = Payment::find($request->id);
+        $payment->status = $request->status;
+        $payment->update();
+        return redirect('/payments')->with('success', 'Status updated!');
     }
 
     public function export_excel()
@@ -473,13 +489,15 @@ class PaymentController extends Controller
     public function getpayments() {
         if(\Auth::user()->role > 20){
             $payments = Payment::where('user_id',\Auth::user()->id)
-                ->join('users', 'users.id', '=', 'payments.user_id')
-                ->orderBy('payments.created_at','desc')->get();
+                ->orderByDesc('created_at')
+                ->with('user')
+                ->get();
         } else {
             // $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('created_at','desc')->get();
             $payments = Payment::where('jenis_pemasukan','=',1)
-                ->join('users', 'users.id', '=', 'payments.user_id')
-                ->orderBy('payments.created_at','desc')->get();
+                ->orderByDesc('created_at')
+                ->with('user')
+                ->get();
             //$payments = Payment::all();
 
         }

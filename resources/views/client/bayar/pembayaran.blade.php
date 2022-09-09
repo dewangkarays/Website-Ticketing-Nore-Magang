@@ -77,9 +77,9 @@
           font-weight: bold;
         }
 
-        #jumlah{
+        /* #jumlah{
           margin : 0 12px;
-        }
+        } */
 
         .split{
         padding-top: 5em;
@@ -205,16 +205,23 @@
 							<select name="tagihan_id" id="tagihan_id" class="form-control select-search" data-fouc onchange="changeTagihan(this)" required>
 								<option value="">-- Pilih Tagihan --</option>
 								@foreach ($tagihanuser as $tagihan)
-								<option value="{{@$tagihan->id}}" data-tagihan="{{@$tagihan->jml_tagih}}" >{{@$tagihan->invoice}} {{number_format(@$tagihan->jml_tagih,0,',','.')}}</option>'
+                  @if ($tagihan->rekapdptagihan != null && $tagihan->rekapdptagihan->total != 0)
+                    <option value="{{@$tagihan->id}}" data-dp="{{@$tagihan->rekapdptagihan->id}}" >{{@$tagihan->rekapdptagihan->invoice}} {{number_format(@$tagihan->rekapdptagihan->total,0,',','.')}}</option>
+                  @endif
+                  @if ($tagihan->rekaptagihan != null && $tagihan->rekaptagihan->total != 0)
+                    <option value="{{@$tagihan->id}}" data-tagihan="{{@$tagihan->rekaptagihan->id}}" >{{@$tagihan->rekaptagihan->invoice}} {{number_format(@$tagihan->rekaptagihan->total,0,',','.')}}</option>
+                  @endif
 								@endforeach
 							</select>
 							@endif
 						</div>
           </div>
+          <input type="hidden" name="jenis_rekap">
           <div class="form-group row">
 						<label class="col-form-label col-lg-4">&nbsp;</label>
 						<div class="col-lg-8" id="detailTagihan">
 							<table class="table table-striped">
+                <thead>
 								<tr>
 									<td>Langganan</td>
 									<td>Ads</td>
@@ -222,7 +229,8 @@
 									<td>Sudah Dibayar</td>
 									<td>Total Tagihan</td>
 								</tr>
-								@if ($tagihanuser2 != null)	
+              </thead>
+								{{-- @if ($tagihanuser2 != null)	
 								<tr>
 									<td>{{number_format(@$tagihanuser2->langganan,0,',','.')}}</td>
 									<td>{{number_format(@$tagihanuser2->ads,0,',','.')}}</td>
@@ -230,7 +238,7 @@
 									<td>{{number_format(@$tagihanuser2->jml_bayar,0,',','.')}}</td>
 									<td>{{number_format(@$tagihanuser2->jml_tagih,0,',','.')}}</td>
 								</tr>
-								@else
+								@else --}}
 								<tr>	
 									<td>-</td>
 									<td>-</td>
@@ -238,7 +246,7 @@
 									<td>-</td>
 									<td>-</td>
 								</tr>
-								@endif
+								{{-- @endif --}}
 							</table>
 						</div>
 					</div>
@@ -282,6 +290,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     {{-- tambahan --}}
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -294,18 +303,35 @@
       }
     </script> 
     <script>
-      $.ajax({
-				type: 'GET',
-				url: "{{ url('/gettagihan')}}/"+id,
-				success: function (data) {
-					$('#tagihan_id').html(data);
-				}
-			});
+      // $.ajax({
+			// 	type: 'GET',
+			// 	url: "{{ url('/gettagihan')}}/"+id,
+			// 	success: function (data) {
+			// 		$('#tagihan_id').html(data);
+			// 	}
+			// });
         
       function changeTagihan(select){
         var id = $(select).find(':selected').val();
         var tagih = $(select).find(':selected').data('tagihan');
-        
+        var dp = $(select).find(':selected').data('dp');
+        var jenis = "";
+
+        // console.log(tagih);
+        // console.log(dp);
+
+        if(tagih)
+        {
+          jenis = "tagihan";
+        }
+        else
+        {
+          jenis = "dptagihan";
+        }
+        // console.log(jenis);
+
+        $("input[name='jenis_rekap']").val(jenis);
+
         $("#tertulis").prop('max',tagih);
         
         
@@ -314,6 +340,8 @@
           url: "{{ url('/detailtagihan')}}/"+id,
           success: function (data) {
             $('#detailTagihan').html(data);
+            // var markup = data;
+            // $("table tbody").append(markup);
           }
         });
       }
