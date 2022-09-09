@@ -61,18 +61,6 @@ class PaymentClient extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
-        
-        $tagihans = Tagihan::orderBy('created_at')->get();
-        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
-        $tagihanhistories = Tagihan::where('user_id',\Auth::user()->id)->where('status','=','2')->get()->count();
-        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
-        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
-        $user = User::where('id',\Auth::user()->id)->first();
-        return view('client.tagihan.tagihan',compact('tagihans','tagihanactives','tagihanhistories','highproyek','taskactives','user'));
-   
-   
-=======
         // dd($request);
         $tagihan = Tagihan::find($request->tagihan_id);
 
@@ -101,8 +89,6 @@ class PaymentClient extends Controller
         // $user = User::where('id',\Auth::user()->id)->first();
         // return view('client.tagihan.tagihan',compact('tagihans','tagihanactives','tagihanhistories','highproyek','taskactives','user'));
         
-
->>>>>>> 49e71002ffc3d7ee6a259e37d0bd505df0284122
     }
 
     /**
