@@ -205,12 +205,18 @@
 							<select name="tagihan_id" id="tagihan_id" class="form-control select-search" data-fouc onchange="changeTagihan(this)" required>
 								<option value="">-- Pilih Tagihan --</option>
 								@foreach ($tagihanuser as $tagihan)
-								<option value="{{@$tagihan->id}}" data-tagihan="{{@$tagihan->jml_tagih}}" >{{@$tagihan->invoice}} {{number_format(@$tagihan->jml_tagih,0,',','.')}}</option>'
+                  @if ($tagihan->rekapdptagihan != null && $tagihan->rekapdptagihan->total != 0)
+                    <option value="{{@$tagihan->id}}" data-tagihan="{{@$tagihan->jml_tagih}}" >{{@$tagihan->rekapdptagihan->invoice}} {{number_format(@$tagihan->rekapdptagihan->total,0,',','.')}}</option>
+                  @endif
+                  @if ($tagihan->reakptagihan != null && $tagihan->rekaptagihan->total != 0)
+                    <option value="{{@$tagihan->id}}" data-tagihan="{{@$tagihan->jml_tagih}}" >{{@$tagihan->rekaptagihan->invoice}} {{number_format(@$tagihan->rekaptagihan->total,0,',','.')}}</option>
+                  @endif
 								@endforeach
 							</select>
 							@endif
 						</div>
           </div>
+          <input type="hidden" name="jenis_rekap">
           <div class="form-group row">
 						<label class="col-form-label col-lg-4">&nbsp;</label>
 						<div class="col-lg-8" id="detailTagihan">
