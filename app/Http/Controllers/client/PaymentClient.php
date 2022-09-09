@@ -61,14 +61,33 @@ class PaymentClient extends Controller
      */
     public function store(Request $request)
     {
-        
-        $tagihans = Tagihan::orderBy('created_at')->get();
-        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
-        $tagihanhistories = Tagihan::where('user_id',\Auth::user()->id)->where('status','=','2')->get()->count();
-        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
-        $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
-        $user = User::where('id',\Auth::user()->id)->first();
-        return view('client.tagihan.tagihan',compact('tagihans','tagihanactives','tagihanhistories','highproyek','taskactives','user'));
+        // dd($request);
+        $tagihan = Tagihan::find($request->tagihan_id);
+
+        $payment = new Payment;
+        $payment->user_id = \Auth::user()->id;
+        $payment->nama = \Auth::user()->nama;
+        $payment->keterangan = $request->keterangan;
+        $payment->nominal = $request->nominal;
+        $payment->tanggal = $request->tgl_bayar;
+        $payment->status = 0;
+        $payment->jenis_pemasukan = 1;
+        if ($request->jenis_rekap == "dptagihan") {
+            $payment->rekap_dptagihan_id = $tagihan->rekap_dptagihan_id;
+        } else {
+            $payment->rekap_tagihan_id = $tagihan->rekap_tagihan_id;
+        }
+        $payment->tagihan_id = $tagihan->id;
+        $payment->save();
+        return redirect('/customer');
+        // dd($payment);
+        // $tagihans = Tagihan::orderBy('created_at')->get();
+        // $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+        // $tagihanhistories = Tagihan::where('user_id',\Auth::user()->id)->where('status','=','2')->get()->count();
+        // $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
+        // $taskactives = Task::where('user_id',\Auth::user()->id)->where('status','!=','3')->get()->count();
+        // $user = User::where('id',\Auth::user()->id)->first();
+        // return view('client.tagihan.tagihan',compact('tagihans','tagihanactives','tagihanhistories','highproyek','taskactives','user'));
         
 
     }
