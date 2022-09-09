@@ -121,6 +121,7 @@ class SettingController extends Controller
             'alamat' => $data['alamat'],
             'no_telp' => $data['no_telp'],
             'email' => $data['email'],
+            'instagram' => $data['instagram'],
             'penerima' => $data['penerima'],
             'ttd_penerima' => $data['ttd_penerima'],
             'ttd_pospenerima' => $data['ttd_pospenerima'],
