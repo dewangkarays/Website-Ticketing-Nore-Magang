@@ -300,6 +300,16 @@ class PaymentController extends Controller
                 }
             }
             $payment->receipt_no = $paynumber;
+
+            if ($payment->rekap_dptagihan_id != null) {
+                $rekapdptagihan = RekapDptagihan::find($payment->rekap_dptagihan_id);
+                $rekapdptagihan->jml_terbayar = $rekapdptagihan->jml_terbayar + $payment->nominal;
+                $rekapdptagihan->update();
+            } else {
+                $rekaptagihan = RekapTagihan::find($payment->rekap_tagihan_id);
+                $rekaptagihan->jml_terbayar = $rekaptagihan->jml_terbayar + $payment->nominal;
+                $rekaptagihan->update();
+            }
         }
 
         $payment->update();
