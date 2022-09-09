@@ -75,7 +75,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/clearnotif',  'NotificationController@clearNotif')->name('clearnotif');
 		Route::get('/notifikasi',  'NotificationController@index')->name('notifikasi');
 		Route::get('/gettagihan/{id}',  'TagihanController@getTagihan');
-		Route::get('/detailtagihan/{id}',  'TagihanController@detailTagihan');
+		// Route::get('/detailtagihan/{id}',  'TagihanController@detailTagihan');
 		Route::get('/getrekaptagihan/{id}',  'RekapTagihanController@getRekapTagihan');
 		Route::get('/detailrekaptagihan/{id}',  'RekapTagihanController@detailRekapTagihan');
 		Route::get('/getradbox',  'RekapTagihanController@getRadBox');
@@ -157,6 +157,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/antrian','client\AntrianClient@index');
 		Route::get('/settinguser','client\SettingClient@changesetting');
 		Route::post('/settinguser/{id}','client\SettingClient@changesettingupdate')->name('settinguser');
+		Route::get('/detailtagihan/{id}',  'TagihanController@detailTagihan');
 	});
 
 	// Route::group(['middleware' => ['role:95']], function() {
