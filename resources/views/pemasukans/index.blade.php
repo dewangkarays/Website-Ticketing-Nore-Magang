@@ -150,7 +150,7 @@
                         data: null,
                         name: "nominal",
                         render: (data, type, row) => {
-                            return number_format(data?.nominal);
+                            return number_format(data?.nominal, 0, '.', '.');
                         }
                     },
                     {

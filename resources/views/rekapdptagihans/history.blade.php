@@ -176,7 +176,7 @@
                             data: null,
                             name: null,
                             render: (data, type, row) => {
-                                return number_format(data?.total, 0, ',', ',')
+                                return number_format(data?.total, 0, '.', '.')
                             }
                         },
                         {

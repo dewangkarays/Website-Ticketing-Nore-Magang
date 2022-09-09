@@ -178,7 +178,7 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								return number_format(data?.nominal, 0, ',', ',');
+								return number_format(data?.nominal, 0, '.', '.');
 							}
 						},
 						{

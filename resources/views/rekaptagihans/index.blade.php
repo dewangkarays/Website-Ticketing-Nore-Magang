@@ -201,21 +201,21 @@
                             data: null,
                             name: null,
                             render: (data, type, row) => {
-                                return number_format(data?.total, 0, ',', ',')
+                                return number_format(data?.total, 0, '.', '.')
                             }
                         },
                         {
                             data: null,
                             name: null,
                             render: (data, type, row) => {
-                                return number_format(data?.jml_terbayar, 0, ',', ',')
+                                return number_format(data?.jml_terbayar, 0, '.', '.')
                             }
                         },
                         {
                             data: null,
                             name: null,
                             render: (data, type, row) => {
-                                return number_format(data?.total - data?.jml_terbayar, 0, ',', ',')
+                                return number_format(data?.total - data?.jml_terbayar, 0, '.', '.')
                             }
                         },
                         {

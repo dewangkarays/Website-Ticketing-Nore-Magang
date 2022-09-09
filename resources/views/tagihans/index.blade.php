@@ -175,14 +175,14 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								return number_format(data?.uang_muka, 0, ',', ',')
+								return number_format(data?.uang_muka, 0, '.', '.')
 							}
 						},
 						{
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								return number_format(data?.jml_tagih, 0, ',', ',')
+								return number_format(data?.jml_tagih, 0, '.', '.')
 							}
 						},
 						{
