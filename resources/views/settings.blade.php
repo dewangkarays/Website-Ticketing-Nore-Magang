@@ -60,6 +60,12 @@
 							value="{{$setting ? $setting->email : ""}}">
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Akun Instagram</label>
+						<div class="col-lg-8">
+							<input type="text" id="instagram" name="instagram" class="form-control border-teal border-1" required value="{{$setting ? $setting->instagram : ""}}">
+						</div>
+					</div>
 					<br>
 					<h4><b>Payment Receipt</b></h4>
 					<hr>
