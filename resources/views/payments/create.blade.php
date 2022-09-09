@@ -358,10 +358,10 @@
 		this.value = this.value.replace(/\D/g,'');
 	});
 
-	$('#tertulis').focus(function() {
-		var angka = $('#nominal').val();
-		$('#tertulis').val(angka);
-	});
+	// $('#tertulis').focus(function() {
+	// 	  var angka = $('#nominal').val();
+	// 	  $('#tertulis').val(angka);
+	// });
 
 	$('#tertulis').keyup(function() {
 		var angka = $('#tertulis').val();
