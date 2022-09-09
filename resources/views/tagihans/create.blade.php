@@ -429,9 +429,6 @@
 						user_id:{
 							required : true
 						},
-						keterangan:{
-							required : true
-						},
 					},
 					messages: {
 						select_proyek:{
@@ -441,9 +438,6 @@
 							required : 'Mohon diisi'
 						},
 						user_id:{
-							required : 'Mohon diisi'
-						},
-						keterangan:{
 							required : 'Mohon diisi'
 						},
 					},

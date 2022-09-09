@@ -328,15 +328,9 @@
 					txtnominal:{
 						required : true
 					},
-					keterangan:{
-						required : true
-					},
 				},
 				messages: {
 					txtnominal:{
-						required : 'Mohon diisi'
-					},
-					keterangan:{
 						required : 'Mohon diisi'
 					},
 				},
