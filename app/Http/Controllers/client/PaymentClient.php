@@ -45,7 +45,7 @@ class PaymentClient extends Controller
     public function create()
     {
         $users = User::where('role','>','50')->get();
-        $tagihanuser = Tagihan::where('user_id', \Auth::user()->id)->get();
+        $tagihanuser = Tagihan::where('user_id', \Auth::user()->id)->where('status', '<', '1')->get();
         $tagihanuser2 = '';
         $setting = Setting::first();
         $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
