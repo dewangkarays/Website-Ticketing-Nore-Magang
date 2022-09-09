@@ -88,10 +88,10 @@
         <tr style="line-height: 2;">
             <td></td>
             <td align="left">
-                <b class="nore-fontcolor" style="font-size: 12px">TOTAL YANG HARUS DIBAYAR</b>
+                <b class="nore-fontcolor" style="font-size: 14px">TOTAL YANG HARUS DIBAYAR</b>
             </td>
             <td align="right">
-                <b class="nore-fontcolor" style="font-size: 12px">@angka($rekapdp->total)</b>
+                <b class="nore-fontcolor" style="font-size: 14px">@angka($rekapdp->total)</b>
             </td>
         </tr>
     </table>

@@ -195,10 +195,10 @@
                 </td>
             </tr>
         </table>
-        <div style="margin-top: 20px; margin-bottom: 20px;">
+        <div style="margin-top:0px; margin-bottom:0px;">
             <hr>
         </div>
-        <table style="margin-top: 20px;margin-bottom: 8px;font-size: 15px !important">
+        <table style="margin-top: 8px;margin-bottom: 8px;font-size: 15px !important">
             <tr>
                 <td style="width: 50%; vertical-align: top">
                     <table style="padding-right: 50px; line-height: 1.75;">
@@ -210,7 +210,7 @@
             </tr>
         </table>
         
-        <table class="main-table" style="margin-top: 15px; line-height: 1">
+        <table class="main-table" style="margin-top: 15px; line-height:0">
             <tr>
                 <th align="left" style="width: 15%; height: 20px" class="nore-fontcolor">PROYEK</th>
                 <th align="left" style="width: 40%; height: 20px" class="nore-fontcolor">DESKRIPSI</th>
@@ -222,7 +222,7 @@
             
         </table>
 
-        <div style="margin-top: 20px; margin-bottom: 15px;">
+        <div style="margin-top: 0px; margin-bottom: 0px;">
             <hr>
         </div>
 
@@ -250,7 +250,7 @@
 
             <table @if ($page_break) style="margin-top: 0cm" @else style="margin-top: 2cm" @endif>
                 <tr>
-                    <th align="left" style="font-weight: bold; width:50%">Catatan:</th>
+                    <th align="left" style="font-weight: bold; width:50%; font-size: 8.8px;">Catatan:</th>
                     <th style="width:20%"></th>
                     <th align="center" style="font-size: 12px; font-weight: normal; width:auto; margin-left:6px">Semarang, {{ date('d') }} {{ config('custom.bulan.' .date('n')) }} {{ date('Y') }}</th>
                 </tr>
@@ -276,7 +276,7 @@
                         <p align="center" style="font-size: 12px"><b>
                             {{$invoice->penagih ? $invoice->penagih : $setting->penagih}}</b> <br> {{$invoice->pospenagih ? $invoice->pospenagih : $setting->pospenagih}}
                         </p>
-                        <i align="center" style="color: #918d8b;">"Terima kasih atas kerja sama Anda"</i>
+                        <i align="center" style="color: #575556;">"Terima kasih atas kerja sama Anda"</i>
                     </td>
                 </tr>
 
