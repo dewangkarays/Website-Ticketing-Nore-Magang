@@ -225,8 +225,9 @@
 									<td>Langganan</td>
 									<td>Ads</td>
 									<td>Lainnya</td>
+                  <td>Uang Muka</td>
+                  <td>Total Tagihan</td>
 									<td>Sudah Dibayar</td>
-									<td>Total Tagihan</td>
 								</tr>
 								{{-- @if ($tagihanuser2 != null)	
 								<tr>
@@ -242,6 +243,7 @@
 									<td>-</td>
 									<td>-</td>
 									<td>-</td>
+                  <td>-</td>
 									<td>-</td>
 								</tr>
 								{{-- @endif --}}
