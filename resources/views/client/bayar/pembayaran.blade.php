@@ -272,9 +272,11 @@
             </div>
         </div>
           <div class="form-group row">
-            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm" id="nominal">Nominal Pembayaran</label>
+            <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Nominal Pembayaran</label>
             <div class="col">
-              <input name="nominal" type="number" class="form-control form-control-sm-8" id="jumlah" placeholder="Input Nominal">
+              <input type="text" id="tertulis" name="tertulis" class="form-control form-control-sm-8" placeholder="Contoh: 2.000.000" onkeyup="ribuan()" required>
+              {{-- <input name="nominal" type="number" class="form-control form-control-sm-8" id="jumlah" placeholder="Input Nominal"> --}}
+              <input type="hidden" id="nominal" name="nominal" class="form-control form-control-sm-8">
             </div>
           </div>
           
@@ -310,6 +312,20 @@
       window.onload=function() {
         var today = new Date().toISOString().split('T')[0];
         document.getElementsByName("tgl_bayar")[0].setAttribute('max', today);
+      }
+
+      function ribuan(){
+        var val = $('#tertulis').val();
+        $('#nominal').val(val.replace(new RegExp(/\./, 'g'), ''));
+        val = val.replace(/[^0-9,]/g,'');
+
+        if(val != "") {
+          valArr = val.split('.');
+          valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
+          val = valArr.join('.');
+        }
+
+        $('#tertulis').val(val);
       }
     </script> 
     <script>
