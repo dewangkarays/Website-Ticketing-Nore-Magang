@@ -205,10 +205,10 @@
 							<select name="tagihan_id" id="tagihan_id" class="form-control select-search" data-fouc onchange="changeTagihan(this)" required>
 								<option value="">-- Pilih Tagihan --</option>
 								@foreach ($tagihanuser as $tagihan)
-                  @if ($tagihan->rekapdptagihan != null && $tagihan->rekapdptagihan->total != 0 && ($tagihan->rekapdptagihan->total - $tagihan->rekapdptagihan->jml_bayar) > 0)
+                  @if ($tagihan->rekap_dptagihan_id != null && ($tagihan->rekapdptagihan->total - $tagihan->rekapdptagihan->jml_terbayar) > 0)
                     <option value="{{@$tagihan->id}}" data-dp="{{@$tagihan->rekapdptagihan->id}}" >(Uang Muka) {{@$tagihan->rekapdptagihan->invoice}} (Rp {{number_format(@($tagihan->rekapdptagihan->total - $tagihan->rekapdptagihan->jml_terbayar),0,',','.')}})</option>
                   @endif
-                  @if ($tagihan->rekaptagihan != null && $tagihan->rekaptagihan->total != 0 && ($tagihan->rekaptagihan->total - $tagihan->rekaptagihan->jml_bayar) > 0)
+                  @if ($tagihan->rekap_tagihan_id != null && ($tagihan->rekaptagihan->total - $tagihan->rekaptagihan->jml_terbayar) > 0)
                     <option value="{{@$tagihan->id}}" data-tagihan="{{@$tagihan->rekaptagihan->id}}" >(Tagihan) {{@$tagihan->rekaptagihan->invoice}} (Rp {{number_format(@($tagihan->rekaptagihan->total - $tagihan->rekaptagihan->jml_terbayar),0,',','.')}})</option>
                   @endif
 								@endforeach
@@ -226,7 +226,8 @@
 									<td>Ads</td>
 									<td>Lainnya</td>
                   <td>Uang Muka</td>
-                  <td>Total Tagihan</td>
+                  <td>Tagihan</td>
+                  <td>Total</td>
 									<td>Sudah Dibayar</td>
 								</tr>
 								{{-- @if ($tagihanuser2 != null)	
@@ -243,6 +244,7 @@
 									<td>-</td>
 									<td>-</td>
 									<td>-</td>
+                  <td>-</td>
                   <td>-</td>
 									<td>-</td>
 								</tr>
