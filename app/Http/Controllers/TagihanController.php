@@ -571,21 +571,24 @@ class TagihanController extends Controller
     public function detailTagihan($id)
     {
         $tagihan = Tagihan::find($id);
+        $terbayar = $tagihan->rekapdptagihan->jml_terbayar + $tagihan->rekaptagihan->jml_terbayar;
         $html = '
         <table class="table table-striped">
             <tr>
                 <td>Langganan</td>
                 <td>Ads</td>
                 <td>Lainnya</td>
-                <td>Sudah Dibayar</td>
+                <td>Uang Muka</td>
                 <td>Total Tagihan</td>
+                <td>Sudah Dibayar</td>
             </tr>
             <tr>
                 <td>'.number_format($tagihan->langganan,0,',','.').'</td>
                 <td>'.number_format($tagihan->ads,0,',','.').'</td>
                 <td>'.number_format($tagihan->lainnya,0,',','.').'</td>
-                <td>'.number_format($tagihan->jml_bayar,0,',','.').'</td>
+                <td>'.number_format($tagihan->uang_muka,0,',','.').'</td>
                 <td>'.number_format($tagihan->jml_tagih,0,',','.').'</td>
+                <td>'.number_format($terbayar,0,',','.').'</td>
             </tr>
         </table>';
 
