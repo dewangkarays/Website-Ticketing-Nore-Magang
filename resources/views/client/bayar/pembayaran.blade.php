@@ -206,10 +206,10 @@
 								<option value="">-- Pilih Tagihan --</option>
 								@foreach ($tagihanuser as $tagihan)
                   @if ($tagihan->rekapdptagihan != null && $tagihan->rekapdptagihan->total != 0 && ($tagihan->rekapdptagihan->total - $tagihan->rekapdptagihan->jml_bayar) > 0)
-                    <option value="{{@$tagihan->id}}" data-dp="{{@$tagihan->rekapdptagihan->id}}" >{{@$tagihan->rekapdptagihan->invoice}} {{number_format(@($tagihan->rekapdptagihan->total - $tagihan->rekapdptagihan->jml_terbayar),0,',','.')}}</option>
+                    <option value="{{@$tagihan->id}}" data-dp="{{@$tagihan->rekapdptagihan->id}}" >(Uang Muka) {{@$tagihan->rekapdptagihan->invoice}} (Rp {{number_format(@($tagihan->rekapdptagihan->total - $tagihan->rekapdptagihan->jml_terbayar),0,',','.')}})</option>
                   @endif
                   @if ($tagihan->rekaptagihan != null && $tagihan->rekaptagihan->total != 0 && ($tagihan->rekaptagihan->total - $tagihan->rekaptagihan->jml_bayar) > 0)
-                    <option value="{{@$tagihan->id}}" data-tagihan="{{@$tagihan->rekaptagihan->id}}" >{{@$tagihan->rekaptagihan->invoice}} {{number_format(@($tagihan->rekaptagihan->total - $tagihan->rekaptagihan->jml_terbayar),0,',','.')}}</option>
+                    <option value="{{@$tagihan->id}}" data-tagihan="{{@$tagihan->rekaptagihan->id}}" >(Tagihan) {{@$tagihan->rekaptagihan->invoice}} (Rp {{number_format(@($tagihan->rekaptagihan->total - $tagihan->rekaptagihan->jml_terbayar),0,',','.')}})</option>
                   @endif
 								@endforeach
 							</select>
