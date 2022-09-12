@@ -571,7 +571,22 @@ class TagihanController extends Controller
     public function detailTagihan($id)
     {
         $tagihan = Tagihan::find($id);
-        $terbayar = $tagihan->rekapdptagihan->jml_terbayar + $tagihan->rekaptagihan->jml_terbayar;
+        $rekaptagihanterbayar = 0;
+        $rekapdptagihanterbayar = 0;
+        if ($tagihan->rekapdptagihan != null)
+        {
+            $rekapdptagihanterbayar = $tagihan->rekapdptagihan->jml_terbayar;
+        }
+        if ($tagihan->rekaptagihan != null)
+        {
+            $rekaptagihanterbayar = $tagihan->rekaptagihan->jml_terbayar;
+        }
+        $terbayar = $rekapdptagihanterbayar + $rekaptagihanterbayar;
+        $diskon = 0;
+        if ($tagihan->diskon != null)
+        {
+            $diskon = $tagihan->diskon;
+        }
         $html = '
         <table class="table table-striped">
             <tr>
@@ -589,7 +604,7 @@ class TagihanController extends Controller
                 <td>Rp '.number_format($tagihan->lainnya,0,',','.').'</td>
                 <td>Rp '.number_format($tagihan->uang_muka,0,',','.').'</td>
                 <td>Rp '.number_format($tagihan->jml_tagih,0,',','.').'</td>
-                <td>Rp '.number_format($tagihan->nominal,0,',','.').'</td>
+                <td>Rp '.number_format($tagihan->nominal - $diskon,0,',','.').'</td>
                 <td>Rp '.number_format($terbayar,0,',','.').'</td>
             </tr>
         </table>';
