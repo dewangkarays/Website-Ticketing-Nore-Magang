@@ -579,16 +579,18 @@ class TagihanController extends Controller
                 <td>Ads</td>
                 <td>Lainnya</td>
                 <td>Uang Muka</td>
-                <td>Total Tagihan</td>
+                <td>Tagihan</td>
+                <td>Total</td>
                 <td>Sudah Dibayar</td>
             </tr>
             <tr>
-                <td>'.number_format($tagihan->langganan,0,',','.').'</td>
-                <td>'.number_format($tagihan->ads,0,',','.').'</td>
-                <td>'.number_format($tagihan->lainnya,0,',','.').'</td>
-                <td>'.number_format($tagihan->uang_muka,0,',','.').'</td>
-                <td>'.number_format($tagihan->jml_tagih,0,',','.').'</td>
-                <td>'.number_format($terbayar,0,',','.').'</td>
+                <td>Rp '.number_format($tagihan->langganan,0,',','.').'</td>
+                <td>Rp '.number_format($tagihan->ads,0,',','.').'</td>
+                <td>Rp '.number_format($tagihan->lainnya,0,',','.').'</td>
+                <td>Rp '.number_format($tagihan->uang_muka,0,',','.').'</td>
+                <td>Rp '.number_format($tagihan->jml_tagih,0,',','.').'</td>
+                <td>Rp '.number_format($tagihan->nominal,0,',','.').'</td>
+                <td>Rp '.number_format($terbayar,0,',','.').'</td>
             </tr>
         </table>';
 
