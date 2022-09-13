@@ -357,6 +357,19 @@ class RekapDptagihanController extends Controller
         }
         
         //upload data lampiran to database
+        if($request->judul != null)
+        {
+        $lampiran = Lampiran_gambar::create([
+            'rekap_dptagihan_id' => $id,
+            'gambar' => $data['gambar'],
+            'keterangan' => $data['keterangan'],
+            'judul' => $data['judul'],
+            'jenis_lampiran' => $data['jenis_lampiran']
+        
+        ]);
+        }
+        else
+        {
         $lampiran = Lampiran_gambar::create([
             'rekap_dptagihan_id' => $id,
             'gambar' => $data['gambar'],
@@ -364,6 +377,7 @@ class RekapDptagihanController extends Controller
             'jenis_lampiran' => $data['jenis_lampiran']
         
         ]);
+        }
         $lampiran->save();
         }
 

@@ -123,7 +123,11 @@
     @endif
     
     @if ($lampiran->jenis_lampiran != $jenis_terakhir)
+        @if ($lampiran->jenis_lampiran == 4)
+        <h5>Lampiran {{$i}} - {{ $lampiran->judul }} {{ $lampiran->keterangan}}</h5>
+        @else
         <h5>Lampiran {{$i}} - {{ config('custom.jenis_lampiran.'.$lampiran->jenis_lampiran) }} {{ $lampiran->keterangan}}</h5>
+        @endif
     @endif
         <div align="center">
             <img src="{{url($lampiran->gambar)}}" style="max-width:90%;object-fit: cover;">

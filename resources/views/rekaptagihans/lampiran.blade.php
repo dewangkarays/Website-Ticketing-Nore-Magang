@@ -219,6 +219,7 @@
             });
         };
 
+            // Menampilkan field judul
         $('#jenis_lampiran').on('change', function() {
             var dropdown = $('#jenis_lampiran option:selected').val()
             if (dropdown=="4" ) {
