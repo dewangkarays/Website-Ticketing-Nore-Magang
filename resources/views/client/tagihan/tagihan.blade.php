@@ -201,6 +201,20 @@
                       <p style="text-align:center;">Tidak ada tagihan aktif</p>
                     @else
                     @foreach ($tagihans as $tagihan)
+                    @php
+                      $dptagihan_terbayar = 0;
+                      if ($tagihan->rekapdptagihan) {
+                        $dptagihan_terbayar = $tagihan->rekapdptagihan->jml_terbayar;
+                      }
+
+                      $tagihan_terbayar = 0;
+                      if ($tagihan->rekaptagihan) {
+                        $tagihan_terbayar = $tagihan->rekaptagihan->jml_terbayar;
+                      }
+
+                      $terbayar = $dptagihan_terbayar + $tagihan_terbayar;
+                      $total = $tagihan->nominal - $tagihan->diskon;
+                    @endphp
                     @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status!=2)
                       <div class="card" style="width:100%;">
                         <div class="card-body">
@@ -226,15 +240,15 @@
                             <div class="row">
                               <div class="col">
                                 <p class="card-text">Total Tagihan</p>
-                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format(((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}}</p>
+                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format($total,0,',','.')}}</p>
                               </div>
                               <div class="col">
                                 <p class="card-text">Sudah Dibayar</p>
-                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format(@$tagihan->jml_bayar,0,',','.')}}</p>
+                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format(@$terbayar,0,',','.')}}</p>
                               </div>
                               <div class="col">
                                 <p class="card-text">Harus dibayar</p>
-                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format(@$tagihan->jml_tagih,0,',','.')}}</p>
+                                <p class="card-text" style="font-weight:bold;">Rp. {{number_format(@($total - $terbayar),0,',','.')}}</p>
                               </div>
                               <div class="col text-right" id="tombol">
                                 <a href="/payment" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
@@ -269,6 +283,20 @@
                       <p style="text-align:center;">Tidak ada riwayat tagihan</p>
                     @else
                     @foreach ($tagihans as $tagihan)
+                    @php
+                      // $dptagihan_terbayar = 0;
+                      // if ($tagihan->rekapdptagihan) {
+                      //   $dptagihan_terbayar = $tagihan->rekapdptagihan->jml_terbayar;
+                      // }
+
+                      // $tagihan_terbayar = 0;
+                      // if ($tagihan->rekaptagihan) {
+                      //   $tagihan_terbayar = $tagihan->rekaptagihan->jml_terbayar;
+                      // }
+
+                      // $terbayar = $dptagihan_terbayar + $tagihan_terbayar;
+                      $total = $tagihan->nominal - $tagihan->diskon;
+                    @endphp
                     @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status==2)
                     <div class="col">
                       <div class="card" style="border:none; border-radius:5px; background-color:#eeee;">
@@ -278,7 +306,7 @@
                               <div class="col">
                                   <h5 class="card-title">{{@$tagihan->proyek->website}}</h5>
                                   <p class="card-title" style="font-weight: bold;">Invoice {{@$tagihan->invoice}}</p>
-                                  <p class="card-text">Total tagihan Rp. {{number_format(((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}}</p>
+                                  <p class="card-text">Total tagihan Rp. {{number_format($total,0,',','.')}}</p>
                                   <p class="card-text" style="font-style: italic;">Terbayar pada {{date("Y-m-d", strtotime(@$tagihan->updated_at))}}</p>
                               </div>
                               <div class="col">
@@ -316,6 +344,20 @@
               </div>
               <div class="cardContainer">
                 @foreach ($tagihans as $tagihan)
+                @php
+                  $dptagihan_terbayar = 0;
+                  if ($tagihan->rekapdptagihan) {
+                    $dptagihan_terbayar = $tagihan->rekapdptagihan->jml_terbayar;
+                  }
+
+                  $tagihan_terbayar = 0;
+                  if ($tagihan->rekaptagihan) {
+                    $tagihan_terbayar = $tagihan->rekaptagihan->jml_terbayar;
+                  }
+
+                  $terbayar = $dptagihan_terbayar + $tagihan_terbayar;
+                  $total = $tagihan->nominal - $tagihan->diskon;
+                @endphp
                 @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status!=2)
                 <div class="card">
                   <div class="card-body">
@@ -336,15 +378,15 @@
                       <div class="row" style="padding-right:10px;">
                         <div class="col">
                           <p class="card-text" style="font-size:14px;">Total Tagihan</p>
-                          <p class="card-text" style="font-weight: bold; font-size:14px;">Rp.<br> {{number_format(((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}}</p>
+                          <p class="card-text" style="font-weight: bold; font-size:14px;">Rp.<br> {{number_format($total,0,',','.')}}</p>
                         </div>
                         <div class="col">
                           <p class="card-text" style="font-size:14px;">Sudah Dibayar</p>
-                          <p class="card-text" style="font-weight: bold; font-size:14px;">Rp.<br> {{number_format($tagihan->jml_bayar,0,',','.')}}</p>
+                          <p class="card-text" style="font-weight: bold; font-size:14px;">Rp.<br> {{number_format($terbayar,0,',','.')}}</p>
                         </div>
                         <div class="col">
                           <p class="card-text" style="font-size:14px;">Harus dibayar</p>
-                          <p class="card-text" style="font-weight: bold; font-size:14px;">Rp.<br> {{number_format($tagihan->jml_tagih,0,',','.')}}</p>
+                          <p class="card-text" style="font-weight: bold; font-size:14px;">Rp.<br> {{number_format(($total - $terbayar),0,',','.')}}</p>
                         </div>
                         <div class="col text-center" id="tombol">
                           <a href="{{url('purchase',$tagihan->id)}}" class="btn btn-success" id="bayar" style=" font-size:14px; border-radius:5px; padding:5px 10px; font-weight:bold;">Bayar</a>
@@ -373,6 +415,20 @@
               </div>
               <div class="cardContainer">
                 @foreach ($tagihans as $tagihan)
+                @php
+                  // $dptagihan_terbayar = 0;
+                  // if ($tagihan->rekapdptagihan) {
+                  //   $dptagihan_terbayar = $tagihan->rekapdptagihan->jml_terbayar;
+                  // }
+
+                  // $tagihan_terbayar = 0;
+                  // if ($tagihan->rekaptagihan) {
+                  //   $tagihan_terbayar = $tagihan->rekaptagihan->jml_terbayar;
+                  // }
+
+                  // $terbayar = $dptagihan_terbayar + $tagihan_terbayar;
+                  $total = $tagihan->nominal - $tagihan->diskon;
+                @endphp
                 @if (\Auth::user()->id == $tagihan->user_id && $tagihan->status==2)
                   <div class="card" style="border:none; border-radius:5px; background-color:#eeee;">
                     <div class="card-body">
@@ -381,7 +437,7 @@
                           <div class="col">
                             <h5 class="card-title">{{@$tagihan->proyek->website}}</h5>
                             <p class="card-title" style="font-weight: bold;">Invoice {{$tagihan->invoice}}</p>
-                            <p class="card-text">Total tagihan Rp.  {{number_format(((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}},-</p>
+                            <p class="card-text">Total tagihan Rp.  {{number_format($total,0,',','.')}},-</p>
                             <p class="card-text" style="font-style: italic;">Terbayar pada {{date("Y-m-d", strtotime($tagihan->updated_at))}}</p>
                         </div>
                           <div class="col">

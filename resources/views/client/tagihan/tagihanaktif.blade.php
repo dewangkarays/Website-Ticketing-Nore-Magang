@@ -180,6 +180,20 @@
         </div>
         <div class="cardContainer">
           @foreach ($tagihans as $tagihan)
+          @php
+            $dptagihan_terbayar = 0;
+            if ($tagihan->rekapdptagihan) {
+              $dptagihan_terbayar = $tagihan->rekapdptagihan->jml_terbayar;
+            }
+
+            $tagihan_terbayar = 0;
+            if ($tagihan->rekaptagihan) {
+              $tagihan_terbayar = $tagihan->rekaptagihan->jml_terbayar;
+            }
+
+            $terbayar = $dptagihan_terbayar + $tagihan_terbayar;
+            $total = $tagihan->nominal - $tagihan->diskon;
+          @endphp
           @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status!=2)
           <div class="card w-100">
             <div class="card-body">
@@ -201,18 +215,18 @@
                 <div class="row">
                   <div class="col">
                     <p class="card-text">Total Tagihan</p>
-                    <p class="card-text desktop" style="font-weight:bold;">Rp. {{number_format( ((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}},-</p>
-                    <p class="card-text mobile" style="font-weight:bold;">Rp.<br>{{number_format( ((int)$tagihan['jml_tagih'] + (int)$tagihan['jml_bayar']),0,',','.')}},-</p>
+                    <p class="card-text desktop" style="font-weight:bold;">Rp. {{number_format($total,0,',','.')}},-</p>
+                    <p class="card-text mobile" style="font-weight:bold;">Rp.<br>{{number_format($total,0,',','.')}},-</p>
                   </div>
                   <div class="col">
                     <p class="card-text">Sudah Dibayar</p>
-                    <p class="card-text desktop" style="font-weight:bold;">Rp. {{number_format(@$tagihan->jml_bayar,0,',','.')}},-</p>
-                    <p class="card-text mobile" style="font-weight:bold;">Rp.<br>{{number_format(@$tagihan->jml_bayar,0,',','.')}},-</p>
+                    <p class="card-text desktop" style="font-weight:bold;">Rp. {{number_format($terbayar,0,',','.')}},-</p>
+                    <p class="card-text mobile" style="font-weight:bold;">Rp.<br>{{number_format($terbayar,0,',','.')}},-</p>
                   </div>
                   <div class="col">
                     <p class="card-text">Harus dibayar</p>
-                    <p class="card-text desktop" style="font-weight:bold;">Rp. {{number_format(@$tagihan->jml_tagih,0,',','.')}},-</p>
-                    <p class="card-text mobile" style="font-weight:bold;">Rp.<br>{{number_format(@$tagihan->jml_tagih,0,',','.')}},-</p>
+                    <p class="card-text desktop" style="font-weight:bold;">Rp. {{number_format(($total - $terbayar),0,',','.')}},-</p>
+                    <p class="card-text mobile" style="font-weight:bold;">Rp.<br>{{number_format(($total - $terbayar),0,',','.')}},-</p>
                   </div>
                   <div class="col text-right desktop" id="tombol" style="margin-right:1.25rem;">
                     <a href="{{url('purchase')}}" class="btn btn-success" id="bayar" style="border-radius:5px; padding:10px 20px; font-weight:bold;">Bayar</a>
