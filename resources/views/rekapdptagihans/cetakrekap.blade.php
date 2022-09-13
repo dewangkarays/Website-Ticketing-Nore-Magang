@@ -130,7 +130,7 @@
         @endif
     @endif
         <div align="center">
-            <img src="{{url($lampiran->gambar)}}" style="max-width:90%;object-fit: cover;">
+            <img src="{{url($lampiran->gambar)}}" style="max-width:90%;max-height:300px;object-fit: cover">
         </div>
 
     @if ($lampiran->jenis_lampiran != $jenis_terakhir)
