@@ -712,7 +712,20 @@
                           <?php $count = 0; ?>
                           @foreach ($tagihans as $tagihan)
                           @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status!=2)
-                          
+                          @php
+                              $dptagihan_terbayar = 0;
+                              if ($tagihan->rekapdptagihan) {
+                                $dptagihan_terbayar = $tagihan->rekapdptagihan->jml_terbayar;
+                              }
+
+                              $tagihan_terbayar = 0;
+                              if ($tagihan->rekaptagihan) {
+                                $tagihan_terbayar = $tagihan->rekaptagihan->jml_terbayar;
+                              }
+
+                              $terbayar = $dptagihan_terbayar + $tagihan_terbayar;
+                              $total = $tagihan->nominal - $tagihan->diskon;
+                          @endphp
                           @if ($count == 2)
                         @break
                         @endif
@@ -736,15 +749,15 @@
                               <div class="row">
                                 <div class="col">
                                   <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Total Tagihan : </p>
-                                  <p style="padding: 0 0 10px 12px; font-size:16px;">Rp {{number_format((@$tagihan->jml_tagih+@$tagihan->jml_bayar),0,',','.')}},-</p>
+                                  <p style="padding: 0 0 10px 12px; font-size:16px;">Rp {{number_format(($total),0,',','.')}},-</p>
                                 </div>
                                 <div class="col">
                                   <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Sudah terbayar : </p>
-                                  <p style="padding: 0 0 10px 12px; font-size:16px;">Rp {{number_format((@$tagihan->jml_bayar),0,',','.')}},-</p>
+                                  <p style="padding: 0 0 10px 12px; font-size:16px;">Rp {{number_format(($terbayar),0,',','.')}},-</p>
                                 </div>
                                 <div class="col">
                                   <p class="card-text" style="padding: 5px 0 10px 12px; font-size:16px;">Harus dibayar : </p>
-                                  <p style="padding: 0 0 10px 12px; font-size:16px; font-weight:bold;">Rp {{number_format((@$tagihan->jml_tagih),0,',','.')}},-</p>
+                                  <p style="padding: 0 0 10px 12px; font-size:16px; font-weight:bold;">Rp {{number_format(($total - $terbayar),0,',','.')}},-</p>
                                 </div>
                               </div>
                               <div class="buttondetail" style="padding-left:12px; padding-bottom:5px;">
@@ -829,7 +842,20 @@
                         <?php $count = 0; ?>
                         @foreach ($tagihans as $tagihan)
                         @if (\Auth::user()->id == @$tagihan->user_id && @$tagihan->status!=2)
-              
+                        @php
+                              $dptagihan_terbayar = 0;
+                              if ($tagihan->rekapdptagihan) {
+                                $dptagihan_terbayar = $tagihan->rekapdptagihan->jml_terbayar;
+                              }
+
+                              $tagihan_terbayar = 0;
+                              if ($tagihan->rekaptagihan) {
+                                $tagihan_terbayar = $tagihan->rekaptagihan->jml_terbayar;
+                              }
+
+                              $terbayar = $dptagihan_terbayar + $tagihan_terbayar;
+                              $total = $tagihan->nominal - $tagihan->diskon;
+                          @endphp
                         @if ($count == 2)
               @break
               @endif
