@@ -165,7 +165,25 @@ class PaymentController extends Controller
                     'status'=>3
                 ]);
             }
-            // $tagihan->save();
+
+            $dataTagihans = Tagihan::where('rekap_tagihan_id', $tagihan->id)->get();
+            foreach ($dataTagihans as $dataTagihan) {
+                $dataTagihan->jml_bayar = $dataTagihan->jml_bayar + $tagihan->jml_terbayar;
+                // $dataTagihan->update();
+
+                $diskon = 0;
+                if ($dataTagihan->diskon != null) {
+                    $diskon = $dataTagihan->diskon;
+                }
+
+                if ($dataTagihan->jml_bayar + $dataTagihan->diskon == $dataTagihan->nominal) {
+                    $dataTagihan->status = 2;
+                } else {
+                    $dataTagihan->status = 1;
+                }
+
+                $dataTagihan->update();
+            }
         }
 
         if($request->get('rdtagihan') == 2){
@@ -184,7 +202,25 @@ class PaymentController extends Controller
                 ]);
                 // $tagihan->status=1;
             }
-            // $tagihan->save();
+            
+            $dataTagihans = Tagihan::where('rekap_dptagihan_id', $tagihan->id)->get();
+            foreach ($dataTagihans as $dataTagihan) {
+                $dataTagihan->jml_bayar = $dataTagihan->jml_bayar + $tagihan->jml_terbayar;
+                // $dataTagihan->update();
+
+                $diskon = 0;
+                if ($dataTagihan->diskon != null) {
+                    $diskon = $dataTagihan->diskon;
+                }
+
+                if ($dataTagihan->jml_bayar + $dataTagihan->diskon == $dataTagihan->nominal) {
+                    $dataTagihan->status = 2;
+                } else {
+                    $dataTagihan->status = 1;
+                }
+
+                $dataTagihan->update();
+            }
         }
         // dd($data);
         $payment = Payment::create($data);
@@ -305,11 +341,50 @@ class PaymentController extends Controller
                 $rekapdptagihan = RekapDptagihan::find($payment->rekap_dptagihan_id);
                 $rekapdptagihan->jml_terbayar = $rekapdptagihan->jml_terbayar + $payment->nominal;
                 $rekapdptagihan->update();
+
+                $tagihans = Tagihan::where('rekap_dptagihan_id', $rekapdptagihan->id)->get();
+                foreach ($tagihans as $tagihan) {
+                    $tagihan->jml_bayar = $tagihan->jml_bayar + $rekapdptagihan->jml_terbayar;
+                    // $tagihan->update();
+
+                    $diskon = 0;
+                    if ($tagihan->diskon != null) {
+                        $diskon = $tagihan->diskon;
+                    }
+
+                    if ($tagihan->jml_bayar + $diskon ==  $tagihan->nominal) {
+                        $tagihan->status = 2;
+                    } else {
+                        $tagihan->status = 1;
+                    }
+
+                    $tagihan->update();
+                }
             } else {
                 $rekaptagihan = RekapTagihan::find($payment->rekap_tagihan_id);
                 $rekaptagihan->jml_terbayar = $rekaptagihan->jml_terbayar + $payment->nominal;
                 $rekaptagihan->update();
+
+                $tagihans = Tagihan::where('rekap_tagihan_id', $rekaptagihan->id)->get();
+                foreach ($tagihans as $tagihan) {
+                    $tagihan->jml_bayar = $tagihan->jml_bayar + $rekaptagihan->jml_terbayar;
+                    // $tagihan->update();
+
+                    $diskon = 0;
+                    if ($tagihan->diskon != null) {
+                        $diskon = $tagihan->diskon;
+                    }
+
+                    if ($tagihan->jml_bayar + $diskon ==  $tagihan->nominal) {
+                        $tagihan->status = 2;
+                    } else {
+                        $tagihan->status = 1;
+                    }
+
+                    $tagihan->update();
+                }
             }
+
         }
 
         $payment->update();
