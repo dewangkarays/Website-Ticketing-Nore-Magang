@@ -340,6 +340,11 @@ class PaymentController extends Controller
             if ($payment->rekap_dptagihan_id != null) {
                 $rekapdptagihan = RekapDptagihan::find($payment->rekap_dptagihan_id);
                 $rekapdptagihan->jml_terbayar = $rekapdptagihan->jml_terbayar + $payment->nominal;
+                if ($rekapdptagihan->jml_terbayar == $rekapdptagihan->total) {
+                    $rekapdptagihan->status = 4;
+                } else {
+                    $rekapdptagihan->status = 3;
+                }
                 $rekapdptagihan->update();
 
                 $tagihans = Tagihan::where('rekap_dptagihan_id', $rekapdptagihan->id)->get();
@@ -363,6 +368,11 @@ class PaymentController extends Controller
             } else {
                 $rekaptagihan = RekapTagihan::find($payment->rekap_tagihan_id);
                 $rekaptagihan->jml_terbayar = $rekaptagihan->jml_terbayar + $payment->nominal;
+                if ($rekaptagihan->jml_terbayar == $rekaptagihan->total) {
+                    $rekaptagihan->status = 4;
+                } else {
+                    $rekaptagihan->status = 3;
+                }
                 $rekaptagihan->update();
 
                 $tagihans = Tagihan::where('rekap_tagihan_id', $rekaptagihan->id)->get();
