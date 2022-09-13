@@ -157,7 +157,7 @@ class TagihanController extends Controller
             $rekapdptagihan->total =  $last_tagihan->uang_muka;
             $rekapdptagihan->status = 2;
             $rekapdptagihan->nama_tertagih = $user->nama;
-            $rekapdptagihan->alamat = $user->alamat;
+            $rekapdptagihan->alamat = $user->alamat ? $user->alamat : "-";
             $rekapdptagihan->jatuh_tempo = $last_tagihan->masa_berlaku ? $last_tagihan->masa_berlaku : date('Y-m-d');
 
             if ($request->buat_invoice == 1) {
@@ -237,7 +237,7 @@ class TagihanController extends Controller
             $rekaptagihan->total =  $last_tagihan->jml_tagih;
             $rekaptagihan->status = 2;
             $rekaptagihan->nama_tertagih = $user->nama;
-            $rekaptagihan->alamat = $user->alamat;
+            $rekaptagihan->alamat = $user->alamat ? $user->alamat : "-";
             $rekaptagihan->jatuh_tempo = $last_tagihan->masa_berlaku ? $last_tagihan->masa_berlaku : date('Y-m-d');
 
             if ($request->buat_invoice == 1) {
