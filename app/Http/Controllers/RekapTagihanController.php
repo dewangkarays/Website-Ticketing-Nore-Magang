@@ -287,10 +287,6 @@ class RekapTagihanController extends Controller
         // $arrayid = $request->get('tagihan');
         $invoices = Tagihan::where('rekap_tagihan_id', $rekap->id)->get();
         // dd($rekap);
-        foreach($invoices as $rekap_id)
-        {
-            $rekap_id->id;
-        }
         $lampirans = Lampiran_gambar::where('rekap_tagihan_id', $rekap->id)->orderBy('jenis_lampiran', 'asc')->get();
         $setting = Setting::first();
         // dd(count($lampirans));
