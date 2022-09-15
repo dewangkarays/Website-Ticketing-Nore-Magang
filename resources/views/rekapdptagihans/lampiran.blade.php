@@ -17,6 +17,9 @@
             <h4><span class="font-weight-semibold">List Lampiran - {{$rekapdp->invoice}} </h4>
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
+            <div class="d-flex">
+                <a href="{{route('cetakrekapdp', $rekapdp->id)}}" target="blank"><button type="button" class="btn btn-success rounded-round"><i class="icon-printer2 mr-2"></i>Print</button></a>
+            </div>
         </div>
     </div>
     <!-- /page header -->
