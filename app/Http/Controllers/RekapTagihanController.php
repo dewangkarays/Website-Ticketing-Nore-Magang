@@ -101,49 +101,53 @@ class RekapTagihanController extends Controller
         $no = str_pad($nomorinv,3,"0",STR_PAD_LEFT);
         $data['invoice'] = $invawal.'/'.$no.'/'.$noakhir;
         // $data['user_id'] = $request->get('user_id');
-        $lastinv = Tagihan::latest('id')->first();
+        // $lastinv = Tagihan::latest('id')->first();
+
+        $lastno = Nomor::first();
+        $lastno->ninv = $nomorinv;
+        $lastno->update();
 
         // dd($data);
 
-        if ($lastinv) {
-            $diffinv = substr($lastinv->invoice,0,3);
-            if ($diffinv == 'INV') {
-                $different = 'no';
-            } else {
-                $different = 'yes';
-            }
+        // if ($lastinv) {
+        //     $diffinv = substr($lastinv->invoice,0,3);
+        //     if ($diffinv == 'INV') {
+        //         $different = 'no';
+        //     } else {
+        //         $different = 'yes';
+        //     }
 
-            if ($different == 'yes') {
-                $lastno = Nomor::first();
-                if ($lastno) {
-                    $lastno->ninv = $nomorinv;
-                    $lastno->save();
-                } else {
-                    $lastno['ninv'] = 1;
-                    $lastno = Nomor::create($lastno);
-                }
-            } else {
-                // jika tidak sama
-                $lastno = Nomor::first();
-                if ($lastno) {
-                    $lastno->ninv = $nomorinv;
-                    $lastno->save();
-                } else {
-                    $lastno['ninv'] = 1;
-                    $lastno = Nomor::create($lastno);
-                }
-            }
+        //     if ($different == 'yes') {
+        //         $lastno = Nomor::first();
+        //         if ($lastno) {
+        //             $lastno->ninv = $nomorinv;
+        //             $lastno->save();
+        //         } else {
+        //             $lastno['ninv'] = 1;
+        //             $lastno = Nomor::create($lastno);
+        //         }
+        //     } else {
+        //         // jika tidak sama
+        //         $lastno = Nomor::first();
+        //         if ($lastno) {
+        //             $lastno->ninv = $nomorinv;
+        //             $lastno->save();
+        //         } else {
+        //             $lastno['ninv'] = 1;
+        //             $lastno = Nomor::create($lastno);
+        //         }
+        //     }
 
-        } else {
-            $lastno = Nomor::first();
-            if ($lastno) {
-                $lastno->ninv = $nomorinv;
-                $lastno->save();
-            } else {
-                $lastno['ninv'] = 1;
-                $lastno = Nomor::create($lastno);
-            }
-        }
+        // } else {
+        //     $lastno = Nomor::first();
+        //     if ($lastno) {
+        //         $lastno->ninv = $nomorinv;
+        //         $lastno->save();
+        //     } else {
+        //         $lastno['ninv'] = 1;
+        //         $lastno = Nomor::create($lastno);
+        //     }
+        // }
 
         // dd($data);
         $rekaptagihan = RekapTagihan::create($data);
