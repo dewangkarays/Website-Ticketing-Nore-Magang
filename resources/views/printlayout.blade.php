@@ -198,7 +198,7 @@
         <div style="margin-top:0px; margin-bottom:0px;">
             <hr>
         </div>
-        <table style="margin-top: 8px;margin-bottom: 8px;font-size: 15px !important">
+        <table style="margin-top: 8px;font-size: 15px !important">
             <tr>
                 <td style="width: 50%; vertical-align: top">
                     <table style="padding-right: 50px; line-height: 1.75;">
@@ -210,7 +210,7 @@
             </tr>
         </table>
         
-        <table class="main-table" style="margin-top: 15px; line-height:0">
+        <table class="main-table" style="margin-top: 15px;line-height:0">
             <tr>
                 <th align="left" style="width: 15%; height: 20px" class="nore-fontcolor">PROYEK</th>
                 <th align="left" style="width: 40%; height: 20px" class="nore-fontcolor">DESKRIPSI</th>

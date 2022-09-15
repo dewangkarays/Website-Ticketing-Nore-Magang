@@ -50,7 +50,11 @@
                 {{ $invoice->proyek->website ? '('.$invoice->proyek->website.')': ''}}
             </td>
             {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
+            @if ($invoice->keterangan != null)
             <td>{!! $invoice->keterangan !!}</td>
+            @else
+            <td><p></p></td>
+            @endif
             <td align="right">@angka($invoice->nominal)</td>
         </tr>
         {{-- <tr>
