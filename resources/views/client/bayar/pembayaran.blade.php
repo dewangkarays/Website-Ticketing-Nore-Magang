@@ -17,6 +17,10 @@
       rel="stylesheet">
     {{-- fixed --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">  
+    <link href="{{asset('assets/css/components.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{asset('global_assets/css/icons/icomoon/styles.min.css') }}" rel="stylesheet" type="text/css">
+
+
    {{-- script --}}
    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
@@ -303,6 +307,8 @@
     {{-- tambahan --}}
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="{{asset('global_assets/js/main/jquery.min.js') }}"></script>
+    <script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+    <script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
     <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -336,7 +342,13 @@
 			// 		$('#tagihan_id').html(data);
 			// 	}
 			// });
-        
+      
+      var $select = $('.select-search').select2();
+
+      $select.on('change', function() {
+				$(this).trigger('blur');
+			});
+
       function changeTagihan(select){
         var id = $(select).find(':selected').val();
         var tagih = $(select).find(':selected').data('tagihan');
