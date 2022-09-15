@@ -118,13 +118,17 @@
 							<input type="text" id="noinv" name="noinv" class="form-control border-info border-1" value="INV" readonly>
 						</div>
 						<div class="col-lg-2">
-							@if ($lastno)
-							@if (isset($lastno->ninv))
-							<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" value="{{$lastno->ninv+1}}" required>
-							@endif
+							{{-- @if ($lastno) --}}
+							{{-- @if (isset($lastno->ninv)) --}}
+							@if ($lastno->ninv != null)
+								<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" value="{{$lastno->ninv+1}}" required>
 							@else
-							<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" value="1" required>
+								<input type="text" id="ninv" name="ninv" class="form-control border-info border-1" value="1" required>							
 							@endif
+							{{-- @endif --}}
+							{{-- @else --}}
+							{{-- <input type="text" id="ninv" name="ninv" class="form-control border-info border-1" value="1" required> --}}
+							{{-- @endif --}}
 						</div>
 						<div class="col-lg-2">
 							<input type="text" id="noakhir" name="noakhir" class="form-control border-info border-1" value="{{date('dmY')}}" required>
