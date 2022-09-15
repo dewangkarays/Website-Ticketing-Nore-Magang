@@ -255,11 +255,7 @@ class RekapDptagihanController extends Controller
         // $arrayid = $request->get('tagihan');
         $invoices = Tagihan::where('rekap_dptagihan_id', $rekapdp->id)->get();
         // dd($invoices);
-        foreach($invoices as $rekapdp_id)
-        {
-            $rekapdp_id->id;
-        }
-        $lampirans = Lampiran_gambar::where('rekap_dptagihan_id', $rekapdp->id)->orderBy('id', 'asc')->get();
+        $lampirans = Lampiran_gambar::where('rekap_dptagihan_id', $rekapdp->id)->orderBy('jenis_lampiran', 'asc')->get();
         $setting = Setting::first();
         // dd($invoices->sum('nominal'));
         $pdf = PDF::loadview('rekapdptagihans.cetakrekap', compact('invoices','lampirans','setting','rekapdp'))->setPaper('a4', 'potrait');
