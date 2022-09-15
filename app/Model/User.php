@@ -74,4 +74,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Model\Pengeluaran','user_id', 'id');
     }
+
+    public function cuti() {
+        return $this->hasMany('App\Model\Cuti', 'user_id', 'id');
+    }
 }
