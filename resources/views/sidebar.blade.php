@@ -224,14 +224,14 @@ ul{
 							<a href="{{ url('/cuti') }}" class="nav-link {{ (request()->is('cuti*')) ? 'active' : '' }}">
 								<i class="icon-drawer3"></i>
 								<span>
-									Pengajuan Cuti
+									Cuti
 								</span>
 							</a>
 							<ul class="nav nav-group-sub" style="display: {{ (request()->is('cuti*')) ? 'block' : 'none' }};">
 								<li class="nav-item"><a href="{{ url('/cuti') }}" class="nav-link {{ (request()->is('cuti*')) ? 'active' : '' }}">
 									<i class="icon-file-text3"></i>
 									<span>
-										Cuti
+										Pengajuan Cuti
 									</span>
 								</a></li>
 								<li class="nav-item"><a href="{{url('/cuti/history')}}" class="nav-link {{ (request()->is('cuti*')) ? 'active' : '' }}">
