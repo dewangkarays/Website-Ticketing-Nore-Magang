@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Model\Cuti;
 use App\Model\User;
+use Auth;
 
 class CutiController extends Controller
 {
@@ -15,11 +16,14 @@ class CutiController extends Controller
     }
 
     public function create() {
-        //
+        $users = User::where('id', '=', \Auth::user()->id)->get() ;
+        // dd($nip);
+        return view('cuti.create', compact('users'));
     }
 
     public function store(Request $request) {
-        //
+        // dd($request);
+        return view('cuti.create');
     }
 
     public function show($id) {
