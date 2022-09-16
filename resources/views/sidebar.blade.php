@@ -198,6 +198,54 @@ ul{
 				@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 
 				<li class="nav-item nav-item-submenu">
+					<a href="#" class="nav-link {{ (request()->is('calendar*','presensi*','cuti*')) ? 'active' : '' }}"><i class="icon-cabinet"></i>
+						<span>
+							Presensi
+						</span>
+					</a>
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('calendar*','presensi*','cuti*')) ? 'block' : 'none' }};">
+						<li class="nav-item">
+							<a href="#" class="nav-link {{ (request()->is('calendar*')) ? 'active' : '' }}">
+								<i class="icon-calendar2"></i>
+								<span>
+									Kalendar
+								</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link {{ (request()->is('presensi*')) ? 'active' : '' }}">
+								<i class="icon-magazine"></i>
+								<span>
+									Presensi Harian
+								</span>
+							</a>
+						</li>
+						<li class="nav-item nav-item-submenu">
+							<a href="{{ url('/cuti') }}" class="nav-link {{ (request()->is('cuti*')) ? 'active' : '' }}">
+								<i class="icon-drawer3"></i>
+								<span>
+									Pengajuan Cuti
+								</span>
+							</a>
+							<ul class="nav nav-group-sub" style="display: {{ (request()->is('cuti*')) ? 'block' : 'none' }};">
+								<li class="nav-item"><a href="{{ url('/cuti') }}" class="nav-link {{ (request()->is('cuti*')) ? 'active' : '' }}">
+									<i class="icon-file-text3"></i>
+									<span>
+										Cuti
+									</span>
+								</a></li>
+								<li class="nav-item"><a href="{{url('/cuti/history')}}" class="nav-link {{ (request()->is('cuti*')) ? 'active' : '' }}">
+									<i class="icon-file-check2"></i>
+									<span>
+										History Cuti
+									</span>
+								</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+
+				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link {{ (request()->is('task*','history','antrian')) ? 'active' : 'none' }}"><i class="icon-stack-text"></i><span>Pengoperasian</span></a>
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('task*','history','antrian')) ? 'block' : 'none' }};">
 						<li class="nav-item">
