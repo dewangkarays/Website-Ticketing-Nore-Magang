@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \Illuminate\Database\Eloquent\Collection;
 
 use App\Model\Cuti;
 use App\Model\User;
 use Carbon\Carbon;
 use Auth;
 use Datatables;
+
 
 class CutiController extends Controller
 {
@@ -41,8 +43,13 @@ class CutiController extends Controller
         //
     }
 
+    public function historycuti() {
+        return view('cuti.history');
+    }
+
     public function destroy($id) {
         $cuti = Cuti::find($id);
+        // dd($cuti);
         $cuti->delete();
         return redirect()->route('cuti');
     }
@@ -63,8 +70,10 @@ class CutiController extends Controller
                 ->with('karyawan')
                 ->get();
         } else if ($status == 'history') {
-            $cuti = Cuti::where('status', '>', '1')
-                ->where('tanggal_akhir', '<=', $today)
+            $cuti = Cuti::where(function($q) use ($today) {
+                $q->where('status', '>', '2')
+                    ->orWhere('tanggal_akhir', '<', $today);
+                })
                 ->with('karyawan')
                 ->get();
         }
