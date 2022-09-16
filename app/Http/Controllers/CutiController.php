@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Model\Cuti;
 use App\Model\User;
+use Carbon\Carbon;
 use Auth;
+use Datatables;
 
 class CutiController extends Controller
 {
@@ -46,4 +48,19 @@ class CutiController extends Controller
     }
 
     //tampilan index menggunakan serverside datatables
+    public function getcuti($status) {
+        $today = Carbon::today();
+        if ($status == 'aktif') {
+            $cuti = Cuti::where('status', '<', '3')
+                ->where('tanggal_akhir', '>=', $today)
+                ->with('karyawan')
+                ->get();
+        } else if ($status == 'history') {
+            $cuti = Cuti::where('status', '>', '1')
+                ->where('tanggal_akhir', '<=', $today)
+                ->with('karyawan')
+                ->get();
+        }
+        return Datatables::of($cuti)->addIndexColumn()->make(true);
+    }
 }
