@@ -47,6 +47,13 @@ class CutiController extends Controller
         return redirect()->route('cuti');
     }
 
+    public function invalid($id) {
+        $cuti = Cuti::find($id);
+        $cuti->status = 4;
+        $cuti->update();
+        return redirect()->route('cuti');
+    }
+
     //tampilan index menggunakan serverside datatables
     public function getcuti($status) {
         $today = Carbon::today();
