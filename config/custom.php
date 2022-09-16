@@ -117,6 +117,13 @@ return [
         '3' => 'Bukti Bayar Pajak',
         '4' => 'Lain-lain'
     ],
+
+    'status_cuti' => [
+        '1' => 'Diajukan',
+        '2' => 'Diterima',
+        '3' => 'DItolak',
+        '4' => 'Invalid',
+    ],
 ];
 
 
