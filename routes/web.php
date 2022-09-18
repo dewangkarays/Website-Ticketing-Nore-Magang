@@ -118,6 +118,8 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/cuti/{id}/edit', 'CutiController@edit')->name('cuti.edit');
 		Route::post('/cuti/{id}/update', 'CutiController@update')->name('cuti.update');
 		Route::post('/cuti/{id}/delete', 'CutiController@destroy')->name('cuti.delete');
+		Route::get('/getverifikator', 'CutiController@getverifikator');
+		
 
 	});
 
