@@ -124,6 +124,13 @@ return [
         '3' => 'DItolak',
         '4' => 'Invalid',
     ],
+
+    'divisi' => [
+        '1' => 'BackEnd',
+        '2' => 'FrontEnd',
+        '3' => 'Marketing',
+        '4' => 'Finance',
+    ],
 ];
 
 
