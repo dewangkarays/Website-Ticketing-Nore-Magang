@@ -78,4 +78,12 @@ class User extends Authenticatable
     public function cuti() {
         return $this->hasMany('App\Model\Cuti', 'user_id', 'id');
     }
+
+    public function verifikasi1() {
+        return $this->hasMany('App\Model\Cuti', 'verifikator_1', 'id');
+    }
+
+    public function verifikasi2() {
+        return $this->hasMany('App\Model\Cuti', 'verifikator_2', 'id');
+    }
 }
