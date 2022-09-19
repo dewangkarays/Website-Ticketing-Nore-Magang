@@ -20,7 +20,7 @@
         body{
             font-family:Arial, Helvetica, sans-serif;
             color: #595657;
-            font: 9pt;
+            font: 10pt;
             background-color:white;
         }
         footer {
@@ -57,11 +57,11 @@
             text-align: center;
         }
         .main__header h5 {
-            font-size: 11pt;
+            font-size: 12pt;
             margin-bottom: 0;
         }
         .main__header p {
-            font-size: 10pt;
+            font-size: 11pt;
             margin-top: 0;
         }
         .main-table {
@@ -86,12 +86,17 @@
             margin-top: 40px;
             text-align: center;
         }
+        .main__tandatangan p {
+            padding: 0;
+            margin: 0;
+        }
         .main__notes {
             margin-top: 50px;
-        }
-        .main__notes .notes {
-            font-size: 7pt;
             text-align: justify;
+        }
+        .main__notes p {
+            padding: 0;
+            margin: 0;
         }
     </style>
     <title>Surat Permohonan Cuti</title>
@@ -154,7 +159,7 @@
                 <u>SURAT PERMOHONAN CUTI</u>
             </h5>
             <p>
-                Nomor: 
+                Nomor: {{$cuti->nomor_permohonan_cuti}}
             </p>
         </div>
         <table class="main-table">
@@ -219,44 +224,51 @@
         </div>
         <table class="main__tandatangan">
             <tr>
-                <td width="30%">
+                <td width="40%">
                     <p>Mengetahui,</p>
-                    <br><br><br>
-                    <p><b>{{$cuti->verifikator2->nama}}</b></p>
+                    <p style="margin-top: 75px"><b>{{$cuti->verifikator2->nama}}</b></p>
+                    @if ($cuti->verifikator2->jabatan)
                     <p>{{$cuti->verifikator2->jabatan}}</p>
+                    @else
+                    <p>Verifikator 2</p>
+                    @endif
+                </td>
+                <td width="20%">
                 </td>
                 <td width="40%">
-                </td>
-                <td width="30%">
                     <p>Hormat saya,</p>
-                    <br><br><br>
-                    <p><b>{{$cuti->karyawan->nama}}</b></p>
+                    <p style="margin-top: 75px"><b>{{$cuti->karyawan->nama}}</b></p>
+                    @if ($cuti->karyawan->jabatan)
                     <p>{{$cuti->karyawan->jabatan}}</p>
+                    @else
+                    <p>Pemohon</p>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td width=30%></td>
-                <td width=40%%>
-                    <p>Menyetujui,</p>
-                    <br><br><br>
-                    <p><b>{{$cuti->verifikator1->nama}}</b></p>
+                <td width=40%>
+                    <p style="margin-top: 30px">Menyetujui,</p>
+                    <p style="margin-top: 75px"><b>{{$cuti->verifikator1->nama}}</b></p>
+                    @if ($cuti->verifikator1->jabatan)
                     <p>{{$cuti->verifikator1->jabatan}}</p>
+                    @else
+                    <p>Verifikator 1</p>
+                    @endif
                 </td>
                 <td width=30%></td>
             </tr>
         </table>
         <div class="main__notes">
             Catatan:
-            <div class="notes">
-                <ul>
-                    @if ($cuti->cataten_ver_2)
-                    <li>{{$cuti->catatan_ver_2}}</li>
-                    @endif
-                    @if ($cuti->catatan_ver_1)
-                    <li>{{$cuti->catatan_ver_1}}</li>
-                    @endif
-                </ul>
-            </div>
+            <ul>
+                @if ($cuti->catatan_ver_2)
+                <li>{!!$cuti->catatan_ver_2!!}</li>
+                @endif
+                @if ($cuti->catatan_ver_1)
+                <li>{!!$cuti->catatan_ver_1!!}</li>
+                @endif
+            </ul>
         </div>
     </main>
     <footer>
