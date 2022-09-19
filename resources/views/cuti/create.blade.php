@@ -30,13 +30,13 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" value="{{ \Auth::user()->nama }}" data-atasan_user="{{ \Auth::user()->atasan_id }}" required readonly>
+								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" value="{{ \Auth::user()->nama }}" data-atasan_user="{{ $user->atasan_id }}" required readonly>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">NIP</label>
 							<div class="col-lg-10">
-								<input type="text" name="nip" class="form-control border border-1" value="{{ \Auth::user()->nip }}" placeholder="NIP" required>
+								<input type="text" name="nip" class="form-control border border-1" value="{{ $user->nip }}" placeholder="NIP" required readonly>
 							</div>
 						</div>
 						@else
