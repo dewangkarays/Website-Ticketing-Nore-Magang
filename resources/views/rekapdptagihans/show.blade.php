@@ -103,7 +103,11 @@
                                         @foreach ($tagihans as $invoice)
                                             <tr>
                                                 <td>{{ $invoice->proyek->nama_proyek }}</td>
+                                                @if ($invoice->proyek->masa_berlaku)
                                                 <td>{{ date('d-m-Y', strtotime(@$invoice->proyek->masa_berlaku)) }}</td>
+                                                @else
+                                                <td>-</td>
+                                                @endif
                                                 <td>Rp @angka($invoice->uang_muka)</td>
                                                 <td>{!! $invoice->keterangan !!}</td>
                                             </tr>
