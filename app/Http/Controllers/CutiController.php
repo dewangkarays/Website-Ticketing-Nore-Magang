@@ -52,7 +52,8 @@ class CutiController extends Controller
     }
 
     public function edit($id) {
-        //
+        $cuti = Cuti::find($id);
+        return view('cuti.edit', compact('cuti'));
     }
 
     public function update(Request $request, $id) {
@@ -70,7 +71,6 @@ class CutiController extends Controller
         return redirect()->route('cuti');
     }
 
-<<<<<<< HEAD
     public function getverifikator()
     {
         // $user = User::find($id);
@@ -94,13 +94,13 @@ class CutiController extends Controller
         
         // dd($i);
         return response()->json($verifs);
-=======
+    }
+    
     public function invalid($id) {
         $cuti = Cuti::find($id);
         $cuti->status = 4;
         $cuti->update();
         return redirect()->route('cuti');
->>>>>>> c6dee0f0f744e94ce0339e9211ae2a2e1204573f
     }
 
     //tampilan index menggunakan serverside datatables
