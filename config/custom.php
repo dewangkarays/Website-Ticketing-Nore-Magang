@@ -131,13 +131,10 @@ return [
         '3' => 'Marketing',
         '4' => 'Finance',
     ],
+
     'verifikasi_cuti' => [
         '1' => 'Belum diverifikasi',
         '2' => 'Diterima',
         '3' => 'Ditolak',
     ],
 ];
-
-
-
-
