@@ -27,14 +27,12 @@ class CutiController extends Controller
     }
 
     public function store(Request $request) {
-        // dd($request);
+        dd($request);
         $cuti = new Cuti();
         $cuti->status = 1;
         $cuti->tanggal_mulai = $request->get('tanggal_mulai');
         $cuti->tanggal_akhir = $request->get('tanggal_akhir');
         $cuti->alasan = $request->get('alasan');
-        // $cuti->verifikator_2 = 2;
-        // $cuti->verifikator_1 = 1;
         $cuti->verifikator_2 = $request->get('verifikator_2');
         $cuti->verifikator_1 = $request->get('verifikator_1');
         $cuti->user_id = \Auth::user()->id; 
@@ -43,7 +41,7 @@ class CutiController extends Controller
         
         $cuti->save();
         
-        return redirect('/cuti')->with('success', 'Task Saved!');
+        return redirect('/cuti')->with('success', 'Cuti Saved!');
     }
 
     public function show($id) {
@@ -53,11 +51,30 @@ class CutiController extends Controller
 
     public function edit($id) {
         $cuti = Cuti::find($id);
-        return view('cuti.edit', compact('cuti'));
+        $verifikator1 = User::where('id', '=', $cuti->verifikator_1)->first();
+        $verifikator2 = User::where('id', '=', $cuti->verifikator_2)->first();
+        return view('cuti.edit', compact('cuti','verifikator1','verifikator2'));
     }
 
     public function update(Request $request, $id) {
-        //
+        // dd($data);
+        $cuti = Cuti::find($id);
+        $cuti->status = 1;
+        $cuti->tanggal_mulai = $request->get('tanggal_mulai');
+        $cuti->tanggal_akhir = $request->get('tanggal_akhir');
+        $cuti->alasan = $request->get('alasan');
+        if ($request->get('verifikator_2') != null) {
+            $cuti->verifikator_2 = $request->get('verifikator_2');
+        }
+        if ($request->get('verifikator_1') != null){
+            $cuti->verifikator_1 = $request->get('verifikator_1');
+        }
+        // if ($request->get('verifikator_2') == $cuti->verifikator_1 || $request->get('verifikator_1') == $cuti->verifikator_2) {
+        //     return redirect()->back()->with('error', 'Verifikator Tidak Boleh Sama!');
+        // }
+        
+        $cuti->update();
+        return redirect('/cuti')->with('success', 'Cuti Updated');
     }
 
     public function historycuti() {
@@ -95,7 +112,7 @@ class CutiController extends Controller
         // dd($i);
         return response()->json($verifs);
     }
-    
+
     public function invalid($id) {
         $cuti = Cuti::find($id);
         $cuti->status = 4;
