@@ -8,9 +8,11 @@ use \Illuminate\Database\Eloquent\Collection;
 use App\Model\Cuti;
 use App\Model\User;
 use Carbon\Carbon;
+use App\Model\Setting;
 use Auth;
 use Dotenv\Regex\Success;
 use Datatables;
+use PDF;
 
 
 class CutiController extends Controller
@@ -96,26 +98,7 @@ class CutiController extends Controller
 
     public function getverifikator()
     {
-        // $user = User::find($id);
-        // $atasan_id = $user->atasan_id;
-        // $i = 0;
-        // $data = "";
-        // for($i = $id; $i == null;){
         $verifs['data'] = User::where('role','=','70')->orderBy('atasan_id','desc')->get();
-        // foreach ($verifs as $verif)
-        // {
-        //   $test = $verif->where('id','=',$atasan_id)->get();
-        //   break;
-        //   $atasan_id = $test->get('atasan_id');
-        //   $data = $test->get();
-        //   $i++;
-        //   continue;
-        // }
-        // dd($data);
-            // $i = $verif['atasan_id'];
-        // }
-        
-        // dd($i);
         return response()->json($verifs);
     }
 
@@ -143,5 +126,12 @@ class CutiController extends Controller
                 ->get();
         }
         return Datatables::of($cuti)->addIndexColumn()->make(true);
+    }
+
+    public function cetaksuratcuti($id) {
+        $cuti = Cuti::find($id);
+        $setting = Setting::first();
+        $pdf = PDF::loadView('cuti.cetaksuratcuti', compact('cuti', 'setting'));
+        return $pdf->stream();
     }
 }
