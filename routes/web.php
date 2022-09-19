@@ -112,12 +112,15 @@ Route::group(['middleware' => ['auth']], function() {
 
 		// Routing Cuti
 		Route::get('/cuti', 'CutiController@index')->name('cuti');
+		Route::get('/cuti/history', 'CutiController@historycuti')->name('cuti.history');
 		Route::get('/cuti/create', 'CutiController@create')->name('cuti.create');
 		Route::post('/cuti/store', 'CutiController@store')->name('cuti.store');
 		Route::get('/cuti/{id}', 'CutiController@show')->name('cuti.show');
 		Route::get('/cuti/{id}/edit', 'CutiController@edit')->name('cuti.edit');
 		Route::post('/cuti/{id}/update', 'CutiController@update')->name('cuti.update');
 		Route::post('/cuti/{id}/delete', 'CutiController@destroy')->name('cuti.delete');
+		Route::get('/cuti/{id}/invalid', 'CutiController@invalid')->name('cuti.invalid');
+		Route::get('/getcuti/{status}', 'CutiController@getcuti')->name('getcuti');
 
 	});
 
