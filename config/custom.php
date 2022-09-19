@@ -121,7 +121,7 @@ return [
     'status_cuti' => [
         '1' => 'Diajukan',
         '2' => 'Diterima',
-        '3' => 'DItolak',
+        '3' => 'Ditolak',
         '4' => 'Invalid',
     ],
 
@@ -130,6 +130,11 @@ return [
         '2' => 'FrontEnd',
         '3' => 'Marketing',
         '4' => 'Finance',
+    ],
+    'verifikasi_cuti' => [
+        '1' => 'Belum diverifikasi',
+        '2' => 'Diterima',
+        '3' => 'Ditolak',
     ],
 ];
 
