@@ -156,7 +156,7 @@
     <main>
         <div class="main__header">
             <h5>
-                <u>SURAT PERMOHONAN CUTI</u>
+                <u>PERMOHONAN IZIN CUTI</u>
             </h5>
             <p>
                 Nomor: {{$cuti->nomor_permohonan_cuti}}
