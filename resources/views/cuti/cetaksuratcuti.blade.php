@@ -177,7 +177,7 @@
                 <td>
                     <table class="main__detail">
                         <tr>
-                            <td>
+                            <td width="10%">
                                 Nama
                             </td>
                             <td>
@@ -185,7 +185,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td width="10%">
                                 Divisi
                             </td>
                             <td>
@@ -193,7 +193,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td width="10%">
                                 Jabatan
                             </td>
                             <td>
@@ -201,7 +201,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td width="10%">
                                 NIP
                             </td>
                             <td>
