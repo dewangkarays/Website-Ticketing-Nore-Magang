@@ -282,7 +282,7 @@
                 } else {
                     $('#div-tipe, #div-jl, #new-masa').show()
                     $('#masa_berlaku').attr({"required": false,"placeholder": "Belum ada masa berlaku"})
-                    $('#new_mb').attr({"required": true,"placeholder": "Tentukan masa berlaku"})
+                    $('#new_mb').attr({"required": false,"placeholder": "Tentukan masa berlaku"})
                     if (dropdown==1) {
                         $('#tipe_app, #jl_app').hide().val("").attr("required", false)
                         $('#tipe_web, #jl_web').show().attr("required", true)
@@ -306,7 +306,7 @@
                 } else if (dropdown_app==3 || dropdown_web==3 || dropdown_app==2 || dropdown_web==2 || dropdown_app==1 || dropdown_web==1 ) {
                     if ($('#masa_berlaku').val()==""){
                         $('#masa_berlaku').attr({"required": false,"placeholder": "Belum ada masa berlaku"})
-                        $('#new_mb').attr({"required": true,"placeholder": "Tentukan masa berlaku"})
+                        $('#new_mb').attr({"required": false,"placeholder": "Tentukan masa berlaku"})
                     } else {
                         $('#masa_berlaku').attr("required", true)
                         $('#new_mb').attr({"required": false,"placeholder": "Update masa berlaku"})
@@ -323,7 +323,7 @@
                     $('#new-masa').show()
                     if ($('#masa_berlaku').val()==""){
                         $('#masa_berlaku').attr({"required": false,"placeholder": "Belum ada masa berlaku"})
-                        $('#new_mb').attr({"required": true,"placeholder": "Tentukan masa berlaku"})
+                        $('#new_mb').attr({"required": false,"placeholder": "Tentukan masa berlaku"})
                     } else {
                         $('#masa_berlaku').attr("required", true)
                         $('#new_mb').attr({"required": false,"placeholder": "Update masa berlaku"})
