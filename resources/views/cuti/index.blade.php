@@ -199,8 +199,8 @@
                                 let showRef = "{{route('cuti.show', ':id')}}"
                                 showRef = showRef.replace(':id', data?.id)
 
-                                let cetakRef = "#"
-                                // cetakRef = cetakRef.replace(':id', data?.id)
+                                let cetakRef = "{{route('cetaksuratcuti', ':id')}}"
+                                cetakRef = cetakRef.replace(':id', data?.id)
 
                                 let delUri = "{{route('cuti.delete', ':id')}}"
                                 delUri = delUri.replace(':id', data?.id)
