@@ -30,7 +30,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" value="{{ \Auth::user()->nama }}" data-atasan_user="{{ $user->atasan_id }}" required readonly>
+								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" value="{{ $user->nama }}" data-atasan_user="{{ $user->atasan_id }}" required readonly>
 							</div>
 						</div>
 						<div class="form-group row">
