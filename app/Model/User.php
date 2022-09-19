@@ -80,10 +80,10 @@ class User extends Authenticatable
     }
 
     public function verifikasi1() {
-        return $this->hasMany('App\Model\Cuti', 'verifikator_1', 'id');
+        return $this->hasMany('App\Model\Cuti', 'verifikator_1_id', 'id');
     }
 
     public function verifikasi2() {
-        return $this->hasMany('App\Model\Cuti', 'verifikator_2', 'id');
+        return $this->hasMany('App\Model\Cuti', 'verifikator_2_id', 'id');
     }
 }
