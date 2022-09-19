@@ -26,27 +26,33 @@
                     @foreach ($users as $user)
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Form Pengajuan</legend>
-						@if(\Auth::user()->role==1 || \Auth::user()->role==10 || \Auth::user()->role==20)
+						@if(\Auth::user()->role==10 || \Auth::user()->role==20)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-								<input type="text" name="name" class="form-control border border-1" placeholder="Nama" value="{{ $user->nama }}" required>
+								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" value="{{ $user->nama }}" data-atasan_user="{{ $user->atasan_id }}" required readonly>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">NIP</label>
+							<div class="col-lg-10">
+								<input type="text" name="nip" class="form-control border border-1" value="{{ $user->nip }}" placeholder="NIP" required readonly>
 							</div>
 						</div>
 						@else
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-								<input type="text" name="name" class="form-control border border-1" placeholder="Nama" value="{{ $user->nama }}" required>
+								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" data-atasan_user="0" required >
 							</div>
 						</div>
-						@endif
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">NIP</label>
 							<div class="col-lg-10">
-								<input type="text" name="nip" class="form-control border border-1" placeholder="NIP" value="{{ $user->nip }}" required>
+								<input type="text" name="nip" class="form-control border border-1" placeholder="NIP" required>
 							</div>
 						</div>
+						@endif
                         @endforeach
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Tanggal Mulai</label>
@@ -57,16 +63,16 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Tanggal Berakhir</label>
                             <div class="col-lg-10">
-                                <input name="tanggal_berakhir" type="text" class="form-control pickadate-accessibility" placeholder="Contoh: 2022-04-16" value="{{  date('Y-m-d') }}" required>
+                                <input name="tanggal_akhir" type="text" class="form-control pickadate-accessibility" placeholder="Contoh: 2022-04-16" value="{{  date('Y-m-d') }}" required>
                             </div>
                         </div>
                         <div class="form-group row">
 							<label class="col-form-label col-lg-2">Verifikator 2</label>
 							<div class="col-lg-10">
-								<select id="verif_2" name="verif_2" class="form-control select-search" data-fouc>
-									<option value="">-- Pilih Verifikator --</option>
+								<select id="verifikator_2" name="verifikator_2" class="form-control select-search" required>
+									<option value="" data-id2="">-- Pilih Verifikator --</option>
 									{{-- @foreach($users as $user)
-										<option data-pnama="{{$user->nama}}" value="{{$user->id}}">{{$user->nama}} </option>
+										<option data-verif="{{$user->nama}}" value="{{$user->nama}}">{{$user->nama}} </option>
 				    				@endforeach --}}
 								</select>
 							</div>
@@ -74,8 +80,8 @@
                         <div class="form-group row">
 							<label class="col-form-label col-lg-2">Verifikator 1</label>
 							<div class="col-lg-10">
-								<select id="verif_1" name="verif_1" class="form-control select-search" data-fouc>
-									<option value="">-- Pilih Verifikator --</option>
+								<select id="verifikator_1" name="verifikator_1" class="form-control select-search">
+									<option value="" data-id1="">-- Pilih Verifikator --</option>
 									{{-- @foreach($users as $user)
 										<option data-pnama="{{$user->nama}}" value="{{$user->id}}">{{$user->nama}} </option>
 				    				@endforeach --}}
@@ -104,7 +110,7 @@
 
 @section('js')
 
-<script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
+{{-- <script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script> --}}
 	<script src="{{asset('global_assets/js/plugins/forms/validation/validate.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/extensions/jquery_ui/interactions.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
@@ -135,6 +141,81 @@
             selectYears: true,
             format: 'yyyy-mm-dd',
         });
+    </script>
+    <script>
+		// karyawan
+        var atasan_user = $('#name').data('atasan_user');
+		console.log(atasan_user);
+        $.ajax({
+            url : '{{ url("getverifikator") }}',
+            type: 'get',
+            dataType: 'json',
+            success : function(verifs){
+				var len = 0;
+				len = verifs['data'].length;
+				console.log(atasan_user);
+				if (atasan_user != 0) {
+                for(var i=0; i<len; i++){
+                    if (atasan_user == verifs['data'][i].id){
+					// var id = 3;
+					var id = verifs['data'][i].id;
+					var atasan_id = verifs['data'][i].atasan_id;
+                    var nama = verifs['data'][i].nama;
+
+					var option = "<option value='"+id+"' data-id2='"+atasan_id+"'>"+nama+"</option>";
+
+					$("#verifikator_2").append(option);
+					atasan_user = verifs['data'][i].atasan_id;
+					}
+                }
+			} else {
+				for(var i=0; i<len; i++){
+					var id = verifs['data'][i].id;
+					var atasan_id = verifs['data'][i].atasan_id;
+                    var nama = verifs['data'][i].nama;
+
+					var option = "<option value='"+id+"' data-id2='"+atasan_id+"'>"+nama+"</option>";
+
+					$("#verifikator_2").append(option);
+                }
+			}
+            }
+        });
+    </script>
+    <script>
+		$('#verifikator_2').on('change', function(){
+		var atasan_user2 = $(this). children("option:selected").data('id2');
+		// console.log(atasan_user2);
+
+        $.ajax({
+            url : '{{ url("getverifikator") }}',
+            type: 'get',
+            dataType: 'json',
+            success : function(verifs2){
+				$("#verifikator_1").empty();
+
+				var test2 = "-- Pilih Verifikator --"
+				var test = "<option value=''>"+test2+"</option>";
+
+				$("#verifikator_1").append(test);
+				var len2 = 0;
+				len2 = verifs2['data'].length;
+				
+                for(var j=0; j<len2; j++){
+                    if (atasan_user2 == verifs2['data'][j].id){
+					var id2 = verifs2['data'][j].id;
+					var atasan_id2 = verifs2['data'][j].atasan_id;
+                    var nama2 = verifs2['data'][j].nama;
+
+					var option2 = "<option value='"+id2+"' data-id1='"+atasan_id2+"'>"+nama2+"</option>";
+					
+					$("#verifikator_1").append(option2);
+					atasan_user2 = verifs2['data'][j].atasan_id;
+					}
+                }
+            }
+        });
+	});
     </script>
 
 @endsection

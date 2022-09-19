@@ -125,13 +125,16 @@ return [
         '4' => 'Invalid',
     ],
 
+    'divisi' => [
+        '1' => 'BackEnd',
+        '2' => 'FrontEnd',
+        '3' => 'Marketing',
+        '4' => 'Finance',
+    ],
+
     'verifikasi_cuti' => [
         '1' => 'Belum diverifikasi',
         '2' => 'Diterima',
         '3' => 'Ditolak',
     ],
 ];
-
-
-
-

@@ -9,6 +9,7 @@ use App\Model\Cuti;
 use App\Model\User;
 use Carbon\Carbon;
 use Auth;
+use Dotenv\Regex\Success;
 use Datatables;
 
 
@@ -20,14 +21,27 @@ class CutiController extends Controller
     }
 
     public function create() {
-        $users = User::where('id', '=', \Auth::user()->id)->get() ;
+        $users = User::where('id', '=', \Auth::user()->id)->get();
         // dd($nip);
         return view('cuti.create', compact('users'));
     }
 
     public function store(Request $request) {
-        // dd($request);
-        return view('cuti.create');
+        dd($request);
+        $cuti = new Cuti();
+        $cuti->status = 1;
+        $cuti->tanggal_mulai = $request->get('tanggal_mulai');
+        $cuti->tanggal_akhir = $request->get('tanggal_akhir');
+        $cuti->alasan = $request->get('alasan');
+        $cuti->verifikator_2 = $request->get('verifikator_2');
+        $cuti->verifikator_1 = $request->get('verifikator_1');
+        $cuti->user_id = \Auth::user()->id; 
+
+        // dd($cuti);
+        
+        $cuti->save();
+        
+        return redirect('/cuti')->with('success', 'Cuti Saved!');
     }
 
     public function show($id) {
@@ -36,11 +50,31 @@ class CutiController extends Controller
     }
 
     public function edit($id) {
-        //
+        $cuti = Cuti::find($id);
+        $verifikator1 = User::where('id', '=', $cuti->verifikator_1)->first();
+        $verifikator2 = User::where('id', '=', $cuti->verifikator_2)->first();
+        return view('cuti.edit', compact('cuti','verifikator1','verifikator2'));
     }
 
     public function update(Request $request, $id) {
-        //
+        // dd($data);
+        $cuti = Cuti::find($id);
+        $cuti->status = 1;
+        $cuti->tanggal_mulai = $request->get('tanggal_mulai');
+        $cuti->tanggal_akhir = $request->get('tanggal_akhir');
+        $cuti->alasan = $request->get('alasan');
+        if ($request->get('verifikator_2') != null) {
+            $cuti->verifikator_2 = $request->get('verifikator_2');
+        }
+        if ($request->get('verifikator_1') != null){
+            $cuti->verifikator_1 = $request->get('verifikator_1');
+        }
+        // if ($request->get('verifikator_2') == $cuti->verifikator_1 || $request->get('verifikator_1') == $cuti->verifikator_2) {
+        //     return redirect()->back()->with('error', 'Verifikator Tidak Boleh Sama!');
+        // }
+        
+        $cuti->update();
+        return redirect('/cuti')->with('success', 'Cuti Updated');
     }
 
     public function historycuti() {
@@ -52,6 +86,31 @@ class CutiController extends Controller
         // dd($cuti);
         $cuti->delete();
         return redirect()->route('cuti');
+    }
+
+    public function getverifikator()
+    {
+        // $user = User::find($id);
+        // $atasan_id = $user->atasan_id;
+        // $i = 0;
+        // $data = "";
+        // for($i = $id; $i == null;){
+        $verifs['data'] = User::where('role','=','70')->orderBy('atasan_id','desc')->get();
+        // foreach ($verifs as $verif)
+        // {
+        //   $test = $verif->where('id','=',$atasan_id)->get();
+        //   break;
+        //   $atasan_id = $test->get('atasan_id');
+        //   $data = $test->get();
+        //   $i++;
+        //   continue;
+        // }
+        // dd($data);
+            // $i = $verif['atasan_id'];
+        // }
+        
+        // dd($i);
+        return response()->json($verifs);
     }
 
     public function invalid($id) {
