@@ -120,6 +120,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::post('/cuti/{id}/update', 'CutiController@update')->name('cuti.update');
 		Route::post('/cuti/{id}/delete', 'CutiController@destroy')->name('cuti.delete');
 		Route::get('/cuti/{id}/invalid', 'CutiController@invalid')->name('cuti.invalid');
+		Route::get('/cuti/{id}/cetaksuratcuti', 'CutiController@cetaksuratcuti')->name('cetaksuratcuti');
 		Route::get('/getcuti/{status}', 'CutiController@getcuti')->name('getcuti');
 		Route::get('/getverifikator', 'CutiController@getverifikator');
 
