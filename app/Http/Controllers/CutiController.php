@@ -24,8 +24,9 @@ class CutiController extends Controller
 
     public function create() {
         $users = User::where('id', '=', \Auth::user()->id)->get();
-        // dd($nip);
-        return view('cuti.create', compact('users'));
+        $karyawans = User::where('role','=','70')->get(); //ganti role = 10 jika tanpa dummy data
+        // dd($karyawan);
+        return view('cuti.create', compact('users','karyawans'));
     }
 
     public function store(Request $request) {
@@ -46,10 +47,14 @@ class CutiController extends Controller
         $cuti->verifikator_1 = $nama_verif1->nama;
         $cuti->verifikator_2_id = $verifikator2;
         $cuti->verifikator_1_id = $verifikator1;
-        $cuti->user_id = \Auth::user()->id; 
+        if (\Auth::user()->id == 1){
+        $cuti->user_id = $request->get('name');
+        } else {
+        $cuti->user_id = \Auth::user()->id;          
+        }
 
         // dd($cuti);
-        
+        // dd($cuti);
         $cuti->save();
         
         return redirect('/cuti')->with('success', 'Cuti Saved!');
@@ -112,23 +117,28 @@ class CutiController extends Controller
 
     public function getverifikator($id)
     {
-        $user = User::find($id);
-        $atasan_id = $user->atasan_id;
-        $data = [];
-        $j = 0;
-        $verifs = User::where('role','=','70')->get();
-        $len = $verifs->count();
-        for($i = 0; $i<$len;$i++){
-            foreach ($verifs as $verif){
-                if ($atasan_id == $verif->id) {
-                    $data[$j] = $verif;
-                    $atasan_id = $verif->atasan_id;
-                    $j++;
-                }
-            }    
-        };      
-        // dd($len);
-        return response()->json($data);
+        $verifs = User::where('role','=','70')->get(); //ganti role = 10 jika tanpa dummy data
+        if ($id != 0) {
+            $user = User::find($id);
+            $atasan_id = $user->atasan_id;
+            $data = [];
+            $j = 0;
+            $len = $verifs->count();
+            for($i = 0; $i<$len;$i++){
+                foreach ($verifs as $verif){
+                    if ($atasan_id == $verif->id) {
+                        $data[$j] = $verif;
+                        $atasan_id = $verif->atasan_id;
+                        $j++;
+                    }
+                }    
+            };      
+            // dd($len);
+            return response()->json($data);
+        } else {
+            return response()->json($verifs);
+        }
+        
     }
 
     public function invalid($id) {
