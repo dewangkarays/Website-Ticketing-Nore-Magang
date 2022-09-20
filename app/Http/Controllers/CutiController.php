@@ -8,9 +8,11 @@ use \Illuminate\Database\Eloquent\Collection;
 use App\Model\Cuti;
 use App\Model\User;
 use Carbon\Carbon;
+use App\Model\Setting;
 use Auth;
 use Dotenv\Regex\Success;
 use Datatables;
+use PDF;
 
 
 class CutiController extends Controller
@@ -153,5 +155,12 @@ class CutiController extends Controller
                 ->get();
         }
         return Datatables::of($cuti)->addIndexColumn()->make(true);
+    }
+
+    public function cetaksuratcuti($id) {
+        $cuti = Cuti::find($id);
+        $setting = Setting::first();
+        $pdf = PDF::loadView('cuti.cetaksuratcuti', compact('cuti', 'setting'));
+        return $pdf->stream();
     }
 }
