@@ -27,20 +27,14 @@ class CutiController extends Controller
     }
 
     public function store(Request $request) {
-        // dd($request);
+        dd($request);
         $cuti = new Cuti();
-        $verifikator2 = $request->get('verifikator_2');
-        $verifikator1 = $request->get('verifikator_1');
-        $nama_verif2 = User::where('id','=',$verifikator2)->first();
-        $nama_verif1 = User::where('id','=',$verifikator1)->first();
         $cuti->status = 1;
         $cuti->tanggal_mulai = $request->get('tanggal_mulai');
         $cuti->tanggal_akhir = $request->get('tanggal_akhir');
         $cuti->alasan = $request->get('alasan');
-        $cuti->verifikator_2 = $nama_verif2->nama;
-        $cuti->verifikator_1 = $nama_verif1->nama;
-        $cuti->verifikator_2_id = $verifikator2;
-        $cuti->verifikator_1_id = $verifikator1;
+        $cuti->verifikator_2 = $request->get('verifikator_2');
+        $cuti->verifikator_1 = $request->get('verifikator_1');
         $cuti->user_id = \Auth::user()->id; 
 
         // dd($cuti);
@@ -80,7 +74,7 @@ class CutiController extends Controller
         // }
         
         $cuti->update();
-        return redirect('/cuti')->with('success', 'Cuti Updated');
+        return redirect('/cuti')->with('success', 'cuti.update');
     }
 
     public function historycuti() {
