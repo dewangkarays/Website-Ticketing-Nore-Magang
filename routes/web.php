@@ -121,7 +121,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::post('/cuti/{id}/delete', 'CutiController@destroy')->name('cuti.delete');
 		Route::get('/cuti/{id}/invalid', 'CutiController@invalid')->name('cuti.invalid');
 		Route::get('/getcuti/{status}', 'CutiController@getcuti')->name('getcuti');
-		Route::get('/getverifikator', 'CutiController@getverifikator');
+		Route::get('/getverifikator/{id}', 'CutiController@getverifikator');
 
 	});
 
