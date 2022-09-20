@@ -198,12 +198,12 @@ ul{
 				@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
 
 				<li class="nav-item nav-item-submenu">
-					<a href="#" class="nav-link {{ (request()->is('calendar*','presensi*','cuti*')) ? 'active' : '' }}"><i class="icon-cabinet"></i>
+					<a href="#" class="nav-link {{ (request()->is('calendar*','presensi*','cuti*', 'history-cuti*')) ? 'active' : '' }}"><i class="icon-cabinet"></i>
 						<span>
 							Presensi
 						</span>
 					</a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('calendar*','presensi*','cuti*')) ? 'block' : 'none' }};">
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('calendar*','presensi*','cuti*', 'history-cuti*')) ? 'block' : 'none' }};">
 						<li class="nav-item">
 							<a href="#" class="nav-link {{ (request()->is('calendar*')) ? 'active' : '' }}">
 								<i class="icon-calendar2"></i>
@@ -221,20 +221,20 @@ ul{
 							</a>
 						</li>
 						<li class="nav-item nav-item-submenu">
-							<a href="{{ url('/cuti') }}" class="nav-link {{ (request()->is('cuti*')) ? 'active' : '' }}">
+							<a href="{{ url('/cuti') }}" class="nav-link {{ (request()->is('cuti*', 'history-cuti*')) ? 'active' : '' }}">
 								<i class="icon-drawer3"></i>
 								<span>
 									Cuti
 								</span>
 							</a>
-							<ul class="nav nav-group-sub" style="display: {{ (request()->is('cuti*')) ? 'block' : 'none' }};">
+							<ul class="nav nav-group-sub" style="display: {{ (request()->is('cuti*', 'history-cuti*')) ? 'block' : 'none' }};">
 								<li class="nav-item"><a href="{{ url('/cuti') }}" class="nav-link {{ (request()->is('cuti*')) ? 'active' : '' }}">
 									<i class="icon-file-text3"></i>
 									<span>
 										Pengajuan Cuti
 									</span>
 								</a></li>
-								<li class="nav-item"><a href="{{url('/cuti/history')}}" class="nav-link {{ (request()->is('cuti*')) ? 'active' : '' }}">
+								<li class="nav-item"><a href="{{url('/history-cuti')}}" class="nav-link {{ (request()->is('history-cuti*')) ? 'active' : '' }}">
 									<i class="icon-file-check2"></i>
 									<span>
 										History Cuti
