@@ -111,6 +111,7 @@ class CutiController extends Controller
 
     //tampilan index menggunakan serverside datatables
     public function getcuti($status) {
+        $currentUserId = Auth::id();
         $today = Carbon::today();
         if ($status == 'aktif') {
             $cuti = Cuti::where('status', '<', '3')
@@ -125,7 +126,10 @@ class CutiController extends Controller
                 ->with('karyawan')
                 ->get();
         }
-        return Datatables::of($cuti)->addIndexColumn()->make(true);
+        return Datatables::of($cuti)
+            ->addIndexColumn()
+            ->addColumn('currentUserId', $currentUserId)
+            ->make(true);
     }
 
     public function cetaksuratcuti($id) {
