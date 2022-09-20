@@ -134,7 +134,7 @@ return [
 
     'verifikasi_cuti' => [
         '1' => 'Belum diverifikasi',
-        '2' => 'Diterima',
-        '3' => 'Ditolak',
+        '2' => 'Terima',
+        '3' => 'Tolak',
     ],
 ];

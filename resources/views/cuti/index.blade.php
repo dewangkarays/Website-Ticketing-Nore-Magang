@@ -199,8 +199,11 @@
                                 let showRef = "{{route('cuti.show', ':id')}}"
                                 showRef = showRef.replace(':id', data?.id)
 
-                                let cetakRef = "#"
-                                // cetakRef = cetakRef.replace(':id', data?.id)
+                                let cetakRef = "{{route('cetaksuratcuti', ':id')}}"
+                                cetakRef = cetakRef.replace(':id', data?.id)
+
+                                let editRef = "{{route('cuti.edit', ':id')}}"
+                                editRef = editRef.replace(':id', data?.id)
 
                                 let delUri = "{{route('cuti.delete', ':id')}}"
                                 delUri = delUri.replace(':id', data?.id)
@@ -218,13 +221,20 @@
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
                                                 <a href="${cetakRef}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>`
-                                if (data?.status == 1)
+                                if (data?.status == 1) {
+                                    @if (Auth::user()->role == 1)
+                                        actionButtons += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
+                                    @else
+                                    if (data?.currentUserId == data?.karyawan?.id)
+                                        actionButtons += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
+                                    @endif
                                     actionButtons += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
-                                else if(data?.status == 2)
-                                    actionButtons += `<a href="${invalidUri}" class="dropdown-item"><i class="icon-x"></i> Invalid</a>`
-                                actionButtons += `</div>
-                                        </div>
-                                    `
+                                } else if(data?.status == 2) {
+                                        actionButtons += `<a href="${invalidUri}" class="dropdown-item"><i class="icon-x"></i> Invalid</a>`
+                                    actionButtons += `</div>
+                                            </div>
+                                        `
+                                }
 
                                 return actionButtons
                             }
