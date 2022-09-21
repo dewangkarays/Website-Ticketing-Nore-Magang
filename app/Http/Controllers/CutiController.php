@@ -68,6 +68,9 @@ class CutiController extends Controller
 
     public function edit($id) {
         $cuti = Cuti::find($id);
+        if (!(Auth::id() == $cuti->karyawan->id || Auth::user()->role == 1)) {
+            return redirect()->back()->with('error', 'Maaf, Anda bukan pemohon data cuti ini!');
+        }
         $verifikator1 = User::where('id', '=', $cuti->verifikator_1_id)->first();
         $verifikator2 = User::where('id', '=', $cuti->verifikator_2_id)->first();
         return view('cuti.edit', compact('cuti','verifikator1','verifikator2'));
@@ -76,6 +79,9 @@ class CutiController extends Controller
     public function update(Request $request, $id) {
         // dd($request);
         $cuti = Cuti::find($id);
+        if (!(Auth::id() == $cuti->karyawan->id || Auth::user()->role == 1)) {
+            return redirect()->back()->with('error', 'Maaf, Anda bukan pemohon data cuti ini!');
+        }
         $cuti->status = 1;
         if ($request->get('tanggal_mulai') == null || $request->get('tanggal_akhir') == null) {
             return redirect()->back()->with('error', 'Tanggal Tidak Boleh Kosong!');
@@ -135,6 +141,9 @@ class CutiController extends Controller
 
     public function destroy($id) {
         $cuti = Cuti::find($id);
+        if (!(Auth::id() == $cuti->karyawan->id || Auth::user()->role == 1)) {
+            return redirect()->back()->with('error', 'Maaf, Anda bukan pemohon data cuti ini!');
+        }
         // dd($cuti);
         $cuti->delete();
         return redirect()->route('cuti');
@@ -168,6 +177,9 @@ class CutiController extends Controller
 
     public function invalid($id) {
         $cuti = Cuti::find($id);
+        if (!(Auth::id() == $cuti->karyawan->id || Auth::user()->role == 1)) {
+            return redirect()->route('cuti')->with('error', 'Maaf, Anda bukan pemohon data cuti ini!');
+        }
         $cuti->status = 4;
         $cuti->update();
         return redirect()->route('cuti');

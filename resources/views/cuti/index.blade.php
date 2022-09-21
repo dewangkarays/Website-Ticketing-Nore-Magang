@@ -224,13 +224,20 @@
                                 if (data?.status == 1) {
                                     @if (Auth::user()->role == 1)
                                         actionButtons += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
+                                        actionButtons += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
+                                    @else
+                                    if (data?.currentUserId == data?.karyawan?.id) {
+                                        actionButtons += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
+                                        actionButtons += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
+                                    }
+                                    @endif
+                                } else if(data?.status == 2) {
+                                    @if (Auth::user()->role == 1)
+                                        actionButtons += `<a href="${invalidUri}" class="dropdown-item"><i class="icon-x"></i> Invalid</a>`
                                     @else
                                     if (data?.currentUserId == data?.karyawan?.id)
-                                        actionButtons += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
-                                    @endif
-                                    actionButtons += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
-                                } else if(data?.status == 2) {
                                         actionButtons += `<a href="${invalidUri}" class="dropdown-item"><i class="icon-x"></i> Invalid</a>`
+                                    @endif
                                     actionButtons += `</div>
                                             </div>
                                         `
