@@ -32,6 +32,10 @@ class CutiController extends Controller
     public function store(Request $request) {
         // dd($request);
         $cuti = new Cuti();
+        $verifikator2 = $request->get('verifikator_2');
+        $verifikator1 = $request->get('verifikator_1');
+        $nama_verif2 = User::where('id','=',$verifikator2)->first();
+        $nama_verif1 = User::where('id','=',$verifikator1)->first();
         $cuti->status = 1;
         if ($request->get('tanggal_mulai') == null || $request->get('tanggal_akhir') == null) {
             return redirect()->back()->with('error', 'Tanggal Tidak Boleh Kosong!');
@@ -51,7 +55,6 @@ class CutiController extends Controller
         } else {
         $cuti->user_id = \Auth::user()->id;          
         }
-
 
         $cuti->save();
         
