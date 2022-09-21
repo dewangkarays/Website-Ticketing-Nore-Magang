@@ -225,18 +225,16 @@
                                     actionButtons += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
                                     if (data?.status == 1) {
                                         actionButtons += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
-                                    } else if (data?.status == 2) {
+                                    } else if (data?.status >= 2) {
                                         actionButtons += `<a href="${invalidUri}" class="dropdown-item"><i class="icon-x"></i> Invalid</a>`
                                     }
                                 @else
-                                if ((data?.currentUserId == data?.karyawan?.id) || (data?.currentUserId == data?.verifikator2?.id) || (data?.currentUserId == data?.verifikator1?.id)) {
+                                if ((data?.currentUserId == data?.karyawan?.id)) {
+                                    if (data?.status == 1) {
                                         actionButtons += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
-                                        if (data?.status == 1) {
-                                            actionButtons += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
-                                        } else if (data?.status == 2) {
-                                            actionButtons += `<a href="${invalidUri}" class="dropdown-item"><i class="icon-x"></i> Invalid</a>`
-                                        }
+                                        actionButtons += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
                                     }
+                                }
                                 @endif
                                 
                                 
