@@ -234,7 +234,7 @@ class CutiController extends Controller
     public function invalid($id) {
         $cuti = Cuti::find($id);
         if (!(Auth::id() == $cuti->karyawan->id || Auth::user()->role == 1)) {
-            return redirect()->route('cuti')->with('error', 'Maaf, Anda bukan pemohon data cuti ini!');
+            return redirect()->back()->with('error', 'Maaf, Anda bukan pemohon data cuti ini!');
         }
         $cuti->status = 4;
         $cuti->update();
@@ -249,6 +249,8 @@ class CutiController extends Controller
             $cuti = Cuti::where('status', '<', '3')
                 ->where('tanggal_akhir', '>=', $today)
                 ->with('karyawan')
+                ->with('verifikator2')
+                ->with('verifikator1')
                 ->get();
         } else if ($status == 'history') {
             $cuti = Cuti::where(function($q) use ($today) {
@@ -256,6 +258,8 @@ class CutiController extends Controller
                     ->orWhere('tanggal_akhir', '<', $today);
                 })
                 ->with('karyawan')
+                ->with('verifikator2')
+                ->with('verifikator1')
                 ->get();
         }
         return Datatables::of($cuti)
