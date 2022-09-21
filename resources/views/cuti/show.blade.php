@@ -30,8 +30,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-							<div class="col-lg-10">
-                                <label class="col-form-label col-lg-10">{{$$cuti->karyawan->nama}}}</label>
+                                <label class="col-form-label col-lg-10">{{$$cuti->karyawan->nama}}</label>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -123,7 +122,7 @@
                         <label class="col-form-label col-lg-2">Gambar</label>
                         <div class="col-lg-10">
                             <input id="gambar" name="gambar" type="file" class="form-control" onchange="upload_check()" required>
-                            <span class="form-text text-muted">Jumlah max ukuran file : 5MB</span>
+                            <!-- <span class="form-text text-muted">Jumlah max ukuran file : 5MB</span> -->
                         </div>
                     </div>
 					</fieldset>
