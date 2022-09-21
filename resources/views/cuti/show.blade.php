@@ -6,7 +6,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><span class="font-weight-semibold">Home</span> - Detail Rekap Karyawan Cuti</h4>
+				<h4><span class="font-weight-semibold">Home</span> - Detail Pengajuan Cuti</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -25,21 +25,7 @@
 					@csrf
                     
 					<fieldset class="mb-3">
-						<legend class="text-uppercase font-size-sm font-weight-bold">Data Rekap Karyawan Cuti</legend>
-						@if(\Auth::user()->role==10 || \Auth::user()->role==20)
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Nama</label>
-							<div class="col-lg-10">
-                                <label class="col-form-label col-lg-10">{{$$cuti->karyawan->nama}}</label>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">NIP</label>
-							<div class="col-lg-10">
-                                <label class="col-form-label col-lg-10">{{$cuti->karyawan->nip}}</label>
-							</div>
-						</div>
-						@else
+						<legend class="text-uppercase font-size-sm font-weight-bold">Detail Pengajuan Cuti</legend>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
@@ -52,8 +38,6 @@
                                 <label class="col-form-label col-lg-10">{{$cuti->karyawan->nip}}</label>
 							</div>
 						</div>
-						@endif
-
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Tanggal Mulai</label>
 							<div class="col-lg-10">
@@ -70,61 +54,90 @@
 							<label class="col-form-label col-lg-2">Verifikator 2</label>
 							<div class="col-lg-10">
                                 <label class="col-form-label col-lg-10">{{$cuti->verifikator_2}}</label>
+							</div>
+						</div>
+                        @if (Auth::user()->role == 1 || Auth::id() == $cuti->verifikator2->id)
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Status</label>
+							<div class="col-lg-10">
+								<select name="status2" class="form-control select-search" data-fouc>
+									@foreach(config('custom.verifikasi_cuti') as $key => $value)
+										<option value="{{$key}}" {{ $cuti->verifikasi_2 == $key ? 'selected' : '' }}>{{$value}}</option>
+									@endforeach
 								</select>
 							</div>
 						</div>
-                        <div class="form-group row">
-									<label class="col-form-label col-lg-2">Status</label>
-									<div class="col-lg-10">
-									<select name="severity" class="form-control select-search" data-fouc>
-                                            @foreach(config('custom.verifikasi_cuti') as $key => $value)
-                                                <option value="{{$key}}" {{ $cuti->verifikasi_2 == $key ? 'selected' : '' }}>{{$value}}</option>
-                                            @endforeach
-                                        </select>
-										</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-form-label col-lg-2">Catatan</label>
-									<div class="col-lg-10">
-										<textarea name="catatan2" rows="4" cols="3" class="form-control" placeholder="Catatan" required>{{ $cuti->catatan }}</textarea>
-									</div>
-								</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Catatan</label>
+							<div class="col-lg-10">
+								<textarea name="catatan2" rows="4" cols="3" class="form-control" placeholder="Catatan"></textarea>
+							</div>
+						</div>
+						@else
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Status</label>
+							<div class="col-lg-10">
+								<label class="col-form-label col-lg-10">{{config('custom.verifikasi_cuti.'.$cuti->verifikasi_2)}}</label>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Catatan</label>
+							<div class="col-lg-10">
+								<textarea name="catatan2" rows="4" cols="3" class="form-control" placeholder="Catatan" disabled>{!! $cuti->catatan_ver_2 !!}</textarea>
+							</div>
+						</div>
+						@endif
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Verifikator 1</label>
 							<div class="col-lg-10">
                                 <label class="col-form-label col-lg-10">{{$cuti->verifikator_1}}</label>
+							</div>
+						</div>
+						@if (Auth::user()->role == 1 || Auth::id() == $cuti->verifikator1->id)
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Status</label>
+							<div class="col-lg-10">
+								<select name="status1" class="form-control select-search" data-fouc>
+									@foreach(config('custom.verifikasi_cuti') as $key => $value)
+										<option value="{{$key}}" {{ $cuti->verifikasi_1 == $key ? 'selected' : '' }}>{{$value}}</option>
+									@endforeach
 								</select>
 							</div>
 						</div>
 						<div class="form-group row">
-									<label class="col-form-label col-lg-2">Status</label>
-									<div class="col-lg-10">
-									<select name="severity" class="form-control select-search" data-fouc>
-                                            @foreach(config('custom.verifikasi_cuti') as $key => $value)
-                                                <option value="{{$key}}" {{ $cuti->verifikasi_1 == $key ? 'selected' : '' }}>{{$value}}</option>
-                                            @endforeach
-                                        </select>
-										</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-form-label col-lg-2">Catatan</label>
-									<div class="col-lg-10">
-										<textarea name="catatan1" rows="4" cols="3" class="form-control" placeholder="Catatan" required>{{ $cuti->catatan }}</textarea>
-									</div>
-								</div>
+							<label class="col-form-label col-lg-2">Catatan</label>
+							<div class="col-lg-10">
+								<textarea name="catatan1" rows="4" cols="3" class="form-control" placeholder="Catatan"></textarea>
+							</div>
+						</div>
+						@else
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Status</label>
+							<div class="col-lg-10">
+								<label class="col-form-label col-lg-10">{{config('custom.verifikasi_cuti.'.$cuti->verifikasi_1)}}</label>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Catatan</label>
+							<div class="col-lg-10">
+								<textarea name="catatan1" rows="4" cols="3" class="form-control" placeholder="Catatan" disabled>{!! $cuti->catatan_ver_2 !!}</textarea>
+							</div>
+						</div>
+						@endif
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Alasan</label>
 							<div class="col-lg-10">
                                 <label class="col-form-label col-lg-10">{{$cuti->alasan}}</label>
 							</div>
 						</div>
+						@if (Auth::user()->role == 1 || Auth::id() == $cuti->karyawan->id)
 						<div class="form-group row">
-                        <label class="col-form-label col-lg-2">Gambar</label>
-                        <div class="col-lg-10">
-                            <input id="gambar" name="gambar" type="file" class="form-control" onchange="upload_check()" required>
-                            <!-- <span class="form-text text-muted">Jumlah max ukuran file : 5MB</span> -->
-                        </div>
-                    </div>
+							<label class="col-form-label col-lg-2">Surat Permohonan Cuti</label>
+							<div class="col-lg-10">
+								<input id="surat_cuti" name="surat_cuti" type="file" class="form-control" onchange="upload_check()">
+							</div>
+						</div>
+						@endif
 					</fieldset>
 					<div class="text-right">
                         @if ($cuti->status == 4)
