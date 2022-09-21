@@ -83,7 +83,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Catatan</label>
 							<div class="col-lg-10">
-								<textarea name="catatan2" rows="4" cols="3" class="form-control" placeholder="Catatan" disabled>{!! $cuti->catatan_ver_2 !!}</textarea>
+								<textarea name="catatan2" id="catatan2" rows="4" cols="3" class="form-control" placeholder="Catatan" disabled>{!! $cuti->catatan_ver_2 !!}</textarea>
 							</div>
 						</div>
 						@endif
@@ -120,7 +120,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Catatan</label>
 							<div class="col-lg-10">
-								<textarea name="catatan1" rows="4" cols="3" class="form-control" placeholder="Catatan" disabled>{!! $cuti->catatan_ver_2 !!}</textarea>
+								<textarea name="catatan1" id="catatan1" rows="4" cols="3" class="form-control" placeholder="Catatan" disabled>{!! $cuti->catatan_ver_1 !!}</textarea>
 							</div>
 						</div>
 						@endif
@@ -171,6 +171,7 @@
 	<script src="{{asset('global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script>
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
+	<script src="{{asset('assets/js/custom.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
 
@@ -190,6 +191,12 @@
             selectYears: true,
             format: 'yyyy-mm-dd',
         });
+		$(() => {
+			var catatan2 = $('#catatan2').val();
+			var catatan1 = $('#catatan1').val();
+			$('#catatan2').val(stripHtml(catatan2));
+			$('#catatan1').val(stripHtml(catatan1));
+		})
     </script>
     <script>
 		// karyawan
