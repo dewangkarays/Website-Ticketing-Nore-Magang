@@ -31,25 +31,26 @@
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
 							<div class="col-lg-10">
-                                <label class="col-form-label col-lg-10">{{$cuti->status}}</label>
+                                <label class="col-form-label col-lg-10">{{$$cuti->karyawan->nama}}}</label>
 							</div>
 						</div>
 						<div class="form-group row">
-						<div class="col-lg-10">
-                                <label class="col-form-label col-lg-10">{{$cuti->status}}</label>
+							<label class="col-form-label col-lg-2">NIP</label>
+							<div class="col-lg-10">
+                                <label class="col-form-label col-lg-10">{{$cuti->karyawan->nip}}</label>
 							</div>
 						</div>
 						@else
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-                                <label class="col-form-label col-lg-10">{{$cuti->id}}</label>
+                                <label class="col-form-label col-lg-10">{{$cuti->karyawan->nama}}</label>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">NIP</label>
 							<div class="col-lg-10">
-                                <label class="col-form-label col-lg-10">{{$cuti->status}}</label>
+                                <label class="col-form-label col-lg-10">{{$cuti->karyawan->nip}}</label>
 							</div>
 						</div>
 						@endif
