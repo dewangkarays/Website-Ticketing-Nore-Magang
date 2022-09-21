@@ -77,7 +77,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Status</label>
 							<div class="col-lg-10">
-								<label class="col-form-label col-lg-10">{{config('custom.verifikasi_cuti.'.$cuti->verifikasi_2)}}</label>
+								<label class="col-form-label col-lg-10">{{config('custom.status_cuti.'.$cuti->verifikasi_2)}}</label>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -114,7 +114,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Status</label>
 							<div class="col-lg-10">
-								<label class="col-form-label col-lg-10">{{config('custom.verifikasi_cuti.'.$cuti->verifikasi_1)}}</label>
+								<label class="col-form-label col-lg-10">{{config('custom.status_cuti.'.$cuti->verifikasi_1)}}</label>
 							</div>
 						</div>
 						<div class="form-group row">
