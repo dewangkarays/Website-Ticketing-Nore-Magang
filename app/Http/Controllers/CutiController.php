@@ -74,33 +74,41 @@ class CutiController extends Controller
     }
 
     public function upload(Request $request, $id) {
-        
         $cuti = Cuti::find($id);
         $cuti->catatan_ver_2 = $request->get('catatan2');
         $cuti->catatan_ver_1 = $request->get('catatan1');
-        
-       
+        $cuti->verifikasi_2 = $request->status2;
+        $cuti->verifikasi_1 = $request->status1;
 
-   
         $file = $request->except(['_token', '_method','surat_cuti']);
 
         $tujuan_upload = config('app.upload_url').'surat_cuti';
         $file = $request->file('surat_cuti');
+
         if($file){
-                $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
+            $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
+            
+            $img = \Image::make($file->getRealPath());
+            $img->save($tujuan_upload.'/'.$name);
                 
-                $img = \Image::make($file->getRealPath());
-                $img->save($tujuan_upload.'/'.$name);
-                
-                if($img){
-                    $cuti['surat_cuti'] = $tujuan_upload.'/'.$name;
-                }
+            if($img){
+                $cuti['surat_cuti'] = $tujuan_upload.'/'.$name;
+            }
                
-            }
-          
-                $cuti->update();
-            return redirect('/cuti')->with('success', 'File uploaded!');
-            }
+        }
+
+        if ($cuti->verifikasi_2 = 2 && $cuti->verifikasi_1 == 2) {
+            $cuti->status = 2;
+        } else if ($cuti->verifikasi_2 = 3 || $cuti->verifikasi_1 == 3) {
+            $cuti->status = 3;
+        }
+
+        $cuti->update();
+        if ($request->surat_cuti) {
+            return redirect('/cuti')->with('success', 'Surat cuti berhasil diupload!');
+        }
+        return redirect()->route('cuti')->with('success', 'Verifikasi berhasil!');
+    }
                 
 
     public function edit($id) {
