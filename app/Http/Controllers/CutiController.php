@@ -80,6 +80,8 @@ class CutiController extends Controller
         $cuti->verifikasi_2 = $request->status2;
         $cuti->verifikasi_1 = $request->status1;
 
+        // dd($cuti);
+
         $file = $request->except(['_token', '_method','surat_cuti']);
 
         $tujuan_upload = config('app.upload_url').'surat_cuti';
