@@ -77,8 +77,14 @@ class CutiController extends Controller
         $cuti = Cuti::find($id);
         $cuti->catatan_ver_2 = $request->get('catatan2');
         $cuti->catatan_ver_1 = $request->get('catatan1');
-        $cuti->verifikasi_2 = $request->status2;
-        $cuti->verifikasi_1 = $request->status1;
+
+        if ($request->status2) {
+            $cuti->verifikasi_2 = $request->status2;
+        }
+
+        if ($request->status1) {
+            $cuti->verifikasi_1 = $request->status1;
+        }
 
         // dd($cuti);
 
