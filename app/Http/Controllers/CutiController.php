@@ -75,10 +75,10 @@ class CutiController extends Controller
        
 
    
-        $file = $request->except(['_token', '_method','gambar']);
+        $file = $request->except(['_token', '_method','surat_cuti']);
 
         $tujuan_upload = config('app.upload_url').'surat_cuti';
-        $file = $request->file('gambar');
+        $file = $request->file('surat_cuti');
         if($file){
                 $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
                 
