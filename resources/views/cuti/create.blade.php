@@ -91,7 +91,7 @@
                         <div class="form-group row">
 							<label class="col-form-label col-lg-2">Verifikator 1</label>
 							<div class="col-lg-10">
-								<select id="verifikator_1" name="verifikator_1" class="form-control select-search">
+								<select id="verifikator_1" name="verifikator_1" class="form-control select-search" required>
 									<option value="" data-id1="">-- Pilih Verifikator --</option>
 									{{-- @foreach($users as $user)
 										<option data-pnama="{{$user->nama}}" value="{{$user->id}}">{{$user->nama}} </option>
@@ -142,6 +142,91 @@
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.date.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
+	<script>
+		var FormValidation = function() {
+
+// Validation config
+var _componentValidation = function() {
+	if (!$().validate) {
+		console.warn('Warning - validate.min.js is not loaded.');
+		return;
+	}
+
+	// Initialize
+	var validator = $('.form-validate-jquery').validate({
+		ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+		errorClass: 'validation-invalid-label',
+		//successClass: 'validation-valid-label',
+		validClass: 'validation-valid-label',
+		highlight: function(element, errorClass) {
+			$(element).removeClass(errorClass);
+		},
+		unhighlight: function(element, errorClass) {
+			$(element).removeClass(errorClass);
+		},
+		// success: function(label) {
+		//    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+		//},
+
+		// Different components require proper error label placement
+		errorPlacement: function(error, element) {
+
+			// Unstyled checkboxes, radios
+			if (element.parents().hasClass('form-check')) {
+				error.appendTo( element.parents('.form-check').parent() );
+			}
+
+			// Input with icons and Select2
+			else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+				error.appendTo( element.parent() );
+			}
+
+			// Input group, styled file input
+			else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+				error.appendTo( element.parent().parent() );
+			}
+
+			// Other elements
+			else {
+				error.insertAfter(element);
+			}
+		},
+		messages: {
+			tanggal_mulai: {
+				required: 'Mohon diisi.'
+			},
+			tanggal_akhir: {
+				required: 'Mohon diisi.'
+			},
+			verifikator_2: {
+				required: 'Pilih salah satu.'
+			},
+			verifikator_1: {
+				required: 'Pilih salah satu.'
+			},
+			alasan: {
+				required: 'Mohon diisi.'
+			},
+		},
+	});
+
+	// Reset form
+	$('#reset').on('click', function() {
+		validator.resetForm();
+	});
+};
+
+// Return objects assigned to module
+return {
+	init: function() {
+		_componentValidation();
+	}
+}
+}();
+document.addEventListener('DOMContentLoaded', function() {
+		    FormValidation.init();
+		});
+	</script>
     <script>
 		
 

@@ -31,6 +31,13 @@ class CutiController extends Controller
 
     public function store(Request $request) {
         // dd($request);
+        $request->validate([
+            'verifikator_2'=>'required',
+            'verifikator_1'=>'required',
+            'tanggal_mulai'=>'required',
+            'tanggal_akhir'=>'required',
+            'alasan'=>'required'
+        ]);
         $cuti = new Cuti();
         $verifikator2 = $request->get('verifikator_2');
         $verifikator1 = $request->get('verifikator_1');
