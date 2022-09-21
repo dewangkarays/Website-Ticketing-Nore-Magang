@@ -26,25 +26,16 @@
                     
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Detail Pengajuan Cuti</legend>
-						{{-- @if(\Auth::user()->role==10 || \Auth::user()->role==20) --}}
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
-							{{-- <div class="col-lg-10"> --}}
 							<div class="col-lg-10">
                                 <label class="col-form-label col-lg-10">{{$cuti->karyawan->nama}}</label>
 							</div>
 						</div>
-						{{-- @else
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Nama</label>
-							<div class="col-lg-10">
-                                <label class="col-form-label col-lg-10">{{$cuti->id}}</label>
-							</div>
-						</div> --}}
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">NIP</label>
 							<div class="col-lg-10">
-                                <label class="col-form-label col-lg-10">{{$cuti->status}}</label>
+                                <label class="col-form-label col-lg-10">{{$cuti->karyawan->nip}}</label>
 							</div>
 						</div>
                         <div class="form-group row">
@@ -143,7 +134,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Surat Permohonan Cuti</label>
 							<div class="col-lg-10">
-								<input id="surat_cuti" name="surat_cuti" type="file" class="form-control" onchange="upload_check()" required>
+								<input id="surat_cuti" name="surat_cuti" type="file" class="form-control" onchange="upload_check()">
 							</div>
 						</div>
 						@endif
