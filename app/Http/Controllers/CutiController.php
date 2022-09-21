@@ -30,7 +30,7 @@ class CutiController extends Controller
     }
 
     public function store(Request $request) {
-        dd($request);
+        // dd($request);
         $cuti = new Cuti();
         $cuti->status = 1;
         if ($request->get('tanggal_mulai') == $request->get('tanggal_akhir')) {
@@ -61,6 +61,36 @@ class CutiController extends Controller
         $cuti = Cuti::find($id);
         return view('cuti.show', compact('cuti'));
     }
+
+    public function upload(Request $request, $id) {
+        
+        $cuti = Cuti::find($id);
+        $cuti->catatan_ver_2 = $request->get('catatan2');
+        $cuti->catatan_ver_1 = $request->get('catatan1');
+        
+       
+
+   
+        $file = $request->except(['_token', '_method','gambar']);
+
+        $tujuan_upload = config('app.upload_url').'surat_cuti';
+        $file = $request->file('gambar');
+        if($file){
+                $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
+                
+                $img = \Image::make($file->getRealPath());
+                $img->save($tujuan_upload.'/'.$name);
+                
+                if($img){
+                    $cuti['surat_cuti'] = $tujuan_upload.'/'.$name;
+                }
+               
+            }
+          
+                $cuti->update();
+            return redirect('/cuti')->with('success', 'File uploaded!');
+            }
+                
 
     public function edit($id) {
         $cuti = Cuti::find($id);

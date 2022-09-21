@@ -123,7 +123,8 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/cuti/{id}/cetaksuratcuti', 'CutiController@cetaksuratcuti')->name('cetaksuratcuti');
 		Route::get('/getcuti/{status}', 'CutiController@getcuti')->name('getcuti');
 		Route::get('/getverifikator/{id}', 'CutiController@getverifikator');
-
+		Route::post('/cuti/{id}/upload', 'CutiController@upload')->name('cuti.upload');
+		
 	});
 
 	//admin
