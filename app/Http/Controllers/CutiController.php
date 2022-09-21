@@ -52,6 +52,7 @@ class CutiController extends Controller
         $cuti->user_id = \Auth::user()->id;          
         }
 
+
         $cuti->save();
         
         return redirect('/cuti')->with('success', 'Cuti Saved!');
@@ -133,14 +134,6 @@ class CutiController extends Controller
         if ($verifikator2 == $cuti->verifikator_1_id || $verifikator1 == $cuti->verifikator_2_id) {
         return redirect()->back()->with('error', 'Verifikator Tidak Boleh Sama!');
         }
-
-<<<<<<< HEAD
-        // }
-        // dd($verifikator1);   
-        
-        $cuti->update();
-        return redirect('/cuti')->with('success', 'cuti.update');
-=======
         $verifs = User::where('role','<=','20')->get();
         $id_verif1 = $cuti->verifikator_1_id;
         $data_verif1 = User::where('id',$id_verif1)->first();
@@ -166,7 +159,6 @@ class CutiController extends Controller
             $cuti->update();
             return redirect('/cuti')->with('success', 'Cuti Updated');
         }
->>>>>>> d646019db0631b4a7732a335eea4e2b90844b37f
     }
 
     public function historycuti() {
