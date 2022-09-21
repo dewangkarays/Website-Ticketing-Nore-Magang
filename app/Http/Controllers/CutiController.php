@@ -99,11 +99,15 @@ class CutiController extends Controller
                
         }
 
-        if ($cuti->verifikasi_2 = 2 && $cuti->verifikasi_1 == 2) {
+        if ($cuti->verifikasi_2 == 2 && $cuti->verifikasi_1 == 2) {
             $cuti->status = 2;
-        } else if ($cuti->verifikasi_2 = 3 || $cuti->verifikasi_1 == 3) {
+        } else if ($cuti->verifikasi_2 == 3 || $cuti->verifikasi_1 == 3) {
             $cuti->status = 3;
+        } else {
+            $cuti->status = 1;
         }
+
+        // dd($cuti);
 
         $cuti->update();
         if ($request->surat_cuti) {
