@@ -24,8 +24,8 @@ class CutiController extends Controller
 
     public function create() {
         $users = User::where('id', '=', \Auth::user()->id)->get();
-        $karyawans = User::where('role','=','70')->get(); //ganti role = 10 jika tanpa dummy data
-        // dd($karyawan);
+        $karyawans = User::where('role','<=','20')->get();
+        // dd($karyawans);
         return view('cuti.create', compact('users','karyawans'));
     }
 
@@ -33,6 +33,9 @@ class CutiController extends Controller
         // dd($request);
         $cuti = new Cuti();
         $cuti->status = 1;
+        if ($request->get('tanggal_mulai') == null || $request->get('tanggal_akhir') == null) {
+            return redirect()->back()->with('error', 'Tanggal Tidak Boleh Kosong!');
+        }
         if ($request->get('tanggal_mulai') == $request->get('tanggal_akhir')) {
             return redirect()->back()->with('error', 'Tanggal Tidak Boleh Sama!');
         }
@@ -49,9 +52,6 @@ class CutiController extends Controller
         $cuti->user_id = \Auth::user()->id;          
         }
 
-
-        // dd($cuti);
-        // dd($cuti);
         $cuti->save();
         
         return redirect('/cuti')->with('success', 'Cuti Saved!');
@@ -94,6 +94,9 @@ class CutiController extends Controller
 
     public function edit($id) {
         $cuti = Cuti::find($id);
+        if (!(Auth::id() == $cuti->karyawan->id || Auth::user()->role == 1)) {
+            return redirect()->back()->with('error', 'Maaf, Anda bukan pemohon data cuti ini!');
+        }
         $verifikator1 = User::where('id', '=', $cuti->verifikator_1_id)->first();
         $verifikator2 = User::where('id', '=', $cuti->verifikator_2_id)->first();
         return view('cuti.edit', compact('cuti','verifikator1','verifikator2'));
@@ -102,7 +105,13 @@ class CutiController extends Controller
     public function update(Request $request, $id) {
         // dd($request);
         $cuti = Cuti::find($id);
+        if (!(Auth::id() == $cuti->karyawan->id || Auth::user()->role == 1)) {
+            return redirect()->back()->with('error', 'Maaf, Anda bukan pemohon data cuti ini!');
+        }
         $cuti->status = 1;
+        if ($request->get('tanggal_mulai') == null || $request->get('tanggal_akhir') == null) {
+            return redirect()->back()->with('error', 'Tanggal Tidak Boleh Kosong!');
+        }
         if ($request->get('tanggal_mulai') == $request->get('tanggal_akhir')) {
             return redirect()->back()->with('error', 'Tanggal Tidak Boleh Sama!');
         }
@@ -113,22 +122,51 @@ class CutiController extends Controller
         $verifikator1 = $request->get('verifikator_1');
         if ($verifikator2 != null) {
             $nama_verif2 = User::where('id','=',$verifikator2)->first();
-            $cuti->verifikator_2 = $nama_verif2->nama;$cuti->verifikator_2_id = $verifikator2;
+            $cuti->verifikator_2 = $nama_verif2->nama;
+            $cuti->verifikator_2_id = $verifikator2;
         }
         if ( $verifikator1 != null){
             $nama_verif1 = User::where('id','=',$verifikator1)->first();
-            $cuti->verifikator_1 = $nama_verif1->nama;$cuti->verifikator_1_id = $verifikator1;
+            $cuti->verifikator_1 = $nama_verif1->nama;
+            $cuti->verifikator_1_id = $verifikator1;
         }
-        // if ($request->get('verifikator_2') == null && $request->get('verifikator_1') == null) {
-            if ($verifikator2 == $cuti->verifikator_1_id || $verifikator1 == $cuti->verifikator_2_id) {
-            return redirect()->back()->with('error', 'Verifikator Tidak Boleh Sama!');
-            }
+        if ($verifikator2 == $cuti->verifikator_1_id || $verifikator1 == $cuti->verifikator_2_id) {
+        return redirect()->back()->with('error', 'Verifikator Tidak Boleh Sama!');
+        }
 
+<<<<<<< HEAD
         // }
         // dd($verifikator1);   
         
         $cuti->update();
         return redirect('/cuti')->with('success', 'cuti.update');
+=======
+        $verifs = User::where('role','<=','20')->get();
+        $id_verif1 = $cuti->verifikator_1_id;
+        $data_verif1 = User::where('id',$id_verif1)->first();
+        $atasan_id = $data_verif1->atasan_id;
+        $data = [];
+        $j = 0;
+        $len = $verifs->count();
+        // dd($verifikator1);
+        for($i = 0; $i<$len;$i++){
+            foreach ($verifs as $verif){
+                if ($atasan_id == $verif->id) {
+                    $data[$j] = $verif;
+                    $atasan_id = $verif->atasan_id;
+                    $j++;
+                }
+            }    
+        };      
+        $collection = collect($data);
+        // dd($verifikator2);
+        if ($collection->contains('id',$verifikator2)){
+            return redirect()->back()->with('error', 'Jabatan Verifikator 2 Lebih Tinggi');
+        } else {
+            $cuti->update();
+            return redirect('/cuti')->with('success', 'Cuti Updated');
+        }
+>>>>>>> d646019db0631b4a7732a335eea4e2b90844b37f
     }
 
     public function historycuti() {
@@ -137,6 +175,9 @@ class CutiController extends Controller
 
     public function destroy($id) {
         $cuti = Cuti::find($id);
+        if (!(Auth::id() == $cuti->karyawan->id || Auth::user()->role == 1)) {
+            return redirect()->back()->with('error', 'Maaf, Anda bukan pemohon data cuti ini!');
+        }
         // dd($cuti);
         $cuti->delete();
         return redirect()->route('cuti');
@@ -144,7 +185,7 @@ class CutiController extends Controller
 
     public function getverifikator($id)
     {
-        $verifs = User::where('role','=','70')->get(); //ganti role = 10 jika tanpa dummy data
+        $verifs = User::where('role','<=','20')->get();
         if ($id != 0) {
             $user = User::find($id);
             $atasan_id = $user->atasan_id;
@@ -170,6 +211,9 @@ class CutiController extends Controller
 
     public function invalid($id) {
         $cuti = Cuti::find($id);
+        if (!(Auth::id() == $cuti->karyawan->id || Auth::user()->role == 1)) {
+            return redirect()->route('cuti')->with('error', 'Maaf, Anda bukan pemohon data cuti ini!');
+        }
         $cuti->status = 4;
         $cuti->update();
         return redirect()->route('cuti');

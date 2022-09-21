@@ -30,7 +30,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" value="{{ $user->nama }}" data-atasan_user="{{ $user->atasan_id }}" required readonly>
+								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" value="{{ $user->nama }}" data-user_id="{{ $user->id }}" required readonly>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -43,13 +43,24 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" data-atasan_user="0" required >
+								{{-- <input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" data-user_id="0" required > --}}
+								<select id="name" name="name" class="form-control select-search" data-user_id="0" required>
+									<option value="">-- Pilih Karyawan --</option>
+									@foreach($karyawans as $karyawan)
+										<option data-nip="{{ $karyawan->nip }}" value="{{$karyawan->id}}">{{$karyawan->nama}} </option>
+				    				@endforeach
+								</select>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">NIP</label>
 							<div class="col-lg-10">
-								<input type="text" name="nip" class="form-control border border-1" placeholder="NIP" required>
+								<input type="text" id="nip" name="nip" class="form-control border border-1" placeholder="NIP" value="" required>
+								{{-- <select id="nip" name="nip" class="form-control select-search" required>
+									@foreach($karyawans as $karyawan)
+										<option value="{{$karyawan->id}}">{{$karyawan->nama}} </option>
+				    				@endforeach
+								</select> --}}
 							</div>
 						</div>
 						@endif
@@ -57,13 +68,13 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Tanggal Mulai</label>
                             <div class="col-lg-10">
-                                <input name="tanggal_mulai" type="text" class="form-control pickadate-accessibility" placeholder="Contoh: 2022-04-16" value="{{  date('Y-m-d') }}" required>
+                                <input id="tanggal_mulai" name="tanggal_mulai" type="date" class="form-control pickadate-accessibility" placeholder="Pilih Tanggal" value="" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Tanggal Berakhir</label>
                             <div class="col-lg-10">
-                                <input name="tanggal_akhir" type="text" class="form-control pickadate-accessibility" placeholder="Contoh: 2022-04-16" value="{{  date('Y-m-d') }}" required>
+                                <input id="tanggal_akhir" name="tanggal_akhir" type="date" class="form-control pickadate-accessibility" placeholder="Pilih Tanggal" value="" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -110,16 +121,16 @@
 
 @section('js')
 
-{{-- <script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script> --}}
+	<script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/validation/validate.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/extensions/jquery_ui/interactions.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
-	<script src="{{asset('global_assets/js/plugins/uploaders/fileinput/plugins/purify.min.js')}}"></script>
+	{{-- <script src="{{asset('global_assets/js/plugins/uploaders/fileinput/plugins/purify.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/uploaders/fileinput/plugins/sortable.min.js')}}"></script>
-	<script src="{{asset('global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script> --}}
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
@@ -132,6 +143,8 @@
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
     <script>
+		
+
          $('.pickadate-accessibility').pickadate({
             labelMonthNext: 'Go to the next month',
             labelMonthPrev: 'Go to the previous month',
@@ -140,43 +153,47 @@
             selectMonths: true,
             selectYears: true,
             format: 'yyyy-mm-dd',
+			min: new Date(),
+			disable: [1,7],
         });
     </script>
+	<script>
+		$('#name').on('change', function(){
+		var nip = $(this). children("option:selected").data('nip');
+		// console.log(nip);
+		$("#nip").val(nip);
+		})
+	</script>
     <script>
 		// karyawan
-        var atasan_user = $('#name').data('atasan_user');
-		console.log(atasan_user);
+        var user_id = $('#name').data('user_id');
+		// console.log(user_id);
         $.ajax({
-            url : '{{ url("getverifikator") }}',
+            url : '{{ url("getverifikator") }}/'+user_id,
             type: 'get',
             dataType: 'json',
-            success : function(verifs){
-				var len = 0;
-				len = verifs['data'].length;
-				console.log(atasan_user);
-				if (atasan_user != 0) {
-                for(var i=0; i<len; i++){
-                    if (atasan_user == verifs['data'][i].id){
-					// var id = 3;
-					var id = verifs['data'][i].id;
-					var atasan_id = verifs['data'][i].atasan_id;
-                    var nama = verifs['data'][i].nama;
+            success : function(verifs2){
+				var len2 = 0;
+				len2 = verifs2.length;
+				if (user_id != 0) {
+                for(var i=0; i<len2; i++){
+					var id2 = verifs2[i].id;
+					var atasan_id2 = verifs2[i].atasan_id;
+                    var nama2 = verifs2[i].nama;
 
-					var option = "<option value='"+id+"' data-id2='"+atasan_id+"'>"+nama+"</option>";
+					var option2 = "<option value='"+id2+"' data-id2='"+atasan_id2+"'>"+nama2+"</option>";
 
-					$("#verifikator_2").append(option);
-					atasan_user = verifs['data'][i].atasan_id;
-					}
+					$("#verifikator_2").append(option2);
                 }
 			} else {
-				for(var i=0; i<len; i++){
-					var id = verifs['data'][i].id;
-					var atasan_id = verifs['data'][i].atasan_id;
-                    var nama = verifs['data'][i].nama;
+				for(var i=0; i<len2; i++){
+					var id2 = verifs2[i].id;
+					var atasan_id2 = verifs2[i].atasan_id;
+                    var nama2 = verifs2[i].nama;
 
-					var option = "<option value='"+id+"' data-id2='"+atasan_id+"'>"+nama+"</option>";
+					var option2 = "<option value='"+id2+"' data-id2='"+atasan_id2+"'>"+nama2+"</option>";
 
-					$("#verifikator_2").append(option);
+					$("#verifikator_2").append(option2);
                 }
 			}
             }
@@ -184,38 +201,57 @@
     </script>
     <script>
 		$('#verifikator_2').on('change', function(){
-		var atasan_user2 = $(this). children("option:selected").data('id2');
+		var id_verif2 = $(this). children("option:selected").val();
 		// console.log(atasan_user2);
 
         $.ajax({
-            url : '{{ url("getverifikator") }}',
+            url : '{{ url("getverifikator") }}/'+id_verif2,
             type: 'get',
             dataType: 'json',
-            success : function(verifs2){
+            success : function(verifs){
 				$("#verifikator_1").empty();
 
-				var test2 = "-- Pilih Verifikator --"
-				var test = "<option value=''>"+test2+"</option>";
+				var dval = "-- Pilih Verifikator --"
+				var defval = "<option value=''>"+dval+"</option>";
 
-				$("#verifikator_1").append(test);
-				var len2 = 0;
-				len2 = verifs2['data'].length;
+				$("#verifikator_1").append(defval);
+				var len = 0;
+				len = verifs.length;
 				
-                for(var j=0; j<len2; j++){
-                    if (atasan_user2 == verifs2['data'][j].id){
-					var id2 = verifs2['data'][j].id;
-					var atasan_id2 = verifs2['data'][j].atasan_id;
-                    var nama2 = verifs2['data'][j].nama;
+                for(var j=0; j<len; j++){
+					var id = verifs[j].id;
+					var atasan_id = verifs[j].atasan_id;
+                    var nama = verifs[j].nama;
 
-					var option2 = "<option value='"+id2+"' data-id1='"+atasan_id2+"'>"+nama2+"</option>";
+					var option = "<option value='"+id+"' data-id1='"+atasan_id+"'>"+nama+"</option>";
 					
-					$("#verifikator_1").append(option2);
-					atasan_user2 = verifs2['data'][j].atasan_id;
-					}
+					$("#verifikator_1").append(option);
                 }
             }
         });
 	});
     </script>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+	        // Default style
+	        @if(session('error'))
+	            new PNotify({
+	                title: 'Error',
+	                text: '{{ session('error') }}.',
+	                icon: 'icon-blocked',
+	                type: 'error'
+	            });
+            @endif
+            @if ( session('success'))
+	            new PNotify({
+	                title: 'Success',
+	                text: '{{ session('success') }}.',
+	                icon: 'icon-checkmark3',
+	                type: 'success'
+	            });
+            @endif
+
+		});
+	</script>
 
 @endsection
