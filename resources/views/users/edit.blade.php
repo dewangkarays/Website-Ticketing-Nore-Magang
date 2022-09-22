@@ -104,12 +104,21 @@
                                 </select>
 							</div>
 						</div>
+						@if($def_atasan != null)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Atasan</label>
 							<div class="col-lg-10">
 								<input type="text" name="atasan" class="form-control border-teal border-1" placeholder="Atasan" value="{{ $def_atasan->nama }}" readonly >
 							</div>
 						</div>
+						@else
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Atasan</label>
+							<div class="col-lg-10">
+								<input type="text" name="atasan" class="form-control border-teal border-1" placeholder="Atasan" value="-" readonly >
+							</div>
+						</div>
+						@endif
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Ganti Atasan</label>
 							<div class="col-lg-10">
