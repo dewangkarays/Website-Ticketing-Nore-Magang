@@ -203,7 +203,7 @@ ul{
 							Presensi
 						</span>
 					</a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('calendar*','presensi*','cuti*', 'history-cuti*')) ? 'block' : 'none' }};">
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('calendar*','presensi*','cuti*', 'verifikasi-cuti*', 'history-cuti*')) ? 'block' : 'none' }};">
 						<li class="nav-item">
 							<a href="#" class="nav-link {{ (request()->is('calendar*')) ? 'active' : '' }}">
 								<i class="icon-calendar2"></i>
@@ -221,17 +221,23 @@ ul{
 							</a>
 						</li>
 						<li class="nav-item nav-item-submenu">
-							<a href="{{ url('/cuti') }}" class="nav-link {{ (request()->is('cuti*', 'history-cuti*')) ? 'active' : '' }}">
+							<a href="{{ url('/cuti') }}" class="nav-link {{ (request()->is('cuti*', 'verifikasi-cuti*', 'history-cuti*')) ? 'active' : '' }}">
 								<i class="icon-drawer3"></i>
 								<span>
 									Cuti
 								</span>
 							</a>
-							<ul class="nav nav-group-sub" style="display: {{ (request()->is('cuti*', 'history-cuti*')) ? 'block' : 'none' }};">
+							<ul class="nav nav-group-sub" style="display: {{ (request()->is('cuti*', 'verifikasi-cuti*', 'history-cuti*')) ? 'block' : 'none' }};">
 								<li class="nav-item"><a href="{{ url('/cuti') }}" class="nav-link {{ (request()->is('cuti*')) ? 'active' : '' }}">
 									<i class="icon-file-text3"></i>
 									<span>
 										Pengajuan Cuti
+									</span>
+								</a></li>
+								<li class="nav-item"><a href="{{ url('/verifikasi-cuti') }}" class="nav-link {{ (request()->is('verifikasi-cuti*')) ? 'active' : '' }}">
+									<i class="icon-file-eye2"></i>
+									<span>
+										Verifikasi Cuti
 									</span>
 								</a></li>
 								<li class="nav-item"><a href="{{url('/history-cuti')}}" class="nav-link {{ (request()->is('history-cuti*')) ? 'active' : '' }}">
