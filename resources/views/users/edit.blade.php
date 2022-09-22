@@ -34,6 +34,18 @@
 							</div>
 						</div>
 						<div class="form-group row">
+							<label class="col-form-label col-lg-2">NIP</label>
+							<div class="col-lg-10">
+								<input type="text" name="nip" class="form-control border-teal border-1" placeholder="NIP" required value="{{ $user->nip }}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Jabatan</label>
+							<div class="col-lg-10">
+								<input type="text" name="jabatan" class="form-control border-teal border-1" placeholder="Jabatan" required value="{{ $user->jabatan }}">
+							</div>
+						</div>
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Email</label>
 							<div class="col-lg-10">
 								<input type="email" name="email" class="form-control border-teal border-1" placeholder="Email" required value="{{ $user->email }}">
@@ -79,7 +91,7 @@
 								<select name="role" class="form-control form-control-select2 border-teal border-1" required>
 									@foreach (config('custom.role') as $key => $value)
 										{{-- <option {{ $user->role == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option> --}}
-										@if (in_array($key, [1,10,20]))
+										@if ($key <= 50)
 										<option {{ $user->role == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
 										@endif
 									@endforeach
@@ -89,6 +101,23 @@
                                     <option value="80" {{ $user->role == '80' ? 'selected' : '' }}>Premium</option>
                                     <option value="90" {{ $user->role == '90' ? 'selected' : '' }}>Prioritas</option>
                                     <option value="99" {{ $user->role == '99' ? 'selected' : '' }}>Simpel</option> --}}
+                                </select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Atasan</label>
+							<div class="col-lg-10">
+								<input type="text" name="atasan" class="form-control border-teal border-1" placeholder="Atasan" value="{{ $def_atasan->nama }}" readonly >
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Ganti Atasan</label>
+							<div class="col-lg-10">
+								<select name="atasan_id" class="form-control form-control-select2 border-teal-1 border-teal">
+									<option value="">-- Pilih Atasan --</option>
+									@foreach ($atasans as $atasan)
+									<option value="{{ $atasan->id }}" >{{ $atasan->nama }}</option>
+									@endforeach
                                 </select>
 							</div>
 						</div>
