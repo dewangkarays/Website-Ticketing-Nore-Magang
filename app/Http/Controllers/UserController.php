@@ -30,7 +30,9 @@ class UserController extends Controller
     */
     public function create()
     {
-        return view('users.create');
+        $atasans = User::where('role','<=','50')->get();
+        // dd($atasan);
+        return view('users.create', compact('atasans'));
     }
 
     public function createmember()
@@ -46,10 +48,11 @@ class UserController extends Controller
     */
     public function store(Request $request)
     {
-
+        // dd($request);
         $validator = Validator::make($request->all(), [
             // 'title' => 'required|unique:posts|max:255',
             // 'body' => 'required',
+            'atasan_id' => 'required',
             'username'=>'unique:users',
             'email'=>'unique:users'
         ]);
@@ -62,12 +65,15 @@ class UserController extends Controller
 
         $user = new User([
             'nama' => $request->get('name'),
+            'nip' => $request->get('nip'),
+            'jabatan' => $request->get('jabatan'),
             'email' => $request->get('email'),
             'telp' => $request->get('phone'),
             'alamat' => $request->get('address'),
             'username' => $request->get('username'),
             'password' => bcrypt($request->get('password')),
-            'role' => $request->get('role')
+            'role' => $request->get('role'),
+            'atasan_id' => $request->get('atasan_id')
         ]);
 
         $user->save();
@@ -110,8 +116,10 @@ class UserController extends Controller
     */
     public function edit($id)
     {
+        $atasans = User::where('role','<=','50')->get();
         $user = User::find($id);
-        return view('users.edit', compact('user'));
+        $def_atasan = User::where( 'id', '=',$user->atasan_id)->first();
+        return view('users.edit', compact('user','atasans','def_atasan'));
     }
 
     public function setting($id){
@@ -152,6 +160,9 @@ class UserController extends Controller
 
         if($request->get('password')!=''){
             $data['password'] = bcrypt($request->get('password'));
+        }
+        if ($request->get('atasan_id')==null){
+            $data['atasan_id'] = $user->atasan_id;
         }
 
         $user->update($data);
@@ -202,6 +213,6 @@ class UserController extends Controller
     }
 
     public function getkaryawans() {
-        return Datatables::of(User::where('role', '<=', '20')->get())->addIndexColumn()->make(true);
+        return Datatables::of(User::where('role', '<=', '50')->get())->addIndexColumn()->make(true);
     }
 }
