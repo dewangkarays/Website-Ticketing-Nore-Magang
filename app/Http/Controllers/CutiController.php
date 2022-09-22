@@ -23,7 +23,7 @@ class CutiController extends Controller
 
     public function create() {
         $users = User::where('id', '=', \Auth::user()->id)->get();
-        $karyawans = User::where('role','<=','20')->get();
+        $karyawans = User::where('role','<=','50')->get();
         // dd($karyawans);
         return view('cuti.create', compact('users','karyawans'));
     }
@@ -221,7 +221,7 @@ class CutiController extends Controller
 
     public function getverifikator($id)
     {
-        $verifs = User::where('role','<=','20')->get();
+        $verifs = User::where('role','<=','50')->get();
         if ($id != 0) {
             $user = User::find($id);
             $atasan_id = $user->atasan_id;

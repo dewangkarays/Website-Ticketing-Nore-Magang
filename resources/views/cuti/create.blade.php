@@ -47,7 +47,7 @@
 								<select id="name" name="name" class="form-control select-search" data-user_id="0" required>
 									<option value="">-- Pilih Karyawan --</option>
 									@foreach($karyawans as $karyawan)
-										<option data-nip="{{ $karyawan->nip }}" value="{{$karyawan->id}}">{{$karyawan->nama}} </option>
+										<option data-atasan_id="{{ $karyawan->atasan_id }}" data-nip="{{ $karyawan->nip }}" value="{{$karyawan->id}}">{{$karyawan->nama}} </option>
 				    				@endforeach
 								</select>
 							</div>
@@ -250,9 +250,12 @@ document.addEventListener('DOMContentLoaded', function() {
 		})
 	</script>
     <script>
-		// karyawan
-        var user_id = $('#name').data('user_id');
-		// console.log(user_id);
+		var user_id = $('#name').data('user_id');
+		if (user_id == 0){
+			$('#name').on('change', function(){
+			var user_id = $(this). children("option:selected").val();
+			console.log(user_id);
+
         $.ajax({
             url : '{{ url("getverifikator") }}/'+user_id,
             type: 'get',
@@ -283,6 +286,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
             }
         });
+		})
+	}
     </script>
     <script>
 		$('#verifikator_2').on('change', function(){
