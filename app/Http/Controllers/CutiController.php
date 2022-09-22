@@ -262,6 +262,7 @@ class CutiController extends Controller
             if (Auth::user()->role == 1) {
                 $cuti = Cuti::where('status', '<', '3')
                 ->where('tanggal_akhir', '>=', $today)
+                ->orderByDesc('id')
                 ->with('karyawan')
                 ->with('verifikator2')
                 ->with('verifikator1')
@@ -270,6 +271,7 @@ class CutiController extends Controller
                 $cuti = Cuti::where('status', '<', '3')
                 ->where('tanggal_akhir', '>=', $today)
                 ->where('user_id', $currentUserId)
+                ->orderByDesc('id')
                 ->with('karyawan')
                 ->with('verifikator2')
                 ->with('verifikator1')
@@ -281,6 +283,7 @@ class CutiController extends Controller
                     $q->where('status', '>', '2')
                         ->orWhere('tanggal_akhir', '<', $today);
                     })
+                    ->orderByDesc('id')
                     ->with('karyawan')
                     ->with('verifikator2')
                     ->with('verifikator1')
@@ -297,6 +300,7 @@ class CutiController extends Controller
                                 ->orWhere('verifikator_1_id', $currentUserId);
                         }
                     )
+                    ->orderByDesc('id')
                     ->with('karyawan')
                     ->with('verifikator2')
                     ->with('verifikator1')
@@ -310,6 +314,7 @@ class CutiController extends Controller
                             ->orWhere('verifikasi_1', '<', '2');
                     }
                 )
+                ->orderByDesc('id')
                 ->with('karyawan')
                 ->with('verifikator2')
                 ->with('verifikator1')
@@ -326,6 +331,7 @@ class CutiController extends Controller
                         );
                     }
                 )
+                ->orderByDesc('id')
                 ->with('karyawan')
                 ->with('verifikator2')
                 ->with('verifikator1')
