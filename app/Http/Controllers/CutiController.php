@@ -213,7 +213,7 @@ class CutiController extends Controller
         }
         // dd($cuti);
         $cuti->delete();
-        return redirect()->route('cuti');
+        return redirect()->route('cuti')->with('error','Cuti Deleted');
     }
 
     public function getverifikator($id)
