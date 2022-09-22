@@ -201,11 +201,8 @@
                                 let cetakRef = "{{route('cetaksuratcuti', ':id')}}"
                                 cetakRef = cetakRef.replace(':id', data?.id)
 
-                                let delUri = "{{route('cuti.delete', ':id')}}"
-                                delUri = delUri.replace(':id', data?.id)
-
-                                let invalidUri = "{{route('cuti.invalid', ':id')}}"
-                                invalidUri = invalidUri.replace(':id', data?.id)
+                                let telpRef = "https://wa.me/{{':telp'}}"
+								telpRef = telpRef.replace(':telp', data?.karyawan?.telp)
 
                                 let actionButtons = 
                                     `
@@ -216,7 +213,11 @@
 
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
-                                                <a href="${cetakRef}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
+                                                <a href="${cetakRef}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>`
+                                if (data?.currentUserId != data?.karyawan?.id) {
+                                    actionButtons += `<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
+                                }
+                                    actionButtons += `
                                             </div>
                                     `
 

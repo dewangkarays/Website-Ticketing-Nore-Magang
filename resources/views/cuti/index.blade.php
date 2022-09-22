@@ -199,6 +199,9 @@
                                 let showRef = "{{route('cuti.show', ':id')}}"
                                 showRef = showRef.replace(':id', data?.id)
 
+                                let telpRef = "https://wa.me/{{':telp'}}"
+								telpRef = telpRef.replace(':telp', data?.karyawan?.telp)
+
                                 let cetakRef = "{{route('cetaksuratcuti', ':id')}}"
                                 cetakRef = cetakRef.replace(':id', data?.id)
 
@@ -221,6 +224,9 @@
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
                                                 <a href="${cetakRef}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>`
+                                if (data?.currentUserId != data?.karyawan?.id) {
+                                    actionButtons += `<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
+                                }
                                 @if (Auth::user()->role == 1)
                                     actionButtons += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
                                     if (data?.status == 1) {
