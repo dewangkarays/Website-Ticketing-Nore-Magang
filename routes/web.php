@@ -112,6 +112,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 		// Routing Cuti
 		Route::get('/cuti', 'CutiController@index')->name('cuti');
+		Route::get('/verifikasi-cuti', 'CutiController@verifikasi')->name('verifikasi-cuti');
 		Route::get('/history-cuti', 'CutiController@historycuti')->name('cuti.history');
 		Route::get('/cuti/create', 'CutiController@create')->name('cuti.create');
 		Route::post('/cuti/store', 'CutiController@store')->name('cuti.store');
