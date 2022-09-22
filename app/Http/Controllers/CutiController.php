@@ -127,9 +127,9 @@ class CutiController extends Controller
 
         $cuti->update();
         if ($request->surat_cuti) {
-            return redirect('/cuti')->with('success', 'Surat cuti berhasil diupload!');
+            return redirect()->route('cuti')->with('success', 'Surat cuti berhasil diupload!');
         }
-        return redirect()->route('cuti')->with('success', 'Verifikasi berhasil!');
+        return redirect()->route('verifikasi-cuti')->with('success', 'Verifikasi berhasil!');
     }
                 
 
@@ -314,6 +314,7 @@ class CutiController extends Controller
                             ->orWhere('verifikasi_1', '<', '2');
                     }
                 )
+                ->where('status', '<', '3')
                 ->orderByDesc('id')
                 ->with('karyawan')
                 ->with('verifikator2')
@@ -331,7 +332,8 @@ class CutiController extends Controller
                         ->orWhere(
                             function($q2) use ($currentUserId) {
                                 $q2->where('verifikator_1_id', $currentUserId)
-                                    ->where('verifikasi_2', '2');
+                                    ->where('verifikasi_2', '2')
+                                    ->where('verifikasi_1', '1');
                             }
                         );
                     }
