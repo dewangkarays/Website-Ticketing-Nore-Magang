@@ -19,8 +19,11 @@ return [
 
 	'role' => [
        	'1' => 'Super Admin',
-        '10' => 'Karyawan',
+        // '10' => 'Karyawan',
         '20' => 'Keuangan',
+        '30' => 'Frontend',
+        '40' => 'Backend',
+        '50' => 'Marketing',
         '95' => 'Klien',
     ],
 
