@@ -70,7 +70,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Catatan</label>
 							<div class="col-lg-10">
-								<textarea name="catatan2" rows="4" cols="3" class="form-control" placeholder="Catatan"></textarea>
+								<textarea name="catatan2" id="catatan2-edit" rows="4" cols="3" class="form-control" placeholder="Catatan">{!! $cuti->catatan_ver_2 !!}</textarea>
 							</div>
 						</div>
 						@else
@@ -107,7 +107,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Catatan</label>
 							<div class="col-lg-10">
-								<textarea name="catatan1" rows="4" cols="3" class="form-control" placeholder="Catatan"></textarea>
+								<textarea name="catatan1" id="catatan1-edit" rows="4" cols="3" class="form-control" placeholder="Catatan">{!! $cuti->catatan_ver_1 !!}</textarea>
 							</div>
 						</div>
 						@else
@@ -134,7 +134,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Surat Permohonan Cuti</label>
 							<div class="col-lg-10">
-								<input id="surat_cuti" name="surat_cuti" type="file" class="form-control" onchange="upload_check()">
+								<input id="surat_cuti" name="surat_cuti" type="file" class="form-control">
 							</div>
 						</div>
 						@endif
@@ -182,96 +182,16 @@
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
     <script>
-         $('.pickadate-accessibility').pickadate({
-            labelMonthNext: 'Go to the next month',
-            labelMonthPrev: 'Go to the previous month',
-            labelMonthSelect: 'Pick a month from the dropdown',
-            labelYearSelect: 'Pick a year from the dropdown',
-            selectMonths: true,
-            selectYears: true,
-            format: 'yyyy-mm-dd',
-        });
 		$(() => {
 			var catatan2 = $('#catatan2').val();
+			var catatan2Edit = $('#catatan2-edit').val();
 			var catatan1 = $('#catatan1').val();
+			var catatan1Edit = $('#catatan1-edit').val();
 			$('#catatan2').val(stripHtml(catatan2));
+			$('#catatan2-edit').val(stripHtml(catatan2Edit));
 			$('#catatan1').val(stripHtml(catatan1));
+			$('#catatan1-edit').val(stripHtml(catatan1Edit));
 		})
-    </script>
-    <script>
-		// karyawan
-        var atasan_user = $('#name').data('atasan_user');
-		console.log(atasan_user);
-        $.ajax({
-            url : '{{ url("getverifikator") }}',
-            type: 'get',
-            dataType: 'json',
-            success : function(verifs){
-				var len = 0;
-				len = verifs['data'].length;
-				console.log(atasan_user);
-				if (atasan_user != 0) {
-                for(var i=0; i<len; i++){
-                    if (atasan_user == verifs['data'][i].id){
-					// var id = 3;
-					var id = verifs['data'][i].id;
-					var atasan_id = verifs['data'][i].atasan_id;
-                    var nama = verifs['data'][i].nama;
-
-					var option = "<option value='"+id+"' data-id2='"+atasan_id+"'>"+nama+"</option>";
-
-					$("#verifikator_2").append(option);
-					atasan_user = verifs['data'][i].atasan_id;
-					}
-                }
-			} else {
-				for(var i=0; i<len; i++){
-					var id = verifs['data'][i].id;
-					var atasan_id = verifs['data'][i].atasan_id;
-                    var nama = verifs['data'][i].nama;
-
-					var option = "<option value='"+id+"' data-id2='"+atasan_id+"'>"+nama+"</option>";
-
-					$("#verifikator_2").append(option);
-                }
-			}
-            }
-        });
-    </script>
-    <script>
-		$('#verifikator_2').on('change', function(){
-		var atasan_user2 = $(this). children("option:selected").data('id2');
-		// console.log(atasan_user2);
-
-        $.ajax({
-            url : '{{ url("getverifikator") }}',
-            type: 'get',
-            dataType: 'json',
-            success : function(verifs2){
-				$("#verifikator_1").empty();
-
-				var test2 = "-- Pilih Verifikator --"
-				var test = "<option value=''>"+test2+"</option>";
-
-				$("#verifikator_1").append(test);
-				var len2 = 0;
-				len2 = verifs2['data'].length;
-				
-                for(var j=0; j<len2; j++){
-                    if (atasan_user2 == verifs2['data'][j].id){
-					var id2 = verifs2['data'][j].id;
-					var atasan_id2 = verifs2['data'][j].atasan_id;
-                    var nama2 = verifs2['data'][j].nama;
-
-					var option2 = "<option value='"+id2+"' data-id1='"+atasan_id2+"'>"+nama2+"</option>";
-					
-					$("#verifikator_1").append(option2);
-					atasan_user2 = verifs2['data'][j].atasan_id;
-					}
-                }
-            }
-        });
-	});
     </script>
 
 @endsection
