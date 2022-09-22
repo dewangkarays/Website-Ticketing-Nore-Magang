@@ -75,8 +75,19 @@ class CutiController extends Controller
 
     public function upload(Request $request, $id) {
         $cuti = Cuti::find($id);
-        $cuti->catatan_ver_2 = $request->get('catatan2');
-        $cuti->catatan_ver_1 = $request->get('catatan1');
+        
+        if (!(Auth::id() == $cuti->karyawan->id || Auth::id() == $cuti->verifikator2->id || Auth::id() == $cuti->verifikator1->id || Auth::user()->role == 1)) {
+            return redirect()->back()->with('error', 'Maaf, Anda tidak memiliki hak akses!');
+        }
+
+        if (Auth::id() == $cuti->verifikator2->id) {
+            $cuti->catatan_ver_2 = $request->get('catatan2');
+        } else if (Auth::id() == $cuti->verifikator1->id) {
+            $cuti->catatan_ver_1 = $request->get('catatan1');
+        } else {
+            $cuti->catatan_ver_2 = $request->get('catatan2');
+            $cuti->catatan_ver_1 = $request->get('catatan1');
+        }
 
         if ($request->status2) {
             $cuti->verifikasi_2 = $request->status2;
