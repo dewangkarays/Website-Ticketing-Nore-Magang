@@ -18,7 +18,6 @@ use PDF;
 class CutiController extends Controller
 {
     public function index() {
-        //tampilan index menggunakan serverside datatables
         return view('cuti.index');
     }
 
@@ -202,6 +201,10 @@ class CutiController extends Controller
         }
     }
 
+    public function verifikasi() {
+        return view('cuti.verifikasi');
+    }
+
     public function historycuti() {
         return view('cuti.history');
     }
@@ -252,27 +255,84 @@ class CutiController extends Controller
         return redirect()->route('cuti');
     }
 
-    //tampilan index menggunakan serverside datatables
     public function getcuti($status) {
         $currentUserId = Auth::id();
         $today = Carbon::today();
         if ($status == 'aktif') {
-            $cuti = Cuti::where('status', '<', '3')
+            if (Auth::user()->role == 1) {
+                $cuti = Cuti::where('status', '<', '3')
                 ->where('tanggal_akhir', '>=', $today)
                 ->with('karyawan')
                 ->with('verifikator2')
                 ->with('verifikator1')
                 ->get();
-        } else if ($status == 'history') {
-            $cuti = Cuti::where(function($q) use ($today) {
-                $q->where('status', '>', '2')
-                    ->orWhere('tanggal_akhir', '<', $today);
-                })
+            } else {
+                $cuti = Cuti::where('status', '<', '3')
+                ->where('tanggal_akhir', '>=', $today)
+                ->where('user_id', $currentUserId)
                 ->with('karyawan')
                 ->with('verifikator2')
                 ->with('verifikator1')
                 ->get();
+            }
+        } else if ($status == 'history') {
+            if (Auth::user()->role == 1) {
+                $cuti = Cuti::where(function($q) use ($today) {
+                    $q->where('status', '>', '2')
+                        ->orWhere('tanggal_akhir', '<', $today);
+                    })
+                    ->with('karyawan')
+                    ->with('verifikator2')
+                    ->with('verifikator1')
+                    ->get();
+            } else {
+                $cuti = Cuti::where(function($q) use ($today) {
+                    $q->where('status', '>', '2')
+                        ->orWhere('tanggal_akhir', '<', $today);
+                    })
+                    ->where(
+                        function($q) use ($currentUserId) {
+                            $q->where('user_id', $currentUserId)
+                                ->orWhere('verifikator_2_id', $currentUserId)
+                                ->orWhere('verifikator_1_id', $currentUserId);
+                        }
+                    )
+                    ->with('karyawan')
+                    ->with('verifikator2')
+                    ->with('verifikator1')
+                    ->get();
+            }
+        } else if ($status == 'verifikasi') {
+            if (Auth::user()->role == 1) {
+                $cuti = Cuti::where(
+                    function($q) {
+                        $q->where('verifikasi_2', '<', '2')
+                            ->orWhere('verifikasi_1', '<', '2');
+                    }
+                )
+                ->with('karyawan')
+                ->with('verifikator2')
+                ->with('verifikator1')
+                ->get();
+            } else {
+                $cuti = Cuti::where(
+                    function($q) use ($currentUserId) {
+                        $q->where('verifikator_2_id', $currentUserId)
+                        ->orWhere(
+                            function($q2) use ($currentUserId) {
+                                $q2->where('verifikator_1_id', $currentUserId)
+                                    ->where('verifikasi_2', '=', '2');
+                            }
+                        );
+                    }
+                )
+                ->with('karyawan')
+                ->with('verifikator2')
+                ->with('verifikator1')
+                ->get();
+            }
         }
+
         return Datatables::of($cuti)
             ->addIndexColumn()
             ->addColumn('currentUserId', $currentUserId)
