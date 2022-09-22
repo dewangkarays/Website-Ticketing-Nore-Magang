@@ -33,6 +33,18 @@
 							</div>
 						</div>
 						<div class="form-group row">
+							<label class="col-form-label col-lg-2">NIP</label>
+							<div class="col-lg-10">
+								<input type="text" name="nip" class="form-control border-teal border-1" placeholder="NIP">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Jabatan</label>
+							<div class="col-lg-10">
+								<input type="text" name="jabatan" class="form-control border-teal border-1" placeholder="Jabatan">
+							</div>
+						</div>
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Email</label>
 							<div class="col-lg-10">
 								<input type="text" name="email" class="form-control border-teal border-1" placeholder="Email">
@@ -81,13 +93,24 @@
 							<div class="col-lg-10">
 								<select name="role" class="form-control form-control-select2 border-teal-1 border-teal">
 									@foreach (config("custom.role") as $key => $value)
-										@if (in_array($key, [1,10,20]))
+										@if ($key <= 50)
 											<option value="{{ $key }}">{{ $value }}</option>
 										@endif
 									@endforeach
                                     {{-- <option value="1">Super Admin</option>
 									<option value="10">Karyawan</option>
 									<option value="20">Keuangan</option> --}}
+                                </select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Atasan</label>
+							<div class="col-lg-10">
+								<select name="atasan_id" class="form-control form-control-select2 border-teal-1 border-teal">
+									<option value="">-- Pilih Atasan --</option>
+									@foreach ($atasans as $atasan)
+											<option value="{{ $atasan->id }}">{{ $atasan->nama }}</option>
+									@endforeach
                                 </select>
 							</div>
 						</div>
