@@ -322,11 +322,16 @@ class CutiController extends Controller
             } else {
                 $cuti = Cuti::where(
                     function($q) use ($currentUserId) {
-                        $q->where('verifikator_2_id', $currentUserId)
+                        $q->where(
+                            function($q1) use ($currentUserId) {
+                                $q1->where('verifikator_2_id', $currentUserId)
+                                    ->where('verifikasi_2', '1');
+                            }
+                        )
                         ->orWhere(
                             function($q2) use ($currentUserId) {
                                 $q2->where('verifikator_1_id', $currentUserId)
-                                    ->where('verifikasi_2', '=', '2');
+                                    ->where('verifikasi_2', '2');
                             }
                         );
                     }
