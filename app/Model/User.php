@@ -86,4 +86,8 @@ class User extends Authenticatable
     public function verifikasi2() {
         return $this->hasMany('App\Model\Cuti', 'verifikator_2_id', 'id');
     }
+
+    public function presensi() {
+        return $this->hasMany('App\Model\Presensi', 'user_id', 'id');
+    }
 }
