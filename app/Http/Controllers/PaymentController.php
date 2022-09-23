@@ -26,7 +26,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        if(\Auth::user()->role > 20){
+        if(\Auth::user()->role > 50){
             $payments = Payment::where('user_id',\Auth::user()->id)->orderBy('created_at','desc')->get();
         } else {
             // $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('created_at','desc')->get();
@@ -67,7 +67,7 @@ class PaymentController extends Controller
         //]);
 
         $data = $request->except(['_token', '_method']);
-        if (\Auth::user()->role < 20) {
+        if (\Auth::user()->role < 20 || \Auth::user()->role>=30 && \Auth::user()->role<=50) {
             $data['status'] = 1;
         }
         $cust = User::find($request->get('user_id'));
@@ -649,7 +649,7 @@ class PaymentController extends Controller
     }
 
     public function getpayments() {
-        if(\Auth::user()->role > 20){
+        if(\Auth::user()->role > 50){
             $payments = Payment::where('user_id',\Auth::user()->id)
                 ->orderByDesc('created_at')
                 ->with('user')

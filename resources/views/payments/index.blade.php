@@ -47,7 +47,7 @@
 					<th>Status</th>
 					<th>Keterangan</th>
 					<th>Tanggal Pembayaran</th>
-					@if(\Auth::user()->role<=20)
+					@if(\Auth::user()->role<=50)
 					<th class="text-center">Actions</th>
 					@endif
 				</tr>
@@ -341,7 +341,7 @@
 
 									<div class="dropdown-menu dropdown-menu-right">`
 										
-								@if(Auth::user()->role<=20)
+								@if(Auth::user()->role<=50)
 									if (data?.status == 0) {
 										actionButtons += `<a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a>`
 										// actionButtons +=
@@ -349,7 +349,7 @@
 										// 	<button type="button" class="btn dropdown-item bg-danger open-modal-reject" id="statusbtn" data-id="${id}" data-payment="${paymentData}" data-toggle="modal" data-target="#modal_tolak"><i class="icon-cancel-circle2"></i> Tolak</button>`
 									}
 								@endif
-								@if(Auth::user()->role<=20)
+								@if(Auth::user()->role<=50)
 										actionButtons += `<a href="https://wa.me/${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
 								@endif
 								@if(Auth::user()->role==1)

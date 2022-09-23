@@ -345,12 +345,12 @@
 										</a>
 										
 										<div class="dropdown-menu dropdown-menu-right">`
-								@if(\Auth::user()->role<=20)
+								@if(\Auth::user()->role<=50)
 											actionsButton += `<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
 								@endif
 								@if (\Auth::user()->role==1 )
 											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
-								@elseif (\Auth::user()->role==10)
+								@elseif (\Auth::user()->role==10 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>`
 								@else
 											if (data?.current_user == data?.handler) {
@@ -482,12 +482,12 @@
 										</a>
 										
 										<div class="dropdown-menu dropdown-menu-right">`
-								@if(\Auth::user()->role<=20)
+								@if(\Auth::user()->role<=50)
 											actionsButton += `<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
 								@endif
 								@if (\Auth::user()->role==1 )
 											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
-								@elseif (\Auth::user()->role==10)
+								@elseif (\Auth::user()->role==10 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>`
 								@else
 											if (data?.current_user == data?.handler) {
@@ -635,12 +635,12 @@
 										</a>
 										
 										<div class="dropdown-menu dropdown-menu-right">`
-								@if(\Auth::user()->role<=20)
+								@if(\Auth::user()->role<=50)
 											actionsButton += `<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
 								@endif
 								@if (\Auth::user()->role==1 )
 											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
-								@elseif (\Auth::user()->role==10)
+								@elseif (\Auth::user()->role==10 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>`
 								@else
 											if (data?.current_user == data?.handler) {
@@ -772,12 +772,12 @@
 										</a>
 										
 										<div class="dropdown-menu dropdown-menu-right">`
-								@if(\Auth::user()->role<=20)
+								@if(\Auth::user()->role<=50)
 											actionsButton += `<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
 								@endif
 								@if (\Auth::user()->role==1 )
 											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>`
-								@elseif (\Auth::user()->role==10)
+								@elseif (\Auth::user()->role==10 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 											actionsButton += `<a href="${editRef}" class="dropdown-item"><i class="icon-search4"></i> Lihat Detail</a>`
 								@else
 											if (data?.current_user == data?.handler) {
