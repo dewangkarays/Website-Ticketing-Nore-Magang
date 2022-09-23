@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-@if ((Auth::user()->role==1) || (Auth::user()->role==20) || (Auth::user()->role==10) )
+@if ((Auth::user()->role==1) || (Auth::user()->role==20) || (Auth::user()->role==10) || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 	<!-- Page header -->
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
