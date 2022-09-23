@@ -126,8 +126,11 @@ class ProyekController extends Controller
     {
         $proyek = Proyek::find($id);
         $users = User::where('role','>','20')->get();
+        $users = User::where('id', '=', \Auth::user()->id)->get();
+        $users = User::where('role','>','20')->get();
+        $karyawans = User::where('role','==','50')->get();
 
-        return view('proyeks.edit', compact(['proyek','users']));
+        return view('proyeks.edit', compact(['proyek','users','karyawans']));
     }
 
     /**
