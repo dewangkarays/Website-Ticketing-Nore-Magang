@@ -30,7 +30,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" value="{{ $user->nama }}" data-user_id="{{ $user->id }}" required readonly>
+								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" value="{{ $user->nama }}" data-user_id="{{ $user->id }}" data-atasan_id="{{ $user->atasan_id }}" required readonly>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -251,10 +251,20 @@ document.addEventListener('DOMContentLoaded', function() {
 	</script>
     <script>
 		var user_id = $('#name').data('user_id');
-		// console.log(user_id);
+		var atasan_user = $('#name').data('atasan_id');
+		if (atasan_user == null){
+			var user_id = 0;
+		}
+		
+		console.log(user_id);
 		if (user_id == 0){
 			$('#name').on('change', function(){
 			var user_id = $(this). children("option:selected").val();
+			$("#verifikator_2").empty();
+			var dval = "-- Pilih Verifikator --"
+			var defval = "<option value=''>"+dval+"</option>";
+
+			$("#verifikator_2").append(defval);
 			// console.log(user_id);
 
         $.ajax({
@@ -355,7 +365,10 @@ document.addEventListener('DOMContentLoaded', function() {
 					
 					$("#verifikator_1").append(option);
                 }
-            }
+            },
+			error : function(){
+				$("#div-verif1").show();
+			}
         });
 	});
     </script>
