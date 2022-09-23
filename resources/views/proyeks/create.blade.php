@@ -128,7 +128,18 @@
                                 <textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1" required>{{ old('keterangan') }}</textarea>
                             </div>
                         </div>
-
+                        <div class="form-group row">
+							<label class="col-form-label col-lg-2">Marketing</label>
+							<div class="col-lg-10">
+								{{-- <input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" data-user_id="0" required > --}}
+								<select id="name" name="name" class="form-control select-search" data-user_id="0" required>
+									<option value="">-- Pilih Karyawan --</option>
+									@foreach($karyawans as $karyawan)
+										<option marketing_id="{{ $karyawan->marketing_id }}" data-nip="{{ $karyawan->nip }}" value="{{$karyawan->id}}">{{$karyawan->nama}} </option>
+				    				@endforeach
+								</select>
+							</div>
+						</div>
 
                     </fieldset>
                     <div class="text-right">

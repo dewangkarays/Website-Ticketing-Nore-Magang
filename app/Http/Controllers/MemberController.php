@@ -29,7 +29,10 @@ class MemberController extends Controller
      */
     public function create()
     {
-        return view('members.create');
+        $users = User::where('id', '=', \Auth::user()->id)->get();
+        $karyawans = User::where('role','==','50')->get();
+
+        return view('members.create', compact('users','karyawans'));
     }
 
     /**
@@ -137,7 +140,10 @@ class MemberController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('members.edit', compact('user'));
+        $users = User::where('id', '=', \Auth::user()->id)->get();
+        $karyawans = User::where('role','==','50')->get();
+
+        return view('members.edit', compact('user','karyawans'));
     }
 
     /**
