@@ -40,7 +40,7 @@
                     <th style="width: 200px">Nominal (Rp)</th>
                     {{-- <th>Status</th> --}}
                     <th style="width: 250px">Keterangan</th>
-                    @if(\Auth::user()->role<=20)
+                    @if(\Auth::user()->role<=50)
                     <th class="text-center" style="width: 50px">Actions</th>
                     @endif
                 </tr>
@@ -176,7 +176,7 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-right">`
-                            @if(\Auth::user()->role<=20)
+                            @if(\Auth::user()->role<=50)
                                 if (data?.status == 0) {
                                     actionsButton += 
                                         `<button type="button" class="btn dropdown-item bg-success open-modal-accept" id="statusbtn" data-id=" ${paymentId} " data-toggle="modal" data-target="#modal_terima"><i class="icon-checkmark-circle"></i> Terima</button>
