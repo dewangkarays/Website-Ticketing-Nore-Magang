@@ -48,7 +48,7 @@
 					<th>Kebutuhan</th>
 					<th>Severity</th>
 					<th>Handler</th>
-					@if (\Auth::user()->role == 10)
+					@if (\Auth::user()->role == 10 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 					<th>Assign</th>
 					@endif
 					<th class="text-center">Status</th>
@@ -76,7 +76,7 @@
 					<th>Kebutuhan</th>
 					<th>Severity</th>
 					<th>Handler</th>
-					@if (\Auth::user()->role == 10)
+					@if (\Auth::user()->role == 10 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 					<th>Assign</th>
 					@endif
 					<th class="text-center">Status</th>
@@ -225,7 +225,7 @@
 				return str.substr(0, str.lastIndexOf(separator, maxLen)) + '...';
 			};
 			// Premium datatable
-			@if(Auth::user()->role == 10)
+			@if(Auth::user()->role == 10 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 				$('.datatable-p').DataTable({
 					// "scrollX": true,
 					processing: true,
@@ -515,7 +515,7 @@
 			@endif
 			
 			// Simple Priorites datatable
-			@if(Auth::user()->role == 10)
+			@if(Auth::user()->role == 10 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 				$('.datatable-sp').DataTable({
 					// "scrollX": true,
 					processing: true,

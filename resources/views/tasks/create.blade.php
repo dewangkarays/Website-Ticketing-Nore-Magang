@@ -25,7 +25,7 @@
 					@csrf
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Data Task</legend>
-						@if(\Auth::user()->role==1 || \Auth::user()->role==10 || \Auth::user()->role==20)
+						@if(\Auth::user()->role==1 || \Auth::user()->role==10 || \Auth::user()->role==20 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">User</label>
 							<div class="col-lg-10">
@@ -87,7 +87,7 @@
 								<span class="form-text text-muted">Jumlah max ukuran file : 32MB</span><hr>
 							</div>
 						</div>
-						@if(\Auth::user()->role==1 || \Auth::user()->role==10 || \Auth::user()->role==20)
+						@if(\Auth::user()->role==1 || \Auth::user()->role==10 || \Auth::user()->role==20 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Severity</label>
 							<div class="col-lg-10">

@@ -54,9 +54,9 @@ class TaskController extends Controller
         ->where('users.task_count','>','0')
         ->get(); //role customer
         $proyeks = Proyek::all();
-        $handlers = User::where('role','10')->get(); //role karyawan
+        $handlers = User::where('role','10')->orWhere('role','30')->orWhere('role','40')->get(); //role karyawan
         $finances = User::where('role','20')->get(); //keuangan
-
+        // dd($handlers);
         return view('tasks.create', compact('users','proyeks','handlers','finances'));
     }
 
