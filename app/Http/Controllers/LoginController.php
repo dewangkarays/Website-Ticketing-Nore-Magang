@@ -27,7 +27,7 @@ class LoginController extends Controller
 	    ){
 	    	if(\Auth::user()->role==1){
 	    		return redirect('/admin');
-	    	}elseif(\Auth::user()->role==10){
+	    	}elseif(\Auth::user()->role==10 || \Auth::user()->role>=30 && \Auth::user()->role<=50){
 	    		return redirect('/karyawan');
 			}elseif(\Auth::user()->role==20){
 				return redirect('/keuangan');
