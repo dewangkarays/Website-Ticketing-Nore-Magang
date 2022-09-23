@@ -26,7 +26,7 @@ class AddKolomMarketingIdToProyeksTable extends Migration
     public function down()
     {
         Schema::table('proyeks', function (Blueprint $table) {
-            //
+            $table->dropColumn('marketing_id');
         });
     }
 }
