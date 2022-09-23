@@ -90,7 +90,7 @@ ul{
 					</ul>
 				</li>
 
-				@elseif(Auth::user()->role==10)
+				@elseif(Auth::user()->role==10 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 				<li class="nav-item">
 					<a href="{{ url('/karyawan') }}" class="nav-link {{ (request()->is('karyawan*')) ? 'active' : '' }}">
 						<i class="icon-home4"></i>
@@ -195,7 +195,7 @@ ul{
 
 				@endif
 
-				@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
+				@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 
 				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link {{ (request()->is('calendar*','presensi*','cuti*', 'history-cuti*')) ? 'active' : '' }}"><i class="icon-cabinet"></i>
@@ -318,7 +318,7 @@ ul{
 							</span>
 					</a>
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('tagihans*','rekaptagihans*','rekapdptagihans*','payments*','pemasukans*','pengeluarans*','laporankeuangan', 'historydp', 'historytagihan', 'setting*')) ? 'block' : 'none' }};">
-					@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20)
+					@if (Auth::user()->role==1||Auth::user()->role==10||Auth::user()->role==20 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 					<li class="nav-item">
 						<li class="nav-item nav-item-submenu">
 							<a href="#" class="nav-link {{ (request()->is('tagihans*','rekapdptagihans*', 'rekaptagihans*', 'historydp', 'historytagihan')) ? 'active' : '' }}">
@@ -446,7 +446,7 @@ ul{
 				@endif
 				@endif
 
-				@if (Auth::user()->role!=1 && Auth::user()->role!=10 && Auth::user()->role!=20)
+				@if (Auth::user()->role!=1 && Auth::user()->role!=10 && Auth::user()->role!=20 && Auth::user()->role!=30 && Auth::user()->role!=40 && Auth::user()->role!=50)
 
 				<li class="nav-item">
 					<a href="{{ url('/tasks') }}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">
@@ -551,7 +551,7 @@ ul{
 <!--
 				@if(Auth::user()->role>=1)
 
-				@if (Auth::user()->role==1||Auth::user()->role==10)
+				@if (Auth::user()->role==1||Auth::user()->role==10 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 				<li class="nav-item">
 					<a href="{{ url('/tagihans') }}" class="nav-link {{ (request()->is('tagihans*')) ? 'active' : '' }}">
 						<i class="icon-file-text"></i>

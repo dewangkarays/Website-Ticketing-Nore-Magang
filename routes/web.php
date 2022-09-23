@@ -24,7 +24,7 @@ Route::get('/del/{id}',  'AttachmentController@destroy');
 
 Route::group(['middleware' => ['auth']], function() {
 	//Kantor
-	Route::group(['middleware' => ['role:1,10,20']], function() {
+	Route::group(['middleware' => ['role:1,10,20,30,40,50']], function() {
 		Route::resource('setting', 'SettingController');
 		Route::get('/changepass',  'UserController@changePass');
 		Route::post('/changepass/{id}',  'UserController@changePassSubmit')->name('changepass');
@@ -138,7 +138,7 @@ Route::group(['middleware' => ['auth']], function() {
 	});
 
 	//karyawan
-	Route::group(['middleware' => ['role:10']], function() {
+	Route::group(['middleware' => ['role:10,30,40,50']], function() {
 		Route::get('/karyawan',  'AdminController@karyawan')->name('karyawan');
 	});
 
@@ -150,7 +150,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 
 	//admin && karyawan
-	Route::group(['middleware' => ['role:1,10']], function() {
+	Route::group(['middleware' => ['role:1,10,30,40,50']], function() {
 		Route::resource('laporankeuangan', 'LaporanKeuanganController');
 		Route::match(['get', 'post'], '/laporankeuangan',  'LaporanKeuanganController@index')->name('filterKeuangan');
         Route::get('cetaklaporan/{filter}/{filterbulan}',  'LaporanKeuanganController@cetaklaporan')->name('cetaklaporan');
