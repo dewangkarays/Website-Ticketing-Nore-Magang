@@ -26,7 +26,7 @@
                     @foreach ($users as $user)
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Form Pengajuan</legend>
-						@if(\Auth::user()->role==10 || \Auth::user()->role==20)
+						@if(\Auth::user()->role==10 || \Auth::user()->role==20 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
@@ -88,10 +88,10 @@
 								</select>
 							</div>
 						</div>
-                        <div class="form-group row">
+                        <div id="div-verif1" class="form-group row">
 							<label class="col-form-label col-lg-2">Verifikator 1</label>
 							<div class="col-lg-10">
-								<select id="verifikator_1" name="verifikator_1" class="form-control select-search" required>
+								<select id="verifikator_1" name="verifikator_1" class="form-control select-search">
 									<option value="" data-id1="">-- Pilih Verifikator --</option>
 									{{-- @foreach($users as $user)
 										<option data-pnama="{{$user->nama}}" value="{{$user->id}}">{{$user->nama}} </option>
@@ -251,10 +251,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	</script>
     <script>
 		var user_id = $('#name').data('user_id');
+		// console.log(user_id);
 		if (user_id == 0){
 			$('#name').on('change', function(){
 			var user_id = $(this). children("option:selected").val();
-			console.log(user_id);
+			// console.log(user_id);
 
         $.ajax({
             url : '{{ url("getverifikator") }}/'+user_id,
@@ -287,12 +288,49 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 		})
+	} else {
+		$.ajax({
+            url : '{{ url("getverifikator") }}/'+user_id,
+            type: 'get',
+            dataType: 'json',
+            success : function(verifs2){
+				var len2 = 0;
+				len2 = verifs2.length;
+				if (user_id != 0) {
+                for(var i=0; i<len2; i++){
+					var id2 = verifs2[i].id;
+					var atasan_id2 = verifs2[i].atasan_id;
+                    var nama2 = verifs2[i].nama;
+
+					var option2 = "<option value='"+id2+"' data-id2='"+atasan_id2+"'>"+nama2+"</option>";
+
+					$("#verifikator_2").append(option2);
+                }
+			} else {
+				for(var i=0; i<len2; i++){
+					var id2 = verifs2[i].id;
+					var atasan_id2 = verifs2[i].atasan_id;
+                    var nama2 = verifs2[i].nama;
+
+					var option2 = "<option value='"+id2+"' data-id2='"+atasan_id2+"'>"+nama2+"</option>";
+
+					$("#verifikator_2").append(option2);
+                }
+			}
+            }
+        });
 	}
     </script>
     <script>
 		$('#verifikator_2').on('change', function(){
 		var id_verif2 = $(this). children("option:selected").val();
-		// console.log(atasan_user2);
+		var atasan_verif2 = $(this). children("option:selected").data('id2');
+		// console.log(atasan_verif2);
+		if(atasan_verif2 == null){
+			$("#div-verif1").hide();
+		} else {
+			$("#div-verif1").show();
+		}
 
         $.ajax({
             url : '{{ url("getverifikator") }}/'+id_verif2,
