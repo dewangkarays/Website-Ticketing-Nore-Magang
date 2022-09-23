@@ -32,7 +32,6 @@ class CutiController extends Controller
         // dd($request);
         $request->validate([
             'verifikator_2'=>'required',
-            'verifikator_1'=>'required',
             'tanggal_mulai'=>'required',
             'tanggal_akhir'=>'required',
             'alasan'=>'required'
@@ -40,8 +39,7 @@ class CutiController extends Controller
         $cuti = new Cuti();
         $verifikator2 = $request->get('verifikator_2');
         $verifikator1 = $request->get('verifikator_1');
-        $nama_verif2 = User::where('id','=',$verifikator2)->first();
-        $nama_verif1 = User::where('id','=',$verifikator1)->first();
+        
         $cuti->status = 1;
         if ($request->get('tanggal_mulai') == null || $request->get('tanggal_akhir') == null) {
             return redirect()->back()->with('error', 'Tanggal Tidak Boleh Kosong!');
@@ -52,10 +50,20 @@ class CutiController extends Controller
         $cuti->tanggal_mulai = $request->get('tanggal_mulai');
         $cuti->tanggal_akhir = $request->get('tanggal_akhir');
         $cuti->alasan = $request->get('alasan');
+        
+        $nama_verif2 = User::where('id','=',$verifikator2)->first();
         $cuti->verifikator_2 = $nama_verif2->nama;
-        $cuti->verifikator_1 = $nama_verif1->nama;
         $cuti->verifikator_2_id = $verifikator2;
+
+        $nama_verif1 = null;
+        $cuti->verifikator_1 = null;
+        $cuti->verifikator_1_id = null;
+
+        if ($verifikator1 != null){  
+        $nama_verif1 = User::where('id','=',$verifikator1)->first();     
+        $cuti->verifikator_1 = $nama_verif1->nama;    
         $cuti->verifikator_1_id = $verifikator1;
+        }
         if (\Auth::user()->id == 1){
         $cuti->user_id = $request->get('name');
         } else {
