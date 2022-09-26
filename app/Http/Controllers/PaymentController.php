@@ -658,7 +658,9 @@ class PaymentController extends Controller
             // $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('created_at','desc')->get();
             $payments = Payment::where('jenis_pemasukan','=',1)
                 ->orderByDesc('id')
-                ->with('user')
+                ->with(['user' => function($q) {
+                    $q->with('proyek');
+                }])
                 ->get();
             //$payments = Payment::all();
 
