@@ -92,6 +92,8 @@
         }
         .main__notes {
             margin-top: 50px;
+            bottom: 10em;
+            position: absolute;
             text-align: justify;
         }
         .main__notes p {
@@ -245,6 +247,7 @@
                     @endif
                 </td>
             </tr>
+            @if($cuti->verifikator_1 != null)
             <tr>
                 <td width=30%></td>
                 <td width=40%>
@@ -258,6 +261,7 @@
                 </td>
                 <td width=30%></td>
             </tr>
+            @endif
         </table>
         <div class="main__notes">
             Catatan:
