@@ -192,6 +192,8 @@ class CutiController extends Controller
         return redirect()->back()->with('error', 'Verifikator Tidak Boleh Sama!');
         }
         $verifs = User::where('role','<=','20')->get();
+
+        if ($cuti->verifikator_1_id != null){
         $id_verif1 = $cuti->verifikator_1_id;
         $data_verif1 = User::where('id',$id_verif1)->first();
         $atasan_id = $data_verif1->atasan_id;
@@ -217,6 +219,9 @@ class CutiController extends Controller
             return redirect('/cuti')->with('success', 'Cuti Updated');
         }
     }
+    $cuti->update();
+    return redirect('/cuti')->with('success', 'Cuti Updated');
+    }
 
     public function verifikasi() {
         return view('cuti.verifikasi');
@@ -238,9 +243,10 @@ class CutiController extends Controller
 
     public function getverifikator($id)
     {
-        $verifs = User::where('role','<=','50')->where('role','>=','10')->get();
-        if ($id != 0) {
-            $user = User::find($id);
+        
+        $user = User::find($id);
+        if ($user->atasan_id != null) {
+            $verifs = User::where('role','<=','50')->where('role','>=','10')->get();
             $atasan_id = $user->atasan_id;
             $data = [];
             $j = 0;
@@ -257,6 +263,7 @@ class CutiController extends Controller
             // dd($len);
             return response()->json($data);
         } else {
+            $verifs = User::where('role','<=','50')->where('role','>=','10')->whereNotNull('atasan_id')->get();
             return response()->json($verifs);
         }
         

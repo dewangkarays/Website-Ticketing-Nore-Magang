@@ -86,6 +86,7 @@
 								</select>
 							</div>
 						</div>
+						@if($verifikator1 != null)
                         <div class="form-group row">
 							<label class="col-form-label col-lg-2">Verifikator 1</label>
 							<div class="col-lg-10">
@@ -109,6 +110,31 @@
 								</select>
 							</div>
 						</div>
+						@else
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Verifikator 1</label>
+							<div class="col-lg-10">
+								<input type="text" id="old_verifikator_1" name="old_verifikator_1" class="form-control border border-1" value=""readonly>
+								{{-- <select id="old_verifikator_1" name="old_verifikator_1" class="form-control select-search">
+									<option value="{{$verifikator1->id}}" data-old_id1="">{{$verifikator1->nama}}</option> --}}
+									{{-- @foreach($users as $user)
+										<option data-pnama="{{$user->nama}}" value="{{$user->id}}">{{$user->nama}} </option>
+				    				@endforeach --}}
+								{{-- </select> --}}
+							</div>
+						</div>
+                        <div class="form-group row">
+							<label class="col-form-label col-lg-2">Ganti Verifikator 1</label>
+							<div class="col-lg-10">
+								<select id="verifikator_1" name="verifikator_1" class="form-control select-search">
+									<option value="" data-id1="">-- Pilih Verifikator --</option>
+									{{-- @foreach($users as $user)
+										<option data-pnama="{{$user->nama}}" value="{{$user->id}}">{{$user->nama}} </option>
+				    				@endforeach --}}
+								</select>
+							</div>
+						</div>
+						@endif
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Alasan</label>
 							<div class="col-lg-10">
