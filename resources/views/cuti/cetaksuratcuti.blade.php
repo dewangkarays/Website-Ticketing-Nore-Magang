@@ -218,8 +218,8 @@
             </tr>
         </table>
         <div class="permohonan">
-            <p>
-                Dengan ini saya mengajukan permohonan izin cuti selama 3 (tiga) hari kerja pada tanggal {{date('d F Y', strtotime($cuti->tanggal_mulai))}} - {{date('d F Y', strtotime($cuti->tanggal_akhir))}} dikarenakan acara keluarga. Adapun tentang tugas dan tanggung jawab pekerjaan selama cuti akan saya kerjakan sesudah saya kembali masuk kerja. Demikian surat izin ini dibuat untuk di pertimbangkan sebagaimana mestinya.
+            <p style="text-indent: 30px">
+                {{ $cuti->alasan }}
             </p>
         </div>
         <table class="main__tandatangan">
