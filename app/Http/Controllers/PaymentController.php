@@ -651,13 +651,13 @@ class PaymentController extends Controller
     public function getpayments() {
         if(\Auth::user()->role > 50){
             $payments = Payment::where('user_id',\Auth::user()->id)
-                ->orderByDesc('created_at')
+                ->orderByDesc('id')
                 ->with('user')
                 ->get();
         } else {
             // $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('created_at','desc')->get();
             $payments = Payment::where('jenis_pemasukan','=',1)
-                ->orderByDesc('created_at')
+                ->orderByDesc('id')
                 ->with('user')
                 ->get();
             //$payments = Payment::all();
