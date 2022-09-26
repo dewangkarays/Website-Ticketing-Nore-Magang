@@ -103,7 +103,7 @@
 							<label class="col-form-label col-lg-2">Alasan</label>
 							<div class="col-lg-10">
 								<textarea id="alasan" name="alasan" rows="4" cols="3" class="form-control" placeholder="Alasan Cuti" required>
-Dengan ini saya mengajukan permohonan izin cuti selama # hari kerja pada tanggal ## - ## dikarenakan (tulis alasan cuti). Adapun tentang tugas dan tanggung jawab pekerjaan selama cuti akan saya kerjakan sesudah saya kembali masuk kerja. Demikian surat izin ini dibuat untuk di pertimbangkan sebagaimana mestinya.
+Dengan ini saya mengajukan permohonan izin cuti selama # hari kerja pada tanggal ## - ## dikarenakan (tulis alasan cuti)
 								</textarea>
 							</div>
 						</div>
@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function() {
         current.setDate(current.getDate() + 1);
     	}
 		$('#alasan').empty();
-		$('#alasan').append('Dengan ini saya mengajukan permohonan izin cuti selama '+totalBusinessDays+' hari kerja pada tanggal '+new_tgl_mulai+' - '+new_tgl_akhir+' dikarenakan (tulis alasan cuti). Adapun tentang tugas dan tanggung jawab pekerjaan selama cuti akan saya kerjakan sesudah saya kembali masuk kerja. Demikian surat izin ini dibuat untuk di pertimbangkan sebagaimana mestinya.');
+		$('#alasan').append('Dengan ini saya mengajukan permohonan izin cuti selama '+totalBusinessDays+' hari kerja pada tanggal '+new_tgl_mulai+' - '+new_tgl_akhir+' dikarenakan (tulis alasan cuti)');
 		})
 		
 		$('#tanggal_mulai').on('change', function(){
@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function() {
         current.setDate(current.getDate() + 1);
     	}
 		$('#alasan').empty();
-		$('#alasan').append('Dengan ini saya mengajukan permohonan izin cuti selama '+totalBusinessDays+' hari kerja pada tanggal '+new_tgl_mulai+' - '+new_tgl_akhir+' dikarenakan (tulis alasan cuti). Adapun tentang tugas dan tanggung jawab pekerjaan selama cuti akan saya kerjakan sesudah saya kembali masuk kerja. Demikian surat izin ini dibuat untuk di pertimbangkan sebagaimana mestinya.');
+		$('#alasan').append('Dengan ini saya mengajukan permohonan izin cuti selama '+totalBusinessDays+' hari kerja pada tanggal '+new_tgl_mulai+' - '+new_tgl_akhir+' dikarenakan (tulis alasan cuti)');
 		})
 	</script>
 	<script type="text/javascript">
