@@ -386,7 +386,7 @@ class RekapTagihanController extends Controller
         // dd($tagihans);
         foreach($tagihans as $tagihan){
             $tagihan->update([
-                'rekap_tagihan_id' => null,
+                'status_rekap' => 5,
             ]);
         }
 
@@ -491,13 +491,17 @@ class RekapTagihanController extends Controller
     public function getrekap($status) {
         if ($status == 'aktif') {
             $rekaptagihans = RekapTagihan::where('status','<','4')
-                ->with('proyeks')
-                ->orderByDesc('created_at')
+                ->with(['tagihan' => function ($q) {
+                    $q->with('proyek');
+                }])
+                ->orderByDesc('id')
                 ->get();
         } else if ($status == 'history') {
             $rekaptagihans = RekapTagihan::where('status','>=','4')
-                ->with('proyeks')
-                ->orderByDesc('created_at')
+                ->with(['tagihan' => function ($q) {
+                    $q->with('proyek');
+                }])
+                ->orderByDesc('updated_at')
                 ->get();
         }
         return Datatables::of($rekaptagihans)->addIndexColumn()->make(true);

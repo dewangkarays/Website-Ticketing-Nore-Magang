@@ -49,7 +49,14 @@ class RekapDptagihanController extends Controller
         if($request->get('c'))
         {
             $requestUser = $request->get('c');
-            $tagihans = Tagihan::where('user_id',$requestUser)->whereNull('rekap_dptagihan_id')->where('uang_muka','>',0)->orderBy('id')->get();
+            $tagihans = Tagihan::where('user_id',$requestUser)
+            ->where('uang_muka','>',0)
+            ->where(function ($q) {
+                $q->whereNull('rekap_dptagihan_id')
+                    ->orWhere('status_rekapdp', '5');
+            })
+            ->orderBy('id')
+            ->get();
         }
         else
         {
@@ -152,13 +159,13 @@ class RekapDptagihanController extends Controller
                 'rekap_dptagihan_id'=> $rekapdptagihan->id,
             ]);
 
-            $proyek_id = $tagihan->id_proyek;
-            $proyeks = Proyek::where('id', $proyek_id)->get();
-            foreach ($proyeks as $proyek) {
-                $proyek->update([
-                    'rekap_dptagihan_id' => $rekapdptagihan->id,
-                ]);
-            }
+            // $proyek_id = $tagihan->id_proyek;
+            // $proyeks = Proyek::where('id', $proyek_id)->get();
+            // foreach ($proyeks as $proyek) {
+            //     $proyek->update([
+            //         'rekap_dptagihan_id' => $rekapdptagihan->id,
+            //     ]);
+            // }
         }
 
         return redirect('/rekapdptagihans')->with('success', 'Rekap uang muka saved!');
@@ -300,7 +307,7 @@ class RekapDptagihanController extends Controller
         // dd($tagihans);
         foreach($tagihans as $tagihan){
             $tagihan->update([
-                'rekap_dptagihan_id' => null,
+                'status_rekapdp' => 5,
             ]);
         }
 
@@ -405,17 +412,21 @@ class RekapDptagihanController extends Controller
     public function getrekapdp($status) {
         if ($status == 'aktif') {
             $rekapdps = RekapDptagihan::where('status','<','4')
-                ->with('proyeks')
-                ->orderByDesc('created_at')
+                ->with(['tagihan' => function ($q) {
+                    $q->with('proyek');
+                }])
+                ->orderByDesc('id')
                 ->get();
-            return Datatables::of($rekapdps)->addIndexColumn()->make(true);
         } else if ($status == 'history') {
             $rekapdps = RekapDptagihan::where('status','>=','4')
-                ->with('proyeks')
-                ->orderByDesc('created_at')
+                ->with(['tagihan' => function ($q) {
+                    $q->with('proyek');
+                }])
+                ->orderByDesc('updated_at')
                 ->get();
-            return Datatables::of($rekapdps)->addIndexColumn()->make(true);
         }
+
+        return Datatables::of($rekapdps)->addIndexColumn()->make(true);
     }
 
 }
