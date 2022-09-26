@@ -41,7 +41,7 @@
 			<thead>
 				<tr>
 					<th>No</th>
-					<th>Nama</th>
+					<th>Nama Proyek</th>
 					<th>No. Receipt</th>
 					<th>Nominal (Rp)</th>
 					<th>Status</th>
@@ -275,7 +275,13 @@
 						data: null,
 						name: null,
 						render: (data, type, row) => {
-							return data?.user?.nama;
+							let namaProyeks = ''
+							data?.user?.proyek.map(proyek => {
+								namaProyeks += proyek.nama_proyek + '<br>'
+							})
+							console.log(namaProyeks)
+							// console.log(proyek)
+							return namaProyeks;
 						}
 					},
 					{
