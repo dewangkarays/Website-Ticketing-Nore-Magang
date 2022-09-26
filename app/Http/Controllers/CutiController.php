@@ -12,6 +12,7 @@ use App\Model\Setting;
 use Auth;
 use Dotenv\Regex\Success;
 use Datatables;
+use DateTime;
 use PDF;
 
 
@@ -44,8 +45,12 @@ class CutiController extends Controller
         if ($request->get('tanggal_mulai') == null || $request->get('tanggal_akhir') == null) {
             return redirect()->back()->with('error', 'Tanggal Tidak Boleh Kosong!');
         }
-        if ($request->get('tanggal_mulai') == $request->get('tanggal_akhir')) {
-            return redirect()->back()->with('error', 'Tanggal Tidak Boleh Sama!');
+        $start = new DateTime($request->get('tanggal_mulai'));
+        $end = new DateTime($request->get('tanggal_akhir'));
+        $interval = $start->diff($end);
+        $check = $interval->invert;
+        if($check == 1){
+            return redirect()->back()->with('error', 'Tanggal Tidak Sesuai!');
         }
         $cuti->tanggal_mulai = $request->get('tanggal_mulai');
         $cuti->tanggal_akhir = $request->get('tanggal_akhir');
@@ -229,7 +234,7 @@ class CutiController extends Controller
 
     public function getverifikator($id)
     {
-        $verifs = User::where('role','<=','50')->get();
+        $verifs = User::where('role','<=','50')->where('role','>=','10')->get();
         if ($id != 0) {
             $user = User::find($id);
             $atasan_id = $user->atasan_id;
