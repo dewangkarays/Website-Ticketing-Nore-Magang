@@ -15,7 +15,7 @@ class RekapTagihan extends Model
 
     public function tagihan()
     {
-        return $this->hasMany('App\Model\Tagihan', 'tagihan_id', 'id');
+        return $this->hasMany('App\Model\Tagihan', 'rekap_tagihan_id', 'id');
     }
     
     public function user()
