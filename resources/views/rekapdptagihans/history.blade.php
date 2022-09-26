@@ -135,7 +135,7 @@
 
                 // Basic datatable
                 $('.datatable-basic').DataTable({
-                    "scrollX": true,
+                    orderable: true,
                     processing: true,
                     serverSide: true,
                     ajax: {
@@ -158,14 +158,15 @@
                             data: null,
                             name: null,
                             render: (data, type, name) => {
-                                let namaProyek = ''
-                                const showNamaProyek = (proyek) => {
-                                    namaProyek += proyek.nama_proyek + '<br>'
+                                let namaProyeks = ''
+                                const addNamaProyeks = (tagihan) => {
+                                    namaProyeks += tagihan.proyek.nama_proyek + '<br>'
+                                    // console.log(tagihan.proyek.nama_proyek)
                                 }
 
-                                data?.proyeks?.map(showNamaProyek)
+                                data?.tagihan?.map(addNamaProyeks)
 
-                                return namaProyek
+                                return namaProyeks
                             }
                         },
                         {

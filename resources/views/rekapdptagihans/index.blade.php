@@ -160,14 +160,14 @@
                             data: null,
                             name: null,
                             render: (data, type, name) => {
-                                let namaProyek = ''
-                                const showNamaProyek = (proyek) => {
-                                    namaProyek += proyek.nama_proyek + '<br>'
+                                let namaProyeks = ''
+                                const addNamaProyeks = (tagihan) => {
+                                    namaProyeks += tagihan.proyek.nama_proyek + '<br>'
                                 }
 
-                                data?.proyeks?.map(showNamaProyek)
+                                data?.tagihan?.map(addNamaProyeks)
 
-                                return namaProyek
+                                return namaProyeks
                             }
                         },
                         {
