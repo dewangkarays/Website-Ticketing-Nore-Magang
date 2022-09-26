@@ -102,7 +102,9 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Alasan</label>
 							<div class="col-lg-10">
-								<textarea name="alasan" rows="4" cols="3" class="form-control" placeholder="Alasan Cuti" required></textarea>
+								<textarea id="alasan" name="alasan" rows="4" cols="3" class="form-control" placeholder="Alasan Cuti" required>
+Dengan ini saya mengajukan permohonan izin cuti selama # hari kerja pada tanggal ## - ## dikarenakan (tulis alasan cuti). Adapun tentang tugas dan tanggung jawab pekerjaan selama cuti akan saya kerjakan sesudah saya kembali masuk kerja. Demikian surat izin ini dibuat untuk di pertimbangkan sebagaimana mestinya.
+								</textarea>
 							</div>
 						</div>
 					</fieldset>
@@ -252,11 +254,10 @@ document.addEventListener('DOMContentLoaded', function() {
     <script>
 		var user_id = $('#name').data('user_id');
 		var atasan_user = $('#name').data('atasan_id');
-		if (atasan_user == null){
-			var user_id = 0;
-		}
+		// console.log(atasan_user);
+		// console.log(user_id);
 		
-		console.log(user_id);
+		//admin
 		if (user_id == 0){
 			$('#name').on('change', function(){
 			var user_id = $(this). children("option:selected").val();
@@ -265,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			var defval = "<option value=''>"+dval+"</option>";
 
 			$("#verifikator_2").append(defval);
-			// console.log(user_id);
+			console.log(user_id);
 
         $.ajax({
             url : '{{ url("getverifikator") }}/'+user_id,
@@ -274,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
             success : function(verifs2){
 				var len2 = 0;
 				len2 = verifs2.length;
-				if (user_id != 0) {
+				// if (user_id != 0) {
                 for(var i=0; i<len2; i++){
 					var id2 = verifs2[i].id;
 					var atasan_id2 = verifs2[i].atasan_id;
@@ -284,21 +285,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 					$("#verifikator_2").append(option2);
                 }
-			} else {
-				for(var i=0; i<len2; i++){
-					var id2 = verifs2[i].id;
-					var atasan_id2 = verifs2[i].atasan_id;
-                    var nama2 = verifs2[i].nama;
+			// } else {
+			// 	for(var i=0; i<len2; i++){
+			// 		var id2 = verifs2[i].id;
+			// 		var atasan_id2 = verifs2[i].atasan_id;
+            //         var nama2 = verifs2[i].nama;
 
-					var option2 = "<option value='"+id2+"' data-id2='"+atasan_id2+"'>"+nama2+"</option>";
+			// 		var option2 = "<option value='"+id2+"' data-id2='"+atasan_id2+"'>"+nama2+"</option>";
 
-					$("#verifikator_2").append(option2);
-                }
-			}
+			// 		$("#verifikator_2").append(option2);
+            //     }
+			// }
             }
         });
 		})
+
+		//karyawan
 	} else {
+		if (atasan_user == null && user_id != 0){
+			user_id = 0;
+		}
+		// console.log(user_id);
 		$.ajax({
             url : '{{ url("getverifikator") }}/'+user_id,
             type: 'get',
@@ -306,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
             success : function(verifs2){
 				var len2 = 0;
 				len2 = verifs2.length;
-				if (user_id != 0) {
+				// if (user_id != 0) {
                 for(var i=0; i<len2; i++){
 					var id2 = verifs2[i].id;
 					var atasan_id2 = verifs2[i].atasan_id;
@@ -316,17 +323,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 					$("#verifikator_2").append(option2);
                 }
-			} else {
-				for(var i=0; i<len2; i++){
-					var id2 = verifs2[i].id;
-					var atasan_id2 = verifs2[i].atasan_id;
-                    var nama2 = verifs2[i].nama;
+			// } else {
+			// 	for(var i=0; i<len2; i++){
+			// 		var id2 = verifs2[i].id;
+			// 		var atasan_id2 = verifs2[i].atasan_id;
+            //         var nama2 = verifs2[i].nama;
 
-					var option2 = "<option value='"+id2+"' data-id2='"+atasan_id2+"'>"+nama2+"</option>";
+			// 		var option2 = "<option value='"+id2+"' data-id2='"+atasan_id2+"'>"+nama2+"</option>";
 
-					$("#verifikator_2").append(option2);
-                }
-			}
+			// 		$("#verifikator_2").append(option2);
+            //     }
+			// }
             }
         });
 	}
@@ -372,6 +379,55 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 	});
     </script>
+	<script>
+		$('#tanggal_akhir').on('change', function(){
+		var tgl_mulai = $('#tanggal_mulai').val();
+		var tgl_akhir = $('#tanggal_akhir').val();
+		new_tgl_mulai = new Date(tgl_mulai).toLocaleDateString('id')
+		new_tgl_akhir = new Date(tgl_akhir).toLocaleDateString('id')
+		
+		var start = new Date(tgl_mulai);
+		var end = new Date(tgl_akhir);
+		
+		var totalBusinessDays = 1;
+		var current = new Date(start);
+		current.setDate(current.getDate()+1);
+		var day;
+		while (current <= end) {
+        day = current.getDay();
+        if (day >= 1 && day <= 5) {
+            ++totalBusinessDays;
+        }
+        current.setDate(current.getDate() + 1);
+    	}
+		$('#alasan').empty();
+		$('#alasan').append('Dengan ini saya mengajukan permohonan izin cuti selama '+totalBusinessDays+' hari kerja pada tanggal '+new_tgl_mulai+' - '+new_tgl_akhir+' dikarenakan (tulis alasan cuti). Adapun tentang tugas dan tanggung jawab pekerjaan selama cuti akan saya kerjakan sesudah saya kembali masuk kerja. Demikian surat izin ini dibuat untuk di pertimbangkan sebagaimana mestinya.');
+		})
+		
+		$('#tanggal_mulai').on('change', function(){
+		var tgl_mulai = $('#tanggal_mulai').val();
+		var tgl_akhir = $('#tanggal_akhir').val();
+		new_tgl_mulai = new Date(tgl_mulai).toLocaleDateString('id')
+		new_tgl_akhir = new Date(tgl_akhir).toLocaleDateString('id')
+		
+		var start = new Date(tgl_mulai);
+		var end = new Date(tgl_akhir);
+		
+		var totalBusinessDays = 1;
+		var current = new Date(start);
+		current.setDate(current.getDate()+1);
+		var day;
+		while (current <= end) {
+        day = current.getDay();
+        if (day >= 1 && day <= 5) {
+            ++totalBusinessDays;
+        }
+        current.setDate(current.getDate() + 1);
+    	}
+		$('#alasan').empty();
+		$('#alasan').append('Dengan ini saya mengajukan permohonan izin cuti selama '+totalBusinessDays+' hari kerja pada tanggal '+new_tgl_mulai+' - '+new_tgl_akhir+' dikarenakan (tulis alasan cuti). Adapun tentang tugas dan tanggung jawab pekerjaan selama cuti akan saya kerjakan sesudah saya kembali masuk kerja. Demikian surat izin ini dibuat untuk di pertimbangkan sebagaimana mestinya.');
+		})
+	</script>
 	<script type="text/javascript">
 		$( document ).ready(function() {
 	        // Default style
