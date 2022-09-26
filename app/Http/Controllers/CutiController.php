@@ -12,6 +12,7 @@ use App\Model\Setting;
 use Auth;
 use Dotenv\Regex\Success;
 use Datatables;
+use DateTime;
 use PDF;
 
 
@@ -44,8 +45,12 @@ class CutiController extends Controller
         if ($request->get('tanggal_mulai') == null || $request->get('tanggal_akhir') == null) {
             return redirect()->back()->with('error', 'Tanggal Tidak Boleh Kosong!');
         }
-        if ($request->get('tanggal_mulai') == $request->get('tanggal_akhir')) {
-            return redirect()->back()->with('error', 'Tanggal Tidak Boleh Sama!');
+        $start = new DateTime($request->get('tanggal_mulai'));
+        $end = new DateTime($request->get('tanggal_akhir'));
+        $interval = $start->diff($end);
+        $check = $interval->invert;
+        if($check == 1){
+            return redirect()->back()->with('error', 'Tanggal Tidak Sesuai!');
         }
         $cuti->tanggal_mulai = $request->get('tanggal_mulai');
         $cuti->tanggal_akhir = $request->get('tanggal_akhir');
@@ -161,8 +166,12 @@ class CutiController extends Controller
         if ($request->get('tanggal_mulai') == null || $request->get('tanggal_akhir') == null) {
             return redirect()->back()->with('error', 'Tanggal Tidak Boleh Kosong!');
         }
-        if ($request->get('tanggal_mulai') == $request->get('tanggal_akhir')) {
-            return redirect()->back()->with('error', 'Tanggal Tidak Boleh Sama!');
+        $start = new DateTime($request->get('tanggal_mulai'));
+        $end = new DateTime($request->get('tanggal_akhir'));
+        $interval = $start->diff($end);
+        $check = $interval->invert;
+        if($check == 1){
+            return redirect()->back()->with('error', 'Tanggal Tidak Sesuai!');
         }
         $cuti->tanggal_mulai = $request->get('tanggal_mulai');
         $cuti->tanggal_akhir = $request->get('tanggal_akhir');
@@ -183,6 +192,8 @@ class CutiController extends Controller
         return redirect()->back()->with('error', 'Verifikator Tidak Boleh Sama!');
         }
         $verifs = User::where('role','<=','20')->get();
+
+        if ($cuti->verifikator_1_id != null){
         $id_verif1 = $cuti->verifikator_1_id;
         $data_verif1 = User::where('id',$id_verif1)->first();
         $atasan_id = $data_verif1->atasan_id;
@@ -208,6 +219,9 @@ class CutiController extends Controller
             return redirect('/cuti')->with('success', 'Cuti Updated');
         }
     }
+    $cuti->update();
+    return redirect('/cuti')->with('success', 'Cuti Updated');
+    }
 
     public function verifikasi() {
         return view('cuti.verifikasi');
@@ -229,9 +243,10 @@ class CutiController extends Controller
 
     public function getverifikator($id)
     {
-        $verifs = User::where('role','<=','50')->get();
-        if ($id != 0) {
-            $user = User::find($id);
+        
+        $user = User::find($id);
+        if ($user->atasan_id != null) {
+            $verifs = User::where('role','<=','50')->where('role','>=','10')->get();
             $atasan_id = $user->atasan_id;
             $data = [];
             $j = 0;
@@ -248,6 +263,7 @@ class CutiController extends Controller
             // dd($len);
             return response()->json($data);
         } else {
+            $verifs = User::where('role','<=','50')->where('role','>=','10')->whereNotNull('atasan_id')->get();
             return response()->json($verifs);
         }
         

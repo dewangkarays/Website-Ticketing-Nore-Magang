@@ -52,13 +52,13 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Tanggal Mulai</label>
                             <div class="col-lg-10">
-                                <input name="tanggal_mulai" type="text" class="form-control pickadate-accessibility" placeholder="Pilih Tanggal" value="{{  $cuti->tanggal_mulai }}" required>
+                                <input id="tanggal_mulai" name="tanggal_mulai" type="text" class="form-control pickadate-accessibility" placeholder="Pilih Tanggal" value="{{  $cuti->tanggal_mulai }}" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Tanggal Berakhir</label>
                             <div class="col-lg-10">
-                                <input name="tanggal_akhir" type="text" class="form-control pickadate-accessibility" placeholder="Pilih Tanggal" value="{{  $cuti->tanggal_akhir }}" required>
+                                <input id="tanggal_akhir" name="tanggal_akhir" type="text" class="form-control pickadate-accessibility" placeholder="Pilih Tanggal" value="{{  $cuti->tanggal_akhir }}" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -86,6 +86,7 @@
 								</select>
 							</div>
 						</div>
+						@if($verifikator1 != null)
                         <div class="form-group row">
 							<label class="col-form-label col-lg-2">Verifikator 1</label>
 							<div class="col-lg-10">
@@ -109,10 +110,35 @@
 								</select>
 							</div>
 						</div>
+						@else
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Verifikator 1</label>
+							<div class="col-lg-10">
+								<input type="text" id="old_verifikator_1" name="old_verifikator_1" class="form-control border border-1" value=""readonly>
+								{{-- <select id="old_verifikator_1" name="old_verifikator_1" class="form-control select-search">
+									<option value="{{$verifikator1->id}}" data-old_id1="">{{$verifikator1->nama}}</option> --}}
+									{{-- @foreach($users as $user)
+										<option data-pnama="{{$user->nama}}" value="{{$user->id}}">{{$user->nama}} </option>
+				    				@endforeach --}}
+								{{-- </select> --}}
+							</div>
+						</div>
+                        <div class="form-group row">
+							<label class="col-form-label col-lg-2">Ganti Verifikator 1</label>
+							<div class="col-lg-10">
+								<select id="verifikator_1" name="verifikator_1" class="form-control select-search">
+									<option value="" data-id1="">-- Pilih Verifikator --</option>
+									{{-- @foreach($users as $user)
+										<option data-pnama="{{$user->nama}}" value="{{$user->id}}">{{$user->nama}} </option>
+				    				@endforeach --}}
+								</select>
+							</div>
+						</div>
+						@endif
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Alasan</label>
 							<div class="col-lg-10">
-								<textarea name="alasan" rows="4" cols="3" class="form-control" placeholder="Alasan Cuti" required>{{ $cuti->alasan }}</textarea>
+								<textarea id="alasan" name="alasan" rows="4" cols="3" class="form-control" placeholder="Alasan Cuti" required>{{ $cuti->alasan }}</textarea>
 							</div>
 						</div>
 					</fieldset>
@@ -232,6 +258,55 @@
 		}
 	});
 });
+</script>
+<script>
+	$('#tanggal_akhir').on('change', function(){
+	var tgl_mulai = $('#tanggal_mulai').val();
+	var tgl_akhir = $('#tanggal_akhir').val();
+	new_tgl_mulai = new Date(tgl_mulai).toLocaleDateString('id')
+	new_tgl_akhir = new Date(tgl_akhir).toLocaleDateString('id')
+	
+	var start = new Date(tgl_mulai);
+	var end = new Date(tgl_akhir);
+	
+	var totalBusinessDays = 1;
+	var current = new Date(start);
+	current.setDate(current.getDate()+1);
+	var day;
+	while (current <= end) {
+	day = current.getDay();
+	if (day >= 1 && day <= 5) {
+		++totalBusinessDays;
+	}
+	current.setDate(current.getDate() + 1);
+	}
+	$('#alasan').empty();
+	$('#alasan').append('Dengan ini saya mengajukan permohonan izin cuti selama '+totalBusinessDays+' hari kerja pada tanggal '+new_tgl_mulai+' - '+new_tgl_akhir+' dikarenakan (tulis alasan cuti)');
+	})
+	
+	$('#tanggal_mulai').on('change', function(){
+	var tgl_mulai = $('#tanggal_mulai').val();
+	var tgl_akhir = $('#tanggal_akhir').val();
+	new_tgl_mulai = new Date(tgl_mulai).toLocaleDateString('id')
+	new_tgl_akhir = new Date(tgl_akhir).toLocaleDateString('id')
+	
+	var start = new Date(tgl_mulai);
+	var end = new Date(tgl_akhir);
+	
+	var totalBusinessDays = 1;
+	var current = new Date(start);
+	current.setDate(current.getDate()+1);
+	var day;
+	while (current <= end) {
+	day = current.getDay();
+	if (day >= 1 && day <= 5) {
+		++totalBusinessDays;
+	}
+	current.setDate(current.getDate() + 1);
+	}
+	$('#alasan').empty();
+	$('#alasan').append('Dengan ini saya mengajukan permohonan izin cuti selama '+totalBusinessDays+' hari kerja pada tanggal '+new_tgl_mulai+' - '+new_tgl_akhir+' dikarenakan (tulis alasan cuti)');
+	})
 </script>
 	<script type="text/javascript">
 		$( document ).ready(function() {
