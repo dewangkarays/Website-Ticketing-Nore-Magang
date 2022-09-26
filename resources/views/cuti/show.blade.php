@@ -87,13 +87,14 @@
 							</div>
 						</div>
 						@endif
+						@if ($cuti->verifikator1 != null)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Verifikator 1</label>
 							<div class="col-lg-10">
                                 <label class="col-form-label col-lg-10">{{$cuti->verifikator_1}}</label>
 							</div>
 						</div>
-						@if (Auth::user()->role == 1 || Auth::id() == $cuti->verifikator1->id)
+						@if (Auth::user()->role == 1 || Auth::id() == $cuti->verifikator1->id  && $cuti->verifikasi_2 == 2)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Status</label>
 							<div class="col-lg-10">
@@ -123,6 +124,7 @@
 								<textarea name="catatan1" id="catatan1" rows="4" cols="3" class="form-control" placeholder="Catatan" disabled>{!! $cuti->catatan_ver_1 !!}</textarea>
 							</div>
 						</div>
+						@endif
 						@endif
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Alasan</label>
