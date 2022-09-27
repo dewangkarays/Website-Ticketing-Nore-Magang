@@ -1,4 +1,14 @@
 @extends('layout')
+@section('css')
+    <style>
+        table tbody {
+            width: 100%;
+        }
+        .tanggal {
+            width: 100px;
+        }
+    </style>
+@endsection
 @section('content')
      <!-- Page header -->
 	<div class="page-header page-header-light">
@@ -16,17 +26,19 @@
         <!-- Hover rows -->
 		<div id="card-rekap" class="card">
             <div class="card-header header-elements-inline">
-				<a href="{{ route('presensi.create') }}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Ajukan</button></a>
+				<a href="{{ route('presensi.create') }}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Presensi</button></a>
 			</div>
 
             <div class="card-body">
 
-                    <table class="table datatable-basic table-hover">
+                    <table class="table datatable-basic table-hover" style="display: block;overflow-x: auto">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
-                                <th>Tanggal</th>
+                                @for($i=0;$i<count($dates);$i++)
+                                <th class="tanggal">{{ $dates[$i] }}</th>
+                                @endfor
                                 
                                 {{-- <th class="text-center">Actions</th> --}}
                             </tr>
@@ -35,7 +47,9 @@
                             <tr>
                                 <td>1</td>
                                 <td>Nore</td>
-                                <td>20-12-2022</td>
+                                @for($i=1;$i<=count($dates);$i++)
+                                <th class="tanggal">{{ $i }}</th>
+                                @endfor
                             </tr>
                         </tbody>
                     </table>
@@ -46,7 +60,7 @@
     <!-- /content area -->
 
     <!-- Danger Modal -->
-	{{-- <div id="modal_theme_danger" class="modal fade" tabindex="-1">
+	<div id="modal_theme_danger" class="modal fade" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header bg-danger" align="center">
@@ -54,9 +68,9 @@
 				</div>
 
 				<form action="" method="post" id="delform">
-				    @csrf --}}
+				    @csrf
 				    {{-- @method('DELETE') --}}
-					{{-- <div class="modal-body" align="center">
+					<div class="modal-body" align="center">
 						<h2> Hapus Data? </h2>
 					</div>
 
@@ -67,6 +81,17 @@
 				</form>
 			</div>
 		</div>
-	</div> --}}
+	</div>
 	<!-- /danger modal -->
+@endsection
+
+@section('js')
+    <script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
+    <script src="{{asset('global_assets/js/plugins/notifications/bootbox.min.js')}}"></script>
+    <script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
+    <script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
+    <script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+    <script src="{{asset('assets/js/app.js')}}"></script>
+    <script src="{{asset('assets/js/custom.js')}}"></script>
+    <script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
 @endsection

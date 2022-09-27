@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\User;
 use Auth;
+use Carbon\Carbon;
 
 class PresensiController extends Controller
 {
@@ -15,7 +16,17 @@ class PresensiController extends Controller
      */
     public function index()
     {
-        return view("presensi.index");
+        $month = Carbon::now();
+        $start = Carbon::parse($month)->startOfMonth();
+        $end = Carbon::parse($month)->endOfMonth();
+
+        $dates = [];
+        while ($start->lte($end)) {
+            $dates[] = $start->copy()->format('d M Y');
+            $start->addDay();
+        }
+        // dd($dates);
+        return view("presensi.index",compact('dates'));
     }
 
     /**
