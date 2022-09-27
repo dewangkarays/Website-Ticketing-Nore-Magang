@@ -54,7 +54,13 @@ class RekapTagihanController extends Controller
         if($request->get('c'))
         {
             $requestUser = $request->get('c');
-            $tagihans = Tagihan::where('user_id',$requestUser)->whereNull('rekap_tagihan_id')->orderBy('id')->get();
+            $tagihans = Tagihan::where('user_id',$requestUser)
+            ->where(function ($q) {
+                $q->whereNull('rekap_tagihan_id')
+                    ->orWhere('status_rekap', '5');
+            })
+            ->orderBy('id')
+            ->get();
         }
         else
         {
