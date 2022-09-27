@@ -26,7 +26,7 @@
                     {{-- @foreach ($cutis as $cuti) --}}
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Form Pengajuan</legend>
-						@if(\Auth::user()->role==10 || \Auth::user()->role==20)
+						@if(\Auth::user()->role==10 || \Auth::user()->role==20 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
@@ -37,7 +37,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
-								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" value="{{ $cuti->karyawan->nama }}" data-user_id="0" required readonly>
+								<input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" value="{{ $cuti->karyawan->nama }}" data-user_id="{{ $cuti->karyawan->id }}" required readonly>
 							</div>
 						</div>
 						@endif

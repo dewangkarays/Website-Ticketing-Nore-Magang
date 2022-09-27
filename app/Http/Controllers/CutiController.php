@@ -191,7 +191,7 @@ class CutiController extends Controller
         if ($verifikator2 == $cuti->verifikator_1_id || $verifikator1 == $cuti->verifikator_2_id) {
         return redirect()->back()->with('error', 'Verifikator Tidak Boleh Sama!');
         }
-        $verifs = User::where('role','<=','20')->get();
+        $verifs = User::where('role','<=','50')->where('role','>=','10')->get();
 
         if ($cuti->verifikator_1_id != null){
         $id_verif1 = $cuti->verifikator_1_id;
@@ -211,7 +211,7 @@ class CutiController extends Controller
             }    
         };      
         $collection = collect($data);
-        // dd($verifikator2);
+        // dd($collection);
         if ($collection->contains('id',$verifikator2)){
             return redirect()->back()->with('error', 'Jabatan Verifikator 2 Lebih Tinggi');
         } else {
