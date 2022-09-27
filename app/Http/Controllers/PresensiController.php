@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\User;
+use Auth;
 
 class PresensiController extends Controller
 {
@@ -23,7 +25,13 @@ class PresensiController extends Controller
      */
     public function create()
     {
-        return view("presensi.create");
+        if (Auth::user()->role == 1) {
+            $users = User::all();
+        } else {
+            $users = User::find(Auth::id());
+        }
+        
+        return view("presensi.create", compact('users'));
     }
 
     /**
