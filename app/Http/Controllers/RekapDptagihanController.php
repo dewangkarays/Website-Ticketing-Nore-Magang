@@ -299,17 +299,21 @@ class RekapDptagihanController extends Controller
     }
 
     public function invalid($id) {
+        $historyProyek = '';
         $rekapdp = RekapDptagihan::find($id);
-        $rekapdp->status = 5;
-        $rekapdp->update();
+        $tagihans = Tagihan::where('rekap_dptagihan_id', $id)->get();
 
-        $tagihans = Tagihan::whereIn('rekap_dptagihan_id', $rekapdp)->get();
-        // dd($tagihans);
         foreach($tagihans as $tagihan){
+            $historyProyek = $historyProyek.$tagihan->proyek->nama_proyek.'<br>';
+
             $tagihan->update([
                 'status_rekapdp' => 5,
             ]);
         }
+
+        $rekapdp->status = 5;
+        $rekapdp->history_proyek = $historyProyek;
+        $rekapdp->update();
 
         return redirect()->route('rekapdptagihans.index')->with('error', 'Data dijadikan invalid!');
     }

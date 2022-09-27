@@ -378,17 +378,21 @@ class RekapTagihanController extends Controller
     }
 
     public function invalid($id) {
+        $historyProyek = '';
         $rekap = RekapTagihan::find($id);
-        $rekap->status = 5;
-        $rekap->update();
+        $tagihans = Tagihan::where('rekap_tagihan_id', $id)->get();
 
-        $tagihans = Tagihan::whereIn('rekap_tagihan_id', $rekap)->get();
-        // dd($tagihans);
         foreach($tagihans as $tagihan){
+            $historyProyek = $historyProyek.$tagihan->proyek->nama_proyek.'<br>';
+
             $tagihan->update([
                 'status_rekap' => 5,
             ]);
         }
+
+        $rekap->status = 5;
+        $rekap->history_proyek = $historyProyek;
+        $rekap->update();
 
         return redirect()->route('rekaptagihans.index')->with('error', 'Data dijadikan invalid!');
     }
