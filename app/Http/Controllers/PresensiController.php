@@ -25,13 +25,16 @@ class PresensiController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->role == 1) {
-            $users = User::all();
+        $role = Auth::user()->role;
+        if ($role == 1) {
+            $users = User::where('role', '<', '80')
+                ->orderBy('role')
+                ->get();
         } else {
             $users = User::find(Auth::id());
         }
-        
-        return view("presensi.create", compact('users'));
+
+        return view("presensi.create", compact('users', 'role'));
     }
 
     /**
