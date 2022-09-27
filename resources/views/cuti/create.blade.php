@@ -252,8 +252,22 @@ document.addEventListener('DOMContentLoaded', function() {
 		})
 	</script>
     <script>
+		var atasan1 = $('#name').data('atasan_id');
+		if(atasan1 == ""){
+			$("#div-verif1").hide();
+		}
+
+		//in admin
+		$('#name').on('change',function() {
+		var atasan = $(this). children("option:selected").data('atasan_id');
+		if(atasan == ""){
+			$("#div-verif1").hide();
+		} else {
+			$("#div-verif1").show();
+		}
+		})
 		var user_id = $('#name').data('user_id');
-		var atasan_user = $('#name').data('atasan_id');
+		// var atasan_user = $('#name').data('atasan_id');
 		// console.log(atasan_user);
 		// console.log(user_id);
 		
@@ -266,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			var defval = "<option value=''>"+dval+"</option>";
 
 			$("#verifikator_2").append(defval);
-			console.log(user_id);
+			// console.log(user_id);
 
         $.ajax({
             url : '{{ url("getverifikator") }}/'+user_id,
@@ -302,10 +316,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		//karyawan
 	} else {
-		if (atasan_user == null && user_id != 0){
-			user_id = 0;
-		}
-		// console.log(user_id);
 		$.ajax({
             url : '{{ url("getverifikator") }}/'+user_id,
             type: 'get',
@@ -339,6 +349,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
     </script>
     <script>
+		var atasan = $('#name').data('atasan_id');
+		
+		$('#name').on('change',function() {
+		atasan = $(this). children("option:selected").data('atasan_id');
+	})
+	console.log(atasan);
 		$('#verifikator_2').on('change', function(){
 		var id_verif2 = $(this). children("option:selected").val();
 		var atasan_verif2 = $(this). children("option:selected").data('id2');
@@ -348,7 +364,11 @@ document.addEventListener('DOMContentLoaded', function() {
 		} else {
 			$("#div-verif1").show();
 		}
-
+		var atasan1 = $('#name').data('atasan_id');
+		if(atasan == ""){
+		$("#div-verif1").hide();
+		} else {
+		console.log(atasan);
         $.ajax({
             url : '{{ url("getverifikator") }}/'+id_verif2,
             type: 'get',
@@ -371,13 +391,17 @@ document.addEventListener('DOMContentLoaded', function() {
 					var option = "<option value='"+id+"' data-id1='"+atasan_id+"'>"+nama+"</option>";
 					
 					$("#verifikator_1").append(option);
+					
                 }
+				
             },
 			error : function(){
 				$("#div-verif1").show();
 			}
         });
+	}
 	});
+
     </script>
 	<script>
 		$('#tanggal_akhir').on('change', function(){

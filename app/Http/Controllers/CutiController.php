@@ -262,11 +262,13 @@ class CutiController extends Controller
             };      
             // dd($len);
             return response()->json($data);
-        } else {
+        } elseif ($user->atasan_id == null && $user->id != 1) {
             $verifs = User::where('role','<=','50')->where('role','>=','10')->whereNotNull('atasan_id')->get();
             return response()->json($verifs);
+        } else {
+            $verifs = User::where('role','<=','50')->where('role','>=','10')->get();
+            return response()->json($verifs);
         }
-        
     }
 
     public function invalid($id) {
