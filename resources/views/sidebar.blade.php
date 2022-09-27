@@ -222,7 +222,7 @@ ul{
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#" class="nav-link {{ (request()->is('presensi*')) ? 'active' : '' }}">
+							<a href="/presensi" class="nav-link {{ (request()->is('presensi*')) ? 'active' : '' }}">
 								<i class="icon-magazine"></i>
 								<span>
 									Presensi Harian
