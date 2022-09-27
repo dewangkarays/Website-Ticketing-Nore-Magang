@@ -140,4 +140,10 @@ return [
         '2' => 'Terima',
         '3' => 'Tolak',
     ],
+
+    'status_presensi' => [
+        '1' => 'Hadir',
+        '2' => 'Izin',
+        '3' => 'Sakit',
+    ],
 ];
