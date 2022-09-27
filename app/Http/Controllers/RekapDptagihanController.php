@@ -155,9 +155,9 @@ class RekapDptagihanController extends Controller
         $rekapdptagihan = RekapDptagihan::create($data);
         $rekapdptagihan->save();
         foreach($tagihans as $tagihan){
-            $tagihan->update([
-                'rekap_dptagihan_id'=> $rekapdptagihan->id,
-            ]);
+            $tagihan->status_rekapdp = 1;
+            $tagihan->rekap_dptagihan_id = $rekapdptagihan->id;
+            $tagihan->update();
 
             // $proyek_id = $tagihan->id_proyek;
             // $proyeks = Proyek::where('id', $proyek_id)->get();

@@ -159,17 +159,17 @@ class RekapTagihanController extends Controller
         $rekaptagihan = RekapTagihan::create($data);
         $rekaptagihan->save();
         foreach($tagihans as $tagihan){
-            $tagihan->update([
-                'rekap_tagihan_id'=> $rekaptagihan->id,
-            ]);
+            $tagihan->status_rekap = 1;
+            $tagihan->rekap_tagihan_id = $rekaptagihan->id;
+            $tagihan->update();
 
-            $proyek_id = $tagihan->id_proyek;
-            $proyeks = Proyek::where('id', $proyek_id)->get();
-            foreach ($proyeks as $proyek) {
-                $proyek->update([
-                    'rekap_tagihan_id' => $rekaptagihan->id,
-                ]);
-            }
+            // $proyek_id = $tagihan->id_proyek;
+            // $proyeks = Proyek::where('id', $proyek_id)->get();
+            // foreach ($proyeks as $proyek) {
+            //     $proyek->update([
+            //         'rekap_tagihan_id' => $rekaptagihan->id,
+            //     ]);
+            // }
         }
 
         return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan saved!');
