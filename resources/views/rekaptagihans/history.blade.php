@@ -182,15 +182,7 @@
                             data: null,
                             name: null,
                             render: (data, type, name) => {
-                                let namaProyeks = ''
-                                const addNamaProyeks = (tagihan) => {
-                                    namaProyeks += tagihan.proyek.nama_proyek + '<br>'
-                                    // console.log(tagihan.proyek.nama_proyek)
-                                }
-
-                                data?.tagihan?.map(addNamaProyeks)
-
-                                return namaProyeks
+                                return stripHtml(data?.history_proyek)
                             }
                         },
                         {
