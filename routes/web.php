@@ -125,6 +125,11 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/getcuti/{status}', 'CutiController@getcuti')->name('getcuti');
 		Route::get('/getverifikator/{id}', 'CutiController@getverifikator');
 		Route::post('/cuti/{id}/upload', 'CutiController@upload')->name('cuti.upload');
+
+		//Routing Presensi
+		Route::get('/presensi', 'PresensiController@index')->name('presensi');
+		Route::get('/presensi/create', 'PresensiController@create')->name('presensi.create');
+		Route::post('/presensi/store', 'PresensiController@store')->name('presensi.store');
 		
 	});
 
