@@ -133,7 +133,7 @@
 							<div class="col-lg-10">
 								{{-- <input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" data-user_id="0" required > --}}
 								<select id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
-									<option value="">-- Pilih Karyawan --</option>
+									<option value="">-- Pilih Marketing --</option>
 									@foreach($marketings as $marketing)
 										<option value="{{$marketing->id}}">{{$marketing->nama}} </option>
 				    				@endforeach
