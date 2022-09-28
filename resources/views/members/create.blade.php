@@ -234,9 +234,7 @@ var FormValidation = function() {
 			}
 
 			// Initialize
-			var $select = $('.form-control-select2').select2({
-				minimumResultsForSearch: Infinity
-			});
+			var $select = $('.select-search').select2();
 
 			// Trigger value change when selection is made
 			$select.on('change', function() {

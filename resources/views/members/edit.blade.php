@@ -123,6 +123,21 @@
 
 		var FormValidation = function() {
 
+			var _componentSelect2 = function() {
+				if (!$().select2) {
+					console.warn('Warning - select2.min.js is not loaded.');
+					return;
+				}
+
+				// Initialize
+				var $select = $('.select-search').select2();
+
+				// Trigger value change when selection is made
+				$select.on('change', function() {
+					$(this).trigger('blur');
+				});
+			};
+
 		    // Validation config
 		    var _componentValidation = function() {
 		        if (!$().validate) {
@@ -194,6 +209,7 @@
 		    // Return objects assigned to module
 		    return {
 		        init: function() {
+					_componentSelect2();
 		            _componentValidation();
 		        }
 		    }
