@@ -73,10 +73,10 @@
 							<label class="col-form-label col-lg-2">Marketing</label>
 							<div class="col-lg-10">
 								{{-- <input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" data-user_id="0" required > --}}
-								<select id="name" name="name" class="form-control select-search" data-user_id="0" required>
-									<option value="">-- Pilih Karyawan --</option>
-									@foreach($karyawans as $karyawan)
-										<option marketing_id="{{ $karyawan->marketing_id }}" data-nip="{{ $karyawan->nip }}" value="{{$karyawan->id}}">{{$karyawan->nama}} </option>
+								<select id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
+									<option value="">-- Pilih Marketing --</option>
+									@foreach($marketings as $marketing)
+										<option value="{{$marketing->id}}">{{$marketing->nama}} </option>
 				    				@endforeach
 								</select>
 							</div>
@@ -307,6 +307,9 @@ var FormValidation = function() {
 					password:{
 						required : true,
 						minlength: 5
+					},
+					marketing_id: {
+						required: true
 					}
 				},
 				messages: {
@@ -328,6 +331,9 @@ var FormValidation = function() {
 					password:{
 						required : 'Mohon diisi.',
 						minlength : 'Minimal 5 karakter'
+					},
+					marketing_id: {
+						required: 'Mohon pilih salah satu.'
 					}
 				}
 			});
