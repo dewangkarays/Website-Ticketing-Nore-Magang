@@ -138,7 +138,7 @@
 						<label class="col-form-label col-lg-2">Potongan Harga</label>
 						<div class="col-lg-10">
 							<select name="jenis_diskon" class="form-control select" id="jenis_diskon">
-								<option>-- Berikan Potongan Harga --</option>
+								<option value="">-- Berikan Potongan Harga --</option>
 								<option value="persen_diskon">Persentase</option>
 								<option value="nominal_diskon">Nominal</option>
 							</select>

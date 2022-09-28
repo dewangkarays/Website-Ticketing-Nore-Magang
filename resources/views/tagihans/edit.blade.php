@@ -114,7 +114,11 @@
 						<label class="col-form-label col-lg-2"></label>
 						<div class="col-lg-10">
 							<select name="jenis_diskon" class="form-control select" id="jenis_diskon">
-								<option>-- Berikan Potongan Harga --</option>
+								@if ($tagihan->diskon)
+								<option value="">-- Ubah Potongan Harga --</option>
+								@else
+								<option value="">-- Berikan Potongan Harga --</option>
+								@endif
 								<option value="persen_diskon">Persentase</option>
 								<option value="nominal_diskon">Nominal</option>
 							</select>
