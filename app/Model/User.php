@@ -90,4 +90,8 @@ class User extends Authenticatable
     public function presensi() {
         return $this->hasMany('App\Model\Presensi', 'user_id', 'id');
     }
+
+    public function proyekMarketing() {
+        return $this->hasMany('App\Model\Proyek', 'marketing_id');
+    }
 }

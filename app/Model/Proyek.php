@@ -36,4 +36,8 @@ class Proyek extends Model
         return $this->belongsTo('App\Model\RekapTagihan', 'rekap_tagihan_id');
     }
 
+    public function marketing(){
+        return $this->belongsTo('App\Model\User', 'marketing_id');
+    }
+
 }
