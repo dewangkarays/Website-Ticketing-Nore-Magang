@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\User;
+use App\Model\Presensi;
 use Auth;
 use Carbon\Carbon;
 
@@ -22,11 +23,23 @@ class PresensiController extends Controller
 
         $dates = [];
         while ($start->lte($end)) {
-            $dates[] = $start->copy()->format('d M Y');
+            $dates[] = $start->copy()->format('d-m-Y');
             $start->addDay();
         }
-        // dd($dates);
-        return view("presensi.index",compact('dates'));
+        // admin
+        $karyawans = Presensi::select('user_id')->distinct()->get();
+        $presensi_all = Presensi::all();
+        $sakit_all = Presensi::where('status','3')->count();
+        $izin_all = Presensi::where('status','2')->count();          
+        // karyawan
+        $presensi = Presensi::where('user_id', \Auth::user()->id)->get();
+        $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status','3')->count();
+        $izin = Presensi::where('user_id', \Auth::user()->id)->where('status','2')->count();     
+
+        $sisa_cuti = 12 - $izin;
+
+        // dd($karyawans);
+        return view("presensi.index",compact('dates','presensi','sakit','izin','sisa_cuti','karyawans','presensi_all','sakit_all','izin_all'));
     }
 
     /**
