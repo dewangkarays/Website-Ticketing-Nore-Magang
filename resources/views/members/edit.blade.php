@@ -64,18 +64,40 @@
 								<input type="password" name="password" class="form-control border-teal border-1" placeholder="Password">
 							</div>
 						</div>
-						<div class="form-group row">
-							<label class="col-form-label col-lg-2">Marketing</label>
-							<div class="col-lg-10">
-								{{-- <input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" data-user_id="0" required > --}}
-								<select id="name" name="name" class="form-control select-search" data-user_id="0" required>
-									<option value="">-- Pilih Karyawan --</option>
-									@foreach($karyawans as $karyawan)
-										<option marketing_id="{{ $karyawan->marketing_id }}" data-nip="{{ $karyawan->nip }}" value="{{$karyawan->id}}">{{$karyawan->nama}} </option>
-				    				@endforeach
-								</select>
-							</div>
+						@if ($current_marketing)
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Marketing</label>
+                        <div class="col-lg-10">
+                            <input id="marketing" name="marketing" type="text" class="form-control" readonly value="{{$current_marketing->nama}}">
+                            <input id="marketing_id" name="marketing_id" type="hidden" class="form-control" value="{{$current_marketing->id}}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+						<label class="col-form-label col-lg-2"></label>
+						<div class="col-lg-10">
+							{{-- <input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" data-user_id="0" required > --}}
+							<select id="marketing_id_baru" name="marketing_id_baru" class="form-control select-search" data-user_id="0">
+								<option value="">-- Ganti Marketing --</option>
+								@foreach($marketings as $marketing)
+									<option value="{{$marketing->id}}">{{$marketing->nama}} </option>
+				    			@endforeach
+							</select>
 						</div>
+					</div>
+                    @else
+                    <div class="form-group row">
+						<label class="col-form-label col-lg-2">Marketing</label>
+						<div class="col-lg-10">
+							{{-- <input type="text" id="name" name="name" class="form-control border border-1" placeholder="Nama" data-user_id="0" required > --}}
+							<select id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
+								<option value="">-- Pilih Marketing --</option>
+								@foreach($marketings as $marketing)
+									<option value="{{$marketing->id}}">{{$marketing->nama}} </option>
+				    			@endforeach
+							</select>
+						</div>
+					</div>
+                    @endif
 					</fieldset>
 					<div class="text-right">
                         <a href="{{ url('/members') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
@@ -122,6 +144,21 @@
         });
 
 		var FormValidation = function() {
+
+			var _componentSelect2 = function() {
+				if (!$().select2) {
+					console.warn('Warning - select2.min.js is not loaded.');
+					return;
+				}
+
+				// Initialize
+				var $select = $('.select-search').select2();
+
+				// Trigger value change when selection is made
+				$select.on('change', function() {
+					$(this).trigger('blur');
+				});
+			};
 
 		    // Validation config
 		    var _componentValidation = function() {
@@ -182,6 +219,9 @@
 		                role: {
 		                    required: 'Mohon diisi.'
 		                },
+						marketing_id: {
+							required: 'Mohon pilih salah satu.'
+						}
 		            },
 		        });
 
@@ -194,6 +234,7 @@
 		    // Return objects assigned to module
 		    return {
 		        init: function() {
+					_componentSelect2();
 		            _componentValidation();
 		        }
 		    }

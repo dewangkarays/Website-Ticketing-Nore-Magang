@@ -210,11 +210,11 @@
             </tr>
         </table>
         
-        <table class="main-table" style="margin-top: 15px;line: height 10px;">
+        <table class="main-table" style="margin-top: 15px;line-height: 1;">
             <tr>
                 <th align="left" style="width: 15%; height: 20px" class="nore-fontcolor">PROYEK</th>
-                <th align="left" style="width: 40%; height: 20px" class="nore-fontcolor">DESKRIPSI</th>
-                <th align="left" style="width: 20%" class="nore-fontcolor"></th>
+                <th align="left" style="width: 30%; height: 20px" class="nore-fontcolor">DESKRIPSI</th>
+                <th align="left" style="width: 30%" class="nore-fontcolor"></th>
                 <th align="right" style="width: auto" class="nore-fontcolor">JUMLAH (Rp)</th>
             </tr>
 
