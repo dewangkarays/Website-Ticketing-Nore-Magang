@@ -456,6 +456,9 @@
                     new_mb: {
                         required: 'Mohon diisi.'
                     },
+                    marketing_id: {
+                        required: 'Mohon pilih salah satu.'
+                    }
                 },
             });
 
