@@ -64,10 +64,11 @@ class ProyekController extends Controller
     {
         // $users = User::where('id', '=', \Auth::user()->id)->get();
         $users = User::where('role','>=','80')->get();
-        $karyawans = User::where('role','=','50')->get();
+        $marketings = User::where('role','=','50')->get();
 
+        // dd($marketings);
        
-        return view('proyeks.create', compact('users','karyawans'));
+        return view('proyeks.create', compact('users','marketings'));
     }
 
     /**
@@ -128,9 +129,9 @@ class ProyekController extends Controller
         // $users = User::where('role','>','20')->get();
         // $users = User::where('id', '=', \Auth::user()->id)->get();
         $users = User::where('role','>=','80')->get();
-        $karyawans = User::where('role','=','50')->get();
+        $marketings = User::where('role','=','50')->get();
 
-        return view('proyeks.edit', compact(['proyek','users','karyawans']));
+        return view('proyeks.edit', compact(['proyek','users','marketings']));
     }
 
     /**
@@ -167,7 +168,9 @@ class ProyekController extends Controller
         if($request->get('jl_app')=='' && $request->get('jl_web')==''){
             $data['jenis_layanan'] = null;
         }
-
+        if ($request->marketing_id_baru != '') {
+            $data['marketing_id'] = $data['marketing_id_baru'];
+        }
 
         $proyek->update($data);
 
