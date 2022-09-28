@@ -69,7 +69,21 @@ class PresensiController extends Controller
      */
     public function store(Request $request)
     {
-        redirect();
+        // dd($request);
+        $request->validate([
+            'tanggal'=>'required',
+            'status'=>'required',
+            'user_id'=>'required',
+           
+        ]);
+        $presensi = new Presensi();
+        $presensi->tanggal = $request->get('tanggal');
+        $presensi->status = $request->get('status');
+        $presensi->user_id = $request->get('user_id');
+        
+        $presensi->save();
+        
+        return redirect('/presensi')->with('success', 'Presensi Saved!');
     }
 
     /**
