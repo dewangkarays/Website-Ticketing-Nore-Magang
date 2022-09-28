@@ -72,8 +72,8 @@
             </td>
             {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
             <td>
-                @if ($invoice->proyek->keterangan != null)
-                {!! $invoice->proyek->keterangan !!}
+                @if ($invoice->keterangan_tambahan != null)
+                {!! $invoice->keterangan_tambahan !!}
                 @else
                 <p></p>
                 @endif
