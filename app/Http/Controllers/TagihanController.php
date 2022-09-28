@@ -373,6 +373,7 @@ class TagihanController extends Controller
 
         $data = $request->except(['_token', '_method','masa_berlaku']);
         $tagihan = Tagihan::find($id);
+
         if($request->get('langganan')==''){
             $data['langganan'] = 0;
         }
@@ -397,13 +398,15 @@ class TagihanController extends Controller
             } else if ($request->get('nominal_diskon')!='') {
                 $data['diskon'] = $data['nominal_diskon'];
             }
+        } else {
+            $data['diskon'] = $tagihan->diskon;
         }
 
         if ($request->tambah_keterangan == '0') {
             $data['keterangan_tambahan'] = null;
         }
 
-        $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
+        $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'] - $data['diskon'];
 
         if ($data['jml_tagih'] < 0) {
             return redirect()->back()->with('error', 'Uang muka melebihi nominal!');
