@@ -399,6 +399,10 @@ class TagihanController extends Controller
             }
         }
 
+        if ($request->tambah_keterangan == '0') {
+            $data['keterangan_tambahan'] = null;
+        }
+
         $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
 
         if ($data['jml_tagih'] < 0) {
