@@ -25,7 +25,15 @@
 					@csrf
                     <fieldset class="mb-3">
                         <legend class="text-uppercase font-size-sm font-weight-bold">Form Presensi Harian</legend>
-                        <div class="form-group row">
+                        @if(\Auth::user()->role==10 || \Auth::user()->role==20 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
+						<div class="form-group row">
+						<label class="col-form-label col-lg-2">Nama</label>
+							<div class="col-lg-10">
+                                <input type="text" name="nama" id="nama" class="form-control border border-1" value="{{\Auth::user()->nama}}" readonly>
+                        	</div>
+						</div>
+						@else
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
 								@if ($role != 1)
@@ -45,7 +53,8 @@
                                 @endif
 							</div>
 						</div>
-                        <div class="form-group row">
+						@endif
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">NIP</label>
 							<div class="col-lg-10">
 								@if ($role != 1)
