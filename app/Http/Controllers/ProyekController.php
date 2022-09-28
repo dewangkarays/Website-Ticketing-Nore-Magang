@@ -62,9 +62,9 @@ class ProyekController extends Controller
      */
     public function create()
     {
-        $users = User::where('id', '=', \Auth::user()->id)->get();
-        $users = User::where('role','>','20')->get();
-        $karyawans = User::where('role','==','50')->get();
+        // $users = User::where('id', '=', \Auth::user()->id)->get();
+        $users = User::where('role','>=','80')->get();
+        $karyawans = User::where('role','=','50')->get();
 
        
         return view('proyeks.create', compact('users','karyawans'));

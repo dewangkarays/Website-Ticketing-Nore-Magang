@@ -59,18 +59,25 @@
                 @endif
             </td>
             <td>
-                Layanan {{ config('custom.jenis_proyek.' .@$invoice->proyek->jenis_proyek) }}
+                {{-- Layanan {{ config('custom.jenis_proyek.' .@$invoice->proyek->jenis_proyek) }}
                 {{ config('custom.kelas_layanan.' .@$invoice->proyek->kelas_layanan) }}
-                {{ config('custom.jenis_layanan.' .@$invoice->proyek->jenis_layanan) }}
+                {{ config('custom.jenis_layanan.' .@$invoice->proyek->jenis_layanan) }} --}}
                 {{-- <br/> --}}
-                {{ $invoice->proyek->website ? '('.$invoice->proyek->website.')': ''}}
+                {{-- {{ $invoice->proyek->website ? '('.$invoice->proyek->website.')': ''}} --}}
+                @if ($invoice->keterangan != null)
+                {!! $invoice->keterangan !!}
+                @else
+                <p></p>
+                @endif
             </td>
             {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
-            @if ($invoice->keterangan != null)
-            <td>{!! $invoice->keterangan !!}</td>
-            @else
-            <td><p></p></td>
-            @endif
+            <td>
+                @if ($invoice->proyek->keterangan != null)
+                {!! $invoice->proyek->keterangan !!}
+                @else
+                <p></p>
+                @endif
+            </td>
             <td align="right">@angka($invoice->nominal)</td>
         </tr>
         {{-- <tr>
