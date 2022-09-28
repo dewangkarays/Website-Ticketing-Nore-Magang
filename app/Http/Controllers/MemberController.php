@@ -142,10 +142,10 @@ class MemberController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        // $users = User::where('id', '=', \Auth::user()->id)->get();
+        $current_marketing = User::find($user->marketing_id);
         $marketings = User::where('role','=','50')->get();
 
-        return view('members.edit', compact('user','marketings'));
+        return view('members.edit', compact('user','current_marketing','marketings'));
     }
 
     /**
