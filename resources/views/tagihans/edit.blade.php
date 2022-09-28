@@ -142,6 +142,29 @@
 							<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{ $tagihan->keterangan }}</textarea>
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Keterangan Tambahan</label>
+						<div class="col-lg-10">
+							<select name="tambah_keterangan" class="form-control select" id="keterangan_tambahan">
+								<option value="0">Tidak Ada</option>
+								<option value="1" {{$tagihan->keterangan_tambahan ? 'selected' : ''}}>Ada</option>
+							</select>
+						</div>
+					</div>
+					@if ($tagihan->keterangan_tambahan)
+					<div class="form-group row" id="div-keterangan-tambahan">
+						<label class="col-form-label col-lg-2"></label>
+						<div class="col-lg-10">
+							<textarea name="keterangan_tambahan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{$tagihan->keterangan_tambahan}}</textarea>
+						</div>
+					</div>
+					@endif
+					<div class="form-group row" id="div-keterangan-tambahan" style="display: none">
+						<label class="col-form-label col-lg-2"></label>
+						<div class="col-lg-10">
+							<textarea name="keterangan_tambahan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1"></textarea>
+						</div>
+					</div>
 				</fieldset>
 				<div class="text-right">
                     <a href="{{ url('/tagihans') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
@@ -275,6 +298,14 @@
 				$('#div-nominal-diskon').show()
 			}
         });
+
+		$('#keterangan_tambahan').on('change', function() {
+			if ($('#keterangan_tambahan option:selected').val() == "1") {
+				$('#div-keterangan-tambahan').show()
+			} else {
+				$('#div-keterangan-tambahan').hide()
+			}
+		})
 
 	var FormValidation = function() {
 
