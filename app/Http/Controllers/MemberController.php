@@ -31,9 +31,9 @@ class MemberController extends Controller
     {
         // $users = User::where('id', '=', \Auth::user()->id)->get();
         $users = User::where('role','<=','50')->get();
-        $karyawans = User::where('role','=','50')->get();
+        $marketings = User::where('role','=','50')->get();
 
-        return view('members.create', compact('users','karyawans'));
+        return view('members.create', compact('users','marketings'));
     }
 
     /**
@@ -96,7 +96,8 @@ class MemberController extends Controller
             'alamat' => $request->get('address'),
             'username' => $request->get('username'),
             'password' => bcrypt($request->get('password')),
-            'role' => 95
+            'role' => 95,
+            'marketing_id' => $request->marketing_id,
         ]);
 
         $user->save();
@@ -142,9 +143,9 @@ class MemberController extends Controller
     {
         $user = User::find($id);
         // $users = User::where('id', '=', \Auth::user()->id)->get();
-        $karyawans = User::where('role','=','50')->get();
+        $marketings = User::where('role','=','50')->get();
 
-        return view('members.edit', compact('user','karyawans'));
+        return view('members.edit', compact('user','marketings'));
     }
 
     /**
