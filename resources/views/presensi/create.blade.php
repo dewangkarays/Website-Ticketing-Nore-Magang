@@ -21,7 +21,7 @@
 			<div class="card-header header-elements-inline">
 			</div>
 			<div class="card-body">
-				<form class="form-validate-jquery" action="{{ route('cuti.store')}}" method="post" enctype="multipart/form-data">
+				<form class="form-validate-jquery" action="{{ route('presensi.store')}}" method="post" enctype="multipart/form-data">
 					@csrf
                     <fieldset class="mb-3">
                         <legend class="text-uppercase font-size-sm font-weight-bold">Form Presensi Harian</legend>
