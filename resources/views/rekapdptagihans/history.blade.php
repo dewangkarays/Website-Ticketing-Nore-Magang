@@ -158,7 +158,7 @@
                             data: null,
                             name: null,
                             render: (data, type, name) => {
-                                return stripHtml(data?.history_proyek)
+                                return stripHtml(data?.nama_proyek)
                             }
                         },
                         {

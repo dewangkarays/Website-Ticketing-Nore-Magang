@@ -41,6 +41,7 @@
 			<thead>
 				<tr>
 					<th>No</th>
+					<th>Nama</th>
 					<th>Nama Proyek</th>
 					<th>No. Receipt</th>
 					<th>Nominal (Rp)</th>
@@ -257,6 +258,7 @@
 
 			// Basic datatable
 			$('.datatable-basic').DataTable({
+				scrollX: true,
 				processing: true,
 				serverSide: true,
 				ajax: {
@@ -272,16 +274,14 @@
 						}
 					},
 					{
+						data: 'nama',
+						name: 'nama',
+					},
+					{
 						data: null,
 						name: null,
 						render: (data, type, row) => {
-							let namaProyeks = ''
-							data?.user?.proyek.map(proyek => {
-								namaProyeks += proyek.nama_proyek + '<br>'
-							})
-							console.log(namaProyeks)
-							// console.log(proyek)
-							return namaProyeks;
+							return stripHtml(data?.nama_proyek);
 						}
 					},
 					{
