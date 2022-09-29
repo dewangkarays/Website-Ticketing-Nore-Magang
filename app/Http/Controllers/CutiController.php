@@ -103,6 +103,9 @@ class CutiController extends Controller
 
         if ($request->status2) {
             $cuti->verifikasi_2 = $request->status2;
+            if ($cuti->verifikasi_2 == 1 || $cuti->verifikasi_2 == 3) {
+                $cuti->verifikasi_1 = 1;
+            }
         }
 
         if ($request->status1) {
