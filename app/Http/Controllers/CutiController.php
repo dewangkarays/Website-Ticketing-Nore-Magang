@@ -348,18 +348,19 @@ class CutiController extends Controller
                 ->get();
             } else {
                 $cuti = Cuti::where(
-                    function($q) use ($currentUserId) {
+                    function($q) use ($currentUserId, $today) {
                         $q->where(
-                            function($q1) use ($currentUserId) {
+                            function($q1) use ($currentUserId, $today) {
                                 $q1->where('verifikator_2_id', $currentUserId)
-                                    ->where('verifikasi_2', '1');
+                                    ->where('verifikasi_2', '<', '3')
+                                    ->where('tanggal_akhir', '>=', $today);
                             }
                         )
                         ->orWhere(
-                            function($q2) use ($currentUserId) {
+                            function($q2) use ($currentUserId, $today) {
                                 $q2->where('verifikator_1_id', $currentUserId)
                                     ->where('verifikasi_2', '2')
-                                    ->where('verifikasi_1', '1');
+                                    ->where('tanggal_akhir', '>=', $today);
                             }
                         );
                     }
