@@ -170,7 +170,10 @@ class RekapTagihanController extends Controller
             //         'rekap_tagihan_id' => $rekaptagihan->id,
             //     ]);
             // }
+            $rekaptagihan->nama_proyek = $rekaptagihan->nama_proyek.$tagihan->proyek->nama_proyek.'<br>';
         }
+
+        $rekaptagihan->update();
 
         return redirect('/rekaptagihans')->with('success', 'Rekap Tagihan saved!');
     }
@@ -384,12 +387,12 @@ class RekapTagihanController extends Controller
     }
 
     public function invalid($id) {
-        $historyProyek = '';
+        // $historyProyek = '';
         $rekap = RekapTagihan::find($id);
         $tagihans = Tagihan::where('rekap_tagihan_id', $id)->get();
 
         foreach($tagihans as $tagihan){
-            $historyProyek = $historyProyek.$tagihan->proyek->nama_proyek.'<br>';
+            // $historyProyek = $historyProyek.$tagihan->proyek->nama_proyek.'<br>';
 
             $tagihan->update([
                 'status_rekap' => 5,
@@ -397,7 +400,7 @@ class RekapTagihanController extends Controller
         }
 
         $rekap->status = 5;
-        $rekap->history_proyek = $historyProyek;
+        // $rekap->history_proyek = $historyProyek;
         $rekap->update();
 
         return redirect()->route('rekaptagihans.index')->with('error', 'Data dijadikan invalid!');
