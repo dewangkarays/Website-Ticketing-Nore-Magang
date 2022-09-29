@@ -23,23 +23,40 @@ class PresensiController extends Controller
 
         $dates = [];
         while ($start->lte($end)) {
-            $dates[] = $start->copy()->format('d-m-Y');
+            $dates[] = $start->copy()->format('Y-m-d');
             $start->addDay();
         }
         // admin
-        $karyawans = Presensi::select('user_id')->distinct()->get();
-        $presensi_all = Presensi::all();
+        // $karyawans_all = Presensi::select('user_id')->distinct()->get();
+        $karyawans_all = User::where('role', '<=' ,'50')->where('role', '!=', 1)->with(['presensi' => function ($q) {
+            $q->orderBy('tanggal'); 
+        }])
+        ->get()->toArray();
+        $presensi_all = Presensi::orderBy('tanggal')->get();
         $sakit_all = Presensi::where('status','3')->count();
         $izin_all = Presensi::where('status','2')->count();          
         // karyawan
-        $presensi = Presensi::where('user_id', \Auth::user()->id)->get();
+        $presensi = Presensi::where('user_id', '166')->orderBy('tanggal')->get();
+        // $test_all = User::where('role','<=','50')->with('presensi')->orderBy('tanggal')->get();
+        // $test = User::where('id', \Auth::user()->id)->where(function ($q) {
+        //     $q->select('*')
+        //     ->from('presensi')
+        //     ->orderBy('tanggal');
+        // })
+        // ->get();
+        $karyawans = User::where('id', \Auth::user()->id)->with(['presensi' => function ($q) {
+            $q->orderBy('tanggal'); 
+        }])
+        ->get()->toArray();
         $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status','3')->count();
         $izin = Presensi::where('user_id', \Auth::user()->id)->where('status','2')->count();     
 
         $sisa_cuti = 12 - $izin;
 
-        // dd($karyawans);
-        return view("presensi.index",compact('dates','presensi','sakit','izin','sisa_cuti','karyawans','presensi_all','sakit_all','izin_all'));
+        // foreach($presensi_all as $pres)
+        // dd(count($karyawans_all));
+        // dd(count($karyawans_all[0]['presensi']));
+        return view("presensi.index",compact('dates','presensi','sakit','izin','sisa_cuti','karyawans','presensi_all','sakit_all','izin_all','karyawans_all'));
     }
 
     /**
