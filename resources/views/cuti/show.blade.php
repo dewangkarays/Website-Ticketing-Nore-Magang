@@ -183,7 +183,7 @@
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.date.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
-    <script>
+    {{-- <script>
 		$(() => {
 			var catatan2 = $('#catatan2').val();
 			var catatan2Edit = $('#catatan2-edit').val();
@@ -194,6 +194,16 @@
 			$('#catatan1').val(stripHtml(catatan1));
 			$('#catatan1-edit').val(stripHtml(catatan1Edit));
 		})
-    </script>
-
+    </script> --}}
+<script>
+	var test = $('[name="status2"]').val();
+	console.log(test);
+		if(test != 2){
+			$('[name="status1"]').attr("disabled",true);
+			$('[name="catatan1"]').attr("disabled",true);
+		} else {
+			$('[name="status1"]').removeAttr("disabled");
+			$('[name="catatan1"]').removeAttr("disabled");
+		}
+</script>
 @endsection
