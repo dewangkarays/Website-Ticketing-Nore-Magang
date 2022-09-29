@@ -60,7 +60,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Status</label>
 							<div class="col-lg-10">
-								<select name="status2" class="form-control select-search" data-fouc>
+								<select name="status2" id="status2" class="form-control select-search" data-fouc>
 									@foreach(config('custom.verifikasi_cuti') as $key => $value)
 										<option value="{{$key}}" {{ $cuti->verifikasi_2 == $key ? 'selected' : '' }}>{{$value}}</option>
 									@endforeach
@@ -98,7 +98,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Status</label>
 							<div class="col-lg-10">
-								<select name="status1" class="form-control select-search" data-fouc>
+								<select name="status1" id="status1" class="form-control select-search" data-fouc>
 									@foreach(config('custom.verifikasi_cuti') as $key => $value)
 										<option value="{{$key}}" {{ $cuti->verifikasi_1 == $key ? 'selected' : '' }}>{{$value}}</option>
 									@endforeach
@@ -196,14 +196,21 @@
 		})
     </script> --}}
 <script>
-	var test = $('[name="status2"]').val();
-	console.log(test);
-		if(test != 2){
-			$('[name="status1"]').attr("disabled",true);
-			$('[name="catatan1"]').attr("disabled",true);
+	@if (Auth::user()->role == 1)
+	if($('#status2').val() != 2) {
+		$('#status1').prop('disabled', true);
+		$('#catatan1-edit').prop('disabled', true);
+	}
+	
+	$('#status2').on('change', function() {
+		if ($('#status2').val() != 2) {
+			$('#status1').prop("disabled",true);
+			$('#catatan1-edit').prop("disabled",true);
 		} else {
-			$('[name="status1"]').removeAttr("disabled");
-			$('[name="catatan1"]').removeAttr("disabled");
+			$('#status1').prop("disabled",false);
+			$('#catatan1-edit').prop("disabled",false);
 		}
+	})
+	@endif
 </script>
 @endsection
