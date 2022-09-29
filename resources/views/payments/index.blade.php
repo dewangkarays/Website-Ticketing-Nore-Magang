@@ -275,13 +275,7 @@
 						data: null,
 						name: null,
 						render: (data, type, row) => {
-							let namaProyeks = ''
-							data?.user?.proyek.map(proyek => {
-								namaProyeks += proyek.nama_proyek + '<br>'
-							})
-							console.log(namaProyeks)
-							// console.log(proyek)
-							return namaProyeks;
+							return stripHtml(data?.nama_proyek);
 						}
 					},
 					{
