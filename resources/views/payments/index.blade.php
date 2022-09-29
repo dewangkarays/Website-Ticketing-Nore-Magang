@@ -41,6 +41,7 @@
 			<thead>
 				<tr>
 					<th>No</th>
+					<th>Nama</th>
 					<th>Nama Proyek</th>
 					<th>No. Receipt</th>
 					<th>Nominal (Rp)</th>
@@ -257,6 +258,7 @@
 
 			// Basic datatable
 			$('.datatable-basic').DataTable({
+				scrollX: true,
 				processing: true,
 				serverSide: true,
 				ajax: {
@@ -270,6 +272,10 @@
 						render: (data, type, row) => {
 							return row.DT_RowIndex;
 						}
+					},
+					{
+						data: 'nama',
+						name: 'nama',
 					},
 					{
 						data: null,
