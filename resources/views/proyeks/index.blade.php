@@ -166,11 +166,8 @@
                         }
                     },
                     {
-                        data: null,
-                        name: null,
-                        render: (data, type, row) => {
-                            return data?.user ? data?.user?.nama : '-'
-                        }
+                        data: "nama_user",
+                        name: "nama_user",
                     },
                     {
                         data: "nama_proyek",
