@@ -140,6 +140,8 @@ Route::group(['middleware' => ['auth']], function() {
 		// Route::get('/getstatistik',  'TaskController@getstatistik')->name('getstat');
 		Route::match(['get', 'post'], '/statistikpayment',  'PaymentController@statistikpayment')->name('stat_payment');
 
+		//Data generator for null columns in old datas
+		Route::get('/generate/nama_proyek/{table}', 'GenerateDataController@nama_proyek')->name('generate.nama_proyek');
 	});
 
 	//karyawan
