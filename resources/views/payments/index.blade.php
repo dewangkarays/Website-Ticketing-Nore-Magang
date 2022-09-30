@@ -279,7 +279,7 @@
 					},
 					{
 						data: null,
-						name: null,
+						name: "nama_proyek",
 						render: (data, type, row) => {
 							return stripHtml(data?.nama_proyek);
 						}
