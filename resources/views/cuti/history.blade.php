@@ -147,18 +147,12 @@
                             }
                         },
                         {
-                            data: null,
-                            name: null,
-                            render: (data, type, row) => {
-                                return data?.karyawan?.nama
-                            }
+                            data: "nama",
+                            name: "nama",
                         },
                         {
-                            data: null,
-                            name: null,
-                            render: (data, type, name) => {
-                                return data?.karaywan?.divisi ? data?.karaywan?.divisi : '-'
-                            }
+                            data: "divisi",
+                            name: "divisi",
                         },
                         {
                             data: 'tanggal_mulai',

@@ -376,6 +376,11 @@ class CutiController extends Controller
             }
         }
 
+        foreach ($cuti as $cutiItem) {
+            $cutiItem['nama'] = $cutiItem->karyawan->nama;
+            $cutiItem['divisi'] = config('custom.role.'.$cutiItem->karyawan->role);
+        }
+
         return Datatables::of($cuti)
             ->addIndexColumn()
             ->addColumn('currentUserId', $currentUserId)
