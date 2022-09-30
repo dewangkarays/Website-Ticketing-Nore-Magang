@@ -35,6 +35,7 @@
                     <table class="table datatable-basic table-hover">
                         <thead>
                             <tr>
+                                <th>Updated At</th>
                                 <th>No</th>
                                 {{-- <th><input type="checkbox" class="checked-all"></th> --}}
                                 <th>Nama</th>
@@ -143,11 +144,18 @@
 		        // Setting datatable defaults
 		        $.extend( $.fn.dataTable.defaults, {
 		            autoWidth: false,
-		            columnDefs: [{
-		                orderable: false,
-		                // width: 100,
-		                targets: [ 2,3,4,5,6 ],
-		            }],
+		            columnDefs: [
+                        {
+                            orderable: false,
+                            // width: 100,
+                            targets: [ 2,3,4,5,6 ],
+                        },
+                        {
+                            visible: false,
+                            searchable: false,
+                            targets: [0],
+                        }
+                    ],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
 		                search: '<span>Filter:</span> _INPUT_',
@@ -159,7 +167,8 @@
 
 		        // Basic datatable
 		        $('.datatable-basic').DataTable({
-                    orderable: true,
+                    // orderable: true,
+                    order: [[0, "desc"]],
                     processing: true,
                     serverSide: true,
                     ajax: {
@@ -167,6 +176,10 @@
                         'url': "/getrekap/history",
                     },
                     columns: [
+                        {
+                            data: "updated_at",
+                            name: "updated_at"
+                        },
                         {
                             data: null,
                             name: null,
