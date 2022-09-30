@@ -103,6 +103,9 @@ class CutiController extends Controller
 
         if ($request->status2) {
             $cuti->verifikasi_2 = $request->status2;
+            if ($cuti->verifikasi_2 == 1 || $cuti->verifikasi_2 == 3) {
+                $cuti->verifikasi_1 = 1;
+            }
         }
 
         if ($request->status1) {
@@ -348,18 +351,19 @@ class CutiController extends Controller
                 ->get();
             } else {
                 $cuti = Cuti::where(
-                    function($q) use ($currentUserId) {
+                    function($q) use ($currentUserId, $today) {
                         $q->where(
-                            function($q1) use ($currentUserId) {
+                            function($q1) use ($currentUserId, $today) {
                                 $q1->where('verifikator_2_id', $currentUserId)
-                                    ->where('verifikasi_2', '1');
+                                    ->where('verifikasi_2', '<', '3')
+                                    ->where('tanggal_akhir', '>=', $today);
                             }
                         )
                         ->orWhere(
-                            function($q2) use ($currentUserId) {
+                            function($q2) use ($currentUserId, $today) {
                                 $q2->where('verifikator_1_id', $currentUserId)
                                     ->where('verifikasi_2', '2')
-                                    ->where('verifikasi_1', '1');
+                                    ->where('tanggal_akhir', '>=', $today);
                             }
                         );
                     }
@@ -370,6 +374,11 @@ class CutiController extends Controller
                 ->with('verifikator1')
                 ->get();
             }
+        }
+
+        foreach ($cuti as $cutiItem) {
+            $cutiItem['nama'] = $cutiItem->karyawan->nama;
+            $cutiItem['divisi'] = config('custom.role.'.$cutiItem->karyawan->role);
         }
 
         return Datatables::of($cuti)

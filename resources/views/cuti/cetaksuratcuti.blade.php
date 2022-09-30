@@ -196,7 +196,7 @@
                                 Divisi
                             </td>
                             <td>
-                                : {{$cuti->karyawan->divisi}}
+                                : {{ config('custom.role.'.$cuti->karyawan->role) }}
                             </td>
                         </tr>
                         <tr>

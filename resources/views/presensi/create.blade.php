@@ -87,12 +87,12 @@
                         <div class="form-group row">
 							<label class="col-form-label col-lg-2">Tanggal</label>
 							<div class="col-lg-10">
-								{{-- @if ($role != 1)
+								@if ($role != 1)
                                 <input type="text" name="tanggal_show" id="tanggal_show" class="form-control border border-1" value="{{date('d F Y')}}" readonly>
                                 <input type="hidden" name="tanggal" id="tanggal" value="{{date('Y-m-d')}}">
-                                @else --}}
+                                @else
                                 <input type="date" name="tanggal" id="tanggal" class="form-control pickadate-accessibility">
-                                {{-- @endif --}}
+                                @endif
 							</div>
 						</div>
                         <div id="div-verif1" class="form-group row">

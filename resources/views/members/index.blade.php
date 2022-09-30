@@ -185,17 +185,8 @@
 							}
 						},
 						{
-							data: null,
-							name: "total_task",
-							render: (data, type, row) => {
-								let totalTask = 0
-								if (data?.proyek != null) {
-									data?.proyek?.map(proyek => {
-										totalTask += proyek.task_count
-									})
-								}
-								return totalTask
-							}
+							data: "task_count",
+							name: "task_count",
 						},
 						{
 							data: null,

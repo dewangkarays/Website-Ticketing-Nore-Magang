@@ -203,22 +203,34 @@ class ProyekController extends Controller
                         ->with('user')
                         ->orderBy('jenis_proyek')
                         ->get();
+        foreach ($null as $nullItem) {
+            $nullItem['nama_user'] = $nullItem->user->nama;
+        }
         $yellow = Proyek::whereNotNull('masa_berlaku')
                         ->whereDate('masa_berlaku', '>=', $date)
                         ->whereDate('masa_berlaku', '<=', $dateline)
                         ->with('user')
                         ->orderBy('masa_berlaku')
                         ->get();
+        foreach ($yellow as $yellowItem) {
+            $yellowItem['nama_user'] = $yellowItem->user->nama;
+        }
         $green = Proyek::whereNotNull('masa_berlaku')
                         ->whereDate('masa_berlaku', '>', $dateline)
                         ->with('user')
                         ->orderBy('masa_berlaku')
                         ->get();
+        foreach ($green as $greenItem) {
+            $greenItem['nama_user'] = $greenItem->user->nama;
+        }
         $red = Proyek::whereNotNull('masa_berlaku')
                         ->whereDate('masa_berlaku', '<', $date)
                         ->with('user')
                         ->orderBy('masa_berlaku')
                         ->get();
+        foreach ($red as $redItem) {
+            $redItem['nama_user'] = $redItem->user->nama;
+        }
                         
         $allItems = new Collection;
         $allItems = $allItems->merge($yellow);

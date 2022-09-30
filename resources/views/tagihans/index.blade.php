@@ -154,18 +154,12 @@
 							}
 						},
 						{
-							data: null,
-							name: null,
-							render: (data, type, row) => {
-								return data?.user?.nama
-							}
+							data: "nama_member",
+							name: "nama_member",
 						},
 						{
-							data: null,
-							name: null,
-							render: (data, type, row) => {
-								return data?.proyek?.nama_proyek ? data?.proyek?.nama_proyek : '-'
-							}
+							data: "nama_proyek",
+							name: "nama_proyek",
 						},
 						{
 							data: "masa_berlaku",

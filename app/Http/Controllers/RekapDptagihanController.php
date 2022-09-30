@@ -152,6 +152,7 @@ class RekapDptagihanController extends Controller
         // }
 
         // dd($data);
+        
         $rekapdptagihan = RekapDptagihan::create($data);
         $rekapdptagihan->save();
         foreach($tagihans as $tagihan){
@@ -166,7 +167,11 @@ class RekapDptagihanController extends Controller
             //         'rekap_dptagihan_id' => $rekapdptagihan->id,
             //     ]);
             // }
+
+            $rekapdptagihan->nama_proyek = $rekapdptagihan->nama_proyek.$tagihan->proyek->nama_proyek.'<br>';
         }
+
+        $rekapdptagihan->update();
 
         return redirect('/rekapdptagihans')->with('success', 'Rekap uang muka saved!');
     }
@@ -299,12 +304,12 @@ class RekapDptagihanController extends Controller
     }
 
     public function invalid($id) {
-        $historyProyek = '';
+        // $historyProyek = '';
         $rekapdp = RekapDptagihan::find($id);
         $tagihans = Tagihan::where('rekap_dptagihan_id', $id)->get();
 
         foreach($tagihans as $tagihan){
-            $historyProyek = $historyProyek.$tagihan->proyek->nama_proyek.'<br>';
+            // $historyProyek = $historyProyek.$tagihan->proyek->nama_proyek.'<br>';
 
             $tagihan->update([
                 'status_rekapdp' => 5,
@@ -312,7 +317,7 @@ class RekapDptagihanController extends Controller
         }
 
         $rekapdp->status = 5;
-        $rekapdp->history_proyek = $historyProyek;
+        // $rekapdp->history_proyek = $historyProyek;
         $rekapdp->update();
 
         return redirect()->route('rekapdptagihans.index')->with('error', 'Data dijadikan invalid!');
@@ -416,16 +421,10 @@ class RekapDptagihanController extends Controller
     public function getrekapdp($status) {
         if ($status == 'aktif') {
             $rekapdps = RekapDptagihan::where('status','<','4')
-                ->with(['tagihan' => function ($q) {
-                    $q->with('proyek');
-                }])
                 ->orderByDesc('id')
                 ->get();
         } else if ($status == 'history') {
             $rekapdps = RekapDptagihan::where('status','>=','4')
-                ->with(['tagihan' => function ($q) {
-                    $q->with('proyek');
-                }])
                 ->orderByDesc('updated_at')
                 ->get();
         }

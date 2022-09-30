@@ -60,7 +60,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Status</label>
 							<div class="col-lg-10">
-								<select name="status2" class="form-control select-search" data-fouc>
+								<select name="status2" id="status2" class="form-control select-search" data-fouc>
 									@foreach(config('custom.verifikasi_cuti') as $key => $value)
 										<option value="{{$key}}" {{ $cuti->verifikasi_2 == $key ? 'selected' : '' }}>{{$value}}</option>
 									@endforeach
@@ -98,7 +98,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Status</label>
 							<div class="col-lg-10">
-								<select name="status1" class="form-control select-search" data-fouc>
+								<select name="status1" id="status1" class="form-control select-search" data-fouc>
 									@foreach(config('custom.verifikasi_cuti') as $key => $value)
 										<option value="{{$key}}" {{ $cuti->verifikasi_1 == $key ? 'selected' : '' }}>{{$value}}</option>
 									@endforeach
@@ -183,7 +183,7 @@
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.date.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
-    <script>
+    {{-- <script>
 		$(() => {
 			var catatan2 = $('#catatan2').val();
 			var catatan2Edit = $('#catatan2-edit').val();
@@ -194,6 +194,23 @@
 			$('#catatan1').val(stripHtml(catatan1));
 			$('#catatan1-edit').val(stripHtml(catatan1Edit));
 		})
-    </script>
-
+    </script> --}}
+<script>
+	@if (Auth::user()->role == 1)
+	if($('#status2').val() != 2) {
+		$('#status1').prop('disabled', true);
+		$('#catatan1-edit').prop('disabled', true);
+	}
+	
+	$('#status2').on('change', function() {
+		if ($('#status2').val() != 2) {
+			$('#status1').prop("disabled",true);
+			$('#catatan1-edit').prop("disabled",true);
+		} else {
+			$('#status1').prop("disabled",false);
+			$('#catatan1-edit').prop("disabled",false);
+		}
+	})
+	@endif
+</script>
 @endsection

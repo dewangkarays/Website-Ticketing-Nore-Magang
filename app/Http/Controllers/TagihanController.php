@@ -159,6 +159,7 @@ class TagihanController extends Controller
             $rekapdptagihan->nama_tertagih = $user->nama;
             $rekapdptagihan->alamat = $user->alamat ? $user->alamat : "-";
             $rekapdptagihan->jatuh_tempo = $last_tagihan->masa_berlaku ? $last_tagihan->masa_berlaku : date('Y-m-d');
+            $rekapdptagihan->nama_proyek = $tagihan->proyek->nama_proyek.'<br>';
 
             if ($request->buat_invoice == 1) {
                 // FORMAT INVOICE
@@ -239,6 +240,7 @@ class TagihanController extends Controller
             $rekaptagihan->nama_tertagih = $user->nama;
             $rekaptagihan->alamat = $user->alamat ? $user->alamat : "-";
             $rekaptagihan->jatuh_tempo = $last_tagihan->masa_berlaku ? $last_tagihan->masa_berlaku : date('Y-m-d');
+            $rekaptagihan->nama_proyek = $tagihan->proyek->nama_proyek.'<br>';
 
             if ($request->buat_invoice == 1) {
                 // FORMAT INVOICE
@@ -668,6 +670,12 @@ class TagihanController extends Controller
             ->with('user')
             ->with('proyek')
             ->get();
+        
+            foreach ($tagihans as $tagihan) {
+                $tagihan['nama_member'] = $tagihan->user->nama;
+                $tagihan['nama_proyek'] = $tagihan->proyek->nama_proyek;
+            }
+
         return Datatables::of($tagihans)->addIndexColumn()->make(true);
     }
 }

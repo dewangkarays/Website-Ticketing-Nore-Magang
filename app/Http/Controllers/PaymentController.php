@@ -70,6 +70,7 @@ class PaymentController extends Controller
         if (\Auth::user()->role < 20 || \Auth::user()->role>=30 && \Auth::user()->role<=50) {
             $data['status'] = 1;
         }
+
         $cust = User::find($request->get('user_id'));
         $data['user_role'] = $cust->role;
         $data['nama'] = $cust->nama;
@@ -222,8 +223,23 @@ class PaymentController extends Controller
                 $dataTagihan->update();
             }
         }
+
+        $data['nama_proyek'] = '';
+
+        if ($request->rdtagihan == 1) {
+            $tagihans = Tagihan::where('rekap_tagihan_id', $request->tagihan_id)->get();
+            foreach ($tagihans as $tagihan) {
+                $data['nama_proyek'] = $data['nama_proyek'].$tagihan->proyek->nama_proyek.'<br>';
+            }
+        } else if ($request->rdtagihan == 2) {
+            $tagihans = Tagihan::where('rekap_dptagihan_id', $request->tagihan_id)->get();
+            foreach ($tagihans as $tagihan) {
+                $data['nama_proyek'] = $data['nama_proyek'].$tagihan->proyek->nama_proyek.'<br>';
+            }
+        }
         // dd($data);
         $payment = Payment::create($data);
+
         // $tagihan = Tagihan::find($request->get('tagihan_id'));
         // $tagihan->jml_tagih -= $request->get('nominal');
         // $tagihan->jml_bayar += $request->get('nominal');
@@ -655,14 +671,9 @@ class PaymentController extends Controller
                 ->with('user')
                 ->get();
         } else {
-            // $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('created_at','desc')->get();
             $payments = Payment::where('jenis_pemasukan','=',1)
                 ->orderByDesc('id')
-                ->with(['user' => function($q) {
-                    $q->with('proyek');
-                }])
                 ->get();
-            //$payments = Payment::all();
 
         }
 
