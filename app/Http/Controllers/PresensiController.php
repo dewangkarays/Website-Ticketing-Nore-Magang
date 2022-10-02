@@ -23,11 +23,11 @@ class PresensiController extends Controller
 
         $dates = [];
         while ($start->lte($end)) {
-            $dates[] = $start->copy()->format('Y-m-d');
+            $tanggal[] = $start->copy()->format('d'); // untuk tampilan
+            $dates[] = $start->copy()->format('Y-m-d'); // untuk validasi dengan data
             $start->addDay();
         }
         // admin
-        // $karyawans_all = Presensi::select('user_id')->distinct()->get();
         $karyawans_all = User::where('role', '<=' ,'50')->where('role', '!=', 1)->with(['presensi' => function ($q) {
             $q->orderBy('tanggal'); 
         }])
@@ -37,17 +37,11 @@ class PresensiController extends Controller
         $izin_all = Presensi::where('status','2')->count();          
         // karyawan
         $presensi = Presensi::where('user_id', '166')->orderBy('tanggal')->get();
-        // $test_all = User::where('role','<=','50')->with('presensi')->orderBy('tanggal')->get();
-        // $test = User::where('id', \Auth::user()->id)->where(function ($q) {
-        //     $q->select('*')
-        //     ->from('presensi')
-        //     ->orderBy('tanggal');
-        // })
-        // ->get();
         $karyawans = User::where('id', \Auth::user()->id)->with(['presensi' => function ($q) {
             $q->orderBy('tanggal'); 
         }])
         ->get()->toArray();
+        // dd($dates);
         $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status','3')->count();
         $izin = Presensi::where('user_id', \Auth::user()->id)->where('status','2')->count();     
 
@@ -56,7 +50,7 @@ class PresensiController extends Controller
         // foreach($presensi_all as $pres)
         // dd(count($karyawans_all));
         // dd(count($karyawans_all[0]['presensi']));
-        return view("presensi.index",compact('dates','presensi','sakit','izin','sisa_cuti','karyawans','presensi_all','sakit_all','izin_all','karyawans_all'));
+        return view("presensi.index",compact('dates','tanggal','presensi','sakit','izin','sisa_cuti','karyawans','presensi_all','sakit_all','izin_all','karyawans_all'));
     }
 
     /**
@@ -152,5 +146,121 @@ class PresensiController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function month($month)
+    {
+        $month = 10;
+        return $month;
+    }
+
+    public function year($year)
+    {
+        $year = 2022;
+        return $year;
+    }
+
+    public function getpresensi($id)
+    {
+        
+        // $bulan = 10;
+        // dd(substr($id, 0, 4)); //tahun
+        // dd(substr($id, 4, 2)); //bulan
+        // dd(substr($id, 6)); //user id
+        $check = User::find(substr($id, 6));
+        // dd($check);
+        // $month = Carbon::now()->today()->subMonth()->month;
+        // $year = Carbon::now();
+        // $month = Carbon::now();
+        $year = intval(substr($id, 0, 4));
+        $month = intval(substr($id, 4, 2));
+        $start = Carbon::parse($month)->startOfMonth();
+        $end = Carbon::parse($month)->endOfMonth();
+        // dd($month);
+        $dates = [];
+        while ($start->lte($end)) {
+            $dates[] = $start->copy()->format('Y-m-d');
+            $start->addDay();
+        }
+
+        if($check->role != 1){
+        @$karyawans = User::where('id', substr($id, 6))->with(['presensi' => function ($q) use ($month, $year) {
+            $q->whereYear('tanggal','=',$year)->whereMonth('tanggal','=',$month)->orderBy('tanggal'); 
+            // $q->orderBy('tanggal'); 
+        }])
+        ->get();
+
+        // $presensi = [];
+        // $j = 0;
+        // for($i=0;$i<count($dates);$i++) {
+        //     if($dates[$i]==@$karyawans[0]['presensi'][$j]['tanggal']) {
+        //         if($karyawans[0]['presensi'][$j]['status'] == 1) {
+        //             // <td class="center"> v </td>
+        //             $presensi[$i] = 'v';
+        //                 if($j < count($karyawans[0]['presensi'])){
+        //                 $j++;
+        //             }
+        //             }elseif($karyawans[0]['presensi'][$j]['status'] == 2) {
+        //             // <td class="center"> i </td>
+        //             $presensi[$i] = 'i';
+        //                 if($j < count($karyawans[0]['presensi'])) {
+        //                 $j++;
+        //             }
+        //             }else{
+        //             // <td class="center"> s </td>
+        //             $presensi[$i] = 's';
+        //                 if($j < count($karyawans[0]['presensi'])) {
+        //                 $j++;
+        //             }
+        //             }
+        //     }else {
+        //         // <td class="center"> . </td>
+        //         $presensi[$i] = '.';
+        //     }
+        // }
+        return response()->json(@$karyawans);
+    } else {
+        @$karyawans = User::where('role','<=','50')->where('role','>=','10')->with(['presensi' => function ($q) use ($month, $year) {
+            $q->whereYear('tanggal','=',$year)->whereMonth('tanggal','=',$month)->orderBy('tanggal'); 
+            // $q->orderBy('tanggal'); 
+        }])
+        ->get();
+
+        //   $presensi = [];
+        //   $j = 0;
+        //   for($k=0;$k<count($karyawans);$k++){
+        //     for($i=0;$i<count($dates);$i++) {
+        //         if(count($karyawans[$k]['presensi']) != 0){
+        //         if($dates[$i]==@$karyawans[$k]['presensi'][$j]['tanggal']) {
+        //             if($karyawans[$k]['presensi'][$j]['status'] == 1) {
+        //                 // <td class="center"> v </td>
+        //                 $presensi[$k][$i] = 'v';
+        //                     if($j < count($karyawans[$k]['presensi'])){
+        //                     $j++;
+        //                 }
+        //             }elseif($karyawans[$k]['presensi'][$j]['status'] == 2) {
+        //                 // <td class="center"> i </td>
+        //                 $presensi[$k][$i] = 'i';
+        //                     if($j < count($karyawans[$k]['presensi'])) {
+        //                     $j++;
+        //                 }
+        //             }else{
+        //                 // <td class="center"> s </td>
+        //                 $presensi[$k][$i] = 's';
+        //                     if($j < count($karyawans[$k]['presensi'])) {
+        //                     $j++;
+        //                 }
+        //                 }
+        //         }else {
+        //             // <td class="center"> . </td>
+        //             $presensi[$k][$i] = '.';
+        //         }
+        //         }else{
+        //             $presensi[$k][$i] = 'kosong';
+        //         }
+        //     }
+        // }
+          return response()->json(@$karyawans);
+    }
     }
 }

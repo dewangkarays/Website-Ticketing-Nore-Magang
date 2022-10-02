@@ -21,23 +21,40 @@
 	</div>
 	<!-- /page header -->
     @if(\Auth::user()->role == 1)
-    <!-- Content area -->
+    <!-- Content area for superadmin-->
     <div class="content">
         <!-- Hover rows -->
 		<div id="card-presensi" class="card">
             <div class="card-header header-elements-inline">
 				<a href="{{ route('presensi.create') }}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Presensi</button></a>
-			</div>
+                <div class="col-lg-3 d-flex">
+                    <select id="tahun" name="tahun" class="form-control select-search">
+                            <option value="">--Tahun--</option>
+                            <option value=2019>2019</option>
+                            <option value=2020>2020</option>
+                            <option value=2021>2021</option>
+                            <option value=2022>2022</option>
+                    </select>
+                    <select id="bulan" name="bulan" class="form-control select-search">
+                        <option value="">--bulan--</option>
+                        @foreach(config('custom.bulan') as $key => $value)
+                            <option value="{{$key}}">{{$value}}</option>
+                        @endforeach
+                    </select>
+                    {{-- <a href=""><button id="filter" class="ml-2 btn btn-primary">Filter</button></a> --}}
+
+                </div>
+            </div>
+            
 
             <div class="card-body">
-
                     <table id="table" class="table datatable-basic table-hover" style="display: block;overflow-x: auto">
                         <thead>
                             <tr> 
                                 <th>No</th>
-                                <th>Nama</th>
-                                @for($i=0;$i<count($dates);$i++)
-                                <th class="tanggal">{{ $dates[$i] }}</th>
+                                <th id="nama" data-role="{{ \Auth::user()->role }}">Nama</th>
+                                @for($i=0;$i<count($tanggal);$i++)
+                                <th class="tanggal">{{ $tanggal[$i] }}</th>
                                 @endfor
                                 {{-- @foreach ($presensi_all as $pres)
                                 <th class="center">{{ $pres->tanggal }}</th>
@@ -54,20 +71,20 @@
                                 <td>{{ $karyawans_all[$k]['nama'] }}</td>
                                 @for($i=0;$i<count($dates);$i++)
                                     @if(count($karyawans_all[$k]['presensi']) != 0)
-                                        @if($dates[$i]==$karyawans_all[$k]['presensi'][$j]['tanggal'])
+                                        @if($dates[$i]==@$karyawans_all[$k]['presensi'][$j]['tanggal'])
                                             @if($karyawans_all[$k]['presensi'][$j]['status'] == 1)
                                                 <td class="center"> v </td>
-                                                    @if($j < count($karyawans_all[$j]['presensi']))
+                                                    @if($j < count($karyawans_all[$k]['presensi']))
                                                     @php($j++)
                                                     @endif
                                                 @elseif($karyawans_all[$k]['presensi'][$j]['status'] == 2)
                                                 <td class="center"> i </td>
-                                                    @if($j < count($karyawans_all[$j]['presensi']))
+                                                    @if($j < count($karyawans_all[$k]['presensi']))
                                                     @php($j++)
                                                     @endif
                                                 @else
                                                 <td class="center"> s </td>
-                                                    @if($j < count($karyawans_all[$j]['presensi']))
+                                                    @if($j < count($karyawans_all[$k]['presensi']))
                                                     @php($j++)
                                                     @endif
                                             @endif
@@ -75,63 +92,68 @@
                                             <td class="center"> . </td>
                                         @endif
                                     @else
-                                        <td class="center"> . </td>
+                                        <td class="center"> kosong </td>
                                     @endif
                                 @endfor
                             </tr>
                             @endfor
+                            {{-- <tr id="presensi"> 
+
+                            </tr> --}}
                         </tbody>
                     </table>
-                    <table id="table" class="mt-3 border table datatable-basic table-hover col-xl-4">
-                        <tr>
-                            <th>Sakit</th>
-                            <td>{{ $sakit_all }}</td>
-                        </tr>
-                        <tr>
-                            <th>Izin</th>
-                            <td>{{ $izin_all }}</td>
-                        </tr>
-                        {{-- <tr>
-                            <th>Sisa Cuti</th>
-                            <td>{{ $sisa_cuti }}</td>
-                        </tr> --}}
-                </table>
             </div>
 		</div>
-		<!-- /hover rows -->
-    </div>
-
-    <div class="col-xl-4">
-        <!-- Basic Table -->
-        <div class="card m-2">
-            <div class="card-body">
-                <div class="chart-container">
-                    <table class="table datatable-basic table-hover">
-                            <tr>
-                                <th>Sakit</th>
-                                <td>{{ $sakit_all }}</td>
-                            </tr>
-                            <tr>
-                                <th>Izin</th>
-                                <td>{{ $izin_all }}</td>
-                            </tr>
-                            {{-- <tr>
-                                <th>Sisa Cuti</th>
-                                <td>{{ $sisa_cuti }}</td>
-                            </tr> --}}
-                    </table>
+        <div class="col-xl-4 p-0">
+            <!-- Basic Table -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="chart-container">
+                        <table class="table datatable-basic table-hover">
+                                <tr>
+                                    <th>Sakit</th>
+                                    <td>{{ $sakit_all }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Izin</th>
+                                    <td>{{ $izin_all }}</td>
+                                </tr>
+                                {{-- <tr>
+                                    <th>Sisa Cuti</th>
+                                    <td>{{ $sisa_cuti }}</td>
+                                </tr> --}}
+                        </table>
+                    </div>
                 </div>
             </div>
+            <!-- /basic donut -->
         </div>
-        <!-- /basic donut -->
+		<!-- /hover rows -->
     </div>
     @else
-    <!-- Content area -->
+    <!-- Content area for karyawans-->
     <div class="content">
         <!-- Hover rows -->
 		<div id="card-presensi" class="card">
             <div class="card-header header-elements-inline">
 				<a href="{{ route('presensi.create') }}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Presensi</button></a>
+                <div class="col-lg-3 d-flex">
+                    <select id="tahun" name="tahun" class="form-control select-search">
+                            <option value="">--Tahun--</option>
+                            <option value=2019>2019</option>
+                            <option value=2020>2020</option>
+                            <option value=2021>2021</option>
+                            <option value=2022>2022</option>
+                    </select>
+                    <select id="bulan" name="bulan" class="form-control select-search">
+                        <option value="">--bulan--</option>
+                        @foreach(config('custom.bulan') as $key => $value)
+                            <option value="{{$key}}">{{$value}}</option>
+                        @endforeach
+                    </select>
+                    {{-- <a href=""><button id="filter" class="ml-2 btn btn-primary">Filter</button></a> --}}
+
+                </div>
 			</div>
 
             <div class="card-body">
@@ -139,7 +161,6 @@
                     <table id="table" class="table datatable-basic table-hover" style="display: block;overflow-x: auto">
                         <thead>
                             <tr> 
-                                <th>No</th>
                                 <th>Nama</th>
                                 @for($i=0;$i<count($dates);$i++)
                                 <th class="tanggal">{{ $dates[$i] }}</th>
@@ -147,10 +168,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr> 
+                            {{-- <tr> 
                                 <td>1</td>
                                 @php($j = 0)
-                                <td>{{ \Auth::user()->nama }}</td>
+                                <td id="nama" data-user_id=" {{ \Auth::user()->id }}">{{ \Auth::user()->nama }}</td>
                                 @for($i=0;$i<count($dates);$i++)
                                     @if($dates[$i]==$karyawans[0]['presensi'][$j]['tanggal'])
                                         @if($karyawans[0]['presensi'][$j]['status'] == 1)
@@ -173,38 +194,40 @@
                                         <td class="center"> . </td>
                                     @endif
                                 @endfor
+                            </tr> --}}
+                            <tr id="presensi">
+                                <td id="nama" data-user_id="{{\Auth::user()->id }}">{{\Auth::user()->nama }}</td>
                             </tr>
                         </tbody>
                     </table>
             </div>
 		</div>
 		<!-- /hover rows -->
-    </div>
-
-    <div class="col-xl-4">
-        <!-- Basic Table -->
-        <div class="card m-2">
-            <div class="card-body">
-                <div class="chart-container">
-                    <table id="table" class="table datatable-basic table-hover">
-                            <tr>
-                                <th>Sakit</th>
-                                <td>{{ $sakit }}</td>
-                            </tr>
-                            <tr>
-                                <th>Izin</th>
-                                <td>{{ $izin }}</td>
-                            </tr>
-                            <tr>
-                                <th>Sisa Cuti</th>
-                                <td>{{ $sisa_cuti }}</td>
-                            </tr>
-                    </table>
+        <div class="col-xl-4 p-0">
+            <!-- Basic Table -->
+            <div class="card m-2">
+                <div class="card-body">
+                    <div class="chart-container">
+                        <table id="table" class="table datatable-basic table-hover">
+                                <tr>
+                                    <th>Sakit</th>
+                                    <td>{{ $sakit }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Izin</th>
+                                    <td>{{ $izin }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Sisa Cuti</th>
+                                    <td>{{ $sisa_cuti }}</td>
+                                </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
+            <!-- /basic donut -->
         </div>
-        <!-- /basic donut -->
-    </div>
+    </div>    
     @endif
 
     <!-- Danger Modal -->
@@ -243,60 +266,156 @@
     <script src="{{asset('assets/js/app.js')}}"></script>
     <script src="{{asset('assets/js/custom.js')}}"></script>
     <script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
+    {{-- <script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script> --}}
+    <script>
+        // change date to local timezone
+        function toIsoString(date) {
+            var tzo = -date.getTimezoneOffset(),
+                dif = tzo >= 0 ? '+' : '-',
+                pad = function(num) {
+                    return (num < 10 ? '0' : '') + num;
+                };
 
-    {{-- <script type="text/javascript">
-var DatatableBasic = function() {
+            return date.getFullYear() +
+                '-' + pad(date.getMonth() + 1) +
+                '-' + pad(date.getDate()) +
+                'T' + pad(date.getHours()) +
+                ':' + pad(date.getMinutes()) +
+                ':' + pad(date.getSeconds()) +
+                dif + pad(Math.floor(Math.abs(tzo) / 60)) +
+                ':' + pad(Math.abs(tzo) % 60);
+            }
 
-// Basic Datatable examples
-var _componentDatatableBasic = function() {
-    if (!$().DataTable) {
-        console.warn('Warning - datatables.min.js is not loaded.');
-        return;
-    }
+        var tahun = new Date().getFullYear();
+        var bulan = new Date().getMonth() + 1;
 
-    // Setting datatable defaults
-    $.extend( $.fn.dataTable.defaults, {
-        autoWidth: false,
-        columnDefs: [{
-            orderable: false,
-            // width: 100,
-            targets: [ 8 ],
-            },
-        ],
-        dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
-        language: {
-            search: '<span>Filter:</span> _INPUT_',
-            searchPlaceholder: 'Type to filter...',
-            lengthMenu: '<span>Show:</span> _MENU_',
-            paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
+        $('#tahun').on('change', function(){
+            tahun = $(this). children("option:selected").val();
+        
+        $('#bulan').on('change', function(){
+            bulan = $(this). children("option:selected").val();
+            // console.log(tahun);
+            // console.log(bulan);
+        
+        var filter = tahun + "/" + bulan + "/ 01";
+        
+        function getAllDaysInMonth(year, month) {
+            const date = new Date(filter);
+            const dates = [];
+
+            while (date.getMonth() === month) {
+                dates.push(new Date(date));
+                date.setDate(date.getDate() + 1);
+            }
+            return dates;
+            }
+        
+        var tanggal = new Date(filter);
+        var all_days = getAllDaysInMonth(tanggal.getFullYear(), tanggal.getMonth());
+
+        const new_all_days = [];
+        for (var i = 0;i<all_days.length;i++){
+            new_all_days[i] = toIsoString(all_days[i]).replace(/T.+/, '')
         }
-    });
-
-    // Resize scrollable table when sidebar width changes
-    $('.sidebar-control').on('click', function() {
-        table.columns.adjust().draw();
-    });
-};
-
-
-
-//
-// Return objects assigned to module
-//
-
-return {
-    init: function() {
-        _componentDatatableBasic();
-    }
-}
-}();
-
-
-// Initialize module
-// ------------------------------
-
-document.addEventListener('DOMContentLoaded', function() {
-DatatableBasic.init();
-});
-    </script> --}}
+        // console.log(new_all_days.length);
+    
+        // console.log(('0'+bulan).length)
+        if (bulan.length == 1) {
+            bulan = '0'+bulan;
+        }
+        var user_id = $('#nama').data('user_id');
+        var role = $('#nama').data('role');
+        // console.log(user_id);
+        // if(role != 1){
+            $.ajax({
+                url : '{{ url("getpresensi")}}/'+tahun+bulan+user_id,
+                type: 'get',
+                dataType: 'json',
+                success : function(karyawans){
+                var presensi = [];
+                var j = 0;
+                $('#presensi').empty();
+                $('#presensi').append('<td id="nama" data-user_id="{{\Auth::user()->id }}">{{\Auth::user()->nama }}</td>');
+                // console.log(karyawans);
+                // console.log(karyawans[0].presensi.length);
+                for(var i=0;i<new_all_days.length;i++) {
+                    if (karyawans[0].presensi[j] != undefined){
+                    if(new_all_days[i]==karyawans[0].presensi[j]['tanggal']) {
+                        if(karyawans[0].presensi[j]['status'] == 1) {
+                            presensi[i] = '<td class="center"> v </td>';
+                            $('#presensi').append(presensi[i]);
+                            // presensi[i] = 'v';
+                                if(j < karyawans[0].presensi.length){
+                                j++;
+                            }
+                            }else if(karyawans[0].presensi[j]['status'] == 2) {
+                            presensi[i] = '<td class="center"> i </td>';
+                            $('#presensi').append(presensi[i]);
+                            // presensi[i] = 'i';
+                                if(j < karyawans[0].presensi.length) {
+                                j++;
+                            }
+                            }else{
+                            presensi[i] = '<td class="center"> s </td>';
+                            $('#presensi').append(presensi[i]);
+                            // presensi[i] = 's';
+                                if(j < karyawans[0].presensi.length) {
+                                j++;
+                            }
+                            }
+                    }else {
+                        presensi[i] = '<td class="center"> . </td>';
+                        $('#presensi').append(presensi[i]);
+                        // presensi[i] = '.';
+                    }
+                }else {
+                        presensi[i] = '<td class="center"> . </td>';
+                        $('#presensi').append(presensi[i]);
+                        // presensi[i] = '.';
+                    }
+                    // console.log(presensi);
+                }
+                }
+            });
+        // } 
+    })
+    })
+        // else {
+        //     $.ajax({
+        //         url : '{{ url("getpresensi") }}/'+1,
+        //         type: 'get',
+        //         dataType: 'json',
+        //         success : function(presensi){
+        //             // console.log(presensi.length);
+        //             for(var k = 0;k<presensi.length;k++){
+        //                 $('#presensi').append('<tr id='+k+'></tr>')
+        //                 for(var i = 0;i<presensi[k].length;i++){
+        //                 $('#presensi').append('<td class="center">'+presensi[k][i]+'</td>');
+        //                 }
+        //             }
+        //         }
+        //     });
+        // }
+    </script>
+    <script type="text/javascript">
+		$( document ).ready(function() {
+	        // Default style
+	        @if(session('error'))
+	            new PNotify({
+	                title: 'Error',
+	                text: '{{ session('error') }}.',
+	                icon: 'icon-blocked',
+	                type: 'error'
+	            });
+            @endif
+            @if ( session('success'))
+	            new PNotify({
+	                title: 'Success',
+	                text: '{{ session('success') }}.',
+	                icon: 'icon-checkmark3',
+	                type: 'success'
+	            });
+            @endif
+		});
+	</script>
 @endsection

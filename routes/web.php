@@ -130,6 +130,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/presensi', 'PresensiController@index')->name('presensi');
 		Route::get('/presensi/create', 'PresensiController@create')->name('presensi.create');
 		Route::post('/presensi/store', 'PresensiController@store')->name('presensi.store');
+		Route::get('/getpresensi/{id}', 'PresensiController@getpresensi');
 		
 	});
 
