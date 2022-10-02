@@ -52,7 +52,7 @@
                         <thead>
                             <tr> 
                                 <th>No</th>
-                                <th id="nama" data-role="{{ \Auth::user()->role }}">Nama</th>
+                                <th id="nama" data-role="{{ \Auth::user()->role }}" data-user_id="{{\Auth::user()->id }}">Nama</th>
                                 @for($i=0;$i<count($tanggal);$i++)
                                 <th class="tanggal">{{ $tanggal[$i] }}</th>
                                 @endfor
@@ -63,8 +63,11 @@
                                 {{-- <th class="text-center">Actions</th> --}}
                             </tr>
                         </thead>
-                        <tbody>
-                            @for($k=0;$k<count($karyawans_all);$k++)
+                        <tbody id="presensi">
+                            {{-- <tr>
+
+                            </tr> --}}
+                            {{-- @for($k=0;$k<count($karyawans_all);$k++)
                             <tr> 
                                 <td>{{ $k + 1 }}</td>
                                 @php($j = 0)
@@ -96,7 +99,7 @@
                                     @endif
                                 @endfor
                             </tr>
-                            @endfor
+                            @endfor --}}
                             {{-- <tr id="presensi"> 
 
                             </tr> --}}
@@ -326,7 +329,7 @@
         var user_id = $('#nama').data('user_id');
         var role = $('#nama').data('role');
         // console.log(user_id);
-        // if(role != 1){
+        if(role != 1){
             $.ajax({
                 url : '{{ url("getpresensi")}}/'+tahun+bulan+user_id,
                 type: 'get',
@@ -377,25 +380,67 @@
                 }
                 }
             });
-        // } 
+        } else {
+            $.ajax({
+                url : '{{ url("getpresensi")}}/'+tahun+bulan+user_id,
+                type: 'get',
+                dataType: 'json',
+                success : function(karyawans){
+                var presensi = [];
+                var j = 0;
+                $('#presensi').empty();
+                // $('#presensi').append('<td id="nama" data-user_id="{{\Auth::user()->id }}">{{\Auth::user()->nama }}</td>');
+                // console.log(karyawans);
+                // console.log(karyawans[0].presensi.length);
+                for (var k=0;k<karyawans.length;k++) {
+                // $('#presensi').empty();
+                $('#presensi').append('<tr id="'+k+'"></tr>')
+                $('#'+k+'').append('<td>'+(k + 1)+'</td>')
+                $('#'+k+'').append('<td>'+karyawans[k].nama+'</td>')
+                for(var i=0;i<new_all_days.length;i++) {
+                    if (karyawans[k].presensi[j] != undefined){
+                    if(new_all_days[i]==karyawans[k].presensi[j]['tanggal']) {
+                        if(karyawans[k].presensi[j]['status'] == 1) {
+                            presensi[i] = '<td class="center"> v </td>';
+                            $('#'+k+'').append(presensi[i]);
+                            // presensi[i] = 'v';
+                                if(j < karyawans[k].presensi.length){
+                                j++;
+                            }
+                            }else if(karyawans[k].presensi[j]['status'] == 2) {
+                            presensi[i] = '<td class="center"> i </td>';
+                            $('#'+k+'').append(presensi[i]);
+                            // presensi[i] = 'i';
+                                if(j < karyawans[k].presensi.length) {
+                                j++;
+                            }
+                            }else{
+                            presensi[i] = '<td class="center"> s </td>';
+                            $('#'+k+'').append(presensi[i]);
+                            // presensi[i] = 's';
+                                if(j < karyawans[k].presensi.length) {
+                                j++;
+                            }
+                            }
+                    }else {
+                        presensi[i] = '<td class="center"> . </td>';
+                        $('#'+k+'').append(presensi[i]);
+                        // presensi[i] = '.';
+                    }
+                }else {
+                        presensi[i] = '<td class="center"> . </td>';
+                        $('#'+k+'').append(presensi[i]);
+                        // presensi[i] = '.';
+                    }
+                    // console.log(presensi);
+                }
+            }
+                }
+            });
+        }
     })
     })
-        // else {
-        //     $.ajax({
-        //         url : '{{ url("getpresensi") }}/'+1,
-        //         type: 'get',
-        //         dataType: 'json',
-        //         success : function(presensi){
-        //             // console.log(presensi.length);
-        //             for(var k = 0;k<presensi.length;k++){
-        //                 $('#presensi').append('<tr id='+k+'></tr>')
-        //                 for(var i = 0;i<presensi[k].length;i++){
-        //                 $('#presensi').append('<td class="center">'+presensi[k][i]+'</td>');
-        //                 }
-        //             }
-        //         }
-        //     });
-        // }
+        
     </script>
     <script type="text/javascript">
 		$( document ).ready(function() {
