@@ -671,41 +671,9 @@ class PaymentController extends Controller
                 ->with('user')
                 ->get();
         } else {
-            // $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('created_at','desc')->get();
-            // $payments = Payment::where('jenis_pemasukan','=',1)
-            //     ->orderByDesc('id')
-            //     ->with(['user' => function($q) {
-            //         $q->with([
-            //             'rekapdptagihan' => function($q1) {
-            //                 $q1->with(['tagihan' => function($q11) {
-            //                     $q11->with('proyek');
-            //                 }]);
-            //             },
-            //             'rekaptagihan' => function($q2) {
-            //                 $q2->with(['tagihan' => function($q21) {
-            //                     $q21->with('proyek');
-            //                 }]);
-            //             }
-            //         ]);
-            //     }])
-            //     ->get();
-
             $payments = Payment::where('jenis_pemasukan','=',1)
                 ->orderByDesc('id')
-                ->with([
-                        'rekapdptagihan' => function($q1) {
-                            $q1->with(['tagihan' => function($q11) {
-                                $q11->with('proyek');
-                            }]);
-                        },
-                        'rekaptagihan' => function($q2) {
-                            $q2->with(['tagihan' => function($q21) {
-                                $q21->with('proyek');
-                            }]);
-                        }
-                    ])
                 ->get();
-            //$payments = Payment::all();
 
         }
 

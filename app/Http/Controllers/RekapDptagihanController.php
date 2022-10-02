@@ -421,16 +421,10 @@ class RekapDptagihanController extends Controller
     public function getrekapdp($status) {
         if ($status == 'aktif') {
             $rekapdps = RekapDptagihan::where('status','<','4')
-                ->with(['tagihan' => function ($q) {
-                    $q->with('proyek');
-                }])
                 ->orderByDesc('id')
                 ->get();
         } else if ($status == 'history') {
             $rekapdps = RekapDptagihan::where('status','>=','4')
-                ->with(['tagihan' => function ($q) {
-                    $q->with('proyek');
-                }])
                 ->orderByDesc('updated_at')
                 ->get();
         }

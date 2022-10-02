@@ -40,6 +40,7 @@
 		<table class="table datatable-basic table-hover">
 			<thead>
 				<tr>
+					<th>ID</th>
 					<th>No</th>
 					<th>Nama</th>
 					<th>Nama Proyek</th>
@@ -242,11 +243,18 @@
 			// Setting datatable defaults
 			$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
-				columnDefs: [{
-					orderable: false,
-					width: 100,
-					targets: [ 7 ]
-				}],
+				columnDefs: [
+					{
+						orderable: false,
+						width: 100,
+						targets: [ 7 ]
+					},
+					{
+						visible: false,
+						searchable: false,
+						targets: [0]
+					}
+				],
 				dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
@@ -259,6 +267,7 @@
 			// Basic datatable
 			$('.datatable-basic').DataTable({
 				scrollX: true,
+				order: [[0, "desc"]],
 				processing: true,
 				serverSide: true,
 				ajax: {
@@ -266,6 +275,10 @@
 					'url': `{{url('getpayments')}}`,
 				},
 				columns: [
+					{
+						data: "id",
+						name: "id",
+					},
 					{
 						data: null,
 						name: null,
@@ -279,7 +292,7 @@
 					},
 					{
 						data: null,
-						name: null,
+						name: "nama_proyek",
 						render: (data, type, row) => {
 							return stripHtml(data?.nama_proyek);
 						}

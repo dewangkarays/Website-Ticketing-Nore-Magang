@@ -34,6 +34,7 @@
                     <table class="table datatable-basic table-hover">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>No</th>
                                 {{-- <th><input type="checkbox" class="checked-all"></th> --}}
                                 <th>Nama</th>
@@ -120,11 +121,17 @@
                 // Setting datatable defaults
                 $.extend( $.fn.dataTable.defaults, {
                     autoWidth: false,
-                    columnDefs: [{
-                        orderable: false,
-                        // width: 100,
-                        targets: [ 8 ],
+                    columnDefs: [
+                        {
+                            orderable: false,
+                            // width: 100,
+                            targets: [ 8 ],
                         },
+                        {
+                            visible: false,
+                            searchable: true,
+                            targets: [0],
+                        }
                     ],
                     dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                     language: {
@@ -138,6 +145,7 @@
                 // Basic datatable
                 $('.datatable-basic').DataTable({
                     // "scrollX": true,
+                    order: [[0, "desc"]],
                     processing: true,
                     serverSide: true,
                     ajax: {
@@ -145,6 +153,10 @@
                         'url': "/getrekapdp/aktif",
                     },
                     columns: [
+                        {
+                            data: "id",
+                            name: "id",
+                        },
                         {
                             data: null,
                             name: null,

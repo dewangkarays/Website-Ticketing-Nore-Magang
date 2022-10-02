@@ -34,6 +34,7 @@
 			<table class="table datatable-basic table-hover">
 				<thead>
 					<tr>
+						<th>ID</th>
 						<th>No</th>
 						<th>Nama</th>
 						{{-- <th>Username</th> --}}
@@ -119,13 +120,18 @@
 		            autoWidth: false,
 		            columnDefs: [{
 		                orderable: false,
-		                width: 100,
+		                // width: 100,
 		                targets: [ 7 ]
 		            	},
 						{
                             width: 100,
                             targets: '__all'
-                        }
+                        },
+						{
+							visible: false,
+							searchable: false,
+							targets: [0]
+						}
 					],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -139,6 +145,7 @@
 		        // Basic datatable
 		        $('.datatable-basic').DataTable({
 					// "scrollX": true,
+					order: [[0, "desc"]],
 					processing: true,
 					serverSide: true,
 					ajax: {
@@ -147,6 +154,10 @@
 					},
 					columns: [
 						{
+							data: "id",
+							name: "id",
+						},
+						{
 							data: null,
 							name: null,
 							render: (data, type, row) => {
@@ -154,18 +165,12 @@
 							}
 						},
 						{
-							data: null,
-							name: null,
-							render: (data, type, row) => {
-								return data?.user?.nama
-							}
+							data: "nama_member",
+							name: "nama_member",
 						},
 						{
-							data: null,
-							name: null,
-							render: (data, type, row) => {
-								return data?.proyek?.nama_proyek ? data?.proyek?.nama_proyek : '-'
-							}
+							data: "nama_proyek",
+							name: "nama_proyek",
 						},
 						{
 							data: "masa_berlaku",

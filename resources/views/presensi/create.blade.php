@@ -107,6 +107,21 @@
 							</div>
 						</div>
                     </fieldset>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Keterangan</label>
+						<div class="col-lg-10">
+							{{-- <div class="summernote form-control border-teal border-1" name="keterangan" placeholder="Keterangan" value="{{old('keterangan')}}"></div> --}}
+							{{-- <input type="text" name="keterangan" class="summernote form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}"> --}}
+							<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1"></textarea>
+						</div>
+					</div>
+					<div class="form-group row">
+                        <label class="col-form-label col-lg-2">Gambar</label>
+                        <div class="col-lg-10">
+                            <input id="gambar" name="gambar" type="file" class="form-control" onchange="upload_check()" required>
+                            <span class="form-text text-muted">Jumlah max ukuran file : 5MB</span>
+                        </div>
+                    </div>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
 					</div>

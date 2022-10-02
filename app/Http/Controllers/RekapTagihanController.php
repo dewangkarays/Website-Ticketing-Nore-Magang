@@ -504,16 +504,10 @@ class RekapTagihanController extends Controller
     public function getrekap($status) {
         if ($status == 'aktif') {
             $rekaptagihans = RekapTagihan::where('status','<','4')
-                ->with(['tagihan' => function ($q) {
-                    $q->with('proyek');
-                }])
                 ->orderByDesc('id')
                 ->get();
         } else if ($status == 'history') {
             $rekaptagihans = RekapTagihan::where('status','>=','4')
-                ->with(['tagihan' => function ($q) {
-                    $q->with('proyek');
-                }])
                 ->orderByDesc('updated_at')
                 ->get();
         }

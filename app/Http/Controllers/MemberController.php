@@ -211,7 +211,15 @@ class MemberController extends Controller
     }
 
     public function getmembers() {
-        $users = User::where('role','>','20')->orderBy('nama')->with('proyek')->get();
+        $users = User::where('role', '>=', '80')
+            ->orderBy('nama')
+            ->get();
+        foreach ($users as $key => $user) {
+            $user['task_count'] = 0;
+            foreach ($user->proyek as $proyek) {
+                $user['task_count'] += $proyek->task_count;
+            }
+        }
         return Datatables::of($users)->addIndexColumn()->make(true);
     }
 }
