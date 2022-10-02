@@ -49,7 +49,7 @@
 
             <div class="card-body">
                     <table id="table" class="table datatable-basic table-hover" style="display: block;overflow-x: auto">
-                        <thead>
+                        <thead id="head">
                             <tr> 
                                 <th>No</th>
                                 <th id="nama" data-role="{{ \Auth::user()->role }}" data-user_id="{{\Auth::user()->id }}">Nama</th>
@@ -162,7 +162,7 @@
             <div class="card-body">
 
                     <table id="table" class="table datatable-basic table-hover" style="display: block;overflow-x: auto">
-                        <thead>
+                        <thead  id="head">
                             <tr> 
                                 <th>Nama</th>
                                 @for($i=0;$i<count($dates);$i++)
@@ -335,6 +335,11 @@
                 type: 'get',
                 dataType: 'json',
                 success : function(karyawans){
+                $('#head').empty();
+                $('#head').append('<th>Nama</th>');
+                for(var m=0;m<new_all_days.length;m++) {
+                $('#head').append('<th>'+new_all_days[m].substr(8)+'</th>');
+                }
                 var presensi = [];
                 var j = 0;
                 $('#presensi').empty();
@@ -386,6 +391,12 @@
                 type: 'get',
                 dataType: 'json',
                 success : function(karyawans){
+                $('#head').empty();
+                $('#head').append('<th>No</th>');
+                $('#head').append('<th id="nama" data-role="{{ \Auth::user()->role }}" data-user_id="{{\Auth::user()->id }}">Nama</th>');
+                for(var n=0;n<new_all_days.length;n++) {
+                $('#head').append('<th>'+new_all_days[n].substr(8)+'</th>');
+                }
                 var presensi = [];
                 var j = 0;
                 $('#presensi').empty();
