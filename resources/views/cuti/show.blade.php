@@ -50,6 +50,14 @@
                                 <label class="col-form-label col-lg-10">{{$cuti->tanggal_akhir}}</label>
                             </div>
                         </div>
+						@if ($cuti->karyawan->sisa_cuti - $cuti->jumlah_hari < 0)
+						<div class="form-group row">
+                            <label class="col-form-label col-lg-2"></label>
+							<div class="col-lg-10">
+                                <label class="col-form-label col-lg-10" style="color: red"><em>Pengajuan melewati batas jumlah hari cuti! {{$cuti->karyawan->sisa_cuti - $cuti->jumlah_hari}} hari</em></label>
+                            </div>
+                        </div>
+						@endif
                         <div class="form-group row">
 							<label class="col-form-label col-lg-2">Verifikator 2</label>
 							<div class="col-lg-10">
