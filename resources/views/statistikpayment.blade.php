@@ -153,7 +153,7 @@
 									@foreach($totals as $total)
 								    <tr>
 								        <td>{{$i}}</td>
-								        <td><div class="datatable-column-width">{{$total->user->username}}</div></td>
+								        <td><div class="datatable-column-width">{{@$total->user->username ? $total->user->username : "-"}}</div></td>
 								        <td><div class="datatable-column-width">{{number_format($total->total,0,',','.')}}</div></td>
 								    </tr>
 								    @php ($i++)
