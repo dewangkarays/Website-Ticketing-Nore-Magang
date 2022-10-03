@@ -113,18 +113,14 @@
                 <div class="card-body">
                     <div class="chart-container">
                         <table class="table datatable-basic table-hover">
-                                <tr>
-                                    <th>Sakit</th>
-                                    <td>{{ $sakit_all }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Izin</th>
-                                    <td>{{ $izin_all }}</td>
-                                </tr>
-                                {{-- <tr>
-                                    <th>Sisa Cuti</th>
-                                    <td>{{ $sisa_cuti }}</td>
-                                </tr> --}}
+                            <tr>
+                                <th>Sakit</th>
+                                <td id="sakit"></td>
+                            </tr>
+                            <tr>
+                                <th>Izin</th>
+                                <td id="izin"></td>
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -165,8 +161,8 @@
                         <thead  id="head">
                             <tr> 
                                 <th>Nama</th>
-                                @for($i=0;$i<count($dates);$i++)
-                                <th class="tanggal">{{ $dates[$i] }}</th>
+                                @for($i=0;$i<count($tanggal);$i++)
+                                <th class="tanggal">{{ $tanggal[$i] }}</th>
                                 @endfor
                             </tr>
                         </thead>
@@ -214,15 +210,15 @@
                         <table id="table" class="table datatable-basic table-hover">
                                 <tr>
                                     <th>Sakit</th>
-                                    <td>{{ $sakit }}</td>
+                                    <td id="sakit"></td>
                                 </tr>
                                 <tr>
                                     <th>Izin</th>
-                                    <td>{{ $izin }}</td>
+                                    <td id="izin"></td>
                                 </tr>
                                 <tr>
                                     <th>Sisa Cuti</th>
-                                    <td>{{ $sisa_cuti }}</td>
+                                    <td id="sisa_cuti"></td>
                                 </tr>
                         </table>
                     </div>
@@ -342,6 +338,10 @@
                 }
                 var presensi = [];
                 var j = 0;
+                var sakit = [];
+                var s = 0;
+                var izin = [];
+                var z = 0;
                 $('#presensi').empty();
                 $('#presensi').append('<td id="nama" data-user_id="{{\Auth::user()->id }}">{{\Auth::user()->nama }}</td>');
                 // console.log(karyawans);
@@ -358,6 +358,8 @@
                             }
                             }else if(karyawans[0].presensi[j]['status'] == 2) {
                             presensi[i] = '<td class="center"> i </td>';
+                            izin[z] = karyawans[0].presensi[j];
+                            z ++;
                             $('#presensi').append(presensi[i]);
                             // presensi[i] = 'i';
                                 if(j < karyawans[0].presensi.length) {
@@ -365,6 +367,8 @@
                             }
                             }else{
                             presensi[i] = '<td class="center"> s </td>';
+                            sakit[s] = karyawans[0].presensi[j];
+                            s ++;
                             $('#presensi').append(presensi[i]);
                             // presensi[i] = 's';
                                 if(j < karyawans[0].presensi.length) {
@@ -383,6 +387,10 @@
                     }
                     // console.log(presensi);
                 }
+                $('#izin').empty();
+                $('#sakit').empty();
+                $('#izin').append(izin.length);
+                $('#sakit').append(sakit.length);
                 }
             });
         } else {
@@ -399,6 +407,10 @@
                 }
                 var presensi = [];
                 var j = 0;
+                var sakit = [];
+                var s = 0;
+                var izin = [];
+                var z = 0;
                 $('#presensi').empty();
                 // $('#presensi').append('<td id="nama" data-user_id="{{\Auth::user()->id }}">{{\Auth::user()->nama }}</td>');
                 // console.log(karyawans);
@@ -420,6 +432,8 @@
                             }
                             }else if(karyawans[k].presensi[j]['status'] == 2) {
                             presensi[i] = '<td class="center"> i </td>';
+                            izin[z] = karyawans[k].presensi[j];
+                            z ++;
                             $('#'+k+'').append(presensi[i]);
                             // presensi[i] = 'i';
                                 if(j < karyawans[k].presensi.length) {
@@ -427,6 +441,8 @@
                             }
                             }else{
                             presensi[i] = '<td class="center"> s </td>';
+                            sakit[s] = karyawans[k].presensi[j];
+                            s ++;
                             $('#'+k+'').append(presensi[i]);
                             // presensi[i] = 's';
                                 if(j < karyawans[k].presensi.length) {
@@ -446,12 +462,39 @@
                     // console.log(presensi);
                 }
             }
+                $('#izin').empty();
+                $('#sakit').empty();
+                $('#izin').append(izin.length);
+                $('#sakit').append(sakit.length);
                 }
             });
         }
     })
     })
         
+    </script>
+    <script>
+        // menghitung sisa cuti karyawan
+        var user_id = $('#nama').data('user_id');
+        var role = $('#nama').data('role');
+        var tahun = new Date().getFullYear();
+        // console.log(user_id);
+        if(role != 1){
+        $('#tahun').on('change', function(){
+            tahun = $(this). children("option:selected").val();
+
+        $.ajax({
+                url : '{{ url("gettotalizin")}}/'+tahun+user_id,
+                type: 'get',
+                dataType: 'json',
+                success : function(izin){
+                var total_izin = izin[0].presensi.length;
+                $('#sisa_cuti').empty();
+                $('#sisa_cuti').append(12 - total_izin);
+                }
+        })
+    })
+    }
     </script>
     <script type="text/javascript">
 		$( document ).ready(function() {

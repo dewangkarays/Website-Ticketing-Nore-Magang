@@ -48,7 +48,7 @@ class PresensiController extends Controller
         $sisa_cuti = 12 - $izin;
 
         // foreach($presensi_all as $pres)
-        // dd(count($karyawans_all));
+        // dd($dates);
         // dd(count($karyawans_all[0]['presensi']));
         return view("presensi.index",compact('dates','tanggal','presensi','sakit','izin','sisa_cuti','karyawans','presensi_all','sakit_all','izin_all','karyawans_all'));
     }
@@ -262,5 +262,18 @@ class PresensiController extends Controller
         // }
           return response()->json(@$karyawans);
     }
+    }
+
+    public function getsisacuti($id)
+    {
+        // dd($id);
+        $year = intval(substr($id, 0, 4));
+        $izin = User::where('id', substr($id, 4))->with(['presensi' => function ($q) use ($year) {
+            $q->whereYear('tanggal','=',$year)->where('status','=', 2); 
+            // $q->orderBy('tanggal'); 
+        }])
+        ->get();
+        // dd(count($sisa_cuti.['presensi']));
+        return response()->json($izin);
     }
 }
