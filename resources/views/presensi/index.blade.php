@@ -406,7 +406,6 @@
                 $('#head').append('<th>'+new_all_days[n].substr(8)+'</th>');
                 }
                 var presensi = [];
-                var j = 0;
                 var sakit = [];
                 var s = 0;
                 var izin = [];
@@ -417,6 +416,7 @@
                 // console.log(karyawans[0].presensi.length);
                 for (var k=0;k<karyawans.length;k++) {
                 // $('#presensi').empty();
+                var j = 0;
                 $('#presensi').append('<tr id="'+k+'"></tr>')
                 $('#'+k+'').append('<td>'+(k + 1)+'</td>')
                 $('#'+k+'').append('<td>'+karyawans[k].nama+'</td>')
