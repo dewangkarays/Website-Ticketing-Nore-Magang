@@ -327,7 +327,7 @@
         // console.log(user_id);
         if(role != 1){
             $.ajax({
-                url : '{{ url("getpresensi")}}/'+tahun+bulan+user_id,
+                url : '/getpresensi/'+tahun+'/'+bulan+'/'+user_id+'',
                 type: 'get',
                 dataType: 'json',
                 success : function(karyawans){
@@ -395,7 +395,7 @@
             });
         } else {
             $.ajax({
-                url : '{{ url("getpresensi")}}/'+tahun+bulan+user_id,
+                url : '/getpresensi/'+tahun+'/'+bulan+'/'+user_id+'',
                 type: 'get',
                 dataType: 'json',
                 success : function(karyawans){

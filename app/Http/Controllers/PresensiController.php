@@ -160,20 +160,20 @@ class PresensiController extends Controller
         return $year;
     }
 
-    public function getpresensi($id)
+    public function getpresensi($tahun, $bulan, $id)
     {
-        
+        // dd($id);
         // $bulan = 10;
         // dd(substr($id, 0, 4)); //tahun
         // dd(substr($id, 4, 2)); //bulan
         // dd(substr($id, 6)); //user id
-        $check = User::find(substr($id, 6));
+        $check = User::find($id);
         // dd($check);
         // $month = Carbon::now()->today()->subMonth()->month;
         // $year = Carbon::now();
         // $month = Carbon::now();
-        $year = intval(substr($id, 0, 4));
-        $month = intval(substr($id, 4, 2));
+        $year = intval($tahun);
+        $month = intval($bulan);
         $start = Carbon::parse($month)->startOfMonth();
         $end = Carbon::parse($month)->endOfMonth();
         // dd($month);
@@ -184,7 +184,7 @@ class PresensiController extends Controller
         }
 
         if($check->role != 1){
-        @$karyawans = User::where('id', substr($id, 6))->with(['presensi' => function ($q) use ($month, $year) {
+        @$karyawans = User::where('id', $id)->with(['presensi' => function ($q) use ($month, $year) {
             $q->whereYear('tanggal','=',$year)->whereMonth('tanggal','=',$month)->orderBy('tanggal'); 
             // $q->orderBy('tanggal'); 
         }])
