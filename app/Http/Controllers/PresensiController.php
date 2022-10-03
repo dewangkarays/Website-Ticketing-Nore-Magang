@@ -264,7 +264,7 @@ class PresensiController extends Controller
     }
     }
 
-    public function getsisacuti($id)
+    public function gettotalizin($id)
     {
         // dd($id);
         $year = intval(substr($id, 0, 4));
