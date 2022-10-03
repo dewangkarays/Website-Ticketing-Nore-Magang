@@ -91,6 +91,7 @@ class PresensiController extends Controller
         $presensi->tanggal = $request->get('tanggal');
         $presensi->status = $request->get('status');
         $presensi->user_id = $request->get('user_id');
+        $presensi->keterangan = $request->get('keterangan');
         $check = Presensi::where('user_id',$request->get('user_id'))
         ->where('tanggal',$request->get('tanggal'))
         ->get();
