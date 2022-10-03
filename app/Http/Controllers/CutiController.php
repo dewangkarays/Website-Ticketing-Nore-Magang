@@ -388,7 +388,7 @@ class CutiController extends Controller
                             }
                         );
                     }
-                )
+                )->where('status', '!=', '4')
                 ->orderByDesc('id')
                 ->with('karyawan')
                 ->with('verifikator2')
