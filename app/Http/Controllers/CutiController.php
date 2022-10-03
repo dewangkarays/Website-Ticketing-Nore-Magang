@@ -75,6 +75,10 @@ class CutiController extends Controller
         $cuti->user_id = \Auth::user()->id;          
         }
 
+        $cuti->jumlah_hari = $request->jumlah_hari;
+
+        // dd($cuti);
+
         $cuti->save();
         
         return redirect('/cuti')->with('success', 'Cuti Saved!');
@@ -132,16 +136,33 @@ class CutiController extends Controller
         }
 
         if ($cuti->verifikasi_2 == 2 && $cuti->verifikasi_1 == 2) {
-            $cuti->status = 2;
+            $status_cuti = 2;
         } else if ($cuti->verifikasi_2 == 3 || $cuti->verifikasi_1 == 3) {
-            $cuti->status = 3;
+            $status_cuti = 3;
         } else {
-            $cuti->status = 1;
+            $status_cuti = 1;
         }
 
-        // dd($cuti);
+        if ($cuti->status != $status_cuti) {
+            $karyawan = User::find($cuti->user_id);
+            if ($cuti->status == 1) {
+                if ($status_cuti == 2) {
+                    $karyawan->sisa_cuti = $karyawan->sisa_cuti - $cuti->jumlah_hari;
+                }
+            } else if ($cuti->status == 2) {
+                $karyawan->sisa_cuti = $karyawan->sisa_cuti + $cuti->jumlah_hari;
+            } else {
+                if ($status_cuti == 2) {
+                    $karyawan->sisa_cuti = $karyawan->sisa_cuti - $cuti->jumlah_hari;
+                }
+            }
 
+            $karyawan->update();
+        }
+
+        $cuti->status = $status_cuti;
         $cuti->update();
+
         if ($request->surat_cuti) {
             return redirect()->route('cuti')->with('success', 'Surat cuti berhasil diupload!');
         }
