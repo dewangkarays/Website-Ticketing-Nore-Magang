@@ -110,16 +110,16 @@
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Keterangan</label>
 						<div class="col-lg-10">
-							{{-- <div class="summernote form-control border-teal border-1" name="keterangan" placeholder="Keterangan" value="{{old('keterangan')}}"></div> --}}
+							{{-- <div class="summernote form-control border-teal border-1" name="keterangan" placeholder="Keterangan" value="{{old('keterangan')}}"required></div> --}}
 							{{-- <input type="text" name="keterangan" class="summernote form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}"> --}}
-							<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1"></textarea>
+							<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1"required></textarea>
 						</div>
 					</div>
 					<div class="form-group row">
-                        <label class="col-form-label col-lg-2">Gambar</label>
+                        <label class="col-form-label col-lg-2">Bukti</label>
                         <div class="col-lg-10">
-                            <input id="gambar" name="gambar" type="file" class="form-control" onchange="upload_check()" required>
-                            <span class="form-text text-muted">Jumlah max ukuran file : 5MB</span>
+                            <input id="gambar" name="gambar" type="file" class="form-control" onchange="upload_check()">
+                            <span class="form-text text-muted">*bukti jika izin</span>
                         </div>
                     </div>
 					<div class="text-right">
