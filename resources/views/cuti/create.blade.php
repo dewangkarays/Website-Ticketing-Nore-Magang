@@ -36,7 +36,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">NIP</label>
 							<div class="col-lg-10">
-								<input type="text" name="nip" class="form-control border border-1" value="{{ $user->nip }}" placeholder="NIP" required readonly>
+								<input type="text" name="nip" class="form-control border border-1" value="{{ $user->nip }}" placeholder="NIP" readonly>
 							</div>
 						</div>
 						@else
@@ -47,7 +47,7 @@
 								<select id="name" name="name" class="form-control select-search" data-user_id="0" required>
 									<option value="">-- Pilih Karyawan --</option>
 									@foreach($karyawans as $karyawan)
-										<option data-atasan_id="{{ $karyawan->atasan_id }}" data-nip="{{ $karyawan->nip }}" value="{{$karyawan->id}}">{{$karyawan->nama}} </option>
+										<option data-atasan_id="{{ $karyawan->atasan_id }}" data-nip="{{ $karyawan->nip }}" data-sisacuti="{{$karyawan->sisa_cuti}}" value="{{$karyawan->id}}">{{$karyawan->nama}} </option>
 				    				@endforeach
 								</select>
 							</div>
@@ -55,7 +55,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">NIP</label>
 							<div class="col-lg-10">
-								<input type="text" id="nip" name="nip" class="form-control border border-1" placeholder="NIP" value="" required>
+								<input type="text" id="nip" name="nip" class="form-control border border-1" placeholder="NIP" value="" readonly>
 								{{-- <select id="nip" name="nip" class="form-control select-search" required>
 									@foreach($karyawans as $karyawan)
 										<option value="{{$karyawan->id}}">{{$karyawan->nama}} </option>
@@ -105,6 +105,14 @@
 								<textarea id="alasan" name="alasan" rows="4" cols="3" class="form-control" placeholder="Alasan Cuti" required>
 Dengan ini saya mengajukan permohonan izin cuti selama # hari kerja pada tanggal ## - ## dikarenakan (tulis alasan cuti)
 								</textarea>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Sisa Cuti</label>
+							<div class="col-lg-10">
+								<label class="col-form-label col-lg-2" id="sisa_cuti_text">0</label>
+								<input type="hidden" name="sisa_cuti_count" id="sisa_cuti_count" value="0">
+								<input type="hidden" name="jumlah_hari" id="jumlah_hari">
 							</div>
 						</div>
 					</fieldset>
@@ -249,6 +257,11 @@ document.addEventListener('DOMContentLoaded', function() {
 		var nip = $(this). children("option:selected").data('nip');
 		// console.log(nip);
 		$("#nip").val(nip);
+		// console.log($("#sisa_cuti").text());
+		$("#sisa_cuti_count").val($(this).children('option:selected').data('sisacuti'));
+		$("#sisa_cuti_text").text($('#sisa_cuti_count').val() + " hari");
+		$('#jumlah_hari').val('0');
+		// console.log($("#sisa_cuti_count").val());
 		})
 	</script>
     <script>
@@ -354,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		$('#name').on('change',function() {
 		atasan = $(this). children("option:selected").data('atasan_id');
 	})
-	console.log(atasan);
+	// console.log(atasan);
 		$('#verifikator_2').on('change', function(){
 		var id_verif2 = $(this). children("option:selected").val();
 		var atasan_verif2 = $(this). children("option:selected").data('id2');
@@ -426,6 +439,10 @@ document.addEventListener('DOMContentLoaded', function() {
     	}
 		$('#alasan').empty();
 		$('#alasan').append('Dengan ini saya mengajukan permohonan izin cuti selama '+totalBusinessDays+' hari kerja pada tanggal '+new_tgl_mulai+' - '+new_tgl_akhir+' dikarenakan (tulis alasan cuti)');
+		console.log(totalBusinessDays);
+
+		$("#sisa_cuti_text").text($("#sisa_cuti_count").val() - totalBusinessDays + " hari");
+		$('#jumlah_hari').val(totalBusinessDays);
 		})
 		
 		$('#tanggal_mulai').on('change', function(){
@@ -450,6 +467,9 @@ document.addEventListener('DOMContentLoaded', function() {
     	}
 		$('#alasan').empty();
 		$('#alasan').append('Dengan ini saya mengajukan permohonan izin cuti selama '+totalBusinessDays+' hari kerja pada tanggal '+new_tgl_mulai+' - '+new_tgl_akhir+' dikarenakan (tulis alasan cuti)');
+
+		$("#sisa_cuti_text").text($("#sisa_cuti_count").val() - totalBusinessDays + " hari");
+		$('#jumlah_hari').val(totalBusinessDays);
 		})
 	</script>
 	<script type="text/javascript">
