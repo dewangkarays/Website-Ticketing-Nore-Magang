@@ -44,9 +44,6 @@
 
                 </div>
             </div>
-            <div  data-toggle="popover"  data-placement="top" data-content="Content">
-                Popover on left
-              </div>
 
             <div class="card-body">
                     <table id="table" class="table datatable-basic table-hover" style="display: block;overflow-x: auto">
