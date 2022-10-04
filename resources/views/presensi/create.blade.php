@@ -118,7 +118,7 @@
 					<div class="form-group row" id="div-bukti" style="display: none">
                         <label class="col-form-label col-lg-2">Bukti</label>
                         <div class="col-lg-10">
-                            <input id="gambar" name="gambar" type="file" class="form-control" onchange="upload_check()">
+                            <input id="bukti" name="bukti" type="file" class="form-control" onchange="upload_check()">
                             <span class="form-text text-muted">Lampirkan bukti izin</span>
                         </div>
                     </div>
