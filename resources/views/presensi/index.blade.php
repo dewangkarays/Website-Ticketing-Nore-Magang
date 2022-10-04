@@ -30,13 +30,12 @@
                 <div class="col-lg-3 d-flex">
                     <select id="tahun" name="tahun" class="form-control select-search">
                             <option value="">--Tahun--</option>
-                            <option value=2019>2019</option>
-                            <option value=2020>2020</option>
-                            <option value=2021>2021</option>
-                            <option value=2022>2022</option>
+                            @foreach ($years as $year)
+                            <option value={{ $year->tahun }}>{{ $year->tahun }}</option>
+                            @endforeach
                     </select>
                     <select id="bulan" name="bulan" class="form-control select-search">
-                        <option value="">--bulan--</option>
+                        <option value="">--Bulan--</option>
                         @foreach(config('custom.bulan') as $key => $value)
                             <option value="{{$key}}">{{$value}}</option>
                         @endforeach
@@ -138,11 +137,10 @@
 				<a href="{{ route('presensi.create') }}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Presensi</button></a>
                 <div class="col-lg-3 d-flex">
                     <select id="tahun" name="tahun" class="form-control select-search">
-                            <option value="">--Tahun--</option>
-                            <option value=2019>2019</option>
-                            <option value=2020>2020</option>
-                            <option value=2021>2021</option>
-                            <option value=2022>2022</option>
+                        <option value="">--Tahun--</option>
+                        @foreach ($years as $year)
+                        <option value={{ $year->tahun }}>{{ $year->tahun }}</option>
+                        @endforeach
                     </select>
                     <select id="bulan" name="bulan" class="form-control select-search">
                         <option value="">--bulan--</option>
@@ -266,6 +264,61 @@
     <script src="{{asset('assets/js/custom.js')}}"></script>
     <script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
     {{-- <script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script> --}}
+    <script>
+        $(function(){
+        function toIsoString(date) {
+            var tzo = -date.getTimezoneOffset(),
+                dif = tzo >= 0 ? '+' : '-',
+                pad = function(num) {
+                    return (num < 10 ? '0' : '') + num;
+                };
+
+            return date.getFullYear() +
+                '-' + pad(date.getMonth() + 1) +
+                '-' + pad(date.getDate()) +
+                'T' + pad(date.getHours()) +
+                ':' + pad(date.getMinutes()) +
+                ':' + pad(date.getSeconds()) +
+                dif + pad(Math.floor(Math.abs(tzo) / 60)) +
+                ':' + pad(Math.abs(tzo) % 60);
+            }
+
+        var tahun = new Date().getFullYear();
+        var bulan = new Date().getMonth() + 1;
+
+        var filter = tahun + "/" + bulan + "/ 01";
+        
+        function getAllDaysInMonth(year, month) {
+            const date = new Date(filter);
+            const dates = [];
+
+            while (date.getMonth() === month) {
+                dates.push(new Date(date));
+                date.setDate(date.getDate() + 1);
+            }
+            return dates;
+            }
+        
+        var tanggal = new Date(filter);
+        var all_days = getAllDaysInMonth(tanggal.getFullYear(), tanggal.getMonth());
+
+        const new_all_days = [];
+        for (var i = 0;i<all_days.length;i++){
+            new_all_days[i] = toIsoString(all_days[i]).replace(/T.+/, '')
+        }
+        // console.log(new_all_days.length);
+    
+        // console.log(('0'+bulan).length)
+        if (bulan.length == 1) {
+            bulan = '0'+bulan;
+        }
+        var user_id = $('#nama').data('user_id');
+        var role = $('#nama').data('role');
+
+        $('#tahun').val(tahun).trigger('change');
+        $('#bulan').val(bulan).trigger('change');
+    });
+    </script>
     <script>
         // change date to local timezone
         function toIsoString(date) {
