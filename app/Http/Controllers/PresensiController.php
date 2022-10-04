@@ -128,7 +128,8 @@ class PresensiController extends Controller
      */
     public function show($id)
     {
-        //
+        $presensi = Presensi::find($id);
+        return view('presensi.show', compact('presensi'));
     }
 
     /**
