@@ -44,7 +44,9 @@
 
                 </div>
             </div>
-            
+            <div  data-toggle="popover"  data-placement="top" data-content="Content">
+                Popover on left
+              </div>
 
             <div class="card-body">
                     <table id="table" class="table datatable-basic table-hover" style="display: block;overflow-x: auto">
@@ -119,6 +121,10 @@
                             <tr>
                                 <th>Izin</th>
                                 <td id="izin"></td>
+                            </tr>
+                            <tr>
+                                <th>Izin</th>
+                                <td title="Header" data-toggle="popover" data-placement="right" data-content="Content">Popover</td>
                             </tr>
                         </table>
                     </div>
@@ -263,6 +269,7 @@
     <script src="{{asset('assets/js/app.js')}}"></script>
     <script src="{{asset('assets/js/custom.js')}}"></script>
     <script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
+    <script src="{{ asset('global_assets\js\main\bootstrap.bundle.min.js') }}"></script>
     {{-- <script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script> --}}
     <script>
         $(function(){
@@ -317,6 +324,8 @@
 
         $('#tahun').val(tahun).trigger('change');
         $('#bulan').val(bulan).trigger('change');
+
+        $('[data-toggle="popover"]').popover() 
     });
     </script>
     <script>
@@ -410,19 +419,21 @@
                                 j++;
                             }
                             }else if(karyawans[0].presensi[j]['status'] == 2) {
-                            presensi[i] = '<td class="center"> i </td>';
+                            presensi[i] = '<td id="'+karyawans[0].presensi[j]['id']+'" class="center" title="Keterangan" data-toggle="popover" data-placement="bottom" data-content="'+karyawans[0].presensi[j]['keterangan']+'"> i </td>';
                             izin[z] = karyawans[0].presensi[j];
                             z ++;
                             $('#presensi').append(presensi[i]);
+                            $('#'+karyawans[0].presensi[j]['id']+'').popover({offset: 10});
                             // presensi[i] = 'i';
                                 if(j < karyawans[0].presensi.length) {
                                 j++;
                             }
                             }else{
-                            presensi[i] = '<td class="center"> s </td>';
+                            presensi[i] = '<td id="'+karyawans[0].presensi[j]['id']+'" class="center" title="Keterangan" data-toggle="popover" data-placement="bottom" data-content="'+karyawans[0].presensi[j]['keterangan']+'"> s </td>';
                             sakit[s] = karyawans[0].presensi[j];
                             s ++;
                             $('#presensi').append(presensi[i]);
+                            $('#'+karyawans[0].presensi[j]['id']+'').popover({offset: 10});
                             // presensi[i] = 's';
                                 if(j < karyawans[0].presensi.length) {
                                 j++;
@@ -470,33 +481,35 @@
                 for (var k=0;k<karyawans.length;k++) {
                 // $('#presensi').empty();
                 var j = 0;
-                $('#presensi').append('<tr id="'+k+'"></tr>')
-                $('#'+k+'').append('<td>'+(k + 1)+'</td>')
-                $('#'+k+'').append('<td>'+karyawans[k].nama+'</td>')
+                $('#presensi').append('<tr id="row'+k+'"></tr>')
+                $('#row'+k+'').append('<td>'+(k + 1)+'</td>')
+                $('#row'+k+'').append('<td>'+karyawans[k].nama+'</td>')
                 for(var i=0;i<new_all_days.length;i++) {
                     if (karyawans[k].presensi[j] != undefined){
                     if(new_all_days[i]==karyawans[k].presensi[j]['tanggal']) {
                         if(karyawans[k].presensi[j]['status'] == 1) {
                             presensi[i] = '<td class="center"> v </td>';
-                            $('#'+k+'').append(presensi[i]);
+                            $('#row'+k+'').append(presensi[i]);
                             // presensi[i] = 'v';
                                 if(j < karyawans[k].presensi.length){
                                 j++;
                             }
                             }else if(karyawans[k].presensi[j]['status'] == 2) {
-                            presensi[i] = '<td class="center"> i </td>';
+                            presensi[i] = '<td id="'+karyawans[k].presensi[j]['id']+'" class="center" title="Keterangan" data-toggle="popover" data-placement="bottom" data-content="'+karyawans[k].presensi[j]['keterangan']+'"> i </td>';
                             izin[z] = karyawans[k].presensi[j];
                             z ++;
-                            $('#'+k+'').append(presensi[i]);
+                            $('#row'+k+'').append(presensi[i]);
+                            $('#'+karyawans[k].presensi[j]['id']+'').popover({offset: 10});
                             // presensi[i] = 'i';
                                 if(j < karyawans[k].presensi.length) {
                                 j++;
                             }
                             }else{
-                            presensi[i] = '<td class="center"> s </td>';
+                            presensi[i] = '<td id="'+karyawans[k].presensi[j]['id']+'" class="center" title="Keterangan" data-toggle="popover" data-placement="bottom" data-content="'+karyawans[k].presensi[j]['keterangan']+'"> s </td>';
                             sakit[s] = karyawans[k].presensi[j];
                             s ++;
-                            $('#'+k+'').append(presensi[i]);
+                            $('#row'+k+'').append(presensi[i]);
+                            $('#'+karyawans[k].presensi[j]['id']+'').popover({offset: 10});
                             // presensi[i] = 's';
                                 if(j < karyawans[k].presensi.length) {
                                 j++;
@@ -504,12 +517,12 @@
                             }
                     }else {
                         presensi[i] = '<td class="center"> . </td>';
-                        $('#'+k+'').append(presensi[i]);
+                        $('#row'+k+'').append(presensi[i]);
                         // presensi[i] = '.';
                     }
                 }else {
                         presensi[i] = '<td class="center"> . </td>';
-                        $('#'+k+'').append(presensi[i]);
+                        $('#row'+k+'').append(presensi[i]);
                         // presensi[i] = '.';
                     }
                     // console.log(presensi);
