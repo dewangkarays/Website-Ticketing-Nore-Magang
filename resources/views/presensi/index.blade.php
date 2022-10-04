@@ -265,6 +265,219 @@
     <script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
     {{-- <script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script> --}}
     <script>
+        $(function(){
+
+        
+        function toIsoString(date) {
+            var tzo = -date.getTimezoneOffset(),
+                dif = tzo >= 0 ? '+' : '-',
+                pad = function(num) {
+                    return (num < 10 ? '0' : '') + num;
+                };
+
+            return date.getFullYear() +
+                '-' + pad(date.getMonth() + 1) +
+                '-' + pad(date.getDate()) +
+                'T' + pad(date.getHours()) +
+                ':' + pad(date.getMinutes()) +
+                ':' + pad(date.getSeconds()) +
+                dif + pad(Math.floor(Math.abs(tzo) / 60)) +
+                ':' + pad(Math.abs(tzo) % 60);
+            }
+
+        var tahun = new Date().getFullYear();
+        var bulan = new Date().getMonth() + 1;
+
+        var filter = tahun + "/" + bulan + "/ 01";
+        
+        function getAllDaysInMonth(year, month) {
+            const date = new Date(filter);
+            const dates = [];
+
+            while (date.getMonth() === month) {
+                dates.push(new Date(date));
+                date.setDate(date.getDate() + 1);
+            }
+            return dates;
+            }
+        
+        var tanggal = new Date(filter);
+        var all_days = getAllDaysInMonth(tanggal.getFullYear(), tanggal.getMonth());
+
+        const new_all_days = [];
+        for (var i = 0;i<all_days.length;i++){
+            new_all_days[i] = toIsoString(all_days[i]).replace(/T.+/, '')
+        }
+        // console.log(new_all_days.length);
+    
+        // console.log(('0'+bulan).length)
+        if (bulan.length == 1) {
+            bulan = '0'+bulan;
+        }
+        var user_id = $('#nama').data('user_id');
+        var role = $('#nama').data('role');
+
+        if(role != 1){
+
+        $.ajax({
+                url : '{{ url("gettotalizin")}}/'+tahun+user_id,
+                type: 'get',
+                dataType: 'json',
+                success : function(izin){
+                var total_izin = izin[0].presensi.length;
+                $('#sisa_cuti').empty();
+                $('#sisa_cuti').append(12 - total_izin);
+                }
+        })
+    }
+
+        if(role != 1){
+            $.ajax({
+                url : '/getpresensi/'+tahun+'/'+bulan+'/'+user_id+'',
+                type: 'get',
+                dataType: 'json',
+                success : function(karyawans){
+                $('#head').empty();
+                $('#head').append('<th>Nama</th>');
+                for(var m=0;m<new_all_days.length;m++) {
+                $('#head').append('<th>'+new_all_days[m].substr(8)+'</th>');
+                }
+                var presensi = [];
+                var j = 0;
+                var sakit = [];
+                var s = 0;
+                var izin = [];
+                var z = 0;
+                $('#presensi').empty();
+                $('#presensi').append('<td id="nama" data-user_id="{{\Auth::user()->id }}">{{\Auth::user()->nama }}</td>');
+                // console.log(karyawans);
+                // console.log(karyawans[0].presensi.length);
+                for(var i=0;i<new_all_days.length;i++) {
+                    if (karyawans[0].presensi[j] != undefined){
+                    if(new_all_days[i]==karyawans[0].presensi[j]['tanggal']) {
+                        if(karyawans[0].presensi[j]['status'] == 1) {
+                            presensi[i] = '<td class="center"> v </td>';
+                            $('#presensi').append(presensi[i]);
+                            // presensi[i] = 'v';
+                                if(j < karyawans[0].presensi.length){
+                                j++;
+                            }
+                            }else if(karyawans[0].presensi[j]['status'] == 2) {
+                            presensi[i] = '<td class="center"> i </td>';
+                            izin[z] = karyawans[0].presensi[j];
+                            z ++;
+                            $('#presensi').append(presensi[i]);
+                            // presensi[i] = 'i';
+                                if(j < karyawans[0].presensi.length) {
+                                j++;
+                            }
+                            }else{
+                            presensi[i] = '<td class="center"> s </td>';
+                            sakit[s] = karyawans[0].presensi[j];
+                            s ++;
+                            $('#presensi').append(presensi[i]);
+                            // presensi[i] = 's';
+                                if(j < karyawans[0].presensi.length) {
+                                j++;
+                            }
+                            }
+                    }else {
+                        presensi[i] = '<td class="center"> . </td>';
+                        $('#presensi').append(presensi[i]);
+                        // presensi[i] = '.';
+                    }
+                }else {
+                        presensi[i] = '<td class="center"> . </td>';
+                        $('#presensi').append(presensi[i]);
+                        // presensi[i] = '.';
+                    }
+                    // console.log(presensi);
+                }
+                $('#izin').empty();
+                $('#sakit').empty();
+                $('#izin').append(izin.length);
+                $('#sakit').append(sakit.length);
+                }
+            });
+        } else {
+            $.ajax({
+                url : '/getpresensi/'+tahun+'/'+bulan+'/'+user_id+'',
+                type: 'get',
+                dataType: 'json',
+                success : function(karyawans){
+                $('#head').empty();
+                $('#head').append('<th>No</th>');
+                $('#head').append('<th id="nama" data-role="{{ \Auth::user()->role }}" data-user_id="{{\Auth::user()->id }}">Nama</th>');
+                for(var n=0;n<new_all_days.length;n++) {
+                $('#head').append('<th>'+new_all_days[n].substr(8)+'</th>');
+                }
+                var presensi = [];
+                var sakit = [];
+                var s = 0;
+                var izin = [];
+                var z = 0;
+                $('#presensi').empty();
+                // $('#presensi').append('<td id="nama" data-user_id="{{\Auth::user()->id }}">{{\Auth::user()->nama }}</td>');
+                // console.log(karyawans);
+                // console.log(karyawans[0].presensi.length);
+                for (var k=0;k<karyawans.length;k++) {
+                // $('#presensi').empty();
+                var j = 0;
+                $('#presensi').append('<tr id="'+k+'"></tr>')
+                $('#'+k+'').append('<td>'+(k + 1)+'</td>')
+                $('#'+k+'').append('<td>'+karyawans[k].nama+'</td>')
+                for(var i=0;i<new_all_days.length;i++) {
+                    if (karyawans[k].presensi[j] != undefined){
+                    if(new_all_days[i]==karyawans[k].presensi[j]['tanggal']) {
+                        if(karyawans[k].presensi[j]['status'] == 1) {
+                            presensi[i] = '<td class="center"> v </td>';
+                            $('#'+k+'').append(presensi[i]);
+                            // presensi[i] = 'v';
+                                if(j < karyawans[k].presensi.length){
+                                j++;
+                            }
+                            }else if(karyawans[k].presensi[j]['status'] == 2) {
+                            presensi[i] = '<td class="center"> i </td>';
+                            izin[z] = karyawans[k].presensi[j];
+                            z ++;
+                            $('#'+k+'').append(presensi[i]);
+                            // presensi[i] = 'i';
+                                if(j < karyawans[k].presensi.length) {
+                                j++;
+                            }
+                            }else{
+                            presensi[i] = '<td class="center"> s </td>';
+                            sakit[s] = karyawans[k].presensi[j];
+                            s ++;
+                            $('#'+k+'').append(presensi[i]);
+                            // presensi[i] = 's';
+                                if(j < karyawans[k].presensi.length) {
+                                j++;
+                            }
+                            }
+                    }else {
+                        presensi[i] = '<td class="center"> . </td>';
+                        $('#'+k+'').append(presensi[i]);
+                        // presensi[i] = '.';
+                    }
+                }else {
+                        presensi[i] = '<td class="center"> . </td>';
+                        $('#'+k+'').append(presensi[i]);
+                        // presensi[i] = '.';
+                    }
+                    // console.log(presensi);
+                }
+            }
+                $('#izin').empty();
+                $('#sakit').empty();
+                $('#izin').append(izin.length);
+                $('#sakit').append(sakit.length);
+                }
+            });
+        }
+    });
+    </script>
+    <script>
         // change date to local timezone
         function toIsoString(date) {
             var tzo = -date.getTimezoneOffset(),
