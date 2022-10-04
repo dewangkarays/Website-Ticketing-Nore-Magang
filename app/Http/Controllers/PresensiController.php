@@ -92,6 +92,7 @@ class PresensiController extends Controller
         $presensi->status = $request->get('status');
         $presensi->user_id = $request->get('user_id');
         $presensi->keterangan = $request->get('keterangan');
+
         $check = Presensi::where('user_id',$request->get('user_id'))
         ->where('tanggal',$request->get('tanggal'))
         ->get();
@@ -99,6 +100,22 @@ class PresensiController extends Controller
         if(count($check) != 0) {
             return redirect('/presensi')->with('error', 'Presensi Sudah Diisi!');
         }
+
+        $file = $request->file('bukti');
+        $destinasi = config('app.upload_url').'bukti_ketidakhadiran';
+
+        if ($file) {
+            $nama = Auth::id()."_".time().".".$file->getClientOriginalName();
+            $img = \Image::make($file->getRealPath());
+            $img->save($destinasi.'/'.$nama);
+
+            if ($img) {
+                $presensi->bukti = $destinasi.'/'.$nama;
+            }
+        }
+
+        // dd($file);
+
         $presensi->save();
         
         return redirect('/presensi')->with('success', 'Presensi Saved!');
