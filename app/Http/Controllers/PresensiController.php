@@ -47,10 +47,9 @@ class PresensiController extends Controller
 
         $sisa_cuti = 12 - $izin;
 
-        // foreach($presensi_all as $pres)
-        // dd($dates);
-        // dd(count($karyawans_all[0]['presensi']));
-        return view("presensi.index",compact('dates','tanggal','presensi','sakit','izin','sisa_cuti','karyawans','presensi_all','sakit_all','izin_all','karyawans_all'));
+        $years = Presensi::selectRaw('year(tanggal) as tahun')->whereNotNull('status')->groupBy('tahun')->orderBy('tahun')->get();
+
+        return view("presensi.index",compact('dates','tanggal','presensi','sakit','izin','sisa_cuti','karyawans','presensi_all','sakit_all','izin_all','karyawans_all','years'));
     }
 
     /**

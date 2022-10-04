@@ -30,13 +30,12 @@
                 <div class="col-lg-3 d-flex">
                     <select id="tahun" name="tahun" class="form-control select-search">
                             <option value="">--Tahun--</option>
-                            <option value=2019>2019</option>
-                            <option value=2020>2020</option>
-                            <option value=2021>2021</option>
-                            <option value=2022>2022</option>
+                            @foreach ($years as $year)
+                            <option value={{ $year->tahun }}>{{ $year->tahun }}</option>
+                            @endforeach
                     </select>
                     <select id="bulan" name="bulan" class="form-control select-search">
-                        <option value="">--bulan--</option>
+                        <option value="">--Bulan--</option>
                         @foreach(config('custom.bulan') as $key => $value)
                             <option value="{{$key}}">{{$value}}</option>
                         @endforeach
@@ -138,11 +137,10 @@
 				<a href="{{ route('presensi.create') }}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Presensi</button></a>
                 <div class="col-lg-3 d-flex">
                     <select id="tahun" name="tahun" class="form-control select-search">
-                            <option value="">--Tahun--</option>
-                            <option value=2019>2019</option>
-                            <option value=2020>2020</option>
-                            <option value=2021>2021</option>
-                            <option value=2022>2022</option>
+                        <option value="">--Tahun--</option>
+                        @foreach ($years as $year)
+                        <option value={{ $year->tahun }}>{{ $year->tahun }}</option>
+                        @endforeach
                     </select>
                     <select id="bulan" name="bulan" class="form-control select-search">
                         <option value="">--bulan--</option>
