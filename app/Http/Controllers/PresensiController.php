@@ -86,11 +86,6 @@ class PresensiController extends Controller
             'user_id'=>'required',
            
         ]);
-        $presensi = new Presensi();
-        $presensi->tanggal = $request->get('tanggal');
-        $presensi->status = $request->get('status');
-        $presensi->user_id = $request->get('user_id');
-        $presensi->keterangan = $request->get('keterangan');
 
         $check = Presensi::where('user_id',$request->get('user_id'))
         ->where('tanggal',$request->get('tanggal'))
@@ -100,16 +95,25 @@ class PresensiController extends Controller
             return redirect('/presensi')->with('error', 'Presensi Sudah Diisi!');
         }
 
-        $file = $request->file('bukti');
-        $destinasi = config('app.upload_url').'bukti_ketidakhadiran';
+        $presensi = new Presensi();
+        $presensi->tanggal = $request->get('tanggal');
+        $presensi->status = $request->get('status');
+        $presensi->user_id = $request->get('user_id');
 
-        if ($file) {
-            $nama = Auth::id()."_".time().".".$file->getClientOriginalName();
-            $img = \Image::make($file->getRealPath());
-            $img->save($destinasi.'/'.$nama);
+        if ($presensi->status != 1) {
+            $presensi->keterangan = $request->get('keterangan');
 
-            if ($img) {
-                $presensi->bukti = $destinasi.'/'.$nama;
+            $file = $request->file('bukti');
+            $destinasi = config('app.upload_url').'bukti_ketidakhadiran';
+
+            if ($file) {
+                $nama = Auth::id()."_".time().".".$file->getClientOriginalName();
+                $img = \Image::make($file->getRealPath());
+                $img->save($destinasi.'/'.$nama);
+
+                if ($img) {
+                    $presensi->bukti = $destinasi.'/'.$nama;
+                }
             }
         }
 
