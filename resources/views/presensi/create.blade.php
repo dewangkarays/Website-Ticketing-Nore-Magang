@@ -107,19 +107,19 @@
 							</div>
 						</div>
                     </fieldset>
-					<div class="form-group row">
+					<div class="form-group row" id="div-keterangan" style="display: none">
 						<label class="col-form-label col-lg-2">Keterangan</label>
 						<div class="col-lg-10">
 							{{-- <div class="summernote form-control border-teal border-1" name="keterangan" placeholder="Keterangan" value="{{old('keterangan')}}"required></div> --}}
 							{{-- <input type="text" name="keterangan" class="summernote form-control border-teal border-1" placeholder="Keterangan" value="{{old('keterangan')}}"> --}}
-							<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1"required></textarea>
+							<textarea name="keterangan" id="keterangan" cols="30" rows="10" class="summernote form-control border-teal border-1"></textarea>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="form-group row" id="div-bukti" style="display: none">
                         <label class="col-form-label col-lg-2">Bukti</label>
                         <div class="col-lg-10">
                             <input id="gambar" name="gambar" type="file" class="form-control" onchange="upload_check()">
-                            <span class="form-text text-muted">*bukti jika izin</span>
+                            <span class="form-text text-muted">Lampirkan bukti izin</span>
                         </div>
                     </div>
 					<div class="text-right">
@@ -272,6 +272,17 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#divisi').val($(this).children("option:selected").data('divisi'))
         $('#jabatan').val($(this).children("option:selected").data('jabatan'))
     })
+
+	$('#status').on('change', function() {
+		if ($('#status').val() != 1) {
+			$('#div-keterangan').show();
+			$('#keterangan').prop('required', true);
+			$('#div-bukti').show();
+		} else {
+			$('#div-keterangan').hide();
+			$('#div-bukti').hide();
+		}
+	})
 </script>
 
 @endsection
