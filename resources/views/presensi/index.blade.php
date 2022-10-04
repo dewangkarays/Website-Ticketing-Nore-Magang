@@ -119,10 +119,6 @@
                                 <th>Izin</th>
                                 <td id="izin"></td>
                             </tr>
-                            <tr>
-                                <th>Izin</th>
-                                <td title="Header" data-toggle="popover" data-placement="right" data-content="Content">Popover</td>
-                            </tr>
                         </table>
                     </div>
                 </div>
