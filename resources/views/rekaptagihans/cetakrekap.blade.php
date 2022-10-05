@@ -164,11 +164,11 @@
     @endif
     @if($lampiran->jenis_lampiran != 2)
         <div align="center">
-            <img src="{{url($lampiran->gambar)}}" style="max-width:90%;max-height:300px;object-fit: cover;">
+            <img src="{{url($lampiran->gambar)}}" style="max-width:90%;max-height:300px;object-fit: cover;margin-bottom: 16px;">
         </div>
     @else
         <div align="center">
-            <img src="{{url($lampiran->gambar)}}" style="max-width:110%;object-fit: cover;">
+            <img src="{{url($lampiran->gambar)}}" style="max-width:110%;object-fit: cover;margin-bottom: 16px;">
         </div>
     @endif
     @if ($lampiran->jenis_lampiran != $jenis_terakhir)
