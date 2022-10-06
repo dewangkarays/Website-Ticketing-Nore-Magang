@@ -95,19 +95,22 @@ class CutiController extends Controller
 
     public function upload(Request $request, $id) {
         $cuti = Cuti::find($id);
-        
-        if (!(Auth::id() == $cuti->karyawan->id || Auth::id() == $cuti->verifikator2->id || Auth::user()->role == 1)) {
-            return redirect()->back()->with('error', 'Maaf, Anda tidak memiliki hak akses!');
-        } else if ($cuti->verifikator1) {
-            if (!Auth::id() == $cuti->verifikator1->id) {
+        $currentUserId = Auth::id();
+
+        if ($cuti->verifikator_1) {
+            if (!($currentUserId == $cuti->karyawan->id || $currentUserId == $cuti->verifikator2->id || $currentUserId == $cuti->verifikator1->id || Auth::user()->role == 1)) {
+                return redirect()->back()->with('error', 'Maaf, Anda tidak memiliki hak akses!');
+            }
+        } else {
+            if (!($currentUserId == $cuti->karyawan->id || $currentUserId == $cuti->verifikator2->id || Auth::user()->role == 1)) {
                 return redirect()->back()->with('error', 'Maaf, Anda tidak memiliki hak akses!');
             }
         }
 
-        if (Auth::id() == $cuti->verifikator2->id) {
+        if ($currentUserId == $cuti->verifikator2->id) {
             $cuti->catatan_ver_2 = $request->get('catatan2');
         } else if ($cuti->verifikator1) {
-            if (Auth::id() == $cuti->verifikator1->id) {
+            if ($currentUserId == $cuti->verifikator1->id) {
                 $cuti->catatan_ver_1 = $request->get('catatan1');
             }
         } else {
@@ -134,7 +137,7 @@ class CutiController extends Controller
         $file = $request->file('surat_cuti');
 
         if($file){
-            $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
+            $name = $currentUserId."_".time().".".$file->getClientOriginalName();
             
             $img = \Image::make($file->getRealPath());
             $img->save($tujuan_upload.'/'.$name);
