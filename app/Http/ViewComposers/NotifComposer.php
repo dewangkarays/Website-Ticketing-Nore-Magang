@@ -40,14 +40,7 @@ class NotifComposer
         )
         ->where('status', '<', '3')
         ->count();
-        $unverifiedcutis = Cuti::where(
-            function($q) {
-                $q->where('verifikasi_2', '<', '2')
-                    ->orWhere('verifikasi_1', '<', '2');
-            }
-        )
-        ->where('status', '<', '3')
-        ->count();
+        $unverifiedcutis = Cuti::where('status', '1')->count();
         $view->with(compact('expired','admunpaid','userunpaid','confirmpayments','unverifiedcutiv','unverifiedcutis'));
     }
 }
