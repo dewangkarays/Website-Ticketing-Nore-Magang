@@ -58,15 +58,12 @@
 								<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
 							</div>
 						</div>
-
-
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Alamat</label>
 							<div class="col-lg-10">
 								<input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat" value="{{ $user->alamat }} ">
 							</div>
 						</div>
-						
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Jumlah Update Task</label>
 							<div class="col-lg-10">
@@ -95,12 +92,6 @@
 										<option {{ $user->role == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
 										@endif
 									@endforeach
-                                    {{-- <option value="1" {{ $user->role == '1' ? 'selected' : '' }}>Super Admin</option>
-									<option value="10" {{ $user->role == '10' ? 'selected' : '' }}>Karyawan</option>
-									<option value="20" {{ $user->role == '20' ? 'selected' : '' }}>Keuangan</option>
-                                    <option value="80" {{ $user->role == '80' ? 'selected' : '' }}>Premium</option>
-                                    <option value="90" {{ $user->role == '90' ? 'selected' : '' }}>Prioritas</option>
-                                    <option value="99" {{ $user->role == '99' ? 'selected' : '' }}>Simpel</option> --}}
                                 </select>
 							</div>
 						</div>
@@ -128,6 +119,18 @@
 									<option value="{{ $atasan->id }}" >{{ $atasan->nama }}</option>
 									@endforeach
                                 </select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Jatah Cuti</label>
+							<div class="col-lg-10">
+								<input type="text" name="jatah_cuti" class="form-control border-teal border-1 phone-number" required value="{{ $user->jatah_cuti }}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Sisa Cuti</label>
+							<div class="col-lg-10">
+								<input type="text" name="sisa_cuti" class="form-control border-teal border-1 phone-number" value="{{ $user->sisa_cuti }}">
 							</div>
 						</div>
 					</fieldset>
