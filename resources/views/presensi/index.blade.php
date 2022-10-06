@@ -7,6 +7,22 @@
         .center {
             text-align: center;
         }
+        .left-sticky {
+            position: sticky;
+            left: 0;
+            background: white;
+        }
+        table thead th {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index:1;
+        }
+        .top-sticky {
+            position: sticky;
+            left: 0;
+            z-index: 2;
+        }
     </style>
 @endsection
 @section('content')
@@ -20,8 +36,8 @@
 		</div>
 	</div>
 	<!-- /page header -->
-    @if(\Auth::user()->role == 1)
-    <!-- Content area for superadmin-->
+    @if(\Auth::user()->role == 1 || \Auth::user()->role == 20)
+    <!-- Content area for superadmin and Finance-->
     <div class="content">
         <!-- Hover rows -->
 		<div id="card-presensi" class="card">
@@ -46,7 +62,7 @@
             </div>
 
             <div class="card-body">
-                    <table id="table" class="table datatable-basic table-hover" style="display: block;overflow-x: auto">
+                    <table id="table" class="table datatable-basic table-hover" style="display: block;overflow-x: auto;table-layout: auto;width: 100%;max-height:500px;">
                         <thead id="head">
                             <tr> 
                                 <th>No</th>
@@ -395,13 +411,18 @@
         }
         var user_id = $('#nama').data('user_id');
         var role = $('#nama').data('role');
+        if (role == 20) {
+            user_id = 1;
+        }
         // console.log(user_id);
-        if(role != 1){
+        // console.log(role);
+        if(role != 1 && role != 20){
             $.ajax({
                 url : '/getpresensi/'+tahun+'/'+bulan+'/'+user_id+'',
                 type: 'get',
                 dataType: 'json',
                 success : function(karyawans){
+                    console.log("if success");
                 $('#head').empty();
                 $('#head').append('<th>Nama</th>');
                 for(var m=0;m<new_all_days.length;m++) {
@@ -495,9 +516,10 @@
                 type: 'get',
                 dataType: 'json',
                 success : function(karyawans){
+                    console.log("else success");
                 $('#head').empty();
                 $('#head').append('<th>No</th>');
-                $('#head').append('<th id="nama" data-role="{{ \Auth::user()->role }}" data-user_id="{{\Auth::user()->id }}">Nama</th>');
+                $('#head').append('<th id="nama" data-role="{{ \Auth::user()->role }}" class="top-sticky" data-user_id="{{\Auth::user()->id }}">Nama</th>');
                 for(var n=0;n<new_all_days.length;n++) {
                 $('#head').append('<th>'+new_all_days[n].substr(8)+'</th>');
                 }
@@ -519,7 +541,7 @@
                 var j = 0;
                 $('#presensi').append('<tr id="row'+k+'"></tr>')
                 $('#row'+k+'').append('<td>'+(k + 1)+'</td>')
-                $('#row'+k+'').append('<td>'+karyawans[k].nama+'</td>')
+                $('#row'+k+'').append('<td class="left-sticky">'+karyawans[k].nama+'</td>')
                 for(var i=0;i<new_all_days.length;i++) {
                     if (karyawans[k].presensi[j] != undefined){
                     if(new_all_days[i]==karyawans[k].presensi[j]['tanggal']) {
