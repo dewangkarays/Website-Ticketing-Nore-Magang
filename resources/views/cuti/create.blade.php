@@ -107,6 +107,7 @@ Dengan ini saya mengajukan permohonan izin cuti selama # hari kerja pada tanggal
 								</textarea>
 							</div>
 						</div>
+						@if (Auth::user()->role ==1)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Sisa Cuti</label>
 							<div class="col-lg-10">
@@ -115,6 +116,16 @@ Dengan ini saya mengajukan permohonan izin cuti selama # hari kerja pada tanggal
 								<input type="hidden" name="jumlah_hari" id="jumlah_hari">
 							</div>
 						</div>
+						@else
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Sisa Cuti</label>
+							<div class="col-lg-10">
+								<label class="col-form-label col-lg-2" id="sisa_cuti_text">{{$sisa_cuti}}</label>
+								<input type="hidden" name="sisa_cuti_count" id="sisa_cuti_count" value="{{$sisa_cuti}}">
+								<input type="hidden" name="jumlah_hari" id="jumlah_hari">
+							</div>
+						</div>
+						@endif
 					</fieldset>
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>

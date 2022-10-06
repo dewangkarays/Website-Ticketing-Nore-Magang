@@ -165,6 +165,11 @@ class UserController extends Controller
             $data['atasan_id'] = $user->atasan_id;
         }
 
+        if ($data['sisa_cuti'] > $data['jatah_cuti']) {
+
+            return redirect()->back()->with('error', 'Sisa cuti melebihi jatah cuti!');
+        }
+
         $user->update($data);
 
         return redirect('/users')->with('success', 'User updated!');
