@@ -36,6 +36,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
+                                <th>Nomor</th>
                                 <th>Divisi</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Akhir</th>
@@ -152,6 +153,10 @@
                         {
                             data: "nama",
                             name: "nama",
+                        },
+                        {
+                            data: "nomor_permohonan_cuti",
+                            name: "nomor_permohonan_cuti",
                         },
                         {
                             data: "divisi",

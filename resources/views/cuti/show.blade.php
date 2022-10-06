@@ -27,6 +27,15 @@
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Detail Pengajuan Cuti</legend>
 						<div class="form-group row">
+                            <label class="col-form-label col-lg-2">Nomor</label>
+                            <div class="col-lg-10">
+                                <label class="col-form-label col-lg-10">{{$cuti->nomor_permohonan_cuti}}</label>
+                            </div>
+                        </div>
+
+                        <hr>
+
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
                                 <label class="col-form-label col-lg-10">{{$cuti->karyawan->nama}}</label>
