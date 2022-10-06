@@ -309,11 +309,10 @@ class RekapDptagihanController extends Controller
         $tagihans = Tagihan::where('rekap_dptagihan_id', $id)->get();
 
         foreach($tagihans as $tagihan){
-            // $historyProyek = $historyProyek.$tagihan->proyek->nama_proyek.'<br>';
+            $tagihan->rekap_dptagihan_id = null;
+            $tagihan->status_rekapdp = 5;
 
-            $tagihan->update([
-                'status_rekapdp' => 5,
-            ]);
+            $tagihan->update();
         }
 
         $rekapdp->status = 5;
