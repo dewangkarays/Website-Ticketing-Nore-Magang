@@ -7,6 +7,7 @@ use \Illuminate\Database\Eloquent\Collection;
 
 use App\Model\Cuti;
 use App\Model\User;
+use App\Model\Nomor;
 use Carbon\Carbon;
 use App\Model\Setting;
 use Auth;
@@ -28,9 +29,11 @@ class CutiController extends Controller
         if (Auth::user()->role != 1) {
             $karyawan = User::find(Auth::id());
             $sisa_cuti = $karyawan->sisa_cuti;
+
+            return view('cuti.create', compact('users','karyawans', 'sisa_cuti'));
         }
         // dd($karyawans);
-        return view('cuti.create', compact('users','karyawans', 'sisa_cuti'));
+        return view('cuti.create', compact('users','karyawans'));
     }
 
     public function store(Request $request) {
@@ -81,7 +84,23 @@ class CutiController extends Controller
 
         $cuti->jumlah_hari = $request->jumlah_hari;
 
-        // dd($cuti);
+        //Nomor Permohonan Izin Cuti
+        $nomor = Nomor::first();
+        $npic = $nomor->npic;
+
+        if ($npic == null || $npic == 0) {
+            $npic = 1;
+        } else {
+            $npic++;
+        }
+
+        $npic_pad = str_pad($npic, 3, 0, STR_PAD_LEFT);
+
+        $cuti->nomor_permohonan_cuti = 'NI/PIC/'.$npic_pad.'/'.date('dmY');
+
+        $nomor->npic = $npic;
+        $nomor->update();
+
 
         $cuti->save();
         
