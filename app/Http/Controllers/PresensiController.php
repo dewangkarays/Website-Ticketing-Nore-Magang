@@ -35,6 +35,7 @@ class PresensiController extends Controller
         $presensi_all = Presensi::orderBy('tanggal')->get();
         $sakit_all = Presensi::where('status','3')->count();
         $izin_all = Presensi::where('status','2')->count();          
+        $WFH_all = Presensi::where('status','4')->count();
         // karyawan
         $presensi = Presensi::where('user_id', '166')->orderBy('tanggal')->get();
         $karyawans = User::where('id', \Auth::user()->id)->with(['presensi' => function ($q) {
@@ -44,12 +45,13 @@ class PresensiController extends Controller
         // dd($dates);
         $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status','3')->count();
         $izin = Presensi::where('user_id', \Auth::user()->id)->where('status','2')->count();     
-
+        $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status','4')->count(); 
+       
         $sisa_cuti = 12 - $izin;
 
         $years = Presensi::selectRaw('year(tanggal) as tahun')->whereNotNull('status')->groupBy('tahun')->orderBy('tahun')->get();
 
-        return view("presensi.index",compact('dates','tanggal','presensi','sakit','izin','sisa_cuti','karyawans','presensi_all','sakit_all','izin_all','karyawans_all','years'));
+        return view("presensi.index",compact('dates','tanggal','presensi','sakit','izin','sisa_cuti','karyawans','presensi_all','sakit_all','izin_all','karyawans_all','years','WFH',));
     }
 
     /**
