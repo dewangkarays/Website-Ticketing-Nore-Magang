@@ -50,8 +50,8 @@
         @foreach ($invoices as $invoice)
         <tr>
             <td>
-                @if ($invoice->nama_proyek)
-                {{$invoice->nama_proyek}}
+                @if ($invoice->proyek->nama_proyek)
+                {{$invoice->proyek->nama_proyek}}
                 @elseif ($invoice->proyek->website)
                 {{$invoice->proyek->website}}
                 @else
