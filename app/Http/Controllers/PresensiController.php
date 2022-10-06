@@ -186,16 +186,8 @@ class PresensiController extends Controller
 
     public function getpresensi($tahun, $bulan, $id)
     {
-        // dd($id);
-        // $bulan = 10;
-        // dd(substr($id, 0, 4)); //tahun
-        // dd(substr($id, 4, 2)); //bulan
-        // dd(substr($id, 6)); //user id
         $check = User::find($id);
-        // dd($check);
-        // $month = Carbon::now()->today()->subMonth()->month;
-        // $year = Carbon::now();
-        // $month = Carbon::now();
+
         $year = intval($tahun);
         $month = intval($bulan);
         $start = Carbon::parse($month)->startOfMonth();
@@ -213,77 +205,14 @@ class PresensiController extends Controller
             // $q->orderBy('tanggal'); 
         }])
         ->get();
-
-        // $presensi = [];
-        // $j = 0;
-        // for($i=0;$i<count($dates);$i++) {
-        //     if($dates[$i]==@$karyawans[0]['presensi'][$j]['tanggal']) {
-        //         if($karyawans[0]['presensi'][$j]['status'] == 1) {
-        //             // <td class="center"> v </td>
-        //             $presensi[$i] = 'v';
-        //                 if($j < count($karyawans[0]['presensi'])){
-        //                 $j++;
-        //             }
-        //             }elseif($karyawans[0]['presensi'][$j]['status'] == 2) {
-        //             // <td class="center"> i </td>
-        //             $presensi[$i] = 'i';
-        //                 if($j < count($karyawans[0]['presensi'])) {
-        //                 $j++;
-        //             }
-        //             }else{
-        //             // <td class="center"> s </td>
-        //             $presensi[$i] = 's';
-        //                 if($j < count($karyawans[0]['presensi'])) {
-        //                 $j++;
-        //             }
-        //             }
-        //     }else {
-        //         // <td class="center"> . </td>
-        //         $presensi[$i] = '.';
-        //     }
-        // }
         return response()->json(@$karyawans);
+
     } else {
         @$karyawans = User::where('role','<=','50')->where('role','>=','10')->with(['presensi' => function ($q) use ($month, $year) {
             $q->whereYear('tanggal','=',$year)->whereMonth('tanggal','=',$month)->orderBy('tanggal'); 
             // $q->orderBy('tanggal'); 
         }])
         ->get();
-
-        //   $presensi = [];
-        //   $j = 0;
-        //   for($k=0;$k<count($karyawans);$k++){
-        //     for($i=0;$i<count($dates);$i++) {
-        //         if(count($karyawans[$k]['presensi']) != 0){
-        //         if($dates[$i]==@$karyawans[$k]['presensi'][$j]['tanggal']) {
-        //             if($karyawans[$k]['presensi'][$j]['status'] == 1) {
-        //                 // <td class="center"> v </td>
-        //                 $presensi[$k][$i] = 'v';
-        //                     if($j < count($karyawans[$k]['presensi'])){
-        //                     $j++;
-        //                 }
-        //             }elseif($karyawans[$k]['presensi'][$j]['status'] == 2) {
-        //                 // <td class="center"> i </td>
-        //                 $presensi[$k][$i] = 'i';
-        //                     if($j < count($karyawans[$k]['presensi'])) {
-        //                     $j++;
-        //                 }
-        //             }else{
-        //                 // <td class="center"> s </td>
-        //                 $presensi[$k][$i] = 's';
-        //                     if($j < count($karyawans[$k]['presensi'])) {
-        //                     $j++;
-        //                 }
-        //                 }
-        //         }else {
-        //             // <td class="center"> . </td>
-        //             $presensi[$k][$i] = '.';
-        //         }
-        //         }else{
-        //             $presensi[$k][$i] = 'kosong';
-        //         }
-        //     }
-        // }
           return response()->json(@$karyawans);
     }
     }
