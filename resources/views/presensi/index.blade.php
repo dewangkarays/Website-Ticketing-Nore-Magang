@@ -112,12 +112,20 @@
                     <div class="chart-container">
                         <table class="table datatable-basic table-hover">
                             <tr>
+                                <th>Hadir</th>
+                                <td id="hadir"></td>
+                            </tr>
+                            <tr>
                                 <th>Sakit</th>
                                 <td id="sakit"></td>
                             </tr>
                             <tr>
                                 <th>Izin</th>
                                 <td id="izin"></td>
+                            </tr>
+                            <tr>
+                                <th>WFH</th>
+                                <td id="wfh"></td>
                             </tr>
                         </table>
                     </div>
@@ -206,12 +214,20 @@
                     <div class="chart-container">
                         <table id="table" class="table datatable-basic table-hover">
                                 <tr>
+                                    <th>Hadir</th>
+                                    <td id="hadir"></td>
+                                </tr>
+                                <tr>
                                     <th>Sakit</th>
                                     <td id="sakit"></td>
                                 </tr>
                                 <tr>
                                     <th>Izin</th>
                                     <td id="izin"></td>
+                                </tr>
+                                <tr>
+                                    <th>WFH</th>
+                                    <td id="wfh"></td>
                                 </tr>
                                 <tr>
                                     <th>Sisa Cuti</th>
@@ -393,10 +409,14 @@
                 }
                 var presensi = [];
                 var j = 0;
+                var hadir = [];
+                var h = 0;
                 var sakit = [];
                 var s = 0;
                 var izin = [];
                 var z = 0;
+                var wfh = [];
+                var w = 0;
                 $('#presensi').empty();
                 $('#presensi').append('<td id="nama" data-user_id="{{\Auth::user()->id }}">{{\Auth::user()->nama }}</td>');
                 // console.log(karyawans);
@@ -406,6 +426,8 @@
                     if(new_all_days[i]==karyawans[0].presensi[j]['tanggal']) {
                         if(karyawans[0].presensi[j]['status'] == 1) {
                             presensi[i] = '<td class="center"> v </td>';
+                            hadir[h] = karyawans[0].presensi[j];
+                            h ++;
                             $('#presensi').append(presensi[i]);
                             // presensi[i] = 'v';
                                 if(j < karyawans[0].presensi.length){
@@ -422,11 +444,22 @@
                                 if(j < karyawans[0].presensi.length) {
                                 j++;
                             }
-                            }else{
+                            }else if(karyawans[0].presensi[j]['status'] == 3){
                             var detail_sakit = karyawans[0].presensi[j]['id'];
                             presensi[i] = '<td id="'+karyawans[0].presensi[j]['id']+'" class="center"><a style="text-decoration: none;color: inherit;" href="presensi/'+detail_sakit+'"> s </a></td>';
                             sakit[s] = karyawans[0].presensi[j];
                             s ++;
+                            $('#presensi').append(presensi[i]);
+                            $('#'+karyawans[0].presensi[j]['id']+'').popover({offset: 10});
+                            // presensi[i] = 's';
+                                if(j < karyawans[0].presensi.length) {
+                                j++;
+                            }
+                            }else{
+                            var detail_wfh = karyawans[0].presensi[j]['id'];
+                            presensi[i] = '<td id="'+karyawans[0].presensi[j]['id']+'" class="center"><a style="text-decoration: none;color: inherit;" href="presensi/'+detail_wfh+'"> WFH </a></td>';
+                            wfh[w] = karyawans[0].presensi[j];
+                            w ++;
                             $('#presensi').append(presensi[i]);
                             $('#'+karyawans[0].presensi[j]['id']+'').popover({offset: 10});
                             // presensi[i] = 's';
@@ -446,10 +479,14 @@
                     }
                     // console.log(presensi);
                 }
+                $('#hadir').empty();
                 $('#izin').empty();
                 $('#sakit').empty();
+                $('#wfh').empty();
+                $('#hadir').append(hadir.length);
                 $('#izin').append(izin.length);
                 $('#sakit').append(sakit.length);
+                $('#wfh').append(wfh.length);
                 }
             });
         } else {
@@ -465,10 +502,14 @@
                 $('#head').append('<th>'+new_all_days[n].substr(8)+'</th>');
                 }
                 var presensi = [];
+                var hadir = [];
+                var h = 0;
                 var sakit = [];
                 var s = 0;
                 var izin = [];
                 var z = 0;
+                var wfh = [];
+                var w = 0;
                 $('#presensi').empty();
                 // $('#presensi').append('<td id="nama" data-user_id="{{\Auth::user()->id }}">{{\Auth::user()->nama }}</td>');
                 // console.log(karyawans);
@@ -484,6 +525,8 @@
                     if(new_all_days[i]==karyawans[k].presensi[j]['tanggal']) {
                         if(karyawans[k].presensi[j]['status'] == 1) {
                             presensi[i] = '<td class="center"> v </td>';
+                            hadir[h] = karyawans[k].presensi[j];
+                            h ++;
                             $('#row'+k+'').append(presensi[i]);
                             // presensi[i] = 'v';
                                 if(j < karyawans[k].presensi.length){
@@ -501,11 +544,22 @@
                                 if(j < karyawans[k].presensi.length) {
                                 j++;
                             }
-                            }else{
+                            }else if(karyawans[k].presensi[j]['status'] == 3){
                             var detail_sakit = karyawans[k].presensi[j]['id'];
                             presensi[i] = '<td id="'+karyawans[k].presensi[j]['id']+'" class="center"><a style="text-decoration: none;color: inherit;" href="presensi/'+detail_sakit+'"> s </a></td>';
                             sakit[s] = karyawans[k].presensi[j];
                             s ++;
+                            $('#row'+k+'').append(presensi[i]);
+                            $('#'+karyawans[k].presensi[j]['id']+'').popover({offset: 10});
+                            // presensi[i] = 's';
+                                if(j < karyawans[k].presensi.length) {
+                                j++;
+                            }
+                            }else{
+                            var detail_wfh = karyawans[k].presensi[j]['id'];
+                            presensi[i] = '<td id="'+karyawans[k].presensi[j]['id']+'" class="center"><a style="text-decoration: none;color: inherit;" href="presensi/'+detail_wfh+'"> WFH </a></td>';
+                            wfh[w] = karyawans[k].presensi[j];
+                            w ++;
                             $('#row'+k+'').append(presensi[i]);
                             $('#'+karyawans[k].presensi[j]['id']+'').popover({offset: 10});
                             // presensi[i] = 's';
@@ -526,10 +580,14 @@
                     // console.log(presensi);
                 }
             }
-                $('#izin').empty();
-                $('#sakit').empty();
-                $('#izin').append(izin.length);
-                $('#sakit').append(sakit.length);
+            $('#hadir').empty();
+            $('#izin').empty();
+            $('#sakit').empty();
+            $('#wfh').empty();
+            $('#hadir').append(hadir.length);
+            $('#izin').append(izin.length);
+            $('#sakit').append(sakit.length);
+            $('#wfh').append(wfh.length);
                 }
             });
         }
