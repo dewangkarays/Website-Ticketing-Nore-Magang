@@ -30,6 +30,7 @@
 						<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
                                 <input type="text" name="nama" id="nama" class="form-control border border-1" value="{{\Auth::user()->nama}}" readonly>
+								<input type="hidden" name="user_id" value="{{\Auth::user()->id}}">
                         	</div>
 						</div>
 						@else
