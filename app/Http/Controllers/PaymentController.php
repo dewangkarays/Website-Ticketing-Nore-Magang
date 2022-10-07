@@ -60,6 +60,7 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         //$request->validate([
             // 'user_id'=>'required',
             // 'keterangan'=>'required',
@@ -67,7 +68,7 @@ class PaymentController extends Controller
         //]);
 
         $data = $request->except(['_token', '_method']);
-        if (\Auth::user()->role < 20 || \Auth::user()->role>=30 && \Auth::user()->role<=50) {
+        if (\Auth::user()->role==1 || \Auth::user()->role==20) {
             $data['status'] = 1;
         }
 
@@ -169,15 +170,19 @@ class PaymentController extends Controller
 
             $dataTagihans = Tagihan::where('rekap_tagihan_id', $tagihan->id)->get();
             foreach ($dataTagihans as $dataTagihan) {
-                $dataTagihan->jml_bayar = $dataTagihan->jml_bayar + $tagihan->jml_terbayar;
-                // $dataTagihan->update();
+                $dataTagihan->status_rekap = $tagihan->status;
 
-                $diskon = 0;
-                if ($dataTagihan->diskon != null) {
-                    $diskon = $dataTagihan->diskon;
-                }
+                // $dataTagihan->jml_bayar = $dataTagihan->jml_bayar + $tagihan->jml_terbayar;
+                // // $dataTagihan->update();
 
-                if ($dataTagihan->jml_bayar + $dataTagihan->diskon == $dataTagihan->nominal) {
+                // $diskon = 0;
+                // if ($dataTagihan->diskon != null) {
+                //     $diskon = $dataTagihan->diskon;
+                // }
+
+                if ($dataTagihan->status_rekapdp == 4 && $dataTagihan->status_rekap) {
+                    $dataTagihan->status = 2;
+                } else if ($dataTagihan->status_rekap == 4 && $dataTagihan->uang_muka == 0) {
                     $dataTagihan->status = 2;
                 } else {
                     $dataTagihan->status = 1;
@@ -206,15 +211,23 @@ class PaymentController extends Controller
             
             $dataTagihans = Tagihan::where('rekap_dptagihan_id', $tagihan->id)->get();
             foreach ($dataTagihans as $dataTagihan) {
-                $dataTagihan->jml_bayar = $dataTagihan->jml_bayar + $tagihan->jml_terbayar;
-                // $dataTagihan->update();
+                $dataTagihan->status_rekapdp = $tagihan->status;
 
-                $diskon = 0;
-                if ($dataTagihan->diskon != null) {
-                    $diskon = $dataTagihan->diskon;
-                }
+                // $dataTagihan->jml_bayar = $dataTagihan->jml_bayar + $tagihan->jml_terbayar;
+                // // $dataTagihan->update();
 
-                if ($dataTagihan->jml_bayar + $dataTagihan->diskon == $dataTagihan->nominal) {
+                // $diskon = 0;
+                // if ($dataTagihan->diskon != null) {
+                //     $diskon = $dataTagihan->diskon;
+                // }
+
+                // if ($dataTagihan->jml_bayar + $dataTagihan->diskon == $dataTagihan->nominal) {
+                //     $dataTagihan->status = 2;
+                // } else {
+                //     $dataTagihan->status = 1;
+                // }
+
+                if ($dataTagihan->status_rekapdp == 4 && $dataTagihan->status_rekap) {
                     $dataTagihan->status = 2;
                 } else {
                     $dataTagihan->status = 1;
@@ -593,6 +606,26 @@ class PaymentController extends Controller
                 $tagihan->status=3;
             }
             $tagihan->update();
+
+            //Mengupdate status_rekap
+            $dataTagihans = Tagihan::where('rekap_tagihan_id', $tagihan->id)->get();
+            foreach ($dataTagihans as $dataTagihan) {
+                if($tagihan->jml_terbayar==0){
+                    $dataTagihan->status_rekap = 2;
+                } else {
+                    $dataTagihan->status_rekap = 3;
+                }
+
+                if ($dataTagihan->status_rekapdp == 4 && $dataTagihan->status_rekap == 4) {
+                    $dataTagihan->status = 2;
+                } else if ($dataTagihan->status_rekap == 4 && $dataTagihan->uang_muka==0) {
+                    $dataTagihan->status = 2;
+                } else {
+                    $dataTagihan->status = 0;
+                }
+
+                $dataTagihan->update();
+            }
         }
 
         else if($payment->rekap_dptagihan_id != null){
@@ -605,6 +638,24 @@ class PaymentController extends Controller
                 $tagihan->status=3;
             }
             $tagihan->update();
+
+            //Mengupdate status_rekapdp
+            $dataTagihans = Tagihan::where('rekap_dptagihan_id', $tagihan->id)->get();
+            foreach ($dataTagihans as $dataTagihan) {
+                if($tagihan->jml_terbayar==0){
+                    $dataTagihan->status_rekapdp = 2;
+                } else {
+                    $dataTagihan->status_rekapdp = 3;
+                }
+
+                if ($dataTagihan->status_rekapdp == 4 && $dataTagihan->status_rekap == 4) {
+                    $dataTagihan->status = 2;
+                } else {
+                    $dataTagihan->status = 0;
+                }
+
+                $dataTagihan->update();
+            }
         }
 
         $payment->delete();
