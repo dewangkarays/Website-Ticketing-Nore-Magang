@@ -23,7 +23,7 @@
         <td style="text-transform: uppercase;">
             {{$rekap->nama_tertagih}}
             <tr>
-        <td style="width: 30%;">
+        <td style="width: 40%;">
             {{$rekap->alamat}}
         </td>
         <td style="width:auto;">

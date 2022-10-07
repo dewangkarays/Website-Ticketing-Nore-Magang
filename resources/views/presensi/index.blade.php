@@ -23,6 +23,9 @@
             left: 0;
             z-index: 2;
         }
+        #nama {
+            min-width: 200px;
+        }
     </style>
 @endsection
 @section('content')

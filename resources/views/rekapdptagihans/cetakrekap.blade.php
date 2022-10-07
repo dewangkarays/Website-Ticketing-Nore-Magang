@@ -23,7 +23,7 @@
         </td>
     </tr>
     <tr>
-        <td style="width: 30%;">
+        <td style="width: 40%;">
             {{$rekapdp->alamat}}
         </td>
         <td style="width:auto;">
