@@ -150,86 +150,88 @@ class TagihanController extends Controller
 
             // dd($last_tagihan);
 
-            //Menyimpan data ke rekap dp tagihan
-            $rekapdptagihan = new RekapDptagihan;
-            $rekapdptagihan->user_id = $user->id;
-            $rekapdptagihan->nama = $user->nama;
-            $rekapdptagihan->total =  $last_tagihan->uang_muka;
-            $rekapdptagihan->status = 2;
-            $rekapdptagihan->nama_tertagih = $user->nama;
-            $rekapdptagihan->alamat = $user->alamat ? $user->alamat : "-";
-            $rekapdptagihan->jatuh_tempo = $last_tagihan->masa_berlaku ? $last_tagihan->masa_berlaku : date('Y-m-d');
-            $rekapdptagihan->nama_proyek = $tagihan->proyek->nama_proyek.'<br>';
+            if ($last_tagihan->uang_muka > 0) {
+                //Menyimpan data ke rekap dp tagihan
+                $rekapdptagihan = new RekapDptagihan;
+                $rekapdptagihan->user_id = $user->id;
+                $rekapdptagihan->nama = $user->nama;
+                $rekapdptagihan->total =  $last_tagihan->uang_muka;
+                $rekapdptagihan->status = 2;
+                $rekapdptagihan->nama_tertagih = $user->nama;
+                $rekapdptagihan->alamat = $user->alamat ? $user->alamat : "-";
+                $rekapdptagihan->jatuh_tempo = date('Y-m-d', strtotime(date('y:m:d').'+7 days'));
+                $rekapdptagihan->nama_proyek = $tagihan->proyek->nama_proyek.'<br>';
 
-            if ($request->buat_invoice == 1) {
-                // FORMAT INVOICE
+                if ($request->buat_invoice == 1) {
+                    // FORMAT INVOICE
 
-                $lastno = Nomor::first();
-                if ($lastno) {
-                    if (isset($lastno->ninv)) {
-                        $ninv = $lastno->ninv+1;
-                    } else {
-                        $ninv = 1;
-                    }
-                }
-
-                $invoiceno = 01;
-
-                $invawal = "INV";
-                $nomorinv = $ninv;
-                $noakhir = date('dmY');
-                $no = str_pad($nomorinv,3,"0",STR_PAD_LEFT);
-                $nomor_invoice = $invawal.'/'.$no.'/'.$noakhir;
-                // $lastinv = Tagihan::latest('id')->first();
-                $lastinv = $last_tagihan;
-
-                // dd($data);
-
-                if ($lastinv) {
-                    $diffinv = substr($lastinv->invoice,0,3);
-                    if ($diffinv == 'INV') {
-                        $different = 'no';
-                    } else {
-                        $different = 'yes';
-                    }
-
-                    if ($different == 'yes') {
-                        $lastno = Nomor::first();
-                        if ($lastno) {
-                            $lastno->ninv = $nomorinv;
-                            $lastno->save();
-                        } else {
-                            $lastno['ninv'] = 1;
-                            $lastno = Nomor::create($lastno);
-                        }
-                    } else {
-                        // jika tidak sama
-                        $lastno = Nomor::first();
-                        if ($lastno) {
-                            $lastno->ninv = $nomorinv;
-                            $lastno->save();
-                        } else {
-                            $lastno['ninv'] = 1;
-                            $lastno = Nomor::create($lastno);
-                        }
-                    }
-
-                } else {
                     $lastno = Nomor::first();
                     if ($lastno) {
-                        $lastno->ninv = $nomorinv;
-                        $lastno->save();
-                    } else {
-                        $lastno['ninv'] = 1;
-                        $lastno = Nomor::create($lastno);
+                        if (isset($lastno->ninv)) {
+                            $ninv = $lastno->ninv+1;
+                        } else {
+                            $ninv = 1;
+                        }
                     }
-                }
-                $rekapdptagihan->invoice = $nomor_invoice;
-            } else {
-                $rekapdptagihan->invoice = now();
-            }
 
-            $rekapdptagihan->save();
+                    $invoiceno = 01;
+
+                    $invawal = "INV";
+                    $nomorinv = $ninv;
+                    $noakhir = date('dmY');
+                    $no = str_pad($nomorinv,3,"0",STR_PAD_LEFT);
+                    $nomor_invoice = $invawal.'/'.$no.'/'.$noakhir;
+                    // $lastinv = Tagihan::latest('id')->first();
+                    $lastinv = $last_tagihan;
+
+                    // dd($data);
+
+                    if ($lastinv) {
+                        $diffinv = substr($lastinv->invoice,0,3);
+                        if ($diffinv == 'INV') {
+                            $different = 'no';
+                        } else {
+                            $different = 'yes';
+                        }
+
+                        if ($different == 'yes') {
+                            $lastno = Nomor::first();
+                            if ($lastno) {
+                                $lastno->ninv = $nomorinv;
+                                $lastno->save();
+                            } else {
+                                $lastno['ninv'] = 1;
+                                $lastno = Nomor::create($lastno);
+                            }
+                        } else {
+                            // jika tidak sama
+                            $lastno = Nomor::first();
+                            if ($lastno) {
+                                $lastno->ninv = $nomorinv;
+                                $lastno->save();
+                            } else {
+                                $lastno['ninv'] = 1;
+                                $lastno = Nomor::create($lastno);
+                            }
+                        }
+
+                    } else {
+                        $lastno = Nomor::first();
+                        if ($lastno) {
+                            $lastno->ninv = $nomorinv;
+                            $lastno->save();
+                        } else {
+                            $lastno['ninv'] = 1;
+                            $lastno = Nomor::create($lastno);
+                        }
+                    }
+                    $rekapdptagihan->invoice = $nomor_invoice;
+                } else {
+                    $rekapdptagihan->invoice = now();
+                }
+
+                $rekapdptagihan->save();
+            }
 
             //Menyimpan date ke rekap tagihan
             $rekaptagihan = new RekapTagihan;
@@ -239,7 +241,7 @@ class TagihanController extends Controller
             $rekaptagihan->status = 2;
             $rekaptagihan->nama_tertagih = $user->nama;
             $rekaptagihan->alamat = $user->alamat ? $user->alamat : "-";
-            $rekaptagihan->jatuh_tempo = $last_tagihan->masa_berlaku ? $last_tagihan->masa_berlaku : date('Y-m-d');
+            $rekaptagihan->jatuh_tempo = date('Y-m-d', strtotime(date('y:m:d').'+7 days'));
             $rekaptagihan->nama_proyek = $tagihan->proyek->nama_proyek.'<br>';
 
             if ($request->buat_invoice == 1) {
