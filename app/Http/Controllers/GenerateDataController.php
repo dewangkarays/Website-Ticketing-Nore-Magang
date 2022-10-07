@@ -7,6 +7,7 @@ use App\Model\Payment;
 use App\Model\Tagihan;
 use App\Model\RekapDptagihan;
 use App\Model\RekapTagihan;
+use App\Model\User;
 
 class GenerateDataController extends Controller
 {
@@ -65,6 +66,19 @@ class GenerateDataController extends Controller
             $rekaptagihan->update();
         }
 
-        return redirect('/');
+        return redirect()->back();
+    }
+
+    public function kuota_cuti() {
+        $users = User::whereNull('jatah_cuti')->where('role', '<', '80')->get();
+
+        foreach ($users as $user) {
+            $user->jatah_cuti = 12;
+            $user->sisa_cuti = 12;
+
+            $user->update();
+        }
+
+        return redirect()->back();
     }
 }

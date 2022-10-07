@@ -20,7 +20,8 @@ Route::get('/login',  'LoginController@index')->name('login');
 Route::post('/login',  'LoginController@login');
 Route::get('/logout',  'LoginController@logout');
 Route::get('/del/{id}',  'AttachmentController@destroy');
-Route::get('/generate/nama_proyek/', 'GenerateDataController@nama_proyek')->name('generate.nama_proyek');
+Route::get('/generate/nama_proyek', 'GenerateDataController@nama_proyek');
+Route::get('/generate/kuota_cuti', 'GenerateDataController@kuota_cuti');
 
 
 Route::group(['middleware' => ['auth']], function() {
