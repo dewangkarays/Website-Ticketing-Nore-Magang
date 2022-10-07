@@ -22,9 +22,11 @@
             {{$rekapdp->nama_tertagih}}
         </td>
     </tr>
-    <tr style="width: 200px;">
-        <td>
+    <tr>
+        <td style="width: 30%;">
             {{$rekapdp->alamat}}
+        </td>
+        <td style="width:auto;">
         </td>
     </tr>
 @endsection
