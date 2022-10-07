@@ -22,6 +22,11 @@
     <tr>
         <td style="text-transform: uppercase;">
             {{$rekap->nama_tertagih}}
+            <tr>
+        <td style="width: 30%;">
+            {{$rekap->alamat}}
+        </td>
+        <td style="width:auto;">
         </td>
     </tr>
 
