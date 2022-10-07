@@ -73,7 +73,9 @@ class UserController extends Controller
             'username' => $request->get('username'),
             'password' => bcrypt($request->get('password')),
             'role' => $request->get('role'),
-            'atasan_id' => $request->get('atasan_id')
+            'atasan_id' => $request->get('atasan_id'),
+            'jatah_cuti' => 12,
+            'sisa_cuti' => 12,
         ]);
 
         $user->save();
