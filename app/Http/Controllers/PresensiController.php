@@ -106,7 +106,7 @@ class PresensiController extends Controller
             $presensi->keterangan = $request->get('keterangan');
 
             $file = $request->file('bukti');
-            $destinasi = config('app.upload_url').'bukti_ketidakhadiran';
+            $destinasi = config('app.upload_url').'attachment/bukti_ketidakhadiran';
 
             if ($file) {
                 $nama = Auth::id()."_".time().".".$file->getClientOriginalName();

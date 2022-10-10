@@ -152,7 +152,7 @@ class CutiController extends Controller
 
         $file = $request->except(['_token', '_method','surat_cuti']);
 
-        $tujuan_upload = config('app.upload_url').'surat_cuti';
+        $tujuan_upload = config('app.upload_url').'attachment/surat_cuti';
         $file = $request->file('surat_cuti');
 
         if($file){

@@ -68,7 +68,7 @@ class PaymentClient extends Controller
         //     'tgl_bayar => required'
         // ]);
 
-        $tujuan_upload = config('app.upload_url').'bukti_pembayaran';
+        $tujuan_upload = config('app.upload_url').'attachment/bukti_pembayaran';
         $file = $request->file('bukti_pembayaran');
         // dd($file);
         if($file){
