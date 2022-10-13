@@ -41,12 +41,6 @@
             &nbsp;
         </td>
     </tr> --}}
-
-    <tr style="width: 200px;">
-        <td>
-            {{$rekap->alamat}}
-        </td>
-    </tr>
 @endsection
 
 @section('deskripsi-proyek')
