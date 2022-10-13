@@ -81,4 +81,22 @@ class GenerateDataController extends Controller
 
         return redirect()->back();
     }
+
+    public function lunas_dp_nol() {
+        //Tagihans
+        $tagihans = Tagihan::where('uang_muka', '0')->where('status_rekapdp', '<', '4')->get();
+        foreach ($tagihans as $tagihan) {
+            $tagihan->status_rekapdp = 4;
+            $tagihan->update();
+        }
+
+        //RekapDp
+        $rekapDptagihans = RekapDptagihan::where('total', '0')->where('status', '<', '4')->get();
+        foreach ($rekapDptagihans as $rekapDptagihan) {
+            $rekapDptagihan->status = 4;
+            $rekapDptagihan->update();
+        }
+
+        return redirect()->back();
+    }
 }
