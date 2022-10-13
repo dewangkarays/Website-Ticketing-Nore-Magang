@@ -22,6 +22,7 @@ Route::get('/logout',  'LoginController@logout');
 Route::get('/del/{id}',  'AttachmentController@destroy');
 Route::get('/generate/nama_proyek', 'GenerateDataController@nama_proyek');
 Route::get('/generate/kuota_cuti', 'GenerateDataController@kuota_cuti');
+Route::get('/generate/lunas_dp_nol', 'GenerateDataController@lunas_dp_nol');
 
 
 Route::group(['middleware' => ['auth']], function() {
