@@ -317,7 +317,9 @@ class TagihanController extends Controller
             //Memperbarui rekap dp tagihan id dan rekap tagihan id
             $last_rekapdptagihan = RekapDptagihan::all()->last();
             $last_rekaptagihan = RekapTagihan::all()->last();
-            $last_tagihan->rekap_dptagihan_id = $last_rekapdptagihan->id;
+            if ($last_tagihan->uang_muka > 0) {
+                $last_tagihan->rekap_dptagihan_id = $last_rekapdptagihan->id;
+            }
             $last_tagihan->rekap_tagihan_id = $last_rekaptagihan->id;
             $last_tagihan->update();
 
