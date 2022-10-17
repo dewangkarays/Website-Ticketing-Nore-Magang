@@ -629,18 +629,19 @@
         if(role != 1){
         $('#tahun').on('change', function(){
             tahun = $(this). children("option:selected").val();
-
+            $('#bulan').on('change', function(){
+            bulan = $(this). children("option:selected").val();
         $.ajax({
-                url : '{{ url("gettotalizin")}}/'+tahun+user_id,
+                url : '/getsisacuti/'+tahun+'/'+user_id+'/',
                 type: 'get',
                 dataType: 'json',
-                success : function(izin){
-                var total_izin = izin[0].presensi.length;
+                success : function(sisa_cuti){
                 $('#sisa_cuti').empty();
-                $('#sisa_cuti').append(12 - total_izin);
+                $('#sisa_cuti').append(sisa_cuti);
                 }
         })
     })
+})
     }
     </script>
     <script type="text/javascript">

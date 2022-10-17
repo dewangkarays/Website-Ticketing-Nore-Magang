@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::post('/presensi/store', 'PresensiController@store')->name('presensi.store');
 		Route::get('/presensi/{id}', 'PresensiController@show')->name('presensi.show');
 		Route::get('/getpresensi/{tahun}/{bulan}/{id}', 'PresensiController@getpresensi');
-		Route::get('/gettotalizin/{id}', 'PresensiController@gettotalizin');
+		Route::get('/getsisacuti/{tahun}/{id}', 'PresensiController@getsisacuti');
 
 		// url ajax serverside datatables
 		Route::get('getproyeks', 'ProyekController@getproyeks');
