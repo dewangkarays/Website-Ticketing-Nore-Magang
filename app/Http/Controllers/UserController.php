@@ -93,21 +93,21 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        if ($user->role == '1') {
-            $roleuser = 'Super-Admin';
-        } elseif ($user->role == '10') {
-            $roleuser = 'Karyawan';
-        }elseif($user->role=='20'){
-            $roleuser = 'Keuangan';
-        } elseif ($user->role == '80') {
-            $roleuser = 'Premium';
-        }elseif ($user->role == '90') {
-            $roleuser = 'Prioritas';
-        }elseif ($user->role == '99') {
-            $roleuser = 'Simpel';
-        }
+        // if ($user->role == '1') {
+        //     $roleuser = 'Super-Admin';
+        // } elseif ($user->role == '10') {
+        //     $roleuser = 'Karyawan';
+        // }elseif($user->role=='20'){
+        //     $roleuser = 'Keuangan';
+        // } elseif ($user->role == '80') {
+        //     $roleuser = 'Premium';
+        // }elseif ($user->role == '90') {
+        //     $roleuser = 'Prioritas';
+        // }elseif ($user->role == '99') {
+        //     $roleuser = 'Simpel';
+        // }
 
-        return view('users.show', compact('user','roleuser'));
+        return view('users.show', compact('user'));
     }
 
     /**

@@ -68,7 +68,7 @@
                     <label class="col-form-label col-lg-2">Role</label>
                     <div class="col-lg-10">
                             <span class="form-text">
-                                {{ $roleuser }}
+                                {{ config('custom.role.'.$user->role) }}
                         </span>
                     </div>
                 </div>
