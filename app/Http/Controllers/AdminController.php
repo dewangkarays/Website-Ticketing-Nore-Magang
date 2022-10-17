@@ -9,6 +9,8 @@ use App\Model\Payment;
 use App\Model\Proyek;
 use App\Model\User;
 use App\Model\Pengeluaran;
+use App\Model\Cuti;
+use App\Model\Presensi;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -41,10 +43,18 @@ class AdminController extends Controller
         $pengeluaranlast =  Pengeluaran::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->sum('nominal');
         $pendapatanthis = Payment::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->sum('nominal');
         $pendapatanlast =  Payment::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->sum('nominal');
+        $karyawanhadir = Presensi::where('status', '1')->where('tanggal', date('Y-m-d'))->count();
+        $karyawancutis = Cuti::where('tanggal_mulai', '<=', date('Y-m-d'))->where('tanggal_akhir', '>=', date('Y-m-d'))->get();
+        $karyawanizin = Presensi::where('status', '2')->where('tanggal', date('Y-m-d'))->get();
+        $karyawansakit = Presensi::where('status', '3')->where('tanggal', date('Y-m-d'))->get();
+        $karyawanwfh = Presensi::where('status', '4')->where('tanggal', date('Y-m-d'))->get();
+        $jumlahkaryawan = User::where('role', '<', '80')->where('role', '>', '1')->count();
 
-        // dd($pendapatanthis);
+
+        // dd(date('Y-m-d') == '2022-10-17');
         return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone','member','proyek','simple','prioritas','premium',
-        'pengeluarans','pendapatans','memberlast','memberthis','proyekthis','proyeklast','pengeluaranthis','pengeluaranlast','pendapatanthis','pendapatanlast'));
+        'pengeluarans','pendapatans','memberlast','memberthis','proyekthis','proyeklast','pengeluaranthis','pengeluaranlast','pendapatanthis','pendapatanlast',
+        'karyawanhadir', 'karyawancutis', 'karyawanizin', 'karyawansakit', 'karyawanwfh', 'jumlahkaryawan'));
     }
 
     public function karyawan()

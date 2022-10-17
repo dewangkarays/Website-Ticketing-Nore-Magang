@@ -21,6 +21,145 @@
 		<h4><span class="font-weight-semibold">Info penting</span></h4>
 	</div>
 	<div class="row">
+		<h5><span class="font-weight">Info Karyawan</span></h5>
+	</div>
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="card bg-blue-800">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-users2 icon-4x"></i>
+					</div>
+					
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">Hadir</h3>
+						</div>
+						<div>
+							{{$karyawanhadir}}
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="card bg-blue-800">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-users2 icon-4x"></i>
+					</div>
+					
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">Belum Presensi</h3>
+						</div>
+						<div>
+							{{$jumlahkaryawan - $karyawanhadir - $karyawancutis->count() - $karyawanizin->count() - $karyawansakit->count()}}
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="card bg-blue-800">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-users2 icon-4x"></i>
+					</div>
+					
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">Cuti: {{ $karyawancutis->count() }}</h3>
+						</div>
+						<div>
+							@foreach ($karyawancutis as $karyawancuti)
+								{{$karyawancuti->karyawan->nama}} 
+								@if ($karyawancuti->karyawan->role)
+								({{config('custom.role.'.$karyawancuti->karyawan->role)}})
+								@endif
+								<br>
+							@endforeach
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="card bg-blue-800">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-users2 icon-4x"></i>
+					</div>
+					
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">WFH: {{ $karyawanwfh->count() }}</h3>
+						</div>
+						<div>
+							@foreach ($karyawanwfh as $wfh)
+								{{$wfh->karyawan->nama}}
+								@if ($wfh->karyawan->role)
+								({{config('custom.role.'.$wfh->karyawan->role)}})
+								@endif
+								<br>
+							@endforeach
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="card bg-blue-800">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-users2 icon-4x"></i>
+					</div>
+					
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">Izin: {{ $karyawanizin->count() }}</h3>
+						</div>
+						<div>
+							@foreach ($karyawanizin as $izin)
+								{{$izin->karyawan->nama}}
+								@if ($izin->karyawan->role)
+								({{config('custom.role.'.$izin->karyawan->role)}})
+								@endif
+								<br>
+							@endforeach
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="card bg-blue-800">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-users2 icon-4x"></i>
+					</div>
+					
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">Sakit: {{ $karyawansakit->count() }}</h3>
+						</div>
+						<div>
+							@foreach ($karyawansakit as $sakit)
+								{{$sakit->karyawan->nama}}
+								@if ($sakit->karyawan->role)
+								({{config('custom.role.'.$sakit->karyawan->role)}})
+								@endif
+								<br>
+							@endforeach
+						</div>
+					</div>
+				</blockquote>
+			</div>
+		</div>
+	</div>
+	<div class="row">
 		<h5><span class="font-weight">Info Klien</span></h5>
 	</div>
 	<div class="row">
