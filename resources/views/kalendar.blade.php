@@ -103,7 +103,7 @@
 						}
 
 					return {
-						title: obj.keterangan,
+						title: obj.nama,
 						start: obj.tanggal,
 						color: paint
 					}
