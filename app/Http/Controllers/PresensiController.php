@@ -217,16 +217,17 @@ class PresensiController extends Controller
     }
     }
 
-    public function gettotalizin($id)
+    public function getsisacuti($tahun, $id)
     {
         // dd($id);
-        $year = intval(substr($id, 0, 4));
-        $izin = User::where('id', substr($id, 4))->with(['presensi' => function ($q) use ($year) {
+        $year = intval($tahun);
+        $izin = User::where('id', $id)->with(['presensi' => function ($q) use ($year) {
             $q->whereYear('tanggal','=',$year)->where('status','=', 2); 
             // $q->orderBy('tanggal'); 
         }])
         ->get();
-        // dd(count($sisa_cuti.['presensi']));
-        return response()->json($izin);
+        // dd(count($izin[0]['jatah_cuti']));
+        $sisa_cuti = $izin[0]['jatah_cuti'] - count($izin[0]['presensi']);
+        return response()->json($sisa_cuti);
     }
 }
