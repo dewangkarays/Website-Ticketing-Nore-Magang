@@ -17,8 +17,10 @@ class KalendarController extends Controller
         $presensi = Presensi::where('status', '!=', '1')->get();
 
         foreach ($presensi as $item) {
+            $item['nama'] = $item->karyawan->nama;
             $item['tanggal_mulai'] = $item->tanggal;
             $item['tanggal_akhir'] = $item->tanggal;
+            $item['url'] = '/presensi/'.$item->id;
             switch ($item->status) {
                 case '2':
                     $item['warna'] = '#f54242'; //Merah
@@ -32,13 +34,13 @@ class KalendarController extends Controller
                     $item['warna'] = '#4284f5'; //Biru
                     break;
             }
-            $item['nama'] = $item->karyawan->nama;
         }
 
         $cuti = Cuti::where('status', '2')->get();
 
         foreach ($cuti as $dataCuti) {
             $dataCuti['nama'] = $dataCuti->karyawan->nama;
+            $dataCuti['url'] = '/cuti/'.$dataCuti->id;
             $dataCuti['warna'] = '#7e8082'; //Grey
         }
 
