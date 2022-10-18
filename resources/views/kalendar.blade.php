@@ -94,7 +94,8 @@
 						title: obj.nama,
 						start: obj.tanggal_mulai,
 						end: obj.tanggal_akhir,
-						color: obj.warna
+						color: obj.warna,
+						url: obj.url
 					}
 				})
 
