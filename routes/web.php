@@ -80,7 +80,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/getpresensi/{tahun}/{bulan}/{id}', 'PresensiController@getpresensi');
 		Route::get('/getsisacuti/{tahun}/{id}', 'PresensiController@getsisacuti');
 
-		//Routing Kalendar
+		//Routing Kalender
 		Route::get('/kalender', 'KalendarController@index')->name('kalendar');
 		Route::get('/getkalender', 'KalendarController@getkalender');
 
