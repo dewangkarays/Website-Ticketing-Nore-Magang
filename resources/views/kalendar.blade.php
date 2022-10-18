@@ -63,7 +63,6 @@
 		*
 		* ---------------------------------------------------------------------------- */
 
-
 		// Setup module
 		// ------------------------------
 
@@ -83,62 +82,79 @@
 
 			// Add demo events
 			// ------------------------------
-
+			$.ajax({
+                url : '/getkalender',
+                type: 'get',
+                dataType: 'json',
+                success : function(presensi){
+					// console.log(presensi);
+					let newPresensi = presensi.map(obj => {
+					return {
+						title: obj.keterangan,
+						start: obj.tanggal
+					}
+				})
+// console.log(newPresensi);
 			// Default events
 			var events = [
+				// {
+				// 	title: 'All Day Event',
+				// 	start: '2014-11-01'
+				// },
+				// {
+				// 	title: 'Long Event',
+				// 	start: '2014-11-07',
+				// 	end: '2014-11-10'
+				// },
+				// {
+				// 	id: 999,
+				// 	title: 'Repeating Event',
+				// 	start: '2014-11-09T16:00:00'
+				// },
+				// {
+				// 	id: 999,
+				// 	title: 'Repeating Event',
+				// 	start: '2014-11-16T16:00:00'
+				// },
+				// {
+				// 	title: 'Conference',
+				// 	start: '2014-11-11',
+				// 	end: '2014-11-13'
+				// },
+				// {
+				// 	title: 'Meeting',
+				// 	start: '2014-11-12T10:30:00',
+				// 	end: '2014-11-12T12:30:00'
+				// },
+				// {
+				// 	title: 'Lunch',
+				// 	start: '2014-11-12T12:00:00'
+				// },
+				// {
+				// 	title: 'Meeting',
+				// 	start: '2014-11-12T14:30:00'
+				// },
+				// {
+				// 	title: 'Happy Hour',
+				// 	start: '2014-11-12T17:30:00'
+				// },
+				// {
+				// 	title: 'Dinner',
+				// 	start: '2014-11-12T20:00:00'
+				// },
+				// {
+				// 	title: 'Birthday Party',
+				// 	start: '2014-11-13T07:00:00'
+				// },
+				// {
+				// 	title: 'Click for Google',
+				// 	url: 'http://google.com/',
+				// 	start: '2014-11-28'
+				// },
 				{
-					title: 'All Day Event',
-					start: '2014-11-01'
-				},
-				{
-					title: 'Long Event',
-					start: '2014-11-07',
-					end: '2014-11-10'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2014-11-09T16:00:00'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2014-11-16T16:00:00'
-				},
-				{
-					title: 'Conference',
-					start: '2014-11-11',
-					end: '2014-11-13'
-				},
-				{
-					title: 'Meeting',
-					start: '2014-11-12T10:30:00',
-					end: '2014-11-12T12:30:00'
-				},
-				{
-					title: 'Lunch',
-					start: '2014-11-12T12:00:00'
-				},
-				{
-					title: 'Meeting',
-					start: '2014-11-12T14:30:00'
-				},
-				{
-					title: 'Happy Hour',
-					start: '2014-11-12T17:30:00'
-				},
-				{
-					title: 'Dinner',
-					start: '2014-11-12T20:00:00'
-				},
-				{
-					title: 'Birthday Party',
-					start: '2014-11-13T07:00:00'
-				},
-				{
-					title: 'Click for Google',
-					url: 'http://google.com/',
-					start: '2014-11-28'
+					title: 'test',
+					start: '2022-10-18',
+					color: '#26A69A'
 				}
 			];
 
@@ -162,9 +178,9 @@
 						center: 'title',
 						right: 'dayGridMonth,dayGridWeek,dayGridDay'
 					},
-					defaultDate: '2014-11-12',
-					editable: true,
-					events: events,
+					defaultDate: new Date,
+					editable: false,
+					events: newPresensi,
 					eventLimit: true
 				}).render();
 			}
@@ -224,6 +240,9 @@
 					events: events
 				}).render();
 			}
+
+		}
+			})
 		};
 
 
