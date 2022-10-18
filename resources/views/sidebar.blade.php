@@ -217,7 +217,7 @@ ul{
 					</a>
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('calendar*','presensi*','cuti*', 'verifikasi-cuti*', 'history-cuti*')) ? 'block' : 'none' }};">
 						<li class="nav-item">
-							<a href="/kalendar" class="nav-link {{ (request()->is('calendar*')) ? 'active' : '' }}">
+							<a href="/kalender" class="nav-link {{ (request()->is('calendar*')) ? 'active' : '' }}">
 								<i class="icon-calendar2"></i>
 								<span>
 									Kalendar

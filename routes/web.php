@@ -81,7 +81,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/getsisacuti/{tahun}/{id}', 'PresensiController@getsisacuti');
 
 		//Routing Kalendar
-		Route::get('/kalendar', 'KalendarController@index')->name('kalendar');
+		Route::get('/kalender', 'KalendarController@index')->name('kalendar');
 		Route::get('/getkalender', 'KalendarController@getkalender');
 
 		// url ajax serverside datatables
