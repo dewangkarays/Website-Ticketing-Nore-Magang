@@ -34,8 +34,26 @@
 			
 			<div class="card-body">
 				{{-- <p class="mb-3">FullCalendar is a jQuery plugin that provides a full-sized, drag &amp; drop event calendar like the one below. It uses AJAX to fetch events on-the-fly and is easily configured to use your own feed format. It is visually customizable with a rich API. Example below demonstrates a default view of the calendar with a basic setup: draggable and editable events, and starting date.</p> --}}
-
 				<div class="fullcalendar-basic"></div>
+			<div style="margin-top:30px">
+				<h5>Keterangan: </h5>
+				<div style="padding-bottom: 10px">
+					<button style="background-color: #f54242;width: 100px;height: 20px" class="btn"></button>
+					<span>Sakit
+				</div>
+				<div style="padding-bottom: 10px">
+					<button style="background-color: #f5d742;width: 100px;height: 20px" class="btn"></button>
+					<span>Izin
+				</div>
+				<div style="padding-bottom: 10px">
+					<button style="background-color: #4284f5;width: 100px;height: 20px" class="btn"></button>
+					<span>WFH
+				</div>
+				<div style="padding-bottom: 10px">
+					<button style="background-color: #7e8082;width: 100px;height: 20px" class="btn"></button>
+					<span>Cuti
+				</div>
+			</div>
 			</div>
 		</div>
 
@@ -136,55 +154,55 @@
 			//
 
 			// Define element
-			var calendarAgendaViewElement = document.querySelector('.fullcalendar-agenda');
+			// var calendarAgendaViewElement = document.querySelector('.fullcalendar-agenda');
 
-			// Initialize
-			if(calendarAgendaViewElement) {
-				var calendarAgendaViewInit = new FullCalendar.Calendar(calendarAgendaViewElement, {
-					plugins: [ 'dayGrid', 'timeGrid', 'interaction' ],
-					header: {
-						left: 'prev,next today',
-						center: 'title',
-						right: 'dayGridMonth,timeGridWeek,timeGridDay'
-					},
-					defaultDate: new Date,
-					defaultView: 'timeGridWeek',
-					editable: true,
-					businessHours: true,
-					events: events
-				}).render();
-			}
+			// // Initialize
+			// if(calendarAgendaViewElement) {
+			// 	var calendarAgendaViewInit = new FullCalendar.Calendar(calendarAgendaViewElement, {
+			// 		plugins: [ 'dayGrid', 'timeGrid', 'interaction' ],
+			// 		header: {
+			// 			left: 'prev,next today',
+			// 			center: 'title',
+			// 			right: 'dayGridMonth,timeGridWeek,timeGridDay'
+			// 		},
+			// 		defaultDate: new Date,
+			// 		defaultView: 'timeGridWeek',
+			// 		editable: true,
+			// 		businessHours: true,
+			// 		events: events
+			// 	}).render();
+			// }
 
 
-			//
-			// List view
-			//
+			// //
+			// // List view
+			// //
 
-			// Define element
-			var calendarListViewElement = document.querySelector('.fullcalendar-list');
+			// // Define element
+			// var calendarListViewElement = document.querySelector('.fullcalendar-list');
 
-			// Initialize
-			if(calendarListViewElement) {
-				var calendarListViewInit = new FullCalendar.Calendar(calendarListViewElement, {
-					plugins: [ 'list', 'interaction' ],
-					header: {
-						left: 'prev,next today',
-						center: 'title',
-						right: 'listDay,listWeek,listMonth'
-					},
-					views: {
-						listDay: { buttonText: 'Day' },
-						listWeek: { buttonText: 'Week' },
-						listMonth: { buttonText: 'Month' }
-					},
-					defaultView: 'listMonth',
-					defaultDate: new Date,
-					navLinks: true, // can click day/week names to navigate views
-					editable: true,
-					eventLimit: true, // allow "more" link when too many events
-					events: events
-				}).render();
-			}
+			// // Initialize
+			// if(calendarListViewElement) {
+			// 	var calendarListViewInit = new FullCalendar.Calendar(calendarListViewElement, {
+			// 		plugins: [ 'list', 'interaction' ],
+			// 		header: {
+			// 			left: 'prev,next today',
+			// 			center: 'title',
+			// 			right: 'listDay,listWeek,listMonth'
+			// 		},
+			// 		views: {
+			// 			listDay: { buttonText: 'Day' },
+			// 			listWeek: { buttonText: 'Week' },
+			// 			listMonth: { buttonText: 'Month' }
+			// 		},
+			// 		defaultView: 'listMonth',
+			// 		defaultDate: new Date,
+			// 		navLinks: true, // can click day/week names to navigate views
+			// 		editable: true,
+			// 		eventLimit: true, // allow "more" link when too many events
+			// 		events: events
+			// 	}).render();
+			// }
 
 		}
 			})
