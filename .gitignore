@@ -30,3 +30,10 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+
+# Attachment
+/public/attachment
+#/public/attachment/bukti_kehadiran
+#/public/attachment/bukti_pembayaran
+#/public/attachment/lampiran
+#/public/attachment/surat_cuti
