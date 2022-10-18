@@ -12,7 +12,13 @@ class KalendarController extends Controller
     }
 
     public function getkalender() {
-        $presensi = Presensi::all();
+        $presensi = Presensi::where('status', '!=', '1')->get();
+
+        foreach ($presensi as $item) {
+            $item['nama'] = $item->karyawan->nama;
+        }
+
+        // dd($presensi);
 
         return response()->json($presensi);
     }
