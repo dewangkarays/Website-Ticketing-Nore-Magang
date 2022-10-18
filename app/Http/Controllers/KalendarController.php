@@ -19,6 +19,19 @@ class KalendarController extends Controller
         foreach ($presensi as $item) {
             $item['tanggal_mulai'] = $item->tanggal;
             $item['tanggal_akhir'] = $item->tanggal;
+            switch ($item->status) {
+                case '2':
+                    $item['warna'] = '#f54242'; //Merah
+                    break;
+                
+                case '3':
+                    $item['warna'] = '#f5d742'; //Kuning
+                    break;
+                
+                case '4':
+                    $item['warna'] = '#4284f5'; //Biru
+                    break;
+            }
             $item['nama'] = $item->karyawan->nama;
         }
 
@@ -29,6 +42,7 @@ class KalendarController extends Controller
 
         foreach ($cuti as $dataCuti) {
             $dataCuti['nama'] = $dataCuti->karyawan->nama;
+            $dataCuti['warna'] = '#7e8082'; //Grey
         }
 
         $dataKalendar = new Collection;

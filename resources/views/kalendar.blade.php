@@ -86,26 +86,15 @@
                 url : '/getkalender',
                 type: 'get',
                 dataType: 'json',
-                success : function(presensi){
-					console.log(presensi);
-					let newPresensi = presensi.map(obj => {
-						let paint = ''
-						switch (obj.status) {
-							case 2:
-								paint = '#f5da42';
-								break;
-							case 3:
-								paint = '#f55142';
-								break;
-							case 4:
-								paint = '#42bff5';
-								break;
-						}
+                success : function(dataKalendar){
+					console.log(dataKalendar);
+					dataKalendar = dataKalendar.map(obj => {
 
 					return {
 						title: obj.nama,
-						start: obj.tanggal,
-						color: paint
+						start: obj.tanggal_mulai,
+						end: obj.tanggal_akhir,
+						color: obj.warna
 					}
 				})
 
@@ -135,7 +124,7 @@
 					},
 					defaultDate: new Date,
 					editable: false,
-					events: newPresensi,
+					events: dataKalendar,
 					eventLimit: true
 				}).render();
 			}
