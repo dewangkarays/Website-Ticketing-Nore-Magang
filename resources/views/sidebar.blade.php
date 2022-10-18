@@ -220,7 +220,7 @@ ul{
 							<a href="/kalender" class="nav-link {{ (request()->is('calendar*')) ? 'active' : '' }}">
 								<i class="icon-calendar2"></i>
 								<span>
-									Kalendar
+									Kalender
 								</span>
 							</a>
 						</li>
