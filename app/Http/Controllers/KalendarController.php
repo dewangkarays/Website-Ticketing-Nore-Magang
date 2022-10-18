@@ -35,10 +35,7 @@ class KalendarController extends Controller
             $item['nama'] = $item->karyawan->nama;
         }
 
-        $cuti = Cuti::where('status', '2')
-            ->where('tanggal_mulai', '<=', date('Y-m-d'))
-            ->where('tanggal_akhir', '>=', date('Y-m-d'))
-            ->get();
+        $cuti = Cuti::where('status', '2')->get();
 
         foreach ($cuti as $dataCuti) {
             $dataCuti['nama'] = $dataCuti->karyawan->nama;
