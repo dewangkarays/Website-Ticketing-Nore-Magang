@@ -87,75 +87,30 @@
                 type: 'get',
                 dataType: 'json',
                 success : function(presensi){
-					// console.log(presensi);
+					console.log(presensi);
 					let newPresensi = presensi.map(obj => {
+						let paint = ''
+						switch (obj.status) {
+							case 2:
+								paint = '#f5da42';
+								break;
+							case 3:
+								paint = '#f55142';
+								break;
+							case 4:
+								paint = '#42bff5';
+								break;
+						}
+
 					return {
 						title: obj.keterangan,
-						start: obj.tanggal
+						start: obj.tanggal,
+						color: paint
 					}
 				})
-// console.log(newPresensi);
-			// Default events
+
+				// Default events
 			var events = [
-				// {
-				// 	title: 'All Day Event',
-				// 	start: '2014-11-01'
-				// },
-				// {
-				// 	title: 'Long Event',
-				// 	start: '2014-11-07',
-				// 	end: '2014-11-10'
-				// },
-				// {
-				// 	id: 999,
-				// 	title: 'Repeating Event',
-				// 	start: '2014-11-09T16:00:00'
-				// },
-				// {
-				// 	id: 999,
-				// 	title: 'Repeating Event',
-				// 	start: '2014-11-16T16:00:00'
-				// },
-				// {
-				// 	title: 'Conference',
-				// 	start: '2014-11-11',
-				// 	end: '2014-11-13'
-				// },
-				// {
-				// 	title: 'Meeting',
-				// 	start: '2014-11-12T10:30:00',
-				// 	end: '2014-11-12T12:30:00'
-				// },
-				// {
-				// 	title: 'Lunch',
-				// 	start: '2014-11-12T12:00:00'
-				// },
-				// {
-				// 	title: 'Meeting',
-				// 	start: '2014-11-12T14:30:00'
-				// },
-				// {
-				// 	title: 'Happy Hour',
-				// 	start: '2014-11-12T17:30:00'
-				// },
-				// {
-				// 	title: 'Dinner',
-				// 	start: '2014-11-12T20:00:00'
-				// },
-				// {
-				// 	title: 'Birthday Party',
-				// 	start: '2014-11-13T07:00:00'
-				// },
-				// {
-				// 	title: 'Click for Google',
-				// 	url: 'http://google.com/',
-				// 	start: '2014-11-28'
-				// },
-				{
-					title: 'test',
-					start: '2022-10-18',
-					color: '#26A69A'
-				}
 			];
 
 
@@ -202,7 +157,7 @@
 						center: 'title',
 						right: 'dayGridMonth,timeGridWeek,timeGridDay'
 					},
-					defaultDate: '2014-11-12',
+					defaultDate: new Date,
 					defaultView: 'timeGridWeek',
 					editable: true,
 					businessHours: true,
@@ -233,7 +188,7 @@
 						listMonth: { buttonText: 'Month' }
 					},
 					defaultView: 'listMonth',
-					defaultDate: '2014-11-12',
+					defaultDate: new Date,
 					navLinks: true, // can click day/week names to navigate views
 					editable: true,
 					eventLimit: true, // allow "more" link when too many events
