@@ -38,11 +38,11 @@
 			<div style="margin-top:30px">
 				<h5>Keterangan: </h5>
 				<div style="padding-bottom: 10px">
-					<button style="background-color: #f54242;width: 100px;height: 20px" class="btn"></button>
+					<button style="background-color: #FF1E1E;width: 100px;height: 20px" class="btn"></button>
 					<span>Sakit
 				</div>
 				<div style="padding-bottom: 10px">
-					<button style="background-color: #f5d742;width: 100px;height: 20px" class="btn"></button>
+					<button style="background-color: #610C63;width: 100px;height: 20px" class="btn"></button>
 					<span>Izin
 				</div>
 				<div style="padding-bottom: 10px">

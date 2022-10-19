@@ -23,11 +23,11 @@ class KalendarController extends Controller
             $item['url'] = '/presensi/'.$item->id;
             switch ($item->status) {
                 case '2':
-                    $item['warna'] = '#f5d742'; //Kuning
+                    $item['warna'] = '#610C63'; //Ungu
                     break;
                     
                 case '3':
-                    $item['warna'] = '#f54242'; //Merah
+                    $item['warna'] = '#FF1E1E'; //Merah
                     break;
 
                 case '4':

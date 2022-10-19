@@ -215,9 +215,9 @@ ul{
 							@endif
 						</span>
 					</a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('calendar*','presensi*','cuti*', 'verifikasi-cuti*', 'history-cuti*')) ? 'block' : 'none' }};">
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('kalender*','presensi*','cuti*', 'verifikasi-cuti*', 'history-cuti*')) ? 'block' : 'none' }};">
 						<li class="nav-item">
-							<a href="/kalender" class="nav-link {{ (request()->is('calendar*')) ? 'active' : '' }}">
+							<a href="/kalender" class="nav-link {{ (request()->is('kalender*')) ? 'active' : '' }}">
 								<i class="icon-calendar2"></i>
 								<span>
 									Kalender
