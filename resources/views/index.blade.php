@@ -59,6 +59,27 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
+			@if (Auth::user()->role == 1 || Auth::user()->role == 50 || Auth::user()->role == 60)
+			<div class="card bg-blue-800">
+				<blockquote class="blockquote d-flex py-2 mb-0">
+					<div class="mr-4" style="padding-left: 1.875rem;">
+						<i class="icon-users2 icon-4x"></i>
+					</div>
+					
+					<div>
+						<div class="d-flex">
+							<h3 class="font-weight-semibold mb-0">Belum Presensi</h3>
+						</div>
+						<a href="{{route('belumpresensi')}}" style="color: white">
+							<div>
+								{{$belumpresensi}}
+							</div>
+						</a>
+					</div>
+				</blockquote>
+			</div>
+			
+			@else
 			<div class="card bg-blue-800">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
@@ -70,11 +91,12 @@
 							<h3 class="font-weight-semibold mb-0">Belum Presensi</h3>
 						</div>
 						<div>
-							{{$jumlahkaryawan - $karyawanhadir - $karyawancutis->count() - $karyawanizin->count() - $karyawansakit->count()}}
+							{{$belumpresensi}}
 						</div>
 					</div>
 				</blockquote>
 			</div>
+			@endif
 		</div>
 		<div class="col-lg-4">
 			<div class="card bg-blue-800">
