@@ -20,6 +20,22 @@
 	<div class="row">
 		<h4><span class="font-weight-semibold">Info penting</span></h4>
 	</div>
+	@if (Auth::user()->role >= 10 && Auth::user()->role <= 60)
+	<div style="">
+
+	<a href="{{ route('presensi.create')}}"><button type="button" class="btn rounded-round" style="background-color:#FCE700;"><i class="fa fa-exclamation-circle mr-2" aria-hidden="true"></i>Presensi</button></a>
+	
+							@if (Auth::user()->role == 1)
+								@if($jumlahkaryawan>0)
+									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $jumlahkaryawan}}</span>
+								@endif
+							@else
+								@if($karyawanhadir>0)
+									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $karyawanhadir}}</span>
+								@endif
+							@endif
+		</div>
+		@endif
 	<div class="row">
 		<h5><span class="font-weight">Info Karyawan</span></h5>
 	</div>
@@ -160,7 +176,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<h5><span class="font-weight">Info Klien</span></h5>
+		<!-- <h5><span class="font-weight">Info Klien</span></h5>
 	</div>
 	<div class="row">
 		<div class="col-lg-4">
@@ -331,8 +347,8 @@
 		</div>
 	</div>
 	@if (\Auth::user()->role==1)
-		<div class="row">
-			<h5>Info pendapatan</h5>
+		<div class="row"> -->
+			<!-- <h5>Info pendapatan</h5>
 		</div>
 		<div class="row">
 			<div class="col-lg-4">
@@ -399,8 +415,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<h5>Info pengeluaran</h5>
+		<div class="row"> -->
+			<!-- <h5>Info pengeluaran</h5>
 		</div>
 		<div class="row">
 			<div class="col-lg-4">
@@ -469,8 +485,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<h5>Info net/profit</h5>
+		<div class="row"> -->
+			<!-- <h5>Info net/profit</h5>
 		</div>
 		<div class="row">
 			<div class="col-lg-4">
@@ -590,11 +606,11 @@
 				</blockquote>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- /quick stats boxes -->
 	 <!-- TODAY -->
 	<!-- Quick stats boxes -->
-	<div class="row">
+	<!-- <div class="row">
 		<hr><hr>
 	</div>
 	<div class="row">
@@ -658,15 +674,15 @@
 				</blockquote>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- /quick stats boxes -->
 	<!-- TODAY -->
 	<!-- Quick stats boxes -->
-	<div class="row">
+	<!-- <div class="row">
 		<hr><hr>
-	</div>
+	</div> -->
 	<!-- /quick stats boxes -->
-</div>
+<!-- </div> -->
 
 @endsection
 
