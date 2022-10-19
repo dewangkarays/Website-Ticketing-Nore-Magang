@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\User;
 use App\Model\Presensi;
+use App\Model\Cuti;
 use Auth;
 use Carbon\Carbon;
+use Datatables;
 
 class PresensiController extends Controller
 {
@@ -229,5 +231,41 @@ class PresensiController extends Controller
         // dd(count($izin[0]['jatah_cuti']));
         $sisa_cuti = $izin[0]['jatah_cuti'] - count($izin[0]['presensi']);
         return response()->json($sisa_cuti);
+    }
+
+    public function belumpresensi() {
+        return view('presensi.belumpresensi');
+    }
+
+    public function getbelumpresensi() {
+        // $sudahpresensi = Presensi::select('user_id')->where('tanggal', date('Y-m-d'))->get();
+
+        $karyawancuti = Cuti::select('user_id')
+            ->where('status', '2')
+            ->where('tanggal_mulai', '<=', date('Y-m-d'))
+            ->where('tanggal_akhir', '>=', date('Y-m-d'))
+            ->get();
+
+            // dd($karyawancuti);
+
+        $sudahpresensi = Presensi::select('user_id')
+            ->where('tanggal', date('Y-m-d'))
+            ->get();
+
+            // dd($sudahpresensi);
+
+        $karyawans = User::select('id', 'nama', 'nip', 'telp', 'jabatan', 'role')
+            ->where('role', '>', '1')
+            ->where('role', '<', '80')
+            ->whereNotIn('id', $sudahpresensi)
+            ->whereNotIn('id', $karyawancuti)
+            ->get();
+
+        foreach ($karyawans as $karyawan) {
+            $karyawan['divisi'] = config('custom.role.'.$karyawan->role);
+        }
+
+        // dd($karyawans);
+        return Datatables::of($karyawans)->addIndexColumn()->make(true);
     }
 }
