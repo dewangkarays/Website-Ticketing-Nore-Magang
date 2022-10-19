@@ -74,8 +74,14 @@ class AdminController extends Controller
         $memberlast = User::where('role','>','20')->whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
         $proyekthis =  Proyek::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
         $proyeklast =  Proyek::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
+        $karyawanhadir = Presensi::where('status', '1')->where('tanggal', date('Y-m-d'))->count();
+        $karyawancutis = Cuti::where('tanggal_mulai', '<=', date('Y-m-d'))->where('tanggal_akhir', '>=', date('Y-m-d'))->get();
+        $karyawanizin = Presensi::where('status', '2')->where('tanggal', date('Y-m-d'))->get();
+        $karyawansakit = Presensi::where('status', '3')->where('tanggal', date('Y-m-d'))->get();
+        $karyawanwfh = Presensi::where('status', '4')->where('tanggal', date('Y-m-d'))->get();
+        $jumlahkaryawan = User::where('role', '<', '80')->where('role', '>', '1')->count();
         return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone','member','proyek','simple','prioritas','premium',
-        'memberlast','memberthis','proyekthis','proyeklast'));
+        'memberlast','memberthis','proyekthis','proyeklast', 'karyawanhadir', 'karyawancutis', 'karyawanizin', 'karyawansakit', 'karyawanwfh', 'jumlahkaryawan'));
     }
 
     public function keuangan()
@@ -95,8 +101,14 @@ class AdminController extends Controller
         $memberlast = User::whereYear('created_at','=',Carbon::now()->today()->year)->where('role','>','20')->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
         $proyekthis =  Proyek::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
         $proyeklast =  Proyek::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
+        $karyawanhadir = Presensi::where('status', '1')->where('tanggal', date('Y-m-d'))->count();
+        $karyawancutis = Cuti::where('tanggal_mulai', '<=', date('Y-m-d'))->where('tanggal_akhir', '>=', date('Y-m-d'))->get();
+        $karyawanizin = Presensi::where('status', '2')->where('tanggal', date('Y-m-d'))->get();
+        $karyawansakit = Presensi::where('status', '3')->where('tanggal', date('Y-m-d'))->get();
+        $karyawanwfh = Presensi::where('status', '4')->where('tanggal', date('Y-m-d'))->get();
+        $jumlahkaryawan = User::where('role', '<', '80')->where('role', '>', '1')->count();
         return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone','member','proyek','simple','prioritas','premium',
-        'memberlast','memberthis','proyekthis','proyeklast'));
+        'memberlast','memberthis','proyekthis','proyeklast', 'karyawanhadir', 'karyawancutis', 'karyawanizin', 'karyawansakit', 'karyawanwfh', 'jumlahkaryawan'));
     }
 
     // public function customer()
