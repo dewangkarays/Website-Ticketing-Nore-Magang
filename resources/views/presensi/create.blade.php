@@ -92,7 +92,7 @@
                                 <input type="text" name="tanggal_show" id="tanggal_show" class="form-control border border-1" value="{{date('d F Y')}}" readonly>
                                 <input type="hidden" name="tanggal" id="tanggal" value="{{date('Y-m-d')}}">
                                 @else
-                                <input type="date" name="tanggal" id="tanggal" class="form-control pickadate-accessibility">
+                                <input type="date" name="tanggal" id="tanggal" value="{{date('Y-m-d')}}" class="form-control pickadate-accessibility">
                                 @endif
 							</div>
 						</div>
@@ -209,21 +209,21 @@ var _componentValidation = function() {
 			}
 		},
 		messages: {
-			tanggal_mulai: {
-				required: 'Mohon diisi.'
-			},
-			tanggal_akhir: {
-				required: 'Mohon diisi.'
-			},
-			verifikator_2: {
-				required: 'Pilih salah satu.'
-			},
-			verifikator_1: {
-				required: 'Pilih salah satu.'
-			},
-			alasan: {
-				required: 'Mohon diisi.'
-			},
+			// tanggal_mulai: {
+			// 	required: 'Mohon diisi.'
+			// },
+			// tanggal_akhir: {
+			// 	required: 'Mohon diisi.'
+			// },
+			// verifikator_2: {
+			// 	required: 'Pilih salah satu.'
+			// },
+			// verifikator_1: {
+			// 	required: 'Pilih salah satu.'
+			// },
+			// alasan: {
+			// 	required: 'Mohon diisi.'
+			// },
 		},
 	});
 
@@ -244,6 +244,21 @@ document.addEventListener('DOMContentLoaded', function() {
 		    FormValidation.init();
 		});
 	</script>
+	<script>
+		
+
+		$('.pickadate-accessibility').pickadate({
+		   labelMonthNext: 'Go to the next month',
+		   labelMonthPrev: 'Go to the previous month',
+		   labelMonthSelect: 'Pick a month from the dropdown',
+		   labelYearSelect: 'Pick a year from the dropdown',
+		   selectMonths: true,
+		   selectYears: true,
+		   format: 'yyyy-mm-dd',
+		   max: new Date(),
+		   disable: [1,7],
+	   });
+   </script>
 	<script type="text/javascript">
 		$( document ).ready(function() {
 	        // Default style
