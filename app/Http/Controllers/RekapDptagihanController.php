@@ -424,6 +424,7 @@ class RekapDptagihanController extends Controller
                 ->get();
         } else if ($status == 'history') {
             $rekapdps = RekapDptagihan::where('status','>=','4')
+                ->where('total', '>', '0')
                 ->orderByDesc('updated_at')
                 ->get();
         }
