@@ -79,6 +79,8 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/presensi/{id}', 'PresensiController@show')->name('presensi.show');
 		Route::get('/getpresensi/{tahun}/{bulan}/{id}', 'PresensiController@getpresensi');
 		Route::get('/getsisacuti/{tahun}/{id}', 'PresensiController@getsisacuti');
+		Route::get('/belumpresensi', 'PresensiController@belumpresensi')->name('belumpresensi');
+		Route::get('/getbelumpresensi', 'PresensiController@getbelumpresensi');
 
 		//Routing Kalender
 		Route::get('/kalender', 'KalendarController@index')->name('kalendar');
