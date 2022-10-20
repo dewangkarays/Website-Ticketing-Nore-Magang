@@ -20,38 +20,32 @@
 	<div class="row">
 		<h4><span class="font-weight-semibold">Info penting</span></h4>
 	</div>
-	@if (Auth::user()->role >= 10 && Auth::user()->role <= 60)
+	@if (Auth::user()->role > 1 && Auth::user()->role < 80)
+	@if ($karyawanabsensi < 1)
 	<div style="">
 
-	<a href="{{ route('presensi.create')}}"><button type="button" class="btn rounded-round" style="background-color:#FCE700;"><i class="fa fa-exclamation-circle mr-2" aria-hidden="true"></i>Presensi</button></a>
+	<a href="{{ route('presensi.create')}}"><button type="button" class="btn rounded-round" style="background-color:#FCE700;color:#000000"><i class="fa fa-exclamation-circle mr-2" aria-hidden="true"style="color:#FF1700"></i><b><span style="color:#FF1700">Anda belum Presensi !!</span><b></button></a>
 	
-							@if (Auth::user()->role == 1)
-								@if($jumlahkaryawan>0)
-									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $jumlahkaryawan}}</span>
-								@endif
-							@else
-								@if($karyawanhadir>0)
-									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $karyawanhadir}}</span>
-								@endif
-							@endif
+	
 		</div>
+		@endif
 		@endif
 	<div class="row">
 		<h5><span class="font-weight">Info Karyawan</span></h5>
 	</div>
 	<div class="row">
 		<div class="col-lg-4">
-			<div class="card bg-blue-800">
+		<div class="card"style="background-color:#229c59;">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-users2 icon-4x"></i>
+						<i class="icon-users2 icon-4x"style="color:white"></i>
 					</div>
 					
 					<div>
 						<div class="d-flex">
-							<h3 class="font-weight-semibold mb-0">Hadir</h3>
+							<h3 class="font-weight-semibold mb-0"style="color:white";>Hadir</h3>
 						</div>
-						<div>
+						<div style="color:white">
 							{{$karyawanhadir}}
 						</div>
 					</div>
@@ -60,7 +54,7 @@
 		</div>
 		<div class="col-lg-4">
 			@if (Auth::user()->role == 1 || Auth::user()->role == 50 || Auth::user()->role == 60)
-			<div class="card bg-blue-800">
+			<div class="card"style="background-color:#EDEDED;">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
 						<i class="icon-users2 icon-4x"></i>
@@ -70,7 +64,7 @@
 						<div class="d-flex">
 							<h3 class="font-weight-semibold mb-0">Belum Presensi</h3>
 						</div>
-						<a href="{{route('belumpresensi')}}" style="color: white">
+						<a href="{{route('belumpresensi')}}" style="color:black">
 							<div>
 								{{$belumpresensi}}
 							</div>
@@ -80,7 +74,7 @@
 			</div>
 			
 			@else
-			<div class="card bg-blue-800">
+			<div class="card"style="background-color:#EDEDED;">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
 						<i class="icon-users2 icon-4x"></i>
@@ -99,15 +93,15 @@
 			@endif
 		</div>
 		<div class="col-lg-4">
-			<div class="card bg-blue-800">
+		<div class="card"style="background-color:#7e8082;">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-users2 icon-4x"></i>
+						<i class="icon-users2 icon-4x"style="color:white"></i>
 					</div>
 					
 					<div>
 						<div class="d-flex">
-							<h3 class="font-weight-semibold mb-0">Cuti: {{ $karyawancutis->count() }}</h3>
+							<h3 class="font-weight-semibold mb-0"style="color:white">Cuti: {{ $karyawancutis->count() }}</h3>
 						</div>
 						<div>
 							@foreach ($karyawancutis as $karyawancuti)
@@ -125,15 +119,15 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-4">
-			<div class="card bg-blue-800">
+		<div class="card"style="background-color:#4284f5;">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-users2 icon-4x"></i>
+						<i class="icon-users2 icon-4x"style="color:white"></i>
 					</div>
 					
 					<div>
 						<div class="d-flex">
-							<h3 class="font-weight-semibold mb-0">WFH: {{ $karyawanwfh->count() }}</h3>
+							<h3 class="font-weight-semibold mb-0"style="color:white">WFH: {{ $karyawanwfh->count() }}</h3>
 						</div>
 						<div>
 							@foreach ($karyawanwfh as $wfh)
@@ -149,15 +143,15 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			<div class="card bg-blue-800">
+		<div class="card"style="background-color:#610C63;">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-users2 icon-4x"></i>
+						<i class="icon-users2 icon-4x"style="color:white"></i>
 					</div>
 					
 					<div>
 						<div class="d-flex">
-							<h3 class="font-weight-semibold mb-0">Izin: {{ $karyawanizin->count() }}</h3>
+							<h3 class="font-weight-semibold mb-0"style="color:white;">Izin: {{ $karyawanizin->count() }}</h3>
 						</div>
 						<div>
 							@foreach ($karyawanizin as $izin)
@@ -173,15 +167,15 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			<div class="card bg-blue-800">
+		<div class="card"style="background-color:#FF1E1E;">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
-						<i class="icon-users2 icon-4x"></i>
+						<i class="icon-users2 icon-4x"style="color:white"></i>
 					</div>
 					
 					<div>
 						<div class="d-flex">
-							<h3 class="font-weight-semibold mb-0">Sakit: {{ $karyawansakit->count() }}</h3>
+							<h3 class="font-weight-semibold mb-0"style="color:white">Sakit: {{ $karyawansakit->count() }}</h3>
 						</div>
 						<div>
 							@foreach ($karyawansakit as $sakit)

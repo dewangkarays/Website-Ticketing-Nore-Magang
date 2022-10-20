@@ -81,9 +81,10 @@ class AdminController extends Controller
         $karyawanwfh = Presensi::where('status', '4')->where('tanggal', date('Y-m-d'))->get();
         $jumlahkaryawan = User::where('role', '<', '80')->where('role', '>', '1')->count();
         $belumpresensi = $jumlahkaryawan - $karyawancutis->count() - $karyawanhadir - $karyawanizin->count() - $karyawansakit->count() - $karyawanwfh->count();
-
-        return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone','member','proyek','simple','prioritas','premium',
-        'memberlast','memberthis','proyekthis','proyeklast', 'karyawanhadir', 'karyawancutis', 'karyawanizin', 'karyawansakit', 'karyawanwfh', 'belumpresensi'));
+        $karyawanabsensi= Presensi::where('user_id', \Auth::id())->where('tanggal', date('Y-m-d'))->count();
+    
+return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone','member','proyek','simple','prioritas','premium',
+        'memberlast','memberthis','proyekthis','proyeklast', 'karyawanhadir', 'karyawancutis', 'karyawanizin', 'karyawansakit', 'karyawanwfh', 'belumpresensi','karyawanabsensi'));
     }
 
     public function keuangan()
@@ -110,9 +111,10 @@ class AdminController extends Controller
         $karyawanwfh = Presensi::where('status', '4')->where('tanggal', date('Y-m-d'))->get();
         $jumlahkaryawan = User::where('role', '<', '80')->where('role', '>', '1')->count();
         $belumpresensi = $jumlahkaryawan - $karyawancutis->count() - $karyawanhadir - $karyawanizin->count() - $karyawansakit->count() - $karyawanwfh->count();
-
+        $karyawanabsensi= Presensi::where('user_id', \Auth::id())->where('tanggal', date('Y-m-d'))->count();
+       
         return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone','member','proyek','simple','prioritas','premium',
-        'memberlast','memberthis','proyekthis','proyeklast', 'karyawanhadir', 'karyawancutis', 'karyawanizin', 'karyawansakit', 'karyawanwfh', 'belumpresensi'));
+        'memberlast','memberthis','proyekthis','proyeklast', 'karyawanhadir', 'karyawancutis', 'karyawanizin', 'karyawansakit', 'karyawanwfh', 'belumpresensi','karyawanabsensi'));
     }
 
     // public function customer()
