@@ -55,9 +55,9 @@
                 @else
                 <p></p>
                 @endif
-            </td>
+            {{-- </td> --}}
             {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
-            <td>
+            {{-- <td> --}}
                 @if ($invoice->keterangan_tambahan != null)
                 {!! $invoice->keterangan_tambahan !!}
                 @else

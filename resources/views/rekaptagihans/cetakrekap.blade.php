@@ -48,7 +48,7 @@
     <tbody>
         @foreach ($invoices as $invoice)
         <tr>
-            <td>
+            <td style="vertical-align: top">
                 @if ($invoice->proyek->nama_proyek)
                 {{$invoice->proyek->nama_proyek}}
                 @elseif ($invoice->proyek->website)
@@ -68,9 +68,9 @@
                 @else
                 <p></p>
                 @endif
-            </td>
+            {{-- </td> --}}
             {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
-            <td>
+            {{-- <td> --}}
                 @if ($invoice->keterangan_tambahan != null)
                 {!! $invoice->keterangan_tambahan !!}
                 @else
