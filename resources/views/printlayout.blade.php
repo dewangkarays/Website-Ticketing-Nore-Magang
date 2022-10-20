@@ -144,6 +144,15 @@
         }
         li {font-size:8.8px;
         }
+        .desc-table td {
+            vertical-align: top;
+        }
+        .desc-table td p {
+            margin: 0;
+            text-align: justify;
+            /* padding: 1px; */
+            /* padding: 0; */
+        }
     </style>
 </head>
 
@@ -210,11 +219,11 @@
             </tr>
         </table>
         
-        <table class="main-table" style="margin-top: 15px;line-height: 0.99;">
+        <table class="main-table desc-table" style="margin-top: 15px;line-height: 0.99;">
             <tr>
                 <th align="left" style="width: 20%; height: 20px" class="nore-fontcolor">PROYEK</th>
-                <th align="left" style="width: 30%; height: 20px" class="nore-fontcolor">DESKRIPSI</th>
-                <th align="left" style="width: 30%" class="nore-fontcolor"></th>
+                <th align="left" style="width: 60%; height: 20px" class="nore-fontcolor">DESKRIPSI</th>
+                {{-- <th align="left" style="width: 30%" class="nore-fontcolor"></th> --}}
                 <th align="right" style="width: auto" class="nore-fontcolor">JUMLAH (Rp)</th>
             </tr>
 
