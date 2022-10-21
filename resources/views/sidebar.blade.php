@@ -204,14 +204,8 @@ ul{
 					<a href="#" class="nav-link {{ (request()->is('calendar*','presensi*','cuti*', 'history-cuti*')) ? 'active' : '' }}"><i class="icon-cabinet"></i>
 						<span>
 							Presensi
-							@if (Auth::user()->role == 1)
-								@if($unverifiedcutis>0)
-									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $unverifiedcutis}}</span>
-								@endif
-							@else
-								@if($unverifiedcutiv>0)
-									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $unverifiedcutiv}}</span>
-								@endif
+							@if ($unverifiedcuti > 0)
+							<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $unverifiedcuti}}</span>
 							@endif
 						</span>
 					</a>
@@ -237,15 +231,9 @@ ul{
 								<i class="icon-drawer3"></i>
 								<span>
 									Cuti
-									@if (Auth::user()->role == 1)
-											@if($unverifiedcutis>0)
-												<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $unverifiedcutis}}</span>
-											@endif
-										@else
-											@if($unverifiedcutiv>0)
-												<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $unverifiedcutiv}}</span>
-											@endif
-										@endif
+									@if ($unverifiedcuti > 0)
+									<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $unverifiedcuti}}</span>
+									@endif
 								</span>
 							</a>
 							<ul class="nav nav-group-sub" style="display: {{ (request()->is('cuti*', 'verifikasi-cuti*', 'history-cuti*')) ? 'block' : 'none' }};">
@@ -259,14 +247,8 @@ ul{
 									<i class="icon-file-eye2"></i>
 									<span>
 										Verifikasi Cuti
-										@if (Auth::user()->role == 1)
-											@if($unverifiedcutis>0)
-												<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $unverifiedcutis}} permohonan</span>
-											@endif
-										@else
-											@if($unverifiedcutiv>0)
-												<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $unverifiedcutiv}} permohonan</span>
-											@endif
+										@if ($unverifiedcuti > 0)
+										<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ $unverifiedcuti}} permohonan</span>
 										@endif
 									</span>
 								</a></li>

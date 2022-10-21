@@ -21,26 +21,30 @@ class NotifComposer
         $admunpaid = Tagihan::where('status','!=',2)->count();
         $userunpaid = Tagihan::where('status','!=',2)->where('user_id',\Auth::user()->id)->count();
         $confirmpayments = Payment::where('status', '=', 0)->count();
-        $unverifiedcutiv = Cuti::where(
-            function($q) use ($currentUserId) {
-                $q->where(
-                    function($q1) use ($currentUserId) {
-                        $q1->where('verifikator_2_id', $currentUserId)
-                            ->where('verifikasi_2', '1');
-                    }
-                )
-                ->orWhere(
-                    function($q2) use ($currentUserId) {
-                        $q2->where('verifikator_1_id', $currentUserId)
-                            ->where('verifikasi_2', '2')
-                            ->where('verifikasi_1', '1');
-                    }
-                );
-            }
-        )
-        ->where('status', '<', '3')
-        ->count();
-        $unverifiedcutis = Cuti::where('status', '1')->count();
-        $view->with(compact('expired','admunpaid','userunpaid','confirmpayments','unverifiedcutiv','unverifiedcutis'));
+        if (Auth::user()->role == 1) {
+            $unverifiedcuti = Cuti::where('status', '1')->count();
+        } else {
+            $unverifiedcuti = Cuti::where(
+                function($q) use ($currentUserId) {
+                    $q->where(
+                        function($q1) use ($currentUserId) {
+                            $q1->where('verifikator_2_id', $currentUserId)
+                                ->where('verifikasi_2', '1');
+                        }
+                    )
+                    ->orWhere(
+                        function($q2) use ($currentUserId) {
+                            $q2->where('verifikator_1_id', $currentUserId)
+                                ->where('verifikasi_2', '2')
+                                ->where('verifikasi_1', '1');
+                        }
+                    );
+                }
+            )
+            ->where('status', '<', '3')
+            ->count();
+        }
+
+        $view->with(compact('expired','admunpaid','userunpaid','confirmpayments','unverifiedcuti'));
     }
 }
