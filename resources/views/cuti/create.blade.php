@@ -26,7 +26,7 @@
                     @foreach ($users as $user)
 					<fieldset class="mb-3">
 						<legend class="text-uppercase font-size-sm font-weight-bold">Form Pengajuan</legend>
-						@if(\Auth::user()->role==10 || \Auth::user()->role==20 || \Auth::user()->role>=30 && \Auth::user()->role<=50)
+						@if(\Auth::user()->role != 1)
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama</label>
 							<div class="col-lg-10">
