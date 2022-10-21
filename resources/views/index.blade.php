@@ -105,7 +105,7 @@
 						<div class="d-flex">
 							<h3 class="font-weight-semibold mb-0"style="color:white">Cuti: {{ $karyawancutis->count() }}</h3>
 						</div>
-						<div>
+						<div style="color:white">
 							@foreach ($karyawancutis as $karyawancuti)
 								{{$karyawancuti->karyawan->nama}} 
 								@if ($karyawancuti->karyawan->role)
@@ -131,7 +131,7 @@
 						<div class="d-flex">
 							<h3 class="font-weight-semibold mb-0"style="color:white">WFH: {{ $karyawanwfh->count() }}</h3>
 						</div>
-						<div>
+						<div style="color:white">
 							@foreach ($karyawanwfh as $wfh)
 								{{$wfh->karyawan->nama}}
 								@if ($wfh->karyawan->role)
@@ -155,7 +155,7 @@
 						<div class="d-flex">
 							<h3 class="font-weight-semibold mb-0"style="color:white;">Izin: {{ $karyawanizin->count() }}</h3>
 						</div>
-						<div>
+						<div style="color:white">
 							@foreach ($karyawanizin as $izin)
 								{{$izin->karyawan->nama}}
 								@if ($izin->karyawan->role)
@@ -179,7 +179,7 @@
 						<div class="d-flex">
 							<h3 class="font-weight-semibold mb-0"style="color:white">Sakit: {{ $karyawansakit->count() }}</h3>
 						</div>
-						<div>
+						<div style="color:white">
 							@foreach ($karyawansakit as $sakit)
 								{{$sakit->karyawan->nama}}
 								@if ($sakit->karyawan->role)
