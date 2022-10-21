@@ -399,7 +399,7 @@ class CutiController extends Controller
                     }
                 )
                 ->where('status', '<', '3')
-                ->where('tanggal_akhir', '<=', $today)
+                ->where('tanggal_akhir', '>=', $today)
                 ->orderByDesc('id')
                 ->with('karyawan')
                 ->with('verifikator2')
