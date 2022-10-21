@@ -25,7 +25,7 @@
 	@if ($karyawanabsensi < 1)
 	<div style="">
 
-	<a href="{{ route('presensi.create')}}"><button type="button" class="btn rounded-round" style="background-color:#FCE700;color:#000000"><i class="fa fa-exclamation-circle mr-2" aria-hidden="true"style="color:#FF1700"></i><b><span style="color:#FF1700">Anda belum Presensi !!</span><b></button></a>
+	<a href="{{ route('presensi.create')}}"><button type="button" class="btn rounded-round" style="background-color:#FCE700;color:#000000"><i class="fa fa-exclamation-circle mr-2" aria-hidden="true"style="color:#FF1700"></i><b><span style="color:#FF1700">Anda belum Presensi !!</span></b></button></a>
 	
 	
 		</div>
