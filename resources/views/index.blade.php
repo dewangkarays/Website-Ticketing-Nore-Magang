@@ -21,6 +21,7 @@
 		<h4><span class="font-weight-semibold">Info penting</span></h4>
 	</div>
 	@if (Auth::user()->role > 1 && Auth::user()->role < 80)
+	@if(count($cuti) == 0)
 	@if ($karyawanabsensi < 1)
 	<div style="">
 
@@ -28,6 +29,7 @@
 	
 	
 		</div>
+		@endif
 		@endif
 		@endif
 	<div class="row">

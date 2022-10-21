@@ -94,9 +94,17 @@ class PresensiController extends Controller
         $check = Presensi::where('user_id',$request->get('user_id'))
         ->where('tanggal',$request->get('tanggal'))
         ->get();
-        // dd(count($check));
+
+        $cuti = Cuti::where('user_id',$request->get('user_id'))
+        ->where('tanggal_mulai','<=',$request->get('tanggal'))
+        ->where('tanggal_akhir','>=',$request->get('tanggal'))
+        ->get();
+        // dd($cuti);
         if(count($check) != 0) {
             return redirect('/presensi')->with('error', 'Presensi Sudah Diisi!');
+        }
+        if(count($cuti) != 0) {
+            return redirect('/presensi')->with('error', 'Karyawan Sedang Cuti!');
         }
 
         $presensi = new Presensi();
