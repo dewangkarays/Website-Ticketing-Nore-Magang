@@ -111,6 +111,7 @@
             '2': 'Iklan/Ads',
             '3': 'Sistem Informasi',
             '4': 'Mobile App',
+            '6': 'Ulo',
             '5': 'Custom/Lainnya',
         }
 
@@ -125,6 +126,9 @@
             '99': 'Simple',
             '90': 'Prioritas',
             '80': 'Premium',
+            '70': 'Free',
+            '74': 'Pro',
+            '78': 'Custom',
         }
 
         // Basic Datatable examples
