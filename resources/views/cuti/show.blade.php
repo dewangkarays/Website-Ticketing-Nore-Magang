@@ -1,5 +1,12 @@
 @extends('layout')
-
+@section('css')
+<style>
+	.summernote ol, ul{
+		list-style: disc !important;
+		list-style-position: inside;
+	}
+</style>
+@endsection
 @section('content')
 
 	<!-- Page header -->
@@ -87,7 +94,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Catatan</label>
 							<div class="col-lg-10">
-								<textarea name="catatan2" id="catatan2-edit" rows="4" cols="3" class="form-control" placeholder="Catatan">{!! $cuti->catatan_ver_2 !!}</textarea>
+								<textarea name="catatan2" id="catatan2-edit" rows="4" cols="3" class="form-control summernote" placeholder="Catatan">{!! $cuti->catatan_ver_2 !!}</textarea>
 							</div>
 						</div>
 						@else
@@ -100,7 +107,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Catatan</label>
 							<div class="col-lg-10">
-								<textarea name="catatan2" id="catatan2" rows="4" cols="3" class="form-control" placeholder="Catatan" disabled>{!! $cuti->catatan_ver_2 !!}</textarea>
+								<textarea name="catatan2" id="catatan2" rows="4" cols="3" class="form-control summernote" placeholder="Catatan" disabled>{!! $cuti->catatan_ver_2 !!}</textarea>
 							</div>
 						</div>
 						@endif
@@ -125,7 +132,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Catatan</label>
 							<div class="col-lg-10">
-								<textarea name="catatan1" id="catatan1-edit" rows="4" cols="3" class="form-control" placeholder="Catatan">{!! $cuti->catatan_ver_1 !!}</textarea>
+								<textarea name="catatan1" id="catatan1-edit" rows="4" cols="3" class="form-control summernote" placeholder="Catatan">{!! $cuti->catatan_ver_1 !!}</textarea>
 							</div>
 						</div>
 						@else
@@ -138,7 +145,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Catatan</label>
 							<div class="col-lg-10">
-								<textarea name="catatan1" id="catatan1" rows="4" cols="3" class="form-control" placeholder="Catatan" disabled>{!! $cuti->catatan_ver_1 !!}</textarea>
+								<textarea name="catatan1" id="catatan1" rows="4" cols="3" class="form-control summernote" placeholder="Catatan" disabled>{!! $cuti->catatan_ver_1 !!}</textarea>
 							</div>
 						</div>
 						@endif
@@ -193,6 +200,7 @@
 	<script src="{{asset('assets/js/custom.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
+	<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 
     <script src="{{asset('global_assets/js/plugins/pickers/daterangepicker.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/anytime.min.js')}}"></script>
@@ -200,18 +208,99 @@
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.date.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
-    {{-- <script>
-		$(() => {
-			var catatan2 = $('#catatan2').val();
-			var catatan2Edit = $('#catatan2-edit').val();
-			var catatan1 = $('#catatan1').val();
-			var catatan1Edit = $('#catatan1-edit').val();
-			$('#catatan2').val(stripHtml(catatan2));
-			$('#catatan2-edit').val(stripHtml(catatan2Edit));
-			$('#catatan1').val(stripHtml(catatan1));
-			$('#catatan1-edit').val(stripHtml(catatan1Edit));
-		})
-    </script> --}}
+	<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
+<script>
+	var Summernote = function() {
+
+//
+// Setup module components
+//
+
+// Summernote
+var _componentSummernote = function() {
+	if (!$().summernote) {
+		console.warn('Warning - summernote.min.js is not loaded.');
+		return;
+	}
+
+	// Basic examples
+	// ------------------------------
+
+	// Default initialization
+	$('.summernote').summernote({
+		toolbar: [
+		['para', ['ul', 'ol', 'paragraph']],
+		],
+		height: 100,
+		callbacks: {
+			onPaste: function (e) {
+			var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+			e.preventDefault();
+
+			setTimeout( function(){
+				document.execCommand( 'insertText', false, bufferText );
+			}, 10 );
+			}
+		}
+	});
+
+	// Control editor height
+	$('.summernote-height').summernote({
+		height: 400
+	});
+
+	// // Air mode
+	// $('.summernote-airmode').summernote({
+	// 	airMode: true
+	// });
+
+
+	// // // Click to edit
+	// // // ------------------------------
+
+	// // // Edit
+	// // $('#edit').on('click', function() {
+	// // 	$('.click2edit').summernote({focus: true});
+	// // })
+
+	// // // Save
+	// // $('#save').on('click', function() {
+	// // 	var aHTML = $('.click2edit').summernote('code');
+	// // 	$('.click2edit').summernote('destroy');
+	// // });
+};
+
+// Uniform
+var _componentUniform = function() {
+	if (!$().uniform) {
+		console.warn('Warning - uniform.min.js is not loaded.');
+		return;
+	}
+
+	// Styled file input
+	$('.note-image-input').uniform({
+		fileButtonClass: 'action btn bg-warning-400'
+	});
+};
+
+
+//
+// Return objects assigned to module
+//
+
+return {
+	init: function() {
+		_componentSummernote();
+		_componentUniform();
+	}
+}
+}();
+
+document.addEventListener('DOMContentLoaded', function() {
+		Summernote.init();
+	});
+</script>
 <script>
 	@if (Auth::user()->role == 1)
 	if($('#status2').val() != 2) {

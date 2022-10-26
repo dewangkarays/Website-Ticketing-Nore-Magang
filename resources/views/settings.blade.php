@@ -2,7 +2,14 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 </head>
 @extends('layout')
-
+@section('css')
+<style>
+	.summernote ol, ul{
+		list-style: disc !important;
+		list-style-position: inside;
+	}
+</style>
+@endsection
 @section('content')
 
 <div class="page-header page-header-light">
@@ -160,7 +167,23 @@
 	<script src="{{asset('global_assets/js/demo_pages/form_checkboxes_radios.js')}}"></script>
 	<script>
 		$(document).ready(function() {
-			$('.summernote').summernote();
+			$('.summernote').summernote({
+					toolbar: [
+					['para', ['ul', 'ol', 'paragraph']],
+					],
+					height: 100,
+					callbacks: {
+						onPaste: function (e) {
+						var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+						e.preventDefault();
+
+						setTimeout( function(){
+							document.execCommand( 'insertText', false, bufferText );
+						}, 10 );
+						}
+					}
+				});
 		});
 	</script>
 	@endsection

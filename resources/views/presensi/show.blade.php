@@ -1,5 +1,16 @@
 @extends('layout')
-
+@section('css')
+<style type="text/css">
+    .summernote ol, ul{
+		list-style: disc !important;
+		list-style-position: inside;
+		padding-left: 15px;
+	}
+	ol {
+		padding-left: 15px;
+	}
+</style>
+@endsection
 @section('content')
 
 	<!-- Page header -->
@@ -66,7 +77,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Keterangan</label>
 							<div class="col-lg-10">
-								<textarea name="keterangan" id="keterangan" rows="4" cols="3" class="form-control" readonly style="background-color: transparent; border:none">{!! $presensi->keterangan !!}</textarea>
+								<textarea name="keterangan" id="keterangan" rows="4" cols="3" class="form-control summernote summernote-disable" style="background-color: transparent; border:none">{!! $presensi->keterangan !!}</textarea>
 							</div>
 						</div>
                         <div class="form-group row">
@@ -109,6 +120,7 @@
 	<script src="{{asset('assets/js/custom.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
+	<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 
     <script src="{{asset('global_assets/js/plugins/pickers/daterangepicker.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/anytime.min.js')}}"></script>
@@ -116,4 +128,13 @@
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.date.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
+	<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
+
+	<script>
+		$('.summernote').summernote({
+			toolbar: false,
+			height: 100,
+		});
+		$('.summernote-disable').summernote('disable');
+	</script>
 @endsection
