@@ -91,6 +91,12 @@
                             <select id="tipe_app" name="tipe_app" class="form-control border-teal border-1" style="display:none">
                                 <option {{ $proyek->tipe == 80 ? 'selected' : '' }} value="80">Premium</option>
                             </select>
+                            <select id="tipe_ulo" name="tipe_ulo" class="form-control border-teal border-1" style="display:none">
+                                <option value="">-- Pilih Kelas Layanan --</option>
+                                <option {{ $proyek->tipe == 70 ? 'selected' : '' }} value="70">Free</option>
+                                <option {{ $proyek->tipe == 74 ? 'selected' : '' }} value="74">Pro</option>
+                                <option {{ $proyek->tipe == 78 ? 'selected' : '' }} value="78">Custom</option>
+                            </select>
                         </div>
                     </div>
 
@@ -112,6 +118,11 @@
                                 <option {{ $proyek->jenis_layanan == 4 ? 'selected' : '' }} value="4">Beli/Lepas</option>
                             </select>
                             <select id="jl_app" name="jl_app" class="form-control border-teal border-1" style="display:none">
+                                <option value="">-- Pilih Jenis Layanan --</option>
+                                <option {{ $proyek->jenis_layanan == 3 ? 'selected' : '' }} value="3">Berlangganan</option>
+                                <option {{ $proyek->jenis_layanan == 4 ? 'selected' : '' }} value="4">Beli/Lepas</option>
+                            </select>
+                            <select id="jl_ulo" name="jl_ulo" class="form-control border-teal border-1" style="display:none">
                                 <option value="">-- Pilih Jenis Layanan --</option>
                                 <option {{ $proyek->jenis_layanan == 3 ? 'selected' : '' }} value="3">Berlangganan</option>
                                 <option {{ $proyek->jenis_layanan == 4 ? 'selected' : '' }} value="4">Beli/Lepas</option>
@@ -269,10 +280,10 @@
 
             $('#jenis_proyek').ready(function() {
                 var dropdown = $('#jenis_proyek option:selected').val()
-                console.log(dropdown)
+                // console.log(dropdown)
                 if (dropdown==null || dropdown==0 || dropdown==5 || dropdown==2) {
                     //$('#div-tipe, #div-jl').hide()
-                    $('#tipe_web, #tipe_app, #jl_web, #jl_app').val("").attr("required", false)
+                    $('#tipe_web, #tipe_app, #tipe_ulo, #jl_web, #jl_app, #jl_ulo').val("").attr("required", false)
                     if (dropdown==5) {
                         $('#new-masa').show()
                         $('#masa_berlaku').attr("placeholder", "Belum ada masa berlaku")
@@ -288,10 +299,17 @@
                     if (dropdown==1) {
                         $('#tipe_web, #jl_web').show().attr("required", true)
                         $('#tipe_app, #jl_app').hide().val("").attr("required", false)
+                        $('#tipe_ulo, #jl_ulo').hide().val("").attr("required", false)
                         $('#website').attr("required", true)
+                    } else if (dropdown==6) {
+                        $('#tipe_web, #jl_web').hide().val("").attr("required", false)
+                        $('#tipe_app, #jl_app').hide().val("").attr("required", false)
+                        $('#tipe_ulo, #jl_ulo').show().attr("required", true)
+                        $('#website').attr("required", false)
                     } else {
                         $('#tipe_web, #jl_web').hide().val("").attr("required", false)
                         $('#tipe_app, #jl_app').show().attr("required", true)
+                        $('#tipe_ulo, #jl_ulo').hide().val("").attr("required", false)
                         $('#tipe_app').val(80)
                         $('#website').attr("required", false)
                     }
@@ -301,7 +319,7 @@
                 console.log(dropdown)
                 if (dropdown==null || dropdown==0 || dropdown==5 || dropdown==2) {
                     $('#div-tipe, #div-jl').hide()
-                    $('#tipe_web, #tipe_app, #jl_web, #jl_app').val("").attr("required", false)
+                    $('#tipe_web, #tipe_app, #tipe_ulo, #jl_web, #jl_app, #jl_ulo').val("").attr("required", false)
                     $('#masa_berlaku, #new_mb').attr("required", false)
                     if (dropdown==5) {
                         $('#new-masa').show()
@@ -316,12 +334,19 @@
                     $('#masa_berlaku').attr({"required": false,"placeholder": "Belum ada masa berlaku"})
                     $('#new_mb').attr({"required": false,"placeholder": "Tentukan masa berlaku"})
                     if (dropdown==1) {
-                        $('#tipe_app, #jl_app').hide().val("").attr("required", false)
                         $('#tipe_web, #jl_web').show().attr("required", true)
+                        $('#tipe_app, #jl_app').hide().val("").attr("required", false)
+                        $('#tipe_ulo, #jl_ulo').hide().val("").attr("required", false)
                         $('#website').attr("required", true)
+                    } else if (dropdown==6) {
+                        $('#tipe_web, #jl_web').hide().val("").attr("required", false)
+                        $('#tipe_app, #jl_app').hide().val("").attr("required", false)
+                        $('#tipe_ulo, #jl_ulo').show().attr("required", true)
+                        $('#website').attr("required", false)
                     } else {
                         $('#tipe_web, #jl_web').hide().val("").attr("required", false)
                         $('#tipe_app, #jl_app').show().attr("required", true)
+                        $('#tipe_ulo, #jl_ulo').hide().val("").attr("required", false)
                         $('#tipe_app').val(80)
                         $('#website').attr("required", false)
                     }
@@ -443,12 +468,18 @@
                     jl_app: {
                         required: 'Mohon pilih satu jenis layanan!'
                     },
+                    jl_ulo: {
+                        required: 'Mohon pilih satu jenis layanan!'
+                    }
                     tipe_web: {
                         required: 'Mohon pilih satu kelas layanan!'
                     },
                     tipe_app: {
                         required: 'Mohon pilih satu kelas layanan!'
                     },
+                    tipe_ulo: {
+                        required: 'Mohon pilih satu kelas layanan!'
+                    }
                     task_count:{
                         required: 'Min : 0',
 						min : 0
