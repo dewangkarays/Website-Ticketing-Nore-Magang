@@ -97,11 +97,13 @@
                     <th align="left" style="width: 40%">TOTAL</th>
                     <th align="right" style="width: auto">@angka($rekap->total)</th>
                 </tr>
+                @if ($invoices->sum('diskon') > 0)
                 <tr>
                     <td></td>
                     <td align="left">Potongan Harga</td>
                     <td align="right">@angka($invoices->sum('diskon'))</td>
                 </tr>
+                @endif
                 <tr>
                     <td></td>
                     <td align="left">Pembayaran Uang Muka</td>
