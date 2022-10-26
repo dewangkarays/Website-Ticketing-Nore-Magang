@@ -83,17 +83,34 @@ class ProyekController extends Controller
 
         $data = $request->except(['_token', '_method']);
 
-        if($request->get('tipe_web')!=''){
-            $data['tipe'] = $request->get('tipe_web');
+        // if($request->get('tipe_web')!=''){
+        //     $data['tipe'] = $request->get('tipe_web');
+        // }
+        // if($request->get('tipe_app')!=''){
+        //     $data['tipe'] = $request->get('tipe_app');
+        // }
+
+        if ($request->tipe_web != '') {
+            $data['tipe'] = $request->tipe_web;
+        } else if ($request->tipe_app != '') {
+            $data['tipe'] = $request->tipe_app;
+        } else if ($request->tipe_ulo != '') {
+            $data['tipe'] = $request->tipe_ulo;
         }
-        if($request->get('tipe_app')!=''){
-            $data['tipe'] = $request->get('tipe_app');
-        }
-        if($request->get('jl_web')!=''){
-            $data['jenis_layanan'] = $request->get('jl_web');
-        }
-        if($request->get('jl_app')!=''){
-            $data['jenis_layanan'] = $request->get('jl_app');
+
+        // if($request->get('jl_web')!=''){
+        //     $data['jenis_layanan'] = $request->get('jl_web');
+        // }
+        // if($request->get('jl_app')!=''){
+        //     $data['jenis_layanan'] = $request->get('jl_app');
+        // }
+
+        if ($request->jl_web != '') {
+            $data['jenis_layanan'] = $request->jl_web;
+        } else if ($request->jl_app != '') {
+            $data['jenis_layanan'] = $request->jl_app;
+        } else if ($request->jl_ulo != '') {
+            $data['jenis_layanan'] = $request->jl_ulo;
         }
 
         $proyek = new Proyek($data);
@@ -150,24 +167,47 @@ class ProyekController extends Controller
         if($request->get('new_mb')!=''){
             $data['masa_berlaku'] = $request->get('new_mb');
         }
-        if($request->get('tipe_web')!=''){
-            $data['tipe'] = $request->get('tipe_web');
-        }
-        if($request->get('tipe_app')!=''){
-            $data['tipe'] = $request->get('tipe_app');
-        }
-        if($request->get('tipe_app')=='' && $request->get('tipe_web')==''){
+
+        // if($request->get('tipe_web')!=''){
+        //     $data['tipe'] = $request->get('tipe_web');
+        // }
+        // if($request->get('tipe_app')!=''){
+        //     $data['tipe'] = $request->get('tipe_app');
+        // }
+        // if($request->get('tipe_app')=='' && $request->get('tipe_web')==''){
+        //     $data['tipe'] = null;
+        // }
+
+        if ($request->tipe_web != '') {
+            $data['tipe'] = $request->tipe_web;
+        } else if ($request->tipe_app != '') {
+            $data['tipe'] = $request->tipe_app;
+        } else if ($request->tipe_ulo != '') {
+            $data['tipe'] = $request->tipe_ulo;
+        } else {
             $data['tipe'] = null;
         }
-        if($request->get('jl_web')!=''){
-            $data['jenis_layanan'] = $request->get('jl_web');
+
+        // if($request->get('jl_web')!=''){
+        //     $data['jenis_layanan'] = $request->get('jl_web');
+        // }
+        // if($request->get('jl_app')!=''){
+        //     $data['jenis_layanan'] = $request->get('jl_app');
+        // }
+        // if($request->get('jl_app')=='' && $request->get('jl_web')==''){
+        //     $data['jenis_layanan'] = null;
+        // }
+
+        if ($request->jl_web != '') {
+            $data['jenis_layanan'] = $request->jl_web;
+        } else if ($request->jl_app != '') {
+            $data['jenis_layanan'] = $request->jl_app;
+        } else if ($request->jl_ulo != '') {
+            $data['jenis_layanan'] = $request->jl_ulo;
+        } else {
+            $data['tipe'] = null;
         }
-        if($request->get('jl_app')!=''){
-            $data['jenis_layanan'] = $request->get('jl_app');
-        }
-        if($request->get('jl_app')=='' && $request->get('jl_web')==''){
-            $data['jenis_layanan'] = null;
-        }
+
         if ($request->marketing_id_baru != '') {
             $data['marketing_id'] = $data['marketing_id_baru'];
         }
