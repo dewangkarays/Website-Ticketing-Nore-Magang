@@ -1,5 +1,12 @@
 @extends('layout')
-
+@section('css')
+<style>
+	.summernote ol, ul{
+		list-style: disc !important;
+		list-style-position: inside;
+	}
+	</style>
+@endsection
 @section('content')
 
 <!-- Page header -->
@@ -830,9 +837,22 @@ var FormValidation = function() {
 
             // Default initialization
             $('.summernote').summernote({
-				toolbar: false,
-				height: 100,
-			});
+					toolbar: [
+					['para', ['ul', 'ol', 'paragraph']],
+					],
+					height: 100,
+					callbacks: {
+						onPaste: function (e) {
+						var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+						e.preventDefault();
+
+						setTimeout( function(){
+							document.execCommand( 'insertText', false, bufferText );
+						}, 10 );
+						}
+					}
+				});
 
             // Control editor height
             // $('.summernote-height').summernote({

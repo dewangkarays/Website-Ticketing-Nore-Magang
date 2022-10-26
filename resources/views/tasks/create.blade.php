@@ -1,5 +1,12 @@
 @extends('layout')
-
+@section('css')
+<style>
+	.summernote ol, ul{
+		list-style: disc !important;
+		list-style-position: inside;
+	}
+</style>
+@endsection
 @section('content')
 
 	<!-- Page header -->
@@ -75,7 +82,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Kebutuhan</label>
 							<div class="col-lg-10">
-								<textarea name="kebutuhan" rows="4" cols="3" class="form-control" placeholder="Kebutuhan User" required></textarea>
+								<textarea name="kebutuhan" rows="4" cols="3" class="form-control summernote" placeholder="Kebutuhan User" required></textarea>
 							</div>
 						</div>
 
@@ -147,10 +154,13 @@
 	<script src="{{asset('global_assets/js/plugins/uploaders/fileinput/plugins/purify.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/uploaders/fileinput/plugins/sortable.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script>
+	<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script>
+	<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
+
 	<script type="text/javascript">
 				
 		var FormValidation = function() {
@@ -224,6 +234,101 @@
 		        }
 		    }
 		}();
+
+		var Summernote = function() {
+
+		//
+		// Setup module components
+		//
+
+		// Summernote
+		var _componentSummernote = function() {
+			if (!$().summernote) {
+				console.warn('Warning - summernote.min.js is not loaded.');
+				return;
+			}
+
+			// Basic examples
+			// ------------------------------
+
+			// Default initialization
+			$('.summernote').summernote({
+				toolbar: [
+				['para', ['ul', 'ol', 'paragraph']],
+				],
+				height: 100,
+				callbacks: {
+					onPaste: function (e) {
+					var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+					e.preventDefault();
+
+					setTimeout( function(){
+						document.execCommand( 'insertText', false, bufferText );
+					}, 10 );
+					}
+				}
+			});
+
+			// Control editor height
+			$('.summernote-height').summernote({
+				height: 400
+			});
+
+			// // Air mode
+			// $('.summernote-airmode').summernote({
+			// 	airMode: true
+			// });
+
+
+			// // // Click to edit
+			// // // ------------------------------
+
+			// // // Edit
+			// // $('#edit').on('click', function() {
+			// // 	$('.click2edit').summernote({focus: true});
+			// // })
+
+			// // // Save
+			// // $('#save').on('click', function() {
+			// // 	var aHTML = $('.click2edit').summernote('code');
+			// // 	$('.click2edit').summernote('destroy');
+			// // });
+		};
+
+		// Uniform
+		var _componentUniform = function() {
+			if (!$().uniform) {
+				console.warn('Warning - uniform.min.js is not loaded.');
+				return;
+			}
+
+			// Styled file input
+			$('.note-image-input').uniform({
+				fileButtonClass: 'action btn bg-warning-400'
+			});
+		};
+
+
+		//
+		// Return objects assigned to module
+		//
+
+		return {
+			init: function() {
+				_componentSummernote();
+				_componentUniform();
+			}
+		}
+		}();
+
+
+		// Initialize module
+		// ------------------------------
+
+		document.addEventListener('DOMContentLoaded', function() {
+		Summernote.init();
+		});
 
 		// Mengambil data proyek sesuai user
 	$('#user_id').on('change', function(){

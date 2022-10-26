@@ -5,6 +5,10 @@
 	.input-error {
 		outline: 1px solid red;
 	}
+	.summernote ol, ul{
+		list-style: disc !important;
+		list-style-position: inside;
+	}
 </style>
 @endsection
 
@@ -506,8 +510,21 @@
 
 				// Default initialization
 				$('.summernote').summernote({
-					toolbar: false,
+					toolbar: [
+					['para', ['ul', 'ol', 'paragraph']],
+					],
 					height: 100,
+					callbacks: {
+						onPaste: function (e) {
+						var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+						e.preventDefault();
+
+						setTimeout( function(){
+							document.execCommand( 'insertText', false, bufferText );
+						}, 10 );
+						}
+					}
 				});
 
 				// Control editor height

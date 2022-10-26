@@ -5,6 +5,10 @@
 	.datatable-column-width{
 		overflow: hidden; text-overflow: ellipsis; max-width: 200px;
 	}
+    .summernote ol, ul{
+		list-style: disc !important;
+		list-style-position: inside;
+	}
 </style>
 @endsection
 
