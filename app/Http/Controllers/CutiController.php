@@ -131,6 +131,9 @@ class CutiController extends Controller
         } else if ($cuti->verifikator1) {
             if ($currentUserId == $cuti->verifikator1->id) {
                 $cuti->catatan_ver_1 = $request->get('catatan1');
+            } else {
+                $cuti->catatan_ver_2 = $request->get('catatan2');
+                $cuti->catatan_ver_1 = $request->get('catatan1');
             }
         } else {
             $cuti->catatan_ver_2 = $request->get('catatan2');
