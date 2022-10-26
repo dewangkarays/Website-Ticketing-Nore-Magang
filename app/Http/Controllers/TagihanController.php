@@ -408,9 +408,9 @@ class TagihanController extends Controller
             $data['diskon'] = $tagihan->diskon;
         }
 
-        if ($request->tambah_keterangan == '0') {
-            $data['keterangan_tambahan'] = null;
-        }
+        // if ($request->keterangan_tambahan == '0') {
+        //     $data['keterangan_tambahan'] = null;
+        // }
 
         $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'] - $data['diskon'];
 
