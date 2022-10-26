@@ -12,6 +12,10 @@
 	.summernote ol, ul{
 		list-style: disc !important;
 		list-style-position: inside;
+		padding-left: 15px;
+	}
+	ol {
+		padding-left: 15px;
 	}
 </style>
 @endsection
