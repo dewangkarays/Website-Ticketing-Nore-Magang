@@ -257,7 +257,7 @@
                     if (dropdown==1) {
                         $('#tipe_web, #jl_web').show().attr("required", true)
                         $('#tipe_app, #jl_app').hide().val("").attr("required", false)
-                        $('#tipe_ulo, #jl_ulo').show().val("").attr('required', false)
+                        $('#tipe_ulo, #jl_ulo').hide().val("").attr('required', false)
                         $('#website').attr("required", true)
                     } else if (dropdown==6) {
                         $('#tipe_web, #jl_web').hide().val("").attr("required", false)
@@ -267,7 +267,7 @@
                     } else {
                         $('#tipe_web, #jl_web').hide().val("").attr("required", false)
                         $('#tipe_app, #jl_app').show().attr("required", true)
-                        $('#tipe_ulo, #jl_ulo').show().val("").attr('required', false)
+                        $('#tipe_ulo, #jl_ulo').hide().val("").attr('required', false)
                         $('#tipe_app').val(80)
                         $('#website').attr("required", false)
                     }
