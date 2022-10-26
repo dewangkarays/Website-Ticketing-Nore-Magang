@@ -91,8 +91,15 @@
         <tr>
             <td></td>
             <td align="left">Uang Muka</td>
-            <td align="right">@angka($invoices->sum('uang_muka'))</td>
+            <td align="right">@angka($rekapdp->total)</td>
         </tr>
+        @if ($rekapdp->jml_terbayar > 0 && $rekapdp->jml_terbayar < $rekapdp->total)
+        <tr>
+            <td></td>
+            <td align="left">Uang Muka Sudah Terbayar</td>
+            <td align="right">@angka($rekapdp->jml_terbayar)</td>
+        </tr>  
+        @endif
         <tr>
             <td></td>
             <td align="left">PPN 11%</td>
@@ -104,7 +111,7 @@
                 <b class="nore-fontcolor" style="font-size: 14px">TOTAL YANG HARUS DIBAYAR</b>
             </td>
             <td align="right">
-                <b class="nore-fontcolor" style="font-size: 14px">@angka($rekapdp->total)</b>
+                <b class="nore-fontcolor" style="font-size: 14px">@angka($rekapdp->total - $rekapdp->jml_terbayar)</b>
             </td>
         </tr>
     </table>

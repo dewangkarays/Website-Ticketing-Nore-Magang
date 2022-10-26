@@ -95,7 +95,7 @@
                 <tr>
                     <th style="width: 45%; height: 30px"></th>
                     <th align="left" style="width: 40%">TOTAL</th>
-                    <th align="right" style="width: auto">@angka($invoices->sum('nominal'))</th>
+                    <th align="right" style="width: auto">@angka($rekap->total)</th>
                 </tr>
                 <tr>
                     <td></td>
@@ -107,10 +107,17 @@
                     <td align="left">Pembayaran Uang Muka</td>
                     <td align="right">@angka($invoices->sum('uang_muka'))</td>
                 </tr>
+                @if ($rekap->jml_terbayar > 0 && ($rekap->jml_terbayar < $rekap->total))
+                <tr>
+                    <td></td>
+                    <td align="left">Sudah Terbayar</td>
+                    <td align="right">@angka($rekap->jml_terbayar)</td>
+                </tr>
+                @endif
                 <tr>
                     <td></td>
                     <td align="left">Sisa Tagihan</td>
-                    <td align="right">@angka($invoices->sum('jml_tagih'))</td>
+                    <td align="right">@angka($rekap->total - $rekap->jml_terbayar)</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -123,7 +130,7 @@
                         <b class="nore-fontcolor" style="font-size: 14px">TOTAL YANG HARUS DIBAYAR</b>
                     </td>
                     <td align="right">
-                        <b class="nore-fontcolor" style="font-size: 14px">@angka($rekap->total)</b>
+                        <b class="nore-fontcolor" style="font-size: 14px">@angka($rekap->total - $rekap->jml_terbayar)</b>
                     </td>
                 </tr>
             </table>
