@@ -90,7 +90,7 @@
                                     <option {{ $proyek->tipe == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
                                 @endforeach
                             </select> --}}
-                            <select id="tipe_web" name="tipe_web" class="form-control select-search border-teal border-1" style="display:none">
+                            <select id="tipe_web" name="tipe_web" class="form-control border-teal border-1" style="display:none">
                                 <option value="">-- Pilih Kelas Layanan --</option>
                                 <option {{ $proyek->tipe == 99 ? 'selected' : '' }} value="99">Simple</option>
                                 <option {{ $proyek->tipe == 90 ? 'selected' : '' }} value="90">Prioritas</option>
@@ -118,7 +118,7 @@
                                     <option {{ $proyek->jenis_layanan == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
                                 @endforeach
                             </select> --}}
-                            <select id="jl_web" name="jl_web" class="form-control select-search border-teal border-1" style="display:none">
+                            <select id="jl_web" name="jl_web" class="form-control border-teal border-1" style="display:none">
                                 <option value="">-- Pilih Jenis Layanan --</option>
                                 <option {{ $proyek->jenis_layanan == 1 ? 'selected' : '' }} value="1">Nore</option>
                                 <option {{ $proyek->jenis_layanan == 2 ? 'selected' : '' }} value="2">Mini</option>
@@ -147,16 +147,16 @@
                     <div id="div-masa" class="form-group row">
                         <label class="col-form-label col-lg-2">Masa Berlaku</label>
                         <div class="col-lg-10">
-                            <input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control" readonly value="{{$proyek->masa_berlaku}}">
+                            <input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control pickadate-accessibility" value="{{$proyek->masa_berlaku}}">
                         </div>
                     </div>
 
-                    <div id="new-masa" class="form-group row" style="display:none">
+                    {{-- <div id="new-masa" class="form-group row" style="display:none">
                         <label class="col-form-label col-lg-2">Update Masa Berlaku</label>
                         <div class="col-lg-10">
                             <input id="new_mb" name="new_mb" type="text" class="form-control border-teal border-1 pickadate-accessibility">
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Keterangan</label>
@@ -372,7 +372,7 @@
                         $('#masa_berlaku').attr({"required": false,"placeholder": "Belum ada masa berlaku"})
                         $('#new_mb').attr({"required": false,"placeholder": "Tentukan masa berlaku"})
                     } else {
-                        $('#masa_berlaku').attr("required", true)
+                        $('#masa_berlaku').attr("required", false)
                         $('#new_mb').attr({"required": false,"placeholder": "Update masa berlaku"})
                     }
                 }
@@ -389,7 +389,7 @@
                         $('#masa_berlaku').attr({"required": false,"placeholder": "Belum ada masa berlaku"})
                         $('#new_mb').attr({"required": false,"placeholder": "Tentukan masa berlaku"})
                     } else {
-                        $('#masa_berlaku').attr("required", true)
+                        $('#masa_berlaku').attr("required", false)
                         $('#new_mb').attr({"required": false,"placeholder": "Update masa berlaku"})
                     }
                 }
@@ -477,7 +477,7 @@
                     },
                     jl_ulo: {
                         required: 'Mohon pilih satu jenis layanan!'
-                    }
+                    },
                     tipe_web: {
                         required: 'Mohon pilih satu kelas layanan!'
                     },
@@ -486,7 +486,7 @@
                     },
                     tipe_ulo: {
                         required: 'Mohon pilih satu kelas layanan!'
-                    }
+                    },
                     task_count:{
                         required: 'Min : 0',
 						min : 0

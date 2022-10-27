@@ -160,13 +160,14 @@ class ProyekController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request);
         $proyek = Proyek::find($id);
         $data = $request->except(['_token', '_method']);
 
 
-        if($request->get('new_mb')!=''){
-            $data['masa_berlaku'] = $request->get('new_mb');
-        }
+        // if($request->get('new_mb')!=''){
+            // $data['masa_berlaku'] = $request->get('new_mb');
+        // }
 
         // if($request->get('tipe_web')!=''){
         //     $data['tipe'] = $request->get('tipe_web');
