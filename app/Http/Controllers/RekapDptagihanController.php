@@ -78,9 +78,9 @@ class RekapDptagihanController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'ninv'=>'bail|unique:nomors|required',
-        ]);
+        // $request->validate([
+        //     'ninv'=>'bail|unique:nomors|required',
+        // ]);
 
         $data = $request->except(['_token', '_method','noinv','ninv','noakhir','tagihan_id']);
 
@@ -150,6 +150,14 @@ class RekapDptagihanController extends Controller
         //         $lastno = Nomor::create($lastno);
         //     }
         // }
+
+        $nomor_invoices = RekapDptagihan::select('invoice')->get();
+
+        foreach ($nomor_invoices as $nomor_invoice) {
+            if ($data['invoice'] == $nomor_invoice->invoice) {
+                return redirect()->back()->with('error', 'Nomor invoice sudah diambil, silakan masukan ulang!');
+            }
+        }
 
         // dd($data);
         
