@@ -270,6 +270,7 @@
                         $('#tipe_web, #jl_web').hide().val("").attr("required", false)
                         $('#tipe_app, #jl_app').hide().val("").attr("required", false)
                         $('#tipe_ulo, #jl_ulo').show().attr('required', true)
+                        $('#jl_ulo').val(3)
                         $('#website').attr("required", false)
                     } else {
                         $('#tipe_web, #jl_web').hide().val("").attr("required", false)
