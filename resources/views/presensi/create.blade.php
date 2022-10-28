@@ -393,6 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			$('#div-bukti').show();
 		} else {
 			$('#div-keterangan').hide();
+			$('#keterangan').prop('required', false);
 			$('#div-bukti').hide();
 		}
 	})
