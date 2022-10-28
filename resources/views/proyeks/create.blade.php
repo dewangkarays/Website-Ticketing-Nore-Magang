@@ -118,9 +118,9 @@
                                     <option value="4">Beli/Lepas</option>
                                 </select>
                                 <select id="jl_ulo" name="jl_ulo" class="form-control border-teal border-1" style="display:none">
-                                    <option value="">-- Pilih Jenis Layanan --</option>
+                                    {{-- <option value="">-- Pilih Jenis Layanan --</option> --}}
                                     <option value="3">Berlangganan</option>
-                                    <option value="4">Beli/Lepas</option>
+                                    {{-- <option value="4">Beli/Lepas</option> --}}
                                 </select>
                             </div>
                         </div>

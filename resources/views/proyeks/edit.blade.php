@@ -130,9 +130,9 @@
                                 <option {{ $proyek->jenis_layanan == 4 ? 'selected' : '' }} value="4">Beli/Lepas</option>
                             </select>
                             <select id="jl_ulo" name="jl_ulo" class="form-control border-teal border-1" style="display:none">
-                                <option value="">-- Pilih Jenis Layanan --</option>
+                                {{-- <option value="">-- Pilih Jenis Layanan --</option> --}}
                                 <option {{ $proyek->jenis_layanan == 3 ? 'selected' : '' }} value="3">Berlangganan</option>
-                                <option {{ $proyek->jenis_layanan == 4 ? 'selected' : '' }} value="4">Beli/Lepas</option>
+                                {{-- <option {{ $proyek->jenis_layanan == 4 ? 'selected' : '' }} value="4">Beli/Lepas</option> --}}
                             </select>
                         </div>
                     </div>
@@ -349,6 +349,7 @@
                         $('#tipe_web, #jl_web').hide().val("").attr("required", false)
                         $('#tipe_app, #jl_app').hide().val("").attr("required", false)
                         $('#tipe_ulo, #jl_ulo').show().attr("required", true)
+                        $('#jl_ulo').val(3)
                         $('#website').attr("required", false)
                     } else {
                         $('#tipe_web, #jl_web').hide().val("").attr("required", false)
