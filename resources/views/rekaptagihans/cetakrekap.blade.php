@@ -95,7 +95,7 @@
                 <tr>
                     <th style="width: 45%; height: 30px"></th>
                     <th align="left" style="width: 40%">TOTAL</th>
-                    <th align="right" style="width: auto">@angka($rekap->total)</th>
+                    <th align="right" style="width: auto">@angka($invoices->sum('nominal'))</th>
                 </tr>
                 @if ($invoices->sum('diskon') > 0)
                 <tr>
