@@ -153,6 +153,11 @@
             /* padding: 1px; */
             /* padding: 0; */
         }
+        li {font-size:10px;
+        
+        }
+
+        
     </style>
 </head>
 
