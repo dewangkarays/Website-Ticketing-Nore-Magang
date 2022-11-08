@@ -20,7 +20,7 @@
     </tr>
 
     <tr>
-        <td style="text-transform: uppercase;">
+        <td style="text-transform: capitalize;">
             {{$rekap->nama_tertagih}}
             <tr>
         <td style="width: 40%;">

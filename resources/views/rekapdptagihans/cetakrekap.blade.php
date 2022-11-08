@@ -18,7 +18,7 @@
         <td><b>Kepada Yth.</b></td>
     </tr>
     <tr>
-        <td style="text-transform: uppercase;">
+        <td style="text-transform: capitalize;">
             {{$rekapdp->nama_tertagih}}
         </td>
     </tr>
