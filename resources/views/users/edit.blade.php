@@ -130,7 +130,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Sisa Cuti</label>
 							<div class="col-lg-10">
-								<input type="text" name="sisa_cuti" class="form-control border-teal border-1 phone-number" value="{{ $user->sisa_cuti }}" readonly>
+								<input type="text" name="sisa_cuti" class="form-control border-teal border-1 phone-number" required value="{{ $user->sisa_cuti }}" >
 							</div>
 						</div>
 					</fieldset>
