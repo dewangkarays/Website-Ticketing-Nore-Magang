@@ -30,12 +30,13 @@
 
 
 			<li class="nav-item dropdown">
-				<a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
+			@if (Auth::user()->role==1||Auth::user()->role==20)
+			<a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
 					<i class="icon-bell3"></i>
 					<span class="d-md-none ml-2">Notification</span>
 					<div id="countNotif"></div>
 				</a>
-				
+				@endif
 				<div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
 					<div class="dropdown-content-header">
 						<span class="font-weight-semibold">Notifikasi</span>
