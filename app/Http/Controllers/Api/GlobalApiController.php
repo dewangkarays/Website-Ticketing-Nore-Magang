@@ -69,7 +69,7 @@ class GlobalApiController extends Controller
             return response()->json([
                 'code' => 400,
                 'message' => 'Discord ID kamu belum diset! Silahkan update di halaman presensi.',
-            ]);
+            ], 400);
         }
 
         $tanggal = date('Y-m-d');
@@ -87,13 +87,13 @@ class GlobalApiController extends Controller
             return response()->json([
                 'code' => 400,
                 'message' => 'Kamu sudah presensi hari ini!'
-            ]);
+            ], 400);
         }
         if(count($cuti) != 0) {
             return response()->json([
                 'code' => 400,
                 'message' => 'Bukannya kamu lagi cuti, ya? Tidak perlu absen.'
-            ]);
+            ], 400);
         }
 
         $presensi = new Presensi();
@@ -106,6 +106,6 @@ class GlobalApiController extends Controller
         return response()->json([
             'code' => 200,
             'message' => 'Presensi kamu hari ini sudah tercatat!',
-        ]);
+        ], 200);
     }
 }
