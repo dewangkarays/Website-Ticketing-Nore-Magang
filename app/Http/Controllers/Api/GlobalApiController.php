@@ -68,7 +68,7 @@ class GlobalApiController extends Controller
         if(!$user) {
             return response()->json([
                 'code' => 400,
-                'message' => 'User tidak ditemukan!',
+                'message' => 'Discord ID kamu belum diset! Silahkan set Discord ID di halaman presensi.',
             ]);
         }
 
