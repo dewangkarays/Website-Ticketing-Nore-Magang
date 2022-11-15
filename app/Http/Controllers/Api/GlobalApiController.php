@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\User;
 use App\Model\Attachment;
+use App\Model\Presensi;
+use App\Model\Cuti;
 
 class GlobalApiController extends Controller
 {
@@ -54,6 +56,48 @@ class GlobalApiController extends Controller
             'status'=>'Success', 
             'message'=>'Get data attachment success', 
             'data'=> $attachment
+        ]);
+    }
+
+    public function hadir(Request $request)
+    {
+        $data = $request->all();
+
+        $user = User::where('discord_id', $request->get('discord_id'))->first();
+        $tanggal = date('Y-m-d');
+
+        $check = Presensi::where('user_id',$user->id)
+        ->where('tanggal',$tanggal)
+        ->get();
+
+        $cuti = Cuti::where('user_id',$user->id)
+        ->where('tanggal_mulai','<=',$tanggal)
+        ->where('tanggal_akhir','>=',$tanggal)
+        ->get();
+        // dd($cuti);
+        if(count($check) != 0) {
+            return response()->json([
+                'code' => 400,
+                'message' => 'Kamu sudah presensi hari ini!'
+            ]);
+        }
+        if(count($cuti) != 0) {
+            return response()->json([
+                'code' => 400,
+                'message' => 'Bukannya kamu lagi cuti, ya? Tidak perlu absen.'
+            ]);
+        }
+
+        $presensi = new Presensi();
+        $presensi->tanggal = $tanggal;
+        $presensi->status = 1;
+        $presensi->user_id = $user->id;
+
+        $presensi->save();
+        
+        return response()->json([
+            'code' => 200,
+            'message' => 'Presensi kamu hari ini sudah tercatat!',
         ]);
     }
 }

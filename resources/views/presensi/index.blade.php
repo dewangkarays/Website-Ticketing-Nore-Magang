@@ -258,6 +258,24 @@
             </div>
             <!-- /basic donut -->
         </div>
+        <div class="col-xl-4 p-0">
+            <!-- Basic Table -->
+            <div class="card m-2">
+                <div class="card-body">
+                    <form action="{{ route('user.update-discord', \Auth::id())}}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-group">
+                            <label>Discord ID</label>
+                            <input type="text" placeholder="Masukkan Discord ID" name="discord_id" id="discord_id" class="form-control border border-1" value="{{\Auth::user()->discord_id ?? ''}}">
+                            <div style='margin-top: 12px; font-size: 11px; color: grey'>Kamu dapat melihat Discord ID dengan perintah <code>/whoami</code></div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-success btn-block">Simpan</button>
+                    </form>
+                </div>
+            </div>
+            <!-- /basic donut -->
+        </div>
     </div>    
     @endif
 

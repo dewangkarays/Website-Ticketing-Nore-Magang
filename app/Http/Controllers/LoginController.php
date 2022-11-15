@@ -17,10 +17,11 @@ class LoginController extends Controller
     }
 
     public function login(Request $request){
-	    $this->validate($request, [
-	        'username' => 'required',
+		$this->validate($request, [
+			'username' => 'required',
 	        'password' => 'required',
-	        ]);
+		]);
+		// dd(bcrypt($request->password));
 	    if (\Auth::attempt([
 	        'username' => $request->username,
 	        'password' => $request->password])

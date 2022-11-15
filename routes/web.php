@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::resource('attachments', 'AttachmentController');
 		// Route::resource('tasks', 'TaskController');
 		Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
+		Route::put('/discord-id/{id}', 'UserController@updateDiscordId')->name('user.update-discord');
 
 		Route::get('/antrian',  'TaskController@antrian');
 		Route::get('/history',  'TaskController@history')->name('history');
@@ -81,6 +82,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/getsisacuti/{tahun}/{id}', 'PresensiController@getsisacuti');
 		Route::get('/belumpresensi', 'PresensiController@belumpresensi')->name('belumpresensi');
 		Route::get('/getbelumpresensi', 'PresensiController@getbelumpresensi');
+		
 
 		//Routing Kalender
 		Route::get('/kalender', 'KalendarController@index')->name('kalendar');

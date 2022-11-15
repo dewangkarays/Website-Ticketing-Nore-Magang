@@ -19,6 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login',  'Api\LoginApiController@login');
 
+// discord integration
+Route::post('/hadir',  'Api\GlobalApiController@hadir');
+
 Route::group(['middleware' => ['auth:api']], function() {
 	Route::resource('tasks', 'Api\TaskApiController');
 	Route::resource('payments', 'Api\PaymentApiController');

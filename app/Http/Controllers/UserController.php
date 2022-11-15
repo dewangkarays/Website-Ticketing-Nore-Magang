@@ -222,4 +222,18 @@ class UserController extends Controller
     public function getkaryawans() {
         return Datatables::of(User::where('role', '<=', '50')->get())->addIndexColumn()->make(true);
     }
+
+    public function updateDiscordId(Request $request, $id) {
+        $request->validate([
+            'discord_id'=>'required',
+        ]);
+
+        $user = User::find($id)->update(['discord_id' => $request->discord_id]);
+
+        if(!$user) {
+            return redirect('/presensi')->with('error', 'Terjadi kesalahan');
+        }
+
+        return redirect('/presensi')->with('success', 'Discord ID berhasil disimpan');
+    }
 }
