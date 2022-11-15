@@ -64,6 +64,14 @@ class GlobalApiController extends Controller
         $data = $request->all();
 
         $user = User::where('discord_id', $request->get('discord_id'))->first();
+
+        if(!$user) {
+            return response()->json([
+                'code' => 400,
+                'message' => 'User tidak ditemukan!',
+            ]);
+        }
+
         $tanggal = date('Y-m-d');
 
         $check = Presensi::where('user_id',$user->id)
