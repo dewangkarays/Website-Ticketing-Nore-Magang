@@ -236,11 +236,17 @@ class PresensiController extends Controller
             // $q->orderBy('tanggal'); 
         }])
         ->get();
+        // dd($id);
         // dd(count($izin[0]['jatah_cuti']));
-        $sisa_cuti = $izin[0]['jatah_cuti'] - count($izin[0]['presensi']);
-        return response()->json($sisa_cuti);
+        $sisa_cuti =  $izin[0]['sisa_cuti'] - count($izin[0]['presensi']);
+        $jumlah_hari = User::where('id', $id)->with(['presensi' => function ($q) use ($year) {
+            $q->whereYear('tanggal','=',$year)->where('status','=', 2); 
+      
+    }])
+    ->get();
+    return response()->json($sisa_cuti);
     }
-
+    
     public function belumpresensi() {
         return view('presensi.belumpresensi');
     }
