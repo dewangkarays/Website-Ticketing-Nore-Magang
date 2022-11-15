@@ -27,8 +27,10 @@
 		<!-- Hover rows -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-				<a href="{{ route('users.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
-			</div>
+			@if (Auth::user()->role==1)
+			<a href="{{ route('users.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+			@endif
+		</div>
 
 			<table class="table datatable-basic table-hover">
 				<thead>
