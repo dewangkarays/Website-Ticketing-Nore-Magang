@@ -127,6 +127,15 @@ class PresensiController extends Controller
                     $presensi->bukti = $destinasi.'/'.$nama;
                 }
             }
+
+            $user = User::find($presensi->user_id);
+
+            $content = null;
+            $content['user'] = $user;
+            $content['status'] = $presensi->status;
+            $content['keterangan'] = $presensi->keterangan;
+
+            sendWebhookAbsensi($content);
         }
 
         // dd($file);
