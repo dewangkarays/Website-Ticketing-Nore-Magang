@@ -8,9 +8,18 @@ function sendWebhookAbsensi($content) {
     $status_presensi = config('custom.status_presensi.'.$content['status']);
     $keterangan = $content['keterangan'];
 
+    /**
+     * 'status_presensi' => [
+            '1' => 'Hadir',
+            '2' => 'Izin',
+            '3' => 'Sakit',
+            '4' => 'WFH',
+        ],
+     */
+    
     switch ($content['status']) {
         case '2':
-            $color = '4284f5';
+            $color = '610C63';
             break;
 
         case '3':
@@ -18,7 +27,7 @@ function sendWebhookAbsensi($content) {
             break;
 
         case '4':
-            $color = '610C63';
+            $color = '4284f5';
             break;
         
         default:
