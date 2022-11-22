@@ -26,6 +26,9 @@
         #nama {
             min-width: 200px;
         }
+        td{
+            text-transform: capitalize;
+        }
     </style>
 @endsection
 @section('content')
