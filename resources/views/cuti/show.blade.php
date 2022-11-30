@@ -1,10 +1,10 @@
 @extends('layout')
 @section('css')
 <style>
-	/* .summernote ol, ul{
+	.summernote ol, ul{
 		list-style: disc !important;
 		list-style-position: inside;
-	} */
+	}
 </style>
 @endsection
 @section('content')
