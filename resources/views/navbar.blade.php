@@ -17,7 +17,7 @@
 
 	<div class="collapse navbar-collapse" id="navbar-mobile">
 		<ul class="navbar-nav">
-			<li class="nav-item">
+			<li class="nav-item"style='list-style-type:none;'>
 				<a href="#" class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block">
 					<i class="icon-paragraph-justify3"></i>
 				</a>
@@ -29,7 +29,7 @@
 		<ul class="navbar-nav">
 
 
-			<li class="nav-item dropdown">
+			<li class="nav-item dropdown"style='list-style-type:none;'>
 			@if (Auth::user()->role==1||Auth::user()->role==20)
 			<a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
 					<i class="icon-bell3"></i>
@@ -54,7 +54,7 @@
 				</div>
 			</li>
 
-			<li class="nav-item dropdown dropdown-user">
+			<li class="nav-item dropdown dropdown-user"style='list-style-type:none;'>
 				<a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
 					<img src="{{ URL::asset('global_assets/images/user-default.png') }}" class="rounded-circle mr-2" height="34" alt="">
 					<span>{{\Auth::user()->nama}}</span>
