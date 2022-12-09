@@ -129,7 +129,7 @@ class GlobalApiController extends Controller
         
         return response()->json([
             'code' => 200,
-            'message' => 'Presensi kamu hari ini sudah tercatat!',
+            'message' => 'Success',
             'data' => $users
         ], 200);
     }
