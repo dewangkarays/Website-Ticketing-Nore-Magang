@@ -1,0 +1,26 @@
+name: Deployment Staging Ticketing
+
+on: 
+  push:
+    branches: production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Connect SSH & Pulling request
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          host: nore.co.id
+          username: u1077110
+          port: 65002
+          privateKey: ${{ secrets.PRIVATE_KEY }}
+          command: |
+            cd public_html/op
+            git pull
+            composer install
+            composer dump-autoload
+            php artisan migrate --force
+        env:
+          CI: true
