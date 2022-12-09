@@ -1,4 +1,4 @@
-name: Deployment Staging Ticketing
+name: Deployment Production Ticketing
 
 on: 
   push:
