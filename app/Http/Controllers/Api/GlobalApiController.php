@@ -116,6 +116,7 @@ class GlobalApiController extends Controller
             ->whereDoesntHave('presensi', function($q) use($tanggal) {
                 $q->where('tanggal', $tanggal);
             })
+            ->select('nama', 'discord_id')
             ->get();
 
 
