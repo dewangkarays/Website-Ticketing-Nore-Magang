@@ -108,4 +108,28 @@ class GlobalApiController extends Controller
             'message' => 'Presensi kamu hari ini sudah tercatat!',
         ], 200);
     }
+
+    public function getUserBelumPresensi()
+    {
+        $tanggal = date('Y-m-d');
+        $users = User::whereNotNull('discord_id')
+            ->whereDoesntHave('presensi', function($q) use($tanggal) {
+                $q->where('tanggal', $tanggal);
+            })
+            ->get();
+
+
+        if(!$users) {
+            return response()->json([
+                'code' => 500,
+                'message' => 'Something wrong',
+            ], 500);
+        }
+        
+        return response()->json([
+            'code' => 200,
+            'message' => 'Presensi kamu hari ini sudah tercatat!',
+            'data' => $users
+        ], 200);
+    }
 }
