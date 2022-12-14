@@ -152,4 +152,12 @@ return [
         '3' => 'Sakit',
         '4' => 'WFH',
     ],
+
+    'status_user' => [
+        '0'=>'Nonaktif',
+        '1'=> 'Aktif',
+        
+    ],
+
+
 ];
