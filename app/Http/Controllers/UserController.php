@@ -236,4 +236,16 @@ class UserController extends Controller
 
         return redirect('/presensi')->with('success', 'Discord ID berhasil disimpan');
     }
+
+    public function UpdateUser($id)
+    {  
+           
+         $user = User::find($id);
+         $user->update([
+            'nonaktif'=>0
+         ]);
+       
+         return redirect('/users')->with('success', 'User dinonaktifan!');
+    }
+
 }

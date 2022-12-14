@@ -282,6 +282,7 @@ class PresensiController extends Controller
             ->where('role', '<', '80')
             ->whereNotIn('id', $sudahpresensi)
             ->whereNotIn('id', $karyawancuti)
+            ->where('nonaktif', '1')
             ->get();
 
         foreach ($karyawans as $karyawan) {

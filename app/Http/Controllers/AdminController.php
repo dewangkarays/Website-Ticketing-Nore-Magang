@@ -48,7 +48,7 @@ class AdminController extends Controller
         $karyawanizin = Presensi::where('status', '2')->where('tanggal', date('Y-m-d'))->get();
         $karyawansakit = Presensi::where('status', '3')->where('tanggal', date('Y-m-d'))->get();
         $karyawanwfh = Presensi::where('status', '4')->where('tanggal', date('Y-m-d'))->get();
-        $jumlahkaryawan = User::where('role', '<', '80')->where('role', '>', '1')->count();
+        $jumlahkaryawan = User::where('role', '<', '80')->where('role', '>', '1')->where('nonaktif', '=', '1')->count();
         $belumpresensi = $jumlahkaryawan - $karyawancutis->count() - $karyawanhadir - $karyawanizin->count() - $karyawansakit->count() - $karyawanwfh->count();
 
         // dd(date('Y-m-d') == '2022-10-17');
