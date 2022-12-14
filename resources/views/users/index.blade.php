@@ -39,6 +39,7 @@
 						<th>Nama</th>
 						<th>Username</th>
 						<th>Role</th>
+						<th>Status User</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
@@ -74,6 +75,31 @@
 			</div>
 		</div>
 	</div>
+	 <!-- Nonaktif User -->
+	 <div id="User_Update" class="modal fade" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header bg-danger" align="center">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<form action="" method="post" id="Nonaktif">
+				    @csrf
+				    @method('PUT')
+					<div class="modal-body" align="center">
+						<h2> Nonaktif User? </h2>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link" data-dismiss="modal">Batal</button>
+						<button type="submit" class="btn bg-danger">Nonaktif</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
 	<!-- /default modal -->
 
 @endsection
@@ -94,7 +120,10 @@
 		$(document).on("click", ".delbutton", function () {
 		     var url = $(this).data('uri');
 		     $("#delform").attr("action", url);
-		});
+			 $("#Nonaktif").attr("action", url);
+			
+			
+			});
 
 		var DatatableBasic = function() {
 
@@ -111,7 +140,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 4 ]
+		                targets: [ 5 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -165,6 +194,18 @@
 						},
 						{
 							data: null,
+							name: 'status_user',
+							render: (data, type, row) => {
+								const status_user = {
+									'0': 'Nonaktif',
+									'1': 'Aktif',
+									
+								}
+								return status_user[data?.nonaktif];
+							}
+						},
+						{
+							data: null,
 							name: 'actions',
 							render: (data, type, row) => {
 								let showRef = "{{route('users.show', ':id')}}";
@@ -178,6 +219,11 @@
 
 								let delUri = "{{route('users.destroy', ':id')}}";
 								delUri = delUri.replace(':id', data?.id);
+									
+								let UserUpdate = "{{route('users.UpdateUser', ':id')}}";
+								UserUpdate = UserUpdate.replace(':id', data?.id);
+									
+								
 									@if(\Auth::user()->role==1)
 										let actionButtons =
 									`
@@ -192,9 +238,10 @@
 												
 												<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
 						            			<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>
-													
-											</div>
-										</div>
+												
+												<a class="dropdown-item delbutton" data-toggle="modal" data-target="#User_Update" data-uri="${UserUpdate}"><i class="fa fa-eye-slash"></i> Nonaktif</a>
+												
+
 									`
 									@else
 									let actionButtons =
