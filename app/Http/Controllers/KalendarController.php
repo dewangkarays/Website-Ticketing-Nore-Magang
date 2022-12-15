@@ -17,7 +17,7 @@ class KalendarController extends Controller
         $presensi = Presensi::where('status', '!=', '1')->get();
 
         foreach ($presensi as $item) {
-            $item['nama'] = $item->karyawan->nama;
+            $item['nama'] = @$item->karyawan->nama;
             $item['tanggal_mulai'] = $item->tanggal;
             $item['tanggal_akhir'] = $item->tanggal;
             $item['url'] = '/presensi/'.$item->id;
