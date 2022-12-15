@@ -79,7 +79,7 @@ class AdminController extends Controller
         $karyawanizin = Presensi::where('status', '2')->where('tanggal', date('Y-m-d'))->get();
         $karyawansakit = Presensi::where('status', '3')->where('tanggal', date('Y-m-d'))->get();
         $karyawanwfh = Presensi::where('status', '4')->where('tanggal', date('Y-m-d'))->get();
-        $jumlahkaryawan = User::where('role', '<', '80')->where('role', '>', '1')->count();
+        $jumlahkaryawan = User::where('role', '<', '80')->where('role', '>', '1')->where('nonaktif', '=', '1')->count();
         $belumpresensi = $jumlahkaryawan - $karyawancutis->count() - $karyawanhadir - $karyawanizin->count() - $karyawansakit->count() - $karyawanwfh->count();
         $karyawanabsensi= Presensi::where('user_id', \Auth::id())->where('tanggal', date('Y-m-d'))->count();
         $cuti = Cuti::where('user_id',\Auth::user()->id)
@@ -114,7 +114,7 @@ return view("index", compact('new','ongoing','done','todaynew','todayongoing','t
         $karyawanizin = Presensi::where('status', '2')->where('tanggal', date('Y-m-d'))->get();
         $karyawansakit = Presensi::where('status', '3')->where('tanggal', date('Y-m-d'))->get();
         $karyawanwfh = Presensi::where('status', '4')->where('tanggal', date('Y-m-d'))->get();
-        $jumlahkaryawan = User::where('role', '<', '80')->where('role', '>', '1')->count();
+        $jumlahkaryawan = User::where('role', '<', '80')->where('role', '>', '1')->where('nonaktif','=', '1')->count();
         $belumpresensi = $jumlahkaryawan - $karyawancutis->count() - $karyawanhadir - $karyawanizin->count() - $karyawansakit->count() - $karyawanwfh->count();
         $karyawanabsensi= Presensi::where('user_id', \Auth::id())->where('tanggal', date('Y-m-d'))->count();
         $cuti = Cuti::where('user_id',\Auth::user()->id)
