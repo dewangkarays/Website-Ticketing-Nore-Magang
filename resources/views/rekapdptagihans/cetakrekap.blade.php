@@ -137,7 +137,7 @@
     </div>
     <div class="page-break"></div>  
     @php ($i++)
-    @foreach ($lampirans as $lampiran)
+    @foreach ($lampirans as $rekapdpindex => $lampiran)
     @if (!$loop->first)
         @if ($lampiran->jenis_lampiran != $jenis_terakhir)
         <div class="page-break"></div>   
@@ -155,9 +155,14 @@
         <div align="center">
             <img src="{{url($lampiran->gambar)}}" style="max-width:90%;max-height:300px;object-fit: cover;margin-bottom: 16px;">
         </div>
-    @else
+        @if (!$loop->last)
+        @if (($rekapdpindex +1) % 3 == 0)
+        <div class="page-break"></div>   
+        @endif
+        @endif
+        @else
         <div align="center">
-            <img src="{{url($lampiran->gambar)}}" style="max-width:110%;object-fit: cover;margin-bottom: 16px;">
+            <img src="{{url($lampiran->gambar)}}" style="max-width:90%;max-height:300px;object-fit: cover;margin-bottom: 16px;">
         </div>
     @endif
     @if ($lampiran->jenis_lampiran != $jenis_terakhir)
