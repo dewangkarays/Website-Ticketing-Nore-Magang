@@ -55,7 +55,7 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			@if (Auth::user()->role == 1 || Auth::user()->role == 50 || Auth::user()->role == 60)
+			@if (Auth::user()->role == 1 || Auth::user()->role ==20 || Auth::user()->role == 50 || Auth::user()->role == 60)
 			<div class="card"style="background-color:#EDEDED;">
 				<blockquote class="blockquote d-flex py-2 mb-0">
 					<div class="mr-4" style="padding-left: 1.875rem;">
