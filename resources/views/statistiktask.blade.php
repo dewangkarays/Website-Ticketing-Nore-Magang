@@ -8,6 +8,9 @@
 		    position: absolute; 
 		  }
 		}
+		td{
+			text-transform:capitalize;
+		}
 	</style>
 @endsection
 
