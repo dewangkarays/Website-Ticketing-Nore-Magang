@@ -98,8 +98,30 @@
 			</div>
 		</div>
 	</div>
-	
-	
+	<!-- Aktif User -->
+	<div id="Aktif_User" class="modal fade" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header bg-success" align="center">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<form action="" method="post" id="Aktif">
+				    @csrf
+				    @method('PUT')
+					<div class="modal-body" align="center">
+						<h2> Aktif User? </h2>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link" data-dismiss="modal">Batal</button>
+						<button type="submit" class="btn bg-success">Aktif</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	@endif
 	<!-- /default modal -->
 
 @endsection
@@ -121,7 +143,7 @@
 		     var url = $(this).data('uri');
 		     $("#delform").attr("action", url);
 			 $("#Nonaktif").attr("action", url);
-			
+			 $("#Aktif").attr("action", url);
 			
 			});
 
@@ -223,7 +245,9 @@
 								let UserUpdate = "{{route('users.UpdateUser', ':id')}}";
 								UserUpdate = UserUpdate.replace(':id', data?.id);
 									
-								
+								let AktifUser = "{{route('users.UserAktif', ':id')}}";
+								AktifUser = AktifUser.replace(':id', data?.id);
+									
 									@if(\Auth::user()->role==1)
 										let actionButtons =
 									`
@@ -241,6 +265,7 @@
 												
 												<a class="dropdown-item delbutton" data-toggle="modal" data-target="#User_Update" data-uri="${UserUpdate}"><i class="fa fa-eye-slash"></i> Nonaktif</a>
 												
+												<a class="dropdown-item delbutton" data-toggle="modal" data-target="#Aktif_User" data-uri="${AktifUser}"><i class="fa fa-eye" aria-hidden="true"></i> Aktif</a>
 
 									`
 									@else

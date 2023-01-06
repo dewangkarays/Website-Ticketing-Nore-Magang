@@ -35,8 +35,11 @@ Route::group(['middleware' => ['auth']], function() {
 		// Route::resource('tasks', 'TaskController');
 		Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
 		Route::put('/discord-id/{id}', 'UserController@updateDiscordId')->name('user.update-discord');
+		
+		// UserController (Aktif.Nonaktif)
 		Route::put('/nonaktif{id}/destroy', 'UserController@UpdateUser')->name('users.UpdateUser');
-
+		Route::put('/nonaktif{id}/update', 'UserController@UserAktif')->name('users.UserAktif');
+		
 		Route::get('/antrian',  'TaskController@antrian');
 		Route::get('/history',  'TaskController@history')->name('history');
 		Route::get('/getnotif',  'NotificationController@getNotif')->name('getnotif');

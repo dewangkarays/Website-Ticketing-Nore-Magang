@@ -247,5 +247,14 @@ class UserController extends Controller
        
          return redirect('/users')->with('success', 'User dinonaktifan!');
     }
-
+    public function UserAktif($id)
+    {  
+           
+         $user = User::find($id);
+         $user->update([
+            'nonaktif'=>1
+         ]);
+       
+         return redirect('/users')->with('success', 'User diaktifan!');
+    }
 }
