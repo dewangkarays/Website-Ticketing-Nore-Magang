@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
 		Route::put('/discord-id/{id}', 'UserController@updateDiscordId')->name('user.update-discord');
 		
-		// UserController (Aktif.Nonaktif)
+		// Route::aktif-nonaktif('User', 'UserController');
 		Route::put('/nonaktif{id}/destroy', 'UserController@UpdateUser')->name('users.UpdateUser');
 		Route::put('/nonaktif{id}/update', 'UserController@UserAktif')->name('users.UserAktif');
 		
