@@ -682,4 +682,16 @@ class TagihanController extends Controller
 
         return Datatables::of($tagihans)->addIndexColumn()->make(true);
     }
+
+    public function CronResetNinv() {
+        $nomor = Nomor::find(1);
+       
+        $nomor->ninv=0;
+        
+        $nomor->save();
+        
+    
+        return 'succes';
+
+    }
 }

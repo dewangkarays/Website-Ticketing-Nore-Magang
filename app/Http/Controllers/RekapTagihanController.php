@@ -69,16 +69,8 @@ class RekapTagihanController extends Controller
         $users = User::where('role','>=',80)->get();
         $users = $users->sortBy('nama');
         $penagih = Setting::first();
-        $lastno = Nomor::orderBy('id','Desc')->first();
+        $lastno = Nomor::first();
 
-        if (date("Y") > ( date("Y", strtotime($lastno->created_at))) ) {
-      
-            $lastno = Nomor::create([
-                'ninv' => 0,
-                
-            ]);
-            
-        } 
         return view('rekaptagihans.create',compact('users','penagih','lastno','requestUser','tagihans'));
     }
 
@@ -118,7 +110,7 @@ class RekapTagihanController extends Controller
         // $data['user_id'] = $request->get('user_id');
         // $lastinv = Tagihan::latest('id')->first();
 
-        $lastno = Nomor::orderBy('id','Desc')->first();
+        $lastno = Nomor::first();
         $lastno->ninv = $nomorinv;
         $lastno->update();
 

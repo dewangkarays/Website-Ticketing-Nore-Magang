@@ -66,16 +66,8 @@ class RekapDptagihanController extends Controller
         $users = User::where('role','>=',80)->get();
         $users = $users->sortBy('nama');
         $penagih = Setting::first();
-        $lastno = Nomor::orderBy('id','Desc')->first();
+        $lastno = Nomor::first();
 
-        if (date("Y") > ( date("Y", strtotime($lastno->created_at))) ) {
-      
-            $lastno = Nomor::create([
-                'ninv' => 0,
-                
-            ]);
-            
-        } 
     
         return view('rekapdptagihans.create', compact('users','penagih','lastno','requestUser','tagihans'));
     }
@@ -114,7 +106,7 @@ class RekapDptagihanController extends Controller
         $data['invoice'] = $invawal.'/'.$no.'/'.$noakhir;
         // $lastinv = Tagihan::latest('id')->first();
 
-        $lastno = Nomor::orderBy('id','Desc')->first();
+        $lastno = Nomor::first();
         $lastno->ninv = $nomorinv;
         $lastno->update();
 
