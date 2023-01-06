@@ -121,7 +121,7 @@
 			</div>
 		</div>
 	</div>
-	@endif
+	
 	<!-- /default modal -->
 
 @endsection
