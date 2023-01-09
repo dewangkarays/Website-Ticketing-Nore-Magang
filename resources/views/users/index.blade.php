@@ -248,9 +248,31 @@
 								let AktifUser = "{{route('users.UserAktif', ':id')}}";
 								AktifUser = AktifUser.replace(':id', data?.id);
 									
-									@if(\Auth::user()->role==1)
-										let actionButtons =
+									@if(\Auth::user()->role==1) 
+									if (data.nonaktif==0) {
+										
+										var actionButtons =
 									`
+										<div class="dropdown">
+											<a href="#" class="list-icons-item" data-toggle="dropdown">
+												<i class="icon-menu9"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right" style="z-index:5">
+												<a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a> 
+												<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
+												
+												
+												<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+						            			<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>
+												
+
+												<a class="dropdown-item delbutton" data-toggle="modal" data-target="#Aktif_User" data-uri="${AktifUser}"><i class="fa fa-eye" aria-hidden="true"></i> Aktif</a>
+
+									`
+									} else { 
+										var actionButtons =
+									
+										`
 										<div class="dropdown">
 											<a href="#" class="list-icons-item" data-toggle="dropdown">
 												<i class="icon-menu9"></i>
@@ -265,11 +287,11 @@
 												
 												<a class="dropdown-item delbutton" data-toggle="modal" data-target="#User_Update" data-uri="${UserUpdate}"><i class="fa fa-eye-slash"></i> Nonaktif</a>
 												
-												<a class="dropdown-item delbutton" data-toggle="modal" data-target="#Aktif_User" data-uri="${AktifUser}"><i class="fa fa-eye" aria-hidden="true"></i> Aktif</a>
-
-									`
+										`
+									}
+										
 									@else
-									let actionButtons =
+									var actionButtons =
 									`
 										<div class="dropdown">
 											<a href="#" class="list-icons-item" data-toggle="dropdown">
@@ -284,7 +306,7 @@
 										</div>
 									`
 									@endif
-								
+									
 								
 
 								return actionButtons;
