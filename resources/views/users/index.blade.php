@@ -149,6 +149,12 @@
 
 		var DatatableBasic = function() {
 
+			const status_user = {
+				'0': 'Nonaktif',
+				'1': 'Aktif',
+									
+			}
+
 		    // Basic Datatable examples
 		    var _componentDatatableBasic = function() {
 		        if (!$().DataTable) {
@@ -216,14 +222,16 @@
 						},
 						{
 							data: null,
-							name: 'status_user',
+							name: null,
 							render: (data, type, row) => {
-								const status_user = {
-									'0': 'Nonaktif',
-									'1': 'Aktif',
-									
-								}
-								return status_user[data?.nonaktif];
+								let nonaktif = ''
+                                if (data?.nonaktif == 0)
+                                    nonaktif = `<span style="font-size: 100%;" class="badge badge-pill badge-danger">${status_user[data?.nonaktif]}</span>`
+                                else 
+                                    nonaktif = `<span style="font-size: 100%;" class="badge badge-pill badge-success">${status_user[data?.nonaktif]}</span>` 
+
+                                  
+								return nonaktif
 							}
 						},
 						{
