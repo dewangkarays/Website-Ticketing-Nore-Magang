@@ -227,7 +227,7 @@ class PresensiController extends Controller
         return response()->json(@$karyawans);
 
     } else {
-        @$karyawans = User::where('role','<=','50')->where('role','>=','10')->with(['presensi' => function ($q) use ($month, $year) {
+        @$karyawans = User::where('nonaktif', '1')->where('role','<=','50')->where('role','>=','10')->with(['presensi' => function ($q) use ($month, $year) {
             $q->whereYear('tanggal','=',$year)->whereMonth('tanggal','=',$month)->orderBy('tanggal'); 
             // $q->orderBy('tanggal'); 
         }])
