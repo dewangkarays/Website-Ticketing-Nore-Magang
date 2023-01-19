@@ -91,7 +91,7 @@ ul{
 				</li>
 
 				{{-- Karyawan non keuangan --}}
-				@elseif(Auth::user()->role>20 && \Auth::user()->role<80)
+				@elseif(Auth::user()->role>20 && \Auth::user()->role< 80)
 				<li class="nav-item">
 					<a href="{{ url('/karyawan') }}" class="nav-link {{ (request()->is('karyawan*')) ? 'active' : '' }}">
 						<i class="icon-home4"></i>
@@ -210,7 +210,7 @@ ul{
 				@endif
 
 				{{-- Kantor --}}
-				@if (Auth::user()->role<80)
+				@if (Auth::user()->role< 80)
 				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link {{ (request()->is('calendar*','presensi*','cuti*', 'history-cuti*')) ? 'active' : '' }}"><i class="icon-cabinet"></i>
 						<span>
