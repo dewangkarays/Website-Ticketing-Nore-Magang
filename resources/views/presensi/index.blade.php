@@ -73,7 +73,7 @@
                             <tr> 
                                 <th>No</th>
                                 <th id="nama" data-role="{{ \Auth::user()->role }}" data-user_id="{{\Auth::user()->id }}">Nama</th>
-                                @for($i=0;$i<count($tanggal);$i++)
+                                @for($i=0;$i< count($tanggal);$i++)
                                 <th class="tanggal">{{ $tanggal[$i] }}</th>
                                 @endfor
                                 {{-- @foreach ($presensi_all as $pres)
@@ -87,12 +87,12 @@
                             {{-- <tr>
 
                             </tr> --}}
-                            {{-- @for($k=0;$k<count($karyawans_all);$k++)
+                            {{-- @for($k=0;$k< count($karyawans_all);$k++)
                             <tr> 
                                 <td>{{ $k + 1 }}</td>
                                 @php($j = 0)
                                 <td>{{ $karyawans_all[$k]['nama'] }}</td>
-                                @for($i=0;$i<count($dates);$i++)
+                                @for($i=0;$i< count($dates);$i++)
                                     @if(count($karyawans_all[$k]['presensi']) != 0)
                                         @if($dates[$i]==@$karyawans_all[$k]['presensi'][$j]['tanggal'])
                                             @if($karyawans_all[$k]['presensi'][$j]['status'] == 1)
@@ -188,7 +188,7 @@
                         <thead  id="head">
                             <tr> 
                                 <th>Nama</th>
-                                @for($i=0;$i<count($tanggal);$i++)
+                                @for($i=0;$i< count($tanggal);$i++)
                                 <th class="tanggal">{{ $tanggal[$i] }}</th>
                                 @endfor
                             </tr>
@@ -198,7 +198,7 @@
                                 <td>1</td>
                                 @php($j = 0)
                                 <td id="nama" data-user_id=" {{ \Auth::user()->id }}">{{ \Auth::user()->nama }}</td>
-                                @for($i=0;$i<count($dates);$i++)
+                                @for($i=0;$i< count($dates);$i++)
                                     @if($dates[$i]==$karyawans[0]['presensi'][$j]['tanggal'])
                                         @if($karyawans[0]['presensi'][$j]['status'] == 1)
                                             <td class="center"> v </td>
