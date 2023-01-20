@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Model\Payment;
 use App\Model\User;
 use App\Model\Notification;
@@ -10,6 +11,7 @@ use App\Model\Task;
 use App\Model\Nomor;
 use App\Model\Tagihan;
 use App\Model\Setting;
+use App\Model\Proyek;
 use App\Exports\PaymentExport; //plugin excel
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
@@ -697,7 +699,16 @@ class PaymentController extends Controller
         // $chart[80] = $chart[90] = $chart[99] = array_fill(1, 12, 0);
         $chart[0] = array_fill(1, 12, 0);
         $pie[80] = $pie[95] = $pie[99] = $pie[90] = 0;
-
+    //     $result=DB::select(DB::raw("select count(*) as total_jenis_proyek ,jenis_proyek from proyeks group by jenis_proyek;"));
+    //     $chartData="";
+    //     foreach($result as $list){
+    //         $chartData.="['".$list->jenis_proyek."', ".$list->total_jenis_proyek."],";
+    //     }
+    //    $arr['chartData']=rtrim($chartData,",");
+    //     return view('chart',$arr);
+       //    echo $chartData;
+        $proyeks = Proyek::selectRaw('jenis_proyek, count(jenis_proyek) as total')->groupBY('jenis_proyek')->orderBY('total','DESC')->get();
+        //   dd($proyeks);
         $years = Payment::selectRaw('year(tanggal) as tahun')->where('status','1')->groupBy('tahun')->orderBy('tahun','DESC')->get();
 
         $qry = Payment::selectRaw('month(tanggal) as bulan, user_role, sum(nominal) as total ')->where('status','1')->whereYear('tanggal',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
@@ -712,7 +723,7 @@ class PaymentController extends Controller
         $clients = Payment::select('*')->orderBy('tanggal','DESC')->offset(0)->limit(8)->get();
         $totals = Payment::selectRaw('user_id, SUM(nominal) as total')->groupBy('user_id')->orderBy('total','DESC')->get();
 
-        return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter','totals'));
+        return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter','totals','proyeks'));
     }
 
     public function getpayments() {
