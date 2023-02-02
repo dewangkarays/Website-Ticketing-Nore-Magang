@@ -99,7 +99,7 @@
 									<tr>
 										<th>No</th>
 										<th>Pelanggan</th>
-										<th>Tanggal</th>
+										<th style="width:23%">Tanggal</th>
 										<th>Jumlah</th>
 									</tr>
 								</thead>
@@ -137,7 +137,7 @@
 				<!-- Basic pie -->
 				<div class="card">
 					<div class="card-header header-elements-inline">
-						<h5 class="card-title">Total Pembayaran per Perlanggan</h5>
+		          	<h5 class="card-title">Total Pembayaran per Perlanggan</h5> 
 					</div>
 
 					<div class="card-body">
@@ -191,8 +191,42 @@
 
 			</div>
 		</div>
+			<div class="modal fade" id="myModal" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
 
-	</div>
+				<!-- Modal Header -->
+				<div class="modal-header bg-success">
+					<h4 class="modal-title" style="border-bottom: 1px solid #000"><span class="text-danger">*</span>Detail Data Proyek</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+				<div class="table-responsive">
+					<table class="table table-bordered table-striped table-hover" id="tableData">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Nama Klien</th>
+								<th>Nama Proyek</th>
+								<th>Website</th>
+							</tr>
+						</thead>
+						<tbody id="dataProyek">
+					</tbody>
+					</table>
+				</div>
+				<br>
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+
+				</div>
+			</div>
+			</div>
+				</div>
 	<!-- /content area -->
 @endsection
 
@@ -536,11 +570,11 @@ var _scatterPieBasicLightExample = function() {
 	//
 	// Charts configuration
 	//
-
+	var pie_basic;
 	if (pie_basic_element) {
 
 		// Initialize chart
-		var pie_basic = echarts.init(pie_basic_element);
+		pie_basic = echarts.init(pie_basic_element);
 
 
 		//
@@ -615,27 +649,65 @@ var _scatterPieBasicLightExample = function() {
 				data: [
 					@foreach($proyeks as $key => $val)
 				
-					{value: {{$val->total}}, name: '{{config("custom.jenis_proyek.".$val->jenis_proyek)}}'},
-		            
+					{value: {{$val->total}},id:{{$val->jenis_proyek}},name: '{{config("custom.jenis_proyek.".$val->jenis_proyek)}}'},
 					@endforeach
-					// {value: 20, name: 'Website'},
-					// {value: 20, name: 'Iklan/Ads'},
-					// {value: 20, name: 'Sistem Informasi'},
-					// {value: 20, name: 'Mobile App'},
-					// {value: 20, name: 'Ulo'}
+
 					]
 			}]
 		});
 		
 	}
-	// pie_basic_element.onclick = function(evt) {
-			
-	// 		console.log(evt);
-			
-	//   		alert('test');
-    // };
-	
+			pie_basic.on('click', function(params) {
+		    //ini sudah dapat value dan name 
+				var token= '{{ csrf_token() }}';
+				$.ajax({
+					type :'GET',
+					url  :'{{route("getstatistikpayment",[null])}}/'+params.data.id,
+					headers  :{
+					'X-CSRF-TOKEN' : token
+					},
+					dataType :'json',
+					success  : function(data){
+						console.log(data);
+						$('#myModal').modal('show');
+						var dataproyek = '';
+						$('#dataProyek').html("");
 
+                        // ITERATING THROUGH OBJECTS
+                        $.each(data, function (key, value) {
+                             var no = key+1;
+                            //CONSTRUCTION OF ROWS HAVING
+                            // DATA FROM JSON OBJECT
+                            dataproyek += '<tr>';
+                            dataproyek += '<td>' + 
+							    no + '</td>';
+								
+								dataproyek += '<td>' + 
+                                value.user.nama + '</td>';
+								
+								dataproyek += '<td>' + 
+                                value.nama_proyek + '</td>';
+  
+								dataproyek += '<td>' + 
+                                value.website + '</td>';
+  
+								dataproyek += '</tr>';
+                        });
+                          
+                        //INSERTING ROWS INTO TABLE 
+                        $('#dataProyek').append(dataproyek);
+						
+						
+
+					},
+					error:function(){
+						alert('eror');
+					}
+				});
+				
+				// Print name in console
+				console.log(params);
+			});
 	//
 	// Resize charts
 	//

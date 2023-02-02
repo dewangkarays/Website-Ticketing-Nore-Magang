@@ -138,7 +138,11 @@ Route::group(['middleware' => ['auth']], function() {
 		//Statistik
 		Route::match(['get', 'post'], '/statistiktask',  'TaskController@statistiktask')->name('stat_task');
 		// Route::get('/getstatistik',  'TaskController@getstatistik')->name('getstat');
+		
 		Route::match(['get', 'post'], '/statistikpayment',  'PaymentController@statistikpayment')->name('stat_payment');
+		
+		//tabeldata Statistik payment
+		Route::get('getstatistikpayment/{id?}', 'PaymentController@getstatistikpayment')->name('getstatistikpayment');
 
 		//Tagihan
 		Route::resource('tagihans', 'TagihanController');

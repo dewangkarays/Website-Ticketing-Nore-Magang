@@ -699,15 +699,8 @@ class PaymentController extends Controller
         // $chart[80] = $chart[90] = $chart[99] = array_fill(1, 12, 0);
         $chart[0] = array_fill(1, 12, 0);
         $pie[80] = $pie[95] = $pie[99] = $pie[90] = 0;
-    //     $result=DB::select(DB::raw("select count(*) as total_jenis_proyek ,jenis_proyek from proyeks group by jenis_proyek;"));
-    //     $chartData="";
-    //     foreach($result as $list){
-    //         $chartData.="['".$list->jenis_proyek."', ".$list->total_jenis_proyek."],";
-    //     }
-    //    $arr['chartData']=rtrim($chartData,",");
-    //     return view('chart',$arr);
-       //    echo $chartData;
-        $proyeks = Proyek::selectRaw('jenis_proyek, count(jenis_proyek) as total')->groupBY('jenis_proyek')->orderBY('total','DESC')->get();
+
+        $proyeks = Proyek::selectRaw('jenis_proyek, count(jenis_proyek) as total')->groupBY('jenis_proyek')->orderBY('total','DESC')->get(); 
         //   dd($proyeks);
         $years = Payment::selectRaw('year(tanggal) as tahun')->where('status','1')->groupBy('tahun')->orderBy('tahun','DESC')->get();
 
@@ -725,7 +718,15 @@ class PaymentController extends Controller
 
         return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter','totals','proyeks'));
     }
-
+    public function getstatistikpayment($id){
+        $proyeks = Proyek::where('jenis_proyek',$id)
+        ->with('user')
+        ->orderBy('jenis_proyek')
+        ->get();
+    
+        return response()->json($proyeks);
+       }
+ 
     public function getpayments() {
         if(\Auth::user()->role > 50){
             $payments = Payment::where('user_id',\Auth::user()->id)
