@@ -44,7 +44,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-3">Konfirmasi Password <span class="text-danger">*</span></label>
 							<div class="col-lg-9">
-								<input type="password" name="con_pass" id="con_pass" class="form-control" required placeholder="password tidak sama">
+								<input type="password" name="con_pass" id="con_pass" class="form-control" required placeholder="Konfirmasi Password sekali lagi">
 							</div>
 						</div>
 
