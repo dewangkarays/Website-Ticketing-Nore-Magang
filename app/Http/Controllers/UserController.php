@@ -213,7 +213,15 @@ class UserController extends Controller
             $user->password = bcrypt($request->get('new_pass'));
             $user->save();
 
-            return redirect('/changepass')->with('success', 'Password updated!');
+        if($user->role==1)
+        {
+            return redirect('/admin')->with('success', 'Password updated!');
+        }
+        if($user->role<=50)
+        {
+            return redirect('/karyawan')->with('success', 'Password updated!');
+        }
+        
         } else {
             return redirect('/changepass')->with('error', 'Password lama salah');
         }
