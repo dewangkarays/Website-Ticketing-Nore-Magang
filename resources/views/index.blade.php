@@ -705,16 +705,120 @@
 @endsection
 
 @section('js')
+	<!-- Theme JS files -->
+	<script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/forms/validation/validate.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
 
-<!-- Theme JS files -->
-<script src="{{asset('global_assets/js/plugins/visualization/d3/d3.min.js') }}"></script>
-<script src="{{asset('global_assets/js/plugins/visualization/d3/d3_tooltip.js') }}"></script>
-<script src="{{asset('global_assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
-<script src="{{asset('global_assets/js/plugins/forms/selects/bootstrap_multiselect.js') }}"></script>
-<script src="{{asset('global_assets/js/plugins/ui/moment/moment.min.js') }}"></script>
-<script src="{{asset('global_assets/js/plugins/pickers/daterangepicker.js') }}"></script>
+	<script src="{{asset('assets/js/app.js')}}"></script>
+	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
+	<script type="text/javascript">
 
-<script src="{{asset('assets/js/app.js') }}"></script>
-<script src="{{asset('global_assets/js/demo_pages/dashboard.js') }}"></script>
-<!-- /theme JS files -->
+		var FormValidation = function() {
+
+		    // Validation config
+		    var _componentValidation = function() {
+		        if (!$().validate) {
+		            console.warn('Warning - validate.min.js is not loaded.');
+		            return;
+		        }
+
+		        // Initialize
+		        var validator = $('.form-validate-jquery').validate({
+		            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+		            errorClass: 'validation-invalid-label',
+		            //successClass: 'validation-valid-label',
+		            validClass: 'validation-valid-label',
+		            highlight: function(element, errorClass) {
+		                $(element).removeClass(errorClass);
+		            },
+		            unhighlight: function(element, errorClass) {
+		                $(element).removeClass(errorClass);
+		            },
+		            // success: function(label) {
+		            //    label.addClass('validation-valid-label').text('Success.'); // remove to hide Success message
+		            //},
+
+		            // Different components require proper error label placement
+		            errorPlacement: function(error, element) {
+
+		                // Unstyled checkboxes, radios
+		                if (element.parents().hasClass('form-check')) {
+		                    error.appendTo( element.parents('.form-check').parent() );
+		                }
+
+		                // Input with icons and Select2
+		                else if (element.parents().hasClass('form-group-feedback') || element.hasClass('select2-hidden-accessible')) {
+		                    error.appendTo( element.parent() );
+		                }
+
+		                // Input group, styled file input
+		                else if (element.parent().is('.uniform-uploader, .uniform-select') || element.parents().hasClass('input-group')) {
+		                    error.appendTo( element.parent().parent() );
+		                }
+
+		                // Other elements
+		                else {
+		                    error.insertAfter(element);
+		                }
+		            },
+		            rules: {
+		                // old_pass: {
+		                //     minlength: 8
+		                // },
+		                new_pass: {
+		                    minlength: 5
+		                },
+		                con_pass: {
+		                    equalTo: '#new_pass'
+		                },
+		            },
+		        });
+
+		        // Reset form
+		        $('#reset').on('click', function() {
+		            validator.resetForm();
+		        });
+		    };
+
+		    // Return objects assigned to module
+		    return {
+		        init: function() {
+		            _componentValidation();
+		        }
+		    }
+		}();
+
+		// Initialize module
+		// ------------------------------
+
+		document.addEventListener('DOMContentLoaded', function() {
+		    FormValidation.init();
+		});
+	</script>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+	        // Default style
+	        @if(session('error'))
+	            new PNotify({
+	                title: 'Error',
+	                text: '{{ session('error') }}.',
+	                icon: 'icon-blocked',
+	                type: 'error'
+	            });
+            @endif
+            @if ( session('success'))
+	            new PNotify({
+	                title: 'Success',
+	                text: '{{ session('success') }}.',
+	                icon: 'icon-checkmark3',
+	                type: 'success'
+	            });
+            @endif
+
+		});
+	</script>
 @endsection
