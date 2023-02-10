@@ -94,7 +94,7 @@
 
 					<div class="card-body">
 						<div class="chart-container">
-							<table class="table datatable-basic table-hover">
+							<table class="table table-hover">
 								<thead>
 									<tr>
 										<th>No</th>
@@ -197,14 +197,15 @@
 
 				<!-- Modal Header -->
 				<div class="modal-header bg-success">
-					<h4 class="modal-title" style="border-bottom: 1px solid #000"><span class="text-danger">*</span>Detail Data Proyek</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" style="border-bottom: 1px solid #000">
+					<span class="text-danger">*</span>Detail Data Proyek</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
 				</div>
 
 				<!-- Modal body -->
 				<div class="modal-body">
 				<div class="table-responsive">
-					<table class="table table-bordered table-striped table-hover" id="tableData">
+					<table class="table table-bordered table-striped table-hover tabledata" id="tableData">
 						<thead>
 							<tr>
 								<th>No</th>
@@ -235,6 +236,7 @@
 	<script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/validation/validate.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
@@ -658,6 +660,7 @@ var _scatterPieBasicLightExample = function() {
 		
 	}
 			pie_basic.on('click', function(params) {
+				
 		    //ini sudah dapat value dan name 
 				var token= '{{ csrf_token() }}';
 				$.ajax({
@@ -668,9 +671,10 @@ var _scatterPieBasicLightExample = function() {
 					},
 					dataType :'json',
 					success  : function(data){
-						console.log(data);
+						// console.log(data);
 						$('#myModal').modal('show');
 						var dataproyek = '';
+						$('.tabledata').DataTable().destroy();
 						$('#dataProyek').html("");
 
                         // ITERATING THROUGH OBJECTS
@@ -696,7 +700,7 @@ var _scatterPieBasicLightExample = function() {
                           
                         //INSERTING ROWS INTO TABLE 
                         $('#dataProyek').append(dataproyek);
-						
+						$('.tabledata').DataTable();
 						
 
 					},
