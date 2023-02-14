@@ -157,7 +157,7 @@
 								    <tr>
 								        <td>{{$i}}</td>
 								        <td><div class="datatable-column-width">{{@$total->user->username ? $total->user->username : "-"}}</div></td>
-								        <td><div class="datatable-column-width">{{number_format($total->total,0,',','.')}}</div></td>
+								        <td><div class="datatable-column-width">Rp.{{number_format($total->total,0,',','.')}}</div></td>
 								    </tr>
 								    @php ($i++)
 								    @endforeach
@@ -199,6 +199,8 @@
 				<div class="modal-header bg-success">
 					<h4 class="modal-title" style="border-bottom: 1px solid #000">
 					<span class="text-danger">*</span>Detail Data Proyek</h4>
+					 &nbsp&nbsp
+					<h4>(<span id="jenisProyekModal"></span></h4>&nbsp<h4><span id="jumlahdata"></span>)</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
 				</div>
 
@@ -588,8 +590,8 @@ var _scatterPieBasicLightExample = function() {
 
 			// Colors
 			color: [
-				'#2ec7c9','#b6a2de','#7eb00a','#ffb980','#d87a80',
-				'#39b772','#e5cf0d','#97b552','#95706d','#dc69aa',
+				'#2ec7c9','#b6a2de','#7eb00a','#ffb980','#39b772',
+				'#d87a80','#e5cf0d','#97b552','#95706d','#dc69aa',
 				'#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
 				'#59678c','#c9ab00','#5ab1ef','#6f5553','#c14089'
 			],
@@ -676,6 +678,8 @@ var _scatterPieBasicLightExample = function() {
 						var dataproyek = '';
 						$('.tabledata').DataTable().destroy();
 						$('#dataProyek').html("");
+						$('#jenisProyekModal').html(params.name);
+						$('#jumlahdata').html(params.value);
 
                         // ITERATING THROUGH OBJECTS
                         $.each(data, function (key, value) {
@@ -694,7 +698,7 @@ var _scatterPieBasicLightExample = function() {
   
 								dataproyek += '<td>' + 
                                 value.website + '</td>';
-  
+		
 								dataproyek += '</tr>';
                         });
                           
