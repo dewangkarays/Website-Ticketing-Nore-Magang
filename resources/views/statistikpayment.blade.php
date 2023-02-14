@@ -213,7 +213,6 @@
 								<th>No</th>
 								<th>Nama Klien</th>
 								<th>Nama Proyek</th>
-								<th>Website</th>
 								<th>Payment</th>
 							</tr>
 						</thead>
@@ -697,9 +696,6 @@ var _scatterPieBasicLightExample = function() {
 								dataproyek += '<td>' + 
                                 value.nama_proyek + '</td>';
   
-								dataproyek += '<td>' + 
-                                value.website + '</td>';
-								
 								dataproyek += '<td>' + 
                                 (value.tagihan ? (new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value.tagihan.nominal )) : 'Rp -')+ '</td>';
   
