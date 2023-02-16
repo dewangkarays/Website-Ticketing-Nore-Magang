@@ -68,6 +68,7 @@ class UserController extends Controller
             'nip' => $request->get('nip'),
             'jabatan' => $request->get('jabatan'),
             'email' => $request->get('email'),
+            'tanggal_lahir' => $request->get('tanggal_lahir'),
             'telp' => $request->get('phone'),
             'alamat' => $request->get('address'),
             'username' => $request->get('username'),
@@ -145,6 +146,7 @@ class UserController extends Controller
         $request->validate([
             'nama'=>'required',
             'email'=>'required',
+            'tanggal_lahir'=>'required',
             'telp'=>'required',
             'username'=>'required',
             'role'=>'required'

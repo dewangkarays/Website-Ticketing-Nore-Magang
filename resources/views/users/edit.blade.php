@@ -52,6 +52,12 @@
 							</div>
 						</div>
 						<div class="form-group row">
+                            <label class="col-form-label col-lg-2">Tanggal Lahir</label>
+                            <div class="col-lg-10">
+                                <input type="date" name="tanggal_lahir" class="form-control border-teal pickadate-accessibility" placeholder="Tanggal Lahir" value="{{ $user->tanggal_lahir }}">
+                            </div>
+                        </div>
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Telp</label>
 							<div class="col-lg-10">
 								<input type="text" name="telp" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA" required value="{{ $user->telp }}">
@@ -243,6 +249,9 @@
 		                    required: 'Mohon diisi.'
 		                },
 		                email: {
+		                    required: 'Mohon diisi.'
+		                },
+						tanggal_lahir: {
 		                    required: 'Mohon diisi.'
 		                },
 		                telp: {
