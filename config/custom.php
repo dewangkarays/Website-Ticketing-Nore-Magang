@@ -33,7 +33,7 @@ return [
         '2' => 'Iklan/Ads',
         '3' => 'Sistem Informasi',
         '4' => 'Mobile App',
-        '6' => 'Ulo',
+        '6' => 'ULo',
         '5' => 'Custom/Lainnya',
     ],
 
