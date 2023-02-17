@@ -633,7 +633,7 @@ var _scatterPieBasicLightExample = function() {
 				orient: 'vertical',
 				top: 'center',
 				left: 0,
-				data: ['Website', 'Iklan/Ads', 'Sistem Informasi', 'Mobile App', 'Ulo','Custom/Lainnya'],
+				data: ['Website', 'Iklan/Ads', 'Sistem Informasi', 'Mobile App', 'ULo','Custom/Lainnya'],
 				itemHeight: 8,
 				itemWidth: 8
 			},
