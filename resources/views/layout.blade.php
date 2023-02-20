@@ -59,7 +59,7 @@
 
 				<div class="navbar-collapse collapse" id="navbar-footer">
 					<span class="navbar-text">
-						&copy; 2020. Nore
+						&copy; 2023. Nore
 					</span>
 
 				</div>
