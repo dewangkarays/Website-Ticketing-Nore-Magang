@@ -133,4 +133,35 @@ class GlobalApiController extends Controller
             'data' => $users
         ], 200);
     }
+    
+    public function izin($id,Request $request)
+    {
+        $user   = User::find($id);
+        $tanggal= date('Y-m-d');
+        if($user->sisa_cuti > 0){
+            // $user->sisa_cuti -= 1;
+            
+            // $user->save();
+
+            $tanggal              = date('Y-m-d');
+            $presensi             = new Presensi();
+            $presensi->tanggal    = $tanggal;
+            $presensi->status     = 2;
+            $presensi->user_id    = $user->id;
+            $presensi->keterangan = $request->keterangan;
+    
+            $presensi->save();
+
+            return response()->json([
+                'code' => 200,
+                'message' => 'Presensi Izin kamu hari ini sudah tercatat!',
+            ], 200);
+        } 
+
+        return response()->json([
+            'code' => 400,
+            'message' => 'Sisa cuti kamu sudah habis!',
+        ], 400);
+        
+    }
 }
