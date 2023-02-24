@@ -164,4 +164,26 @@ class GlobalApiController extends Controller
         ], 400);
         
     }
+
+    public function wfh($id,Request $request)
+    {
+        $user   = User::find($id);
+        $tanggal= date('Y-m-d');
+       
+           
+            $tanggal              = date('Y-m-d');
+            $presensi             = new Presensi();
+            $presensi->tanggal    = $tanggal;
+            $presensi->status     = 4;
+            $presensi->user_id    = $user->id;
+            $presensi->keterangan = $request->keterangan;
+    
+            $presensi->save();
+
+            return response()->json([
+                'code' => 200,
+                'message' => 'Presensi WFH kamu hari ini sudah tercatat!',
+            ], 200);
+        
+    }
 }

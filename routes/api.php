@@ -22,6 +22,8 @@ Route::post('/login',  'Api\LoginApiController@login');
 // discord integration
 Route::post('/hadir',  'Api\GlobalApiController@hadir');
 Route::post('/izin/{id}',  'Api\GlobalApiController@izin');
+Route::post('/wfh/{id}',  'Api\GlobalApiController@wfh');
+
 Route::get('/check-presensi',  'Api\GlobalApiController@getUserBelumPresensi');
 
 Route::group(['middleware' => ['auth:api']], function() {
