@@ -25,6 +25,7 @@ Route::post('/izin/{id}',  'Api\GlobalApiController@izin');
 Route::post('/wfh/{id}',  'Api\GlobalApiController@wfh');
 
 Route::get('/check-presensi',  'Api\GlobalApiController@getUserBelumPresensi');
+Route::get('/check-ulang-tahun',  'Api\GlobalApiController@getTodayUlangTahun');
 
 Route::group(['middleware' => ['auth:api']], function() {
 	Route::resource('tasks', 'Api\TaskApiController');

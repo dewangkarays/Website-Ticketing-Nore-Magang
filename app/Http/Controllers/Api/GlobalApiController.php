@@ -186,4 +186,24 @@ class GlobalApiController extends Controller
             ], 200);
         
     }
+
+    public function getTodayUlangTahun()
+    {
+        $date = date('Y-m-d');
+        $user = User::where('tanggal_lahir', $date)->get();
+
+        if(!$user) {
+            return response()->json([
+                'code' => 500,
+                'message' => 'Terjadi kesalahan'
+            ]);
+
+        }
+
+        return response()->json([
+            'code' => 200,
+            'message' => 'Success',
+            'data' => $user
+        ]);
+    }
 }
