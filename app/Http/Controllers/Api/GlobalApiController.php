@@ -189,8 +189,12 @@ class GlobalApiController extends Controller
 
     public function getTodayUlangTahun()
     {
-        $date = date('Y-m-d');
-        $user = User::where('tanggal_lahir', $date)->get();
+        $day = date('d');
+        $month = date('m');
+        
+        $user = User::whereMonth('tanggal_lahir', $month)
+            ->whereDay('tanggal_lahir', $day)
+            ->get();
 
         if(!$user) {
             return response()->json([
