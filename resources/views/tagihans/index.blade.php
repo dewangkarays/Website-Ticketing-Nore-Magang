@@ -225,7 +225,7 @@
 										<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
 										{{-- <a href="{{url('/tagihans/cetak/'.$tagihan->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a> --}}`
 										// <a href="${lampiranRef}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a>`
-								@if (Auth::user()->role==1)
+								@if (Auth::user()->role==1 || \Auth::user()->role==20)
 							        actionsButton += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
 								@endif
 									actionsButton += `</div>
