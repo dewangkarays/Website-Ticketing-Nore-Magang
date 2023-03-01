@@ -379,7 +379,7 @@
 								@if(Auth::user()->role<=50)
 										actionButtons += `<a href="https://wa.me/${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>`
 								@endif
-								@if(Auth::user()->role==1)
+								@if(Auth::user()->role==1 || \Auth::user()->role==20)
 									actionButtons += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
 								@endif
 									actionButtons +=
