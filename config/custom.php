@@ -159,5 +159,23 @@ return [
         
     ],
 
+    'status_klien' => [
+        '1' => 'Visit',
+        '2' => 'Kenal',
+        '3' => 'Negosiasi',
+        '4' => 'Deal',
+        '5' => 'Pending',
+        '6' => 'Bayar',
+    ],
+
+    'source' => [
+        '1' => 'Facebook',
+        '2' => 'Goggle',
+        '3' => 'Iklan',
+        '4' => 'Walkin',
+        '5' => 'Web',
+        '6' => 'Relasi',
+        '6' => 'Referal',
+    ],
 
 ];

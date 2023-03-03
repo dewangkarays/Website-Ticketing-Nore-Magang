@@ -43,6 +43,14 @@ ul{
 						</span>
 					</a>
 				</li>
+				<li class="nav-item">
+					<a href="{{ url('/klien') }}" class="nav-link {{ (request()->is('klien*')) ? 'active' : '' }}">
+						<i class="icon-user-tie"></i>
+						<span>
+							Klien
+						</span>
+					</a>
+				</li>
 				<!-- <li class="nav-item">
 					<a href="{{ url('/setting') }}" class="nav-link {{ (request()->is('setting*')) ? 'active' : '' }}">
 						<i class="icon-gear"></i>
