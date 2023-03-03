@@ -100,6 +100,21 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('gettasks/{type}', 'TaskController@gettasks');
 		Route::get('gettaskshistory', 'TaskController@gettaskshistory');
 		
+
+
+		Route::get('/klien','KlienController@index')->name('klien');
+		Route::post('/klien/getdata','KlienController@getData')->name('klien.data');
+
+		Route::get('/klien/show/{id}','KlienController@show')->name('klien.show');
+		
+		Route::get('/klien/edit/{id}','KlienController@edit')->name('klien.edit');
+		Route::post('/klien/saveedit/{id}','KlienController@saveEdit')->name('klien.saveedit');
+
+		Route::get('/klien/create','KlienController@create')->name('klien.create');
+		Route::post('/klien/savecreate','KlienController@saveCreate')->name('klien.savecreate');
+
+		Route::delete('/klien/delete/{id?}','KlienController@delete')->name('klien.delete');
+
 	});
 
 	//admin
