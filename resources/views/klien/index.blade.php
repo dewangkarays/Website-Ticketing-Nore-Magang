@@ -119,7 +119,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-		                targets: [ 5 ]
+						targets: [ 7 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -132,8 +132,8 @@
 
 		        // Basic datatable
 		        $('.datatable-basic').DataTable({
-                    // "scrollX": true,
-                    // order: [[0, "desc"]],
+                    "scrollX": true,
+                    order: [[0, "desc"]],
 					processing: true,
 					serverSide: true,
 					// "order": true,
