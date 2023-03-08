@@ -45,7 +45,7 @@ ul{
 				</li>
 				<li class="nav-item">
 					<a href="{{ url('/klien') }}" class="nav-link {{ (request()->is('klien*')) ? 'active' : '' }}">
-						<i class="icon-user-tie"></i>
+						<i class="icon-people"></i>
 						<span>
 							Klien
 						</span>
@@ -445,6 +445,7 @@ ul{
 					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('statistik*')) ? 'block' : 'none' }};">
 						<li class="nav-item">
 							<a href="{{ url('/statistiktask') }}" class="nav-link {{ (request()->is('statistiktask*')) ? 'active' : '' }}">
+								<i class="icon-stack-text"></i>
 								<span>
 									Task
 								</span>
@@ -452,6 +453,7 @@ ul{
 						</li>
 						<li class="nav-item">
 							<a href="{{ url('/statistikpayment') }}" class="nav-link {{ (request()->is('statistikpayment*')) ? 'active' : '' }}">
+								<i class="icon-coins"></i>
 								<span>
 									Pembayaran
 								</span>
