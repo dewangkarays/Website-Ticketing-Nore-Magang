@@ -48,11 +48,12 @@
 				<div class="form-group row">
 					<label class="col-form-label col-lg-2">Status</label>
 					<div class="col-lg-10">
-						<select id="status_nore" name="status" class="form-control select-search border-teal border-1" >
+						<select id="status_klien" name="status" class="form-control select-search border-teal border-1" >
+							@if ($klien->status == null)
+								<option value="">-- Pilih Jenis Proyek --</option>
+							@endif
 							@foreach (config('custom.status_klien') as $key => $value)
-								@if ($key <= 50)
-								<option {{ $klien->status_klien == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
-								@endif
+								<option {{ $klien->status == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -67,11 +68,12 @@
 				<div class="form-group row">
 					<label class="col-form-label col-lg-2">Potensi</label>
 					<div class="col-lg-10">
-						<select name="potensi" class="form-control form-control-select2 border-teal border-1" required>
+						<select id="potensi" name="potensi" class="form-control select-search border-teal border-1" >
+							@if ($klien->potensi == null)
+								<option value="">-- Pilih Jenis Proyek --</option>
+							@endif
 							@foreach (config('custom.jenis_proyek') as $key => $value)
-								@if ($key <= 50)
-								<option {{ $klien->jenis_proyek == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
-								@endif
+								<option {{ $klien->potensi == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -94,38 +96,19 @@
 						<input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat" value="{{ $klien->alamat }} ">
 					</div>
 				</div>
-				{{-- @if ($klien->marketing_id)
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Marketing</label>
-					<div class="col-lg-10">
-						<input id="marketing" name="marketing" type="text" class="form-control" readonly value="{{$marketing->nama}}">
-						<input id="marketing_id" name="marketing_id" type="hidden" class="form-control" value="{{$klien->marketing_id}}">
-					</div>
-				</div> --}}
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Marketing</label>
-					<div class="col-lg-10">
-						<select id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0">
-							<option value="">-- Ganti Marketing --</option>
-							@foreach($marketings as $marketing)
-								<option value="{{$marketing->id}}">{{$marketing->nama}} </option>
-							@endforeach
-						</select>
-					</div>
-				</div>
-				{{-- @else
 				<div class="form-group row">
 					<label class="col-form-label col-lg-2">Marketing</label>
 					<div class="col-lg-10">
 						<select id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
 							<option value="">-- Pilih Marketing --</option>
 							@foreach($marketings as $marketing)
-								<option value="{{$marketing->id}}">{{$marketing->nama}} </option>
+								<option @if($klien->marketing_id == $marketing->id)selected @endif value="{{$marketing->id}}">{{$marketing->nama}} </option>
+								
 							@endforeach
 						</select>
 					</div>
 				</div>
-				@endif --}}
+
 			</fieldset>
 			<div class="text-right">
 				<a href="{{ url('/klien') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
