@@ -8,9 +8,10 @@ class Klien extends Model
 {
     protected $table = 'kliens';
 
-    // public function user()
-    
-    // return $this->belongsTo('App\Model\User', 'user_id', 'id');
+    public function marketing()
+    {
+        return $this->belongsTo('App\Model\User', 'marketing_id','id');
+    }  
 }
 
        
