@@ -5,6 +5,14 @@
 	.datatable-column-width{
 		overflow: hidden; text-overflow: ellipsis; max-width: 200px;
 	}
+	.summernote ol, ul{
+		list-style: disc !important;
+		list-style-position: inside;
+		padding-left: 15px;
+	}
+	ol {
+		padding-left: 15px;
+	}
 </style>
 @endsection
 
@@ -41,8 +49,9 @@
                           <th>Jenis Perusahaan</th>
                           <th>Potensi</th>
                           <th>Status</th>
+                          <th>Source</th>
                           <th>Alamat</th>
-                          <th>Action</th>
+						  <th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -119,7 +128,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-						targets: [ 7 ]
+						targets: [ 8 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -132,7 +141,7 @@
 
 		        // Basic datatable
 		        $('.datatable-basic').DataTable({
-                    "scrollX": true,
+                    //"scrollX": true,
                     order: [[0, "desc"]],
 					processing: true,
 					serverSide: true,
@@ -182,12 +191,12 @@
                                 // if (data?.ProdukNore == 6)
                                 //     ProdukNore = `<span style="font-size: 100%;" class="badge badge-pill badge-success">${potensi[data?.ProdukNore]}</span>`
 									const potensi = {
-										'1' : 'Website',
-										'2' : 'Iklan/Ads',
-										'3' : 'Sistem Informasi',
-										'4' : 'Mobile App',
-										'5' : 'ULo',
-										'6' : 'Custom/Lainnya',
+										'1': 'Website',
+										'2': 'Iklan/Ads',
+										'3': 'Sistem Informasi',
+										'4': 'Mobile App',
+										'6': 'Ulo',
+										'5': 'Custom/Lainnya',
 															
 									}
 								return potensi[data?.potensi];
@@ -206,6 +215,22 @@
                                     '6' : 'Bayar',
 								}
 								return status_klien[data?.status];
+							}
+						},
+						{
+							data: null,
+							name: 'source',
+							render: (data, type, row) => {
+								const source = {
+                                    '1' : 'Facebook',
+									'2' : 'Goggle',
+									'3' : 'Iklan',
+									'4' : 'Walkin',
+									'5' : 'Web',
+									'6' : 'Relasi',
+									'7' : 'Referal',
+								}
+								return source[data?.source];
 							}
 						},
                         {
