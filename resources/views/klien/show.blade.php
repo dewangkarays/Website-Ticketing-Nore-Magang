@@ -26,7 +26,7 @@
             @method('PATCH')
             @csrf
             <fieldset class="mb-3">
-                <legend class="text-uppercase font-size-sm font-weight-bold">Data User</legend>
+                <legend class="text-uppercase font-size-sm font-weight-bold">Data Klien</legend>
                 
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Nama Klien</label>
