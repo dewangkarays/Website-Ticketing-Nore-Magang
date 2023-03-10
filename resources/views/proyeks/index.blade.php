@@ -37,7 +37,18 @@
         <div class="card-header header-elements-inline">
             <a href="{{ route('proyeks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
         </div>
-
+     
+    <div class="row" style="margin-left:55px">
+        <div class="col-lg-3">
+        <select style="width:200px; height:36px" onchange="marketing()" id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
+            <option value="">-- Pilih Marketing --</option>
+            @foreach($marketings as $marketing)
+                <option value="{{$marketing->id}}">{{$marketing->nama}} </option>
+            @endforeach
+        </select>
+        </div> 
+    </div>
+ 
         <table class="table datatable-basic table-hover">
             <thead>
                 <tr>
@@ -148,7 +159,7 @@
                 columnDefs: [{
                     orderable: false,
                     width: 100,
-                    targets: "_all"
+                     targets: [ 8 ]
                 }],
                 dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                 language: {
@@ -168,6 +179,9 @@
                 ajax: {
                     "type": "GET",
                     "url": "/getproyeks",
+                    "data":{
+                        "marketing" : $('#marketing_id').val()
+                    }
                 },
                 columns: [
                     {
@@ -340,6 +354,16 @@
     document.addEventListener('DOMContentLoaded', function() {
         DatatableBasic.init();
     });
+
+    function marketing(){
+        $('.datatable-basic').DataTable().destroy();
+        DatatableBasic.init();
+        
+      // alert('Halodek')
+    }
+    // $('#marketing_id').change(function(){
+    //     datatable.draw();
+    // });
 </script>
 
 <script type="text/javascript">
