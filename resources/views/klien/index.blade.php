@@ -141,7 +141,7 @@
 
 		        // Basic datatable
 		        $('.datatable-basic').DataTable({
-                    //"scrollX": true,
+                    "scrollX": true,
                     order: [[0, "desc"]],
 					processing: true,
 					serverSide: true,
