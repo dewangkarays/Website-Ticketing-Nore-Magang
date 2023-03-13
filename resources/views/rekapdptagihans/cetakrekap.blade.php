@@ -151,20 +151,20 @@
         <h5>Lampiran {{$i}} - {{ config('custom.jenis_lampiran.'.$lampiran->jenis_lampiran) }} {{ $lampiran->keterangan}}</h5>
         @endif
     @endif
-    @if($lampiran->jenis_lampiran != 2)
+    {{-- @if($lampiran->jenis_lampiran != 2) --}}
         <div align="center">
-            <img src="{{url($lampiran->gambar)}}" style="max-width:90%;max-height:300px;object-fit: cover;margin-bottom: 16px;">
+            <img src="{{url($lampiran->gambar)}}" style="max-width:110%;object-fit: cover;">
         </div>
         @if (!$loop->last)
         @if (($rekapdpindex +1) % 3 == 0)
         <div class="page-break"></div>   
         @endif
         @endif
-        @else
+        {{-- @else
         <div align="center">
             <img src="{{url($lampiran->gambar)}}" style="max-width:90%;max-height:300px;object-fit: cover;margin-bottom: 16px;">
         </div>
-    @endif
+    @endif --}}
     @if ($lampiran->jenis_lampiran != $jenis_terakhir)
     @php ($i++)
     @endif
