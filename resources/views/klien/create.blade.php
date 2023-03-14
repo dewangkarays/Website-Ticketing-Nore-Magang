@@ -426,10 +426,7 @@ var FormValidation = function() {
             $('.summernote-height').summernote({
                 height: 400
             });
- // Control editor height
- $('.summernote-height').summernote({
-                height: 400
-            });
+ 
 
             // // Air mode
             // $('.summernote-airmode').summernote({

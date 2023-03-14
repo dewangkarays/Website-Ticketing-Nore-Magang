@@ -1,5 +1,12 @@
 @extends('layout')
-
+@section('css')
+<style>
+	.summernote ol, ul{
+		list-style: disc !important;
+		list-style-position: inside;
+	}
+</style>
+@endsection
 @section('content')
 
 	<!-- Page header -->
@@ -182,7 +189,19 @@
             format: 'yyyy-mm-dd',
         });
 				
-		var FormValidation = function() {
+		 var FormValidation = function() {
+
+        var _componentUniform = function() {
+			if (!$().uniform) {
+				console.warn('Warning - uniform.min.js is not loaded.');
+				return;
+			}
+
+			// Initialize
+			$('.form-input-styled').uniform({
+				fileButtonClass: 'action btn bg-blue'
+			});
+		};
 
 		    // Validation config
 		    var _componentValidation = function() {
@@ -195,7 +214,7 @@
 		        var validator = $('.form-validate-jquery').validate({
 		            ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
 		            errorClass: 'validation-invalid-label',
-		            //successClass: 'validation-valid-label',
+		            successClass: 'validation-valid-label',
 		            validClass: 'validation-valid-label',
 		            highlight: function(element, errorClass) {
 		                $(element).removeClass(errorClass);
@@ -261,11 +280,13 @@
 		    };
 
 		    // Return objects assigned to module
-		    return {
-		        init: function() {
-		            _componentValidation();
-		        }
-		    }
+			return {
+			init: function() {
+				_componentUniform();
+				_componentSelect2();
+				_componentValidation();
+			}
+		}
 		}();
 
 
@@ -276,7 +297,7 @@
 		    FormValidation.init();
 		});
 	//sumernote wysiwyg
-	var Summernote = function() {
+    var Summernote = function() {
         var _componentSummernote = function() {
             if (!$().summernote) {
                 console.warn('Warning - summernote.min.js is not loaded.');
