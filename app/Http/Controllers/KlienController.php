@@ -112,7 +112,9 @@ class KlienController extends Controller
         $klien->tanggal_kontakterakhir       = $request->tanggal_kontakterakhir;
         $klien->status                       = $request->status;
         $klien->telp                         = $request->telp;
+        $klien->source                       = $request->source;
         $klien->alamat                       = $request->alamat;
+        $klien->keterangan_lain              = $request->keterangan_lain;
         $klien->marketing_id                 = $request->marketing_id;
 
       
