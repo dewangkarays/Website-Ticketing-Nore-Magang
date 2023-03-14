@@ -125,7 +125,7 @@
                             <label class="col-form-label col-lg-2">Keterangan lain</label>
                             <div class="col-lg-10">
                                 <span class="form-text text-muted">Contoh: Website blogspot Noer Prajitno</span>
-                                <textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1" required>{{ old('keterangan') }}</textarea>
+                                <textarea name="keterangan_lain" id="" cols="30" rows="10" class="summernote form-control border-teal border-1" required>{{ old('keterangan_lain') }}</textarea>
                             </div>
                         </div>
 					</fieldset>

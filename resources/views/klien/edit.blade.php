@@ -25,7 +25,7 @@
 			{{-- @method('POST') --}}
 			@csrf
 			<fieldset class="mb-3">
-				<legend class="text-uppercase font-size-sm font-weight-bold">Data User</legend>
+				<legend class="text-uppercase font-size-sm font-weight-bold">Data Klien</legend>
 
 				<div class="form-group row">
 					<label class="col-form-label col-lg-2">Nama Klien</label>
@@ -46,6 +46,26 @@
 					</div>
 				</div>
 				<div class="form-group row">
+					<label class="col-form-label col-lg-2">Potensi</label>
+					<div class="col-lg-10">
+						<select id="potensi" name="potensi" class="form-control select-search border-teal border-1" >
+							@if ($klien->potensi == null)
+								<option value="">-- Pilih Jenis Proyek --</option>
+							@endif
+							@foreach (config('custom.jenis_proyek') as $key => $value)
+								<option {{ $klien->potensi == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
+							@endforeach
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-form-label col-lg-2">Telp</label>
+					<div class="col-lg-10">
+						<input type="text" name="telp" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA" required value="{{ $klien->telp }}">
+						<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
+					</div>
+				</div>
+				<div class="form-group row">
 					<label class="col-form-label col-lg-2">Status</label>
 					<div class="col-lg-10">
 						<select id="status_klien" name="status" class="form-control select-search border-teal border-1" >
@@ -59,21 +79,14 @@
 					</div>
 				</div>
 				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Telp</label>
+					<label class="col-form-label col-lg-2">Source</label>
 					<div class="col-lg-10">
-						<input type="text" name="telp" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA" required value="{{ $klien->telp }}">
-						<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Potensi</label>
-					<div class="col-lg-10">
-						<select id="potensi" name="potensi" class="form-control select-search border-teal border-1" >
-							@if ($klien->potensi == null)
-								<option value="">-- Pilih Jenis Proyek --</option>
+						<select id="source" name="source" class="form-control select-search border-teal border-1" >
+							@if ($klien->source == null)
+								<option value="">-- Source --</option>
 							@endif
-							@foreach (config('custom.jenis_proyek') as $key => $value)
-								<option {{ $klien->potensi == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
+							@foreach (config('custom.source') as $key => $value)
+								<option {{ $klien->source == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -97,13 +110,19 @@
 					</div>
 				</div>
 				<div class="form-group row">
+					<label class="col-form-label col-lg-2">Keterangan lain</label>
+					<div class="col-lg-10">
+						<span class="form-text text-muted">Contoh: Website blogspot Noer Prajitno</span>
+						<textarea class="summernote form-control border-teal" name="keterangan_lain" id="keterangan_lain" cols="30" rows="10">{{$klien->keterangan_lain}}</textarea>
+					</div>
+				</div>
+				<div class="form-group row">
 					<label class="col-form-label col-lg-2">Marketing</label>
 					<div class="col-lg-10">
 						<select id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
 							<option value="">-- Pilih Marketing --</option>
 							@foreach($marketings as $marketing)
-								<option @if($klien->marketing_id == $marketing->id)selected @endif value="{{$marketing->id}}">{{$marketing->nama}} </option>
-								
+								<option @if($klien->marketing_id == $marketing->id)selected @endif value="{{$marketing->id}}">{{$marketing->nama}} </option>	
 							@endforeach
 						</select>
 					</div>
@@ -138,9 +157,11 @@
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
+	<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
+	<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 	<script type="text/javascript">
 		// Initialize
 		$('.select-search').select2();
@@ -254,7 +275,95 @@
 		document.addEventListener('DOMContentLoaded', function() {
 		    FormValidation.init();
 		});
+	//sumernote wysiwyg
+	var Summernote = function() {
+        var _componentSummernote = function() {
+            if (!$().summernote) {
+                console.warn('Warning - summernote.min.js is not loaded.');
+                return;
+            }
 
+            // Basic examples
+            // ------------------------------
+
+            // Default initialization
+            $('.summernote').summernote({
+                toolbar: [
+                ['para', ['ul', 'ol', 'paragraph']],
+                ],
+                height: 100,
+                callbacks: {
+                    onPaste: function (e) {
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+                    e.preventDefault();
+
+                    setTimeout( function(){
+                        document.execCommand( 'insertText', false, bufferText );
+                    }, 10 );
+                    }
+                }
+            });
+
+            // Control editor height
+            $('.summernote-height').summernote({
+                height: 400
+            });
+
+            // // Air mode
+            // $('.summernote-airmode').summernote({
+            // 	airMode: true
+            // });
+
+
+            // // // Click to edit
+            // // // ------------------------------
+
+            // // // Edit
+            // // $('#edit').on('click', function() {
+            // // 	$('.click2edit').summernote({focus: true});
+            // // })
+
+            // // // Save
+            // // $('#save').on('click', function() {
+            // // 	var aHTML = $('.click2edit').summernote('code');
+            // // 	$('.click2edit').summernote('destroy');
+            // // });
+        };
+
+        // Uniform
+        var _componentUniform = function() {
+            if (!$().uniform) {
+                console.warn('Warning - uniform.min.js is not loaded.');
+                return;
+            }
+
+            // Styled file input
+            $('.note-image-input').uniform({
+                fileButtonClass: 'action btn bg-warning-400'
+            });
+        };
+
+
+        //
+        // Return objects assigned to module
+        //
+
+        return {
+            init: function() {
+                _componentSummernote();
+                _componentUniform();
+            }
+        }
+    }();
+
+
+    // Initialize module
+    // ------------------------------
+
+    document.addEventListener('DOMContentLoaded', function() {
+        Summernote.init();
+    });
 		// Regex for validating phone number
 		$(function() {
 			$(".phone-number").on("keyup", function(event) {
