@@ -51,6 +51,7 @@
                           <th>Status</th>
                           <th>Source</th>
                           <th>Alamat</th>
+						  <th>Keterangan</th>
 						  <th class="text-center">Actions</th>
 					</tr>
 				</thead>
@@ -103,6 +104,7 @@
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
+	<script src="{{asset('assets/js/custom.js')}}"></script>
 	<script>
 		//modal delete
 		$(document).on("click", ".delbutton", function () {
@@ -128,7 +130,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-						targets: [ 8 ]
+						targets: [ 9 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -237,6 +239,13 @@
 							data: 'alamat',
 							name: 'alamat',
 						},
+						{
+                        data: null,
+                        name: "keterangan_lain",
+                        render: (data, type, row) => {
+                            return data?.keterangan_lain ? stripHtml(data?.keterangan_lain) : '-'
+                        }
+                    	},
 						{
 							data: null,
 							name: 'actions',
