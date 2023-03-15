@@ -54,6 +54,12 @@
 							</div>
 						</div>
 						<div class="form-group row">
+                            <label class="col-form-label col-lg-2">Tanggal Lahir</label>
+                            <div class="col-lg-10">
+                                <input id="tanggal_lahir" name="tanggal_lahir" type="date" class="form-control pickadate-accessibility" placeholder="Pilih Tanggal"  required>
+                            </div>
+                        </div>
+						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Telp</label>
 							<div class="col-lg-10">
 								<input type="text" name="phone" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA">
