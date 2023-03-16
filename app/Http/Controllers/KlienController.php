@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User;
 use App\Model\Klien;
-use Datatables;
+use Yajra\DataTables\Facades\Datatables;
+
 
 class KlienController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         return view('klien.index');
     }
@@ -29,7 +31,7 @@ class KlienController extends Controller
         //     $dbquery->where(function ($query) use ($search){
         //         $query->orWhere('nama_calonklien','LIKE',"%{$search}%");
         //         $query->orWhere('nama_perusahaan','LIKE',"%{$search}%");
-            
+
         //     });
         // }
 
@@ -40,8 +42,8 @@ class KlienController extends Controller
         // $dbquery->offset($start);
         // $data = $dbquery->get();
 
-        
-       
+
+
         // $json_data = array(
         //     "recordsTotal"    => intval($totalData),
         //     "recordsFiltered" => intval($totalFilter),
@@ -51,17 +53,19 @@ class KlienController extends Controller
         $json_data = Klien::all();
         // return json_encode($json_data);
         return Datatables::of($json_data)->addIndexColumn()->make(true);
-    }   
+    }
 
-     //CREATE
-     public function create(Request $request){
-        $marketings= User::where('role','50')->get();
+    //CREATE
+    public function create(Request $request)
+    {
+        $marketings = User::where('role', '50')->get();
         return view('klien.create', compact('marketings'));
     }
 
-    public function saveCreate(Request $request){
+    public function saveCreate(Request $request)
+    {
 
-       
+
         $klien = new Klien;
         $klien->nama_calonklien         = $request->nama_calonklien;
         $klien->nama_perusahaan         = $request->nama_perusahaan;
@@ -78,31 +82,35 @@ class KlienController extends Controller
 
         $klien->save();
 
-       return redirect('/klien')->with('success', 'Klien saved!');
+        return redirect('/klien')->with('success', 'Klien saved!');
     }
-    
+
     //Show
-    public function show($id){
+    public function show($id)
+    {
         $klien = Klien::find($id);
-        return view('klien.show',compact('klien'));
+        return view('klien.show', compact('klien'));
     }
 
     //DELETE
-    public function delete($id){
+    public function delete($id)
+    {
         $klien = Klien::find($id);
         $klien->delete();
-       
+
         return redirect('/klien')->with('success', 'Klien deleted!');
     }
 
     //EDIT
-    public function edit($id){
+    public function edit($id)
+    {
         $klien = Klien::find($id);
-        $marketings= User::where('role','50')->get();
-        return view('klien.edit', compact('klien','marketings'));
+        $marketings = User::where('role', '50')->get();
+        return view('klien.edit', compact('klien', 'marketings'));
     }
 
-    public function saveEdit(Request $request,$id){
+    public function saveEdit(Request $request, $id)
+    {
         $klien = Klien::find($id);
         $klien->nama_calonklien              = $request->nama_calonklien;
         $klien->nama_perusahaan              = $request->nama_perusahaan;
@@ -117,10 +125,9 @@ class KlienController extends Controller
         $klien->keterangan_lain              = $request->keterangan_lain;
         $klien->marketing_id                 = $request->marketing_id;
 
-      
+
         $klien->save();
 
         return redirect('/klien')->with('success', 'Klien updated!');
     }
-
 }
