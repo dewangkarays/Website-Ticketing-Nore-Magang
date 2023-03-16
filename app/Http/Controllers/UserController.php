@@ -5,18 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Model\User;
 use App\Model\Tagihan;
 use App\Model\Proyek;
-use Datatables;
+use Yajra\DataTables\Facades\Datatables;
 
 class UserController extends Controller
 {
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         // $users = User::where('role','<=','20')->get();
@@ -24,13 +25,13 @@ class UserController extends Controller
     }
 
     /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
-        $atasans = User::where('role','<=','50')->get();
+        $atasans = User::where('role', '<=', '50')->get();
         // dd($atasan);
         return view('users.create', compact('atasans'));
     }
@@ -41,11 +42,11 @@ class UserController extends Controller
     }
 
     /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         // dd($request);
@@ -53,14 +54,14 @@ class UserController extends Controller
             // 'title' => 'required|unique:posts|max:255',
             // 'body' => 'required',
             'atasan_id' => 'required',
-            'username'=>'unique:users',
-            'email'=>'unique:users'
+            'username' => 'unique:users',
+            'email' => 'unique:users'
         ]);
 
         if ($validator->fails()) {
             return redirect('users/create')
-                        ->withErrors($validator)
-                        ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $user = new User([
@@ -85,11 +86,11 @@ class UserController extends Controller
 
 
     /**
-    * Display the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
         $user = User::find($id);
@@ -112,60 +113,61 @@ class UserController extends Controller
     }
 
     /**
-    * Show the form for editing the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
-        $atasans = User::where('role','<=','50')->get();
+        $atasans = User::where('role', '<=', '50')->get();
         $user = User::find($id);
-        $def_atasan = User::where( 'id', '=',$user->atasan_id)->first();
-        return view('users.edit', compact('user','atasans','def_atasan'));
+        $def_atasan = User::where('id', '=', $user->atasan_id)->first();
+        return view('users.edit', compact('user', 'atasans', 'def_atasan'));
     }
 
-    public function setting($id){
+    public function setting($id)
+    {
         // $user = User::find($id);
         // return view('client.setting.setting', compact('user'));
-        $highproyek = Proyek::where('user_id',\Auth::user()->id)->orderBy('tipe','asc')->first();
-        $tagihanactives = Tagihan::where('user_id',\Auth::user()->id)->where('status','!=','2')->get()->count();
+        $highproyek = Proyek::where('user_id', Auth::user()->id)->orderBy('tipe', 'asc')->first();
+        $tagihanactives = Tagihan::where('user_id', Auth::user()->id)->where('status', '!=', '2')->get()->count();
         // return view('client.setting.setting',compact('user','tagihanactives'));
-        return view('client.setting.setting',compact('tagihanactives','highproyek','id'));
+        return view('client.setting.setting', compact('tagihanactives', 'highproyek', 'id'));
     }
 
     /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama'=>'required',
-            'email'=>'required',
-            'tanggal_lahir'=>'required',
-            'telp'=>'required',
-            'username'=>'required',
-            'role'=>'required'
-            ]);
+            'nama' => 'required',
+            'email' => 'required',
+            'tanggal_lahir' => 'required',
+            'telp' => 'required',
+            'username' => 'required',
+            'role' => 'required'
+        ]);
 
         $user = User::find($id);
         $data = $request->except(['_token', '_method', 'password']);
 
         //Mencegah user memasukan username yang sama dengan user lain
-        if($request->username != $user->username) {
+        if ($request->username != $user->username) {
             $request->validate([
                 'username' => 'unique:users',
             ]);
         }
 
-        if($request->get('password')!=''){
+        if ($request->get('password') != '') {
             $data['password'] = bcrypt($request->get('password'));
         }
-        if ($request->get('atasan_id')==null){
+        if ($request->get('atasan_id') == null) {
             $data['atasan_id'] = $user->atasan_id;
         }
 
@@ -180,11 +182,11 @@ class UserController extends Controller
     }
 
     /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $user = User::find($id);
@@ -201,46 +203,45 @@ class UserController extends Controller
     public function changePassSubmit(Request $request, $id)
     {
         $request->validate([
-            'old_pass'=>'required',
-            'new_pass'=>'required',
-            'con_pass'=>'required',
+            'old_pass' => 'required',
+            'new_pass' => 'required',
+            'con_pass' => 'required',
         ]);
 
         $user = User::find($id);
-        if($request->get('new_pass') != $request->get('con_pass')){
+        if ($request->get('new_pass') != $request->get('con_pass')) {
             return redirect('/changepass')->with('error', 'Password baru tidak sama dengan konfirmasi password');
         }
 
-        if(Hash::check($request->get('old_pass'), $user->password)){
+        if (Hash::check($request->get('old_pass'), $user->password)) {
             $user->password = bcrypt($request->get('new_pass'));
             $user->save();
 
-        if($user->role==1)
-        {
-            return redirect('/admin')->with('success', 'Password updated!');
-        }
-        if($user->role<=50)
-        {
-            return redirect('/karyawan')->with('success', 'Password updated!');
-        }
-        
+            if ($user->role == 1) {
+                return redirect('/admin')->with('success', 'Password updated!');
+            }
+            if ($user->role <= 50) {
+                return redirect('/karyawan')->with('success', 'Password updated!');
+            }
         } else {
             return redirect('/changepass')->with('error', 'Password lama salah');
         }
     }
 
-    public function getkaryawans() {
+    public function getkaryawans()
+    {
         return Datatables::of(User::where('role', '<=', '50')->get())->addIndexColumn()->make(true);
     }
 
-    public function updateDiscordId(Request $request, $id) {
+    public function updateDiscordId(Request $request, $id)
+    {
         $request->validate([
-            'discord_id'=>'required',
+            'discord_id' => 'required',
         ]);
 
         $user = User::find($id)->update(['discord_id' => $request->discord_id]);
 
-        if(!$user) {
+        if (!$user) {
             return redirect('/presensi')->with('error', 'Terjadi kesalahan');
         }
 
@@ -248,23 +249,23 @@ class UserController extends Controller
     }
 
     public function UpdateUser($id)
-    {  
-           
-         $user = User::find($id);
-         $user->update([
-            'nonaktif'=>0
-         ]);
-       
-         return redirect('/users')->with('success', 'User dinonaktifan!');
+    {
+
+        $user = User::find($id);
+        $user->update([
+            'nonaktif' => 0
+        ]);
+
+        return redirect('/users')->with('success', 'User dinonaktifan!');
     }
     public function UserAktif($id)
-    {  
-           
-         $user = User::find($id);
-         $user->update([
-            'nonaktif'=>1
-         ]);
-       
-         return redirect('/users')->with('success', 'User diaktifan!');
+    {
+
+        $user = User::find($id);
+        $user->update([
+            'nonaktif' => 1
+        ]);
+
+        return redirect('/users')->with('success', 'User diaktifan!');
     }
 }

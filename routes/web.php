@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +13,7 @@
 */
 
 Route::get('/', function () {
-    return view('login');
+	return view('login');
 });
 
 //all
@@ -25,9 +26,9 @@ Route::get('/generate/kuota_cuti', 'GenerateDataController@kuota_cuti');
 Route::get('/generate/lunas_dp_nol', 'GenerateDataController@lunas_dp_nol');
 
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function () {
 	//Kantor
-	Route::group(['middleware' => ['role:1,10,20,30,40,50']], function() {
+	Route::group(['middleware' => ['role:1,10,20,30,40,50']], function () {
 		Route::get('/changepass',  'UserController@changePass');
 		Route::post('/changepass/{id}',  'UserController@changePassSubmit')->name('changepass');
 		// Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');
@@ -35,14 +36,14 @@ Route::group(['middleware' => ['auth']], function() {
 		// Route::resource('tasks', 'TaskController');
 		Route::post('/updatestatus', 'TaskController@updatestatus')->name('updatestatus');
 		Route::put('/discord-id/{id}', 'UserController@updateDiscordId')->name('user.update-discord');
-		
+
 		//reset NO invoice
 		Route::get('/cronresetnomor',  'TagihanController@CronResetNinv');
 
 		// Route::aktif-nonaktif('User', 'UserController');
 		Route::put('/nonaktif{id}/destroy', 'UserController@UpdateUser')->name('users.UpdateUser');
 		Route::put('/nonaktif{id}/update', 'UserController@UserAktif')->name('users.UserAktif');
-		
+
 		Route::get('/antrian',  'TaskController@antrian');
 		Route::get('/history',  'TaskController@history')->name('history');
 		Route::get('/getnotif',  'NotificationController@getNotif')->name('getnotif');
@@ -89,7 +90,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/getsisacuti/{tahun}/{id}', 'PresensiController@getsisacuti');
 		Route::get('/belumpresensi', 'PresensiController@belumpresensi')->name('belumpresensi');
 		Route::get('/getbelumpresensi', 'PresensiController@getbelumpresensi');
-		
+
 
 		//Routing Kalender
 		Route::get('/kalender', 'KalendarController@index')->name('kalendar');
@@ -99,41 +100,40 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('getproyeks', 'ProyekController@getproyeks');
 		Route::get('gettasks/{type}', 'TaskController@gettasks');
 		Route::get('gettaskshistory', 'TaskController@gettaskshistory');
-		
 
 
-		Route::get('/klien','KlienController@index')->name('klien');
-		Route::post('/klien/getdata','KlienController@getData')->name('klien.data');
 
-		Route::get('/klien/show/{id}','KlienController@show')->name('klien.show');
-		
-		Route::get('/klien/edit/{id}','KlienController@edit')->name('klien.edit');
-		Route::post('/klien/saveedit/{id}','KlienController@saveEdit')->name('klien.saveedit');
+		Route::get('/klien', 'KlienController@index')->name('klien');
+		Route::post('/klien/getdata', 'KlienController@getData')->name('klien.data');
 
-		Route::get('/klien/create','KlienController@create')->name('klien.create');
-		Route::post('/klien/savecreate','KlienController@saveCreate')->name('klien.savecreate');
+		Route::get('/klien/show/{id}', 'KlienController@show')->name('klien.show');
 
-		Route::delete('/klien/delete/{id?}','KlienController@delete')->name('klien.delete');
+		Route::get('/klien/edit/{id}', 'KlienController@edit')->name('klien.edit');
+		Route::post('/klien/saveedit/{id}', 'KlienController@saveEdit')->name('klien.saveedit');
 
+		Route::get('/klien/create', 'KlienController@create')->name('klien.create');
+		Route::post('/klien/savecreate', 'KlienController@saveCreate')->name('klien.savecreate');
+
+		Route::delete('/klien/delete/{id?}', 'KlienController@delete')->name('klien.delete');
 	});
 
 	//admin
-	Route::group(['middleware' => ['role:1']], function() {
+	Route::group(['middleware' => ['role:1']], function () {
 		Route::get('/admin',  'AdminController@index')->name('admin');
 	});
 
 	//karyawan
-	Route::group(['middleware' => ['role:20,30,40,50']], function() {
+	Route::group(['middleware' => ['role:20,30,40,50']], function () {
 		Route::get('/karyawan',  'AdminController@karyawan')->name('karyawan');
 	});
 
 	//keuangan
-	Route::group(['middleware' => ['role:20']], function() {
+	Route::group(['middleware' => ['role:20']], function () {
 		Route::get('/keuangan',  'AdminController@keuangan')->name('keuangan');
 	});
 
 	//Admin, HRD, dan Keuangan
-	Route::group(['middleware' => ['role:1,20,60']], function() {
+	Route::group(['middleware' => ['role:1,20,60']], function () {
 		Route::resource('users', 'UserController');
 		Route::resource('members', 'MemberController');
 
@@ -143,19 +143,19 @@ Route::group(['middleware' => ['auth']], function() {
 	});
 
 	//admin dan keuangan
-	Route::group(['middleware' => ['role:1,20']], function() {
+	Route::group(['middleware' => ['role:1,20']], function () {
 		Route::resource('laporankeuangan', 'LaporanKeuanganController');
 		Route::match(['get', 'post'], '/laporankeuangan',  'LaporanKeuanganController@index')->name('filterKeuangan');
-        Route::get('cetaklaporan/{filter}/{filterbulan}',  'LaporanKeuanganController@cetaklaporan')->name('cetaklaporan');
-        Route::get('exportlaporan/{filter}/{filterbulan}',  'LaporanKeuanganController@exportlaporan')->name('exportlaporan');
+		Route::get('cetaklaporan/{filter}/{filterbulan}',  'LaporanKeuanganController@cetaklaporan')->name('cetaklaporan');
+		Route::get('exportlaporan/{filter}/{filterbulan}',  'LaporanKeuanganController@exportlaporan')->name('exportlaporan');
 		// Route::post('/laporankeuangan',  'LaporanKeuanganController@index')->name('filterbulan');
 
 		//Statistik
 		Route::match(['get', 'post'], '/statistiktask',  'TaskController@statistiktask')->name('stat_task');
 		// Route::get('/getstatistik',  'TaskController@getstatistik')->name('getstat');
-		
+
 		Route::match(['get', 'post'], '/statistikpayment',  'PaymentController@statistikpayment')->name('stat_payment');
-		
+
 		//tabeldata Statistik payment
 		Route::get('getstatistikpayment/{id?}', 'PaymentController@getstatistikpayment')->name('getstatistikpayment');
 
@@ -177,7 +177,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('createtagihan/{id}',  'TagihanController@createtagihan')->name('createtagihan');
 
 		//Rekap Dp
-		Route::resource('rekapdptagihans','RekapDptagihanController');
+		Route::resource('rekapdptagihans', 'RekapDptagihanController');
 		Route::get('cetakrekapdp/{id}',  'RekapDptagihanController@cetakrekap')->name('cetakrekapdp');
 		Route::get('rekapdpinvalid/{id}', 'RekapDptagihanController@invalid')->name('rekapdpinvalid');
 		Route::get('/historydp',  'RekapDptagihanController@history')->name('historydp');
@@ -189,7 +189,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('rekaptagihan/lampiran/{id}',  'RekapTagihanController@lampiran')->name('lampiran_rt');
 		Route::post('rekaptagihan/lampiran/{id}',  'RekapTagihanController@lampiran')->name('lampiran_rt');
 		Route::post('rekaptagihan/lampirandestroy/{id}/{idm}', 'RekapTagihanController@lampirandestroy')->name('lampirandestroy');
-		Route::resource('rekaptagihans','RekapTagihanController');
+		Route::resource('rekaptagihans', 'RekapTagihanController');
 		Route::get('createrekap', 'RekapTagihanController@createrekap')->name('createrekap');
 		Route::get('cetakrekap/{id}',  'RekapTagihanController@cetakrekap')->name('cetakrekap');
 		Route::get('rekapinvalid/{id}', 'RekapTagihanController@invalid')->name('rekapinvalid');
@@ -221,25 +221,23 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('getpayments', 'PaymentController@getpayments');
 		Route::get('getpengeluarans', 'PengeluaranController@getpengeluarans');
 		Route::get('getpemasukans', 'PemasukanLainController@getpemasukans');
-
-
 	});
 
 	//customer
-	Route::group(['middleware' => ['role:80,90,95,99']], function() {
+	Route::group(['middleware' => ['role:80,90,95,99']], function () {
 		Route::get('/customer',  'AdminController@customer')->name('customer');
-		Route::get('/tagihanclient','client\TagihanClient@index');
-		Route::get('/tagihanaktif','client\TagihanClient@active');
-		Route::get('/tagihanriwayat','client\TagihanClient@history');
+		Route::get('/tagihanclient', 'client\TagihanClient@index');
+		Route::get('/tagihanaktif', 'client\TagihanClient@active');
+		Route::get('/tagihanriwayat', 'client\TagihanClient@history');
 		Route::resource('/paymentclients', 'client\PaymentClient');
-		Route::get('/payment','client\PaymentClient@index');
-		Route::get('/purchase','client\PaymentClient@create');
+		Route::get('/payment', 'client\PaymentClient@index');
+		Route::get('/purchase', 'client\PaymentClient@create');
 		Route::resource('/taskclients', 'client\TaskClient');
-		Route::get('/taskclient','client\TaskClient@index');
-		Route::get('/taskcreate','client\TaskClient@create');
-		Route::get('/antrian','client\AntrianClient@index');
-		Route::get('/settinguser','client\SettingClient@changesetting');
-		Route::post('/settinguser/{id}','client\SettingClient@changesettingupdate')->name('settinguser');
+		Route::get('/taskclient', 'client\TaskClient@index');
+		Route::get('/taskcreate', 'client\TaskClient@create');
+		Route::get('/antrian', 'client\AntrianClient@index');
+		Route::get('/settinguser', 'client\SettingClient@changesetting');
+		Route::post('/settinguser/{id}', 'client\SettingClient@changesettingupdate')->name('settinguser');
 		Route::get('/detailtagihan/{id}',  'TagihanController@detailTagihan');
 	});
 
