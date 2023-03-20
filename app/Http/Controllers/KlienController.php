@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User;
 use App\Model\Klien;
-use Yajra\DataTables\Facades\Datatables;
+use Datatables;
 
 
 class KlienController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
-        return view('klien.index');
+        $marketings = User::where('role', '50')->get();
+        return view('klien.index', compact('marketings'));
     }
 
     public function getData(Request $request)
@@ -50,7 +50,7 @@ class KlienController extends Controller
         //     "data"            => $data
         //     );
 
-        $json_data = Klien::all();
+        $json_data = Klien::with('marketing')->get();
         // return json_encode($json_data);
         return Datatables::of($json_data)->addIndexColumn()->make(true);
     }

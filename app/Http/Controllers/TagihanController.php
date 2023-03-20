@@ -17,7 +17,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\File;
 use PDF;
 use Intervention\Image\ImageManagerStatic as Image;
-use Yajra\DataTables\Facades\Datatables;
+use Datatables;
 
 class TagihanController extends Controller
 {
