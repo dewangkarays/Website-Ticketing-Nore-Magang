@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Model\User;
 use App\Model\Tagihan;
 use App\Model\Proyek;
-use Yajra\DataTables\Facades\Datatables;
+use Datatables;
 
 class UserController extends Controller
 {
