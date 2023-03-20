@@ -1,32 +1,35 @@
 @extends('layout')
 
 @section('css')
-<style type="text/css">
-	.datatable-column-width{
-		overflow: hidden; text-overflow: ellipsis; max-width: 200px;
-	}
-</style>
+    <style type="text/css">
+        .datatable-column-width {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+    </style>
 @endsection
 
 @section('content')
     <!-- Page header -->
-	<div class="page-header page-header-light">
-		<div class="page-header-content header-elements-md-inline">
-			<div class="page-title d-flex">
-				<h4><span class="font-weight-semibold">Home</span> - Rekap Uang Muka</h4>
-				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
-			</div>
-		</div>
-	</div>
-	<!-- /page header -->
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><span class="font-weight-semibold">Home</span> - Rekap Uang Muka</h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
 
     <!-- Content area -->
     <div class="content">
         <!-- Hover rows -->
-		<div id="card-rekap" class="card">
+        <div id="card-rekap" class="card">
             <div class="card-header header-elements-inline">
-				<a href="{{ route('rekapdptagihans.create') }}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
-			</div>
+                <a href="{{ route('rekapdptagihans.create') }}"><button type="button"
+                        class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+            </div>
 
             <div class="card-body">
                 <form method="GET" action="{{ url('cetakrekap') }}">
@@ -53,54 +56,54 @@
                     </table>
                 </form>
             </div>
-		</div>
-		<!-- /hover rows -->
+        </div>
+        <!-- /hover rows -->
     </div>
     <!-- /content area -->
 
     <!-- Danger Modal -->
-	<div id="modal_theme_danger" class="modal fade" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header bg-danger" align="center">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
+    <div id="modal_theme_danger" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger" align="center">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
 
-				<form action="" method="post" id="delform">
-				    @csrf
-				    @method('DELETE')
-					<div class="modal-body" align="center">
-						<h2> Hapus Data? </h2>
-					</div>
+                <form action="" method="post" id="delform">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-body" align="center">
+                        <h2> Hapus Data? </h2>
+                    </div>
 
-					<div class="modal-footer">
-						<button type="button" class="btn btn-link" data-dismiss="modal">Batal</button>
-						<button type="submit" class="btn bg-danger">Hapus</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<!-- /danger modal -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn bg-danger">Hapus</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /danger modal -->
 @endsection
 
 @section('js')
-    <script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
-    <script src="{{asset('global_assets/js/plugins/notifications/bootbox.min.js')}}"></script>
-    <script src="{{asset('global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
-    <script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
-    <script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
-    <script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
-    <script src="{{asset('assets/js/app.js')}}"></script>
-    <script src="{{asset('assets/js/custom.js')}}"></script>
-    <script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
+    <script src="{{ asset('global_assets/js/plugins/notifications/pnotify.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/notifications/bootbox.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/buttons/spin.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/buttons/ladda.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="{{ asset('global_assets/js/demo_pages/components_modals.js') }}"></script>
 
     <script type="text/javascript">
         //modal delete
-		$(document).on("click", ".delbutton", function () {
-		     var url = $(this).data('uri');
-		     $("#delform").attr("action", url);
-		});
+        $(document).on("click", ".delbutton", function() {
+            var url = $(this).data('uri');
+            $("#delform").attr("action", url);
+        });
         var DatatableBasic = function() {
 
             const rekapStatus = {
@@ -119,13 +122,12 @@
                 }
 
                 // Setting datatable defaults
-                $.extend( $.fn.dataTable.defaults, {
+                $.extend($.fn.dataTable.defaults, {
                     autoWidth: false,
-                    columnDefs: [
-                        {
+                    columnDefs: [{
                             orderable: false,
                             // width: 100,
-                            targets: [ 8 ],
+                            targets: [8],
                         },
                         {
                             visible: false,
@@ -138,14 +140,21 @@
                         search: '<span>Filter:</span> _INPUT_',
                         searchPlaceholder: 'Type to filter...',
                         lengthMenu: '<span>Show:</span> _MENU_',
-                        paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
+                        paginate: {
+                            'first': 'First',
+                            'last': 'Last',
+                            'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;',
+                            'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;'
+                        }
                     }
                 });
 
                 // Basic datatable
                 $('.datatable-basic').DataTable({
-                    // "scrollX": true,
-                    order: [[0, "desc"]],
+                    "scrollX": true,
+                    order: [
+                        [0, "desc"]
+                    ],
                     processing: true,
                     serverSide: true,
                     ajax: {
@@ -206,13 +215,17 @@
                             render: (data, type, row) => {
                                 let status = ''
                                 if (data?.status == 1)
-									status = `<span style="font-size: 100%;" class="badge badge-pill badge-info">${rekapStatus[data?.status]}</span>`
-								else if(data?.status == 2)
-									status = `<span style="font-size: 100%;" class="badge badge-pill badge-danger">${rekapStatus[data?.status]}</span>`
-								else if(data?.status == 3)
-									status = `<span style="font-size: 100%;" class="badge badge-pill badge-warning">${rekapStatus[data?.status]}</span>`
-								else
-									status = `<span style="font-size: 100%;" class="badge badge-pill badge-success">${rekapStatus[data?.status]}</span>`
+                                    status =
+                                    `<span style="font-size: 100%;" class="badge badge-pill badge-info">${rekapStatus[data?.status]}</span>`
+                                else if (data?.status == 2)
+                                    status =
+                                    `<span style="font-size: 100%;" class="badge badge-pill badge-danger">${rekapStatus[data?.status]}</span>`
+                                else if (data?.status == 3)
+                                    status =
+                                    `<span style="font-size: 100%;" class="badge badge-pill badge-warning">${rekapStatus[data?.status]}</span>`
+                                else
+                                    status =
+                                    `<span style="font-size: 100%;" class="badge badge-pill badge-success">${rekapStatus[data?.status]}</span>`
 
                                 return status
                             }
@@ -221,22 +234,22 @@
                             data: null,
                             name: null,
                             render: (data, type, row) => {
-                                let showRef = "{{route('rekapdptagihans.show', ':id')}}"
+                                let showRef = "{{ route('rekapdptagihans.show', ':id') }}"
                                 showRef = showRef.replace(':id', data?.id)
 
-                                let lampiranRef = "{{route('lampiran_rdp', ':id')}}"
-								lampiranRef = lampiranRef.replace(':id', data?.id)
+                                let lampiranRef = "{{ route('lampiran_rdp', ':id') }}"
+                                lampiranRef = lampiranRef.replace(':id', data?.id)
 
-                                let cetakRef = "{{route('cetakrekapdp', ':id')}}"
+                                let cetakRef = "{{ route('cetakrekapdp', ':id') }}"
                                 cetakRef = cetakRef.replace(':id', data?.id)
 
-                                let delUri = "{{route('rekapdptagihans.destroy', ':id')}}"
+                                let delUri = "{{ route('rekapdptagihans.destroy', ':id') }}"
                                 delUri = delUri.replace(':id', data?.id)
 
-                                let invalidUri = "{{route('rekapdpinvalid', ':id')}}"
+                                let invalidUri = "{{ route('rekapdpinvalid', ':id') }}"
                                 invalidUri = invalidUri.replace(':id', data?.id)
 
-                                let actionButtons = 
+                                let actionButtons =
                                     `
                                         <dropdown">
                                             <a href="#" class="list-icons-item" data-toggle="dropdown">
@@ -248,9 +261,11 @@
                                                 <a href="${lampiranRef}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a>
                                                 <a href="${cetakRef}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>`
                                 if (data?.status == 1)
-                                    actionButtons += `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
-                                else if(data?.status < 5)
-                                    actionButtons += `<a href="${invalidUri}" class="dropdown-item"><i class="icon-x"></i> Invalid</a>`
+                                    actionButtons +=
+                                    `<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>`
+                                else if (data?.status < 5)
+                                    actionButtons +=
+                                    `<a href="${invalidUri}" class="dropdown-item"><i class="icon-x"></i> Invalid</a>`
                                 actionButtons += `</div>
                                         </div>
                                     `
@@ -265,7 +280,10 @@
                 $('.datatable-pagination').DataTable({
                     pagingType: "simple",
                     language: {
-                        paginate: {'next': $('html').attr('dir') == 'rtl' ? 'Next &larr;' : 'Next &rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr; Prev' : '&larr; Prev'}
+                        paginate: {
+                            'next': $('html').attr('dir') == 'rtl' ? 'Next &larr;' : 'Next &rarr;',
+                            'previous': $('html').attr('dir') == 'rtl' ? '&rarr; Prev' : '&larr; Prev'
+                        }
                     }
                 });
 
@@ -323,24 +341,24 @@
         });
     </script>
     <script type="text/javascript">
-		$( document ).ready(function() {
-	        // Default style
-	        @if(session('error'))
-	            new PNotify({
-	                title: 'Error',
-	                text: '{{ session('error') }}.',
-	                icon: 'icon-blocked',
-	                type: 'error'
-	            });
+        $(document).ready(function() {
+            // Default style
+            @if (session('error'))
+                new PNotify({
+                    title: 'Error',
+                    text: '{{ session('error') }}.',
+                    icon: 'icon-blocked',
+                    type: 'error'
+                });
             @endif
-            @if ( session('success'))
-	            new PNotify({
-	                title: 'Success',
-	                text: '{{ session('success') }}.',
-	                icon: 'icon-checkmark3',
-	                type: 'success'
-	            });
+            @if (session('success'))
+                new PNotify({
+                    title: 'Success',
+                    text: '{{ session('success') }}.',
+                    icon: 'icon-checkmark3',
+                    type: 'success'
+                });
             @endif
-		});
-	</script>
+        });
+    </script>
 @endsection
