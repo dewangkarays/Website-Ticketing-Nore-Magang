@@ -36,19 +36,19 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama Klien</label>
 							<div class="col-lg-10">
-                                <input type="text" name="nama_calonklien" class="form-control border-teal border-1">
+                                <input type="text" name="nama_calonklien" class="form-control border-teal border-1" placeholder="Nama klien" required>
                             </div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama Perusahaan</label>
 							<div class="col-lg-10">
-								<input type="text" name="nama_perusahaan" class="form-control border-teal border-1">
+								<input type="text" name="nama_perusahaan" class="form-control border-teal border-1" placeholder="Nama Perusahaan" required>
                         </div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Jenis Perusahaan</label>
 							<div class="col-lg-10">
-                                <input type="text" id="jenis_perusahaan" name="jenis_perusahaan" class="form-control border-teal border-1">
+                                <input type="text" id="jenis_perusahaan" name="jenis_perusahaan" class="form-control border-teal border-1" placeholder="Jenis Perusahaan" required>
                             </div>
 						</div>
 						<div class="form-group row">
