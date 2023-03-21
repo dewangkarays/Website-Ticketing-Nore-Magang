@@ -51,6 +51,7 @@
                           <th>Status</th>
                           <th>Source</th>
                           <th>Alamat</th>
+                          <th>Marketing</th>
 						  <th>Keterangan</th>
 						  <th class="text-center">Actions</th>
 					</tr>
@@ -238,6 +239,13 @@
                         {
 							data: 'alamat',
 							name: 'alamat',
+						},
+						{
+							data: null,
+							name: 'marketing_id',
+							render: (data, type, row) => {
+								return  data?.marketing?.nama
+							}
 						},
 						{
                         data: null,
