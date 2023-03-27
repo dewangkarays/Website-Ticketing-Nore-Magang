@@ -233,7 +233,7 @@
                     },
                     {
                         data: null,
-                        name: null,
+                        name: "masa_berlaku",
                         render: (data, type, row) => {
                             let masaBerlaku = ''
                             if (data?.masa_berlaku == null) {
