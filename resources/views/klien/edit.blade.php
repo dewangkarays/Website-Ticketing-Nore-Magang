@@ -57,7 +57,7 @@
 					<div class="col-lg-10">
 						<select id="potensi" name="potensi" class="form-control select-search border-teal border-1" >
 							@if ($klien->potensi == null)
-								<option value="">-- Pilih Jenis Proyek --</option>
+								<option value="">-- Pilih Produk Nore --</option>
 							@endif
 							@foreach (config('custom.jenis_proyek') as $key => $value)
 								<option {{ $klien->potensi == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
@@ -77,7 +77,7 @@
 					<div class="col-lg-10">
 						<select id="status_klien" name="status" class="form-control select-search border-teal border-1" >
 							@if ($klien->status == null)
-								<option value="">-- Pilih Jenis Proyek --</option>
+								<option value="">-- Pilih Status--</option>
 							@endif
 							@foreach (config('custom.status_klien') as $key => $value)
 								<option {{ $klien->status == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
