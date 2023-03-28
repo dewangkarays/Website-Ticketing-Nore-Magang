@@ -24,25 +24,25 @@ class ProyekController extends Controller
         $expired = Carbon::today()->addDays(-1);
         $dateline = Carbon::today()->addDays(14);
         $null = Proyek::whereNull('masa_berlaku')
-                        ->with('user')
-                        ->orderBy('jenis_proyek')
-                        ->get();
+            ->with('user')
+            ->orderBy('jenis_proyek')
+            ->get();
         $yellow = Proyek::whereNotNull('masa_berlaku')
-                        ->whereDate('masa_berlaku', '>=', $date)
-                        ->whereDate('masa_berlaku', '<=', $dateline)
-                        ->with('user')
-                        ->orderBy('masa_berlaku')
-                        ->get();
+            ->whereDate('masa_berlaku', '>=', $date)
+            ->whereDate('masa_berlaku', '<=', $dateline)
+            ->with('user')
+            ->orderBy('masa_berlaku')
+            ->get();
         $green = Proyek::whereNotNull('masa_berlaku')
-                        ->whereDate('masa_berlaku', '>', $dateline)
-                        ->with('user')
-                        ->orderBy('masa_berlaku')
-                        ->get();
+            ->whereDate('masa_berlaku', '>', $dateline)
+            ->with('user')
+            ->orderBy('masa_berlaku')
+            ->get();
         $red = Proyek::whereNotNull('masa_berlaku')
-                        ->whereDate('masa_berlaku', '<', $date)
-                        ->with('user')
-                        ->orderBy('masa_berlaku')
-                        ->get();
+            ->whereDate('masa_berlaku', '<', $date)
+            ->with('user')
+            ->orderBy('masa_berlaku')
+            ->get();
 
         $allItems = new Collection;
         $allItems = $allItems->merge($yellow);
@@ -52,9 +52,9 @@ class ProyekController extends Controller
         // dd($allItems);
         //dd($proyeks, $yellow, $green, $red);
         // dd($allItems->toJson());
-        $marketings = User::where('role','=','50')->get();
+        $marketings = User::where('role', '=', '50')->get();
         //dd($marketings);
-        
+
         return view('proyeks.index', compact('marketings'));
     }
 
@@ -66,12 +66,12 @@ class ProyekController extends Controller
     public function create()
     {
         // $users = User::where('id', '=', \Auth::user()->id)->get();
-        $users = User::where('role','>=','80')->get();
-        $marketings = User::where('role','=','50')->get();
+        $users = User::where('role', '>=', '80')->get();
+        $marketings = User::where('role', '=', '50')->get();
 
         // dd($marketings);
-       
-        return view('proyeks.create', compact('users','marketings'));
+
+        return view('proyeks.create', compact('users', 'marketings'));
     }
 
     /**
@@ -148,10 +148,10 @@ class ProyekController extends Controller
         $proyek = Proyek::find($id);
         // $users = User::where('role','>','20')->get();
         // $users = User::where('id', '=', \Auth::user()->id)->get();
-        $users = User::where('role','>=','80')->get();
-        $marketings = User::where('role','=','50')->get();
+        $users = User::where('role', '>=', '80')->get();
+        $marketings = User::where('role', '=', '50')->get();
 
-        return view('proyeks.edit', compact(['proyek','users','marketings']));
+        return view('proyeks.edit', compact(['proyek', 'users', 'marketings']));
     }
 
     /**
@@ -169,7 +169,7 @@ class ProyekController extends Controller
 
 
         // if($request->get('new_mb')!=''){
-            // $data['masa_berlaku'] = $request->get('new_mb');
+        // $data['masa_berlaku'] = $request->get('new_mb');
         // }
 
         // if($request->get('tipe_web')!=''){
@@ -239,70 +239,71 @@ class ProyekController extends Controller
         return redirect('/proyeks')->with('success', 'Proyek deleted!');
     }
 
-    public function getproyeks(Request $request) {
-        
-       // dd($request->marketing);
-        $marketing=null;
-       if ($request->marketing) {
-      
-        $marketing=$request->marketing;
-       }
+    public function getproyeks(Request $request)
+    {
+
+        // dd($request->marketing);
+        $marketing = null;
+        if ($request->marketing) {
+
+            $marketing = $request->marketing;
+        }
         $date = Carbon::today();
         $expired = Carbon::today()->addDays(-1);
         $dateline = Carbon::today()->addDays(14);
         $null = Proyek::whereNull('masa_berlaku');
-                        //->where('marketing_id', $request->marketing)
-                        if ($request->marketing) {
-                            $null=$null->where('marketing_id',$marketing);
-                        }
-                        $null=$null->with('user')
-                        ->orderBy('jenis_proyek')
-                        ->get();
-                        //dd($null);
+        //->where('marketing_id', $request->marketing)
+        if ($request->marketing) {
+            $null = $null->where('marketing_id', $marketing);
+        }
+        $null = $null->with('user')
+            ->orderBy('jenis_proyek')
+            ->get();
+        //dd($null);
         foreach ($null as $nullItem) {
             $nullItem['nama_user'] = $nullItem->user->nama;
         }
         $yellow = Proyek::whereNotNull('masa_berlaku');
-                        if ($request->marketing) {
-                            $yellow=$yellow->where('marketing_id',$marketing);
-                        }
-                        $yellow=$yellow->with('user')
-                        // ->where('marketing_id', $marketing)
-                        ->whereDate('masa_berlaku', '>=', $date)
-                        ->whereDate('masa_berlaku', '<=', $dateline)
-                        ->with('user')
-                        ->orderBy('masa_berlaku')
-                        ->get();
+        if ($request->marketing) {
+            $yellow = $yellow->where('marketing_id', $marketing);
+        }
+        $yellow = $yellow->with('user')
+            // ->where('marketing_id', $marketing)
+            ->whereDate('masa_berlaku', '>=', $date)
+            ->whereDate('masa_berlaku', '<=', $dateline)
+            ->with('user')
+            ->orderBy('masa_berlaku')
+            ->get();
         foreach ($yellow as $yellowItem) {
             $yellowItem['nama_user'] = $yellowItem->user->nama;
         }
         $green = Proyek::whereNotNull('masa_berlaku');
-                        //->where('marketing_id', $marketing)
-                        if ($request->marketing) {
-                            $green=$green->where('marketing_id',$marketing);
-                        }
-                        $green=$green->with('user')
-                        ->whereDate('masa_berlaku', '>', $dateline)
-                        ->with('user')
-                        ->orderBy('masa_berlaku')
-                        ->get();
+        //->where('marketing_id', $marketing)
+        if ($request->marketing) {
+            $green = $green->where('marketing_id', $marketing);
+        }
+        $green = $green->with('user')
+            ->whereDate('masa_berlaku', '>', $dateline)
+            ->with('user')
+            ->orderBy('masa_berlaku')
+            ->get();
         foreach ($green as $greenItem) {
             $greenItem['nama_user'] = $greenItem->user->nama;
         }
         $red = Proyek::whereNotNull('masa_berlaku');
-                        //->where('marketing_id', $marketing)
-                        if ($request->marketing) {
-                            $red=$red->where('marketing_id',$marketing);
-                        }
-                        $red=$red->with('user')
-                        ->whereDate('masa_berlaku', '<', $date)
-                        ->with('user')
-                        ->orderBy('masa_berlaku')
-                        ->get();
+        //->where('marketing_id', $marketing)
+        if ($request->marketing) {
+            $red = $red->where('marketing_id', $marketing);
+        }
+        $red = $red->with('user')
+            ->whereDate('masa_berlaku', '<', $date)
+            ->with('user')
+            ->orderBy('masa_berlaku')
+            ->get();
         foreach ($red as $redItem) {
             $redItem['nama_user'] = $redItem->user->nama;
         }
-                        
+
         $allItems = new Collection;
         $allItems = $allItems->merge($yellow);
         $allItems = $allItems->merge($green);
@@ -318,7 +319,7 @@ class ProyekController extends Controller
         // }
         // die;
         // $allItems = $collections->values()->all();
-        
+
 
         return Datatables::of($allItems)
             ->addColumn('expired', $expired)
