@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User;
 use App\Model\Klien;
+use App\Model\Historyklien;
 use Datatables;
 
 
@@ -129,5 +130,43 @@ class KlienController extends Controller
         $klien->save();
 
         return redirect('/klien')->with('success', 'Klien updated!');
+    }
+
+    public function KlienHistory(Request $request, $id)
+    {
+      
+        
+        $klien   = Klien::find($id);
+        $tanggal= date('Y-m-d');
+
+
+        $tanggal                = date('Y-m-d');
+        $history                = new Historyklien();
+        $history->created_at    = $tanggal;
+        $history->status        = $request->status;
+        $history->klien_id      = $klien->id;
+        $history->keterangan    = $request->keterangan_lain;
+        $history->save();
+        
+        
+
+        $klien->updated_at                   = $request->updated_at;
+        $klien->status                       = $request->status;
+        $klien->keterangan_lain              = $request->keterangan_lain;
+
+        $klien->save();
+
+        return redirect('/klien')->with('success', 'Klien updated!');
+    }
+
+    public function getdatahistory(Request $request, $id)
+    {
+        // dd($id);
+        $history = Historyklien::where('klien_id', $id)
+                    ->orderByDesc('updated_at')
+                    ->get();
+
+       
+        return response()->json($history);
     }
 }

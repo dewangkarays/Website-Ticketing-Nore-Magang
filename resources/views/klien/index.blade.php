@@ -13,6 +13,9 @@
 	ol {
 		padding-left: 15px;
 	}
+	.picker {
+		top:auto;
+	}
 </style>
 @endsection
 
@@ -89,6 +92,68 @@
 		</div>
 	</div>
 	 
+	 <!-- History modal -->
+	 <div id="modal_theme_history" class="modal fade" tabindex="-1">
+		<div class="modal-fade" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				{{-- Modal Header --}}
+				<div class="modal-header bg-warning" align="center">
+					<h4><span>History Status</span></h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<form action="" method="post" id="historyform">
+				    @csrf
+					@method('PUT')
+
+				{{-- Modal Body --}}
+					<div class="modal-body">
+						<table class="table" id="tableData">
+							<thead>
+							<tr>
+								<th>Tanggal</th>
+								<th>Status</th>
+								<th>Keterangan</th>
+							</tr>
+							</thead>
+							<tbody id="dataProyek">
+							</tbody>
+						</table>
+						
+					</div>
+					<div class="modal-body">
+					<hr>
+						 <div class="mb-3">
+							<label class="col-form-label col-lg-2">Tanggal</label>
+							<input type="date" name="updated_at" class="form-control border-teal pickadate-accessibility" value="{{date('Y-m-d')}}">
+						</div>
+						 <div class="mb-3">
+							<label class="col-form-label col-lg-2">Status</label>
+							<select id="status" name="status" class="form-control select-search border-teal border-1" >
+									<option value="">-- Status --</option>
+								@foreach (config('custom.status_klien') as $key => $value)
+									<option value="{{ $key }}">{{ $value }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="mb-3">
+							<label class="col-form-label col-lg-2">Keterangan</label>
+							<input type="text" name="keterangan_lain" class="form-control border-teal border-1"> 
+						</div> 
+					</div>
+
+				{{-- Modal Footer --}}
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn bg-success">Save</button>
+					</div>
+				</form>
+			</div>
+			</div>
+		</div>
+	</div>
 	
 	<!-- /default modal -->
 
@@ -102,6 +167,16 @@
 	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/daterangepicker.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/anytime.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.date.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/utc.js"></script>
+	<script>dayjs.extend(window.dayjs_plugin_utc)</script>
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
@@ -111,6 +186,81 @@
 		$(document).on("click", ".delbutton", function () {
 		     var url = $(this).data('uri');
 		     $("#delform").attr("action", url);
+			
+			});
+
+		//modal history	
+		$(document).on("click", ".historybutton", function () {
+		     var url = $(this).data('uri');
+		     var ref = $(this).data('id');
+			 var token= '{{ csrf_token() }}';
+				$.ajax({
+					type :'GET',
+					url  :'{{route("getdatahistory",[null])}}/'+ref,
+					headers  :{
+					'X-CSRF-TOKEN' : token
+					},
+					dataType :'json',
+					success  : function(data){
+						// console.log(data);
+						$('#myModal').modal('show');
+						var dataproyek = '';
+						$('.tabledata').DataTable();
+						$('#dataProyek').html("");
+		
+                        // ITERATING THROUGH OBJECTS
+                        $.each(data, function (key, value) {
+                             var no = key+1;
+                            //CONSTRUCTION OF ROWS HAVING
+                            // DATA FROM JSON OBJECT
+                            dataproyek += '<tr>';
+                           	
+								dataproyek += '<td>' + 
+                                dayjs(value.created_at).format('YYYY-MM-DD') + '</td>';
+								
+								let textStatus;
+								switch(value.status){
+									case 1:
+										textStatus='Visit';
+										break;
+									case 2:
+										textStatus='Kenal';
+										break;
+									case 3:
+										textStatus='Negosiasi';
+										break;
+									case 4:
+										textStatus='Deal';
+										break;
+									case 5:
+										textStatus='Pending';
+										break;
+									case 6:
+										textStatus='Bayar';
+										break;
+									default:
+										textStatus='';
+								}
+								dataproyek += '<td>' + 
+                                textStatus  + '</td>';
+  
+								dataproyek += '<td>' + 
+                                value.keterangan + '</td>';
+							
+  
+								dataproyek += '</tr>';
+                        });
+                          
+                        //INSERTING ROWS INTO TABLE 
+                        $('#dataProyek').append(dataproyek);
+						$('.tabledata').DataTable();
+					
+					},
+					error:function(){
+						alert('eror');
+					}
+				});
+		     $("#historyform").attr("action", url);
 			
 			});
 
@@ -269,6 +419,9 @@
 
 								let delUri = "{{route('klien.delete', ':id')}}";
 								delUri = delUri.replace(':id', data?.id);
+
+								let HistoryRef = "{{route('klien.KlienHistory', ':id')}}";
+								HistoryRef = HistoryRef.replace(':id', data?.id);
 										
 									
 									@if(\Auth::user()->role==1) 
@@ -281,8 +434,8 @@
 											</a>
 											<div class="dropdown-menu dropdown-menu-right" style="z-index:5">
 												<a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a> 
-												<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
 												<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+												<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
 						            			<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>
 												
 
@@ -291,10 +444,12 @@
 										var actionButtons =
 									
 										`
-										<div class="dropdown">
-											<a href="#" class="list-icons-item" data-toggle="dropdown">
-												<i class="icon-menu9"></i>
-											</a>
+											<div class="dropdown">
+												<a href="#" class="list-icons-item text-purple historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}"><i class="fa fa-bug" aria-hidden="true"></i></a>
+													
+												<a href="#" class="list-icons-item" data-toggle="dropdown">
+													<i class="icon-menu9"></i>
+												</a>
 											<div class="dropdown-menu dropdown-menu-right" style="z-index:5">
 												<a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
 												<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
@@ -368,6 +523,17 @@
 		            dropdownAutoWidth: true,
 		            width: 'auto'
 		        });
+
+				 // Accessibility labels
+				 $('.pickadate-accessibility').pickadate({
+					labelMonthNext: 'Go to the next month',
+					labelMonthPrev: 'Go to the previous month',
+					labelMonthSelect: 'Pick a month from the dropdown',
+					labelYearSelect: 'Pick a year from the dropdown',
+					selectMonths: true,
+					selectYears: true,
+					format: 'yyyy-mm-dd',
+				});
 		    };
 
 
