@@ -115,6 +115,9 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('/klien/savecreate', 'KlienController@saveCreate')->name('klien.savecreate');
 
 		Route::delete('/klien/delete/{id?}', 'KlienController@delete')->name('klien.delete');
+
+		Route::put('/historyklien{id}/update', 'KlienController@KlienHistory')->name('klien.KlienHistory');
+		Route::get('getdatahistory/{id?}', 'KlienController@getdatahistory')->name('getdatahistory');
 	});
 
 	//admin
