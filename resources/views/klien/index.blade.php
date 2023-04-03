@@ -445,7 +445,7 @@
 									
 										`
 											<div class="dropdown">
-												<a href="#" class="list-icons-item text-purple historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}"><i class="fa fa-bug" aria-hidden="true"></i></a>
+												<a href="#" class="list-icons-item text-orange historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}"><i class="icon-pencil5"></i></a>
 													
 												<a href="#" class="list-icons-item" data-toggle="dropdown">
 													<i class="icon-menu9"></i>
