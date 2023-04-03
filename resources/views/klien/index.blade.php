@@ -127,11 +127,11 @@
 					<hr>
 						 <div class="mb-3">
 							<label class="col-form-label col-lg-2">Tanggal</label>
-							<input type="date" name="updated_at" class="form-control border-teal pickadate-accessibility" value="{{date('Y-m-d')}}">
+							<input type="date" name="updated_at" class="form-control border-teal pickadate-accessibility" value="{{date('Y-m-d')}}" required>
 						</div>
 						 <div class="mb-3">
 							<label class="col-form-label col-lg-2">Status</label>
-							<select id="status" name="status" class="form-control select-search border-teal border-1" >
+							<select id="status" name="status" class="form-control select-search border-teal border-1" required>
 									<option value="">-- Status --</option>
 								@foreach (config('custom.status_klien') as $key => $value)
 									<option value="{{ $key }}">{{ $value }}</option>
@@ -140,7 +140,7 @@
 						</div>
 						<div class="mb-3">
 							<label class="col-form-label col-lg-2">Keterangan</label>
-							<input type="text" name="keterangan_lain" class="form-control border-teal border-1"> 
+							<input type="text" name="keterangan_lain" class="form-control border-teal border-1" required> 
 						</div> 
 					</div>
 
