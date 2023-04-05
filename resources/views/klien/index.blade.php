@@ -140,7 +140,7 @@
 						</div>
 						<div class="mb-3">
 							<label class="col-form-label col-lg-2">Keterangan</label>
-							<input type="text" name="keterangan_lain" class="form-control border-teal border-1" required> 
+							<input type="text" name="keterangan_lain" class="form-control border-teal border-1"> 
 						</div> 
 					</div>
 
@@ -266,7 +266,14 @@
 
 		var DatatableBasic = function() {
 
-		
+			const status_klien = {
+				'1' : 'Visit',
+				'2' : 'Kenal',
+				'3' : 'Negosiasi',
+				'4' : 'Deal',
+				'5' : 'Pending',
+				'6' : 'Bayar',
+			}
 
 		    // Basic Datatable examples
 		    var _componentDatatableBasic = function() {
@@ -359,15 +366,21 @@
 							data: null,
 							name: null,
 							render: (data, type, row) => {
-								const status_klien = {
-                                    '1' : 'Visit',
-                                    '2' : 'Kenal',
-                                    '3' : 'Negosiasi',
-                                    '4' : 'Deal',
-                                    '5' : 'Pending',
-                                    '6' : 'Bayar',
-								}
-								return status_klien[data?.status];
+								let status= ''
+								if (data?.status == 1)
+									status = `<span style="font-size: 100%;" class="badge badge-pill badge-info">${status_klien[data?.status]}</span>`
+								else if (data?.status == 2)
+									status = `<span style="font-size: 100%;" class="badge badge-pill badge-danger">${status_klien[data?.status]}</span>`
+								else if (data?.status == 3)
+									status = `<span style="font-size: 100%;" class="badge badge-pill badge-warning">${status_klien[data?.status]}</span>`
+								else if (data?.status == 4)
+									status = `<span style="font-size: 100%;" class="badge badge-pill badge-primary">${status_klien[data?.status]}</span>`
+								else if (data?.status == 5)
+									status = `<span style="font-size: 100%;" class="badge badge-pill badge-secondary">${status_klien[data?.status]}</span>`
+								else
+									status = `<span style="font-size: 100%;" class="badge badge-pill badge-success">${status_klien[data?.status]}</span>`
+								
+								return status
 							}
 						},
 						{
