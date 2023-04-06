@@ -16,6 +16,9 @@
 	.picker {
 		top:auto;
 	}
+	hr{
+		margin: 0rem;
+	}
 </style>
 @endsection
 
@@ -123,8 +126,8 @@
 						</table>
 						
 					</div>
-					<div class="modal-body">
 					<hr>
+					<div class="modal-body">
 						 <div class="mb-3">
 							<label class="col-form-label col-lg-2">Tanggal</label>
 							<input type="date" name="updated_at" class="form-control border-teal pickadate-accessibility" value="{{date('Y-m-d')}}" required>
