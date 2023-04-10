@@ -55,7 +55,7 @@
                           {{-- <th>Jenis Perusahaan</th> --}}
                           <th>Potensi</th>
                           <th>Status</th>
-                          <th>Source</th>
+                          {{-- <th>Source</th> --}}
                           {{-- <th>Alamat</th> --}}
                           <th>Marketing</th>
 						  <th>Keterangan</th>
@@ -97,7 +97,7 @@
 	 
 	 <!-- History modal -->
 	 <div id="modal_theme_history" class="modal fade" tabindex="-1">
-		<div class="modal-fade" id="myModal">
+		{{-- <div class="modal-fade" id="myModal"> --}}
 		<div class="modal-dialog">
 			<div class="modal-content">
 
@@ -155,7 +155,7 @@
 				</form>
 			</div>
 			</div>
-		</div>
+		{{-- </div> --}}
 	</div>
 	
 	<!-- /default modal -->
@@ -206,7 +206,7 @@
 					dataType :'json',
 					success  : function(data){
 						// console.log(data);
-						$('#myModal').modal('show');
+						// $('#myModal').modal('show');
 						var dataproyek = '';
 						$('.tabledata').DataTable();
 						$('#dataProyek').html("");
@@ -289,7 +289,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-						targets: [ 8 ]
+						targets: [ 7 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -384,22 +384,22 @@
 								return status
 							}
 						},
-						{
-							data: null,
-							name: 'source',
-							render: (data, type, row) => {
-								const source = {
-                                    '1' : 'Facebook',
-									'2' : 'Goggle',
-									'3' : 'Iklan',
-									'4' : 'Walkin',
-									'5' : 'Web',
-									'6' : 'Relasi',
-									'7' : 'Referal',
-								}
-								return source[data?.source];
-							}
-						},
+						// {
+						// 	data: null,
+						// 	name: 'source',
+						// 	render: (data, type, row) => {
+						// 		const source = {
+                        //             '1' : 'Facebook',
+						// 			'2' : 'Goggle',
+						// 			'3' : 'Iklan',
+						// 			'4' : 'Walkin',
+						// 			'5' : 'Web',
+						// 			'6' : 'Relasi',
+						// 			'7' : 'Referal',
+						// 		}
+						// 		return source[data?.source];
+						// 	}
+						// },
                         // {
 						// 	data: 'alamat',
 						// 	name: 'alamat',
@@ -446,7 +446,7 @@
 												<a href="${showRef}" class="list-icons-item text-blue"><i class="icon-search4"></i></a>
 
 												<a href="${editRef}" class="list-icons-item text-purple"><i class="icon-pencil7"></i></a>
-												
+
 												<a href="${telpRef}" target="_blank" class="list-icons-item text-success"><i class="fab fa-whatsapp"></i></a>
 												
 						            			<a class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-bin"></i></a>
