@@ -52,11 +52,11 @@
 						  <th>No</th>
                           <th>Nama Calon Klien</th>
                           <th>Nama Perusahaan</th>
-                          <th>Jenis Perusahaan</th>
+                          {{-- <th>Jenis Perusahaan</th> --}}
                           <th>Potensi</th>
                           <th>Status</th>
                           <th>Source</th>
-                          <th>Alamat</th>
+                          {{-- <th>Alamat</th> --}}
                           <th>Marketing</th>
 						  <th>Keterangan</th>
 						  <th class="text-center">Actions</th>
@@ -248,9 +248,7 @@
                                 textStatus  + '</td>';
   
 								dataproyek += '<td>' + 
-                                value.keterangan + '</td>';
-							
-  
+                                (value.keterangan ? value.keterangan : "-") + '</td>';
 								dataproyek += '</tr>';
                         });
                           
@@ -291,7 +289,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-						targets: [ 9 ]
+						targets: [ 8 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -332,10 +330,10 @@
 							data: 'nama_perusahaan',
 							name: 'nama_perusahaan',
 						},
-                        {
-							data: 'jenis_perusahaan',
-							name: 'jenis_perusahaan',
-						},
+                        // {
+						// 	data: 'jenis_perusahaan',
+						// 	name: 'jenis_perusahaan',
+						// },
                         {
 							data: null,
 							name: null,
@@ -402,10 +400,10 @@
 								return source[data?.source];
 							}
 						},
-                        {
-							data: 'alamat',
-							name: 'alamat',
-						},
+                        // {
+						// 	data: 'alamat',
+						// 	name: 'alamat',
+						// },
 						{
 							data: null,
 							name: 'marketing_id',
@@ -460,17 +458,20 @@
 										var actionButtons =
 									
 										`
-											<div class="dropdown">
+											
 												<a href="#" class="list-icons-item text-orange historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}"><i class="icon-pencil5"></i></a>
-													
-												<a href="#" class="list-icons-item" data-toggle="dropdown">
-													<i class="icon-menu9"></i>
-												</a>
-											<div class="dropdown-menu dropdown-menu-right" style="z-index:5">
-												<a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a>
-												<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-						            			<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
-												<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>
+												
+												<a href="${showRef}" class="list-icons-item text-blue"><i class="icon-search4"></i></a>
+												
+												<a href="${editRef}" class="list-icons-item text-purple"><i class="icon-pencil7"></i></a>
+						            			
+												<a href="${telpRef}" target="_blank" class="list-icons-item text-success"><i class="fab fa-whatsapp"></i></a>
+												
+												<a class="list-icons-item text-danger dellbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-bin"></i></a>
+												
+											
+												
+												
 												
 												
 										`
@@ -479,13 +480,10 @@
 									@else
 									var actionButtons =
 									`
-										<div class="dropdown">
-											<a href="#" class="list-icons-item" data-toggle="dropdown">
-												<i class="icon-menu9"></i>
-											</a>
-											<div class="dropdown-menu dropdown-menu-right" style="z-index:5">
-												<a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a> 
-												<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
+									
+											<a href="${showRef}" class="list-icons-item text-blue"><i class="icon-search4"></i></a>
+											
+											<a href="${telpRef}" target="_blank" class="list-icons-item text-green"><i class="fab fa-whatsapp"></i></a>
 												
 												
 											</div>
