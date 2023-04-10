@@ -54,7 +54,7 @@
 						<div class="form-group row">
                             <label class="col-form-label col-lg-2">Tanggal Lahir</label>
                             <div class="col-lg-10">
-                                <input type="date" name="tanggal_lahir" class="form-control border-teal pickadate-accessibility" placeholder="Tanggal Lahir" value="{{ $user->tanggal_lahir }}">
+                                <input type="date" name="tanggal_lahir" class="form-control border-teal pickadate-accessibility" placeholder="Tanggal Lahir" required value="{{ $user->tanggal_lahir }}">
                             </div>
                         </div>
 						<div class="form-group row">
