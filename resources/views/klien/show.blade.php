@@ -28,7 +28,7 @@
             <fieldset class="mb-3">
                 <legend class="text-uppercase font-size-sm font-weight-bold">Data Klien</legend>
                 
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label class="col-form-label col-lg-2">Nama Klien</label>
                     <div class="col-lg-10">
                         <span class="form-text"> {{$klien->nama_calonklien}}</span>
@@ -39,11 +39,40 @@
                     <div class="col-lg-10">
                         <span class="form-text"> {{$klien->nama_perusahaan}} </span>
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Jenis Perusahaan</label>
                     <div class="col-lg-10">
                         <span class="form-text"> {{$klien->jenis_perusahaan}} </span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2">Source</label>
+                    <div class="col-lg-10">
+                        <span class="form-text"> 
+                            @switch($klien->source)
+                            @case(1)
+                                Facebook
+                                @break
+                            @case(2)
+                                Iklan
+                                @break
+                            @case(3)
+                                Walkin
+                                @break
+                            @case(4)
+                                Web
+                                @break
+                            @case(5)
+                                Relasi
+                                @break
+                            @case(6)
+                                Referal
+                                @break
+                            @default
+                                Unknown status
+                            @endswitch
+                        </span>
                     </div>
                 </div>
                 <div class="form-group row">
