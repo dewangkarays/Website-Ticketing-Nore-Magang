@@ -442,15 +442,14 @@
 										
 										var actionButtons =
 									`
-										<div class="dropdown">
-											<a href="#" class="list-icons-item" data-toggle="dropdown">
-												<i class="icon-menu9"></i>
-											</a>
-											<div class="dropdown-menu dropdown-menu-right" style="z-index:5">
-												<a href="${showRef}" class="dropdown-item"><i class="icon-search4"></i> Show</a> 
-												<a href="${editRef}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-												<a href="${telpRef}" target="_blank" class="dropdown-item"><i class="fab fa-whatsapp"></i> Kontak User</a>
-						            			<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-x"></i> Delete</a>
+										
+												<a href="${showRef}" class="list-icons-item text-blue"><i class="icon-search4"></i></a>
+
+												<a href="${editRef}" class="list-icons-item text-purple"><i class="icon-pencil7"></i></a>
+												
+												<a href="${telpRef}" target="_blank" class="list-icons-item text-success"><i class="fab fa-whatsapp"></i></a>
+												
+						            			<a class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-bin"></i></a>
 												
 
 									`
@@ -467,7 +466,7 @@
 						            			
 												<a href="${telpRef}" target="_blank" class="list-icons-item text-success"><i class="fab fa-whatsapp"></i></a>
 												
-												<a class="list-icons-item text-danger dellbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-bin"></i></a>
+												<a class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-bin"></i></a>
 												
 											
 												
