@@ -20,38 +20,9 @@ class KlienController extends Controller
 
     public function getData(Request $request)
     {
-        // $limit =$request->length;
-        // $start =$request->start;
-        // $page  =$start+1;
-        // $search=$request->search['value'];
-
-        // $dbquery = Klien::select('*');
-        // $dbquery->orderBy('id','desc');
-
-        // if($search) {
-        //     $dbquery->where(function ($query) use ($search){
-        //         $query->orWhere('nama_calonklien','LIKE',"%{$search}%");
-        //         $query->orWhere('nama_perusahaan','LIKE',"%{$search}%");
-
-        //     });
-        // }
-
-
-        // $totalData                   =$dbquery->get()->count();
-        // $totalFilter                 =$dbquery->get()->count();  
-        // $dbquery->limit($limit);
-        // $dbquery->offset($start);
-        // $data = $dbquery->get();
-
-
-
-        // $json_data = array(
-        //     "recordsTotal"    => intval($totalData),
-        //     "recordsFiltered" => intval($totalFilter),
-        //     "data"            => $data
-        //     );
-
-        $json_data = Klien::with('marketing')->get();
+        $json_data = Klien::orderBy('id', 'desc')
+                ->with('marketing')
+                ->get();
         // return json_encode($json_data);
         return Datatables::of($json_data)->addIndexColumn()->make(true);
     }
@@ -83,6 +54,13 @@ class KlienController extends Controller
 
         $klien->save();
 
+        $klien = Klien::latest()->first();
+        $history                = new Historyklien();
+        $history->created_at    = $klien->created_at;
+        $history->status        = $request->status;
+        $history->klien_id      = $klien->id;
+        $history->keterangan    = $request->keterangan_lain;
+        $history->save();
         return redirect('/klien')->with('success', 'Klien saved!');
     }
 
