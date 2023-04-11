@@ -54,7 +54,7 @@
                           <th>Nama Perusahaan</th>
                           {{-- <th>Jenis Perusahaan</th> --}}
                           <th>Potensi</th>
-                          <th>Status</th>
+                          <th>Leads</th>
                           {{-- <th>Source</th> --}}
                           {{-- <th>Alamat</th> --}}
                           <th>Marketing</th>
@@ -117,7 +117,7 @@
 							<thead>
 							<tr>
 								<th>Tanggal</th>
-								<th>Status</th>
+								<th>Status Lead</th>
 								<th>Keterangan</th>
 							</tr>
 							</thead>
@@ -133,7 +133,7 @@
 							<input type="date" name="updated_at" class="form-control border-teal pickadate-accessibility" value="{{date('Y-m-d')}}" required>
 						</div>
 						 <div class="mb-3">
-							<label class="col-form-label col-lg-2">Status</label>
+							<label class="col-form-label col-lg-2">Status Lead</label>
 							<select id="status" name="status" class="form-control select-search border-teal border-1" required>
 									<option value="">-- Status --</option>
 								@foreach (config('custom.status_klien') as $key => $value)
@@ -436,24 +436,28 @@
 
 								let HistoryRef = "{{route('klien.KlienHistory', ':id')}}";
 								HistoryRef = HistoryRef.replace(':id', data?.id);
-										
+								
+								let createRef = `/members/create?c=${data?.id}`
 									
 									@if(\Auth::user()->role==1) 
-										
+									if (data.status==4)	{
 										var actionButtons =
 									`
-										
+												<a href="${createRef}" class="list-icons-item historybutton"><i class="icon-file-text"></i></a>
+
+												<a href="#" class="list-icons-item text-orange historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}"><i class="icon-pencil5"></i></a>
+
 												<a href="${showRef}" class="list-icons-item text-blue"><i class="icon-search4"></i></a>
 
 												<a href="${editRef}" class="list-icons-item text-purple"><i class="icon-pencil7"></i></a>
 
 												<a href="${telpRef}" target="_blank" class="list-icons-item text-success"><i class="fab fa-whatsapp"></i></a>
 												
-						            			<a class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-bin"></i></a>
+						            			<a href="#" class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-bin"></i></a>
 												
 
 									`
-									{ 
+									} else { 
 										var actionButtons =
 									
 										`
@@ -466,7 +470,7 @@
 						            			
 												<a href="${telpRef}" target="_blank" class="list-icons-item text-success"><i class="fab fa-whatsapp"></i></a>
 												
-												<a class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-bin"></i></a>
+												<a href="#" class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-bin"></i></a>
 												
 											
 												
