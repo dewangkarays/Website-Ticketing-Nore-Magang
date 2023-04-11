@@ -81,22 +81,22 @@
                         <span class="form-text"> 
                             @switch($klien->status)
                             @case(1)
-                                Visit
+                            <span style="font-size: 100%;" class="badge badge-pill badge-info">Visit</span>
                                 @break
                             @case(2)
-                                Kenal
+                            <span style="font-size: 100%;" class="badge badge-pill badge-danger">Kenal</span>
                                 @break
                             @case(3)
-                                Negosiasi 
+                            <span style="font-size: 100%;" class="badge badge-pill badge-warning">Negosiasi</span>
                                 @break
                             @case(4)
-                                Deal
+                            <span style="font-size: 100%;" class="badge badge-pill badge-primary">Deal</span>
                                 @break
                             @case(5)
-                                Pending
+                            <span style="font-size: 100%;" class="badge badge-pill badge-secondary">Pending</span>
                                 @break
                             @case(6)
-                                Bayar
+                            <span style="font-size: 100%;" class="badge badge-pill badge-success">Bayar</span>
                                 @break
                             @default
                                 Unknown Leads
