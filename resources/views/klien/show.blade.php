@@ -28,7 +28,7 @@
             <fieldset class="mb-3">
                 <legend class="text-uppercase font-size-sm font-weight-bold">Data Klien</legend>
                 
-                {{-- <div class="form-group row">
+                <div class="form-group row">
                     <label class="col-form-label col-lg-2">Nama Klien</label>
                     <div class="col-lg-10">
                         <span class="form-text"> {{$klien->nama_calonklien}}</span>
@@ -39,11 +39,69 @@
                     <div class="col-lg-10">
                         <span class="form-text"> {{$klien->nama_perusahaan}} </span>
                     </div>
-                </div> --}}
+                </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Jenis Perusahaan</label>
                     <div class="col-lg-10">
                         <span class="form-text"> {{$klien->jenis_perusahaan}} </span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2">potensi</label>
+                    <div class="col-lg-10">
+                        <span class="form-text"> 
+                            @switch($klien->potensi)
+                            @case(1)
+                                Website 
+                                @break
+                            @case(2)
+                                Iklan/Ads
+                                @break
+                            @case(3)
+                                Sistem Informasi
+                                @break
+                            @case(4)
+                                Mobile App
+                                @break
+                            @case(5)
+                                Custom/Lainnya
+                                @break
+                            @case(6)
+                                Ulo
+                                @break
+                            @default
+                                Unknown Potensi
+                            @endswitch
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2">Leads</label>
+                    <div class="col-lg-10">
+                        <span class="form-text"> 
+                            @switch($klien->status)
+                            @case(1)
+                                Visit
+                                @break
+                            @case(2)
+                                Kenal
+                                @break
+                            @case(3)
+                                Negosiasi 
+                                @break
+                            @case(4)
+                                Deal
+                                @break
+                            @case(5)
+                                Pending
+                                @break
+                            @case(6)
+                                Bayar
+                                @break
+                            @default
+                                Unknown Leads
+                            @endswitch
+                        </span>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -55,22 +113,25 @@
                                 Facebook
                                 @break
                             @case(2)
-                                Iklan
+                                Goggle
                                 @break
                             @case(3)
-                                Walkin
+                                Iklan
                                 @break
                             @case(4)
-                                Web
+                                Walkin
                                 @break
                             @case(5)
-                                Relasi
+                                Web
                                 @break
                             @case(6)
+                                Relasi
+                                @break
+                            @case(7)
                                 Referal
                                 @break
                             @default
-                                Unknown status
+                                Unknown Source
                             @endswitch
                         </span>
                     </div>
@@ -84,13 +145,14 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Tanggal Kontak Pertama</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{$klien->tanggal_kontakpertama}} </span>
+                        <span class="form-text"> {{@$klien->tanggal_kontakpertama ? $klien->tanggal_kontakpertama:'-'}} 
+                        </span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Tanggal Kontak Terakhir</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{$klien->tanggal_kontakterakhir}} </span>
+                        <span class="form-text"> {{@$klien->tanggal_kontakterakhir ?$klien->tanggal_kontakterakhir:'-'}} </span>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -99,7 +161,13 @@
                         <span class="form-text"> {{$klien->alamat}} </span>
                     </div>
                 </div>
-               
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2">keterangan</label>
+                    <div class="col-lg-10">
+                        <span class="form-text"> {{@$klien->keterangan_lain ? $klien->keterangan_lain:'-'}} </span>
+                    </div>
+                </div>
+
                 </fieldset>
                 <div class="text-right">
                     <a href="{{ url('/klien') }}">
