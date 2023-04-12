@@ -135,7 +135,7 @@
 						 <div class="mb-3">
 							<label class="col-form-label col-lg-2">Status Lead</label>
 							<select id="status" name="status" class="form-control select-search border-teal border-1" required>
-									<option value="">-- Status --</option>
+									<option value="">-- Lead --</option>
 								@foreach (config('custom.status_klien') as $key => $value)
 									<option value="{{ $key }}">{{ $value }}</option>
 								@endforeach
@@ -443,7 +443,7 @@
 									if (data.status==4)	{
 										var actionButtons =
 									`
-												<a href="${createRef}" class="list-icons-item historybutton"><i class="icon-file-text"></i></a>
+												<a href="${createRef}" class="list-icons-item historybutton" data-toggle="tooltip" data-placement="top" title="Create Member"><i class="icon-file-text"></i></a>
 
 												<a href="#" class="list-icons-item text-orange historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}"><i class="icon-pencil5"></i></a>
 
