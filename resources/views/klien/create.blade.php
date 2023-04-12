@@ -75,10 +75,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-form-label col-lg-2">Status</label>
+                            <label class="col-form-label col-lg-2">Status Lead</label>
                             <div class="col-lg-10">
                                 <select id="status_nore" name="status" class="form-control select-search border-teal border-1" >
-                                    <option value="">-- Pilih Status --</option>
+                                    <option value="">-- Lead --</option>
                                     @foreach (config('custom.status_klien') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
