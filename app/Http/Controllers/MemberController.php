@@ -212,7 +212,7 @@ class MemberController extends Controller
 
     public function getmembers() {
         $users = User::where('role', '>=', '80')
-            ->orderBy('nama')
+            ->orderBy('id','desc')
             ->get();
         foreach ($users as $key => $user) {
             $user['task_count'] = 0;
