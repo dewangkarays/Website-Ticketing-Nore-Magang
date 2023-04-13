@@ -47,7 +47,7 @@ ul{
 					<a href="{{ url('/klien') }}" class="nav-link {{ (request()->is('klien*')) ? 'active' : '' }}">
 						<i class="icon-people"></i>
 						<span>
-							Klien
+							Leads
 						</span>
 					</a>
 				</li>
