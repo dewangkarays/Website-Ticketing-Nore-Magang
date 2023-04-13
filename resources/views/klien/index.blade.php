@@ -54,7 +54,7 @@
                           <th>Nama Perusahaan</th>
                           {{-- <th>Jenis Perusahaan</th> --}}
                           <th>Potensi</th>
-                          <th>Leads</th>
+                          <th>Status</th>
                           {{-- <th>Source</th> --}}
                           {{-- <th>Alamat</th> --}}
                           <th>Marketing</th>
@@ -437,40 +437,40 @@
 								let HistoryRef = "{{route('klien.KlienHistory', ':id')}}";
 								HistoryRef = HistoryRef.replace(':id', data?.id);
 								
-								let createRef = `/members/create?c=${data?.id}`
 									
 									@if(\Auth::user()->role==1) 
-									if (data.status==4)	{
+									
 										var actionButtons =
 									`
-												<a href="${createRef}" class="list-icons-item historybutton" data-toggle="tooltip" data-placement="top" title="Create Member"><i class="icon-file-text"></i></a>
-
-												<a href="#" class="list-icons-item text-orange historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}"><i class="icon-pencil5"></i></a>
-
-												<a href="${showRef}" class="list-icons-item text-blue"><i class="icon-search4"></i></a>
-
-												<a href="${editRef}" class="list-icons-item text-purple"><i class="icon-pencil7"></i></a>
-
-												<a href="${telpRef}" target="_blank" class="list-icons-item text-success"><i class="fab fa-whatsapp"></i></a>
 												
-						            			<a href="#" class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-bin"></i></a>
+												
+
+												<a href="#" class="list-icons-item text-orange historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}" data-toggle="tooltip" data-placement="top" title="History"><i class="icon-pencil5"></i></a>
+
+												<a href="${showRef}" class="list-icons-item text-blue" data-toggle="tooltip" data-placement="top" title="Show"><i class="icon-search4"></i></a>
+
+												<a href="${editRef}" class="list-icons-item text-purple" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-pencil7"></i></a>
+
+												<a href="${telpRef}" target="_blank" class="list-icons-item text-success" data-toggle="tooltip" data-placement="top" title="Telp"><i class="fab fa-whatsapp"></i></a>
+												
+												<a href="#" class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-bin"></i></a>
 												
 
 									`
-									} else { 
+									 { 
 										var actionButtons =
 									
 										`
 											
-												<a href="#" class="list-icons-item text-orange historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}"><i class="icon-pencil5"></i></a>
+												<a href="#" class="list-icons-item text-orange historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}" data-toggle="tooltip" data-placement="top" title="History"><i class="icon-pencil5"></i></a>
 												
-												<a href="${showRef}" class="list-icons-item text-blue"><i class="icon-search4"></i></a>
+												<a href="${showRef}" class="list-icons-item text-blue" data-toggle="tooltip" data-placement="top" title="Show"><i class="icon-search4"></i></a>
 												
-												<a href="${editRef}" class="list-icons-item text-purple"><i class="icon-pencil7"></i></a>
+												<a href="${editRef}" class="list-icons-item text-purple" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-pencil7"></i></a>
 						            			
-												<a href="${telpRef}" target="_blank" class="list-icons-item text-success"><i class="fab fa-whatsapp"></i></a>
+												<a href="${telpRef}" target="_blank" class="list-icons-item text-success" data-toggle="tooltip" data-placement="top" title="Telp"><i class="fab fa-whatsapp"></i></a>
 												
-												<a href="#" class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"><i class="icon-bin"></i></a>
+												<a href="#" class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-bin"></i></a>
 												
 											
 												
