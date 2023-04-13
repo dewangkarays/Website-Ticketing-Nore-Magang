@@ -20,7 +20,8 @@ class KlienController extends Controller
 
     public function getData(Request $request)
     {
-        $json_data = Klien::orderBy('id', 'desc')
+        $json_data = Klien::whereNotIn('status',[4])
+                ->orderBy('id', 'desc')
                 ->with('marketing')
                 ->get();
         // return json_encode($json_data);
@@ -134,6 +135,9 @@ class KlienController extends Controller
 
         $klien->save();
 
+        if($klien->status==4){
+            return $this->createMember($id);
+        }
         return redirect('/klien')->with('success', 'Klien updated!');
     }
 
@@ -147,4 +151,31 @@ class KlienController extends Controller
        
         return response()->json($history);
     }
+
+    //createMember
+    public function createMember($id)
+    {
+        $klien = Klien::find($id);
+        $marketings = User::where('role', '50')->get();
+        return view('klien.createmember', compact('klien', 'marketings'));
+    }
+
+    public function savecreateMember(Request $request, $id)
+    {
+        
+        $user = new User([
+            'nama'         => $request->get('nama_calonklien'),
+            'email'        => $request->get('email'),
+            'telp'         => $request->get('telp'),
+            'alamat'       => $request->get('alamat'),
+            'username'     => $request->get('username'),
+            'password'     => bcrypt($request->get('password')),
+            'role'         => 95,
+            'marketing_id' => $request->get('marketing_id'),
+        ]);
+
+        $user->save();
+        return redirect('/members')->with('success', 'User saved!');
+    }
+
 }

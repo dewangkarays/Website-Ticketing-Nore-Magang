@@ -118,6 +118,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 		Route::put('/historyklien{id}/update', 'KlienController@KlienHistory')->name('klien.KlienHistory');
 		Route::get('getdatahistory/{id?}', 'KlienController@getdatahistory')->name('getdatahistory');
+
+		Route::get('/klien/createMember/{id}', 'KlienController@createMember')->name('klien.createMember');
+		Route::post('/klien/savecreateMember/{id}', 'KlienController@savecreateMember')->name('klien.savecreateMember');
 	});
 
 	//admin
