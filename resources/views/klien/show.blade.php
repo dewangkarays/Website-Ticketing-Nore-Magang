@@ -161,12 +161,12 @@
                         <span class="form-text"> {{$klien->alamat}} </span>
                     </div>
                 </div>
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label class="col-form-label col-lg-2">keterangan</label>
                     <div class="col-lg-10">
                         <span class="form-text"> {{@$klien->keterangan_lain ? $klien->keterangan_lain:'-'}} </span>
                     </div>
-                </div>
+                </div> --}}
 
                 </fieldset>
                 <div class="text-right">
