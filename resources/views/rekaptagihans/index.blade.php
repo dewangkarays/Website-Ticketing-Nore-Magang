@@ -30,9 +30,10 @@
 			</div>
 
             <div class="card-body">
-                <form method="GET" action="{{ url('cetakrekap') }}">
-
+                
+            <div class="table-responsive">
                     <table class="table datatable-basic table-hover">
+                        <form method="GET" action="{{ url('cetakrekap') }}">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -53,6 +54,7 @@
                     </table>
                 </form>
             </div>
+        </div>
 		</div>
 		<!-- /hover rows -->
     </div>
@@ -148,7 +150,7 @@
                         {
                             orderable: false,
                             // width: 100,
-                            targets: [ 8 ],
+                            targets: [ 9 ],
                         },
                         {
                             visible: false,
@@ -167,7 +169,10 @@
 
 		        // Basic datatable
 		        $('.datatable-basic').DataTable({
-                    "scrollX": true,
+                    // "scrollX": true,
+                    // "scrollY": 500,
+                    // "scrollCollapse": true,
+                    // "paging": false,
                     order: [[0, "desc"]],
                     processing: true,
                     serverSide: true,
