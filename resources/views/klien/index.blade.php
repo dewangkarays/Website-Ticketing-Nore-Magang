@@ -55,7 +55,7 @@
                           {{-- <th>Jenis Perusahaan</th> --}}
                           <th>Potensi</th>
                           <th>Status</th>
-                          {{-- <th>Source</th> --}}
+                          <th>Source</th>
                           {{-- <th>Alamat</th> --}}
                           <th>Marketing</th>
 						  <th>Keterangan</th>
@@ -289,7 +289,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-						targets: [ 7 ]
+						targets: [ 8 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -384,22 +384,22 @@
 								return status
 							}
 						},
-						// {
-						// 	data: null,
-						// 	name: 'source',
-						// 	render: (data, type, row) => {
-						// 		const source = {
-                        //             '1' : 'Facebook',
-						// 			'2' : 'Goggle',
-						// 			'3' : 'Iklan',
-						// 			'4' : 'Walkin',
-						// 			'5' : 'Web',
-						// 			'6' : 'Relasi',
-						// 			'7' : 'Referal',
-						// 		}
-						// 		return source[data?.source];
-						// 	}
-						// },
+						{
+							data: null,
+							name: 'source',
+							render: (data, type, row) => {
+								const source = {
+                                    '1' : 'Facebook',
+									'2' : 'Goggle',
+									'3' : 'Iklan',
+									'4' : 'Walkin',
+									'5' : 'Web',
+									'6' : 'Relasi',
+									'7' : 'Referal',
+								}
+								return source[data?.source];
+							}
+						},
                         // {
 						// 	data: 'alamat',
 						// 	name: 'alamat',
@@ -436,14 +436,18 @@
 
 								let HistoryRef = "{{route('klien.KlienHistory', ':id')}}";
 								HistoryRef = HistoryRef.replace(':id', data?.id);
+
+								let createRef = "{{route('klien.createMember', ':id')}}";
+								createRef = createRef.replace(':id', data?.id);
 								
 									
-									@if(\Auth::user()->role==1) 
+								@if(\Auth::user()->role==1) 
+									if (data.status==4) {
 									
 										var actionButtons =
 									`
-												
-												
+										<div style="text-align: right">
+												<a href="${createRef}" class="list-icons-item" data-toggle="tooltip" data-placement="top" title="Create Member"><i class="icon-file-text"></i></a>
 
 												<a href="#" class="list-icons-item text-orange historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}" data-toggle="tooltip" data-placement="top" title="History"><i class="icon-pencil5"></i></a>
 
@@ -455,13 +459,13 @@
 												
 												<a href="#" class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-bin"></i></a>
 												
-
+										</div>
 									`
-									 { 
+								} else { 
 										var actionButtons =
 									
 										`
-											
+										<div style="text-align: right">
 												<a href="#" class="list-icons-item text-orange historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}" data-toggle="tooltip" data-placement="top" title="History"><i class="icon-pencil5"></i></a>
 												
 												<a href="${showRef}" class="list-icons-item text-blue" data-toggle="tooltip" data-placement="top" title="Show"><i class="icon-search4"></i></a>
@@ -473,7 +477,7 @@
 												<a href="#" class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-bin"></i></a>
 												
 											
-												
+											</div>	
 												
 												
 												
