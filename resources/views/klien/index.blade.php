@@ -449,7 +449,7 @@
 										<div style="text-align: right">
 												<a href="${createRef}" class="list-icons-item" data-toggle="tooltip" data-placement="top" title="Create Member"><i class="icon-file-text"></i></a>
 
-												<a href="#" class="list-icons-item text-orange historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}" data-toggle="tooltip" data-placement="top" title="History"><i class="icon-pencil5"></i></a>
+												<a href="#" class="list-icons-item text-orange-600 historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}" data-toggle="tooltip" data-placement="top" title="History"><i class="icon-history"></i></a>
 
 												<a href="${showRef}" class="list-icons-item text-blue" data-toggle="tooltip" data-placement="top" title="Show"><i class="icon-search4"></i></a>
 
@@ -466,7 +466,7 @@
 									
 										`
 										<div style="text-align: right">
-												<a href="#" class="list-icons-item text-orange historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}" data-toggle="tooltip" data-placement="top" title="History"><i class="icon-pencil5"></i></a>
+												<a href="#" class="list-icons-item text-orange-600 historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}" data-toggle="tooltip" data-placement="top" title="History"><i class="icon-history"></i></a>
 												
 												<a href="${showRef}" class="list-icons-item text-blue" data-toggle="tooltip" data-placement="top" title="Show"><i class="icon-search4"></i></a>
 												
