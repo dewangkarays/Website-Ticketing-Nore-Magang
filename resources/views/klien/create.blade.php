@@ -54,7 +54,7 @@
 						<div class="form-group row">
                             <label class="col-form-label col-lg-2">Potensi</label>
                             <div class="col-lg-10">
-                                <select id="potensi" name="potensi" class="form-control select-search border-teal border-1" >
+                                <select id="potensi" name="potensi" class="form-control select-search border-teal border-1" required>
                                     <option value="">-- Pilih Produk Nore --</option>
                                     @foreach (config('custom.jenis_proyek') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
@@ -77,7 +77,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Status Lead</label>
                             <div class="col-lg-10">
-                                <select id="status_nore" name="status" class="form-control select-search border-teal border-1" >
+                                <select id="status_nore" name="status" class="form-control select-search border-teal border-1" required>
                                     <option value="">-- Lead --</option>
                                     @foreach (config('custom.status_klien') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
