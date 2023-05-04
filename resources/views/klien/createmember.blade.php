@@ -40,6 +40,18 @@
 						<input type="text" name="nama_calonklien" class="form-control border-teal border-1" placeholder="Nama" required value="{{ $klien->nama_calonklien }}">
 					</div>
 				</div>
+				<div class="form-group row">
+					<label class="col-form-label col-lg-2">Nama Proyek</label>
+					<div class="col-lg-10">
+						<input type="text" name="nama_proyek" class="form-control border-teal border-1" placeholder="Contoh : Pembuatan Website" >
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-form-label col-lg-2">Website</label>
+					<div class="col-lg-10">
+						<input type="text" id="website" name="website" class="form-control border-teal border-1" placeholder="Contoh : nore.web.id" >
+					</div>
+				</div>
 				{{-- <div class="form-group row">
 					<label class="col-form-label col-lg-2">Nama Perusahaan</label>
 					<div class="col-lg-10">
@@ -140,6 +152,94 @@
                         <input type="password" name="password" class="form-control border-teal border-1" placeholder="Password" required>
                     </div>
                 </div>
+				<div class="form-group row">
+					<label class="col-form-label col-lg-2">Jenis Proyek</label>
+					<div class="col-lg-10">
+						<select id="jenis_proyek" name="jenis_proyek" class="form-control select-search border-teal border-1">
+							@if ($klien->potensi == null)
+								<option value="">-- Pilih Jenis Proyek --</option>
+							@endif
+							@foreach (config('custom.jenis_proyek') as $key => $value)
+								<option {{ $klien->potensi == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
+							@endforeach
+						</select>
+					</div>
+				</div>
+
+				<div id="div-tipe" class="form-group row" style="display:none">
+					<label class="col-form-label col-lg-2">Kelas Layanan</label>
+					<div class="col-lg-10">
+						{{-- <select id="tipe" name="tipe" class="form-control border-teal border-1" >
+							<option value="0">-- Pilih Kelas Layanan --</option>
+							@foreach (config('custom.kelas_layanan') as $key => $value)
+								<option value="{{ $key }}">{{ $value }}</option>
+							@endforeach
+						</select> --}}
+						<select id="tipe_web" name="tipe_web" class="form-control border-teal border-1" style="display:none">
+							<option value="">-- Pilih Kelas Layanan --</option>
+							<option value="99">Simple</option>
+							<option value="90">Prioritas</option>
+						</select>
+						<select id="tipe_app" name="tipe_app" class="form-control border-teal border-1" style="display:none">
+							<option value="80">Premium</option>
+						</select>
+						<select id="tipe_ulo" name="tipe_ulo" class="form-control border-teal border-1" style="display:none">
+							<option value="">-- Pilih Kelas Layanan --</option>
+							<option value="70">Free</option>
+							<option value="74">Pro</option>
+							<option value="78">Custom</option>
+						</select>
+					</div>
+				</div>
+
+				<div id="div-jl" class="form-group row" style="display:none">
+					<label class="col-form-label col-lg-2">Jenis Layanan</label>
+					<div class="col-lg-10">
+						{{-- <select id="jenis_layanan" name="jenis_layanan" class="form-control border-teal border-1" >
+							<option value="0">-- Pilih Jenis Layanan --</option>
+							@foreach (config('custom.jenis_layanan') as $key => $value)
+								<option value="{{ $key }}">{{ $value }}</option>
+							@endforeach
+						</select> --}}
+						<select id="jl_web" name="jl_web" class="form-control border-teal border-1" style="display:none">
+							<option value="">-- Pilih Jenis Layanan --</option>
+							<option value="1">Nore</option>
+							<option value="2">Mini</option>
+							<option value="4">Beli/Lepas</option>
+						</select>
+						<select id="jl_app" name="jl_app" class="form-control border-teal border-1" style="display:none">
+							<option value="">-- Pilih Jenis Layanan --</option>
+							<option value="3">Berlangganan</option>
+							<option value="4">Beli/Lepas</option>
+						</select>
+						<select id="jl_ulo" name="jl_ulo" class="form-control border-teal border-1" style="display:none">
+							{{-- <option value="">-- Pilih Jenis Layanan --</option> --}}
+							<option value="3">Berlangganan</option>
+							{{-- <option value="4">Beli/Lepas</option> --}}
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-form-label col-lg-2">Jumlah Task</label>
+					<div class="col-lg-10">
+						<input name="task_count" type="number" class="form-control border-teal border-1" placeholder="Tentukan Jumlah Task">
+					</div>
+				</div>
+				<div id="div-masa" class="form-group row" style="display:none">
+					<label class="col-form-label col-lg-2">Masa Berlaku</label>
+					<div class="col-lg-10">
+						<input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control border-teal pickadate-accessibility" placeholder="Tanggal Masa Berlaku">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-form-label col-lg-2">Keterangan</label>
+					<div class="col-lg-10">
+						<span class="form-text text-muted">Contoh: Website blogspot Noer Prajitno</span>
+						<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1" required>{{ old('keterangan') }}</textarea>
+					</div>
+				</div>
 				{{-- <div class="form-group row">
 					<label class="col-form-label col-lg-2">Keterangan lain</label>
 					<div class="col-lg-10">
@@ -226,6 +326,78 @@
 				fileButtonClass: 'action btn bg-blue'
 			});
 		};
+
+		// Select2 select
+		var _componentSelect2 = function() {
+				if (!$().select2) {
+					console.warn('Warning - select2.min.js is not loaded.');
+					return;
+				}
+
+				var $select = $('.select-search').select2();
+
+				// Initialize
+				//var $select = $('.form-control-select2').select2({
+					//minimumResultsForSearch: Infinity
+				//});
+
+				// Trigger value change when selection is made
+				$select.on('change', function() {
+					$(this).trigger('blur');
+				});
+
+				$('#jenis_proyek').on('change', function() {
+					var dropdown = $('#jenis_proyek option:selected').val()
+					console.log(dropdown)
+					if (dropdown=="" || dropdown==0 || dropdown==5 || dropdown==2) {
+						$('#div-tipe, #div-jl').hide()
+						// $('#tipe_web, #tipe_app, #jl_web, #jl_app, #website').val("").attr("required", false)
+						$('#tipe_web, #tipe_app, #tipe_ulo, #jl_web, #jl_app, #jl_ulo').val("").attr("required", false)
+						if (dropdown==5) {
+							$('#div-masa').show()
+						} else {
+							$('#div-masa').hide()
+						}
+					} else {
+						$('#div-tipe, #div-jl').show()
+						$('#div-masa').show()
+						// $('#masa_berlaku').val("").attr("required", false)
+						if (dropdown==1) {
+							$('#tipe_web, #jl_web').show().attr("required", true)
+							$('#tipe_app, #jl_app').hide().val("").attr("required", false)
+							$('#tipe_ulo, #jl_ulo').hide().val("").attr('required', false)
+							$('#website').attr("required", true)
+						} else if (dropdown==6) {
+							$('#tipe_web, #jl_web').hide().val("").attr("required", false)
+							$('#tipe_app, #jl_app').hide().val("").attr("required", false)
+							$('#tipe_ulo, #jl_ulo').show().attr('required', true)
+							$('#jl_ulo').val(3)
+							$('#website').attr("required", false)
+						} else {
+							$('#tipe_web, #jl_web').hide().val("").attr("required", false)
+							$('#tipe_app, #jl_app').show().attr("required", true)
+							$('#tipe_ulo, #jl_ulo').hide().val("").attr('required', false)
+							$('#tipe_app').val(80)
+							$('#website').attr("required", false)
+						}
+					}
+				});
+
+				$('#jl_app, #jl_web, #jl_ulo').on('change', function() {
+					var dropdown_app = $('#jl_app option:selected').val()
+					var dropdown_web = $('#jl_web option:selected').val()
+					var dropdown_ulo = $('#jl_ulo option:selected').val()
+					console.log([dropdown_app, dropdown_web])
+					if (dropdown_app==4 || dropdown_web==4 || dropdown_ulo==4) {
+						$('#div-masa').hide()
+						// $('#masa_berlaku').val("").attr("required", false)
+					} else {
+						$('#div-masa').show()
+						// $('#masa_berlaku').attr("required", true)
+					}
+				});
+
+			};
 
 		    // Validation config
 		    var _componentValidation = function() {
@@ -419,6 +591,44 @@
 	<script type="text/javascript">
 		$( document ).ready(function() {
 	        // Default style
+			setTimeout(()=>{
+				var dropdown = $('#jenis_proyek option:selected').val()
+					console.log(dropdown)
+					if (dropdown=="" || dropdown==0 || dropdown==5 || dropdown==2) {
+						$('#div-tipe, #div-jl').hide()
+						// $('#tipe_web, #tipe_app, #jl_web, #jl_app, #website').val("").attr("required", false)
+						$('#tipe_web, #tipe_app, #tipe_ulo, #jl_web, #jl_app, #jl_ulo').val("").attr("required", false)
+						if (dropdown==5) {
+							$('#div-masa').show()
+						} else {
+							$('#div-masa').hide()
+						}
+					} else {
+						$('#div-tipe, #div-jl').show()
+						$('#div-masa').show()
+						// $('#masa_berlaku').val("").attr("required", false)
+						if (dropdown==1) {
+							$('#tipe_web, #jl_web').show().attr("required", true)
+							$('#tipe_app, #jl_app').hide().val("").attr("required", false)
+							$('#tipe_ulo, #jl_ulo').hide().val("").attr('required', false)
+							$('#website').attr("required", true)
+						} else if (dropdown==6) {
+							$('#tipe_web, #jl_web').hide().val("").attr("required", false)
+							$('#tipe_app, #jl_app').hide().val("").attr("required", false)
+							$('#tipe_ulo, #jl_ulo').show().attr('required', true)
+							$('#jl_ulo').val(3)
+							$('#website').attr("required", false)
+						} else {
+							$('#tipe_web, #jl_web').hide().val("").attr("required", false)
+							$('#tipe_app, #jl_app').show().attr("required", true)
+							$('#tipe_ulo, #jl_ulo').hide().val("").attr('required', false)
+							$('#tipe_app').val(80)
+							$('#website').attr("required", false)
+						}
+					}
+			},1000);
+			
+
 	        @if(session('error'))
 	            new PNotify({
 	                title: 'Error',

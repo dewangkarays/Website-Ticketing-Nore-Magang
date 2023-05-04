@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User;
 use App\Model\Klien;
+use App\Model\Proyek;
 use App\Model\Historyklien;
 use Datatables;
 
@@ -166,7 +167,7 @@ class KlienController extends Controller
 
     public function savecreateMember(Request $request, $id)
     {
-        
+        // dd($request);
         $user = new User([
             'nama'         => $request->get('nama_calonklien'),
             'email'        => $request->get('email'),
@@ -179,6 +180,40 @@ class KlienController extends Controller
         ]);
 
         $user->save();
+
+
+        if ($request->jl_web != '') {
+            $jenislayanan = $request->jl_web;
+        } else if ($request->jl_app != '') {
+            $jenislayanan = $request->jl_app;
+        } else if ($request->jl_ulo != '') {
+            $jenislayanan = $request->jl_ulo;
+        }
+
+        if ($request->tipe_web != '') {
+            $kelaslayanan = $request->tipe_web;
+        } else if ($request->tipe_app != '') {
+            $kelaslayanan = $request->tipe_app;
+        } else if ($request->tipe_ulo != '') {
+            $kelaslayanan = $request->tipe_ulo;
+        }
+
+        $proyek = new Proyek([
+            'user_id'       => $user->id,
+            'nama_proyek'   => $request->get('nama_proyek'),
+            'website'       => $request->get('website'),
+            'jenis_proyek'  => $request->get('jenis_proyek'),
+            'jenis_layanan' => $jenislayanan,
+            'tipe'          => $kelaslayanan,
+            'masa_berlaku'  => $request->get('masa_berlaku'),
+            'task_count'    => $request->get('task_count'),
+            'keterangan'    => $request->get('keterangan'),
+            'marketing_id'  => $request->get('marketing_id'),
+           
+        ]);
+
+        $proyek->save();
+
 
         $klien = Klien::find($id);
         $klien->update([
