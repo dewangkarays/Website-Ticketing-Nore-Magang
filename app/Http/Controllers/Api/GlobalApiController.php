@@ -113,6 +113,10 @@ class GlobalApiController extends Controller
     {
         $tanggal = date('Y-m-d');
         $users = User::whereNotNull('discord_id')
+            ->whereDoesntHave('cuti', function($q) use($tanggal) {
+                $q->where('tanggal_mulai','<=',$tanggal)
+                ->where('tanggal_akhir','>=',$tanggal);
+            })
             ->whereDoesntHave('presensi', function($q) use($tanggal) {
                 $q->where('tanggal', $tanggal);
             })
