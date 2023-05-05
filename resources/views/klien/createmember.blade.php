@@ -626,6 +626,20 @@
 							$('#website').attr("required", false)
 						}
 					}
+				});
+
+				$('#jl_app, #jl_web, #jl_ulo').on('change', function() {
+					var dropdown_app = $('#jl_app option:selected').val()
+					var dropdown_web = $('#jl_web option:selected').val()
+					var dropdown_ulo = $('#jl_ulo option:selected').val()
+					console.log([dropdown_app, dropdown_web])
+					if (dropdown_app==4 || dropdown_web==4 || dropdown_ulo==4) {
+						$('#div-masa').hide()
+						// $('#masa_berlaku').val("").attr("required", false)
+					} else {
+						$('#div-masa').show()
+						// $('#masa_berlaku').attr("required", true)
+					}		
 			},1000);
 			
 
