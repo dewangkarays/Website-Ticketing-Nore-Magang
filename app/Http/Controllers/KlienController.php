@@ -188,6 +188,8 @@ class KlienController extends Controller
             $jenislayanan = $request->jl_app;
         } else if ($request->jl_ulo != '') {
             $jenislayanan = $request->jl_ulo;
+        } else if ($request->null == '') {
+            $jenislayanan = $request->null;
         }
 
         if ($request->tipe_web != '') {
@@ -196,6 +198,8 @@ class KlienController extends Controller
             $kelaslayanan = $request->tipe_app;
         } else if ($request->tipe_ulo != '') {
             $kelaslayanan = $request->tipe_ulo;
+        } else if ($request->null == '') {
+            $kelaslayanan = $request->null;
         }
 
         $proyek = new Proyek([
@@ -219,7 +223,7 @@ class KlienController extends Controller
         $klien->update([
             'member_created' => true
         ]);
-        return redirect('/members')->with('success', 'User saved!');
+        return redirect('/members')->with('success', 'Member & Proyek saved!');
     }
 
 }

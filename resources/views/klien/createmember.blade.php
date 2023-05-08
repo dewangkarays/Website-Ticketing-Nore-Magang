@@ -626,8 +626,10 @@
 							$('#website').attr("required", false)
 						}
 					}
-				});
+					
+			},1000);
 
+			setTimeout(()=>{
 				$('#jl_app, #jl_web, #jl_ulo').on('change', function() {
 					var dropdown_app = $('#jl_app option:selected').val()
 					var dropdown_web = $('#jl_web option:selected').val()
@@ -639,7 +641,8 @@
 					} else {
 						$('#div-masa').show()
 						// $('#masa_berlaku').attr("required", true)
-					}		
+					}
+				});
 			},1000);
 			
 
