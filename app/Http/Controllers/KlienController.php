@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use App\Model\User;
 use App\Model\Klien;
 use App\Model\Proyek;
@@ -168,6 +169,41 @@ class KlienController extends Controller
     public function savecreateMember(Request $request, $id)
     {
         // dd($request);
+
+        $validator = Validator::make($request->all(), [
+            'username'=>'unique:users',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        if ($request->get('email') != null) {
+            $validator = Validator::make($request->all(), [
+                'email'=>'unique:users',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+            }
+        }
+
+        if ($request->get('telp') != null) {
+            $validator = Validator::make($request->all(), [
+                'telp'=>'unique:users',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+            }
+        }
+
         $user = new User([
             'nama'         => $request->get('nama_calonklien'),
             'email'        => $request->get('email'),
