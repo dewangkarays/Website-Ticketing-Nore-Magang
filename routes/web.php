@@ -66,6 +66,10 @@ Route::group(['middleware' => ['auth']], function () {
 		//Proyek
 		Route::resource('proyeks', 'ProyekController');
 
+		// Target Marketing
+		Route::resource('targetmarketing', 'TargetMarketingController');
+		Route::get('/targetmarketingdatatable', 'TargetMarketingController@targetmarketingdatatable');
+
 		// Routing Cuti
 		Route::get('/cuti', 'CutiController@index')->name('cuti');
 		Route::get('/verifikasi-cuti', 'CutiController@verifikasi')->name('verifikasi-cuti');

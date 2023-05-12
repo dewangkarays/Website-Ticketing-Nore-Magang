@@ -51,6 +51,14 @@ ul{
 						</span>
 					</a>
 				</li>
+				<li class="nav-item">
+					<a href="{{ url('/targetmarketing') }}" class="nav-link {{ (request()->is('targetmarketing*')) ? 'active' : '' }}">
+						<i class="icon-clipboard3"></i>
+						<span>
+							Target Marketing
+						</span>
+					</a>
+				</li>
 				<!-- <li class="nav-item">
 					<a href="{{ url('/setting') }}" class="nav-link {{ (request()->is('setting*')) ? 'active' : '' }}">
 						<i class="icon-gear"></i>
