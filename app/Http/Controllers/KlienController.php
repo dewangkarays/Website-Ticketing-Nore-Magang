@@ -122,7 +122,7 @@ class KlienController extends Controller
       
         
         $klien   = Klien::find($id);
-        $tanggal= date('Y-m-d');
+        $tanggal = date('Y-m-d');
 
 
         $tanggal                = date('Y-m-d');
