@@ -42,29 +42,31 @@
 		<div class="card">
 			<div class="card-header header-elements-inline">
 			@if (Auth::user()->role==1)
-			<a href="{{ route('klien.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+			<a href="{{ route('klien.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
 			@endif
 		</div>
-
-			<table class="table datatable-basic table-hover">
-				<thead>
-					<tr>
-						  <th>No</th>
-                          <th>Nama Calon Klien</th>
-                          <th>Nama Perusahaan</th>
-                          {{-- <th>Jenis Perusahaan</th> --}}
-                          <th>Potensi</th>
-                          <th>Status</th>
-                          <th>Source</th>
-                          {{-- <th>Alamat</th> --}}
-                          <th>Marketing</th>
-						  <th>Keterangan</th>
-						  <th class="text-center">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
+			<div class="card">
+				<table class="table datatable-basic table-hover">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>Nama Calon Klien</th>
+							<th>Nama Perusahaan</th>
+							{{-- <th>Jenis Perusahaan</th> --}}
+							<th>Potensi</th>
+							<th>Status</th>
+							<th>Source</th>
+							{{-- <th>Alamat</th> --}}
+							<th>Marketing</th>
+							<th>Keterangan</th>
+							<th class="text-center">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			
 		</div>
 		<!-- /hover rows -->
 
