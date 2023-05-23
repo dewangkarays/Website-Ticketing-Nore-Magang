@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Model\Payment;
 use App\Model\User;
 use App\Model\Notification;
@@ -14,9 +15,10 @@ use App\Model\Setting;
 use App\Model\Proyek;
 use App\Exports\PaymentExport; //plugin excel
 use Maatwebsite\Excel\Facades\Excel;
-use PDF;
+//use PDF;
 use App\Model\RekapTagihan;
 use App\Model\RekapDptagihan;
+use Barryvdh\DomPDF\PDF;
 use Datatables;
 
 class PaymentController extends Controller
@@ -28,11 +30,11 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        if(\Auth::user()->role > 50){
-            $payments = Payment::where('user_id',\Auth::user()->id)->orderBy('created_at','desc')->get();
+        if (Auth::user()->role > 50) {
+            $payments = Payment::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
         } else {
             // $payments = Payment::orderByRaw('case when status = 0 then 0 else 1 end, status')->orderBy('created_at','desc')->get();
-            $payments = Payment::where('jenis_pemasukan','=',1)->orderBy('created_at','desc')->get();
+            $payments = Payment::where('jenis_pemasukan', '=', 1)->orderBy('created_at', 'desc')->get();
             //$payments = Payment::all();
 
         }
@@ -46,12 +48,12 @@ class PaymentController extends Controller
      */
     public function create(Request $request)
     {
-        $users = User::where('role','>','50')->get();
-        $tagihanuser = RekapTagihan::where('user_id', \Auth::user()->id)->get();
+        $users = User::where('role', '>', '50')->get();
+        $tagihanuser = RekapTagihan::where('user_id', Auth::user()->id)->get();
         $tagihanuser2 = '';
         $setting = Setting::first();
 
-        return view('payments.create', compact('setting', 'users', 'tagihanuser','tagihanuser2'));
+        return view('payments.create', compact('setting', 'users', 'tagihanuser', 'tagihanuser2'));
     }
 
     /**
@@ -64,13 +66,13 @@ class PaymentController extends Controller
     {
         // dd($request);
         //$request->validate([
-            // 'user_id'=>'required',
-            // 'keterangan'=>'required',
-            // 'nominal'=>'required',
+        // 'user_id'=>'required',
+        // 'keterangan'=>'required',
+        // 'nominal'=>'required',
         //]);
 
         $data = $request->except(['_token', '_method']);
-        if (\Auth::user()->role==1 || \Auth::user()->role==20) {
+        if (Auth::user()->role == 1 || Auth::user()->role == 20) {
             $data['status'] = 1;
         }
 
@@ -82,7 +84,7 @@ class PaymentController extends Controller
         $receiptno = 01;
         $lastreceipt = Payment::latest('id')->first();
         if ($lastreceipt) {
-            $diffpay = substr($lastreceipt->receipt_no,0,3);
+            $diffpay = substr($lastreceipt->receipt_no, 0, 3);
             if ($diffpay == 'PAY') {
                 $different = 'no';
             } else {
@@ -90,83 +92,83 @@ class PaymentController extends Controller
             }
             // $data['receipt_no'] = 'PAY/'.$receiptno.'/'.date('dmY');
 
-                if ($different == 'yes') {
-                    $lastno = Nomor::first();
-                    if ($lastno) {
-                        $no1 = $lastno->npay + 1;
-                        $lastno->npay = $no1;
-                        $no = str_pad($no1,3,"0",STR_PAD_LEFT);
-                        $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                        $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
-                        $lastno->save();
-                    } else {
-                        $lastno['npay'] = 1;
-                        $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
-                        $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                        $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
-                        $lastno = Nomor::create($lastno);
-                    }
+            if ($different == 'yes') {
+                $lastno = Nomor::first();
+                if ($lastno) {
+                    $no1 = $lastno->npay + 1;
+                    $lastno->npay = $no1;
+                    $no = str_pad($no1, 3, "0", STR_PAD_LEFT);
+                    // $nouserpad = str_pad(Auth::user()->id, 2, "0", STR_PAD_LEFT);
+                    $data['receipt_no'] = 'PAY/' . $no . '/' . date('dmY');
+                    $lastno->save();
                 } else {
-                    // jika tidak sama
-                    $lastno = Nomor::first();
-                    if ($lastno) {
-                        $no1 = $lastno->npay + 1;
-                        $lastno->npay = $no1;
-                        $no = str_pad($no1,3,"0",STR_PAD_LEFT);
-                        $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                        $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
-                        $lastno->save();
-                    } else {
-                        $lastno['npay'] = 1;
-                        $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
-                        $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                        $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
-                        $lastno = Nomor::create($lastno);
-                    }
+                    $lastno['npay'] = 1;
+                    $no = str_pad($receiptno, 3, "0", STR_PAD_LEFT);
+                    // $nouserpad = str_pad(Auth::user()->id, 2, "0", STR_PAD_LEFT);
+                    $data['receipt_no'] = 'PAY/' . $no . '/' . date('dmY');
+                    $lastno = Nomor::create($lastno);
                 }
-        } else{
+            } else {
+                // jika tidak sama
+                $lastno = Nomor::first();
+                if ($lastno) {
+                    $no1 = $lastno->npay + 1;
+                    $lastno->npay = $no1;
+                    $no = str_pad($no1, 3, "0", STR_PAD_LEFT);
+                    // $nouserpad = str_pad(Auth::user()->id, 2, "0", STR_PAD_LEFT);
+                    $data['receipt_no'] = 'PAY/' . $no . '/' . date('dmY');
+                    $lastno->save();
+                } else {
+                    $lastno['npay'] = 1;
+                    $no = str_pad($receiptno, 3, "0", STR_PAD_LEFT);
+                    // $nouserpad = str_pad(Auth::user()->id, 2, "0", STR_PAD_LEFT);
+                    $data['receipt_no'] = 'PAY/' . $no . '/' . date('dmY');
+                    $lastno = Nomor::create($lastno);
+                }
+            }
+        } else {
             $lastno = Nomor::first();
             if ($lastno) {
                 $no1 = $lastno->npay + 1;
                 $lastno->npay = $no1;
-                $no = str_pad($no1,3,"0",STR_PAD_LEFT);
-                $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                $no = str_pad($no1, 3, "0", STR_PAD_LEFT);
+                // $nouserpad = str_pad(Auth::user()->id, 2, "0", STR_PAD_LEFT);
+                $data['receipt_no'] = 'PAY/' . $no . '/' . date('dmY');
                 $lastno->save();
             } else {
                 $lastno['npay'] = 1;
-                $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
-                $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                $data['receipt_no'] = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                $no = str_pad($receiptno, 3, "0", STR_PAD_LEFT);
+                // $nouserpad = str_pad(Auth::user()->id, 2, "0", STR_PAD_LEFT);
+                $data['receipt_no'] = 'PAY/' . $no . '/' . date('dmY');
                 $lastno = Nomor::create($lastno);
             }
         }
         // dd($data);
 
-        if($request->get('kadaluarsa')!=''){
+        if ($request->get('kadaluarsa') != '') {
 
             $cust->kadaluarsa = $request->get('kadaluarsa');
             $cust->save();
         }
 
-        if($request->get('task_count')!=''){
+        if ($request->get('task_count') != '') {
 
             $cust->task_count += $request->get('task_count');
             $cust->save();
         }
 
-        if($request->get('rdtagihan') == 1){
+        if ($request->get('rdtagihan') == 1) {
             $tagihan = RekapTagihan::find($request->get('tagihan_id'));
             // $tagihan->jml_tagih -= $request->get('nominal');
             $data['rekap_tagihan_id'] = $request->get('tagihan_id');
             $tagihan->jml_terbayar += $request->get('nominal');
-            if($tagihan->jml_terbayar==$tagihan->total){
+            if ($tagihan->jml_terbayar == $tagihan->total) {
                 $tagihan->update([
-                    'status'=>4
+                    'status' => 4
                 ]);
             } else {
                 $tagihan->update([
-                    'status'=>3
+                    'status' => 3
                 ]);
             }
 
@@ -194,23 +196,23 @@ class PaymentController extends Controller
             }
         }
 
-        if($request->get('rdtagihan') == 2){
+        if ($request->get('rdtagihan') == 2) {
             $tagihan = RekapDptagihan::find($request->get('tagihan_id'));
             // $tagihan->jml_tagih -= $request->get('nominal');
             $data['rekap_dptagihan_id'] = $request->get('tagihan_id');
             $tagihan->jml_terbayar += $request->get('nominal');
-            if($tagihan->jml_terbayar==$tagihan->total){
+            if ($tagihan->jml_terbayar == $tagihan->total) {
                 $tagihan->update([
-                    'status'=>4
+                    'status' => 4
                 ]);
                 // $tagihan->status=2;
             } else {
                 $tagihan->update([
-                    'status'=>3
+                    'status' => 3
                 ]);
                 // $tagihan->status=1;
             }
-            
+
             $dataTagihans = Tagihan::where('rekap_dptagihan_id', $tagihan->id)->get();
             foreach ($dataTagihans as $dataTagihan) {
                 $dataTagihan->status_rekapdp = $tagihan->status;
@@ -244,12 +246,12 @@ class PaymentController extends Controller
         if ($request->rdtagihan == 1) {
             $tagihans = Tagihan::where('rekap_tagihan_id', $request->tagihan_id)->get();
             foreach ($tagihans as $tagihan) {
-                $data['nama_proyek'] = $data['nama_proyek'].$tagihan->proyek->nama_proyek.'<br>';
+                $data['nama_proyek'] = $data['nama_proyek'] . $tagihan->proyek->nama_proyek . '<br>';
             }
         } else if ($request->rdtagihan == 2) {
             $tagihans = Tagihan::where('rekap_dptagihan_id', $request->tagihan_id)->get();
             foreach ($tagihans as $tagihan) {
-                $data['nama_proyek'] = $data['nama_proyek'].$tagihan->proyek->nama_proyek.'<br>';
+                $data['nama_proyek'] = $data['nama_proyek'] . $tagihan->proyek->nama_proyek . '<br>';
             }
         }
         // dd($data);
@@ -299,7 +301,8 @@ class PaymentController extends Controller
         return view('payments.show', compact('payment', 'member', 'invoice', 'tagihans'));
     }
 
-    public function changestatus(Request $request) {
+    public function changestatus(Request $request)
+    {
         $payment = Payment::find($request->id);
 
         $payment->status = $request->status;
@@ -307,7 +310,7 @@ class PaymentController extends Controller
             $receiptno = 01;
             $lastreceipt = Payment::latest('id')->first();
             if ($lastreceipt) {
-                $diffpay = substr($lastreceipt->receipt_no,0,3);
+                $diffpay = substr($lastreceipt->receipt_no, 0, 3);
                 if ($diffpay == 'PAY') {
                     $different = 'no';
                 } else {
@@ -315,54 +318,54 @@ class PaymentController extends Controller
                 }
                 // $data['receipt_no'] = 'PAY/'.$receiptno.'/'.date('dmY');
 
-                    if ($different == 'yes') {
-                        $lastno = Nomor::first();
-                        if ($lastno) {
-                            $no1 = $lastno->npay + 1;
-                            $lastno->npay = $no1;
-                            $no = str_pad($no1,3,"0",STR_PAD_LEFT);
-                            $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                            $paynumber = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
-                            $lastno->save();
-                        } else {
-                            $lastno['npay'] = 1;
-                            $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
-                            $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                            $paynumber = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
-                            $lastno = Nomor::create($lastno);
-                        }
+                if ($different == 'yes') {
+                    $lastno = Nomor::first();
+                    if ($lastno) {
+                        $no1 = $lastno->npay + 1;
+                        $lastno->npay = $no1;
+                        $no = str_pad($no1, 3, "0", STR_PAD_LEFT);
+                        // $nouserpad = str_pad(Auth::user()->id, 2, "0", STR_PAD_LEFT);
+                        $paynumber = 'PAY/' . $no . '/' . date('dmY');
+                        $lastno->save();
                     } else {
-                        // jika tidak sama
-                        $lastno = Nomor::first();
-                        if ($lastno) {
-                            $no1 = $lastno->npay + 1;
-                            $lastno->npay = $no1;
-                            $no = str_pad($no1,3,"0",STR_PAD_LEFT);
-                            $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                            $paynumber = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
-                            $lastno->save();
-                        } else {
-                            $lastno['npay'] = 1;
-                            $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
-                            $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                            $paynumber = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
-                            $lastno = Nomor::create($lastno);
-                        }
+                        $lastno['npay'] = 1;
+                        $no = str_pad($receiptno, 3, "0", STR_PAD_LEFT);
+                        // $nouserpad = str_pad(Auth::user()->id, 2, "0", STR_PAD_LEFT);
+                        $paynumber = 'PAY/' . $no . '/' . date('dmY');
+                        $lastno = Nomor::create($lastno);
                     }
-            } else{
+                } else {
+                    // jika tidak sama
+                    $lastno = Nomor::first();
+                    if ($lastno) {
+                        $no1 = $lastno->npay + 1;
+                        $lastno->npay = $no1;
+                        $no = str_pad($no1, 3, "0", STR_PAD_LEFT);
+                        // $nouserpad = str_pad(Auth::user()->id, 2, "0", STR_PAD_LEFT);
+                        $paynumber = 'PAY/' . $no . '/' . date('dmY');
+                        $lastno->save();
+                    } else {
+                        $lastno['npay'] = 1;
+                        $no = str_pad($receiptno, 3, "0", STR_PAD_LEFT);
+                        // $nouserpad = str_pad(Auth::user()->id, 2, "0", STR_PAD_LEFT);
+                        $paynumber = 'PAY/' . $no . '/' . date('dmY');
+                        $lastno = Nomor::create($lastno);
+                    }
+                }
+            } else {
                 $lastno = Nomor::first();
                 if ($lastno) {
                     $no1 = $lastno->npay + 1;
                     $lastno->npay = $no1;
-                    $no = str_pad($no1,3,"0",STR_PAD_LEFT);
-                    $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                    $paynumber = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                    $no = str_pad($no1, 3, "0", STR_PAD_LEFT);
+                    // $nouserpad = str_pad(Auth::user()->id, 2, "0", STR_PAD_LEFT);
+                    $paynumber = 'PAY/' . $no . '/' . date('dmY');
                     $lastno->save();
                 } else {
                     $lastno['npay'] = 1;
-                    $no = str_pad($receiptno,3,"0",STR_PAD_LEFT);
-                    $nouserpad = str_pad(\Auth::user()->id,2,"0",STR_PAD_LEFT);
-                    $paynumber = 'PAY/'.$no.'/'.date('dmY').'/'.$nouserpad;
+                    $no = str_pad($receiptno, 3, "0", STR_PAD_LEFT);
+                    // $nouserpad = str_pad(Auth::user()->id, 2, "0", STR_PAD_LEFT);
+                    $paynumber = 'PAY/' . $no . '/' . date('dmY');
                     $lastno = Nomor::create($lastno);
                 }
             }
@@ -434,7 +437,7 @@ class PaymentController extends Controller
 
     public function export_excel()
     {
-        return Excel::download(new PaymentExport, 'Payment '.(date('Y-m-d')).'.xlsx' );
+        return Excel::download(new PaymentExport, 'Payment ' . (date('Y-m-d')) . '.xlsx');
     }
 
     public function cetak($id)
@@ -442,41 +445,45 @@ class PaymentController extends Controller
         $receipt = Payment::find($id);
         $setting = Setting::first();
 
-        $pdf = PDF::loadview('payments.receipt', compact('receipt','setting'))->setPaper('a4', 'potrait');
+        $pdf = PDF::loadView('payments.receipt', compact('receipt', 'setting'))->setPaper('a4', 'potrait');
         return $pdf->stream();
     }
 
-    public static function kekata($x) {
+    public static function kekata($x)
+    {
         $x = abs($x);
-        $angka = array("", "satu", "dua", "tiga", "empat", "lima",
-        "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+        $angka = array(
+            "", "satu", "dua", "tiga", "empat", "lima",
+            "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"
+        );
         $temp = "";
-        if ($x <12) {
-            $temp = " ". $angka[$x];
-        } else if ($x <20) {
-            $temp = PaymentController::kekata($x - 10). " belas";
-        } else if ($x <100) {
-            $temp = PaymentController::kekata($x/10)." puluh". PaymentController::kekata($x % 10);
-        } else if ($x <200) {
+        if ($x < 12) {
+            $temp = " " . $angka[$x];
+        } else if ($x < 20) {
+            $temp = PaymentController::kekata($x - 10) . " belas";
+        } else if ($x < 100) {
+            $temp = PaymentController::kekata($x / 10) . " puluh" . PaymentController::kekata($x % 10);
+        } else if ($x < 200) {
             $temp = " seratus" . PaymentController::kekata($x - 100);
-        } else if ($x <1000) {
-            $temp = PaymentController::kekata($x/100) . " ratus" . PaymentController::kekata($x % 100);
-        } else if ($x <2000) {
+        } else if ($x < 1000) {
+            $temp = PaymentController::kekata($x / 100) . " ratus" . PaymentController::kekata($x % 100);
+        } else if ($x < 2000) {
             $temp = " seribu" . PaymentController::kekata($x - 1000);
-        } else if ($x <1000000) {
-            $temp = PaymentController::kekata($x/1000) . " ribu" . PaymentController::kekata($x % 1000);
-        } else if ($x <1000000000) {
-            $temp = PaymentController::kekata($x/1000000) . " juta" . PaymentController::kekata($x % 1000000);
-        } else if ($x <1000000000000) {
-            $temp = PaymentController::kekata($x/1000000000) . " milyar" . PaymentController::kekata(fmod($x,1000000000));
-        } else if ($x <1000000000000000) {
-            $temp = PaymentController::kekata($x/1000000000000) . " trilyun" . PaymentController::kekata(fmod($x,1000000000000));
+        } else if ($x < 1000000) {
+            $temp = PaymentController::kekata($x / 1000) . " ribu" . PaymentController::kekata($x % 1000);
+        } else if ($x < 1000000000) {
+            $temp = PaymentController::kekata($x / 1000000) . " juta" . PaymentController::kekata($x % 1000000);
+        } else if ($x < 1000000000000) {
+            $temp = PaymentController::kekata($x / 1000000000) . " milyar" . PaymentController::kekata(fmod($x, 1000000000));
+        } else if ($x < 1000000000000000) {
+            $temp = PaymentController::kekata($x / 1000000000000) . " trilyun" . PaymentController::kekata(fmod($x, 1000000000000));
         }
-            return $temp;
+        return $temp;
     }
-    public static function terbilang($x, $style=4) {
-        if($x<0) {
-            $hasil = "minus ". trim(PaymentController::kekata($x));
+    public static function terbilang($x, $style = 4)
+    {
+        if ($x < 0) {
+            $hasil = "minus " . trim(PaymentController::kekata($x));
         } else {
             $hasil = trim(PaymentController::kekata($x));
         }
@@ -508,8 +515,8 @@ class PaymentController extends Controller
         $payment = Payment::find($id);
         $tagihans = Tagihan::where('user_id', $payment->user_id)->get();
         $detailtagih = Tagihan::find($payment->tagihan_id);
-        $users = User::where('role','>','50')->get();
-        return view('payments.edit', compact('payment','users','tagihans','detailtagih', ));
+        $users = User::where('role', '>', '50')->get();
+        return view('payments.edit', compact('payment', 'users', 'tagihans', 'detailtagih',));
     }
 
     /**
@@ -528,17 +535,17 @@ class PaymentController extends Controller
         ]);
 
         $payment = Payment::find($id);
-        $data = $request->except(['_token', '_method','kadaluarsa','updkadaluarsa','task_count']);
+        $data = $request->except(['_token', '_method', 'kadaluarsa', 'updkadaluarsa', 'task_count']);
 
         $user = User::find($request->get('user_id'));
-        if($request->get('kadaluarsa')!='' && $request->get('updkadaluarsa')=='1'){
+        if ($request->get('kadaluarsa') != '' && $request->get('updkadaluarsa') == '1') {
             $data['kadaluarsa'] = $request->get('kadaluarsa');
 
             $user->kadaluarsa = $request->get('kadaluarsa');
             $user->save();
         }
 
-        if($request->get('task_count')!='' && $request->get('updkadaluarsa')=='1'){
+        if ($request->get('task_count') != '' && $request->get('updkadaluarsa') == '1') {
             $data['task_count'] = $request->get('task_count');
 
             $user->task_count += $request->get('task_count');
@@ -575,10 +582,10 @@ class PaymentController extends Controller
         $tagihan = Tagihan::find($request->get('tagihan_id'));
         $tagihan->jml_tagih -= ($request->get('nominal') - $payment->nominal);
         $tagihan->jml_bayar += ($request->get('nominal') - $payment->nominal);
-        if($tagihan->jml_tagih==0){
-            $tagihan->status=2;
+        if ($tagihan->jml_tagih == 0) {
+            $tagihan->status = 2;
         } else {
-            $tagihan->status=1;
+            $tagihan->status = 1;
         }
         $tagihan->save();
 
@@ -597,22 +604,22 @@ class PaymentController extends Controller
     {
         $payment = Payment::find($id);
 
-        if($payment->rekap_tagihan_id != null){
+        if ($payment->rekap_tagihan_id != null) {
             // dd($payment);
             $tagihan = RekapTagihan::find($payment->rekap_tagihan_id);
             // $tagihan->jml_tagih += $payment->nominal;
             $tagihan->jml_terbayar -= $payment->nominal;
-            if($tagihan->jml_terbayar==0){
-                $tagihan->status=2;
+            if ($tagihan->jml_terbayar == 0) {
+                $tagihan->status = 2;
             } else {
-                $tagihan->status=3;
+                $tagihan->status = 3;
             }
             $tagihan->update();
 
             //Mengupdate status_rekap
             $dataTagihans = Tagihan::where('rekap_tagihan_id', $tagihan->id)->get();
             foreach ($dataTagihans as $dataTagihan) {
-                if($tagihan->jml_terbayar==0){
+                if ($tagihan->jml_terbayar == 0) {
                     $dataTagihan->status_rekap = 2;
                 } else {
                     $dataTagihan->status_rekap = 3;
@@ -620,7 +627,7 @@ class PaymentController extends Controller
 
                 if ($dataTagihan->status_rekapdp == 4 && $dataTagihan->status_rekap == 4) {
                     $dataTagihan->status = 2;
-                } else if ($dataTagihan->status_rekap == 4 && $dataTagihan->uang_muka==0) {
+                } else if ($dataTagihan->status_rekap == 4 && $dataTagihan->uang_muka == 0) {
                     $dataTagihan->status = 2;
                 } else {
                     $dataTagihan->status = 0;
@@ -628,23 +635,21 @@ class PaymentController extends Controller
 
                 $dataTagihan->update();
             }
-        }
-
-        else if($payment->rekap_dptagihan_id != null){
+        } else if ($payment->rekap_dptagihan_id != null) {
             $tagihan = RekapDptagihan::find($payment->rekap_dptagihan_id);
             // $tagihan->jml_tagih += $payment->nominal;
             $tagihan->jml_terbayar -= $payment->nominal;
-            if($tagihan->jml_terbayar==0){
-                $tagihan->status=2;
+            if ($tagihan->jml_terbayar == 0) {
+                $tagihan->status = 2;
             } else {
-                $tagihan->status=3;
+                $tagihan->status = 3;
             }
             $tagihan->update();
 
             //Mengupdate status_rekapdp
             $dataTagihans = Tagihan::where('rekap_dptagihan_id', $tagihan->id)->get();
             foreach ($dataTagihans as $dataTagihan) {
-                if($tagihan->jml_terbayar==0){
+                if ($tagihan->jml_terbayar == 0) {
                     $dataTagihan->status_rekapdp = 2;
                 } else {
                     $dataTagihan->status_rekapdp = 3;
@@ -671,14 +676,14 @@ class PaymentController extends Controller
         $payment->status = $request->status;
 
         // tolak
-        if ($request->status == 2){
+        if ($request->status == 2) {
             $tagihan = Tagihan::find($payment->tagihan_id);
             $tagihan->jml_tagih += $payment->nominal;
             $tagihan->jml_bayar -= $payment->nominal;
-            if($tagihan->jml_bayar==0){
-                $tagihan->status=0;
+            if ($tagihan->jml_bayar == 0) {
+                $tagihan->status = 0;
             } else {
-                $tagihan->status=1;
+                $tagihan->status = 1;
             }
             $tagihan->save();
         }
@@ -687,8 +692,9 @@ class PaymentController extends Controller
         $payment->save();
     }
 
-    public function statistikpayment(Request $request){
-        if($request->isMethod('post')){
+    public function statistikpayment(Request $request)
+    {
+        if ($request->isMethod('post')) {
             $filter = $request->get('tahun');
         } else {
             $filter = date('Y');
@@ -700,11 +706,11 @@ class PaymentController extends Controller
         $chart[0] = array_fill(1, 12, 0);
         $pie[80] = $pie[95] = $pie[99] = $pie[90] = 0;
 
-        $proyeks = Proyek::selectRaw('jenis_proyek, count(jenis_proyek) as total')->groupBY('jenis_proyek')->orderBY('total','DESC')->get(); 
+        $proyeks = Proyek::selectRaw('jenis_proyek, count(jenis_proyek) as total')->groupBY('jenis_proyek')->orderBY('total', 'DESC')->get();
         //   dd($proyeks);
-        $years = Payment::selectRaw('year(tanggal) as tahun')->where('status','1')->groupBy('tahun')->orderBy('tahun','DESC')->get();
+        $years = Payment::selectRaw('year(tanggal) as tahun')->where('status', '1')->groupBy('tahun')->orderBy('tahun', 'DESC')->get();
 
-        $qry = Payment::selectRaw('month(tanggal) as bulan, user_role, sum(nominal) as total ')->where('status','1')->whereYear('tanggal',$filter)->groupBy('bulan', 'user_role')->get()->toArray();
+        $qry = Payment::selectRaw('month(tanggal) as bulan, user_role, sum(nominal) as total ')->where('status', '1')->whereYear('tanggal', $filter)->groupBy('bulan', 'user_role')->get()->toArray();
 
         foreach ($qry as $val) {
             // $chart[$val['user_role']][$val['bulan']] = $val['total'];
@@ -716,7 +722,7 @@ class PaymentController extends Controller
         $clients = Payment::select('*')->orderBy('tanggal','DESC')->offset(0)->limit(8)->get();
         $totals = Payment::selectRaw('user_id, SUM(nominal) as total')->groupBy('user_id')->orderBy('total','DESC')->get();
 
-        return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter','totals','proyeks'));
+        return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter', 'totals', 'proyeks'));
     }
     public function getstatistikpayment($id){
         $proyeks = Proyek::where('jenis_proyek',$id)
@@ -725,16 +731,17 @@ class PaymentController extends Controller
         ->get();
     
         return response()->json($proyeks);
-       }
- 
-    public function getpayments() {
-        if(\Auth::user()->role > 50){
-            $payments = Payment::where('user_id',\Auth::user()->id)
+    }
+
+    public function getpayments()
+    {
+        if (Auth::user()->role > 50) {
+            $payments = Payment::where('user_id', Auth::user()->id)
                 ->orderByDesc('id')
                 ->with('user')
                 ->get();
         } else {
-            $payments = Payment::where('jenis_pemasukan','=',1)
+            $payments = Payment::where('jenis_pemasukan', '=', 1)
                 ->orderByDesc('id')
                 ->get();
 
