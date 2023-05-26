@@ -159,6 +159,14 @@ ul{
 						</span>
 					</a>
 				</li>
+				<li class="nav-item">
+					<a href="{{ url('/klien') }}" class="nav-link {{ (request()->is('klien*')) ? 'active' : '' }}">
+						<i class="icon-people"></i>
+						<span>
+							Leads
+						</span>
+					</a>
+				</li>
 				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link"><i class="icon-users4"></i>
 						<span>Users &nbsp;
