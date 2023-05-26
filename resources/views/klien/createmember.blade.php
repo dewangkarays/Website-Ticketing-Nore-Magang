@@ -5,6 +5,15 @@
 		list-style: disc !important;
 		list-style-position: inside;
 	}
+	/* .garis_verikal{
+		border-left: 1px rgb(179, 176, 176) solid;
+		height: 560px;
+		width: 0px;
+		left: 50%;
+		margin-left: 1px;
+		position: absolute;
+		top: 12%;
+	} */
 </style>
 @endsection
 @section('content')
@@ -34,48 +43,139 @@
 			<fieldset class="mb-3">
 				<legend class="text-uppercase font-size-sm font-weight-bold">Data Klien</legend>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Nama Klien</label>
-					<div class="col-lg-10">
-						<input type="text" name="nama_calonklien" class="form-control border-teal border-1" placeholder="Nama" required value="{{ $klien->nama_calonklien }}">
+				<div class="row">
+					<div class="form-group col-6">
+						<label>Nama Klien</label>
+						<input type="text" name="nama_calonklien" class="form-control border-teal border-1" placeholder="Nama" required value="{{ $klien->nama_calonklien }}" readonly>
 					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Nama Proyek</label>
-					<div class="col-lg-10">
+					<div class="form-group col-6">
+						<label>Nama Proyek</label>
 						<input type="text" name="nama_proyek" class="form-control border-teal border-1" placeholder="Contoh : Pembuatan Website" >
-					</div>
+					</div>	
 				</div>
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Website</label>
-					<div class="col-lg-10">
-						<input type="text" id="website" name="website" class="form-control border-teal border-1" placeholder="Contoh : nore.web.id" >
-					</div>
-				</div>
-				{{-- <div class="form-group row">
-					<label class="col-form-label col-lg-2">Nama Perusahaan</label>
-					<div class="col-lg-10">
-						<input type="text" name="nama_perusahaan" class="form-control border-teal border-1" placeholder="Nama Perusahaan" required value="{{ $klien->nama_perusahaan}}">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Jenis Perusahaan</label>
-					<div class="col-lg-10">
-						<input type="text" name="jenis_perusahaan" class="form-control border-teal border-1" required value="{{$klien->jenis_perusahaan}}">
-					</div>
-				</div> --}}
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Email</label>
-                    <div class="col-lg-10">
+				<div class="row">
+                    <div class="form-group col-6">
+                    	<label>Email</label>
                         <input type="text" name="email" class="form-control border-teal border-1" placeholder="Email" required>
                         @error('email')
                             <div style="margin-top:1rem;" class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
+					<div class="form-group col-6">
+						<label>Website</label>
+						<input type="text" id="website" name="website" class="form-control border-teal border-1" placeholder="Contoh : nore.web.id" >
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-6">
+						<label>Telp</label>
+						<input type="text" name="telp" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA" required value="{{ $klien->telp }}">
+						<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
+					</div>
+					<div class="form-group col-6">
+						<label>Jenis Proyek</label>
+							<select id="jenis_proyek" name="jenis_proyek" class="form-control select-search border-teal border-1">
+								@if ($klien->potensi == null)
+									<option value="">-- Pilih Jenis Proyek --</option>
+								@endif
+								@foreach (config('custom.jenis_proyek') as $key => $value)
+									<option {{ $klien->potensi == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
+								@endforeach
+							</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-6">
+						<label>Alamat</label>
+						<input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat" value="{{ $klien->alamat }} ">
+					</div>
+					<div class="form-group col-6">
+					<div id="div-tipe" style="display:none">
+						<label>Kelas Layanan</label>
+							{{-- <select id="tipe" name="tipe" class="form-control border-teal border-1" >
+								<option value="0">-- Pilih Kelas Layanan --</option>
+								@foreach (config('custom.kelas_layanan') as $key => $value)
+									<option value="{{ $key }}">{{ $value }}</option>
+								@endforeach
+							</select> --}}
+							<select id="tipe_web" name="tipe_web" class="form-control border-teal border-1" style="display:none">
+								<option value="">-- Pilih Kelas Layanan --</option>
+								<option value="99">Simple</option>
+								<option value="90">Prioritas</option>
+							</select>
+							<select id="tipe_app" name="tipe_app" class="form-control border-teal border-1" style="display:none">
+								<option value="80">Premium</option>
+							</select>
+							<select id="tipe_ulo" name="tipe_ulo" class="form-control border-teal border-1" style="display:none">
+								<option value="">-- Pilih Kelas Layanan --</option>
+								<option value="70">Free</option>
+								<option value="74">Pro</option>
+								<option value="78">Custom</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+                    <div class="form-group col-6">
+                    	<label>Username</label>
+                        <input type="text" name="username" class="form-control border-teal border-1" placeholder="Username" required>
+                        @error('username')
+                        <div style="margin-top:1rem;" class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+					<div class="form-group col-6">
+					<div id="div-jl" style="display:none">
+						<label>Jenis Layanan</label>
+							{{-- <select id="jenis_layanan" name="jenis_layanan" class="form-control border-teal border-1" >
+								<option value="0">-- Pilih Jenis Layanan --</option>
+								@foreach (config('custom.jenis_layanan') as $key => $value)
+									<option value="{{ $key }}">{{ $value }}</option>
+								@endforeach
+							</select> --}}
+							<select id="jl_web" name="jl_web" class="form-control border-teal border-1" style="display:none">
+								<option value="">-- Pilih Jenis Layanan --</option>
+								<option value="1">Nore</option>
+								<option value="2">Mini</option>
+								<option value="4">Beli/Lepas</option>
+							</select>
+							<select id="jl_app" name="jl_app" class="form-control border-teal border-1" style="display:none">
+								<option value="">-- Pilih Jenis Layanan --</option>
+								<option value="3">Berlangganan</option>
+								<option value="4">Beli/Lepas</option>
+							</select>
+							<select id="jl_ulo" name="jl_ulo" class="form-control border-teal border-1" style="display:none">
+								{{-- <option value="">-- Pilih Jenis Layanan --</option> --}}
+								<option value="3">Berlangganan</option>
+								{{-- <option value="4">Beli/Lepas</option> --}}
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+                    <div class="form-group col-6">
+                    	<label>Password</label>
+                        <input type="password" name="password" class="form-control border-teal border-1" placeholder="Password" required>
+                    </div>
+					<div class="form-group col-6">
+						<label>Jumlah Task</label>
+						<input name="task_count" type="number" class="form-control border-teal border-1" placeholder="Tentukan Jumlah Task">
+					</div>
                 </div>
 				{{-- <div class="form-group row">
+					<label class="col-form-label col-lg-2">Nama Perusahaan</label>
+					<div class="form-group col-6">
+						<input type="text" name="nama_perusahaan" class="form-control border-teal border-1" placeholder="Nama Perusahaan" required value="{{ $klien->nama_perusahaan}}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-form-label col-lg-2">Jenis Perusahaan</label>
+					<div class="form-group col-6">
+						<input type="text" name="jenis_perusahaan" class="form-control border-teal border-1" required value="{{$klien->jenis_perusahaan}}">
+					</div>
+				</div> --}}
+				{{-- <div class="form-group row">
 					<label class="col-form-label col-lg-2">Potensi</label>
-					<div class="col-lg-10">
+					<div class="form-group col-6">
 						<select id="potensi" name="potensi" class="form-control select-search border-teal border-1" >
 							@if ($klien->potensi == null)
 								<option value="">-- Pilih Produk Nore --</option>
@@ -86,16 +186,9 @@
 						</select>
 					</div>
 				</div> --}}
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Telp</label>
-					<div class="col-lg-10">
-						<input type="text" name="telp" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA" required value="{{ $klien->telp }}">
-						<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
-					</div>
-				</div>
 				{{-- <div class="form-group row">
 					<label class="col-form-label col-lg-2">Status</label>
-					<div class="col-lg-10">
+					<div class="form-group col-6">
 						<select id="status_klien" name="status" class="form-control select-search border-teal border-1" >
 							@if ($klien->status == null)
 								<option value="">-- Pilih Status--</option>
@@ -108,7 +201,7 @@
 				</div>
 				<div class="form-group row">
 					<label class="col-form-label col-lg-2">Source</label>
-					<div class="col-lg-10">
+					<div class="form-group col-6">
 						<select id="source" name="source" class="form-control select-search border-teal border-1" >
 							@if ($klien->source == null)
 								<option value="">-- Source --</option>
@@ -121,135 +214,19 @@
 				</div>
 				<div class="form-group row">
 					<label class="col-form-label col-lg-2">Tanggal Kontak Pertama</label>
-					<div class="col-lg-10">
+					<div class="form-group col-6">
 						<input type="date" name="tanggal_kontakpertama" class="form-control border-teal pickadate-accessibility" value="{{ $klien->tanggal_kontakpertama}}">
 					</div>
 				</div>
 				<div class="form-group row">
 					<label class="col-form-label col-lg-2">Tanggal Kontak Terakhir</label>
-					<div class="col-lg-10">
+					<div class="form-group col-6">
 						<input type="date" name="tanggal_kontakterakhir" class="form-control border-teal pickadate-accessibility" value="{{ $klien->tanggal_kontakterakhir}}">
 					</div>
 				</div> --}}
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Alamat</label>
-					<div class="col-lg-10">
-						<input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat" value="{{ $klien->alamat }} ">
-					</div>
-				</div>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Username</label>
-                    <div class="col-lg-10">
-                        <input type="text" name="username" class="form-control border-teal border-1" placeholder="Username" required>
-                        @error('username')
-                        <div style="margin-top:1rem;" class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Password</label>
-                    <div class="col-lg-10">
-                        <input type="password" name="password" class="form-control border-teal border-1" placeholder="Password" required>
-                    </div>
-                </div>
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Jenis Proyek</label>
-					<div class="col-lg-10">
-						<select id="jenis_proyek" name="jenis_proyek" class="form-control select-search border-teal border-1">
-							@if ($klien->potensi == null)
-								<option value="">-- Pilih Jenis Proyek --</option>
-							@endif
-							@foreach (config('custom.jenis_proyek') as $key => $value)
-								<option {{ $klien->potensi == $key ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
-
-				<div id="div-tipe" class="form-group row" style="display:none">
-					<label class="col-form-label col-lg-2">Kelas Layanan</label>
-					<div class="col-lg-10">
-						{{-- <select id="tipe" name="tipe" class="form-control border-teal border-1" >
-							<option value="0">-- Pilih Kelas Layanan --</option>
-							@foreach (config('custom.kelas_layanan') as $key => $value)
-								<option value="{{ $key }}">{{ $value }}</option>
-							@endforeach
-						</select> --}}
-						<select id="tipe_web" name="tipe_web" class="form-control border-teal border-1" style="display:none">
-							<option value="">-- Pilih Kelas Layanan --</option>
-							<option value="99">Simple</option>
-							<option value="90">Prioritas</option>
-						</select>
-						<select id="tipe_app" name="tipe_app" class="form-control border-teal border-1" style="display:none">
-							<option value="80">Premium</option>
-						</select>
-						<select id="tipe_ulo" name="tipe_ulo" class="form-control border-teal border-1" style="display:none">
-							<option value="">-- Pilih Kelas Layanan --</option>
-							<option value="70">Free</option>
-							<option value="74">Pro</option>
-							<option value="78">Custom</option>
-						</select>
-					</div>
-				</div>
-
-				<div id="div-jl" class="form-group row" style="display:none">
-					<label class="col-form-label col-lg-2">Jenis Layanan</label>
-					<div class="col-lg-10">
-						{{-- <select id="jenis_layanan" name="jenis_layanan" class="form-control border-teal border-1" >
-							<option value="0">-- Pilih Jenis Layanan --</option>
-							@foreach (config('custom.jenis_layanan') as $key => $value)
-								<option value="{{ $key }}">{{ $value }}</option>
-							@endforeach
-						</select> --}}
-						<select id="jl_web" name="jl_web" class="form-control border-teal border-1" style="display:none">
-							<option value="">-- Pilih Jenis Layanan --</option>
-							<option value="1">Nore</option>
-							<option value="2">Mini</option>
-							<option value="4">Beli/Lepas</option>
-						</select>
-						<select id="jl_app" name="jl_app" class="form-control border-teal border-1" style="display:none">
-							<option value="">-- Pilih Jenis Layanan --</option>
-							<option value="3">Berlangganan</option>
-							<option value="4">Beli/Lepas</option>
-						</select>
-						<select id="jl_ulo" name="jl_ulo" class="form-control border-teal border-1" style="display:none">
-							{{-- <option value="">-- Pilih Jenis Layanan --</option> --}}
-							<option value="3">Berlangganan</option>
-							{{-- <option value="4">Beli/Lepas</option> --}}
-						</select>
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Jumlah Task</label>
-					<div class="col-lg-10">
-						<input name="task_count" type="number" class="form-control border-teal border-1" placeholder="Tentukan Jumlah Task">
-					</div>
-				</div>
-				<div id="div-masa" class="form-group row" style="display:none">
-					<label class="col-form-label col-lg-2">Masa Berlaku</label>
-					<div class="col-lg-10">
-						<input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control border-teal pickadate-accessibility" placeholder="Tanggal Masa Berlaku">
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Keterangan</label>
-					<div class="col-lg-10">
-						<span class="form-text text-muted">Contoh: Website blogspot Noer Prajitno</span>
-						<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1" required>{{ old('keterangan') }}</textarea>
-					</div>
-				</div>
-				{{-- <div class="form-group row">
-					<label class="col-form-label col-lg-2">Keterangan lain</label>
-					<div class="col-lg-10">
-						<span class="form-text text-muted">Contoh: Website blogspot Noer Prajitno</span>
-						<textarea class="summernote form-control border-teal" name="keterangan_lain" id="keterangan_lain" cols="30" rows="10">{{$klien->keterangan_lain}}</textarea>
-					</div>
-				</div> --}}
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">Marketing</label>
-					<div class="col-lg-10">
+				<div class="row">
+					<div class="form-group col-6">
+						<label>Marketing</label>
 						<select id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
 							<option value="">-- Pilih Marketing --</option>
 							@foreach($marketings as $marketing)
@@ -257,7 +234,26 @@
 							@endforeach
 						</select>
 					</div>
+					<div class="form-group col-6">
+					<div id="div-masa" style="display:none">
+						<label>Masa Berlaku</label>
+						<input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control border-teal pickadate-accessibility" placeholder="Tanggal Masa Berlaku">
+					</div>
 				</div>
+
+				<div class="form-group col-12">
+						<label>Keterangan</label>
+						<span class="form-text text-muted">Contoh: Website blogspot Noer Prajitno</span>
+						<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1" required>{{ old('keterangan') }}</textarea>
+				</div>
+				{{-- <div class="form-group row">
+					<label class="col-form-label col-lg-2">Keterangan lain</label>
+					<div class="form-group col-6">
+						<span class="form-text text-muted">Contoh: Website blogspot Noer Prajitno</span>
+						<textarea class="summernote form-control border-teal" name="keterangan_lain" id="keterangan_lain" cols="30" rows="10">{{$klien->keterangan_lain}}</textarea>
+					</div>
+				</div> --}}
+				
 
 			</fieldset>
 			<div class="text-right">
@@ -627,7 +623,7 @@
 						}
 					}
 					
-			},1000);
+			},500);
 
 			setTimeout(()=>{
 				$('#jl_app, #jl_web, #jl_ulo').on('change', function() {
@@ -643,7 +639,7 @@
 						// $('#masa_berlaku').attr("required", true)
 					}
 				});
-			},1000);
+			},500);
 			
 
 	        @if(session('error'))
