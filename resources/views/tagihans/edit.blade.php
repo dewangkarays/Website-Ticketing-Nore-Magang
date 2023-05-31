@@ -166,6 +166,7 @@
 					<div class="form-group row" id="div-keterangan-tambahan">
 						<label class="col-form-label col-lg-2">Keterangan Tambahan</label>
 						<div class="col-lg-10">
+							<span class="from-text text-muted">Contoh: Berlangganan 1 tahun</span>
 							<textarea name="keterangan_tambahan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{$tagihan->keterangan_tambahan}}</textarea>
 						</div>
 					</div>

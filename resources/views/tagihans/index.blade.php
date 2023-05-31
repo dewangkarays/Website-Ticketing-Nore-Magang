@@ -129,7 +129,7 @@
 		            columnDefs: [{
 		                orderable: false,
 		                // width: 100,
-		                targets: [ 7 ]
+		                targets: [ 8 ]
 		            	},
 						{
                             width: 100,
