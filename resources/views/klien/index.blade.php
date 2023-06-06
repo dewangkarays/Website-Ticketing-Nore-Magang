@@ -136,7 +136,7 @@
 						</div>
 						 <div class="mb-3">
 							<label class="col-form-label col-lg-2">Status Lead</label>
-							<select id="status" name="status" class="form-control select-search border-teal border-1" required>
+							<select id="status" name="status" class="form-control select-search" required>
 									<option value="">-- Lead --</option>
 								@foreach (config('custom.status_klien') as $key => $value)
 									<option value="{{ $key }}">{{ $value }}</option>
@@ -187,6 +187,9 @@
 	<script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
 	<script src="{{asset('assets/js/custom.js')}}"></script>
 	<script>
+
+		$('.select-search').select2();
+
 		//modal delete
 		$(document).on("click", ".delbutton", function () {
 		     var url = $(this).data('uri');
@@ -539,6 +542,8 @@
 		            console.warn('Warning - select2.min.js is not loaded.');
 		            return;
 		        }
+
+				var $select = $('.select-search').select2();
 
 		        // Initialize
 		        $('.dataTables_length select').select2({
