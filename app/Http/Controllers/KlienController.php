@@ -9,6 +9,10 @@ use App\Model\User;
 use App\Model\Klien;
 use App\Model\Proyek;
 use App\Model\Historyklien;
+use App\Model\Nomor;
+use App\Model\Tagihan;
+use App\Model\RekapDptagihan;
+use App\Model\RekapTagihan;
 use Datatables;
 
 
@@ -163,6 +167,7 @@ class KlienController extends Controller
     {
         $klien = Klien::find($id);
         $marketings = User::where('role', '50')->get();
+        $lastno = Nomor::first();
         return view('klien.createmember', compact('klien', 'marketings'));
     }
 
@@ -253,6 +258,210 @@ class KlienController extends Controller
         ]);
 
         $proyek->save();
+
+        // $request->validate([
+        //     'nominal' => 'required|max:11',
+        //     'uang_muka' => 'max:11',
+        // ]);
+
+        $tagihan = new Tagihan([
+            'user_id'       => $user->id,
+            'id_proyek'     => $proyek->id,
+            'masa_berlaku'  => $request->get('masa_berlaku'),
+            'nominal'       => $request->get('nominal'),
+            'jml_tagih'     => $request->get('nominal'),
+            'uang_muka'     => $request->get('uang_muka'),
+ 
+        ]);
+
+        $tagihan->save();
+
+        if ($request->buat_rekap == 1) {
+            //Tagihan terakhir
+            $last_tagihan = Tagihan::all()->last();
+
+            // dd($last_tagihan);
+
+            if ($last_tagihan->uang_muka > 0) {
+                //Menyimpan data ke rekap dp tagihan
+                $rekapdptagihan = new RekapDptagihan;
+                $rekapdptagihan->user_id = $user->id;
+                $rekapdptagihan->nama = $user->nama;
+                $rekapdptagihan->total =  $last_tagihan->uang_muka;
+                $rekapdptagihan->status = 2;
+                $rekapdptagihan->nama_tertagih = $user->nama;
+                $rekapdptagihan->alamat = $user->alamat ? $user->alamat : "-";
+                $rekapdptagihan->jatuh_tempo = date('Y-m-d', strtotime(date('y:m:d') . '+7 days'));
+                $rekapdptagihan->nama_proyek = $tagihan->proyek->nama_proyek . '<br>';
+
+                if ($request->buat_invoice == 1) {
+                    // FORMAT INVOICE
+
+                    $lastno = Nomor::first();
+                    if ($lastno) {
+                        if (isset($lastno->ninv)) {
+                            $ninv = $lastno->ninv + 1;
+                        } else {
+                            $ninv = 1;
+                        }
+                    }
+
+                    $invoiceno = 01;
+
+                    $invawal = "INV";
+                    $nomorinv = $ninv;
+                    $noakhir = date('dmY');
+                    $no = str_pad($nomorinv, 3, "0", STR_PAD_LEFT);
+                    $nomor_invoice = $invawal . '/' . $no . '/' . $noakhir;
+                    // $lastinv = Tagihan::latest('id')->first();
+                    $lastinv = $last_tagihan;
+
+                    // dd($data);
+
+                    if ($lastinv) {
+                        $diffinv = substr($lastinv->invoice, 0, 3);
+                        if ($diffinv == 'INV') {
+                            $different = 'no';
+                        } else {
+                            $different = 'yes';
+                        }
+
+                        if ($different == 'yes') {
+                            $lastno = Nomor::first();
+                            if ($lastno) {
+                                $lastno->ninv = $nomorinv;
+                                $lastno->save();
+                            } else {
+                                $lastno['ninv'] = 1;
+                                $lastno = Nomor::create($lastno);
+                            }
+                        } else {
+                            // jika tidak sama
+                            $lastno = Nomor::first();
+                            if ($lastno) {
+                                $lastno->ninv = $nomorinv;
+                                $lastno->save();
+                            } else {
+                                $lastno['ninv'] = 1;
+                                $lastno = Nomor::create($lastno);
+                            }
+                        }
+                    } else {
+                        $lastno = Nomor::first();
+                        if ($lastno) {
+                            $lastno->ninv = $nomorinv;
+                            $lastno->save();
+                        } else {
+                            $lastno['ninv'] = 1;
+                            $lastno = Nomor::create($lastno);
+                        }
+                    }
+                    $rekapdptagihan->invoice = $nomor_invoice;
+                } else {
+                    $rekapdptagihan->invoice = now();
+                }
+
+                $rekapdptagihan->save();
+            }
+
+            //Menyimpan date ke rekap tagihan
+            $rekaptagihan = new RekapTagihan;
+            $rekaptagihan->user_id = $user->id;
+            $rekaptagihan->nama = $user->nama;
+            $rekaptagihan->total =  $last_tagihan->jml_tagih;
+            $rekaptagihan->status = 2;
+            $rekaptagihan->nama_tertagih = $user->nama;
+            $rekaptagihan->alamat = $user->alamat ? $user->alamat : "-";
+            $rekaptagihan->jatuh_tempo = date('Y-m-d', strtotime(date('y:m:d') . '+7 days'));
+            $rekaptagihan->nama_proyek = $tagihan->proyek->nama_proyek . '<br>';
+
+            if ($request->buat_invoice == 1) {
+                // FORMAT INVOICE
+
+                $lastno = Nomor::first();
+                if ($lastno) {
+                    if (isset($lastno->ninv)) {
+                        $ninv = $lastno->ninv + 1;
+                    } else {
+                        $ninv = 1;
+                    }
+                }
+
+                $invoiceno = 01;
+
+                $invawal = "INV";
+                $nomorinv = $ninv;
+                $noakhir = date('dmY');
+                $no = str_pad($nomorinv, 3, "0", STR_PAD_LEFT);
+                $nomor_invoice = $invawal . '/' . $no . '/' . $noakhir;
+                // $lastinv = Tagihan::latest('id')->first();
+                $lastinv = $last_tagihan;
+
+                // dd($data);
+
+                if ($lastinv) {
+                    $diffinv = substr($lastinv->invoice, 0, 3);
+                    if ($diffinv == 'INV') {
+                        $different = 'no';
+                    } else {
+                        $different = 'yes';
+                    }
+
+                    if ($different == 'yes') {
+                        $lastno = Nomor::first();
+                        if ($lastno) {
+                            $lastno->ninv = $nomorinv;
+                            $lastno->save();
+                        } else {
+                            $lastno['ninv'] = 1;
+                            $lastno = Nomor::create($lastno);
+                        }
+                    } else {
+                        // jika tidak sama
+                        $lastno = Nomor::first();
+                        if ($lastno) {
+                            $lastno->ninv = $nomorinv;
+                            $lastno->save();
+                        } else {
+                            $lastno['ninv'] = 1;
+                            $lastno = Nomor::create($lastno);
+                        }
+                    }
+                } else {
+                    $lastno = Nomor::first();
+                    if ($lastno) {
+                        $lastno->ninv = $nomorinv;
+                        $lastno->save();
+                    } else {
+                        $lastno['ninv'] = 1;
+                        $lastno = Nomor::create($lastno);
+                    }
+                }
+                $rekaptagihan->invoice = $nomor_invoice;
+            } else {
+                $rekaptagihan->invoice = now();
+            }
+
+            $rekaptagihan->save();
+
+            //Memperbarui rekap dp tagihan id dan rekap tagihan id
+            $last_rekapdptagihan = RekapDptagihan::all()->last();
+            $last_rekaptagihan = RekapTagihan::all()->last();
+            if ($last_tagihan->uang_muka > 0) {
+                $last_tagihan->rekap_dptagihan_id = $last_rekapdptagihan->id;
+            }
+            $last_tagihan->rekap_tagihan_id = $last_rekaptagihan->id;
+            $last_tagihan->update();
+
+            //Memperbarui nilai rekap dp tagihan dan rekap tagihan id ke proyek
+            $proyek_id = $last_tagihan->id_proyek;
+            $proyeks = Proyek::where('id', $proyek_id)->get();
+            foreach ($proyeks as $proyek) {
+                $proyek->rekap_dptagihan_id = $last_rekapdptagihan->id;
+                $proyek->rekap_tagihan_id = $last_rekaptagihan->id;
+                $proyek->update();
+            }
+        }
 
 
         $klien = Klien::find($id);

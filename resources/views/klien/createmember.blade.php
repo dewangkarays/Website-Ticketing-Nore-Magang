@@ -71,6 +71,9 @@
 						<label>Telp</label>
 						<input type="text" name="telp" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA" required value="{{ $klien->telp }}">
 						<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
+						@error('telp')
+							<div style="margin-top:1rem;" class="alert alert-danger">{{ $message }}</div>
+						@enderror
 					</div>
 					<div class="form-group col-6">
 						<label>Jenis Proyek</label>
@@ -235,16 +238,81 @@
 						</select>
 					</div>
 					<div class="form-group col-6">
-					<div id="div-masa" style="display:none">
-						<label>Masa Berlaku</label>
-						<input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control border-teal pickadate-accessibility" placeholder="Tanggal Masa Berlaku">
+						<div id="div-masa" style="display:none">
+							<label>Masa Berlaku</label>
+							<input id="masa_berlaku" name="masa_berlaku" type="text" class="form-control border-teal pickadate-accessibility" placeholder="Tanggal Masa Berlaku">
+						</div>
 					</div>
 				</div>
-
+				<div class="row">	
+					<div class="form-group col-6">
+						<label>Nominal</label>
+						<input id="datanominal" type="hidden" name="nominal" value="{{old('nominal')}}" class="form-control border-teal border-1">
+						<input id="nilainominal" type="text" class="form-control border-teal border-1" placeholder="Nominal" onkeyup="ribuan()" value="{{old('nominal')}}">
+					</div>
+					<div class="form-group col-6">
+						<label>Uang Muka</label>
+							<input id="datauang_muka" type="hidden" name="uang_muka" value="{{old('uang_muka')}}" class="form-control border-teal border-1">
+							<input id="nilaiuang_muka" type="text" class="form-control border-teal border-1" placeholder="Uang Muka" onkeyup="ribuan()" value="{{old('uang_muka')}}">
+					</div>
+				</div>
+				<div class="row">	
+					<div class="form-group col-6">
+						<label>Status Rekap</label>
+							<select name="buat_rekap" class="form-control select-search" id="status_rekap">
+								<option value="0">Buatkan nanti</option>
+								<option value="1">Buatkan sekarang</option>
+							</select>
+					</div>
+					<div id="div-status-invoice" class="form-group col-6" style="display: none">
+						<label>Status Invoice</label>
+							<select name="buat_invoice" class="form-control select-search">
+								<option value="0">Tanpa invoice</option>
+								<option value="1">Buatkan invoice</option>
+							</select>
+					</div>
+				</div>
+				
+				
+				{{-- <div class="form-group col-6">
+					<label>Potongan Harga</label>
+					
+						<select name="jenis_diskon" class="form-control select-search" id="jenis_diskon">
+							<option value="">-- Berikan Potongan Harga --</option>
+							<option value="persen_diskon">Persentase</option>
+							<option value="nominal_diskon">Nominal</option>
+						</select>
+					
+				</div>
+				<div id="div-persen-diskon" class="form-group col-6" style="display: none">
+					<label>Persentase Potongan</label>
+					<div class="col-lg-10">
+						<input id="persentase_diskon" type="number" name="persen_diskon" class="form-control border-teal border-1" placeholder="Persentase potongan, contoh: 10 untuk 10%">
+					</div>
+				</div>
+				<div id="div-nominal-diskon" class="form-group col-6" style="display: none">
+					<label>Nominal Potongan</label>
+					<div class="col-lg-10">
+						<input id="datadiskon" type="hidden" name="nominal_diskon">
+						<input id="nilaidiskon" type="text" name="nominal_diskon_alter" class="form-control border-teal border-1" placeholder="Nominal Diskon, contoh: 100000" onkeyup="ribuan()" value="{{old('nominal_diskon')}}">
+					</div>
+				</div> --}}
+				{{-- <div class="form-group col-7">
+					<div id="div-status-invoice">
+						<label>Status Invoice</label>
+						<div class="col-lg-10">
+							<select name="buat_invoice" class="form-control select-search">
+								<option value="0">Tanpa invoice</option>
+								<option value="1">Buatkan invoice</option>
+							</select>
+						</div>
+					</div>
+				</div> --}}
+				
 				<div class="form-group col-12">
 						<label>Keterangan</label>
 						<span class="form-text text-muted">Contoh: Website blogspot Noer Prajitno</span>
-						<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1" required>{{ old('keterangan') }}</textarea>
+						<textarea name="keterangan" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{ old('keterangan') }}</textarea>
 				</div>
 				{{-- <div class="form-group row">
 					<label class="col-form-label col-lg-2">Keterangan lain</label>
@@ -395,6 +463,26 @@
 
 			};
 
+				$('#jenis_diskon').on('change', function() {
+				var dropdown = $('#jenis_diskon option:selected').val()
+				if (dropdown=="persen_diskon" ) {
+					$('#div-persen-diskon').show()
+					$('#div-nominal-diskon').hide()
+				} else if (dropdown=='nominal_diskon') {
+					$('#div-persen-diskon').hide()
+					$('#div-nominal-diskon').show()
+				}
+			});
+				
+				$('#status_rekap').on('change', function() {
+				var dropdown = $('#status_rekap option:selected').val()
+				if (dropdown=="1" ) {
+					$('#div-status-invoice').show()
+				} else {
+					$('#div-status-invoice').hide()
+				}
+			});
+			
 		    // Validation config
 		    var _componentValidation = function() {
 		        if (!$().validate) {
@@ -577,6 +665,34 @@
     document.addEventListener('DOMContentLoaded', function() {
         Summernote.init();
     });
+
+		function ribuan(){
+			var val = $('#nilainominal').val();
+			var val1 = $('#nilaiuang_muka').val();
+			
+			$('#datanominal').val(val.replace(new RegExp(/\./, 'g'), ''));
+			$('#datauang_muka').val(val1.replace(new RegExp(/\./, 'g'), ''));
+			
+			val = val.replace(/[^0-9,]/g,'');
+			val1 = val1.replace(/[^0-9,]/g,'');
+			
+
+			if(val != "") {
+				valArr = val.split('.');
+				valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
+				val = valArr.join('.');
+			}
+			if(val1 != "") {
+				valArr = val1.split('.');
+				valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
+				val1 = valArr.join('.');
+			}
+		
+			$('#nilainominal').val(val);
+			$('#nilaiuang_muka').val(val1);
+			
+		}
+		
 		// Regex for validating phone number
 		$(function() {
 			$(".phone-number").on("keyup", function(event) {
