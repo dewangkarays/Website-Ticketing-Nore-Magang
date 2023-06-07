@@ -49,6 +49,7 @@
         </div> 
     </div>
  
+    <div class="table-responsive">
         <table class="table datatable-basic table-hover">
             <thead>
                 <tr>
@@ -68,6 +69,7 @@
             <tbody>
             </tbody>
         </table>
+    </div>
     </div>
 <!-- /hover rows -->
 
@@ -173,7 +175,7 @@
             // Basic datatable
             $('.datatable-basic').DataTable({
                 "order": true,
-                "scrollX": true,
+                // "scrollX": true,
                 processing: true,
                 serverSide: true,
                 ajax: {
