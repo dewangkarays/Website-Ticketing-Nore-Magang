@@ -41,7 +41,7 @@
 		<!-- Hover rows -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-			@if (Auth::user()->role==1)
+			@if (Auth::user()->role==1 || Auth::user()->role==20)
 			<a href="{{ route('klien.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
 			@endif
 		</div>
