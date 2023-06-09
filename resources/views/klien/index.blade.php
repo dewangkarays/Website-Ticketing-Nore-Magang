@@ -446,7 +446,7 @@
 								createRef = createRef.replace(':id', data?.id);
 								
 									
-								@if(\Auth::user()->role==1) 
+								@if(\Auth::user()->role==1 || \Auth::user()->role==20) 
 									if (data.status==4) {
 									
 										var actionButtons =
