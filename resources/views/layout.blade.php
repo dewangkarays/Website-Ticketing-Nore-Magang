@@ -5,6 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
+	<link href="{{asset('global_assets/images/Nore_Iklan_Nore.png') }}" rel="shortcut icon" type="image/x-icon">
 	<title>Nore - Pengoperasian Website</title>
 
 	<!-- Global stylesheets -->
