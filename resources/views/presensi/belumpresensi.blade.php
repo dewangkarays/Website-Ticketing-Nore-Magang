@@ -35,6 +35,17 @@
 				</thead>
 				<tbody>
 				</tbody>
+				<tr>
+					@if (Auth::user()->role==1)
+					<td rowspan="1" colspan="6">
+						<div class="text-right">
+							<a href="{{ url('/admin') }}">
+								<button type="submit" class="btn bg-slate"><i class="icon-undo2 mr-2"></i> Kembali</button>
+							</a>
+						</div>
+					@endif
+					</td>
+				</tr>
 			</table>
 		</div>
 		<!-- /hover rows -->
