@@ -28,7 +28,7 @@
         <div id="card-rekap" class="card">
             <div class="card-header header-elements-inline">
                 <a href="{{ route('rekapdptagihans.create') }}"><button type="button"
-                        class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+                        class="btn btn-success rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
             </div>
 
             <div class="card-body">
@@ -45,7 +45,7 @@
                                 <th>Nama Proyek</th>
                                 <th>Invoice</th>
                                 <th>Uang Muka Tagihan (Rp)</th>
-                                <th>Jumlah Terbayar (Rp)</th>
+                                <th style="width:10%">Jumlah Terbayar (Rp)</th>
                                 <th>Sisa Uang Muka Tagihan (Rp)</th>
                                 {{-- <th>Keterangan</th> --}}
                                 <th>Status</th>

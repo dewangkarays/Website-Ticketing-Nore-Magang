@@ -26,7 +26,7 @@
         <!-- Hover rows -->
 		<div id="card-rekap" class="card" style="display:none">
             <div class="card-header header-elements-inline">
-				<a href="{{ route('rekaptagihans.create') }}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+				<a href="{{ route('rekaptagihans.create') }}"><button type="button" class="btn btn-success rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
 			</div>
 
             <div class="card-body">
@@ -43,7 +43,7 @@
                                 <th>Nama Proyek</th>
                                 <th>Invoice</th>
                                 <th>Tagihan (Rp)</th>
-                                <th>Jumlah Terbayar (Rp)</th>
+                                <th style="width:10%">Jumlah Terbayar (Rp)</th>
 								<th>Sisa Tagihan (Rp)</th>
                                 <th>Status</th>
                                 <th class="text-center">Actions</th>
