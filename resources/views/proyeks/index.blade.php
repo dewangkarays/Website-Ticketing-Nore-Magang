@@ -33,22 +33,20 @@
 <div class="content">
 
     <!-- Hover rows -->
-    <div class="card">
-        <div class="card-header header-elements-inline">
-            <a href="{{ route('proyeks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
-        </div>
-     
-    <div class="row" style="margin-left:55px">
-        <div class="col-lg-3">
-        <select style="width:200px; height:36px" onchange="marketing()" id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
-            <option value="">-- Pilih Marketing --</option>
-            @foreach($marketings as $marketing)
-                <option value="{{$marketing->id}}">{{$marketing->nama}} </option>
-            @endforeach
-        </select>
-        </div> 
-    </div>
- 
+   <div class="card">
+       
+            <div class="card-header header-elements-inline">
+                <a href="{{ route('proyeks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
+                <div class="row">
+                    <select style="width:200px; height:36px" onchange="marketing()" id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
+                        <option value="">-- Pilih Marketing --</option>
+                        @foreach($marketings as $marketing)
+                            <option value="{{$marketing->id}}">{{$marketing->nama}} </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            
     <div class="table-responsive">
         <table class="table datatable-basic table-hover">
             <thead>
@@ -116,6 +114,13 @@
 <script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
 <script src="{{asset('assets/js/custom.js')}}"></script>
 <script>
+// Initialize
+    $('.select-search').select2();
+
+    // Initialize
+    var $select = $('.form-control-select2').select2({
+        minimumResultsForSearch: Infinity
+    });
     //modal delete
     $(document).on("click", ".delbutton", function () {
         var url = $(this).data('uri');
