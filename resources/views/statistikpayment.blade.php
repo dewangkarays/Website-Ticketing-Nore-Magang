@@ -132,7 +132,7 @@
 		<!-- /pie and donut -->
 		
 		<div class="row">
-			<div class="col-xl-6">
+			<div class="col-xl-12">
 
 				<!-- Basic pie -->
 				<div class="card">
