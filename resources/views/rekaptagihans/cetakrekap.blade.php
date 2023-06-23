@@ -174,7 +174,7 @@
         <div align="center">
             <img src="{{url($lampiran->gambar)}}" style="max-width:110%;max-height:300px;object-fit: cover;margin-bottom: 16px;page-break-inside:avoid; ">
         </div>
-        @if (!$loop->last)
+        @if (!$loop->even)
         @if (($rekapindex +1) % 3 == 0)
         <div class="page-break"></div>   
         @endif
