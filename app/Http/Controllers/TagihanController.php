@@ -665,8 +665,8 @@ class TagihanController extends Controller
             ->get();
 
         foreach ($tagihans as $tagihan) {
-            $tagihan['nama_member'] = $tagihan->user->nama;
-            $tagihan['nama_proyek'] = $tagihan->proyek->nama_proyek;
+            $tagihan['nama_member'] = @$tagihan->user->nama;
+            $tagihan['nama_proyek'] = @$tagihan->proyek->nama_proyek;
         }
 
         return Datatables::of($tagihans)->addIndexColumn()->make(true);
