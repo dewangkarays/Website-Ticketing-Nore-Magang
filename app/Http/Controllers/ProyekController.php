@@ -261,7 +261,7 @@ class ProyekController extends Controller
             ->get();
         //dd($null);
         foreach ($null as $nullItem) {
-            $nullItem['nama_user'] = $nullItem->user->nama;
+            $nullItem['nama_user'] = @$nullItem->user->nama;
         }
         $yellow = Proyek::whereNotNull('masa_berlaku');
         if ($request->marketing) {
@@ -275,7 +275,7 @@ class ProyekController extends Controller
             ->orderBy('masa_berlaku')
             ->get();
         foreach ($yellow as $yellowItem) {
-            $yellowItem['nama_user'] = $yellowItem->user->nama;
+            $yellowItem['nama_user'] = @$yellowItem->user->nama;
         }
         $green = Proyek::whereNotNull('masa_berlaku');
         //->where('marketing_id', $marketing)
@@ -288,7 +288,7 @@ class ProyekController extends Controller
             ->orderBy('masa_berlaku')
             ->get();
         foreach ($green as $greenItem) {
-            $greenItem['nama_user'] = $greenItem->user->nama;
+            $greenItem['nama_user'] = @$greenItem->user->nama;
         }
         $red = Proyek::whereNotNull('masa_berlaku');
         //->where('marketing_id', $marketing)
@@ -301,7 +301,7 @@ class ProyekController extends Controller
             ->orderBy('masa_berlaku')
             ->get();
         foreach ($red as $redItem) {
-            $redItem['nama_user'] = $redItem->user->nama;
+            $redItem['nama_user'] = @$redItem->user->nama;
         }
 
         $allItems = new Collection;
