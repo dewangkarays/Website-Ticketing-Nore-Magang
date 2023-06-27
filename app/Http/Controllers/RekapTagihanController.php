@@ -308,7 +308,8 @@ class RekapTagihanController extends Controller
         // $arrayid = $request->get('tagihan');
         $invoices = Tagihan::where('rekap_tagihan_id', $rekap->id)->get();
         // dd($rekap);
-        $lampirans = Lampiran_gambar::where('rekap_tagihan_id', $rekap->id)->orderBy('jenis_lampiran', 'asc')->get();
+        $lampirans = Lampiran_gambar::where('rekap_tagihan_id', $rekap->id)->orderBy('jenis_lampiran', 'desc')->get();
+        // dd($lampirans)
         $setting = Setting::first();
         // dd(count($lampirans));
         $pdf = PDF::loadview('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','rekap'))->setPaper('a4', 'potrait');
@@ -418,11 +419,11 @@ class RekapTagihanController extends Controller
         // $this->validate($request, [
         //     'gambar' => 'image|mimes:jpeg,png,jpg,gif,svg',
         // ]);
-        $request->validate([
-            'gambar' => 'mimes:jpeg,png,jpg,gif,svg',
-            'jenis_lampiran =>required'
-        ]);
-
+        // $request->validate([
+        //     'gambar' => 'mimes:jpeg,png,jpg,gif,svg,application/pdf',
+        //     // 'jenis_lampiran' =>'required',
+        // ]);
+        //  dd($request);
         if ($request->isMethod('GET')) {
             $rekap = RekapTagihan::find($id);
             $lampirans = Lampiran_gambar::where('rekap_tagihan_id', $id)->orderBy('id', 'desc')->get();
@@ -437,51 +438,56 @@ class RekapTagihanController extends Controller
 
         $tujuan_upload = config('app.upload_url').'attachment/lampiran';
         $file = $request->file('gambar');
+        // dd($file->getMimeType());
         if($file){
                 $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
                 // $destinationPath = public_path('/thumbnail');
-                
-                $imgsize = $file->getSize();
-                $imgsize = number_format($imgsize / 1048576,2);
-                $img = \Image::make($file->getRealPath());
-                // dd($imgsize);
-                
-                //compress file
-                if(filesize($file) < 204800){
-                    $img->save($tujuan_upload.'/'.$name, 90, 'jpg');
-                }
-                elseif(filesize($file) < 1048576){
-                    $img->save($tujuan_upload.'/'.$name, 80, 'jpg');
-                } else{
-                    $img->save($tujuan_upload.'/'.$name, 10, 'jpg');
-                }
-                // $img->move($tujuan_upload, $name);
-                // $name = \Auth::user()->id."_".time().".".$file->getClientOriginalExtension();
-                // $up1 = $file->move($tujuan_upload,$name);
-                if($img){
+                if($file->getMimeType()=='application/pdf'){
+                    $file->move($tujuan_upload,$name);
                     $data['gambar'] = $tujuan_upload.'/'.$name;
+                
+                }else{
+                    $imgsize = $file->getSize();
+                    $imgsize = number_format($imgsize / 1048576,2);
+                    $img = \Image::make($file->getRealPath());
+                    // dd($imgsize);
+                    
+                    //compress file
+                    if(filesize($file) < 204800){
+                        $img->save($tujuan_upload.'/'.$name, 90, 'jpg');
+                    }
+                    elseif(filesize($file) < 1048576){
+                        $img->save($tujuan_upload.'/'.$name, 80, 'jpg');
+                    } else{
+                        $img->save($tujuan_upload.'/'.$name, 10, 'jpg');
+                    }
+                    // $img->move($tujuan_upload, $name);
+                    // $name = \Auth::user()->id."_".time().".".$file->getClientOriginalExtension();
+                    // $up1 = $file->move($tujuan_upload,$name);
+                    if($img){
+                        $data['gambar'] = $tujuan_upload.'/'.$name;
+                    }
                 }
+    
         }
-        
+        // dd($request);
         //upload data lampiran to database
         if($request->judul != null)
         {
-        $lampiran = Lampiran_gambar::create([
-            'rekap_tagihan_id' => $id,
-            'gambar' => $data['gambar'],
-            'keterangan' => $data['keterangan'],
-            'judul' => $data['judul'],
-            'jenis_lampiran' => $data['jenis_lampiran']
+            $lampiran = Lampiran_gambar::create([
+                'rekap_tagihan_id' => $id,
+                'gambar' => $data['gambar'],
+                'keterangan' => $data['keterangan'],
+                'judul' => $data['judul'],
+                'jenis_lampiran' => $data['jenis_lampiran']
         
         ]);
-        }
-        else
-        {
-        $lampiran = Lampiran_gambar::create([
-            'rekap_tagihan_id' => $id,
-            'gambar' => $data['gambar'],
-            'keterangan' => $data['keterangan'],
-            'jenis_lampiran' => $data['jenis_lampiran']
+        }else{
+            $lampiran = Lampiran_gambar::create([
+                'rekap_tagihan_id' => $id,
+                'gambar' => $data['gambar'],
+                'keterangan' => $data['keterangan'],
+                'jenis_lampiran' => $data['jenis_lampiran']
         
         ]);
         }
