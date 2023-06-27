@@ -145,7 +145,7 @@
     @endif
     
     @if ($lampiran->jenis_lampiran != $jenis_terakhir)
-        @if ($lampiran->jenis_lampiran == 4)
+        @if ($lampiran->jenis_lampiran == 1)
         <h5>Lampiran {{$i}} - {{ $lampiran->judul }} {{ $lampiran->keterangan}}</h5>
         @else
         <h5>Lampiran {{$i}} - {{ config('custom.jenis_lampiran.'.$lampiran->jenis_lampiran) }} {{ $lampiran->keterangan}}</h5>
@@ -155,11 +155,11 @@
         <div align="center">
             <img src="{{url($lampiran->gambar)}}" style="max-width:110%;max-height:300px;object-fit: cover;margin-bottom: 16px;page-break-inside:avoid; ">
         </div>
-        @if (!$loop->last)
+        {{-- @if (!$loop->last) --}}
         @if (($rekapdpindex +1) % 3 == 0)
         <div class="page-break"></div>   
         @endif
-        @endif
+        {{-- @endif --}}
         @else
         <div align="center">
             <img src="{{url($lampiran->gambar)}}" style="max-width:90%;max-height:300px;object-fit: cover;margin-bottom: 16px;">

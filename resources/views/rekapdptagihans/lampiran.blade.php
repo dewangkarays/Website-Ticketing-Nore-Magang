@@ -71,7 +71,7 @@
                     </div>
         
                     <div class="text-right">
-                        <button class="btn bg-success-400" type="submit">Submit</button>
+                        <button class="btn bg-success" type="submit">Submit</button>
                     </div>
                 </div>
                 
@@ -176,7 +176,14 @@
     
     <script src="{{asset('assets/js/app.js')}}"></script>
     <script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
-    <script>
+    <script type="text/javascript">
+          // Initialize
+		$('.select-search').select2();
+
+		// Initialize
+		var $select = $('.form-control-select2').select2({
+			minimumResultsForSearch: Infinity
+		});
         //max file size
         function upload_check()
 {
@@ -225,7 +232,7 @@
         // Menampilkan field judul
         $('#jenis_lampiran').on('change', function() {
             var dropdown = $('#jenis_lampiran option:selected').val()
-            if (dropdown=="4" ) {
+            if (dropdown=="1" ) {
                 $('#div-judul').show()
 			} else {
 				$('#div-judul').hide()
