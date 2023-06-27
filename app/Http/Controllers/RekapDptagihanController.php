@@ -50,7 +50,7 @@ class RekapDptagihanController extends Controller
         {
             $requestUser = $request->get('c');
             $tagihans = Tagihan::where('user_id',$requestUser)
-            ->where('uang_muka','>',0)
+            // ->where('uang_muka','>',0)
             ->where(function ($q) {
                 $q->whereNull('rekap_dptagihan_id')
                     ->orWhere('status_rekapdp', '5');
@@ -282,7 +282,7 @@ class RekapDptagihanController extends Controller
         // $arrayid = $request->get('tagihan');
         $invoices = Tagihan::where('rekap_dptagihan_id', $rekapdp->id)->get();
         // dd($invoices);
-        $lampirans = Lampiran_gambar::where('rekap_dptagihan_id', $rekapdp->id)->orderBy('jenis_lampiran', 'asc')->get();
+        $lampirans = Lampiran_gambar::where('rekap_dptagihan_id', $rekapdp->id)->orderBy('jenis_lampiran', 'desc')->get();
         $setting = Setting::first();
         // dd($invoices->sum('nominal'));
         $pdf = PDF::loadview('rekapdptagihans.cetakrekap', compact('invoices','lampirans','setting','rekapdp'))->setPaper('a4', 'potrait');
@@ -337,10 +337,10 @@ class RekapDptagihanController extends Controller
         // $this->validate($request, [
         //     'gambar' => 'image|mimes:jpeg,png,jpg,gif,svg',
         // ]);
-        $request->validate([
-            'gambar' => 'mimes:jpeg,png,jpg,gif,svg',
-            'jenis_lampiran =>required'
-        ]);
+        // $request->validate([
+        //     'gambar' => 'mimes:jpeg,png,jpg,gif,svg',
+        //     'jenis_lampiran =>required'
+        // ]);
 
         if ($request->isMethod('GET')) {
             $rekapdp = RekapDptagihan::find($id);
@@ -356,51 +356,56 @@ class RekapDptagihanController extends Controller
 
         $tujuan_upload = config('app.upload_url').'attachment/lampiran';
         $file = $request->file('gambar');
+        // dd($file->getMimeType());
         if($file){
                 $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
                 // $destinationPath = public_path('/thumbnail');
-                
-                $imgsize = $file->getSize();
-                $imgsize = number_format($imgsize / 1048576,2);
-                $img = \Image::make($file->getRealPath());
-                // dd($imgsize);
-                
-                //compress file
-                if(filesize($file) < 204800){
-                    $img->save($tujuan_upload.'/'.$name, 90, 'jpg');
-                }
-                elseif(filesize($file) < 1048576){
-                    $img->save($tujuan_upload.'/'.$name, 80, 'jpg');
-                } else{
-                    $img->save($tujuan_upload.'/'.$name, 10, 'jpg');
-                }
-                // $img->move($tujuan_upload, $name);
-                // $name = \Auth::user()->id."_".time().".".$file->getClientOriginalExtension();
-                // $up1 = $file->move($tujuan_upload,$name);
-                if($img){
+                if($file->getMimeType()=='application/pdf'){
+                    $file->move($tujuan_upload,$name);
                     $data['gambar'] = $tujuan_upload.'/'.$name;
+                
+                }else{
+                    $imgsize = $file->getSize();
+                    $imgsize = number_format($imgsize / 1048576,2);
+                    $img = \Image::make($file->getRealPath());
+                    // dd($imgsize);
+                    
+                    //compress file
+                    if(filesize($file) < 204800){
+                        $img->save($tujuan_upload.'/'.$name, 90, 'jpg');
+                    }
+                    elseif(filesize($file) < 1048576){
+                        $img->save($tujuan_upload.'/'.$name, 80, 'jpg');
+                    } else{
+                        $img->save($tujuan_upload.'/'.$name, 10, 'jpg');
+                    }
+                    // $img->move($tujuan_upload, $name);
+                    // $name = \Auth::user()->id."_".time().".".$file->getClientOriginalExtension();
+                    // $up1 = $file->move($tujuan_upload,$name);
+                    if($img){
+                        $data['gambar'] = $tujuan_upload.'/'.$name;
+                    }
                 }
+               
         }
         
         //upload data lampiran to database
         if($request->judul != null)
         {
-        $lampiran = Lampiran_gambar::create([
-            'rekap_dptagihan_id' => $id,
-            'gambar' => $data['gambar'],
-            'keterangan' => $data['keterangan'],
-            'judul' => $data['judul'],
-            'jenis_lampiran' => $data['jenis_lampiran']
+            $lampiran = Lampiran_gambar::create([
+                'rekap_dptagihan_id' => $id,
+                'gambar' => $data['gambar'],
+                'keterangan' => $data['keterangan'],
+                'judul' => $data['judul'],
+                'jenis_lampiran' => $data['jenis_lampiran']
         
         ]);
-        }
-        else
-        {
-        $lampiran = Lampiran_gambar::create([
-            'rekap_dptagihan_id' => $id,
-            'gambar' => $data['gambar'],
-            'keterangan' => $data['keterangan'],
-            'jenis_lampiran' => $data['jenis_lampiran']
+        }else{
+            $lampiran = Lampiran_gambar::create([
+                'rekap_dptagihan_id' => $id,
+                'gambar' => $data['gambar'],
+                'keterangan' => $data['keterangan'],
+                'jenis_lampiran' => $data['jenis_lampiran']
         
         ]);
         }
