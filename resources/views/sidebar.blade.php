@@ -34,7 +34,7 @@ ul{
 				<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Menu</div> <i class="icon-menu" title="Main"></i></li>
 
 				{{-- Super admin --}}
-				@if(Auth::user()->role==1)
+				@if(Auth::user()->role==1 || Auth::user()->role==50)
 				<li class="nav-item">
 					<a href="{{ url('/admin') }}" class="nav-link {{ (request()->is('admin*')) ? 'active' : '' }}">
 						<i class="icon-home4"></i>
@@ -159,14 +159,14 @@ ul{
 						</span>
 					</a>
 				</li>
-				<li class="nav-item">
+				{{-- <li class="nav-item">
 					<a href="{{ url('/klien') }}" class="nav-link {{ (request()->is('klien*')) ? 'active' : '' }}">
 						<i class="icon-people"></i>
 						<span>
 							Leads
 						</span>
 					</a>
-				</li>
+				</li> --}}
 				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link"><i class="icon-users4"></i>
 						<span>Users &nbsp;
