@@ -176,7 +176,7 @@ return [
         '4' => 'Walkin',
         '5' => 'Repeat/Teman Klien',
         '6' => 'Relasi',
-        '7' => 'Referal',
+        '7' => 'Referral',
     ],
 
 ];
