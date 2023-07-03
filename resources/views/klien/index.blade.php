@@ -396,11 +396,11 @@
 							name: 'source',
 							render: (data, type, row) => {
 								const source = {
-                                    '1' : 'Facebook',
-									'2' : 'Goggle',
+                                    '1' : 'Social Media',
+									'2' : 'Google',
 									'3' : 'Iklan',
 									'4' : 'Walkin',
-									'5' : 'Web',
+									'5' : 'Repeat/Teman Klien',
 									'6' : 'Relasi',
 									'7' : 'Referal',
 								}
