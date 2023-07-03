@@ -363,6 +363,7 @@
 										'3': 'Sistem Informasi',
 										'4': 'Mobile App',
 										'6': 'Ulo',
+										'7': 'Hotely',
 										'5': 'Custom/Lainnya',
 															
 									}
