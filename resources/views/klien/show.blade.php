@@ -69,6 +69,9 @@
                             @case(6)
                                 Ulo
                                 @break
+                            @case(7)
+                                Hotely
+                                @break
                             @default
                                 Unknown Potensi
                             @endswitch
@@ -110,10 +113,10 @@
                         <span class="form-text"> 
                             @switch($klien->source)
                             @case(1)
-                                Facebook
+                               Social Media
                                 @break
                             @case(2)
-                                Goggle
+                                Google
                                 @break
                             @case(3)
                                 Iklan
@@ -122,7 +125,7 @@
                                 Walkin
                                 @break
                             @case(5)
-                                Web
+                                Repeat/Teman Klien
                                 @break
                             @case(6)
                                 Relasi
