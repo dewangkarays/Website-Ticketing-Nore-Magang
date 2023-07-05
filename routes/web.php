@@ -107,7 +107,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('gettaskshistory', 'TaskController@gettaskshistory');
 
 
-
+		//Routing klien (leads*)
 		Route::get('/klien', 'KlienController@index')->name('klien');
 		Route::post('/klien/getdata', 'KlienController@getData')->name('klien.data');
 
@@ -126,6 +126,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 		Route::get('/klien/createMember/{id}', 'KlienController@createMember')->name('klien.createMember');
 		Route::post('/klien/savecreateMember/{id}', 'KlienController@savecreateMember')->name('klien.savecreateMember');
+
+		// Route::get('leads_excel', 'KlienController@leads_excel');
+
 	});
 
 	//admin
@@ -134,7 +137,7 @@ Route::group(['middleware' => ['auth']], function () {
 	});
 
 	//karyawan
-	Route::group(['middleware' => ['role:20,30,40,50']], function () {
+	Route::group(['middleware' => ['role:20,30,40']], function () {
 		Route::get('/karyawan',  'AdminController@karyawan')->name('karyawan');
 	});
 
@@ -143,8 +146,13 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('/keuangan',  'AdminController@keuangan')->name('keuangan');
 	});
 
+	//marketing
+	Route::group(['middleware' => ['role:50']], function () {
+		Route::get('/marketing',  'AdminController@marketing')->name('marketing');
+	});
+
 	//Admin, HRD, dan Keuangan
-	Route::group(['middleware' => ['role:1,20,60']], function () {
+	Route::group(['middleware' => ['role:1,20,50,60']], function () {
 		Route::resource('users', 'UserController');
 		Route::resource('members', 'MemberController');
 

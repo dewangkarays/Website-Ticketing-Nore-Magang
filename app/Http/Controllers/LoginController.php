@@ -28,10 +28,13 @@ class LoginController extends Controller
 	    ){
 	    	if(\Auth::user()->role==1){
 	    		return redirect('/admin');
-	    	}elseif(\Auth::user()->role==10 || \Auth::user()->role>=30 && \Auth::user()->role<=50){
+	    	}elseif(\Auth::user()->role==10 || \Auth::user()->role>=30 && \Auth::user()->role<=40){
 	    		return redirect('/karyawan');
 			}elseif(\Auth::user()->role==20){
 				return redirect('/keuangan');
+			}
+			elseif(\Auth::user()->role==50){
+				return redirect('/marketing');
 			}
 			elseif(\Auth::user()->role==95){
 	    		return redirect('/customer');
