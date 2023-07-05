@@ -126,6 +126,39 @@ return view("index", compact('new','ongoing','done','todaynew','todayongoing','t
         'memberlast','memberthis','proyekthis','proyeklast', 'karyawanhadir', 'karyawancutis', 'karyawanizin', 'karyawansakit', 'karyawanwfh', 'belumpresensi','karyawanabsensi','cuti'));
     }
 
+    public function marketing()
+    {
+        $new = Task::where('status', '=', '1')->get()->count();
+        $ongoing = Task::where('status', '=', '2')->get()->count();
+        $done = Task::where('status', '=', '3')->get()->count();
+        $todaynew = Task::where('status', '=', '1')->whereDate('created_at', '=', Carbon::today()->toDateString())->get()->count();
+        $todayongoing = Task::where('status', '=', '2')->whereDate('updated_at', '=', Carbon::today()->toDateString())->get()->count();
+        $todaydone = Task::where('status', '=', '3')->whereDate('updated_at', '=', Carbon::today()->toDateString())->get()->count();
+        $member = User::where('role','>','20')->get()->count();
+        $proyek = Proyek::all();
+        $simple = Proyek::where('tipe','=','99')->get()->count();
+        $prioritas = Proyek::where('tipe','=','90')->get()->count();
+        $premium = Proyek::where('tipe','=','80')->get()->count();
+        $memberthis = User::whereYear('created_at','=',Carbon::now()->today()->year)->where('role','>','20')->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
+        $memberlast = User::whereYear('created_at','=',Carbon::now()->today()->year)->where('role','>','20')->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
+        $proyekthis =  Proyek::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->today()->month)->get()->count();
+        $proyeklast =  Proyek::whereYear('created_at','=',Carbon::now()->today()->year)->whereMonth('created_at','=',Carbon::now()->subMonth()->month)->get()->count();
+        $karyawanhadir = Presensi::where('status', '1')->where('tanggal', date('Y-m-d'))->count();
+        $karyawancutis = Cuti::where('status', '2')->where('tanggal_mulai', '<=', date('Y-m-d'))->where('tanggal_akhir', '>=', date('Y-m-d'))->get();
+        $karyawanizin = Presensi::where('status', '2')->where('tanggal', date('Y-m-d'))->get();
+        $karyawansakit = Presensi::where('status', '3')->where('tanggal', date('Y-m-d'))->get();
+        $karyawanwfh = Presensi::where('status', '4')->where('tanggal', date('Y-m-d'))->get();
+        $jumlahkaryawan = User::where('role', '<', '80')->where('role', '>', '1')->where('nonaktif','=', '1')->count();
+        $belumpresensi = $jumlahkaryawan - $karyawancutis->count() - $karyawanhadir - $karyawanizin->count() - $karyawansakit->count() - $karyawanwfh->count();
+        $karyawanabsensi= Presensi::where('user_id', \Auth::id())->where('tanggal', date('Y-m-d'))->count();
+        $cuti = Cuti::where('user_id',\Auth::user()->id)
+        ->where('tanggal_mulai','<=',date('Y-m-d'))
+        ->where('tanggal_akhir','>=',date('Y-m-d'))
+        ->get();
+       
+        return view("index", compact('new','ongoing','done','todaynew','todayongoing','todaydone','member','proyek','simple','prioritas','premium',
+        'memberlast','memberthis','proyekthis','proyeklast', 'karyawanhadir', 'karyawancutis', 'karyawanizin', 'karyawansakit', 'karyawanwfh', 'belumpresensi','karyawanabsensi','cuti'));
+    }
     // public function customer()
     // {
     //     $new = Task::where('status', '=', '1')->where('user_id',\Auth::user()->id)->get()->count();
