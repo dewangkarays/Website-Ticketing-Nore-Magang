@@ -105,7 +105,7 @@
 								<select id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
 									<option value="">-- Pilih Marketing --</option>
 									@foreach($marketings as $marketing)
-										<option value="{{$marketing->id}}">{{$marketing->nama}} </option>
+										<option @if (\Auth::user()->id == $marketing->id) selected @endif value="{{$marketing->id}}">{{$marketing->nama}} </option>
 				    				@endforeach
 								</select>
 							</div>
