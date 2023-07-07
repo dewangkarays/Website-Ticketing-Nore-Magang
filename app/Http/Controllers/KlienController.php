@@ -13,6 +13,8 @@ use App\Model\Nomor;
 use App\Model\Tagihan;
 use App\Model\RekapDptagihan;
 use App\Model\RekapTagihan;
+use App\Exports\KlienExport; //plugin excel
+use Maatwebsite\Excel\Facades\Excel;
 use Datatables;
 
 
@@ -471,4 +473,8 @@ class KlienController extends Controller
         return redirect('/members')->with('success', 'Member & Proyek saved!');
     }
 
+    public function leads_excel()
+    {
+        return Excel::download(new KlienExport, 'Leads ' . (date('Y-m-d')) . '.xlsx');
+    }
 }

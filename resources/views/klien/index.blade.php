@@ -43,7 +43,7 @@
 			<div class="card-header header-elements-inline">
 			@if (Auth::user()->role==1 || Auth::user()->role==50)
 			<a href="{{ route('klien.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
-			{{-- <a href={{ url('leads_excel')}} target="_blank"><button class="btn btn-success rounded-round"><i class="icon-file-excel mr-2"></i> Export Excel</button></a> --}}
+			<a href={{ url('leads_excel')}} target="_blank"><button class="btn btn-success rounded-round"><i class="icon-file-excel mr-2"></i> Export Excel</button></a>
 			@endif
 		</div>
 			<div class="card">
@@ -55,7 +55,7 @@
 							<th>Nama Perusahaan</th>
 							{{-- <th>Jenis Perusahaan</th> --}}
 							<th>Potensi</th>
-							<th>Status</th>
+							<th>Status Lead</th>
 							<th>Source</th>
 							{{-- <th>Alamat</th> --}}
 							<th>Marketing</th>

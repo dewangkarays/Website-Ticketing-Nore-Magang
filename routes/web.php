@@ -127,7 +127,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('/klien/createMember/{id}', 'KlienController@createMember')->name('klien.createMember');
 		Route::post('/klien/savecreateMember/{id}', 'KlienController@savecreateMember')->name('klien.savecreateMember');
 
-		// Route::get('leads_excel', 'KlienController@leads_excel');
+		Route::get('leads_excel', 'KlienController@leads_excel');
 
 	});
 
