@@ -175,41 +175,25 @@ ul{
 					</a>
 				</li>
 				<li class="nav-item nav-item-submenu">
-					<a href="#" class="nav-link {{ (request()->is('users*','members*','proyeks*')) ? 'active' : '' }}"><i class="icon-users"></i>
-						<span>Users
+					<a href="{{ url('/members') }}" class="nav-link {{ (request()->is('members*','proyeks*')) ? 'active' : '' }}">
+						<i class="icon-briefcase"></i>
+						<span>
+							Member & Proyek
 						</span>
 					</a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('users*','members*','proyeks*')) ? 'block' : 'none' }};">
-						<li class="nav-item">
-							<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
-								<i class="icon-vcard"></i>
-								<span>
-									Karyawan
-								</span>
-							</a>
-						</li>
-						<li class="nav-item nav-item-submenu">
-							<a href="{{ url('/members') }}" class="nav-link {{ (request()->is('members*','proyeks*')) ? 'active' : '' }}">
-								<i class="icon-briefcase"></i>
-								<span>
-									Member & Proyek
-								</span>
-							</a>
-							<ul class="nav nav-group-sub" style="display: {{ (request()->is('members*','proyeks*')) ? 'block' : 'none' }};">
-								<li class="nav-item"><a href="{{ url('/members') }}" class="nav-link {{ (request()->is('members*')) ? 'active' : '' }}">
-									<i class="icon-user"></i>
-									<span>
-										Daftar Member
-									</span>
-								</a></li>
-								<li class="nav-item"><a href="{{url('proyeks')}}" class="nav-link {{ (request()->is('proyeks*')) ? 'active' : '' }}">
-									<i class="icon-traffic-cone"></i>
-									<span>
-										Data Proyek
-									</span>
-								</a></li>
-							</ul>
-						</li>
+					<ul class="nav nav-group-sub" style="display: {{ (request()->is('members*','proyeks*')) ? 'block' : 'none' }};">
+						<li class="nav-item"><a href="{{ url('/members') }}" class="nav-link {{ (request()->is('members*')) ? 'active' : '' }}">
+							<i class="icon-user"></i>
+							<span>
+								Daftar Member
+							</span>
+						</a></li>
+						<li class="nav-item"><a href="{{url('proyeks')}}" class="nav-link {{ (request()->is('proyeks*')) ? 'active' : '' }}">
+							<i class="icon-traffic-cone"></i>
+							<span>
+								Data Proyek
+							</span>
+						</a></li>
 					</ul>
 				</li>
 				{{-- Keuangan --}}
