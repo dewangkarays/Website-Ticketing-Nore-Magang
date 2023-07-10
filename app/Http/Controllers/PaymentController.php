@@ -724,12 +724,22 @@ class PaymentController extends Controller
 
         return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter', 'totals', 'proyeks'));
     }
-    public function getstatistikpayment($id){
-        $proyeks = Proyek::where('jenis_proyek',$id)
-        ->with('user')
-        ->orderBy('jenis_proyek')
-        ->get();
-    
+    public function getstatistikpayment($id)
+    {
+        $proyeks = Proyek::where('jenis_proyek', $id)
+            ->with('user', 'tagihan')
+            ->orderByDesc('updated_at')
+            ->get();
+
+        // $a = [
+        //     [
+        //         "a" => 1,
+        //         "b" => 12,
+        //         "c" => 1413123123,
+        //         "d" => 1111111,
+        //     ],
+        // ];
+
         return response()->json($proyeks);
     }
 
