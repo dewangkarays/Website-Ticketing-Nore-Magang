@@ -23,7 +23,7 @@
             {{-- <td> {{$payment->id}} </td> --}}
             <td> {{$i}} </td>
             <td> {{@$payment->user->nama}} </td>
-            <td> {{@$payment->keterangan}} </td>
+            <td> {{strip_tags(@$payment->keterangan)}} </td>
             <td> {{$payment->nominal}}     </td>
             <td> {{@$payment->kadaluarsa}} </td>
             <td> {{@$payment->created_at}} </td>
