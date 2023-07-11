@@ -37,6 +37,7 @@
        
             <div class="card-header header-elements-inline">
                 <a href="{{ route('proyeks.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
+			    @if (Auth::user()->role==1 || Auth::user()->role==20)
                 <div class="row">
                     <select style="width:200px; height:36px" onchange="marketing()" id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
                         <option value="">-- Pilih Marketing --</option>
@@ -45,6 +46,7 @@
                         @endforeach
                     </select>
                 </div>
+                @endif
             </div>
             
     <div class="table-responsive">
