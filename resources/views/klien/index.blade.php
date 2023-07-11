@@ -41,7 +41,7 @@
 		<!-- Hover rows -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-			@if (Auth::user()->role==1 || Auth::user()->role==50)
+			@if (Auth::user()->role==1 || Auth::user()->role==20 || Auth::user()->role==50)
 			<a href="{{ route('klien.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
 			<a href={{ url('leads_excel')}} target="_blank"><button class="btn btn-success rounded-round"><i class="icon-file-excel mr-2"></i> Export Excel</button></a>
 			@endif
@@ -448,23 +448,23 @@
 								createRef = createRef.replace(':id', data?.id);
 								
 									
-								@if(\Auth::user()->role==1 || \Auth::user()->role==50) 
+								@if(\Auth::user()->role==1 || Auth::user()->role==20|| \Auth::user()->role==50) 
 									if (data.status==4) {
 									
 										var actionButtons =
 									`
 										<div style="text-align: right">
-												<a href="${createRef}" class="list-icons-item" data-toggle="tooltip" data-placement="top" title="Create Member"><i class="icon-file-text"></i></a>
+												<a href="${createRef}" class="btn btn-dark btn-icon" data-toggle="tooltip" data-placement="top" title="Create Member"><i class="icon-file-text"></i></a>
 
-												<a href="#" class="list-icons-item text-orange-600 historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}" data-toggle="tooltip" data-placement="top" title="History"><i class="icon-history"></i></a>
+												<a href="#" class="btn bg-orange-600 historybutton btn-icon" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}" data-toggle="tooltip" data-placement="top" title="History"><i class="icon-history"></i></a>
 
-												<a href="${showRef}" class="list-icons-item text-blue" data-toggle="tooltip" data-placement="top" title="Show"><i class="icon-search4"></i></a>
+												<a href="${showRef}" class="btn bg-blue btn-icon showbutton btn-icon" data-toggle="tooltip" data-placement="top" title="Show"><i class="icon-search4"></i></a>
 
-												<a href="${editRef}" class="list-icons-item text-purple" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-pencil7"></i></a>
+												<a href="${editRef}" class="btn bg-purple btn-icon" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-pencil7"></i></a>
 
-												<a href="${telpRef}" target="_blank" class="list-icons-item text-success" data-toggle="tooltip" data-placement="top" title="Telp"><i class="fab fa-whatsapp"></i></a>
+												<a href="${telpRef}" target="_blank" class="btn bg-success btn-icon" data-toggle="tooltip" data-placement="top" title="Telp"><i class="fab fa-whatsapp"></i></a>
 												
-												<a href="#" class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-bin"></i></a>
+												<a href="#" class="btn btn-danger btn-icon delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-bin"></i></a>
 												
 										</div>
 									`
@@ -473,15 +473,15 @@
 									
 										`
 										<div style="text-align: right">
-												<a href="#" class="list-icons-item text-orange-600 historybutton" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}" data-toggle="tooltip" data-placement="top" title="History"><i class="icon-history"></i></a>
+												<a href="#" class="btn bg-orange-600 historybutton btn-icon" data-id="${data?.id}" data-toggle="modal" data-target="#modal_theme_history" data-uri="${HistoryRef}" data-toggle="tooltip" data-placement="top" title="History"><i class="icon-history"></i></a>
+
+												<a href="${showRef}" class="btn bg-blue btn-icon showbutton btn-icon" data-toggle="tooltip" data-placement="top" title="Show"><i class="icon-search4"></i></a>
+
+												<a href="${editRef}" class="btn bg-purple btn-icon" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-pencil7"></i></a>
+
+												<a href="${telpRef}" target="_blank" class="btn bg-success btn-icon" data-toggle="tooltip" data-placement="top" title="Telp"><i class="fab fa-whatsapp"></i></a>
 												
-												<a href="${showRef}" class="list-icons-item text-blue" data-toggle="tooltip" data-placement="top" title="Show"><i class="icon-search4"></i></a>
-												
-												<a href="${editRef}" class="list-icons-item text-purple" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-pencil7"></i></a>
-						            			
-												<a href="${telpRef}" target="_blank" class="list-icons-item text-success" data-toggle="tooltip" data-placement="top" title="Telp"><i class="fab fa-whatsapp"></i></a>
-												
-												<a href="#" class="list-icons-item text-danger delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-bin"></i></a>
+												<a href="#" class="btn btn-danger btn-icon delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-bin"></i></a>
 												
 											
 											</div>	
