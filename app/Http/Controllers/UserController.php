@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Rules\UniqueUsername;
 use App\Model\User;
 use App\Model\Tagihan;
 use App\Model\Proyek;
@@ -50,14 +51,18 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        $validator = Validator::make($request->all(), [
-            // 'title' => 'required|unique:posts|max:255',
-            // 'body' => 'required',
-            'atasan_id' => 'required',
-            'username' => 'unique:users',
-            'email' => 'unique:users'
-        ]);
+        $rules = [
+            'username' => 'required|unique:users,username,NULL,id,deleted_at,NULL',
+            'email'    => 'required|unique:users,email,NULL,id,deleted_at,NULL',
+            // Tambahkan aturan validasi lainnya jika diperlukan
+        ];
 
+        // Membuat instance Validator
+        $validator = Validator::make($request->all(), $rules);
+
+        // Jalankan validasi
+        $validator->validate();
+        
         if ($validator->fails()) {
             return redirect('users/create')
                 ->withErrors($validator)
