@@ -18,7 +18,11 @@ class MemberController extends Controller
     public function index()
     {
         $users = User::where('role','>','20')->orderBy('nama')->get();
-        //dd($users);
+
+        // if (\Auth::user()->role==50){
+        //     $users = User::where('marketing_id','=',\Auth::user()->id)->orderBy('nama')->get();
+        // }
+        // dd(\Auth::user()->id);
         return view('members.index');
     }
 
@@ -211,9 +215,17 @@ class MemberController extends Controller
     }
 
     public function getmembers() {
-        $users = User::where('role', '>=', '80')
+        if(\Auth::user()->role==1 || \Auth::user()->role==20){
+            $users = User::where('role', '>=', '80')
             ->orderBy('id','desc')
             ->get();
+        }else{
+            $users = User::where('role', '>=', '80')
+            ->where('marketing_id','=',\Auth::user()->id)
+            ->orderBy('id','desc')
+            ->get(); 
+        }; 
+    
         foreach ($users as $key => $user) {
             $user['task_count'] = 0;
             foreach ($user->proyek as $proyek) {

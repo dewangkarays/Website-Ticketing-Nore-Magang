@@ -251,7 +251,12 @@ class ProyekController extends Controller
         $date = Carbon::today();
         $expired = Carbon::today()->addDays(-1);
         $dateline = Carbon::today()->addDays(14);
-        $null = Proyek::whereNull('masa_berlaku');
+       
+        if(\Auth::user()->role==1 || \Auth::user()->role==20){
+            $null = Proyek::whereNull('masa_berlaku');
+        }else{
+            $null = Proyek::whereNull('masa_berlaku')->where('marketing_id','=',\Auth::user()->id);
+        }
         //->where('marketing_id', $request->marketing)
         if ($request->marketing) {
             $null = $null->where('marketing_id', $marketing);
@@ -263,7 +268,13 @@ class ProyekController extends Controller
         foreach ($null as $nullItem) {
             $nullItem['nama_user'] = @$nullItem->user->nama;
         }
-        $yellow = Proyek::whereNotNull('masa_berlaku');
+        
+        if(\Auth::user()->role==1 || \Auth::user()->role==20){
+            $yellow = Proyek::whereNotNull('masa_berlaku');
+        }else{
+            $yellow = Proyek::whereNotNull('masa_berlaku')->where('marketing_id','=',\Auth::user()->id);
+        }
+        
         if ($request->marketing) {
             $yellow = $yellow->where('marketing_id', $marketing);
         }
@@ -277,7 +288,13 @@ class ProyekController extends Controller
         foreach ($yellow as $yellowItem) {
             $yellowItem['nama_user'] = @$yellowItem->user->nama;
         }
-        $green = Proyek::whereNotNull('masa_berlaku');
+       
+        if(\Auth::user()->role==1 || \Auth::user()->role==20){
+            $green = Proyek::whereNotNull('masa_berlaku');
+        }else{
+            $green = Proyek::whereNotNull('masa_berlaku')->where('marketing_id','=',\Auth::user()->id);
+        }
+        
         //->where('marketing_id', $marketing)
         if ($request->marketing) {
             $green = $green->where('marketing_id', $marketing);
@@ -290,7 +307,12 @@ class ProyekController extends Controller
         foreach ($green as $greenItem) {
             $greenItem['nama_user'] = @$greenItem->user->nama;
         }
-        $red = Proyek::whereNotNull('masa_berlaku');
+        
+        if(\Auth::user()->role==1 || \Auth::user()->role==20){
+            $red = Proyek::whereNotNull('masa_berlaku');
+        }else{
+            $red = Proyek::whereNotNull('masa_berlaku')->where('marketing_id','=',\Auth::user()->id);
+        }
         //->where('marketing_id', $marketing)
         if ($request->marketing) {
             $red = $red->where('marketing_id', $marketing);
