@@ -52,7 +52,7 @@
                             </div>
 						</div>
 						<div class="form-group row">
-                            <label class="col-form-label col-lg-2">Potensi</label>
+                            <label class="col-form-label col-lg-2">Potensi <span class="text-danger">*</span></label>
                             <div class="col-lg-10">
                                 <select id="potensi" name="potensi" class="form-control select-search border-teal border-1" required>
                                     <option value="">-- Pilih Produk Nore --</option>
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-form-label col-lg-2">Status Lead</label>
+                            <label class="col-form-label col-lg-2">Status Lead <span class="text-danger">*</span></label>
                             <div class="col-lg-10">
                                 <select id="status_nore" name="status" class="form-control select-search border-teal border-1" required>
                                     <option value="">-- Lead --</option>
@@ -111,7 +111,7 @@
 							</div>
 						</div>
 						<div class="form-group row">
-                            <label class="col-form-label col-lg-2">Source</label>
+                            <label class="col-form-label col-lg-2">Source <span class="text-danger">*</span></label>
                             <div class="col-lg-10">
                                 <select id="source" name="source" class="form-control select-search border-teal border-1">
                                     <option value="">-- Source --</option>
@@ -134,6 +134,7 @@
 						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
 					</div>
 				</form>
+				{{-- @php (dump(session('error'))); --}}
 			</div>
 
 		</div>
@@ -164,6 +165,11 @@
 	<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 	<script type="text/javascript">
 		// Initialize
+		
+		// $('#simpan').onclick(
+		// 	alert('diisi')
+		// )
+
 		$('.select-search').select2();
 
 		// Initialize
@@ -347,6 +353,12 @@ var FormValidation = function() {
 						required : true,
 						number : true,
 					},
+					source:{
+						required : true,
+					},
+					status:{
+						required : true,
+					},
 					
 					
 				},
@@ -362,6 +374,12 @@ var FormValidation = function() {
 						required : 'Mohon diisi.',
 						number : 'Hanya mengandung angka'
 					}, 
+					source:{
+						required : 'Mohon diisi.',
+					},
+					status:{
+						required : 'Mohon diisi.',
+					},
 				}
 			});
 
@@ -490,6 +508,16 @@ var FormValidation = function() {
 	<script type="text/javascript">
 		$( document ).ready(function() {
 	        // Default style
+			@if ($errors->any())
+            @foreach ($errors->all() as $error)
+                new PNotify({
+            title: 'Error',
+            text: '{{ $error }}.',
+            icon: 'icon-notification2',
+            type: 'error'
+        });
+            @endforeach
+        @endif
 	        @if(session('error'))
 	            new PNotify({
 	                title: 'Error',

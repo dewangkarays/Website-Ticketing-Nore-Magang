@@ -46,7 +46,14 @@ class KlienController extends Controller
     public function saveCreate(Request $request)
     {
 
-
+        $validatedData = $request->validate([
+            'status' => 'required',
+          ],
+        [
+            'status.required'=>'Status lead mohon diisi'
+        ]);
+        
+        
         $klien = new Klien;
         $klien->nama_calonklien         = $request->nama_calonklien;
         $klien->nama_perusahaan         = $request->nama_perusahaan;
