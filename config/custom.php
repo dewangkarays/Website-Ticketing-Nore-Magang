@@ -167,6 +167,8 @@ return [
         '4' => 'Deal',
         '5' => 'Pending',
         '6' => 'Bayar',
+        '7' => 'Ended',
+        '8' => 'Live',
     ],
 
     'source' => [
