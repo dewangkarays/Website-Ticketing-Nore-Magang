@@ -93,7 +93,7 @@
                             <span style="font-size: 100%;" class="badge badge-pill bg-orange">Negosiasi</span>
                                 @break
                             @case(4)
-                            <span style="font-size: 100%;" class="badge badge-pill badge-primary">Deal</span>
+                            <span style="font-size: 100%;" class="badge badge-pill bg-indigo">Deal</span>
                                 @break
                             @case(5)
                             <span style="font-size: 100%;" class="badge badge-pill badge-secondary">Pending</span>

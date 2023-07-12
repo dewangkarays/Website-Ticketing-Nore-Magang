@@ -386,9 +386,9 @@
 								if (data?.status == 1)
 									status = `<span style="font-size: 100%;" class="badge badge-pill badge-info">${status_klien[data?.status]}</span>`
 								else if (data?.status == 2)
-									status = `<span style="font-size: 100%;" class="badge bg-warning badge-pill badge-warning badge-warning">${status_klien[data?.status]}</span>`
+									status = `<span style="font-size: 100%;" class="badge bg-warning badge-pill badge-warning">${status_klien[data?.status]}</span>`
 								else if (data?.status == 3)
-									status = `<span style="font-size: 100%;" class="badge bg-orange badge-pill badge-warning badge-orange">${status_klien[data?.status]}</span>`
+									status = `<span style="font-size: 100%;" class="badge bg-orange badge-pill badge-orange">${status_klien[data?.status]}</span>`
 								else if (data?.status == 4)
 									status = `<span style="font-size: 100%;" class="badge badge-pill badge-primary">${status_klien[data?.status]}</span>`
 								else if (data?.status == 5)
