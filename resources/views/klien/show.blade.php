@@ -87,10 +87,10 @@
                             <span style="font-size: 100%;" class="badge badge-pill badge-info">Visit</span>
                                 @break
                             @case(2)
-                            <span style="font-size: 100%;" class="badge badge-pill badge-danger">Kenal</span>
+                            <span style="font-size: 100%;" class="badge badge-pill bg-warning">Kenal</span>
                                 @break
                             @case(3)
-                            <span style="font-size: 100%;" class="badge badge-pill badge-warning">Negosiasi</span>
+                            <span style="font-size: 100%;" class="badge badge-pill bg-orange">Negosiasi</span>
                                 @break
                             @case(4)
                             <span style="font-size: 100%;" class="badge badge-pill badge-primary">Deal</span>
@@ -100,6 +100,12 @@
                                 @break
                             @case(6)
                             <span style="font-size: 100%;" class="badge badge-pill badge-success">Bayar</span>
+                                @break
+                            @case(7)
+                            <span style="font-size: 100%;" class="badge badge-pill badge-dark">Ended</span>
+                                @break
+                            @case(8)
+                            <span style="font-size: 100%;" class="badge badge-pill bg-teal">Live</span>
                                 @break
                             @default
                                 Unknown Leads

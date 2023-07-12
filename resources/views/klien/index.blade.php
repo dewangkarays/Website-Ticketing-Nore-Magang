@@ -247,6 +247,12 @@
 									case 6:
 										textStatus='Bayar';
 										break;
+									case 7:
+										textStatus='Ended';
+										break;
+									case 8:
+										textStatus='Live';
+										break;
 									default:
 										textStatus='';
 								}
@@ -280,6 +286,8 @@
 				'4' : 'Deal',
 				'5' : 'Pending',
 				'6' : 'Bayar',
+				'7' : 'Ended',
+				'8' : 'Live',
 			}
 
 		    // Basic Datatable examples
@@ -378,15 +386,21 @@
 								if (data?.status == 1)
 									status = `<span style="font-size: 100%;" class="badge badge-pill badge-info">${status_klien[data?.status]}</span>`
 								else if (data?.status == 2)
-									status = `<span style="font-size: 100%;" class="badge badge-pill badge-danger">${status_klien[data?.status]}</span>`
+									status = `<span style="font-size: 100%;" class="badge bg-warning badge-pill badge-warning badge-warning">${status_klien[data?.status]}</span>`
 								else if (data?.status == 3)
-									status = `<span style="font-size: 100%;" class="badge badge-pill badge-warning">${status_klien[data?.status]}</span>`
+									status = `<span style="font-size: 100%;" class="badge bg-orange badge-pill badge-warning badge-orange">${status_klien[data?.status]}</span>`
 								else if (data?.status == 4)
 									status = `<span style="font-size: 100%;" class="badge badge-pill badge-primary">${status_klien[data?.status]}</span>`
 								else if (data?.status == 5)
 									status = `<span style="font-size: 100%;" class="badge badge-pill badge-secondary">${status_klien[data?.status]}</span>`
-								else
+								else if (data?.status == 6)
 									status = `<span style="font-size: 100%;" class="badge badge-pill badge-success">${status_klien[data?.status]}</span>`
+								else if (data?.status == 7)
+									status = `<span style="font-size: 100%;" class="badge badge-pill badge-dark">${status_klien[data?.status]}</span>`
+								else if (data?.status == 8)
+									status = `<span style="font-size: 100%;" class="badge bg-teal badge-pill badge-teal">${status_klien[data?.status]}</span>`
+								else
+									status = `<span style="font-size: 100%;" class="badge badge-pill badge-danger">${status_klien[data?.status]}</span>`
 								
 								return status
 							}
@@ -402,7 +416,7 @@
 									'4' : 'Walkin',
 									'5' : 'Repeat/Teman Klien',
 									'6' : 'Relasi',
-									'7' : 'Referal',
+									'7' : 'Referral',
 								}
 								return source[data?.source];
 							}
