@@ -26,7 +26,7 @@
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>Nama</th>
+						<th style="width:20%">Nama</th>
 						<th>NIP</th>
 						<th>Jabatan</th>
 						<th>Divisi</th>
@@ -40,6 +40,13 @@
 					<td rowspan="1" colspan="6">
 						<div class="text-right">
 							<a href="{{ url('/admin') }}">
+								<button type="submit" class="btn bg-slate"><i class="icon-undo2 mr-2"></i> Kembali</button>
+							</a>
+						</div>
+					@elseif(Auth::user()->role==20)
+					<td rowspan="1" colspan="6">
+						<div class="text-right">
+							<a href="{{ url('/keuangan') }}">
 								<button type="submit" class="btn bg-slate"><i class="icon-undo2 mr-2"></i> Kembali</button>
 							</a>
 						</div>
