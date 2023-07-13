@@ -45,26 +45,29 @@
 
 		</div>
 
-		<table class="table datatable-basic table-hover">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>No</th>
-					<th>Nama</th>
-					<th>Nama Proyek</th>
-					<th>No. Receipt</th>
-					<th>Nominal (Rp)</th>
-					<th>Status</th>
-					<th>Keterangan</th>
-					<th>Tanggal Pembayaran</th>
-					@if(\Auth::user()->role<=50)
-					<th class="text-center">Actions</th>
-					@endif
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
+		<div class="table-responsive">
+			<table class="table datatable-basic table-hover">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>No</th>
+						<th>Nama</th>
+						<th>Nama Proyek</th>
+						<th>No. Receipt</th>
+						<th>Nominal (Rp)</th>
+						<th>Status</th>
+						<th>Keterangan</th>
+						<th>Tanggal Pembayaran</th>
+						@if(\Auth::user()->role<=50)
+						<th class="text-center">Actions</th>
+						@endif
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		
 	</div>
 	<!-- /hover rows -->
 
@@ -274,7 +277,7 @@
 
 			// Basic datatable
 			$('.datatable-basic').DataTable({
-				scrollX: true,
+				// scrollX: true,
 				order: [[0, "desc"]],
 				processing: true,
 				serverSide: true,
