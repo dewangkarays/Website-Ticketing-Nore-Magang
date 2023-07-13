@@ -22,7 +22,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4><span class="font-weight-semibold">Home</span> - member</h4>
+				<h4><span class="font-weight-semibold">Home</span> - Klien</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -56,7 +56,7 @@
 				<div class="row">
                     <div class="form-group col-6">
                     	<label>Email</label>
-                        <input type="text" name="email" class="form-control border-teal border-1" placeholder="Email" required>
+                        <input type="text" name="email" class="form-control border-teal border-1" placeholder="Email">
                         @error('email')
                             <div style="margin-top:1rem;" class="alert alert-danger">{{ $message }}</div>
                         @enderror
