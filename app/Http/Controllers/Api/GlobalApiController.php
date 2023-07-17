@@ -244,6 +244,7 @@ class GlobalApiController extends Controller
                 return response()->json([
                     'code' => 200,
                     'message' => 'Token Valid',
+                    'data'=> ['user'=>auth()->user()]
                 ]);
             } else {
                 return response()->json([
