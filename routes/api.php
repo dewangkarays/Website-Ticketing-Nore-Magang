@@ -27,6 +27,9 @@ Route::post('/wfh/{id}',  'Api\GlobalApiController@wfh');
 Route::get('/check-presensi',  'Api\GlobalApiController@getUserBelumPresensi');
 Route::get('/check-ulang-tahun',  'Api\GlobalApiController@getTodayUlangTahun');
 
+//check token
+Route::get('/check-token',  'Api\GlobalApiController@cektoken');
+
 Route::group(['middleware' => ['auth:api']], function() {
 	Route::resource('tasks', 'Api\TaskApiController');
 	Route::resource('payments', 'Api\PaymentApiController');

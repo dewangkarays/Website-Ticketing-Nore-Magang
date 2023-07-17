@@ -8,6 +8,8 @@ use App\Model\User;
 use App\Model\Attachment;
 use App\Model\Presensi;
 use App\Model\Cuti;
+use Carbon\Carbon;
+
 
 class GlobalApiController extends Controller
 {
@@ -213,5 +215,47 @@ class GlobalApiController extends Controller
             'message' => 'Success',
             'data' => $user
         ]);
+    }
+
+    public function cektoken(Request $request){
+        // break up the string to extract only the token
+        $auth_header = explode(' ', $request->get('token'));
+        $token = $auth_header[0];
+
+        // break up the token into its three respective parts
+        // The current version of Passport places the JTI string value in the second token part, so: $token_parts[1]
+        $token_parts = explode('.', $token);
+        // $token_header = $token_parts[0];
+        $token_header = $token_parts[1];
+
+        // base64 decode to get a json string
+        $token_header_json = base64_decode($token_header);
+
+        // then convert the json to an array
+        $token_header_array = json_decode($token_header_json, true);
+        $user_token = $token_header_array['jti'];
+
+        $oauth_user = \DB::table('oauth_access_tokens')->where('id', $user_token)->where('revoked', 0)->first();
+        if($oauth_user){
+            $expires = Carbon::parse($oauth_user->expires_at)->toDateTimeString();
+            $now = date('Y-m-d h:i:s');
+
+            if ($expires > $now) {
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'Token Valid',
+                ]);
+            } else {
+                return response()->json([
+                    'code' => 400,
+                'message' => 'Token Invalid',
+                ])(400,'Success','Token Expired');
+            }
+        } else {
+            return response()->json([
+                'code' => 400,
+                'message' => 'Token Invalid',
+            ]);
+        }
     }
 }
