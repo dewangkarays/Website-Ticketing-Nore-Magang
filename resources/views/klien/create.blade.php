@@ -96,7 +96,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Alamat</label>
 							<div class="col-lg-10">
-                                <input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat">
+                                <input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat" required>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -346,8 +346,7 @@ var FormValidation = function() {
 						required : true
 					}, 
 					nama_perusahaan:{
-						required : true,
-						nama_perusahaan: true
+						required : true
 					},
 					telp:{
 						required : true,
