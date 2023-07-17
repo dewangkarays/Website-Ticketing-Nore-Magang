@@ -48,9 +48,13 @@ class KlienController extends Controller
 
         $validatedData = $request->validate([
             'status' => 'required',
+            'telp'   => 'required',
+            'alamat' => 'required',
           ],
         [
-            'status.required'=>'Status lead mohon diisi'
+            'status.required'=>'Status lead mohon diisi',
+            'telp.required'  =>'Nomor telp mohon diisi',
+            'alamat.required'=>'Alamat mohon diisi'
         ]);
         
         

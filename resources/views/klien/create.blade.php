@@ -36,19 +36,19 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama Klien</label>
 							<div class="col-lg-10">
-                                <input type="text" name="nama_calonklien" class="form-control border-teal border-1" placeholder="Nama klien" required>
+                                <input type="text" name="nama_calonklien" class="form-control border-teal border-1" placeholder="Nama klien" value="{{old('nama_calonklien')}}" required>
                             </div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama Perusahaan</label>
 							<div class="col-lg-10">
-								<input type="text" name="nama_perusahaan" class="form-control border-teal border-1" placeholder="Nama Perusahaan" required>
+								<input type="text" name="nama_perusahaan" class="form-control border-teal border-1" placeholder="Nama Perusahaan" value="{{old('nama_perusahaan')}}" required>
                         </div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Jenis Perusahaan</label>
 							<div class="col-lg-10">
-                                <input type="text" id="jenis_perusahaan" name="jenis_perusahaan" class="form-control border-teal border-1" placeholder="Jenis Perusahaan" required>
+                                <input type="text" id="jenis_perusahaan" name="jenis_perusahaan" class="form-control border-teal border-1" placeholder="Jenis Perusahaan" value="{{old('jenis_perusahaan')}}" required>
                             </div>
 						</div>
 						<div class="form-group row">
@@ -71,7 +71,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Tanggal Kontak Terakhir</label>
                             <div class="col-lg-10">
-                                <input id="tanggal_kontakterakhir" name="tanggal_kontakterakhir" type="date" class="form-control pickadate-accessibility" placeholder="Pilih Tanggal" required>
+                                <input id="tanggal_kontakterakhir" name="tanggal_kontakterakhir" type="date" class="form-control pickadate-accessibility" placeholder="Pilih Tanggal">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -88,7 +88,7 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Telp</label>
 							<div class="col-lg-10">
-                                <input type="text" name="telp" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA">
+                                <input type="text" name="telp" class="form-control border-teal border-1 phone-number" placeholder="Telp/WA" value="{{old('telp')}}">
 								<span class="form-text text-muted">Contoh : 628123456678 (gunakan kode negara tanpa tanda + dan spasi)</span>
 							</div>
 						</div>
