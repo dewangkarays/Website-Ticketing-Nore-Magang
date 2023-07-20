@@ -35,7 +35,7 @@
 		<!-- Hover rows -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-				<a href="{{ route('tagihans.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-help mr-2"></i> Tambah</button></a>
+				<a href="{{ route('tagihans.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
 				<a href="{{ url('exporttagihan')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-file-excel mr-2"></i> Export Excel</button></a>
 			</div>
 
