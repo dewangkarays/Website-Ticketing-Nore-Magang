@@ -28,10 +28,19 @@ class KlienController extends Controller
 
     public function getData(Request $request)
     {
-        $json_data = Klien::where('member_created',false)
-                ->orderBy('id', 'desc')
-                ->with('marketing')
-                ->get();
+      
+        if(\Auth::user()->role==1 || \Auth::user()->role==20){
+            $json_data = Klien::where('member_created',false)
+            ->orderBy('id', 'desc')
+            ->with('marketing')
+            ->get();
+        }else{
+            $json_data = Klien::where('member_created',false)
+            ->where('marketing_id','=',\Auth::user()->id)
+            ->orderBy('id', 'desc')
+            ->with('marketing')
+            ->get();
+        }
         // return json_encode($json_data);
         return Datatables::of($json_data)->addIndexColumn()->make(true);
     }
