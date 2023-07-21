@@ -23,7 +23,9 @@ class KlienController extends Controller
     public function index(Request $request)
     {
         $marketings = User::where('role', '50')->get();
-        return view('klien.index', compact('marketings'));
+        $totalPerStatus = Klien::selectRaw('status, count(status) as total')->groupBY('status')->orderBY('total','DESC')->get();
+          // dd($status);
+        return view('klien.index', compact('marketings','totalPerStatus'));
     }
 
     public function getData(Request $request)
@@ -41,6 +43,35 @@ class KlienController extends Controller
             ->with('marketing')
             ->get();
         }
+
+        if ($request->potensi) {
+            $potensi = $request->potensi;
+            $json_data = Klien::where('member_created',false)
+            ->where('potensi','=',$potensi)
+            ->orderBy('id', 'desc')
+            ->with('marketing')
+            ->get();
+        }
+        
+        if ($request->source) {
+            $source = $request->source;
+            $json_data = Klien::where('member_created',false)
+            ->where('source','=',$source)
+            ->orderBy('id', 'desc')
+            ->with('marketing')
+            ->get();
+        }
+
+        if ($request->marketing) {
+            $marketing = $request->marketing;
+            $json_data = Klien::where('member_created',false)
+            ->where('marketing_id','=',$marketing)
+            ->orderBy('id', 'desc')
+            ->with('marketing')
+            ->get();
+        }
+
+       
         // return json_encode($json_data);
         return Datatables::of($json_data)->addIndexColumn()->make(true);
     }

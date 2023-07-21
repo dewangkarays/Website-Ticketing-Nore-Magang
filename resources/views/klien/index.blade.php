@@ -31,22 +31,72 @@
 				<h4><span class="font-weight-semibold">Home</span> - Data Leads</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
-		</div>
-	</div>
-	<!-- /page header -->
-
-	<!-- Content area -->
-	<div class="content">
-
-		<!-- Hover rows -->
-		<div class="card">
-			<div class="card-header header-elements-inline">
-			@if (Auth::user()->role==1 || Auth::user()->role==20 || Auth::user()->role==50)
-			<a href="{{ route('klien.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
+			@if (Auth::user()->role==1 || Auth::user()->role==20)
 			<a href={{ url('leads_excel')}} target="_blank"><button class="btn btn-success rounded-round"><i class="icon-file-excel mr-2"></i> Export Excel</button></a>
 			@endif
 		</div>
-			<div class="card">
+	</div>
+	<!-- /page header -->
+	<div class="content">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm">
+					<select style="width:200px; height:36px" onchange="potensi()" id="potensi" name="potensi" 
+					class="form-control select-search" data-user_id="0" required>
+						<option value="">-- Potensi --</option>
+						@foreach (config('custom.jenis_proyek') as $key => $value)
+							<option value="{{ $key }}">{{ $value }}</option>
+						@endforeach
+					</select>
+				</div>
+				<div class="col-sm">
+					<select style="width:200px; height:36px" onchange="source()" id="source" name="source" 
+					class="form-control select-search" data-user_id="0" required>
+						<option value="">-- Source --</option>
+						@foreach (config('custom.source') as $key => $value)
+							<option value="{{ $key }}">{{ $value }}</option>
+						@endforeach
+					</select>
+				</div>
+				<div class="col-sm">
+					@if (Auth::user()->role==1 || Auth::user()->role==20)
+							<select style="width:200px; height:36px" onchange="marketing()" id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
+								<option value="">-- Pilih Marketing --</option>
+								@foreach($marketings as $marketing)
+									<option value="{{$marketing->id}}">{{$marketing->nama}} </option>
+								@endforeach
+							</select>
+						@endif
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Content area -->
+	<div class="content">
+
+		
+		<!-- Hover rows -->
+		<div class="card">
+			<div class="card-header header-elements-inline">
+				@if (Auth::user()->role==1 || Auth::user()->role==20 || Auth::user()->role==50)
+				<a href="{{ route('klien.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
+				@endif
+{{-- 				
+					<table>
+						<tr>
+							<th>Status</th>
+							<th>Total Leads</th>
+						</tr>
+						@foreach($totalPerStatus as $status)
+						<tr>
+							<td>{{ $status->status }}</td>
+							<td>{{ $status->total }}</td>
+						</tr>
+						@endforeach
+					</table> --}}
+				
+			</div>
+			<hr>
 				<table class="table datatable-basic table-hover">
 					<thead>
 						<tr>
@@ -59,15 +109,14 @@
 							<th>Source</th>
 							{{-- <th>Alamat</th> --}}
 							<th>Marketing</th>
-							<th>Keterangan</th>
+							<th>Tanggal awal</th>
+							{{-- <th>Keterangan</th> --}}
 							<th class="text-center">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 					</tbody>
-				</table>
-			</div>
-			
+				</table>	
 		</div>
 		<!-- /hover rows -->
 
@@ -324,8 +373,11 @@
 					ajax: {
 						"url"   :"{{ route("klien.data") }}",
                         "type"  :"POST",
-                        "data"  :function ( d ) {
-                            d._token= "{{ csrf_token() }}";
+                        "data"  : {
+                            "_token" : "{{ csrf_token() }}",
+							"marketing" : $('#marketing_id').val(),
+							"source" 	: $('#source').val(),
+							"potensi" 	: $('#potensi').val(),
                         }
 					},
 					columns: [
@@ -433,12 +485,16 @@
 							}
 						},
 						{
-                        data: null,
-                        name: "keterangan_lain",
-                        render: (data, type, row) => {
-                            return data?.keterangan_lain ? stripHtml(data?.keterangan_lain) : '-'
-                        }
-                    	},
+							data: 'tanggal_kontakpertama',
+							name: 'tanggal_kontakpertama',
+						},
+						// {
+                        // data: null,
+                        // name: "keterangan_lain",
+                        // render: (data, type, row) => {
+                        //     return data?.keterangan_lain ? stripHtml(data?.keterangan_lain) : '-'
+                        // }
+                    	// },
 						{
 							data: null,
 							name: 'actions',
@@ -600,6 +656,26 @@
 		document.addEventListener('DOMContentLoaded', function() {
 		    DatatableBasic.init();
 		});
+
+		function potensi(){
+        $('.datatable-basic').DataTable().destroy();
+        DatatableBasic.init();
+        
+        // alert('Halodek')
+    }
+		function source(){
+			$('.datatable-basic').DataTable().destroy();
+			DatatableBasic.init();
+			
+		// alert('Halodek')
+    }
+		function marketing(){
+			$('.datatable-basic').DataTable().destroy();
+			DatatableBasic.init();
+				
+			// alert('Halodek')
+    }
+	
 	</script>
 	<script type="text/javascript">
 		$( document ).ready(function() {
