@@ -31,7 +31,7 @@
 				<h4><span class="font-weight-semibold">Home</span> - Data Leads</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
-			@if (Auth::user()->role==1 || Auth::user()->role==20)
+			@if (Auth::user()->role==1 || Auth::user()->role==20 || Auth::user()->role==50)
 			<a href={{ url('leads_excel')}} target="_blank"><button class="btn btn-success rounded-round"><i class="icon-file-excel mr-2"></i> Export Excel</button></a>
 			@endif
 		</div>
