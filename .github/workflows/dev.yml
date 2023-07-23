@@ -12,8 +12,8 @@ jobs:
       - name: Connect SSH & Pulling request
         uses: garygrossgarten/github-action-ssh@release
         with:
-          host: nore.co.id
-          username: u1077110
+          host: noretest.com
+          username: u1748803
           port: 65002
           privateKey: ${{ secrets.PRIVATE_KEY }}
           command: |
