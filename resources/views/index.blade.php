@@ -193,7 +193,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
+	{{-- <div class="row"> --}}
 		<!-- <h5><span class="font-weight">Info Klien</span></h5>
 	</div>
 	<div class="row">
@@ -700,7 +700,7 @@
 		<hr><hr>
 	</div> -->
 	<!-- /quick stats boxes -->
-<!-- </div> -->
+ 	</div>
 
 @endsection
 
