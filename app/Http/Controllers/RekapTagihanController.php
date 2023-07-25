@@ -29,10 +29,15 @@ class RekapTagihanController extends Controller
      */
     public function index()
     {
+        $totalTagihan = RekapTagihan::where('status', '<', 4)->sum('total');
+        $totalTerbayar = RekapTagihan::where('status', '<', 4)->sum('jml_terbayar');
+    
+        $totalSisatagihan = $totalTagihan - $totalTerbayar;
+
         $rekaptagihans = RekapTagihan::where('status','<','4')->orderByDesc('created_at')->get();
         $tagihans = Tagihan::all();
         $users = User::where('role','>=','80')->get();
-        return view('rekaptagihans.index', compact('rekaptagihans','tagihans', 'users'));
+        return view('rekaptagihans.index', compact('rekaptagihans','tagihans', 'users','totalTagihan','totalTerbayar','totalSisatagihan'));
     }
 
     public function history()

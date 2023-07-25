@@ -51,6 +51,24 @@
                         </thead>
                         <tbody>
                         </tbody>
+                        <tr>
+                            <td rowspan="1" colspan="4">
+                                <div class="text-right">
+                                    <h6> Total </h6>
+                                </div>
+                            </td>
+                            <td rowspan="1" colspan="1">
+                                <div class="text-right">
+                                    <h6>{{ $totalTagihan }}</h6>
+                                </div>
+                            </td>
+                            <td rowspan="1" colspan="2">
+                                <div class="text-right">
+                                    <h6>{{ $totalSisatagihan }}</h6>
+                                </div>
+                            </td>
+                        </tr>  
+                         
                     </table>
                 </form>
             </div>
