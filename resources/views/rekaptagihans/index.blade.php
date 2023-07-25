@@ -59,12 +59,12 @@
                             </td>
                             <td rowspan="1" colspan="1">
                                 <div class="text-right">
-                                    <h6>{{ $totalTagihan }}</h6>
+                                    <h6>{{ number_format($totalTagihan, 0, ',', '.') }}</h6>
                                 </div>
                             </td>
                             <td rowspan="1" colspan="2">
                                 <div class="text-right">
-                                    <h6>{{ $totalSisatagihan }}</h6>
+                                    <h6>{{ number_format($totalSisatagihan, 0, ',', '.') }}</h6>
                                 </div>
                             </td>
                         </tr>  
