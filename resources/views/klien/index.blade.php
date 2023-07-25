@@ -31,12 +31,10 @@
 				<h4><span class="font-weight-semibold">Home</span> - Data Leads</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
-			@if (Auth::user()->role==1 || Auth::user()->role==20 || Auth::user()->role==50)
-			<a href={{ url('leads_excel')}} target="_blank"><button class="btn btn-success rounded-round"><i class="icon-file-excel mr-2"></i> Export Excel</button></a>
-			@endif
 		</div>
 	</div>
 	<!-- /page header -->
+	@if (Auth::user()->role==1 || Auth::user()->role==20)
 	<div class="content">
 		<div class="container">
 			<div class="row">
@@ -59,17 +57,58 @@
 					</select>
 				</div>
 				<div class="col-sm">
-					@if (Auth::user()->role==1 || Auth::user()->role==20)
-							<select style="width:200px; height:36px" onchange="marketing()" id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
-								<option value="">-- Pilih Marketing --</option>
-								@foreach($marketings as $marketing)
-									<option value="{{$marketing->id}}">{{$marketing->nama}} </option>
-								@endforeach
-							</select>
-						@endif
+					<select style="width:200px; height:36px" onchange="leads()" id="leads" name="leads" 
+					class="form-control select-search" data-user_id="0" required>
+						<option value="">-- Status Lead --</option>
+						@foreach (config('custom.status_klien') as $key => $value)
+							<option value="{{ $key }}">{{ $value }}</option>
+						@endforeach
+					</select>
+				</div>
+				<div class="col-sm">
+					<select style="width:200px; height:36px" onchange="marketing()" id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
+						<option value="">-- Pilih Marketing --</option>
+						@foreach($marketings as $marketing)
+							<option value="{{$marketing->id}}">{{$marketing->nama}} </option>
+						@endforeach
+					</select>
 				</div>
 			</div>
 		</div>
+		@elseif (Auth::user()->role==50)
+		<div class="content">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm">
+						<select style="width:200px; height:36px" onchange="potensi()" id="potensi" name="potensi" 
+						class="form-control select-search" data-user_id="0" required>
+							<option value="">-- Potensi --</option>
+							@foreach (config('custom.jenis_proyek') as $key => $value)
+								<option value="{{ $key }}">{{ $value }}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="col-sm">
+						<select style="width:200px; height:36px" onchange="source()" id="source" name="source" 
+						class="form-control select-search" data-user_id="0" required>
+							<option value="">-- Source --</option>
+							@foreach (config('custom.source') as $key => $value)
+								<option value="{{ $key }}">{{ $value }}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="col-sm">
+						<select style="width:200px; height:36px" onchange="leads()" id="leads" name="leads" 
+						class="form-control select-search" data-user_id="0" required>
+							<option value="">-- Status Lead --</option>
+							@foreach (config('custom.status_klien') as $key => $value)
+								<option value="{{ $key }}">{{ $value }}</option>
+							@endforeach
+						</select>
+					</div>
+				</div>
+			</div>
+		@endif
 	</div>
 	<!-- Content area -->
 	<div class="content">
@@ -80,43 +119,84 @@
 			<div class="card-header header-elements-inline">
 				@if (Auth::user()->role==1 || Auth::user()->role==20 || Auth::user()->role==50)
 				<a href="{{ route('klien.create')}}"><button type="button" class="btn btn-success rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
+				<a href={{ url('leads_excel')}} target="_blank"><button class="btn btn-success rounded-round"><i class="icon-file-excel mr-2"></i> Export Excel</button></a>
 				@endif
-{{-- 				
-					<table>
-						<tr>
-							<th>Status</th>
-							<th>Total Leads</th>
-						</tr>
-						@foreach($totalPerStatus as $status)
-						<tr>
-							<td>{{ $status->status }}</td>
-							<td>{{ $status->total }}</td>
-						</tr>
-						@endforeach
-					</table> --}}
-				
 			</div>
 			<hr>
-				<table class="table datatable-basic table-hover">
-					<thead>
-						<tr>
-							<th>No</th>
-							<th>Nama Calon Klien</th>
-							<th>Nama Perusahaan</th>
-							{{-- <th>Jenis Perusahaan</th> --}}
-							<th>Potensi</th>
-							<th>Status Lead</th>
-							<th>Source</th>
-							{{-- <th>Alamat</th> --}}
-							<th>Marketing</th>
-							<th>Tanggal awal</th>
-							{{-- <th>Keterangan</th> --}}
-							<th class="text-center">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>	
+			<div class="card-body">
+				<div class="row">
+					<div class="col text-center">
+						<span class="font-weight-semibold" style="font-size: 15px">
+							Total Leads
+						</span>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-1 offset-1 text-center">
+						<span class="font-weight-semibold" style="font-size: 100%">
+							Visit:{{$totalPerStatus['visit']}}
+						</span>
+					</div>
+					<div class="col-md-1 text-center">
+						<span class="font-weight-semibold" style="font-size: 100%">
+							Kenal:{{$totalPerStatus['kenal']}}
+						</span>
+					</div>
+					<div class="col-md-2 text-center">
+						<span class="font-weight-semibold" style="font-size: 100%">
+							Negosiasi:{{$totalPerStatus['negosiasi']}}
+						</span>
+					</div>
+					<div class="col-md-1 text-center">
+						<span class="font-weight-semibold" style="font-size: 100%">
+							Deal:{{$totalPerStatus['deal']}}
+						</span>
+					</div>
+					<div class="col-md-2 text-center">
+						<span class="font-weight-semibold" style="font-size: 100%">
+							Pending:{{$totalPerStatus['pending']}}
+						</span>
+					</div>
+					<div class="col-md-1 text-center">
+						<span class="font-weight-semibold" style="font-size: 100%">
+							Bayar:{{$totalPerStatus['bayar']}}
+						</span>
+					</div>
+					<div class="col-md-1 text-center">
+						<span class="font-weight-semibold" style="font-size: 100%">
+							Ended:{{$totalPerStatus['ended']}}
+						</span>
+					</div>
+					<div class="col-md-1 text-center">
+						<span class="font-weight-semibold" style="font-size: 100%">
+							Live:{{$totalPerStatus['live']}}
+						</span>
+					</div>
+				</div>
+				<hr>
+					<table class="table datatable-basic table-hover">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Nama Calon Klien</th>
+								<th>Nama Perusahaan</th>
+								{{-- <th>Jenis Perusahaan</th> --}}
+								<th>Potensi</th>
+								<th>Status Lead</th>
+								<th>Source</th>
+								{{-- <th>Alamat</th> --}}
+								<th>Marketing</th>
+								<th>Tanggal awal</th>
+								{{-- <th>Keterangan</th> --}}
+								<th class="text-center">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>	
+			</div>
+			
 		</div>
 		<!-- /hover rows -->
 
@@ -377,6 +457,7 @@
                             "_token" : "{{ csrf_token() }}",
 							"marketing" : $('#marketing_id').val(),
 							"source" 	: $('#source').val(),
+							"leads" 	: $('#leads').val(),
 							"potensi" 	: $('#potensi').val(),
                         }
 					},
@@ -664,6 +745,12 @@
         // alert('Halodek')
     }
 		function source(){
+			$('.datatable-basic').DataTable().destroy();
+			DatatableBasic.init();
+			
+		// alert('Halodek')
+    }
+		function leads(){
 			$('.datatable-basic').DataTable().destroy();
 			DatatableBasic.init();
 			

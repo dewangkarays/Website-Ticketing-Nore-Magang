@@ -16,15 +16,41 @@ use App\Model\RekapTagihan;
 use App\Exports\KlienExport; //plugin excel
 use Maatwebsite\Excel\Facades\Excel;
 use Datatables;
-
+use DB;
 
 class KlienController extends Controller
 {
     public function index(Request $request)
     {
         $marketings = User::where('role', '50')->get();
-        $totalPerStatus = Klien::selectRaw('status, count(status) as total')->groupBY('status')->orderBY('total','DESC')->get();
-          // dd($status);
+        // $totalPerStatus = Klien::selectRaw('status, count(status) as total')->where('member_created',false)->groupBY('status')->orderBY('total','DESC')->get();
+        if(\Auth::user()->role==1 || \Auth::user()->role==20){
+            $totalPerStatus = Klien::select(
+                DB::raw('SUM(case when status = "1" then 1 else 0 end) as visit'),
+                DB::raw('SUM(case when status = "2" then 1 else 0 end) as kenal'),
+                DB::raw('SUM(case when status = "3" then 1 else 0 end) as negosiasi'),
+                DB::raw('SUM(case when status = "4" then 1 else 0 end) as deal'),
+                DB::raw('SUM(case when status = "5" then 1 else 0 end) as pending'),
+                DB::raw('SUM(case when status = "6" then 1 else 0 end) as bayar'),
+                DB::raw('SUM(case when status = "7" then 1 else 0 end) as ended'),
+                DB::raw('SUM(case when status = "8" then 1 else 0 end) as live'),
+            )
+            ->where('member_created',false)->first(); 
+        }else{
+            $totalPerStatus = Klien::select(
+                DB::raw('SUM(case when status = "1" then 1 else 0 end) as visit'),
+                DB::raw('SUM(case when status = "2" then 1 else 0 end) as kenal'),
+                DB::raw('SUM(case when status = "3" then 1 else 0 end) as negosiasi'),
+                DB::raw('SUM(case when status = "4" then 1 else 0 end) as deal'),
+                DB::raw('SUM(case when status = "5" then 1 else 0 end) as pending'),
+                DB::raw('SUM(case when status = "6" then 1 else 0 end) as bayar'),
+                DB::raw('SUM(case when status = "7" then 1 else 0 end) as ended'),
+                DB::raw('SUM(case when status = "8" then 1 else 0 end) as live'),
+            )
+            ->where('marketing_id','=',\Auth::user()->id)->where('member_created',false)->first();  
+        }
+        
+        //    dd($totalPerStatus);
         return view('klien.index', compact('marketings','totalPerStatus'));
     }
 
@@ -44,6 +70,7 @@ class KlienController extends Controller
             ->get();
         }
 
+    if(\Auth::user()->role==1 || \Auth::user()->role==20){
         if ($request->potensi) {
             $potensi = $request->potensi;
             $json_data = Klien::where('member_created',false)
@@ -62,6 +89,15 @@ class KlienController extends Controller
             ->get();
         }
 
+        if ($request->leads) {
+            $leads = $request->leads;
+            $json_data = Klien::where('member_created',false)
+            ->where('status','=',$leads)
+            ->orderBy('id', 'desc')
+            ->with('marketing')
+            ->get();
+        }
+
         if ($request->marketing) {
             $marketing = $request->marketing;
             $json_data = Klien::where('member_created',false)
@@ -70,6 +106,49 @@ class KlienController extends Controller
             ->with('marketing')
             ->get();
         }
+
+    }else{
+        if ($request->potensi) {
+            $potensi = $request->potensi;
+            $json_data = Klien::where('member_created',false)
+            ->where('marketing_id','=',\Auth::user()->id)
+            ->where('potensi','=',$potensi)
+            ->orderBy('id', 'desc')
+            ->with('marketing')
+            ->get();
+        }
+        
+        if ($request->source) {
+            $source = $request->source;
+            $json_data = Klien::where('member_created',false)
+            ->where('marketing_id','=',\Auth::user()->id)
+            ->where('source','=',$source)
+            ->orderBy('id', 'desc')
+            ->with('marketing')
+            ->get();
+        }
+
+        if ($request->leads) {
+            $leads = $request->leads;
+            $json_data = Klien::where('member_created',false)
+            ->where('marketing_id','=',\Auth::user()->id)
+            ->where('status','=',$leads)
+            ->orderBy('id', 'desc')
+            ->with('marketing')
+            ->get();
+        }
+
+        if ($request->marketing) {
+            $marketing = $request->marketing;
+            $json_data = Klien::where('member_created',false)
+            ->where('marketing_id','=',\Auth::user()->id)
+            ->where('marketing_id','=',$marketing)
+            ->orderBy('id', 'desc')
+            ->with('marketing')
+            ->get();
+        }
+    }
+        
 
        
         // return json_encode($json_data);
