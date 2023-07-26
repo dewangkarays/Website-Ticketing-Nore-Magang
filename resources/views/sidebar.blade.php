@@ -107,7 +107,7 @@ ul{
 				</li>
 
 				{{-- Karyawan non keuangan --}}
-				@elseif(Auth::user()->role>20 && \Auth::user()->role< 40)
+				@elseif(Auth::user()->role>20 && \Auth::user()->role<= 40)
 				<li class="nav-item">
 					<a href="{{ url('/karyawan') }}" class="nav-link {{ (request()->is('karyawan*')) ? 'active' : '' }}">
 						<i class="icon-home4"></i>
