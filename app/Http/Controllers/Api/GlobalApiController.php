@@ -249,7 +249,7 @@ class GlobalApiController extends Controller
             } else {
                 return response()->json([
                     'code' => 400,
-                'message' => 'Token Invalid',
+                    'message' => 'Token Invalid',
                 ])(400,'Success','Token Expired');
             }
         } else {

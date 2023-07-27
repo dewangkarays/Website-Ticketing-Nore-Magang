@@ -28,7 +28,12 @@ class LoginApiController extends Controller
             'code'=>200, 
             'status'=>'Success', 
             'message'=>'Login Success', 
-            'data'=> ['user'=>auth()->user(), 'token'=>$accToken]
+            'data'=> [
+                'token'=>$accToken,
+                'role'=> [
+                    'id'   => auth()->user()->role,
+                    'nama' => config('custom.role.'.auth()->user()->role)
+            ]]
         ]);
     }
     
