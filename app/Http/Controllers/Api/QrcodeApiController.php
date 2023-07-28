@@ -15,18 +15,18 @@ class QrcodeApiController extends Controller
 {
     public function index()
     {
-        $month = Carbon::now();
-        $start = Carbon::parse($month)->startOfMonth();
-        $end = Carbon::parse($month)->endOfMonth();
+        // $month = Carbon::now();
+        // $start = Carbon::parse($month)->startOfMonth();
+        // $end = Carbon::parse($month)->endOfMonth();
 
-        $dates = [];
-        while ($start->lte($end)) {
-            $dates[] = [
-                'tanggal' => $start->copy()->format('Y-m-d'),
-                'day' => $start->copy()->format('d'), // for display purposes
-            ];
-            $start->addDay();
-        }
+        // $dates = [];
+        // while ($start->lte($end)) {
+        //     $dates[] = [
+        //         'tanggal' => $start->copy()->format('Y-m-d'),
+        //         'day' => $start->copy()->format('d'), // for display purposes
+        //     ];
+        //     $start->addDay();
+        // }
 
         // // Get data for all users
         // $karyawans_all = User::where('role', '<=' ,'50')
@@ -63,11 +63,11 @@ class QrcodeApiController extends Controller
             ->get();
 
         $data = [
-            'dates' => $dates,
-            'presensi' => $presensi,
-            'sakit' => $sakit,
-            'izin' => $izin,
-            'sisa_cuti' => $sisa_cuti,
+            // 'dates' => $dates,
+            // 'presensi' => $presensi,
+            // 'sakit' => $sakit,
+            // 'izin' => $izin,
+            // 'sisa_cuti' => $sisa_cuti,
             'karyawans' => $karyawans,
             // 'presensi_all' => $presensi_all,
             // 'sakit_all' => $sakit_all,
