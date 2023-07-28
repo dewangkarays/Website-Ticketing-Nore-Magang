@@ -33,7 +33,7 @@ class LoginApiController extends Controller
                 'user' => auth()->user(),
                 'role'=> [
                     'id'   => auth()->user()->role,
-                    'nama' => config('custom.role.'.auth()->user()->role)
+                    'divisi' => config('custom.role.'.auth()->user()->role)
             ]]
         ]);
     }
