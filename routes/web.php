@@ -88,6 +88,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 		//Routing Presensi
 		Route::get('/presensi', 'PresensiController@index')->name('presensi');
+		Route::get('/generateqr', 'QRController@index')->name('generateqr');
 		Route::get('/presensi/create', 'PresensiController@create')->name('presensi.create');
 		Route::post('/presensi/store', 'PresensiController@store')->name('presensi.store');
 		Route::get('/presensi/{id}', 'PresensiController@show')->name('presensi.show');
@@ -95,6 +96,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('/getsisacuti/{tahun}/{id}', 'PresensiController@getsisacuti');
 		Route::get('/belumpresensi', 'PresensiController@belumpresensi')->name('belumpresensi');
 		Route::get('/getbelumpresensi', 'PresensiController@getbelumpresensi');
+		Route::get('/exportpdf', 'QRController@exportpdf');
 
 
 		//Routing Kalender

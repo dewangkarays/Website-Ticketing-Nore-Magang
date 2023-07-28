@@ -291,7 +291,7 @@ ul{
 							@endif
 						</span>
 					</a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('kalender*','presensi*','cuti*', 'verifikasi-cuti*', 'history-cuti*')) ? 'block' : 'none' }};">
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('kalender*','presensi*','cuti*', 'verifikasi-cuti*', 'history-cuti*', 'generateqr*')) ? 'block' : 'none' }};">
 						<li class="nav-item">
 							<a href="/kalender" class="nav-link {{ (request()->is('kalender*')) ? 'active' : '' }}">
 								<i class="icon-calendar2"></i>
@@ -308,6 +308,16 @@ ul{
 								</span>
 							</a>
 						</li>
+						@if (Auth::user()->role==1)
+						<li class="nav-item">
+							<a href="/generateqr" class="nav-link {{ (request()->is('generateqr*')) ? 'active' : '' }}">
+								<i class="icon-qrcode"></i>
+								<span>
+									Cetak Kode QR
+								</span>
+							</a>
+						</li>
+						@endif
 						<li class="nav-item nav-item-submenu">
 							<a href="{{ url('/cuti') }}" class="nav-link {{ (request()->is('cuti*', 'verifikasi-cuti*', 'history-cuti*')) ? 'active' : '' }}">
 								<i class="icon-drawer3"></i>
