@@ -37,6 +37,10 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('/getcustomer',  'Api\GlobalApiController@getCustomer');
     Route::get('/getkaryawan',  'Api\GlobalApiController@getKaryawan');
     Route::get('/getattachment/{id}',  'Api\GlobalApiController@getAttachment');
-    
+    // Get presensi
+    Route::get('/getpresensi',  'Api\QrcodeApiController@index');
+    Route::get('/createpresensi',  'Api\QrcodeApiController@create');
+    Route::post('/storepresensi',  'Api\QrcodeApiController@store');
+
     Route::get('/logout',  'Api\LoginApiController@logout');
 });
