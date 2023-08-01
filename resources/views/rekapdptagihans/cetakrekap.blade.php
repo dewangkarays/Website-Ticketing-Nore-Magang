@@ -151,6 +151,11 @@
         <h5>Lampiran {{$i}} - {{ config('custom.jenis_lampiran.'.$lampiran->jenis_lampiran) }} {{ $lampiran->keterangan}}</h5>
         @endif
     @endif
+    @if($lampiran->jenis_lampiran == 3 )
+    <div align="center">
+        <img src="{{url($lampiran->gambar)}}" style="max-width:110%;object-fit: cover;">
+    </div>
+    @else
     @if($lampiran->jenis_lampiran != 2)
         <div align="center">
             <img src="{{url($lampiran->gambar)}}" style="max-width:110%;max-height:300px;object-fit: cover;margin-bottom: 16px;page-break-inside:avoid; ">
@@ -164,6 +169,8 @@
         <div align="center">
             <img src="{{url($lampiran->gambar)}}" style="max-width:90%;max-height:300px;object-fit: cover;margin-bottom: 16px;">
         </div>
+    @endif
+    
     @endif
     @if ($lampiran->jenis_lampiran != $jenis_terakhir)
     @php ($i++)
