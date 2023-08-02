@@ -33,7 +33,9 @@ class LoginApiController extends Controller
                 'user' => auth()->user(),
                 'role'=> [
                     'id'   => auth()->user()->role,
-                    'divisi' => isset(config('custom.role')[auth()->user()->role]) ? config('custom.role')[auth()->user()->role] : null,
+                    'posisi' =>config('custom.role.'.auth()->user()->role),
+                    
+                  
             ]]
         ]);
     }
