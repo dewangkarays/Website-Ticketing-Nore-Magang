@@ -23,7 +23,11 @@ class LoginApiController extends Controller
         }
         
         $accToken = auth()->user()->createToken('authToken')->accessToken;
-
+        $user = auth()->user();
+        $roleId = $user->role;
+        $user->divisi = config('custom.role.' . $roleId, null);
+        
+    
         return response()->json([
             'code'=>200, 
             'status'=>'Success', 
@@ -31,12 +35,11 @@ class LoginApiController extends Controller
             'data'=> [
                 'token'=>$accToken,
                 'user' => auth()->user(),
-                'role'=> [
-                    'id'   => auth()->user()->role,
-                    'posisi' =>config('custom.role.'.auth()->user()->role),
-                    
-                  
-            ]]
+                // 'posisi' => $user, 
+                // 'divisi' => config('custom.role.' . $roleId, null),
+                 
+                
+            ]
         ]);
     }
     
