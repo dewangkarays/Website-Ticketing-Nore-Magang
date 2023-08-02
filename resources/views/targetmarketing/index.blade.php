@@ -73,6 +73,7 @@
 		<!-- /hover rows -->
 
 	</div>
+</div>
 	<!-- /content area -->
 
     <!-- Tambah modal -->
