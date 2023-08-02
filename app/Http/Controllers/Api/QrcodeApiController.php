@@ -48,8 +48,8 @@ class QrcodeApiController extends Controller
             ->with(['presensi' => function ($q) {
                 $q->orderBy('tanggal'); 
             }])
-            ->get()
-            ->toArray();
+            ->first();
+            // ->toArray();
 
         $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status', '3')->count();
         $izin = Presensi::where('user_id', \Auth::user()->id)->where('status', '2')->count();     
@@ -68,13 +68,39 @@ class QrcodeApiController extends Controller
             // 'sakit' => $sakit,
             // 'izin' => $izin,
             // 'sisa_cuti' => $sisa_cuti,
-            'karyawans' => $karyawans,
+            'presensi' =>  $presensi->map(function ($item) {
+                $statusMap = [
+                    '1' => 'Hadir',
+                    '2' => 'Izin',
+                    '3' => 'Sakit',
+                    '4' => 'WFH',
+                ];
+        
+                $item->status_kehadiran = $statusMap[$item->status];
+                return $item;
+            }),
+            //     'izin'=> $karyawans->izin,
+            //     'sakit'=>
+            // ],
             // 'presensi_all' => $presensi_all,
             // 'sakit_all' => $sakit_all,
             // 'izin_all' => $izin_all,
             // 'karyawans_all' => $karyawans_all,
             'years' => $years,
             'WFH' => $WFH,
+            'id'     => auth()->user()->status,
+            'status' => config('custom.status_presensi'.auth()->user()->status),
+            // 'presensi' => $presensi->map(function ($item) {
+            //     $statusMap = [
+            //         '1' => 'Hadir',
+            //         '2' => 'Izin',
+            //         '3' => 'Sakit',
+            //         '4' => 'WFH',
+            //     ];
+        
+            //     $item->status_label = $statusMap[$item->status];
+            //     return $item;
+            // }),
         ];
 
          return response()->json([
