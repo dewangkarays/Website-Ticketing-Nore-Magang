@@ -51,6 +51,7 @@ class QrcodeApiController extends Controller
             ->first();
             // ->toArray();
 
+        $hadir = Presensi::where('user_id', \Auth::user()->id)->where('status', '1')->count();
         $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status', '3')->count();
         $izin = Presensi::where('user_id', \Auth::user()->id)->where('status', '2')->count();     
         $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status', '4')->count(); 
@@ -65,9 +66,11 @@ class QrcodeApiController extends Controller
         $data = [
             // 'dates' => $dates,
             // 'presensi' => $presensi,
-            // 'sakit' => $sakit,
-            // 'izin' => $izin,
-            // 'sisa_cuti' => $sisa_cuti,
+            'Hadir'=> $hadir,
+            'sakit' => $sakit,
+            'izin' => $izin,
+            'WFH' => $WFH,
+            'sisa_cuti' => $sisa_cuti,
             'presensi' =>  $presensi->map(function ($item) {
                 $statusMap = [
                     '1' => 'Hadir',

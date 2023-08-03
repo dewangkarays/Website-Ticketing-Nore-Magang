@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Model\Presensi;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class LoginApiController extends Controller
 {
@@ -26,6 +27,12 @@ class LoginApiController extends Controller
         $user = auth()->user();
         $roleId = $user->role;
         $user->divisi = config('custom.role.' . $roleId, null);
+
+        $hadir = Presensi::where('user_id', \Auth::user()->id)->where('status', '1')->count();
+        $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status', '3')->count();
+        $izin = Presensi::where('user_id', \Auth::user()->id)->where('status', '2')->count();     
+        $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status', '4')->count(); 
+        $sisa_cuti = 12 - $izin;
         
     
         return response()->json([
@@ -35,6 +42,13 @@ class LoginApiController extends Controller
             'data'=> [
                 'token'=>$accToken,
                 'user' => auth()->user(),
+                'jumlah_kehadiran'=> [
+                    'hadir' => $hadir,
+                   'sakit'=> $sakit,
+                    'izin'=> $izin,
+                    'WFH'=>$WFH,
+                    'sisa_cuti'=>$sisa_cuti
+                ]
                 // 'posisi' => $user, 
                 // 'divisi' => config('custom.role.' . $roleId, null),
                  
