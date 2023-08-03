@@ -34,21 +34,27 @@ class LoginApiController extends Controller
         $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status', '4')->count(); 
         $sisa_cuti = 12 - $izin;
         
-    
+        $user->jumlah_kehadiran = [
+            'hadir' => $hadir,
+            'sakit' => $sakit,
+            'izin' => $izin,
+            'WFH' => $WFH,
+            'sisa_cuti' => $sisa_cuti
+        ];
         return response()->json([
             'code'=>200, 
             'status'=>'Success', 
             'message'=>'Login Success', 
             'data'=> [
                 'token'=>$accToken,
-                'user' => auth()->user(),
-                'jumlah_kehadiran'=> [
-                    'hadir' => $hadir,
-                   'sakit'=> $sakit,
-                    'izin'=> $izin,
-                    'WFH'=>$WFH,
-                    'sisa_cuti'=>$sisa_cuti
-                ]
+                'user' => $user,
+                // 'jumlah_kehadiran'=> [
+                //     'hadir' => $hadir,
+                //    'sakit'=> $sakit,
+                //     'izin'=> $izin,
+                //     'WFH'=>$WFH,
+                //     'sisa_cuti'=>$sisa_cuti
+                // ]
                 // 'posisi' => $user, 
                 // 'divisi' => config('custom.role.' . $roleId, null),
                  
