@@ -33,12 +33,15 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="content">
+
 	<!-- /page header -->
 	@if (Auth::user()->role==1 || Auth::user()->role==20)
-	<div class="content">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm">
+	<div class="card">
+		<div class="card-body">
+			<div class="row justify-content-between">
+				<div class="col">
 					<select style="width:200px; height:36px" onchange="potensi()" id="potensi" name="potensi" 
 					class="form-control select-search" data-user_id="0" required>
 						<option value="">-- Potensi --</option>
@@ -47,7 +50,7 @@
 						@endforeach
 					</select>
 				</div>
-				<div class="col-sm">
+				<div class="col">
 					<select style="width:200px; height:36px" onchange="source()" id="source" name="source" 
 					class="form-control select-search" data-user_id="0" required>
 						<option value="">-- Source --</option>
@@ -56,7 +59,7 @@
 						@endforeach
 					</select>
 				</div>
-				<div class="col-sm">
+				<div class="col">
 					<select style="width:200px; height:36px" onchange="leads()" id="leads" name="leads" 
 					class="form-control select-search" data-user_id="0" required>
 						<option value="">-- Status Lead --</option>
@@ -65,7 +68,7 @@
 						@endforeach
 					</select>
 				</div>
-				<div class="col-sm">
+				<div class="col">
 					<select style="width:200px; height:36px" onchange="marketing()" id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
 						<option value="">-- Pilih Marketing --</option>
 						@foreach($marketings as $marketing)
@@ -75,11 +78,12 @@
 				</div>
 			</div>
 		</div>
+	</div>
 		@elseif (Auth::user()->role==50)
-		<div class="content">
-			<div class="container">
+		<div class="card">
+		<div class="card-body">
 				<div class="row">
-					<div class="col-sm">
+					<div class="col">
 						<select style="width:200px; height:36px" onchange="potensi()" id="potensi" name="potensi" 
 						class="form-control select-search" data-user_id="0" required>
 							<option value="">-- Potensi --</option>
@@ -88,7 +92,7 @@
 							@endforeach
 						</select>
 					</div>
-					<div class="col-sm">
+					<div class="col">
 						<select style="width:200px; height:36px" onchange="source()" id="source" name="source" 
 						class="form-control select-search" data-user_id="0" required>
 							<option value="">-- Source --</option>
@@ -97,7 +101,7 @@
 							@endforeach
 						</select>
 					</div>
-					<div class="col-sm">
+					<div class="col">
 						<select style="width:200px; height:36px" onchange="leads()" id="leads" name="leads" 
 						class="form-control select-search" data-user_id="0" required>
 							<option value="">-- Status Lead --</option>
@@ -108,12 +112,11 @@
 					</div>
 				</div>
 			</div>
-		@endif
-	</div>
-	<!-- Content area -->
-	<div class="content">
+		</div>
+@endif
 
-		
+	<!-- Content area -->
+	
 		<!-- Hover rows -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
