@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Model\Presensi;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class LoginApiController extends Controller
 {
@@ -23,6 +24,28 @@ class LoginApiController extends Controller
         }
         
         $accToken = auth()->user()->createToken('authToken')->accessToken;
+        $user = auth()->user();
+        $roleId = $user->role;
+        $user->divisi = config('custom.role.' . $roleId, null);
+
+        $hadir = Presensi::where('user_id', \Auth::user()->id)->where('status', '1')->count();
+        $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status', '3')->count();
+        $izin = Presensi::where('user_id', \Auth::user()->id)->where('status', '2')->count();     
+        $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status', '4')->count(); 
+        $sisa_cuti = 12 - $izin;
+        
+        // $user->jumlah_kehadiran = [
+        //     'hadir' => $hadir,
+        //     'sakit' => $sakit,
+        //     'izin' => $izin,
+        //     'WFH' => $WFH,
+        //     'sisa_cuti' => $sisa_cuti
+        // ];
+        $user->hadir = $hadir;
+        $user->sakit = $sakit;
+        $user->izin = $izin;
+        $user->WFH = $WFH;
+        $user->sisa_cuti = $sisa_cuti;
 
         return response()->json([
             'code'=>200, 
@@ -30,11 +53,19 @@ class LoginApiController extends Controller
             'message'=>'Login Success', 
             'data'=> [
                 'token'=>$accToken,
-                'user' => auth()->user(),
-                'role'=> [
-                    'id'   => auth()->user()->role,
-                    'divisi' => config('custom.role.'.auth()->user()->role)
-            ]]
+                'user' => $user,
+                // 'jumlah_kehadiran'=> [
+                //     'hadir' => $hadir,
+                //    'sakit'=> $sakit,
+                //     'izin'=> $izin,
+                //     'WFH'=>$WFH,
+                //     'sisa_cuti'=>$sisa_cuti
+                // ]
+                // 'posisi' => $user, 
+                // 'divisi' => config('custom.role.' . $roleId, null),
+                 
+                
+            ]
         ]);
     }
     
