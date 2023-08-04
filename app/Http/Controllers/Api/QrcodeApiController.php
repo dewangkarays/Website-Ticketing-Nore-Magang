@@ -59,6 +59,10 @@ class QrcodeApiController extends Controller
         $user = auth()->user();
         $roleId = $user->role;
         $user->divisi = config('custom.role.' . $roleId, null);
+        // $namaDandivisi = [
+        //     'nama' => $user->nama,
+        //     'divisi' => $user->divisi,
+        // ];
 
         $years = Presensi::selectRaw('year(tanggal) as tahun')
             ->whereNotNull('status')
@@ -69,7 +73,9 @@ class QrcodeApiController extends Controller
         $data = [
             // 'dates' => $dates,
             // 'presensi' => $presensi,
-            'user' => $user,
+            'nama' => $user->nama,
+            'divisi' => $user->divisi,
+            // 'user' => $namaDandivisi,
             'Hadir'=> $hadir,
             'sakit' => $sakit,
             'izin' => $izin,
@@ -81,10 +87,12 @@ class QrcodeApiController extends Controller
                     '2' => 'Izin',
                     '3' => 'Sakit',
                     '4' => 'WFH',
+                    
                 ];
         
                 $item->status_kehadiran = $statusMap[$item->status];
                 return $item;
+                
             }),
             //     'izin'=> $karyawans->izin,
             //     'sakit'=>
