@@ -56,6 +56,9 @@ class QrcodeApiController extends Controller
         $izin = Presensi::where('user_id', \Auth::user()->id)->where('status', '2')->count();     
         $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status', '4')->count(); 
         $sisa_cuti = 12 - $izin;
+        $user = auth()->user();
+        $roleId = $user->role;
+        $user->divisi = config('custom.role.' . $roleId, null);
 
         $years = Presensi::selectRaw('year(tanggal) as tahun')
             ->whereNotNull('status')
@@ -66,11 +69,12 @@ class QrcodeApiController extends Controller
         $data = [
             // 'dates' => $dates,
             // 'presensi' => $presensi,
+            'user' => $user,
             'Hadir'=> $hadir,
             'sakit' => $sakit,
             'izin' => $izin,
             'WFH' => $WFH,
-            'sisa_cuti' => $sisa_cuti,
+            // 'sisa_cuti' => $sisa_cuti,
             'presensi' =>  $presensi->map(function ($item) {
                 $statusMap = [
                     '1' => 'Hadir',
