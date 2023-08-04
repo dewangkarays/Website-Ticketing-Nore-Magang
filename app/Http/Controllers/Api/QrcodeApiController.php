@@ -80,7 +80,7 @@ class QrcodeApiController extends Controller
             'sakit' => $sakit,
             'izin' => $izin,
             'WFH' => $WFH,
-            // 'sisa_cuti' => $sisa_cuti,
+            'sisa_cuti' => $sisa_cuti,
             'presensi' =>  $presensi->map(function ($item) {
                 $statusMap = [
                     '1' => 'Hadir',
