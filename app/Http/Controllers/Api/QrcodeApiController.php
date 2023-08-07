@@ -6,10 +6,14 @@ use Image;
 use Carbon\Carbon;
 use App\Model\Cuti;
 use App\Model\User;
+use Ramsey\Uuid\Uuid;
 use App\Model\Presensi;
+use App\Model\PresensiQR;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class QrcodeApiController extends Controller
 {
@@ -208,6 +212,61 @@ class QrcodeApiController extends Controller
         $presensi->save();
 
         return response()->json(['message' => 'Presensi Saved!'], 201);
+     }
+
+     public function storeqr(Request $request)
+     {  
+        // dd($request);
+        if (\Auth::check()) {
+            $user = \Auth::user();
+            $request->validate([
+                'uuid' => 'required',
+                
+            ]);
+            $uuidcheck = PresensiQR::orderBy('id', 'desc')->first();
+            // $fixedUuid = env('FIXED_UUID');
+            // dd($uuid2);
+            if ($request->uuid !== $uuidcheck->uuid) {
+                return response()->json([
+                    'message' => 'UUID tidak valid',
+                ], 400);
+            }
+        
+            $existingPresensi = Presensi::where('user_id', $user->id)
+                ->whereDate('tanggal', now())
+                ->first();
+        
+            if ($existingPresensi) {
+                return response()->json([
+                    'message' => 'Presensi untuk tanggal ini sudah diisi',
+                ], 400);
+            }
+        
+            // $uuid = now()->format('Ymd') . '-' . Str::uuid();
+            $uuid = Cache::remember('uuid', now()->addDay(), function () {
+                return Uuid::uuid4()->toString();
+            });
+        
+            $presensi = Presensi::create([
+                'tanggal' => now(),
+                'status' => 1,
+                'user_id' => $user->id,
+                'uuid' => $uuid,
+            ]);
+        
+            return response()->json([
+                'code' => 200,
+                'status' => 'Success',
+                'message' => 'Presensi berhasil disimpan dengan UUID',
+                'uuid' => $uuid,
+                'presensi' => $presensi,
+            ], 201);
+        } else {
+            return response()->json([
+                'message' => 'Anda tidak terautentikasi',
+            ], 401); 
+        }
+        
      }
 
 }
