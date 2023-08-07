@@ -45,3 +45,6 @@ Route::group(['middleware' => ['auth:api']], function() {
 
     Route::get('/logout',  'Api\LoginApiController@logout');
 });
+
+
+
