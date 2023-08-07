@@ -17,6 +17,7 @@ Route::get('/', function () {
 });
 
 //all
+Route::post('/test',  'LoginController@test');
 Route::get('/login',  'LoginController@index')->name('login');
 Route::post('/login',  'LoginController@login');
 Route::get('/logout',  'LoginController@logout');
