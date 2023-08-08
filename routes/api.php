@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('/userinfo',  'Api\QrcodeApiController@userinfo');
     Route::get('/getpresensi',  'Api\QrcodeApiController@index');
     Route::get('/createpresensi',  'Api\QrcodeApiController@create');
+    Route::get('/statuspresensi',  'Api\QrcodeApiController@statuspresensi');
     Route::post('/storepresensi',  'Api\QrcodeApiController@store');
     Route::post('/storepresensiqr',  'Api\QrcodeApiController@storeqr');
 
