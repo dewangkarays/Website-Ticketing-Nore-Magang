@@ -34,8 +34,10 @@ class QRController extends Controller
 
     public function exportpdf()
     {
-        $uuid = Cache::remember('uuid', now()->addDay(), function () {
-            return Uuid::uuid4()->toString();
+        $cacheKey = 'uuid_' . now()->toDateString();
+
+        $uuid = Cache::remember($cacheKey, now()->addDay(), function () {
+             return Uuid::uuid4()->toString();
         });
         $data = QrCode::size(200)->generate($uuid);
     
