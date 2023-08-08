@@ -225,7 +225,7 @@ class QrcodeApiController extends Controller
             ]);
             $uuidcheck = PresensiQR::orderBy('id', 'desc')->first();
             // $fixedUuid = env('FIXED_UUID');
-            // dd($uuid2);
+            // dd($uuidcheck);
             if ($request->uuid !== $uuidcheck->uuid) {
                 return response()->json([
                     'message' => 'UUID tidak valid',
