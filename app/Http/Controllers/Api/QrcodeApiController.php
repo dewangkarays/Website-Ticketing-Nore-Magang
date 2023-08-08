@@ -221,8 +221,13 @@ class QrcodeApiController extends Controller
             $user = \Auth::user();
             $request->validate([
                 'uuid' => 'required',
-                
+                 
             ]);
+            $cacheKey = 'uuid_' . now()->toDateString();
+
+            $uuid = Cache::remember($cacheKey, now()->addDay(), function () {
+            return Uuid::uuid4()->toString();
+            });
             $uuidcheck = PresensiQR::orderBy('id', 'desc')->first();
             // $fixedUuid = env('FIXED_UUID');
             // dd($uuidcheck);
@@ -243,9 +248,7 @@ class QrcodeApiController extends Controller
             }
         
             // $uuid = now()->format('Ymd') . '-' . Str::uuid();
-            $uuid = Cache::remember('uuid', now()->addDay(), function () {
-                return Uuid::uuid4()->toString();
-            });
+          
         
             $presensi = Presensi::create([
                 'tanggal' => now(),
