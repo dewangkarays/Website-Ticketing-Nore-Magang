@@ -158,6 +158,7 @@ class QrcodeApiController extends Controller
             'tanggal' => 'required',
             'status' => 'required',
             'user_id' => 'required',
+            
         ]);
         // dd($request);
         $check = Presensi::where('user_id', $request->get('user_id'))
@@ -243,12 +244,10 @@ class QrcodeApiController extends Controller
         
             if ($existingPresensi) {
                 return response()->json([
+                    'code' => 400,
                     'message' => 'Presensi untuk tanggal ini sudah diisi',
                 ], 400);
             }
-        
-            // $uuid = now()->format('Ymd') . '-' . Str::uuid();
-          
         
             $presensi = Presensi::create([
                 'tanggal' => now(),
@@ -271,6 +270,36 @@ class QrcodeApiController extends Controller
         }
         
      }
+
+     public function userinfo()
+     {
+        $user = auth()->user();
+        $roleId = $user->role;
+        $user->divisi = config('custom.role.' . $roleId, null);
+
+        $hadir = Presensi::where('user_id', \Auth::user()->id)->where('status', '1')->count();
+        $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status', '3')->count();
+        $izin = Presensi::where('user_id', \Auth::user()->id)->where('status', '2')->count();
+        $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status', '4')->count();
+        $sisa_cuti = 12 - $izin;
+        $validasipresensi = $hadir > 0 || $sakit > 0 || $izin > 0 || $WFH > 0;
+
+        $user->hadir = $hadir;
+        $user->sakit = $sakit;
+        $user->izin = $izin;
+        $user->WFH = $WFH;
+        $user->sisa_cuti = $sisa_cuti;
+        $user->validasi_presensi = $validasipresensi;
+
+        return response()->json([
+            'code' => 200,
+            'status' => 'Success',
+            'message' => 'User Info Diterima',
+            'user' => $user
+            
+        ]);
+
+    }
 
 }
 
