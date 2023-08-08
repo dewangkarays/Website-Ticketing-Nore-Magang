@@ -6,6 +6,7 @@
 	.qrcode{
 		display: flex;
 		justify-content: center;
+		
 	}
 	.tanggal{
 		display: flex;
@@ -14,6 +15,31 @@
 	.format {
 		display: flex;
 		justify-content: center;
+		
+	}
+	.card-footer{
+		display: flex;
+		justify-content: center;
+	}
+	.body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f2f2f2;
+        }
+		.card-footer {
+			margin-top: 40px;
+		}
+
+	.description{
+		display: flex;
+		justify-content: center;
+	}
+	.button{
+		display: flex;
+		justify-content: center;
+		margin-top: 40px;
+		
 	}
 </style>
 <!-- Page header -->
@@ -32,18 +58,32 @@
 			<body>
 	
 				<div class="wrapper">
-					<h1 class="tanggal">Barcode pada tanggal : </h1>
+					<h2 class="tanggal">Barcode pada tanggal : </h2>
 					<h2 class="format">{{  date("Y-m-d")}}</h2>
 					  {{-- <h2 class="format" id="current-date"></h2> --}}
 				</div>
-				<div class="qrcode">
-					{{ QrCode::size(500)->generate(date("Y-m-d")) }}
+			{{-- @php
+				$qrCodeDate = date("Y-m-d");
+				$currentDate = date("Y-m-d");
+			@endphp
+		
+			@if ($currentDate == $qrCodeDate)
+				<p class="description">Scan Kode QR dibawah ini untuk melakukan absensi.</p>
+			@else
+				<p class="description">Kode QR kadaluwarsa.</p>
+			@endif
+		 --}}
+			<div class="qrcode">
+				{{ QrCode::size(500)->generate($uuid) }}
 				 
 				</div>
-
+				{{-- <div class="button"> --}}
 				 <div class="card-footer">
-				 <a href="/exportpdf" class="btn btn-info" >Export PDF</a>
+				 {{-- <a href="/exportpdf" class="btn btn-info" >Export PDF</a> --}}
+				 <a href="/exportpdf"><button class="btn btn-danger rounded-round"><i class="icon-file-pdf mr-2"></i> Export PDF</button></a>
+				{{-- </div> --}}
 				</div>
+				
 				
 			</body>
 		
