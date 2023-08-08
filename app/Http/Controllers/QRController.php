@@ -16,9 +16,11 @@ class QRController extends Controller
 {
     public function index ()
     {   
-        $uuid = Cache::remember('uuid', now()->addDay(), function () {
-            return Uuid::uuid4()->toString();
-        });
+        $cacheKey = 'uuid_' . now()->toDateString();
+
+        $uuid = Cache::remember($cacheKey, now()->addDay(), function () {
+             return Uuid::uuid4()->toString();
+    });
         $presensi = PresensiQR::updateOrCreate(
             [
                 'tanggal' => now()->toDateString() 
