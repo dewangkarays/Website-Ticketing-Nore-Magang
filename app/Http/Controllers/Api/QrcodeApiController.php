@@ -173,7 +173,7 @@ class QrcodeApiController extends Controller
             $uuid = Cache::remember($cacheKey, now()->addDay(), function () {
             return Uuid::uuid4()->toString();
             });
-            $uuidcheck = PresensiQR::orderBy('id', 'desc')->first();
+            $uuidcheck = PresensiQR::orderBy('id')->first();
             // $fixedUuid = env('FIXED_UUID');
             // dd($uuidcheck);
             if (!$uuidcheck || $request->uuid !== $uuidcheck->uuid) {
@@ -258,8 +258,13 @@ class QrcodeApiController extends Controller
             ];
         }
 
-        return response()->json($statusArray);
-
+        return response()->json([
+            'code' => 200,
+            'status' => 'Success',
+            'message' => 'Status Presensi Diterima',
+            'user' => $statusArray
+            
+        ]);
     }
 
 }
