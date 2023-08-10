@@ -115,11 +115,19 @@ class QrcodeApiController extends Controller
             ->get();
         
         if (count($check) != 0) {
-            return response()->json(['error' => 'Presensi Sudah Diisi!'], 422);
+            return response()->json([
+                'code'=>400, 
+                'status' => 'Gagal',
+                'message' => 'Presensi Sudah Diisi!'
+            ],400);
         }
 
         if (count($cuti) != 0) {
-            return response()->json(['error' => 'Karyawan Sedang Cuti!'], 422);
+            return response()->json([
+                'code'=>400, 
+                'status' => 'Gagal',
+                'message' => 'Karyawan Sedang Cuti!'
+            ], 422);
         }
         // dd($request);
         $presensi = new Presensi();
@@ -156,7 +164,11 @@ class QrcodeApiController extends Controller
 
         $presensi->save();
 
-        return response()->json(['message' => 'Presensi Saved!'], 201);
+        return response()->json([
+            'code' => 201,
+            'status' => 'Success',
+            'message' => 'Presensi Berhasil!'
+        ], 201);
      }
 
      public function storeqr(Request $request)
@@ -174,10 +186,11 @@ class QrcodeApiController extends Controller
             return Uuid::uuid4()->toString();
             });
             $uuidcheck = PresensiQR::orderBy('id')->first();
-            // $fixedUuid = env('FIXED_UUID');
             // dd($uuidcheck);
             if (!$uuidcheck || $request->uuid !== $uuidcheck->uuid) {
                 return response()->json([
+                    'code' => 400,
+                    'status' => 'Gagal',
                     'message' => 'UUID tidak valid',
                 ], 400);
             }
@@ -189,6 +202,7 @@ class QrcodeApiController extends Controller
             if ($existingPresensi) {
                 return response()->json([
                     'code' => 400,
+                    'status' => 'Gagal',
                     'message' => 'Presensi untuk tanggal ini sudah diisi',
                 ], 400);
             }
@@ -201,7 +215,7 @@ class QrcodeApiController extends Controller
             ]);
         
             return response()->json([
-                'code' => 200,
+                'code' => 201,
                 'status' => 'Success',
                 'message' => 'Presensi berhasil disimpan dengan UUID',
                 'uuid' => $uuid,
@@ -209,6 +223,7 @@ class QrcodeApiController extends Controller
             ], 201);
         } else {
             return response()->json([
+                'code' => 401,
                 'message' => 'Anda tidak terautentikasi',
             ], 401); 
         }
