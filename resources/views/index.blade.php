@@ -107,8 +107,8 @@
 						</div>
 						<div style="color:white">
 							@foreach ($karyawancutis as $karyawancuti)
-								{{$karyawancuti->karyawan->nama}} 
-								@if ($karyawancuti->karyawan->role)
+								{{@$karyawancuti->karyawan->nama}} 
+								@if (@$karyawancuti->karyawan->role)
 								({{config('custom.role.'.$karyawancuti->karyawan->role)}})
 								@endif
 								<br>
@@ -157,8 +157,8 @@
 						</div>
 						<div style="color:white">
 							@foreach ($karyawanizin as $izin)
-								{{$izin->karyawan->nama}}
-								@if ($izin->karyawan->role)
+								{{@$izin->karyawan->nama}}
+								@if (@$izin->karyawan->role)
 								({{config('custom.role.'.$izin->karyawan->role)}})
 								@endif
 								<br>
@@ -181,8 +181,8 @@
 						</div>
 						<div style="color:white">
 							@foreach ($karyawansakit as $sakit)
-								{{$sakit->karyawan->nama}}
-								@if ($sakit->karyawan->role)
+								{{@$sakit->karyawan->nama}}
+								@if (@$sakit->karyawan->role)
 								({{config('custom.role.'.$sakit->karyawan->role)}})
 								@endif
 								<br>
