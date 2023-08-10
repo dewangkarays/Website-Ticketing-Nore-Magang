@@ -133,7 +133,7 @@
 						</div>
 						<div style="color:white">
 							@foreach ($karyawanwfh as $wfh)
-								{{$wfh->karyawan->nama}}
+								{{@$wfh->karyawan->nama}}
 								@if ($wfh->karyawan->role)
 								({{config('custom.role.'.$wfh->karyawan->role)}})
 								@endif
