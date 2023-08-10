@@ -185,7 +185,8 @@ class QrcodeApiController extends Controller
             $uuid = Cache::remember($cacheKey, now()->addDay(), function () {
             return Uuid::uuid4()->toString();
             });
-            $uuidcheck = PresensiQR::orderBy('id')->first();
+            
+            $uuidcheck = PresensiQR::orderBy('id', 'desc')->first();
             // dd($uuidcheck);
             if (!$uuidcheck || $request->uuid !== $uuidcheck->uuid) {
                 return response()->json([
@@ -201,10 +202,10 @@ class QrcodeApiController extends Controller
         
             if ($existingPresensi) {
                 return response()->json([
-                    'code' => 400,
+                    'code' => 401,
                     'status' => 'Gagal',
                     'message' => 'Presensi untuk tanggal ini sudah diisi',
-                ], 400);
+                ], 401);
             }
         
             $presensi = Presensi::create([
