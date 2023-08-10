@@ -202,10 +202,10 @@ class QrcodeApiController extends Controller
         
             if ($existingPresensi) {
                 return response()->json([
-                    'code' => 401,
+                    'code' => 400,
                     'status' => 'Gagal',
                     'message' => 'Presensi untuk tanggal ini sudah diisi',
-                ], 401);
+                ], 400);
             }
         
             $presensi = Presensi::create([
@@ -216,17 +216,18 @@ class QrcodeApiController extends Controller
             ]);
         
             return response()->json([
-                'code' => 201,
+                'code' => 200,
                 'status' => 'Success',
                 'message' => 'Presensi berhasil disimpan dengan UUID',
                 'uuid' => $uuid,
                 'presensi' => $presensi,
-            ], 201);
-        } else {
+            ], 200);
+        } 
+        else {
             return response()->json([
-                'code' => 401,
+                'code' => 400,
                 'message' => 'Anda tidak terautentikasi',
-            ], 401); 
+            ], 400); 
         }
         
      }
