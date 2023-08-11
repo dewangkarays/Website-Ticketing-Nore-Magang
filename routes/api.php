@@ -1,6 +1,12 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardApiController;
+use App\Models\Klien;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -45,5 +51,6 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('/logout',  'Api\LoginApiController@logout');
 });
 
-
-
+//Dashboard 
+    Route::get('/leads', 'Api\DashboardApiController@index');
+    Route::get('/marketing', 'Api\DashboardApiController@getMarketingData');
