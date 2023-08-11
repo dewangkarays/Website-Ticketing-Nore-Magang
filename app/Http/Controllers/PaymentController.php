@@ -706,7 +706,7 @@ class PaymentController extends Controller
         $chart[0] = array_fill(1, 12, 0);
         $pie[80] = $pie[95] = $pie[99] = $pie[90] = 0;
 
-        $proyeks = Proyek::selectRaw('jenis_proyek, count(jenis_proyek) as total')->groupBY('jenis_proyek')->orderBY('total', 'DESC')->get();
+        $proyeks = Proyek::selectRaw('jenis_proyek, count(jenis_proyek) as total')->groupBY('jenis_proyek')->orderBY('total', 'ASC')->get();
         //   dd($proyeks);
         $years = Payment::selectRaw('year(tanggal) as tahun')->where('status', '1')->groupBy('tahun')->orderBy('tahun', 'DESC')->get();
 
