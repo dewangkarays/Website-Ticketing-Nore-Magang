@@ -591,8 +591,8 @@ var _scatterPieBasicLightExample = function() {
 
 			// Colors
 			color: [
-				'#2ec7c9','#b6a2de','#7eb00a','#ffb980','#39b772',
-				'#d87a80','#e5cf0d','#97b552','#95706d','#dc69aa',
+				'#d87a80','#b6a2de','#7eb00a','#39b772','#ffb980',
+				'#2ec7c9','#e5cf0d','#97b552','#95706d','#dc69aa',
 				'#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
 				'#59678c','#c9ab00','#5ab1ef','#6f5553','#c14089'
 			],

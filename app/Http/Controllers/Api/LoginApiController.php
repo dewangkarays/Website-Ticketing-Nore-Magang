@@ -33,6 +33,7 @@ class LoginApiController extends Controller
         $izin = Presensi::where('user_id', \Auth::user()->id)->where('status', '2')->count();     
         $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status', '4')->count(); 
         $sisa_cuti = 12 - $izin;
+        $validasipresensi = $hadir > 0 || $sakit > 0 || $izin > 0 || $WFH > 0;
         
         // $user->jumlah_kehadiran = [
         //     'hadir' => $hadir,
@@ -46,6 +47,8 @@ class LoginApiController extends Controller
         $user->izin = $izin;
         $user->WFH = $WFH;
         $user->sisa_cuti = $sisa_cuti;
+        $user->validasi_presensi = $validasipresensi;
+       
 
         return response()->json([
             'code'=>200, 

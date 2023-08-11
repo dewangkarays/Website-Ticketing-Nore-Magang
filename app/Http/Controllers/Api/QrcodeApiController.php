@@ -6,43 +6,20 @@ use Image;
 use Carbon\Carbon;
 use App\Model\Cuti;
 use App\Model\User;
+use Ramsey\Uuid\Uuid;
 use App\Model\Presensi;
+use App\Model\PresensiQR;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 
 class QrcodeApiController extends Controller
 {
     public function index()
     {
-        // $month = Carbon::now();
-        // $start = Carbon::parse($month)->startOfMonth();
-        // $end = Carbon::parse($month)->endOfMonth();
-
-        // $dates = [];
-        // while ($start->lte($end)) {
-        //     $dates[] = [
-        //         'tanggal' => $start->copy()->format('Y-m-d'),
-        //         'day' => $start->copy()->format('d'), // for display purposes
-        //     ];
-        //     $start->addDay();
-        // }
-
-        // // Get data for all users
-        // $karyawans_all = User::where('role', '<=' ,'50')
-        //     ->where('role', '!=', 1)
-        //     ->with(['presensi' => function ($q) {
-        //         $q->orderBy('tanggal'); 
-        //     }])
-        //     ->get()
-        //     ->toArray();
-
-        // $presensi_all = Presensi::orderBy('tanggal')->get();
-        // $sakit_all = Presensi::where('status', '3')->count();
-        // $izin_all = Presensi::where('status', '2')->count();          
-        // $WFH_all = Presensi::where('status', '4')->count();
-
-        // Get data for the authenticated user
         $presensi = Presensi::where('user_id', \Auth::user()->id)->orderBy('tanggal')->get();
         $karyawans = User::where('id', \Auth::user()->id)
             ->with(['presensi' => function ($q) {
@@ -59,11 +36,7 @@ class QrcodeApiController extends Controller
         $user = auth()->user();
         $roleId = $user->role;
         $user->divisi = config('custom.role.' . $roleId, null);
-        // $namaDandivisi = [
-        //     'nama' => $user->nama,
-        //     'divisi' => $user->divisi,
-        // ];
-
+      
         $years = Presensi::selectRaw('year(tanggal) as tahun')
             ->whereNotNull('status')
             ->groupBy('tahun')
@@ -71,16 +44,7 @@ class QrcodeApiController extends Controller
             ->get();
 
         $data = [
-            // 'dates' => $dates,
-            // 'presensi' => $presensi,
-            'nama' => $user->nama,
-            'divisi' => $user->divisi,
-            // 'user' => $namaDandivisi,
-            'Hadir'=> $hadir,
-            'sakit' => $sakit,
-            'izin' => $izin,
-            'WFH' => $WFH,
-            'sisa_cuti' => $sisa_cuti,
+          
             'presensi' =>  $presensi->map(function ($item) {
                 $statusMap = [
                     '1' => 'Hadir',
@@ -94,28 +58,12 @@ class QrcodeApiController extends Controller
                 return $item;
                 
             }),
-            //     'izin'=> $karyawans->izin,
-            //     'sakit'=>
-            // ],
-            // 'presensi_all' => $presensi_all,
-            // 'sakit_all' => $sakit_all,
-            // 'izin_all' => $izin_all,
-            // 'karyawans_all' => $karyawans_all,
+     
             'years' => $years,
             'WFH' => $WFH,
             'id'     => auth()->user()->status,
             'status' => config('custom.status_presensi'.auth()->user()->status),
-            // 'presensi' => $presensi->map(function ($item) {
-            //     $statusMap = [
-            //         '1' => 'Hadir',
-            //         '2' => 'Izin',
-            //         '3' => 'Sakit',
-            //         '4' => 'WFH',
-            //     ];
-        
-            //     $item->status_label = $statusMap[$item->status];
-            //     return $item;
-            // }),
+           
         ];
 
          return response()->json([
@@ -154,6 +102,7 @@ class QrcodeApiController extends Controller
             'tanggal' => 'required',
             'status' => 'required',
             'user_id' => 'required',
+            
         ]);
         // dd($request);
         $check = Presensi::where('user_id', $request->get('user_id'))
@@ -166,11 +115,19 @@ class QrcodeApiController extends Controller
             ->get();
         
         if (count($check) != 0) {
-            return response()->json(['error' => 'Presensi Sudah Diisi!'], 422);
+            return response()->json([
+                'code'=>400, 
+                'status' => 'Gagal',
+                'message' => 'Presensi Sudah Diisi!'
+            ],400);
         }
 
         if (count($cuti) != 0) {
-            return response()->json(['error' => 'Karyawan Sedang Cuti!'], 422);
+            return response()->json([
+                'code'=>400, 
+                'status' => 'Gagal',
+                'message' => 'Karyawan Sedang Cuti!'
+            ], 422);
         }
         // dd($request);
         $presensi = new Presensi();
@@ -207,8 +164,125 @@ class QrcodeApiController extends Controller
 
         $presensi->save();
 
-        return response()->json(['message' => 'Presensi Saved!'], 201);
+        return response()->json([
+            'code' => 201,
+            'status' => 'Success',
+            'message' => 'Presensi Berhasil!'
+        ], 201);
      }
+
+     public function storeqr(Request $request)
+     {  
+        // dd($request);
+        if (\Auth::check()) {
+            $user = \Auth::user();
+            $request->validate([
+                'uuid' => 'required',
+                 
+            ]);
+            $cacheKey = 'uuid_' . now()->toDateString();
+
+            $uuid = Cache::remember($cacheKey, now()->addDay(), function () {
+            return Uuid::uuid4()->toString();
+            });
+            
+            $uuidcheck = PresensiQR::orderBy('id', 'desc')->first();
+            // dd($uuidcheck);
+            if (!$uuidcheck || $request->uuid !== $uuidcheck->uuid) {
+                return response()->json([
+                    'code' => 400,
+                    'status' => 'Gagal',
+                    'message' => 'UUID tidak valid',
+                ], 400);
+            }
+        
+            $existingPresensi = Presensi::where('user_id', $user->id)
+                ->whereDate('tanggal', now())
+                ->first();
+        
+            if ($existingPresensi) {
+                return response()->json([
+                    'code' => 400,
+                    'status' => 'Gagal',
+                    'message' => 'Presensi untuk tanggal ini sudah diisi',
+                ], 400);
+            }
+        
+            $presensi = Presensi::create([
+                'tanggal' => now(),
+                'status' => 1,
+                'user_id' => $user->id,
+                'uuid' => $uuid,
+            ]);
+        
+            return response()->json([
+                'code' => 200,
+                'status' => 'Success',
+                'message' => 'Presensi berhasil disimpan dengan UUID',
+                'uuid' => $uuid,
+                'presensi' => $presensi,
+            ], 200);
+        } 
+        else {
+            return response()->json([
+                'code' => 400,
+                'message' => 'Anda tidak terautentikasi',
+            ], 400); 
+        }
+        
+     }
+
+     public function userinfo()
+     {
+        $user = auth()->user();
+        $roleId = $user->role;
+        $user->divisi = config('custom.role.' . $roleId, null);
+
+        $hadir = Presensi::where('user_id', \Auth::user()->id)->where('status', '1')->count();
+        $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status', '3')->count();
+        $izin = Presensi::where('user_id', \Auth::user()->id)->where('status', '2')->count();
+        $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status', '4')->count();
+        $sisa_cuti = 12 - $izin;
+        $validasipresensi = $hadir > 0 || $sakit > 0 || $izin > 0 || $WFH > 0;
+
+        $user->hadir = $hadir;
+        $user->sakit = $sakit;
+        $user->izin = $izin;
+        $user->WFH = $WFH;
+        $user->sisa_cuti = $sisa_cuti;
+        $user->validasi_presensi = $validasipresensi;
+
+        return response()->json([
+            'code' => 200,
+            'status' => 'Success',
+            'message' => 'User Info Diterima',
+            'user' => $user
+            
+        ]);
+
+    }
+
+    public function statuspresensi()
+    {
+
+        $statusPresensi = Config::get('custom.status_presensi');
+
+        $statusArray = [];
+        foreach ($statusPresensi as $id => $nama) {
+            $statusArray[] = [
+                'id' => $id,
+                'nama' => $nama,
+            ];
+        }
+
+        return response()->json([
+            'code' => 200,
+            'status' => 'Success',
+            'message' => 'Status Presensi Diterima',
+            'user' => $statusArray
+            
+        ]);
+    }
 
 }
 

@@ -5,6 +5,10 @@
 	.datatable-column-width{
 		overflow: hidden; text-overflow: ellipsis; max-width: 200px;
 	}
+     .white-text {
+        font-weight: bold;
+        color: white;
+    }
 </style>
 @endsection
 
@@ -51,20 +55,25 @@
                         </thead>
                         <tbody>
                         </tbody>
-                        <tr>
+                        <tr style="background-color: #3EB772">
                             <td rowspan="1" colspan="4">
                                 <div class="text-right">
-                                    <h6> Total </h6>
+                                   <h6 style="font-size: 13.5px" class="white-text">Total</h6>
                                 </div>
                             </td>
                             <td rowspan="1" colspan="1">
                                 <div class="text-right">
-                                    <h6>{{ number_format($totalTagihan, 0, ',', '.') }}</h6>
+                                    <h6 style="font-size: 13.5px" class="white-text">{{ number_format($totalTagihan, 0, ',', '.') }}</h6>
                                 </div>
                             </td>
                             <td rowspan="1" colspan="2">
                                 <div class="text-right">
-                                    <h6>{{ number_format($totalSisatagihan, 0, ',', '.') }}</h6>
+                                    <h6 style="font-size: 13.5px" class="white-text">{{ number_format($totalSisatagihan, 0, ',', '.') }}</h6>
+                                </div>
+                            </td>
+                            <td rowspan="1" colspan="4">
+                                <div class="text-right">
+                                    <h6></h6>
                                 </div>
                             </td>
                         </tr>  
