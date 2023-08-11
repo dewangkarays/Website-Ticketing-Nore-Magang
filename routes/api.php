@@ -36,7 +36,8 @@ Route::get('/check-ulang-tahun',  'Api\GlobalApiController@getTodayUlangTahun');
 //check token
 Route::get('/check-token',  'Api\GlobalApiController@cektoken');
 
-Route::group(['middleware' => ['auth:api']], function() {
+Route::group(['middleware' => ['auth:api','cors:api']], function() {
+    
 	Route::resource('tasks', 'Api\TaskApiController');
 	Route::resource('payments', 'Api\PaymentApiController');
     Route::get('/antrian',  'Api\TaskApiController@antrian');
@@ -58,3 +59,4 @@ Route::group(['middleware' => ['auth:api']], function() {
 //Dashboard 
     Route::get('/leads', 'Api\DashboardApiController@index');
     Route::get('/marketing', 'Api\DashboardApiController@getMarketingData');
+
