@@ -238,12 +238,15 @@ class QrcodeApiController extends Controller
         $roleId = $user->role;
         $user->divisi = config('custom.role.' . $roleId, null);
 
-        $hadir = Presensi::where('user_id', \Auth::user()->id)->where('status', '1')->count();
-        $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status', '3')->count();
-        $izin = Presensi::where('user_id', \Auth::user()->id)->where('status', '2')->count();
-        $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status', '4')->count();
+        $today = now()->format('Y-m-d');
+
+        $hadir = Presensi::where('user_id', \Auth::user()->id)->where('status', '1')->whereDate('tanggal', $today)->count();
+        $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status', '3')->whereDate('tanggal', $today)->count();
+        $izin = Presensi::where('user_id', \Auth::user()->id)->where('status', '2')->whereDate('tanggal', $today)->count();
+        $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status', '4')->whereDate('tanggal', $today)->count();
         $sisa_cuti = 12 - $izin;
-        $validasipresensi = $hadir > 0 || $sakit > 0 || $izin > 0 || $WFH > 0;
+
+        $validasipresensi = ($hadir + $sakit + $izin + $WFH) > 0;
 
         $user->hadir = $hadir;
         $user->sakit = $sakit;
