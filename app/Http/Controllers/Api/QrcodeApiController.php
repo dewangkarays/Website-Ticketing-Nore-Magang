@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Config;
 
 class QrcodeApiController extends Controller
 {
-    public function index()
+    public function getpresensi()
     {
         $presensi = Presensi::where('user_id', \Auth::user()->id)->orderBy('tanggal')->get();
         $karyawans = User::where('id', \Auth::user()->id)
@@ -218,7 +218,7 @@ class QrcodeApiController extends Controller
             return response()->json([
                 'code' => 200,
                 'status' => 'Success',
-                'message' => 'Presensi berhasil disimpan dengan UUID',
+                'message' => 'Presensi berhasil!',
                 'uuid' => $uuid,
                 'presensi' => $presensi,
             ], 200);
@@ -237,21 +237,23 @@ class QrcodeApiController extends Controller
         $user = auth()->user();
         $roleId = $user->role;
         $user->divisi = config('custom.role.' . $roleId, null);
+        
+        $today = now()->format('Y-m-d');
+        $validasi_hadir = Presensi::where('user_id', $user->id)->whereIn('status', ['1', '2', '3', '4'])->whereDate('tanggal', $today)->count();
 
         $hadir = Presensi::where('user_id', \Auth::user()->id)->where('status', '1')->count();
         $sakit = Presensi::where('user_id', \Auth::user()->id)->where('status', '3')->count();
-        $izin = Presensi::where('user_id', \Auth::user()->id)->where('status', '2')->count();
-        $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status', '4')->count();
+        $izin = Presensi::where('user_id', \Auth::user()->id)->where('status', '2')->count();     
+        $WFH = Presensi::where('user_id', \Auth::user()->id)->where('status', '4')->count(); 
         $sisa_cuti = 12 - $izin;
-        $validasipresensi = $hadir > 0 || $sakit > 0 || $izin > 0 || $WFH > 0;
 
+        
         $user->hadir = $hadir;
         $user->sakit = $sakit;
         $user->izin = $izin;
         $user->WFH = $WFH;
         $user->sisa_cuti = $sisa_cuti;
-        $user->validasi_presensi = $validasipresensi;
-
+        $user->validasi_presensi = $validasi_hadir > 0;
         return response()->json([
             'code' => 200,
             'status' => 'Success',

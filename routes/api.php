@@ -1,6 +1,12 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardApiController;
+use App\Models\Klien;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +36,8 @@ Route::get('/check-ulang-tahun',  'Api\GlobalApiController@getTodayUlangTahun');
 //check token
 Route::get('/check-token',  'Api\GlobalApiController@cektoken');
 
-Route::group(['middleware' => ['auth:api']], function() {
+Route::group(['middleware' => ['auth:api','cors:api']], function() {
+    
 	Route::resource('tasks', 'Api\TaskApiController');
 	Route::resource('payments', 'Api\PaymentApiController');
     Route::get('/antrian',  'Api\TaskApiController@antrian');
@@ -40,7 +47,7 @@ Route::group(['middleware' => ['auth:api']], function() {
     // Get presensi
 
     Route::get('/userinfo',  'Api\QrcodeApiController@userinfo');
-    Route::get('/getpresensi',  'Api\QrcodeApiController@index');
+    Route::get('/getpresensi',  'Api\QrcodeApiController@getpresensi');
     Route::get('/createpresensi',  'Api\QrcodeApiController@create');
     Route::get('/statuspresensi',  'Api\QrcodeApiController@statuspresensi');
     Route::post('/storepresensi',  'Api\QrcodeApiController@store');
@@ -49,5 +56,8 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('/logout',  'Api\LoginApiController@logout');
 });
 
-
-
+//Dashboard 
+Route::group(['middleware' => ['cors:api']], function() {
+    Route::get('/leads', 'Api\DashboardApiController@index');
+    Route::get('/marketing', 'Api\DashboardApiController@getMarketingData');
+});

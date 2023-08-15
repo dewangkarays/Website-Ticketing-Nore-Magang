@@ -267,3 +267,6 @@ Route::group(['middleware' => ['auth']], function () {
 	// });
 	// Route::get('gettasks/{type}', 'TaskController@gettasks');
 });
+
+//Dashboard
+
