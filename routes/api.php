@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth:api','cors:api']], function() {
 });
 
 //Dashboard 
+Route::group(['middleware' => ['cors:api']], function() {
     Route::get('/leads', 'Api\DashboardApiController@index');
     Route::get('/marketing', 'Api\DashboardApiController@getMarketingData');
-
+});
