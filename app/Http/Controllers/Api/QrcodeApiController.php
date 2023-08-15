@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Config;
 
 class QrcodeApiController extends Controller
 {
-    public function index()
+    public function getpresensi()
     {
         $presensi = Presensi::where('user_id', \Auth::user()->id)->orderBy('tanggal')->get();
         $karyawans = User::where('id', \Auth::user()->id)
