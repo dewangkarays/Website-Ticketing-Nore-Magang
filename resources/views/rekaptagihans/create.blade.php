@@ -64,6 +64,7 @@
                             <th>Nama</th>
                             <th>Nama Proyek</th>
                             <th>Tagihan</th>
+							<th>Sudah Terbayar</th>
                             <th>Keterangan</th>
                             {{-- <th class="text-center">Actions</th> --}}
                         </tr>
@@ -72,37 +73,45 @@
                     @if(!$tagihans->isEmpty())
                         @php ($i = 1)
                         @foreach($tagihans as $tagihan)
-                        <tr>
-                            <td>{{$i}}</td>
-                            <td><input type="checkbox" name="tagihan_id[]" id="chk" value="{{ @$tagihan->id }}" required></td>
-                            <td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
-                            <td><div class="datatable-column-width">{{@$tagihan->proyek->nama_proyek}}</div></td>
-                            <td><div class="datatable-column-width">Rp @angka(@$tagihan->jml_tagih)</div></td>
-                            <td><div class="datatable-column-width">{!! @$tagihan->keterangan !!}</div></td>
-                            {{-- <td align="center">
-                                <div class="list-icons">
-                                    <div class="dropdown">
-                                        <a href="#" class="list-icons-item" data-toggle="dropdown">
-                                            <i class="icon-menu9"></i>
-                                        </a>
+							@if($tagihan->pembayaranCicilanKosong->isNotEmpty())
+								{{-- @php (dd($tagihan->pembayaranCicilan->first()->id)) --}}
+								<tr>
+									<td>{{$i}}</td>
+									<td><input type="checkbox" name="cicilan[]" id="chk" value="{{ @$tagihan->pembayaranCicilanKosong->first()->id }}" required></td>
+								{{-- @php (dd(@$tagihan->pembayaranCicilan->first()->pembayaran_ke)) --}}
 
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="{{ route('tagihans.edit',$tagihan->id)}}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-                                            <a href="{{url('/tagihans/cetak/'.$tagihan->id)}}" class="dropdown-item" target="_blank"><i class="icon-printer2"></i> Print</a>
-                                            <a href="{{url('/tagihans/lampiran/'.$tagihan->id)}}" class="dropdown-item"><i class="icon-images3"></i> Lampiran</a>
-                                            <a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="{{ route('tagihans.destroy', $tagihan->id)}}"><i class="icon-x"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td> --}}
-                        </tr>
-                        @php ($i++)
-                        @endforeach
-                    @else
-                          <tr><td align="center" colspan="9">Data Kosong</td></tr>
-                    @endif
-
-                    </tbody>
+									<td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
+									<td><div class="datatable-column-width">{{@$tagihan->proyek->nama_proyek}}</div></td>
+									{{-- <td><div class="datatable-column-width">Rp @angka(@$tagihan->jml_tagih)</div></td> --}}
+									<td>
+										@if ($tagihan->pembayaranCicilanKosong->isNotEmpty())
+											<div class="datatable-column-width">Rp @angka($tagihan->pembayaranCicilanKosong->first()->jml_cicilan)</div>
+										@else
+											<div class="datatable-column-width">-</div>
+										@endif
+									</td>
+									<td><div class="datatable-column-width">-</div></td>
+									<td><div class="datatable-column-width">Cicilan ke {{@$tagihan->pembayaranCicilanKosong->first()->pembayaran_ke}}</div></td>
+								</tr>
+								@php ($i++)
+							@else
+								<tr>
+									<td>{{$i}}</td>
+									<td><input type="checkbox" name="tagihan_id[]" id="chk" value="{{ @$tagihan->id }}" required></td>
+									<td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
+									<td><div class="datatable-column-width">{{@$tagihan->proyek->nama_proyek}}</div></td>
+									<td><div class="datatable-column-width">Rp @angka(@$tagihan->jml_tagih)</div></td>
+									<td><div class="datatable-column-width">-</div></td>
+									<td><div class="datatable-column-width">{!! @$tagihan->keterangan !!}</div></td>
+									
+								</tr>
+								@php ($i++)
+							@endif
+							@endforeach
+						@else
+							<tr><td align="center" colspan="9">Data Kosong</td></tr>
+						@endif
+					</tbody>
                 </table>
 
                 <hr>

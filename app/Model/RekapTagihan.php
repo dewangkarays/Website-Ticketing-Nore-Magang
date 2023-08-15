@@ -32,4 +32,14 @@ class RekapTagihan extends Model
     {
         return $this->hasMany('App\Model\Proyek', 'rekap_tagihan_id');
     }
+    public function pembayaranCicilan()
+    {
+        return $this->hasOne('App\Model\TagihanCicilan', 'rekap_id', 'id');
+    }
+
+    public function pembayaranCicilanKosong()
+    {
+        return $this->hasMany('App\Model\TagihanCicilan', 'rekap_id', 'id')
+            ->whereNull('rekap_id');
+    }
 }
