@@ -218,7 +218,7 @@ class QrcodeApiController extends Controller
             return response()->json([
                 'code' => 200,
                 'status' => 'Success',
-                'message' => 'Presensi berhasil disimpan dengan UUID',
+                'message' => 'Presensi berhasil!',
                 'uuid' => $uuid,
                 'presensi' => $presensi,
             ], 200);
