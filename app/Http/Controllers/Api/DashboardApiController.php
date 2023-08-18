@@ -14,36 +14,66 @@ class DashboardApiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $data = Klien::all();
+{
+    $data = Klien::all();
 
-        $response = [
-            'Deal' => 0,
-            'Pending' => 0,
-            'Live' => 0,
-        ];
+    // Mendapatkan data sebelumnya dari cache atau database
+    $previousData = // Dapatkan data sebelumnya di sini
 
-        foreach($data as $dt){
-            if($dt->status==4){
-                $response['Deal'] += 1;
-            }
-            if($dt->status==5){
-                $response['Pending'] += 1;
-            }
-            if($dt->status==8){
-                $response['Live'] += 1;
-            }
+    $response = [
+        'Deal' => 0,
+        'Pending' => 0,
+        'Live' => 0,
+    ];
+
+    foreach($data as $dt){
+        if($dt->status == 4){
+            $response['Deal'] += 1;
         }
-
-        return response()->json([
-            'status'=>true,
-            'message'=>'Data Ditemukan',
-            'data'=>[
-                'status' => $response,
-                // 'marketing' => 0
-            ]
-            ], 200);
+        if($dt->status == 5){
+            $response['Pending'] += 1;
+        }
+        if($dt->status == 8){
+            $response['Live'] += 1;
+        }
     }
+
+    // Kenaikan jumlah dari data sebelumnya ke data sekarang
+    $increaseDeal = $response['Deal'] - $previousData['Deal'];
+    $increasePending = $response['Pending'] - $previousData['Pending'];
+    $increaseLive = $response['Live'] - $previousData['Live'];
+
+    $totalCount = count($data);
+
+    // Menghitung persentase kenaikan
+    $percentageDeal = ($totalCount !== 0) ? (($response['Deal'] / $totalCount) * 100) : 0;
+    $percentagePending = ($totalCount !== 0) ? (($response['Pending'] / $totalCount) * 100) : 0;
+    $percentageLive = ($totalCount !== 0) ? (($response['Live'] / $totalCount) * 100) : 0;
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Data Ditemukan',
+        'data' => [
+            'status' => [
+                'Deal' => [
+                    'count' => $response['Deal'],
+                    'increase' => $increaseDeal,
+                    'percentage' => $percentageDeal . '%',
+                ],
+                'Pending' => [
+                    'count' => $response['Pending'],
+                    'increase' => $increasePending,
+                    'percentage' => $percentagePending . '%',
+                ],
+                'Live' => [
+                    'count' => $response['Live'],
+                    'increase' => $increaseLive,
+                    'percentage' => $percentageLive . '%',
+                ],
+            ],
+        ],
+    ], 200);
+}
 
     public function getMarketingData()
 {
