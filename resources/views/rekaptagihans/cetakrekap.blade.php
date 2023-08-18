@@ -60,8 +60,8 @@
                 @endif
             </td>
             <td>
-                @if ($invoice->keterangan != null)
-                {!! $invoice->keterangan !!}
+                @if ($invoice->tagihan->keterangan != null)
+                {!! $invoice->tagihan->keterangan !!}
                 @else
                 <p></p>
                 @endif
@@ -124,6 +124,7 @@
 @section('nominal-bayar')
     {{-- Sub 3 --}}
         @if($invoice->tagihan)
+         @if($invoice->tagihan->pembayaranCicilan->isNotEmpty())
             <table style="line-height: 1.5; padding: 5px 10px;">
                 <tr>
                     <th style="width: 45%; height: 30px"></th>
@@ -139,32 +140,32 @@
                 @endif
                 <tr>
                     <td></td>
+                    <td align="left">Pembayaran Yang Telah Diterima :</td>
+                </tr>
+                <tr>
+                    <td></td>
                     <td align="left">Pembayaran Uang Muka</td>
                     <td align="right">@angka($invoice->tagihan->uang_muka)</td>
                 </tr>
-                @if ($rekap->jml_terbayar > 0 && ($rekap->jml_terbayar < $rekap->total))
-
-                
-
                 <tr>
                     <td></td>
-                    <td align="left">Sudah Terbayar</td>
-                    <td align="right">@angka($rekap->jml_terbayar)</td>
-                </tr>
-                @endif
-                <tr>
-                    <td></td>
-                    <td align="left">Angsuran ke {{@$rekap->pembayaranCicilan->pembayaran_ke}}</td>
-                    {{-- @php
-                        dd(@$rekap->pembayaranCicilanKosong->pembayaran_ke);
-                    @endphp --}}
-                    <td align="right">@angka($rekap->total)</td>
-                     
+                    <td align="left">
+                        @foreach ($tagihanCicilanKe1 as $cicilan)
+                            Angsuran ke {{ $cicilan->pembayaran_ke }}
+                        <br>
+                        @endforeach
+                    </td>
+                    <td align="right">
+                        @foreach ($tagihanCicilanKe1 as $cicilan)
+                            @angka($cicilan->jml_cicilan)
+                        <br>
+                        @endforeach
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td align="left">Sisa Tagihan</td>
-                    <td align="right">@angka($invoice->tagihan->jml_tagih - $rekap->jml_terbayar)</td>
+                    <td align="right">@angka(@$invoice->tagihan->jml_tagih - $totalSum)</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -230,6 +231,7 @@
                     </td>
                 </tr>
             </table>
+     @endif  
     @endif  
             @php
                 $jenis_rekap = "tagihan";

@@ -78,11 +78,10 @@
 								<tr>
 									<td>{{$i}}</td>
 									<td><input type="checkbox" name="cicilan[]" id="chk" value="{{ @$tagihan->pembayaranCicilanKosong->first()->id }}" required></td>
-								{{-- @php (dd(@$tagihan->pembayaranCicilan->first()->pembayaran_ke)) --}}
+								{{-- @php (dd($tagihan->pembayaranCicilan->sum('jml_cicilan'))) --}}
 
 									<td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
 									<td><div class="datatable-column-width">{{@$tagihan->proyek->nama_proyek}}</div></td>
-									{{-- <td><div class="datatable-column-width">Rp @angka(@$tagihan->jml_tagih)</div></td> --}}
 									<td>
 										@if ($tagihan->pembayaranCicilanKosong->isNotEmpty())
 											<div class="datatable-column-width">Rp @angka($tagihan->pembayaranCicilanKosong->first()->jml_cicilan)</div>
@@ -90,7 +89,9 @@
 											<div class="datatable-column-width">-</div>
 										@endif
 									</td>
-									<td><div class="datatable-column-width">-</div></td>
+									<td>
+										<div class="datatable-column-width">Rp {{ number_format($tagihan->pembayaranCicilan->whereNotNull('rekap_id')->sum('jml_cicilan'), 0, ',', '.') }}</div>
+									</td>
 									<td><div class="datatable-column-width">Cicilan ke {{@$tagihan->pembayaranCicilanKosong->first()->pembayaran_ke}}</div></td>
 								</tr>
 								@php ($i++)
@@ -101,7 +102,7 @@
 									<td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
 									<td><div class="datatable-column-width">{{@$tagihan->proyek->nama_proyek}}</div></td>
 									<td><div class="datatable-column-width">Rp @angka(@$tagihan->jml_tagih)</div></td>
-									<td><div class="datatable-column-width">-</div></td>
+									{{-- <td><div class="datatable-column-width">-</div></td> --}}
 									<td><div class="datatable-column-width">{!! @$tagihan->keterangan !!}</div></td>
 									
 								</tr>

@@ -97,57 +97,65 @@ class RekapTagihanController extends Controller
         if ($request->has('cicilan')){
         $datacicilan = $request->except(['_token', '_method', 'noinv', 'ninv', 'noakhir', 'cicilan']);
 
-            $arrayid = $request->get('cicilan');
-            $findtagihanCicilans = TagihanCicilan::whereIn('id', $arrayid)->first();
-            // dd($findtagihanCicilans);
+        $arrayid = $request->get('cicilan');
+        $findtagihanCicilans = TagihanCicilan::whereIn('id', $arrayid)->first();
+        // dd($findtagihanCicilans);
 
-            $tagihan = $findtagihanCicilans->tagihan; 
-            //  dd($tagihan);
+        $tagihan = $findtagihanCicilans->tagihan; 
+        //  dd($tagihan);
 
-            $tagihanCicilans = $findtagihanCicilans;
-            //   dd( $tagihanCicilans );
-        
-            // Ambil data user
-            $finduser = User::find($datacicilan['user_id']);
-            $datacicilan['nama'] = $finduser->nama;                         //rekaptagihan
-            $datacicilan['status'] = 1;                                     //rekaptagihan
-            $datacicilan['nama_tertagih'] = $request->get('nama_tertagih'); //rekaptagihan
-            $datacicilan['alamat'] = $request->get('alamat');               //rekaptagihan
-        
-            // Hitung total tagihan dan uang muka
-            $datacicilan['total'] = $tagihanCicilans->jml_cicilan;
-            $datacicilan['uang_muka'] = $tagihan->uang_muka;
-            //  dd($datacicilan);
-        
-            // Format invoice
-            $invawal = $request->get('noinv');
-            $nomorinv = $request->get('ninv');
-            $noakhir = $request->get('noakhir');
-            $no = str_pad($nomorinv, 3, "0", STR_PAD_LEFT);
-            $datacicilan['invoice'] = "$invawal/$no/$noakhir";
-      
-            // dd($datacicilan);
-            
-            $lastno = Nomor::first();
-            $lastno->ninv = $nomorinv;
-            $lastno->update();
+        $tagihanCicilans = $findtagihanCicilans;
+        //   dd( $tagihanCicilans );
     
-            // Periksa nomor invoice yang sudah diambil
-            $existingInvoice = RekapTagihan::where('invoice', $datacicilan['invoice'])->first();
-            if ($existingInvoice) {
-                return redirect()->back()->with('error', 'Nomor invoice sudah diambil, silakan masukkan ulang!');
-            }
+        $latestCicilan = TagihanCicilan::where('tagihan_id', $tagihan->id)
+        ->orderBy('pembayaran_ke', 'desc')
+        ->first();
+        // Ambil data user
+        $finduser = User::find($datacicilan['user_id']);
+        $datacicilan['nama'] = $finduser->nama;                         //rekaptagihan
+        $datacicilan['status'] = 1;                                     //rekaptagihan
+        $datacicilan['nama_tertagih'] = $request->get('nama_tertagih'); //rekaptagihan
+        $datacicilan['alamat'] = $request->get('alamat');               //rekaptagihan
+    
+        // Hitung total tagihan dan uang muka
+        $datacicilan['total'] = $tagihanCicilans->jml_cicilan;
+        $datacicilan['uang_muka'] = $tagihan->uang_muka;
+        //  dd($datacicilan);
+    
+        // Format invoice
+        $invawal = $request->get('noinv');
+        $nomorinv = $request->get('ninv');
+        $noakhir = $request->get('noakhir');
+        $no = str_pad($nomorinv, 3, "0", STR_PAD_LEFT);
+        $datacicilan['invoice'] = "$invawal/$no/$noakhir";
+    
+        // dd($datacicilan);
         
-            // Simpan data rekap tagihan
-            $rekaptagihan = RekapTagihan::create($datacicilan);            
-                
-                $findtagihanCicilans->rekap_id = $rekaptagihan->id; 
-                $findtagihanCicilans->update();
-        
-                $rekaptagihan->nama_proyek = $rekaptagihan->nama_proyek.$tagihan->proyek->nama_proyek.'<br>';
+        $lastno = Nomor::first();
+        $lastno->ninv = $nomorinv;
+        $lastno->update();
+
+        // Periksa nomor invoice yang sudah diambil
+        $existingInvoice = RekapTagihan::where('invoice', $datacicilan['invoice'])->first();
+        if ($existingInvoice) {
+            return redirect()->back()->with('error', 'Nomor invoice sudah diambil, silakan masukkan ulang!');
+        }
+    
+        // Simpan data rekap tagihan
+        $rekaptagihan = RekapTagihan::create($datacicilan);            
             
-          
-            $rekaptagihan->save();
+            $findtagihanCicilans->rekap_id = $rekaptagihan->id;
+            $findtagihanCicilans->update();
+
+            // if ($latestCicilan) {
+            //     $tagihan->rekap_tagihan_id = $rekaptagihan->id;
+            //     $tagihan->update();
+            // }
+
+            $rekaptagihan->nama_proyek = $rekaptagihan->nama_proyek.$tagihan->proyek->nama_proyek.'<br>';
+        
+        
+        $rekaptagihan->save();
 
         
         }else{
@@ -378,8 +386,13 @@ class RekapTagihanController extends Controller
     public function cetakrekap(Request $request, $id)
     {
         $rekap = RekapTagihan::find($id);
+        // dd($rekap);
 
         $tagihanCicilanInvoices = TagihanCicilan::where('rekap_id', $rekap->id)->get();
+        $tagihanCicilanKe1 = TagihanCicilan::where('tagihan_id', $rekap->pembayaranCicilan->tagihan_id)->where('pembayaran_ke', '<', $rekap->pembayaranCicilan->pembayaran_ke)->get();
+        
+        $totalSum = $tagihanCicilanKe1->sum('jml_cicilan');
+        // dd($tagihanCicilanKe1);
         $tagihanInvoices = Tagihan::where('rekap_tagihan_id', $rekap->id)->get();
          
         $invoices = $tagihanCicilanInvoices->concat($tagihanInvoices);
@@ -388,7 +401,7 @@ class RekapTagihanController extends Controller
         // dd($lampirans)
         $setting = Setting::first();
         // dd(count($lampirans));
-        $pdf = PDF::loadview('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','rekap','tagihanCicilanInvoices','tagihanInvoices'))->setPaper('a4', 'potrait');
+        $pdf = PDF::loadview('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','rekap','tagihanCicilanInvoices','tagihanInvoices','tagihanCicilanKe1','totalSum'))->setPaper('a4', 'potrait');
         return $pdf->stream();
         // return view('rekaptagihans.cetakrekap', compact('invoices','lampirans','setting','arrayid','findtagihan'));
     }
