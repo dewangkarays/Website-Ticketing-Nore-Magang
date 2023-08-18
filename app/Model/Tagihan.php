@@ -41,4 +41,15 @@ class Tagihan extends Model
     {
         return $this->belongsTo('App\Model\RekapDptagihan', 'rekap_dptagihan_id', 'id');
     }
+    public function pembayaranCicilan()
+    {
+        return $this->hasMany('App\Model\TagihanCicilan', 'tagihan_id', 'id');
+    }
+
+    public function pembayaranCicilanKosong()
+    {
+        return $this->hasMany('App\Model\TagihanCicilan', 'tagihan_id', 'id')
+            ->whereNull('rekap_id');
+    }
+
 }

@@ -192,7 +192,7 @@ class QrcodeApiController extends Controller
                 return response()->json([
                     'code' => 400,
                     'status' => 'Gagal',
-                    'message' => 'UUID tidak valid',
+                    'message' => 'Barcode tidak valid!',
                 ], 400);
             }
         
@@ -204,7 +204,7 @@ class QrcodeApiController extends Controller
                 return response()->json([
                     'code' => 400,
                     'status' => 'Gagal',
-                    'message' => 'Presensi untuk tanggal ini sudah diisi',
+                    'message' => 'Presensi untuk tanggal ini sudah diisi!',
                 ], 400);
             }
         

@@ -46,7 +46,35 @@
 @section('deskripsi-proyek')
     {{-- Sub 2 --}}
     <tbody>
+@if(!$invoices->isEmpty())
         @foreach ($invoices as $invoice)
+    @if($invoice->tagihan)
+        <tr>
+            <td style="vertical-align: top">
+                @if (@$invoice->tagihan->proyek->nama_proyek)
+                {{$invoice->tagihan->proyek->nama_proyek}}
+                @elseif ($invoice->tagihan->proyek->website)
+                {{$invoice->tagihan->proyek->website}}
+                @else
+                -
+                @endif
+            </td>
+            <td>
+                @if ($invoice->tagihan->keterangan != null)
+                {!! $invoice->tagihan->keterangan !!}
+                @else
+                <p></p>
+                @endif
+          
+                @if ($invoice->tagihan->keterangan_tambahan != null)
+                {!! $invoice->tagihan->keterangan_tambahan !!}
+                @else
+                <p></p>
+                @endif
+            </td>
+            <td align="right">@angka($invoice->tagihan->nominal)</td>
+        </tr>
+    @else
         <tr>
             <td style="vertical-align: top">
                 @if ($invoice->proyek->nama_proyek)
@@ -82,7 +110,11 @@
         {{-- <tr>
             <td colspan="2" style="background-color: white">&nbsp;</td>
         </tr> --}}
+    @endif  
         @endforeach
+    @else
+        <tr><td align="center" colspan="9">Data Kosong</td></tr>
+    @endif
         {{-- @php
             dd($invoice);
         @endphp --}}
@@ -91,6 +123,69 @@
 
 @section('nominal-bayar')
     {{-- Sub 3 --}}
+        @if($invoice->tagihan)
+         @if($invoice->tagihan->pembayaranCicilan->isNotEmpty())
+            <table style="line-height: 1.5; padding: 5px 10px;">
+                <tr>
+                    <th style="width: 45%; height: 30px"></th>
+                    <th align="left" style="width: 40%">TOTAL</th>
+                    <th align="right" style="width: auto">@angka($invoice->tagihan->nominal)</th>
+                </tr>
+                @if ($invoices->sum('diskon') > 0)
+                <tr>
+                    <td></td>
+                    <td align="left">Potongan Harga</td>
+                    <td align="right">@angka($invoices->sum('diskon'))</td>
+                </tr>
+                @endif
+                <tr>
+                    <td></td>
+                    <td align="left">Pembayaran Yang Telah Diterima :</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="left">Pembayaran Uang Muka</td>
+                    <td align="right">@angka($invoice->tagihan->uang_muka)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="left">
+                        @foreach ($tagihanCicilanKe1 as $cicilan)
+                            Angsuran ke {{ $cicilan->pembayaran_ke }}
+                        <br>
+                        @endforeach
+                    </td>
+                    <td align="right">
+                        @foreach ($tagihanCicilanKe1 as $cicilan)
+                            @angka($cicilan->jml_cicilan)
+                        <br>
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="left">Sisa Tagihan</td>
+                    <td align="right">@angka(@$invoice->tagihan->jml_tagih - $totalSum)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="left">PPN 11%</td>
+                    <td align="right">0</td>
+                </tr>
+                <tr style="line-height: 2;">
+                    <td></td>
+                    <td align="left">
+                        <b class="nore-fontcolor" style="font-size: 14px">Angsuran ke {{@$rekap->pembayaranCicilan->pembayaran_ke}}</b>
+                        {{-- @php
+                        dd(@$rekap->pembayaranCicilan->pembayaran_ke);
+                    @endphp --}}
+                    </td>
+                    <td align="right">
+                        <b class="nore-fontcolor" style="font-size: 14px">@angka($rekap->total)</b>
+                    </td>
+                </tr>
+            </table>
+        @else
             <table style="line-height: 1.5; padding: 5px 10px;">
                 <tr>
                     <th style="width: 45%; height: 30px"></th>
@@ -136,6 +231,8 @@
                     </td>
                 </tr>
             </table>
+     @endif  
+    @endif  
             @php
                 $jenis_rekap = "tagihan";
             @endphp

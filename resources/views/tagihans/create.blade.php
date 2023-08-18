@@ -124,20 +124,70 @@
                         </div>
                     @endif
 
-                    <div class="form-group row">
+					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Nominal</label>
 						<div class="col-lg-10">
 							<input id="datanominal" type="hidden" name="nominal" value="{{old('nominal')}}" class="form-control border-teal border-1">
-							<input id="nilainominal" type="text" class="form-control border-teal border-1" placeholder="Nominal" onkeyup="ribuan()" value="{{old('nominal')}}">
+							<input id="nilainominal" type="text" class="form-control border-teal border-1" placeholder="Nominal" onkeyup="ribuan()" onchange="updateFitValue()" value="{{old('nominal')}}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Uang Muka</label>
 						<div class="col-lg-10">
 							<input id="datauang_muka" type="hidden" name="uang_muka" value="{{old('uang_muka')}}" class="form-control border-teal border-1">
-							<input id="nilaiuang_muka" type="text" class="form-control border-teal border-1" placeholder="Uang Muka" onkeyup="ribuan()" value="{{old('uang_muka')}}">
+							<input id="nilaiuang_muka" type="text" class="form-control border-teal border-1" placeholder="Uang Muka" onkeyup="ribuan()" onchange="updateFitValue()" value="{{old('uang_muka')}}">
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Cicilan Tenor</label>
+						<div class="col-lg-2">
+							<input id="datacicilan" type="hidden" value="{{old('cicilan')}}" class="form-control border-teal border-1">
+							<input type="number" name="cicilan" id="jumlahKolom" class="form-control border-teal border-1" placeholder="Tenor" onkeyup="rupiah()"  oninput="updateFitValue()" value="{{old('cicilan')}}">
+						</div>
+					</div>
+					<div id="cicilan"></div>
+					<script>
+
+					function formatNumberWithDotSeparator(number) {
+						return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+					}
+
+					// Function to update the fit value in each column
+					function updateFitValue() {
+						const nominalValue = parseFloat(document.getElementById("nilainominal").value.replace(/[^\d.-]/g, "")); // Extract numeric value from "Nominal" field
+						const uangMukaValue = parseFloat(document.getElementById("nilaiuang_muka").value.replace(/[^\d.-]/g, "")); // Extract numeric value from "Uang Muka" field
+						const jumlahKolom = parseInt(document.getElementById("jumlahKolom").value);
+						const fitValue = (nominalValue - uangMukaValue) / jumlahKolom;
+
+						// Update fit value in each column
+						const cicilanInputs = document.querySelectorAll("#cicilan input");
+						cicilanInputs.forEach((input, index) => {
+							input.value = formatNumberWithDotSeparator(fitValue.toFixed(6)); // Display the fit value with 2 decimal places and dot as thousands separator
+						});
+					}
+
+					document.getElementById("jumlahKolom").addEventListener("input", (event) => {
+						const jumlahCicilan = event.target.valueAsNumber;
+						const cicilanDiv = document.getElementById("cicilan");
+						cicilanDiv.innerHTML = "";
+						for (let i = 1; i <= jumlahCicilan; i++) {
+							$('#cicilan').append(`
+								<div class="col-lg-2 offset-lg-2">
+									Cicilan ${i}
+									<input type="text" name="jml_cicilan[]" id="nilaicicilan" class="form-control border-teal border-1" placeholder="Tenor" onkeyup="rupiah()" value="{{old('cicilan')}}"><br>
+								</div>
+							`);
+						}
+
+						// Update fit value when the number of columns changes
+						updateFitValue();
+					});
+
+					// Update fit value when "Nominal" or "Uang Muka" fields change
+					document.getElementById("nilainominal").addEventListener("input", updateFitValue);
+					document.getElementById("nilaiuang_muka").addEventListener("input", updateFitValue);
+					</script>
+
 					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Potongan Harga</label>
 						<div class="col-lg-10">
@@ -616,6 +666,24 @@
 			$('#nilainominal').val(val);
 			$('#nilaiuang_muka').val(val1);
 			$('#nilaidiskon').val(val2);
+		}
+
+		function rupiah(){
+			var val = $('#nilaicicilan').val();
+	
+			$('#datacicilan').val(val.replace(new RegExp(/\./, 'g'), ''));
+		
+			val = val.replace(/[^0-9,]/g,'');
+			
+
+			if(val != "") {
+				valArr = val.split('.');
+				valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
+				val = valArr.join('.');
+			}
+			
+			$('#nilaicicilan').val(val);
+			
 		}
 		</script>
 		<script type="text/javascript">

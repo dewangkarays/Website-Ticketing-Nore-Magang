@@ -288,7 +288,9 @@
                         {{-- <p align="center" style="font-size: 12px">Semarang, {{ date('d F Y') }}</p> --}}
                         <br style="line-height: 11;">
                         <p align="center" style="font-size: 12px"><b>
-                            {{$invoice->penagih ? $invoice->penagih : $setting->penagih}}</b> <br> {{$invoice->pospenagih ? $invoice->pospenagih : $setting->pospenagih}}
+                            {{$invoice->penagih ? $invoice->penagih : $setting->penagih}}</b> <br> 
+                            {{-- @php (dd($invoice->penagih ? $invoice->penagih : $setting->penagih)) --}}
+                            {{$invoice->pospenagih ? $invoice->pospenagih : $setting->pospenagih}}
                         </p>
                         <i align="center" style="color: #575556;">"Terima kasih atas kerja sama Anda"</i>
                     </td>

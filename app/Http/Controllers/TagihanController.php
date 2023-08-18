@@ -11,6 +11,7 @@ use App\Model\User;
 use App\Model\Setting;
 use App\Model\Nomor;
 use App\Model\Proyek;
+use App\Model\TagihanCicilan;
 use App\Model\Lampiran_gambar;
 use App\Exports\TagihanExport; //plugin excel
 use Maatwebsite\Excel\Facades\Excel;
@@ -89,59 +90,143 @@ class TagihanController extends Controller
 
         $data = $request->except(['_token', '_method', 'select_proyek', 'masa_berlaku']);
 
-        if ($request->get('langganan') == '') {
-            $data['langganan'] = 0;
-        }
-        if ($request->get('ads') == '') {
-            $data['ads'] = 0;
-        }
-        if ($request->get('lainnya') == '') {
-            $data['lainnya'] = 0;
-        }
+        if ($request->has('jml_cicilan')) {
 
-        if ($request->get('uang_muka') == '') {
-            $data['uang_muka'] = 0;
-        }
 
-        if ($request->get('new_mb') == '') {
-            $data['masa_berlaku'] = $request->get('masa_berlaku');
-        }
-
-        if ($request->get('new_mb') != '') {
-            $data['masa_berlaku'] = $request->get('new_mb');
-        }
-
-        if ($request->get('jenis_diskon') != '') {
-            if ($request->get('persen_diskon') != '') {
-                $data['diskon'] = $data['persen_diskon'] * $data['nominal'] / 100;
-            } else if ($request->get('nominal_diskon') != '') {
-                $data['diskon'] = $data['nominal_diskon'];
+            if ($request->get('langganan') == '') {
+                $data['langganan'] = 0;
             }
-        }
-
-        if ($data['diskon'] != '') {
-            $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'] - $data['diskon'];
-        } else {
-            $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
-        }
-
-        if ($data['jml_tagih'] < 0) {
-            return redirect()->back()->with('error', 'Uang muka melebihi nominal!');
-        }
-
-        // if ($data['jml_tagih'] > )
-
-        // dd($data);
-
-        $user = User::find($data['user_id']);
-        $data['nama'] = $user->nama;
-
-        // dd($data);
-
-        $tagihan = Tagihan::create($data);
-        $proyek = Proyek::find($tagihan->id_proyek);
-        $proyek->masa_berlaku = $tagihan->masa_berlaku;
-        $proyek->save();
+            if ($request->get('ads') == '') {
+                $data['ads'] = 0;
+            }
+            if ($request->get('lainnya') == '') {
+                $data['lainnya'] = 0;
+            }
+    
+            if ($request->get('uang_muka') == '') {
+                $data['uang_muka'] = 0;
+            }
+    
+            if ($request->get('new_mb') == '') {
+                $data['masa_berlaku'] = $request->get('masa_berlaku');
+            }
+    
+            if ($request->get('new_mb') != '') {
+                $data['masa_berlaku'] = $request->get('new_mb');
+            }
+    
+            if ($request->get('jenis_diskon') != '') {
+                if ($request->get('persen_diskon') != '') {
+                    $data['diskon'] = $data['persen_diskon'] * $data['nominal'] / 100;
+                } else if ($request->get('nominal_diskon') != '') {
+                    $data['diskon'] = $data['nominal_diskon'];
+                }
+            }
+    
+            if ($data['diskon'] != '') {
+                $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'] - $data['diskon'];
+            } else {
+                $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
+            }
+    
+            if ($data['jml_tagih'] < 0) {
+                return redirect()->back()->with('error', 'Uang muka melebihi nominal!');
+            }
+    
+            // if ($data['jml_tagih'] > )
+    
+            // dd($data);
+    
+            $user = User::find($data['user_id']);
+            $data['nama'] = $user->nama;
+    
+            // dd($data);
+    
+            $tagihan = Tagihan::create($data);
+    
+            $tagihan_cicilan = new TagihanCicilan([
+                'tagihan_id' => $tagihan->id,
+            ]);
+            
+            $jml_cicilan = $request->input('jml_cicilan');
+            $pembayaran_ke = 1; // Initialize the counter variable
+            
+            foreach ($jml_cicilan as $cicilan) {
+                // Hilangkan tanda titik dari nilai cicilan
+                $cicilan = str_replace('.', '', $cicilan);
+            
+                TagihanCicilan::create([
+                    'tagihan_id' => $tagihan->id,
+                    'pembayaran_ke' => $pembayaran_ke, // Use the counter variable
+                    'jml_cicilan' => $cicilan,
+                ]);
+            
+                $pembayaran_ke++; // Increment the counter for the next iteration
+            }
+            
+            $proyek = Proyek::find($tagihan->id_proyek);
+            $proyek->masa_berlaku = $tagihan->masa_berlaku;
+            $proyek->save();
+                
+            
+            }else{
+                if ($request->get('langganan') == '') {
+                    $data['langganan'] = 0;
+                }
+                if ($request->get('ads') == '') {
+                    $data['ads'] = 0;
+                }
+                if ($request->get('lainnya') == '') {
+                    $data['lainnya'] = 0;
+                }
+        
+                if ($request->get('uang_muka') == '') {
+                    $data['uang_muka'] = 0;
+                }
+        
+                if ($request->get('new_mb') == '') {
+                    $data['masa_berlaku'] = $request->get('masa_berlaku');
+                }
+        
+                if ($request->get('new_mb') != '') {
+                    $data['masa_berlaku'] = $request->get('new_mb');
+                }
+        
+                if ($request->get('jenis_diskon') != '') {
+                    if ($request->get('persen_diskon') != '') {
+                        $data['diskon'] = $data['persen_diskon'] * $data['nominal'] / 100;
+                    } else if ($request->get('nominal_diskon') != '') {
+                        $data['diskon'] = $data['nominal_diskon'];
+                    }
+                }
+        
+                if ($data['diskon'] != '') {
+                    $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'] - $data['diskon'];
+                } else {
+                    $data['jml_tagih'] = $data['nominal'] - $data['uang_muka'];
+                }
+        
+                if ($data['jml_tagih'] < 0) {
+                    return redirect()->back()->with('error', 'Uang muka melebihi nominal!');
+                }
+        
+                // if ($data['jml_tagih'] > )
+        
+                // dd($data);
+        
+                $user = User::find($data['user_id']);
+                $data['nama'] = $user->nama;
+        
+                // dd($data);
+        
+                $tagihan = Tagihan::create($data);
+        
+                $proyek = Proyek::find($tagihan->id_proyek);
+                $proyek->masa_berlaku = $tagihan->masa_berlaku;
+                $proyek->save();
+            }
+        
+       
 
         if ($request->buat_rekap == 1) {
             //Tagihan terakhir
