@@ -13,6 +13,7 @@ use App\Model\Nomor;
 use App\Model\Tagihan;
 use App\Model\Setting;
 use App\Model\Proyek;
+use App\Model\TagihanCicilan;
 use App\Exports\PaymentExport; //plugin excel
 use Maatwebsite\Excel\Facades\Excel;
 //use PDF;
@@ -244,7 +245,13 @@ class PaymentController extends Controller
         $data['nama_proyek'] = '';
 
         if ($request->rdtagihan == 1) {
+            $tagihanCicilans = TagihanCicilan::where('rekap_id', $request->tagihan_id)->get();
+            // dd($tagihanCicilans);
+            foreach ($tagihanCicilans as $tagihanCicilan) {
+                $data['nama_proyek'] = $data['nama_proyek'] . $tagihanCicilan->tagihan->proyek->nama_proyek . '<br>';
+            }
             $tagihans = Tagihan::where('rekap_tagihan_id', $request->tagihan_id)->get();
+            // dd($tagihans);
             foreach ($tagihans as $tagihan) {
                 $data['nama_proyek'] = $data['nama_proyek'] . $tagihan->proyek->nama_proyek . '<br>';
             }
