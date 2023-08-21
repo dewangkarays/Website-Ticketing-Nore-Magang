@@ -124,7 +124,6 @@
 @section('nominal-bayar')
     {{-- Sub 3 --}}
         @if($invoice->tagihan)
-         @if($invoice->tagihan->pembayaranCicilan->isNotEmpty())
             <table style="line-height: 1.5; padding: 5px 10px;">
                 <tr>
                     <th style="width: 45%; height: 30px"></th>
@@ -231,8 +230,8 @@
                     </td>
                 </tr>
             </table>
-     @endif  
-    @endif  
+         @endif  
+    {{-- @endif   --}}
             @php
                 $jenis_rekap = "tagihan";
             @endphp

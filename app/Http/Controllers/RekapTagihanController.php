@@ -144,15 +144,15 @@ class RekapTagihanController extends Controller
         // Simpan data rekap tagihan
         $rekaptagihan = RekapTagihan::create($datacicilan);            
             
-            $findtagihanCicilans->rekap_id = $rekaptagihan->id;
-            $findtagihanCicilans->update();
+        $findtagihanCicilans->rekap_id = $rekaptagihan->id;
+        $findtagihanCicilans->update();
 
-            // if ($latestCicilan) {
-            //     $tagihan->rekap_tagihan_id = $rekaptagihan->id;
-            //     $tagihan->update();
-            // }
+        if ($latestCicilan->id ) {
+            $tagihan->rekap_tagihan_id = 1;
+            $tagihan->save();
+        }
 
-            $rekaptagihan->nama_proyek = $rekaptagihan->nama_proyek.$tagihan->proyek->nama_proyek.'<br>';
+        $rekaptagihan->nama_proyek = $rekaptagihan->nama_proyek.$tagihan->proyek->nama_proyek.'<br>';
         
         
         $rekaptagihan->save();
@@ -386,16 +386,33 @@ class RekapTagihanController extends Controller
     public function cetakrekap(Request $request, $id)
     {
         $rekap = RekapTagihan::find($id);
-        // dd($rekap);
 
         $tagihanCicilanInvoices = TagihanCicilan::where('rekap_id', $rekap->id)->get();
-        $tagihanCicilanKe1 = TagihanCicilan::where('tagihan_id', $rekap->pembayaranCicilan->tagihan_id)->where('pembayaran_ke', '<', $rekap->pembayaranCicilan->pembayaran_ke)->get();
-        
+        $tagihanCicilanKe1 = collect(); // Inisialisasi sebagai koleksi kosong
+
+        if ($rekap->pembayaranCicilan) {
+            $tagihanCicilanKe1 = TagihanCicilan::where('tagihan_id', $rekap->pembayaranCicilan->tagihan_id)
+                                                ->where('pembayaran_ke', '<', $rekap->pembayaranCicilan->pembayaran_ke)
+                                                ->get();
+        }
+
         $totalSum = $tagihanCicilanKe1->sum('jml_cicilan');
         // dd($tagihanCicilanKe1);
         $tagihanInvoices = Tagihan::where('rekap_tagihan_id', $rekap->id)->get();
-         
-        $invoices = $tagihanCicilanInvoices->concat($tagihanInvoices);
+
+        $invoices = collect();
+
+        if ($tagihanCicilanInvoices->isNotEmpty()) {
+            $invoices = $invoices->concat($tagihanCicilanInvoices);
+        }
+
+        // if ($tagihanCicilanKe1->isNotEmpty()) {
+        //     $invoices = $invoices->concat($tagihanCicilanKe1);
+        // }
+
+        if ($tagihanInvoices->isNotEmpty()) {
+            $invoices = $invoices->concat($tagihanInvoices);
+        }
             // dd($rekap);
         $lampirans = Lampiran_gambar::where('rekap_tagihan_id', $rekap->id)->orderBy('jenis_lampiran', 'desc')->get();
         // dd($lampirans)
@@ -531,7 +548,7 @@ class RekapTagihanController extends Controller
         if($file){
                 $name = \Auth::user()->id."_".time().".".$file->getClientOriginalName();
                 // $destinationPath = public_path('/thumbnail');
-            if($file->getMimeType()=='application/pdf'){
+             if($file->getMimeType()=='application/pdf'){
                     $file->move($tujuan_upload,$name);
                     $data['gambar'] = $tujuan_upload.'/'.$name;
                 
