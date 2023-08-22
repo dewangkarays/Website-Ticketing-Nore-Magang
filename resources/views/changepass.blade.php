@@ -49,32 +49,7 @@
 						</div>
 
 					</fieldset>
-					<div class="text-right">
-						@if (Auth::user()->role==1)
-					<td rowspan="1" colspan="6">
-						<div class="text-right">
-							<a href="{{ url('/admin') }}">
-								<button type="submit" class="btn bg-slate"><i class="icon-undo2 mr-2"></i> Kembali</button>
-							</a>
-						</div>
-					@elseif(Auth::user()->role==20)
-					<td rowspan="1" colspan="6">
-						<div class="text-right">
-							<a href="{{ url('/keuangan') }}">
-								<button type="submit" class="btn bg-slate"><i class="icon-undo2 mr-2"></i> Kembali</button>
-							</a>
-						</div>
-						@elseif(Auth::user()->role<= 40)
-					<td rowspan="1" colspan="6">
-						<div class="text-right">
-							<a href="{{ url('/karyawan') }}">
-								<button type="submit" class="btn bg-slate"><i class="icon-undo2 mr-2"></i> Kembali</button>
-							</a>
-						</div>
-					@endif
-						
 						<button type="submit" class="btn btn-primary">Submit <i class="icon-paperplane ml-2"></i></button>
-					</div>
 				</form>
 			</div>
 
