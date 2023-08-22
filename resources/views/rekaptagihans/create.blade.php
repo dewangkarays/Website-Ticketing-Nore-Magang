@@ -102,7 +102,7 @@
 									<td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
 									<td><div class="datatable-column-width">{{@$tagihan->proyek->nama_proyek}}</div></td>
 									<td><div class="datatable-column-width">Rp @angka(@$tagihan->jml_tagih)</div></td>
-									{{-- <td><div class="datatable-column-width">-</div></td> --}}
+									<td><div class="datatable-column-width">-</div></td>
 									<td><div class="datatable-column-width">{!! @$tagihan->keterangan !!}</div></td>
 									
 								</tr>
