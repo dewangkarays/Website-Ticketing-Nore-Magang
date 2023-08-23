@@ -9,12 +9,17 @@
 		
 	}
 	.tanggal{
-		display: flex;
-		justify-content: center;
+		font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 20px;
+	
 	}
 	.format {
-		display: flex;
-		justify-content: center;
+		font-size: 28px;
+        font-weight: normal;
+        text-align: center;
+        margin-top: 5px;
 		
 	}
 	.card-footer{
@@ -71,8 +76,8 @@
 				<p class="description">Scan Kode QR dibawah ini untuk melakukan absensi.</p>
 			@else
 				<p class="description">Kode QR kadaluwarsa.</p>
-			@endif
-		 --}}
+			@endif --}}
+		
 			<div class="qrcode">
 				{{ QrCode::size(500)->generate($uuid) }}
 				 

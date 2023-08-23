@@ -7,6 +7,7 @@ use PDF;
 
 use Ramsey\Uuid\Uuid;
 use App\Model\PresensiQR;
+use App\Model\setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -43,7 +44,7 @@ class QRController extends Controller
     
         $pdf = PDF::loadView('presensi.CetakBarcode-pdf', ['data' => $data]);
 
-        return $pdf->download('KodeQR.pdf');
+        return $pdf->download('Absensi Barcode.pdf');
     }
 
     // public function store(Request $request)
