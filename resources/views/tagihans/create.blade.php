@@ -174,9 +174,13 @@
 							$('#cicilan').append(`
 								<div class="col-lg-2 offset-lg-2">
 									Cicilan ${i}
-									<input type="text" name="jml_cicilan[]" id="nilaicicilan" class="form-control border-teal border-1" placeholder="Tenor" onkeyup="rupiah()" value="{{old('cicilan')}}"><br>
+									<input type="text" name="jml_cicilan[]" id="nilaicicilan${i}" class="form-control border-teal border-1" placeholder="Tenor" onkeyup="rupiah(this)" value="{{old('cicilan')}}"><br>
 								</div>
 							`);
+
+							// Add the onkeyup event listener to each dynamically generated input field
+							const dynamicInput = document.getElementById(`nilaicicilan${i}`);
+							dynamicInput.addEventListener("keyup", (event) => rupiah(event.target));
 						}
 
 						// Update fit value when the number of columns changes
@@ -668,22 +672,27 @@
 			$('#nilaidiskon').val(val2);
 		}
 
-		function rupiah(){
-			var val = $('#nilaicicilan').val();
-	
-			$('#datacicilan').val(val.replace(new RegExp(/\./, 'g'), ''));
-		
-			val = val.replace(/[^0-9,]/g,'');
-			
+		function rupiah(inputElement) {
+			var val = inputElement.value;
 
-			if(val != "") {
-				valArr = val.split('.');
-				valArr[0] = (parseInt(valArr[0],10)).toLocaleString('id-ID');
-				val = valArr.join('.');
+			// Remove all dots from the input value and store it in the hidden input
+			$('#datacicilan').val(val.replace(/\./g, ''));
+
+			// Remove all non-numeric and non-comma characters
+			val = val.replace(/[^0-9,]/g, '');
+
+			if (val !== "") {
+				// Split the value by comma
+				var valArr = val.split(',');
+
+				// Format the integer part with thousands separator
+				valArr[0] = parseInt(valArr[0], 10).toLocaleString('id-ID');
+
+				// Combine integer and decimal parts with a comma
+				val = valArr.join(',');
 			}
-			
-			$('#nilaicicilan').val(val);
-			
+
+			inputElement.value = val; // Update the input value
 		}
 		</script>
 		<script type="text/javascript">
