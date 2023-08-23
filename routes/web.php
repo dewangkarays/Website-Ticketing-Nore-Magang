@@ -28,7 +28,7 @@ Route::get('/generate/lunas_dp_nol', 'GenerateDataController@lunas_dp_nol');
 
 Route::group(['middleware' => ['auth']], function () {
 	//Kantor
-	Route::group(['middleware' => ['role:1,10,20,30,40,50']], function () {
+	Route::group(['middleware' => ['role:1,10,20,30,35,40,50']], function () {
 		Route::get('/changepass',  'UserController@changePass');
 		Route::post('/changepass/{id}',  'UserController@changePassSubmit')->name('changepass');
 		// Route::post('/changehandler',  'TaskController@changehandler')->name('changehandler');
@@ -139,7 +139,7 @@ Route::group(['middleware' => ['auth']], function () {
 	});
 
 	//karyawan
-	Route::group(['middleware' => ['role:20,30,40']], function () {
+	Route::group(['middleware' => ['role:20,30,35,40']], function () {
 		Route::get('/karyawan',  'AdminController@karyawan')->name('karyawan');
 	});
 
