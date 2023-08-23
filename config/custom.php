@@ -22,6 +22,7 @@ return [
         // '10' => 'Karyawan',
         '20' => 'Keuangan',
         '30' => 'Frontend',
+        '35' => 'QA',
         '40' => 'Backend',
         '50' => 'Marketing',
         '60' => 'HRD',
