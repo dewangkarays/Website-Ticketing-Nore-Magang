@@ -250,11 +250,13 @@
 						<input id="datanominal" type="hidden" name="nominal" value="{{old('nominal')}}" class="form-control border-teal border-1">
 						<input id="nilainominal" type="text" class="form-control border-teal border-1" placeholder="Nominal" onkeyup="ribuan()" value="{{old('nominal')}}">
 					</div>
-					<div class="form-group col-6">
+				</div>
+				<div class="row">
+				<div class="form-group col-6">
 						<label>Uang Muka</label>
-							<input id="datauang_muka" type="hidden" name="uang_muka" value="{{old('uang_muka')}}" class="form-control border-teal border-1">
-							<input id="nilaiuang_muka" type="text" class="form-control border-teal border-1" placeholder="Uang Muka" onkeyup="ribuan()" value="{{old('uang_muka')}}">
-					</div>
+						<input id="datauang_muka" type="hidden" name="uang_muka" value="{{old('uang_muka')}}" class="form-control border-teal border-1">
+						<input id="nilaiuang_muka" type="text" class="form-control border-teal border-1" placeholder="Uang Muka" onkeyup="ribuan()" value="{{old('uang_muka')}}">
+				</div>
 				</div>
 				<div class="row">	
 					<div class="form-group col-6">
