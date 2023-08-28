@@ -43,6 +43,7 @@
 								<button type="submit" class="btn bg-slate"><i class="icon-undo2 mr-2"></i> Kembali</button>
 							</a>
 						</div>
+					</td>
 					@elseif(Auth::user()->role==20)
 					<td rowspan="1" colspan="6">
 						<div class="text-right">
