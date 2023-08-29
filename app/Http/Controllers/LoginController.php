@@ -26,24 +26,30 @@ class LoginController extends Controller
 	        'username' => $request->username,
 	        'password' => $request->password])
 	    ){
-	    	if(\Auth::user()->role==1){
-	    		return redirect('/admin');
-	    	}elseif(\Auth::user()->role==10 || \Auth::user()->role>=30 && \Auth::user()->role<=40){
-	    		return redirect('/karyawan');
-			}elseif(\Auth::user()->role==20){
-				return redirect('/keuangan');
+			if (\Auth::user()->nonaktif=='1'){
+
+				if(\Auth::user()->role==1){
+					return redirect('/admin');
+				}elseif (\Auth::user()->role == 10 || \Auth::user()->role >= 30 && \Auth::user()->role <= 40) {
+					return redirect('/karyawan');
+				}elseif(\Auth::user()->role==20){
+					return redirect('/keuangan');
+				}
+				elseif(\Auth::user()->role==50){
+					return redirect('/marketing');
+				}
+				elseif(\Auth::user()->role==95){
+					return redirect('/customer');
+				} 
+
+			}else{
+				return redirect('/login')->with('error', 'deactivated user');
 			}
-			elseif(\Auth::user()->role==50){
-				return redirect('/marketing');
-			}
-			elseif(\Auth::user()->role==95){
-	    		return redirect('/customer');
-	    	} else {
-	    		return redirect('/login')->with('error', 'Invalid Email address or Password');
-	    	}
-	        
-	    }
-	    return redirect('/login')->with('error', 'Invalid Email address or Password');
+			
+	    	}else {
+			return redirect('/login')->with('error', 'Invalid Email address or Password');
+		}
+	    
 	}
 	/* GET
 	*/
