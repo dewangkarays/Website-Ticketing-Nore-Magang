@@ -105,6 +105,23 @@
                                     </tr>
                                     <tbody>
                                         @foreach ($tagihans as $invoice)
+                                        @if($invoice->tagihan)
+                                            <tr>
+                                                <td>{{ @$invoice->tagihan->proyek->nama_proyek }}</td>
+                                                {{-- @php
+                                                    dd(@$invoice->tagihan->proyek->nama_proyek);
+                                                @endphp --}}
+
+                                                @if (@$invoice->tagihan->proyek->masa_berlaku)
+
+                                                <td>{{ date('d-m-Y', strtotime(@$invoice->tagihan->proyek->masa_berlaku)) }}</td>
+                                                @else
+                                                <td>-</td>
+                                                @endif
+                                                <td>Rp @angka($invoice->tagihan->jml_tagih)</td>
+                                                <td>{!! $invoice->tagihan->keterangan !!}</td>
+                                            </tr>
+                                        @else
                                             <tr>
                                                 <td>{{ $invoice->proyek->nama_proyek }}</td>
                                                 @if ($invoice->proyek->masa_berlaku)
@@ -115,6 +132,7 @@
                                                 <td>Rp @angka($invoice->jml_tagih)</td>
                                                 <td>{!! $invoice->keterangan !!}</td>
                                             </tr>
+							            @endif
                                         @endforeach
                                     @else
                                     <tr>
