@@ -137,43 +137,43 @@
 				<br>
 				<div class="row">
 					<div class="col-md-1 offset-1 text-center">
-						<span class="font-weight-semibold" style="font-size: 100%">
-							Visit:{{$totalPerStatus['visit']}}
+						<span class="font-weight-semibold" style="font-size: 100%" id="status-1">
+							Visit: {{$totalPerStatus['1'] ?? 0 }}
 						</span>
 					</div>
 					<div class="col-md-1 text-center">
-						<span class="font-weight-semibold" style="font-size: 100%">
-							Kenal:{{$totalPerStatus['kenal']}}
+						<span class="font-weight-semibold" style="font-size: 100%" id="status-2">
+							Kenal:{{$totalPerStatus['2'] ?? 0 }} 
 						</span>
 					</div>
 					<div class="col-md-2 text-center">
-						<span class="font-weight-semibold" style="font-size: 100%">
-							Negosiasi:{{$totalPerStatus['negosiasi']}}
+						<span class="font-weight-semibold" style="font-size: 100%" id="status-3">
+							Negosiasi:{{$totalPerStatus['3'] ?? 0 }} 
 						</span>
 					</div>
 					<div class="col-md-1 text-center">
-						<span class="font-weight-semibold" style="font-size: 100%">
-							Deal:{{$totalPerStatus['deal']}}
+						<span class="font-weight-semibold" style="font-size: 100%" id="status-4">
+							Deal:{{$totalPerStatus['4'] ?? 0 }} 
 						</span>
 					</div>
 					<div class="col-md-2 text-center">
-						<span class="font-weight-semibold" style="font-size: 100%">
-							Pending:{{$totalPerStatus['pending']}}
+						<span class="font-weight-semibold" style="font-size: 100%" id="status-5">
+							Pending:{{$totalPerStatus['5'] ?? 0 }} 
 						</span>
 					</div>
 					<div class="col-md-1 text-center">
-						<span class="font-weight-semibold" style="font-size: 100%">
-							Bayar:{{$totalPerStatus['bayar']}}
+						<span class="font-weight-semibold" style="font-size: 100%" id="status-6">
+							Bayar:{{$totalPerStatus['6'] ?? 0 }} 
 						</span>
 					</div>
 					<div class="col-md-1 text-center">
-						<span class="font-weight-semibold" style="font-size: 100%">
-							Ended:{{$totalPerStatus['ended']}}
+						<span class="font-weight-semibold" style="font-size: 100%" id="status-7">
+							Ended:{{$totalPerStatus['7'] ?? 0 }} 
 						</span>
 					</div>
 					<div class="col-md-1 text-center">
-						<span class="font-weight-semibold" style="font-size: 100%">
-							Live:{{$totalPerStatus['live']}}
+						<span class="font-weight-semibold" style="font-size: 100%" id="status-8">
+							Live:{{$totalPerStatus['8'] ?? 0 }} 
 						</span>
 					</div>
 				</div>
@@ -766,6 +766,61 @@
 			// alert('Halodek')
     }
 	
+		 function updateStatistics() {
+			var selectedMarketingId = $('#marketing_id').val();
+			var statusNames = {
+				'1': 'Visit',
+				'2': 'Kenal',
+				'3': 'Negosiasi',
+				'4': 'Deal',
+				'5': 'Pending',
+				'6': 'Bayar',
+				'7': 'Ended',
+				'8': 'Live'
+			};
+
+			$.ajax({
+				url: '/get-statistics', 
+				type: 'GET',
+				data: { marketing_id: selectedMarketingId },
+				success: function(data) {
+					console.log(data);
+					
+					// Reset counts for all statuses to 0
+					var counts = {};
+					for (var statusId in statusNames) {
+						counts[statusId] = 0;
+					}
+					
+					// Update counts based on data received
+					for (var statusId in data) {
+						counts[statusId] = data[statusId][selectedMarketingId] || 0;
+					}
+					
+					// Update UI elements with counts
+					for (var statusId in statusNames) {
+						var count = counts[statusId];
+						var statusName = statusNames[statusId];
+						var selector = '#status-' + statusId;
+						var element = $(selector);
+						var newText = statusName + ': ' + count;
+						element.text(newText);
+					}
+				}
+			});
+		}
+
+
+		$('#marketing_id').on('change', function() {
+			updateStatistics();
+		});
+
+		// Panggil updateStatistics saat halaman dimuat
+		$(document).ready(function() {
+			updateStatistics();
+		});
+
+
 	</script>
 	<script type="text/javascript">
 		$( document ).ready(function() {

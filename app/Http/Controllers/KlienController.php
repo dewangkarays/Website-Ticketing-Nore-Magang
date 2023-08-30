@@ -11,6 +11,7 @@ use App\Model\Proyek;
 use App\Model\Historyklien;
 use App\Model\Nomor;
 use App\Model\Tagihan;
+use App\Model\TagihanCicilan;
 use App\Model\RekapDptagihan;
 use App\Model\RekapTagihan;
 use App\Exports\KlienExport; //plugin excel
@@ -25,29 +26,21 @@ class KlienController extends Controller
         $marketings = User::where('role', '50')->get();
         // $totalPerStatus = Klien::selectRaw('status, count(status) as total')->where('member_created',false)->groupBY('status')->orderBY('total','DESC')->get();
         if(\Auth::user()->role==1 || \Auth::user()->role==20){
-            $totalPerStatus = Klien::select(
-                DB::raw('SUM(case when status = "1" then 1 else 0 end) as visit'),
-                DB::raw('SUM(case when status = "2" then 1 else 0 end) as kenal'),
-                DB::raw('SUM(case when status = "3" then 1 else 0 end) as negosiasi'),
-                DB::raw('SUM(case when status = "4" then 1 else 0 end) as deal'),
-                DB::raw('SUM(case when status = "5" then 1 else 0 end) as pending'),
-                DB::raw('SUM(case when status = "6" then 1 else 0 end) as bayar'),
-                DB::raw('SUM(case when status = "7" then 1 else 0 end) as ended'),
-                DB::raw('SUM(case when status = "8" then 1 else 0 end) as live'),
-            )
-            ->where('member_created',false)->first(); 
+           $statusCounts = Klien::where('member_created', false)
+            ->groupBy('status')
+            ->selectRaw('status, COUNT(*) as count')
+            ->get();
+
+            $totalPerStatus = collect($statusCounts)->pluck('count', 'status')->toArray();
+            // $selectedMarketingId = $request->input('marketing_id');
+            // dd($totalPerStatus);
         }else{
-            $totalPerStatus = Klien::select(
-                DB::raw('SUM(case when status = "1" then 1 else 0 end) as visit'),
-                DB::raw('SUM(case when status = "2" then 1 else 0 end) as kenal'),
-                DB::raw('SUM(case when status = "3" then 1 else 0 end) as negosiasi'),
-                DB::raw('SUM(case when status = "4" then 1 else 0 end) as deal'),
-                DB::raw('SUM(case when status = "5" then 1 else 0 end) as pending'),
-                DB::raw('SUM(case when status = "6" then 1 else 0 end) as bayar'),
-                DB::raw('SUM(case when status = "7" then 1 else 0 end) as ended'),
-                DB::raw('SUM(case when status = "8" then 1 else 0 end) as live'),
-            )
-            ->where('marketing_id','=',\Auth::user()->id)->where('member_created',false)->first();  
+             $statusCounts = Klien::where('marketing_id','=',\Auth::user()->id)->where('member_created', false)
+                ->groupBy('status')
+                ->selectRaw('status, COUNT(*) as count')
+                ->get();
+
+            $totalPerStatus = collect($statusCounts)->pluck('count', 'status')->toArray();
         }
         
         //    dd($totalPerStatus);
@@ -133,6 +126,25 @@ class KlienController extends Controller
         return Datatables::of($json_data)->addIndexColumn()->make(true);
     }
 
+    public function getStatistics(Request $request)
+    {
+        $marketingId = $request->input('marketing_id');
+        
+        $statusCounts = Klien::when($marketingId, function ($query) use ($marketingId) {
+            return $query->where('marketing_id', $marketingId);
+        })
+            ->where('member_created', false)
+            ->groupBy('status')
+            ->selectRaw('status, COUNT(*) as count')
+            ->get();
+
+        $totalPerStatus = [];
+        foreach ($statusCounts as $statusCount) {
+            $totalPerStatus[$statusCount->status][$marketingId] = $statusCount->count;
+        }
+
+    return response()->json($totalPerStatus);
+    }
     //CREATE
     public function create(Request $request)
     {
@@ -385,6 +397,26 @@ class KlienController extends Controller
         ]);
 
         $tagihan->save();
+
+        $tagihan_cicilan = new TagihanCicilan([
+            'tagihan_id' => $tagihan->id,
+        ]);
+        
+        $jml_cicilan = $request->input('jml_cicilan');
+        $pembayaran_ke = 1; // Initialize the counter variable
+        
+        foreach ($jml_cicilan as $cicilan) {
+            // Hilangkan tanda titik dari nilai cicilan
+            $cicilan = str_replace('.', '', $cicilan);
+        
+            TagihanCicilan::create([
+                'tagihan_id' => $tagihan->id,
+                'pembayaran_ke' => $pembayaran_ke, // Use the counter variable
+                'jml_cicilan' => $cicilan,
+            ]);
+        
+            $pembayaran_ke++; // Increment the counter for the next iteration
+        }
 
         if ($request->buat_rekap == 1) {
             //Tagihan terakhir
