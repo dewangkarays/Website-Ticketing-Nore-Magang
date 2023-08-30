@@ -71,82 +71,60 @@ class KlienController extends Controller
         }
 
     if(\Auth::user()->role==1 || \Auth::user()->role==20){
-        if ($request->potensi) {
-            $potensi = $request->potensi;
-            $json_data = Klien::where('member_created',false)
-            ->where('potensi','=',$potensi)
-            ->orderBy('id', 'desc')
-            ->with('marketing')
-            ->get();
-        }
-        
-        if ($request->source) {
-            $source = $request->source;
-            $json_data = Klien::where('member_created',false)
-            ->where('source','=',$source)
-            ->orderBy('id', 'desc')
-            ->with('marketing')
-            ->get();
-        }
+        $query = Klien::where('member_created', false);
 
-        if ($request->leads) {
-            $leads = $request->leads;
-            $json_data = Klien::where('member_created',false)
-            ->where('status','=',$leads)
-            ->orderBy('id', 'desc')
-            ->with('marketing')
-            ->get();
-        }
+            if ($request->potensi) {
+                $potensi = $request->potensi;
+                $query->where('potensi', '=', $potensi);
+            }
 
-        if ($request->marketing) {
-            $marketing = $request->marketing;
-            $json_data = Klien::where('member_created',false)
-            ->where('marketing_id','=',$marketing)
-            ->orderBy('id', 'desc')
+            if ($request->source) {
+                $source = $request->source;
+                $query->where('source', '=', $source);
+            }
+
+            if ($request->leads) {
+                $leads = $request->leads;
+                $query->where('status', '=', $leads);
+            }
+
+            
+            if ($request->marketing) {
+                $marketing = $request->marketing;
+                $query->where('marketing_id', '=', $marketing);
+            }
+
+        $json_data = $query->orderBy('id', 'desc')
             ->with('marketing')
             ->get();
-        }
 
     }else{
-        if ($request->potensi) {
-            $potensi = $request->potensi;
-            $json_data = Klien::where('member_created',false)
-            ->where('marketing_id','=',\Auth::user()->id)
-            ->where('potensi','=',$potensi)
-            ->orderBy('id', 'desc')
-            ->with('marketing')
-            ->get();
-        }
-        
-        if ($request->source) {
-            $source = $request->source;
-            $json_data = Klien::where('member_created',false)
-            ->where('marketing_id','=',\Auth::user()->id)
-            ->where('source','=',$source)
-            ->orderBy('id', 'desc')
-            ->with('marketing')
-            ->get();
-        }
+        $query = Klien::where('member_created', false);
 
-        if ($request->leads) {
-            $leads = $request->leads;
-            $json_data = Klien::where('member_created',false)
-            ->where('marketing_id','=',\Auth::user()->id)
-            ->where('status','=',$leads)
-            ->orderBy('id', 'desc')
-            ->with('marketing')
-            ->get();
-        }
+            if ($request->potensi) {
+                $potensi = $request->potensi;
+                $query->where('potensi', '=', $potensi);
+            }
 
-        if ($request->marketing) {
-            $marketing = $request->marketing;
-            $json_data = Klien::where('member_created',false)
+            if ($request->source) {
+                $source = $request->source;
+                $query->where('source', '=', $source);
+            }
+
+            if ($request->leads) {
+                $leads = $request->leads;
+                $query->where('status', '=', $leads);
+            }
+
+            if ($request->marketing) {
+                $marketing = $request->marketing;
+                $query->where('marketing_id', '=', $marketing);
+            }
+
+        $json_data = $query->orderBy('id', 'desc')
             ->where('marketing_id','=',\Auth::user()->id)
-            ->where('marketing_id','=',$marketing)
-            ->orderBy('id', 'desc')
             ->with('marketing')
             ->get();
-        }
     }
         
 
@@ -300,7 +278,7 @@ class KlienController extends Controller
         $klien = Klien::find($id);
         $marketings = User::where('role', '50')->get();
         $lastno = Nomor::first();
-        return view('klien.createmember', compact('klien', 'marketings'));
+        return view('klien.createmember', compact('klien', 'marketings','lastno'));
     }
 
     public function savecreateMember(Request $request, $id)
