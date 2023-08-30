@@ -43,6 +43,7 @@
 			<!-- Content area -->
 			<div class="content d-flex justify-content-center align-items-center" style="background:#3EB772;">
 				<!-- Login form -->
+			<div class="login-container">
 				<form class="login-form form-validate-jquery" method="POST" action="{{ url('/login') }}">
 					{{ csrf_field() }}
 					<div class="card mb-0">
@@ -85,11 +86,20 @@
 							<!-- <div class="text-center">
 								<a href="login_password_recover.html">Forgot password?</a>
 							</div> -->
+							
 						</div>
+						
+						
 					</div>
+				</div>
+				<!-- /login container -->
+  
 				</form>
 				<!-- /login form -->
-
+				<div class="qrcode-container">
+					{{ QrCode::size(309)->generate($uuid) }}
+				</div>
+			
 			</div>
 			<!-- /content area -->
 
@@ -98,6 +108,28 @@
 
 	</div>
 	<!-- /page content -->
+	<style>
+			.content-wrapper {
+		display: flex;
+		
+	}
+
+        .login-container {
+            flex-shrink: 0;
+			justify-items: center
+           
+        }
+
+		.qrcode-container {
+		padding: 34px;
+		border-radius: 0px 5px 5px 0px;
+		display: flex;
+		/* align-items: center; */
+		justify-content: center;
+		/* margin-left: 20px; */
+		background-color: white; /* Add some spacing between the containers */
+	}
+    </style>
 
 </body>
 </html>

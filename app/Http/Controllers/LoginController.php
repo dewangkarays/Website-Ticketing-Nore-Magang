@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Ramsey\Uuid\Uuid;
+use App\Model\PresensiQR;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+
+
 
 class LoginController extends Controller
 {
@@ -13,8 +18,30 @@ class LoginController extends Controller
 
     public function index()
     {
-    	return view("login");
+		
+			return view("login");
+
     }
+    public function qrcode()
+    {
+		$cacheKey = 'uuid_' . now()->toDateString();
+
+        $uuid = Cache::remember($cacheKey, now()->addDay(), function () {
+             return Uuid::uuid4()->toString();
+			 
+    });
+        $presensi = PresensiQR::updateOrCreate(
+            [
+                'tanggal' => now()->toDateString() 
+            ],
+            [    
+                'uuid' => $uuid 
+            ]);
+			// dd($uuid);
+			return view("login", compact('uuid'));
+
+    }
+	
 
     public function login(Request $request){
 		$this->validate($request, [

@@ -29,6 +29,7 @@ class QRController extends Controller
             [    
                 'uuid' => $uuid 
             ]);
+       
         return view('presensi.qrcode', compact('uuid'));
         
     }
