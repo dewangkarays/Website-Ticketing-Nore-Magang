@@ -283,7 +283,7 @@
 			return {
 			init: function() {
 				_componentUniform();
-				_componentSelect2();
+				// _componentSelect2();
 				_componentValidation();
 			}
 		}
