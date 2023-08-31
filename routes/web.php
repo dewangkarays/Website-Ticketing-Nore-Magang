@@ -12,13 +12,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'LoginController@qrcode',function () {
+Route::get('/', function () {
 	return view('login');
 });
 
 //all
 // Route::get('/',  'LoginController@qrcode');
-Route::get('/login',  'LoginController@qrcode');
+Route::get('/login',  'LoginController@index')->name('login');
+// Route::get('/login',  'LoginController@qrcode');
 Route::post('/login',  'LoginController@login');
 Route::get('/logout',  'LoginController@logout');
 Route::get('/del/{id}',  'AttachmentController@destroy');
