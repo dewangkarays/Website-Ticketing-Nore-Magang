@@ -32,7 +32,6 @@ class KlienController extends Controller
             ->get();
 
             $totalPerStatus = collect($statusCounts)->pluck('count', 'status')->toArray();
-            // $selectedMarketingId = $request->input('marketing_id');
             // dd($totalPerStatus);
         }else{
              $statusCounts = Klien::where('marketing_id','=',\Auth::user()->id)->where('member_created', false)
@@ -128,23 +127,28 @@ class KlienController extends Controller
 
     public function getStatistics(Request $request)
     {
-        $marketingId = $request->input('marketing_id');
-        
-        $statusCounts = Klien::when($marketingId, function ($query) use ($marketingId) {
-            return $query->where('marketing_id', $marketingId);
-        })
+        if (\Auth::user()->role == 1 || \Auth::user()->role == 20) {
+            $marketingId = $request->input('marketing_id');
+
+            $statusCounts = Klien::when($marketingId, function ($query) use ($marketingId) {
+                return $query->where('marketing_id', $marketingId);
+            })
             ->where('member_created', false)
             ->groupBy('status')
             ->selectRaw('status, COUNT(*) as count')
             ->get();
 
-        $totalPerStatus = [];
-        foreach ($statusCounts as $statusCount) {
-            $totalPerStatus[$statusCount->status][$marketingId] = $statusCount->count;
-        }
+            $totalPerStatus = [];
+            foreach ($statusCounts as $statusCount) {
+                $totalPerStatus[$statusCount->status][$marketingId] = $statusCount->count;
+            }
 
-    return response()->json($totalPerStatus);
+            return response()->json($totalPerStatus);
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
     }
+
     //CREATE
     public function create(Request $request)
     {
@@ -397,26 +401,6 @@ class KlienController extends Controller
         ]);
 
         $tagihan->save();
-
-        $tagihan_cicilan = new TagihanCicilan([
-            'tagihan_id' => $tagihan->id,
-        ]);
-        
-        $jml_cicilan = $request->input('jml_cicilan');
-        $pembayaran_ke = 1; // Initialize the counter variable
-        
-        foreach ($jml_cicilan as $cicilan) {
-            // Hilangkan tanda titik dari nilai cicilan
-            $cicilan = str_replace('.', '', $cicilan);
-        
-            TagihanCicilan::create([
-                'tagihan_id' => $tagihan->id,
-                'pembayaran_ke' => $pembayaran_ke, // Use the counter variable
-                'jml_cicilan' => $cicilan,
-            ]);
-        
-            $pembayaran_ke++; // Increment the counter for the next iteration
-        }
 
         if ($request->buat_rekap == 1) {
             //Tagihan terakhir
