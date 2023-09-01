@@ -112,6 +112,59 @@
 						</div>
 					</div>
 					<div class="form-group row">
+						<label class="col-form-label col-lg-2">Cicilan Tenor</label>
+						<div class="col-lg-2">
+							<input id="datacicilan" type="hidden" value="{{old('cicilan')}}" class="form-control border-teal border-1">
+							<input type="number" name="cicilan" id="jumlahKolom" class="form-control border-teal border-1" placeholder="Tenor" onkeyup="rupiah()"  oninput="updateFitValue()" value="{{old('cicilan')}}">
+						</div>
+					</div>
+					<div id="cicilan"></div>
+					<script>
+
+					function formatNumberWithDotSeparator(number) {
+						return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+					}
+
+					// Function to update the fit value in each column
+					function updateFitValue() {
+						const nominalValue = parseFloat(document.getElementById("nilainominal").value.replace(/[^\d.-]/g, "")); // Extract numeric value from "Nominal" field
+						const uangMukaValue = parseFloat(document.getElementById("nilaiuang_muka").value.replace(/[^\d.-]/g, "")); // Extract numeric value from "Uang Muka" field
+						const jumlahKolom = parseInt(document.getElementById("jumlahKolom").value);
+						const fitValue = (nominalValue - uangMukaValue) / jumlahKolom;
+
+						// Update fit value in each column
+						const cicilanInputs = document.querySelectorAll("#cicilan input");
+						cicilanInputs.forEach((input, index) => {
+							input.value = formatNumberWithDotSeparator(fitValue.toFixed(6)); // Display the fit value with 2 decimal places and dot as thousands separator
+						});
+					}
+
+					document.getElementById("jumlahKolom").addEventListener("input", (event) => {
+						const jumlahCicilan = event.target.valueAsNumber;
+						const cicilanDiv = document.getElementById("cicilan");
+						cicilanDiv.innerHTML = "";
+						for (let i = 1; i <= jumlahCicilan; i++) {
+							$('#cicilan').append(`
+								<div class="col-lg-2 offset-lg-2">
+									Cicilan ${i}
+									<input type="text" name="jml_cicilan[]" id="nilaicicilan${i}" class="form-control border-teal border-1" placeholder="Tenor" onkeyup="rupiah(this)" value="{{old('cicilan')}}"><br>
+								</div>
+							`);
+
+							// Add the onkeyup event listener to each dynamically generated input field
+							const dynamicInput = document.getElementById(`nilaicicilan${i}`);
+							dynamicInput.addEventListener("keyup", (event) => rupiah(event.target));
+						}
+
+						// Update fit value when the number of columns changes
+						updateFitValue();
+					});
+
+					// Update fit value when "Nominal" or "Uang Muka" fields change
+					document.getElementById("nilainominal").addEventListener("input", updateFitValue);
+					document.getElementById("nilaiuang_muka").addEventListener("input", updateFitValue);
+					</script>
+					<div class="form-group row">
 						<label class="col-form-label col-lg-2">Potongan Harga</label>
 						<div class="col-lg-10">
 							<input type="text" class="form-control border-teal border-1" value="{{$tagihan->diskon ? $tagihan->diskon : '0'}}" readonly>

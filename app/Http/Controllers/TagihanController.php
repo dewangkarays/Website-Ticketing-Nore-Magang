@@ -504,6 +504,29 @@ class TagihanController extends Controller
 
         $tagihan->update($data);
 
+        if ($request->has('jml_cicilan')) {
+            $tagihan_cicilan = new TagihanCicilan([
+            'tagihan_id' => $tagihan->id,
+        ]);
+        
+        $jml_cicilan = $request->input('jml_cicilan');
+        $pembayaran_ke = 1; // Initialize the counter variable
+        
+        foreach ($jml_cicilan as $cicilan) {
+            // Hilangkan tanda titik dari nilai cicilan
+            $cicilan = str_replace('.', '', $cicilan);
+        
+            TagihanCicilan::create([
+                'tagihan_id' => $tagihan->id,
+                'pembayaran_ke' => $pembayaran_ke, // Use the counter variable
+                'jml_cicilan' => $cicilan,
+            ]);
+        
+            $pembayaran_ke++; // Increment the counter for the next iteration
+        }
+        
+    }
+       
         $proyek = Proyek::find($tagihan->id_proyek);
         $proyek->masa_berlaku = $tagihan->masa_berlaku;
         $proyek->update();
