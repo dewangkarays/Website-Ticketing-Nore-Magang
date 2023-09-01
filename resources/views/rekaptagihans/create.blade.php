@@ -77,7 +77,7 @@
 								{{-- @php (dd($tagihan->pembayaranCicilan->first()->id)) --}}
 								<tr>
 									<td>{{$i}}</td>
-									<td><input type="checkbox" name="cicilan[]" id="chk" value="{{ @$tagihan->pembayaranCicilanKosong->first()->id }}" required></td>
+									<td><input type="checkbox" name="cicilan[]" id="chk" value="{{ @$tagihan->pembayaranCicilanKosong->first()->id }}"></td>
 								{{-- @php (dd($tagihan->pembayaranCicilan->sum('jml_cicilan'))) --}}
 
 									<td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
@@ -98,7 +98,7 @@
 							@else
 								<tr>
 									<td>{{$i}}</td>
-									<td><input type="checkbox" name="tagihan_id[]" id="chk" value="{{ @$tagihan->id }}" required></td>
+									<td><input type="checkbox" name="tagihan_id[]" id="chk" value="{{ @$tagihan->id }}"></td>
 									<td><div class="datatable-column-width">{{@$tagihan->user->nama}}</div></td>
 									<td><div class="datatable-column-width">{{@$tagihan->proyek->nama_proyek}}</div></td>
 									<td><div class="datatable-column-width">Rp @angka(@$tagihan->jml_tagih)</div></td>

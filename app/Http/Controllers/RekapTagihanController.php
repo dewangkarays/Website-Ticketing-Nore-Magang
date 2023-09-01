@@ -110,6 +110,8 @@ class RekapTagihanController extends Controller
         $latestCicilan = TagihanCicilan::where('tagihan_id', $tagihan->id)
         ->orderBy('pembayaran_ke', 'desc')
         ->first();
+        // dd($latestCicilan);
+        
         // Ambil data user
         $finduser = User::find($datacicilan['user_id']);
         $datacicilan['nama'] = $finduser->nama;                         //rekaptagihan
@@ -142,20 +144,23 @@ class RekapTagihanController extends Controller
         }
     
         // Simpan data rekap tagihan
-        $rekaptagihan = RekapTagihan::create($datacicilan);            
+        $rekaptagihan = RekapTagihan::create($datacicilan);   
+        $rekaptagihan->nama_proyek = $rekaptagihan->nama_proyek.$tagihan->proyek->nama_proyek.'<br>';
+         
+        $rekaptagihan->save();         
             
         $findtagihanCicilans->rekap_id = $rekaptagihan->id;
         $findtagihanCicilans->update();
 
-        if ($latestCicilan->id ) {
+        if ($latestCicilan) {
+        // Ambil nilai pembayaran_ke terakhir dari cicilan
+
+        if ($latestCicilan->pembayaran_ke === $findtagihanCicilans->pembayaran_ke) {
+            // Jika tidak ada cicilan dengan pembayaran_ke yang lebih kecil dari terakhir
             $tagihan->rekap_tagihan_id = 1;
             $tagihan->save();
         }
-
-        $rekaptagihan->nama_proyek = $rekaptagihan->nama_proyek.$tagihan->proyek->nama_proyek.'<br>';
-        
-        
-        $rekaptagihan->save();
+    } 
 
         
         }else{
