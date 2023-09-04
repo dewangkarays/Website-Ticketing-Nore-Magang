@@ -308,7 +308,7 @@ ul{
 								</span>
 							</a>
 						</li>
-						@if (Auth::user()->role==1)
+						@if (Auth::user()->role<=20)
 						<li class="nav-item">
 							<a href="/generateqr" class="nav-link {{ (request()->is('generateqr*')) ? 'active' : '' }}">
 								<i class="icon-qrcode"></i>
