@@ -2,6 +2,19 @@
 
 @section('content')
 
+@section('css')
+<style type="text/css">
+.custom-span {
+
+    color: #333;
+    background-color: #f0f0f0; 
+    border: 1px solid #b8b7b7;  
+    border-radius: 5px; 
+    padding: 5px;             
+}
+
+</style>
+@endsection
 <!-- Page header -->
 <div class="page-header page-header-light">
     <div class="page-header-content header-elements-md-inline">
@@ -31,25 +44,25 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Nama Klien</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{$klien->nama_calonklien}}</span>
+                        <span class="form-text custom-span"> {{$klien->nama_calonklien}}</span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Nama Perusahaan</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{$klien->nama_perusahaan}} </span>
+                        <span class="form-text custom-span"> {{$klien->nama_perusahaan}} </span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Jenis Perusahaan</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{$klien->jenis_perusahaan}} </span>
+                        <span class="form-text custom-span"> {{$klien->jenis_perusahaan}} </span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">potensi</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> 
+                        <span class="form-text custom-span"> 
                             @switch($klien->potensi)
                             @case(1)
                                 Website 
@@ -81,7 +94,7 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Leads</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> 
+                        <span class="form-text custom-span"> 
                             @switch($klien->status)
                             @case(1)
                             <span style="font-size: 100%;" class="badge badge-pill badge-info">Visit</span>
@@ -116,7 +129,7 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Source</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> 
+                        <span class="form-text custom-span"> 
                             @switch($klien->source)
                             @case(1)
                                Social Media
@@ -148,32 +161,32 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Telp</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{$klien->telp}} </span>
+                        <span class="form-text custom-span"> {{$klien->telp}} </span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Tanggal Kontak Pertama</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{@$klien->tanggal_kontakpertama ? $klien->tanggal_kontakpertama:'-'}} 
+                        <span class="form-text custom-span"> {{@$klien->tanggal_kontakpertama ? $klien->tanggal_kontakpertama:'-'}} 
                         </span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Tanggal Kontak Terakhir</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{@$klien->tanggal_kontakterakhir ?$klien->tanggal_kontakterakhir:'-'}} </span>
+                        <span class="form-text custom-span"> {{@$klien->tanggal_kontakterakhir ?$klien->tanggal_kontakterakhir:'-'}} </span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Alamat</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{$klien->alamat}} </span>
+                        <span class="form-text custom-span"> {{$klien->alamat}} </span>
                     </div>
                 </div>
                 {{-- <div class="form-group row">
                     <label class="col-form-label col-lg-2">keterangan</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{@$klien->keterangan_lain ? $klien->keterangan_lain:'-'}} </span>
+                        <span class="form-text custom-span"> {{@$klien->keterangan_lain ? $klien->keterangan_lain:'-'}} </span>
                     </div>
                 </div> --}}
 
