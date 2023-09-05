@@ -572,6 +572,29 @@
 		$('#nilaiuang_muka').val(val1);
 	}
 
+	function rupiah(inputElement) {
+		var val = inputElement.value;
+
+		// Remove all dots from the input value and store it in the hidden input
+		$('#datacicilan').val(val.replace(/\./g, ''));
+
+		// Remove all non-numeric and non-comma characters
+		val = val.replace(/[^0-9,]/g, '');
+
+		if (val !== "") {
+			// Split the value by comma
+			var valArr = val.split(',');
+
+			// Format the integer part with thousands separator
+			valArr[0] = parseInt(valArr[0], 10).toLocaleString('id-ID');
+
+			// Combine integer and decimal parts with a comma
+			val = valArr.join(',');
+		}
+
+		inputElement.value = val; // Update the input value
+		}
+
 	$( document ).ready(function() {
 		// Default style
 		@if(session('error'))
