@@ -158,16 +158,17 @@
     @else
     @if($lampiran->jenis_lampiran != 2)
         <div align="center">
-            <img src="{{url($lampiran->gambar)}}" style="max-width:110%;max-height:300px;object-fit: cover;margin-bottom: 16px;page-break-inside:avoid; ">
+            <img src="{{url($lampiran->gambar)}}" style="max-width:110%;max-height:400px;object-fit: cover;margin-bottom: 16px;page-break-inside:avoid; ">
         </div>
-        {{-- @if (!$loop->last) --}}
-        @if (($rekapdpindex +1) % 3 == 0)
+        @if (!$loop->last)
+            @if (($rekapindex + 1) % 2 == 0)
+        {{-- @php (dd($rekapindex)) --}}
         <div class="page-break"></div>   
+            @endif
         @endif
-        {{-- @endif --}}
-        @else
+    @else
         <div align="center">
-            <img src="{{url($lampiran->gambar)}}" style="max-width:90%;max-height:300px;object-fit: cover;margin-bottom: 16px;">
+            <img src="{{url($lampiran->gambar)}}" style="max-width:90%;max-height:400px;object-fit: cover;margin-bottom: 16px;">
         </div>
     @endif
     
