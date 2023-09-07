@@ -44,7 +44,7 @@
 			<div class="content d-flex justify-content-center align-items-center" style="background:#3EB772;">
 				<!-- Login form -->
 			<div class="login-container">
-				<form class="login-form form-validate-jquery" method="POST" action="{{ url('/login') }}">
+				<form class="form-validate-jquery" method="POST" action="{{ url('/login') }}">
 					{{ csrf_field() }}
 					<div class="card mb-0">
 						<div class="card-body">
@@ -109,26 +109,43 @@
 	</div>
 	<!-- /page content -->
 	<style>
-			.content-wrapper {
-		display: flex;
-		
-	}
-
+		.content-wrapper {
+		justify-content: center;
+        display: flex;
+        flex-wrap: wrap;
+    }
         .login-container {
-            flex-shrink: 0;
-			justify-items: center
-           
-        }
+        flex-shrink: 0;
+        width: 100%;
+        max-width: 400px;
+		padding: 34px;
+        /* margin: 0 auto; */
+    }
 
 		.qrcode-container {
+		flex-shrink: 0;
+        width: 100%;
+        max-width: 400px;
+        /* margin: 20px auto; */
 		padding: 34px;
-		border-radius: 0px 5px 5px 0px;
+		border-radius: 4px; 
 		display: flex;
 		/* align-items: center; */
 		justify-content: center;
 		/* margin-left: 20px; */
-		background-color: white; /* Add some spacing between the containers */
+		background-color: white; Add some spacing between the containerss
 	}
+
+	 @media screen and (max-width: 768px) {
+        .content {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qrcode-container {
+            margin-top: 20px;
+        }
+    }
     </style>
 
 </body>
