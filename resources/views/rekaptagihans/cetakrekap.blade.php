@@ -255,7 +255,9 @@
     @foreach ($lampirans as $rekapindex => $lampiran)
     @if (!$loop->first)
         @if ($lampiran->jenis_lampiran != $jenis_terakhir)
-        <div class="page-break"></div>   
+            @if ($rekapindex > 2)
+                <div class="page-break"></div>
+            @endif
         @endif
     @endif
     
@@ -279,7 +281,7 @@
         @if (!$loop->last)
             @if (($rekapindex + 1) % 2 == 0)
         {{-- @php (dd($rekapindex)) --}}
-        <div class="page-break"></div>   
+            <div class="page-break"></div>   
             @endif
         @endif
     @else
