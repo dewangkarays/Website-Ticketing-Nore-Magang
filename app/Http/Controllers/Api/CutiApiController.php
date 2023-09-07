@@ -46,30 +46,30 @@ class CutiApiController extends Controller
 
 //     return response()->json(['error' => 'Invalid request'], 400);
 // }
-    public function create1()
-    {
-        $users = User::where('id', '=', Auth::user()->id)->get();
-        $karyawans = User::where('role', '<=', '50')->get();
-        if (auth()->user()->role != 1) {
-            $karyawan = User::find(auth()->id());
-            $sisa_cuti = $karyawan->sisa_cuti;
+    // public function create1()
+    // {
+    //     $users = User::where('id', '=', Auth::user()->id)->get();
+    //     $karyawans = User::where('role', '<=', '50')->get();
+    //     if (auth()->user()->role != 1) {
+    //         $karyawan = User::find(auth()->id());
+    //         $sisa_cuti = $karyawan->sisa_cuti;
             
        
         
-            // dd($users);
-        // $data = [
-        //     'user' => $users,
-        //     'karyawan' => $karyawans,
-        //     'sisa_cuti' => $sisa_cuti,
+    //         // dd($users);
+    //     // $data = [
+    //     //     'user' => $users,
+    //     //     'karyawan' => $karyawans,
+    //     //     'sisa_cuti' => $sisa_cuti,
             
 
-        //         ];
+    //     //         ];
 
-            return response()->json(compact('users', 'karyawan', 'sisa_cuti',), 200);
-        }
+    //         return response()->json(compact('users', 'karyawan', 'sisa_cuti',), 200);
+    //     }
 
-        return response()->json(compact('users', 'karyawans'), 200);
-    }
+    //     return response()->json(compact('users', 'karyawans'), 200);
+    // }
 
 
     public function create(Request $request)
@@ -137,7 +137,7 @@ class CutiApiController extends Controller
         //     ->exists();
         
         // if ($check) {
-        //     return response()->json(['error' => 'Permohonan cuti tumpang tindih dengan cuti sebelumnya'], 400);
+        //     return response()->json(['error' => 'Permohonan cuti doubleh dengan cuti sebelumnya'], 400);
         // }
         
 
@@ -171,7 +171,6 @@ class CutiApiController extends Controller
             $cuti->verifikator_2 = $nama_verif2->nama;
             $cuti->verifikator_2_id = $verifikator2;
         } else {
-            // Handle case where $nama_verif2 is not found
             return response()->json(['error' => 'Verifikator 2 not found'], 404);
         }
     
@@ -186,7 +185,6 @@ class CutiApiController extends Controller
                 $cuti->verifikator_1 = $nama_verif1->nama;
                 $cuti->verifikator_1_id = $verifikator1;
             } else {
-                // Handle case where $nama_verif1 is not found
                 return response()->json(['error' => 'Verifikator 1 not found'], 404);
             }
         }
@@ -229,7 +227,7 @@ class CutiApiController extends Controller
 
         public function getverifikator(Request $request, $id)
         {
-            $user = \Auth::user(); // Mendapatkan pengguna yang saat ini diautentikasi
+            $user = \Auth::user(); 
 
     if ($user->atasan_id != null) {
         $verifs = User::where('role', '<=', '50')
@@ -243,12 +241,12 @@ class CutiApiController extends Controller
         while ($atasan_id) {
             $verif = $verifs->where('id', $atasan_id)->first();
             if ($verif) {
-                $data[$j]['id'] = $verif->id; // Ambil ID pengguna
-                $data[$j]['nama'] = $verif->nama; // Ambil nama pengguna
+                $data[$j]['id'] = $verif->id; 
+                $data[$j]['nama'] = $verif->nama; 
                 $atasan_id = $verif->atasan_id;
                 $j++;
             } else {
-                break; // Hentikan jika tidak ada atasan dengan id yang ditemukan
+                break; 
             }
         }
 
