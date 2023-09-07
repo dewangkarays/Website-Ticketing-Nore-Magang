@@ -69,11 +69,14 @@
                             <input id="keterangan" name="keterangan" type="text" class="form-control">
                         </div>
                     </div>
-        
-                    <div class="text-right">
-                        <button class="btn bg-success" type="submit">Submit</button>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <a href="{{ url('/rekapdptagihans') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
+                        </div>
+                        <div>
+                            <button class="btn bg-success" type="submit"><i class="icon-paperplane mr-2"></i>Submit</button>
+                        </div>
                     </div>
-                </div>
                 
             </form>
         </div>
@@ -202,7 +205,7 @@
 
         var upl = document.getElementById("gambar");
         $("#gambar").change(function () {
-       var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'svg'];
+       var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'svg', 'pdf'];
        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
            alert("Only formats are allowed : "+fileExtension.join(', '));
         upl.value = "";
