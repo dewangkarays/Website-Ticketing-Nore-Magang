@@ -49,7 +49,24 @@
 						</div>
 
 					</fieldset>
+					<div class="text-right">
+						@switch(Auth::user()->role)
+							@case(1)
+								<a href="{{ url('/admin') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
+								@break
+							@case(20)
+								<a href="{{ url('/keuangan') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
+								@break
+							@case(50)
+								<a href="{{ url('/marketing') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
+								@break
+							@default
+								@if(Auth::user()->role > 20 && Auth::user()->role <= 40)
+									<a href="{{ url('/karyawan') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
+								@endif
+						@endswitch
 						<button type="submit" class="btn btn-primary">Submit <i class="icon-paperplane ml-2"></i></button>
+					</div>
 				</form>
 			</div>
 
