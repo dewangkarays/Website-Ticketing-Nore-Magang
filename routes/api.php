@@ -54,10 +54,10 @@ Route::group(['middleware' => ['auth:api','cors:api']], function() {
     Route::post('/storepresensiqr',  'Api\QrcodeApiController@storeqr');
 
     // Cuti
-    Route::get('/cuti', 'Api\CutiApiController@index'); //
+    // Route::get('/cuti', 'Api\CutiApiController@index'); //
     Route::get('/getcuti', 'Api\CutiApiController@create');
     // Route::get('/api/cuti', 'Api\CutiApiController@index');
-    Route::post('/cuti', 'Api\CutiApiController@store');
+    Route::post('/storecuti', 'Api\CutiApiController@store');
     Route::get('/get-verifikator/{id}', 'Api\CutiApiController@getverifikator');
     Route::get('/cuti/{status}', 'Api\CutiApiController@getcuti');
     Route::get('/statuscuti', 'Api\CutiApiController@statuscuti');

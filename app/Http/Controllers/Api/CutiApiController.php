@@ -352,17 +352,22 @@ class CutiApiController extends Controller
         $cuti = $cuti->get();
 
         $statuscuti = Config::get('custom.status_cuti');
-
+    
         foreach ($cuti as &$cutiItem) {
             $cutiItem['status_cuti'] = $statuscuti[$cutiItem['status']];
         }
+    
+        $data = [
+            'cuti' => $cuti,
+            'status' => config('custom.status_presensi' . auth()->user()->status),
+        ];
 
 
        return response()->json([
         'code' => 200, 
         'status' => 'Success', 
         'message' => 'Get data cuti success', 
-        'data' => $cuti
+        'data' => $data
     ]);
     }
 
