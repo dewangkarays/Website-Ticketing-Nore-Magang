@@ -130,6 +130,7 @@
                         </div>
                     </div>
 					<div class="text-right">
+						<a href="{{ url('/presensi') }}" class="btn bg-slate">Kembali <i class="icon-undo2 ml-2"></i></a>
 						<button type="submit" class="btn btn-primary">Simpan <i class="icon-paperplane ml-2"></i></button>
 					</div>
 				</form>
