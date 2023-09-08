@@ -36,25 +36,25 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama Klien</label>
 							<div class="col-lg-10">
-                                <input type="text" name="nama_calonklien" class="form-control border-teal border-1" placeholder="Nama klien" value="{{old('nama_calonklien')}}" required>
+                                <input type="text" name="nama_calonklien" class="form-control border-teal border-1" placeholder="Nama klien" value="{{old('nama_calonklien')}}">
                             </div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Nama Perusahaan</label>
 							<div class="col-lg-10">
-								<input type="text" name="nama_perusahaan" class="form-control border-teal border-1" placeholder="Nama Perusahaan" value="{{old('nama_perusahaan')}}" required>
+								<input type="text" name="nama_perusahaan" class="form-control border-teal border-1" placeholder="Nama Perusahaan" value="{{old('nama_perusahaan')}}">
                         </div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Jenis Perusahaan</label>
 							<div class="col-lg-10">
-                                <input type="text" id="jenis_perusahaan" name="jenis_perusahaan" class="form-control border-teal border-1" placeholder="Jenis Perusahaan" value="{{old('jenis_perusahaan')}}" required>
+                                <input type="text" id="jenis_perusahaan" name="jenis_perusahaan" class="form-control border-teal border-1" placeholder="Jenis Perusahaan" value="{{old('jenis_perusahaan')}}">
                             </div>
 						</div>
 						<div class="form-group row">
                             <label class="col-form-label col-lg-2">Potensi <span class="text-danger">*</span></label>
                             <div class="col-lg-10">
-                                <select id="potensi" name="potensi" class="form-control select-search border-teal border-1" required>
+                                <select id="potensi" name="potensi" class="form-control select-search border-teal border-1">
                                     <option value="">-- Pilih Produk Nore --</option>
                                     @foreach (config('custom.jenis_proyek') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
@@ -65,7 +65,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Tanggal Kontak Pertama</label>
                             <div class="col-lg-10">
-                                <input id="tanggal_kontakpertama" name="tanggal_kontakpertama" type="date" class="form-control pickadate-accessibility" placeholder="Pilih Tanggal"  required>
+                                <input id="tanggal_kontakpertama" name="tanggal_kontakpertama" type="date" class="form-control pickadate-accessibility" placeholder="Pilih Tanggal" >
                             </div>
                         </div>
                         <div class="form-group row">
@@ -77,7 +77,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Status Lead <span class="text-danger">*</span></label>
                             <div class="col-lg-10">
-                                <select id="status_nore" name="status" class="form-control select-search border-teal border-1" required>
+                                <select id="status_nore" name="status" class="form-control select-search border-teal border-1">
                                     <option value="">-- Lead --</option>
                                     @foreach (config('custom.status_klien') as $key => $value)
                                         <option value="{{ $key }}">{{ $value }}</option>
@@ -96,13 +96,13 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Alamat</label>
 							<div class="col-lg-10">
-                                <input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat" required>
+                                <input type="text" name="alamat" class="form-control border-teal border-1" placeholder="Alamat">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Marketing</label>
 							<div class="col-lg-10">
-								<select id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0" required>
+								<select id="marketing_id" name="marketing_id" class="form-control select-search" data-user_id="0">
 									<option value="">-- Pilih Marketing --</option>
 									@foreach($marketings as $marketing)
 										<option @if (\Auth::user()->id == $marketing->id) selected @endif value="{{$marketing->id}}">{{$marketing->nama}} </option>
@@ -125,7 +125,7 @@
                             <label class="col-form-label col-lg-2">Keterangan lain</label>
                             <div class="col-lg-10">
                                 <span class="form-text text-muted">Contoh: Website blogspot Noer Prajitno</span>
-                                <textarea name="keterangan_lain" id="" cols="30" rows="10" class="summernote form-control border-teal border-1" required>{{ old('keterangan_lain') }}</textarea>
+                                <textarea name="keterangan_lain" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{ old('keterangan_lain') }}</textarea>
                             </div>
                         </div>
 					</fieldset>
@@ -341,45 +341,45 @@ var FormValidation = function() {
 						error.insertAfter(element);
 					}
 				},
-				rules: {
-					nama_calon_klien:{
-						required : true
-					}, 
-					nama_perusahaan:{
-						required : true
-					},
-					telp:{
-						required : true,
-						number : true,
-					},
-					source:{
-						required : true,
-					},
-					status:{
-						required : true,
-					},
+				// rules: {
+				// 	nama_calon_klien:{
+				// 		required : true
+				// 	}, 
+				// 	nama_perusahaan:{
+				// 		required : true
+				// 	},
+				// 	telp:{
+				// 		required : true,
+				// 		number : true,
+				// 	},
+				// 	source:{
+				// 		required : true,
+				// 	},
+				// 	status:{
+				// 		required : true,
+				// 	},
 					
 					
-				},
-				messages: {
-					nama_calon_klien:{
-						required : 'Mohon diisi.'
-					},
-					nama_perusahaan:{
-						required : 'Mohon diisi.',
-						nama_perusahaan : 'Masukan nama perusahaan dengan benar'
-					},
-					telp:{
-						required : 'Mohon diisi.',
-						number : 'Hanya mengandung angka'
-					}, 
-					source:{
-						required : 'Mohon diisi.',
-					},
-					status:{
-						required : 'Mohon diisi.',
-					},
-				}
+				// },
+				// messages: {
+				// 	nama_calon_klien:{
+				// 		required : 'Mohon diisi.'
+				// 	},
+				// 	nama_perusahaan:{
+				// 		required : 'Mohon diisi.',
+				// 		nama_perusahaan : 'Masukan nama perusahaan dengan benar'
+				// 	},
+				// 	telp:{
+				// 		required : 'Mohon diisi.',
+				// 		number : 'Hanya mengandung angka'
+				// 	}, 
+				// 	source:{
+				// 		required : 'Mohon diisi.',
+				// 	},
+				// 	status:{
+				// 		required : 'Mohon diisi.',
+				// 	},
+				// }
 			});
 
 			// Reset form
