@@ -480,10 +480,7 @@
 							data: 'nama_perusahaan',
 							name: 'nama_perusahaan',
 						},
-                        // {
-						// 	data: 'jenis_perusahaan',
-						// 	name: 'jenis_perusahaan',
-						// },
+                       
                         {
 							data: null,
 							name: null,
@@ -511,7 +508,7 @@
 										'5': 'Custom/Lainnya',
 															
 									}
-								return potensi[data?.potensi];
+								return potensi[data?.potensi] || '';
 							}
 						},
                         {
@@ -554,7 +551,7 @@
 									'6' : 'Relasi',
 									'7' : 'Referral',
 								}
-								return source[data?.source];
+								return source[data?.source] || '';
 							}
 						},
                         // {
@@ -565,7 +562,7 @@
 							data: null,
 							name: 'marketing_id',
 							render: (data, type, row) => {
-								return  data?.marketing?.nama
+								return data?.marketing?.nama || '';
 							}
 						},
 						{

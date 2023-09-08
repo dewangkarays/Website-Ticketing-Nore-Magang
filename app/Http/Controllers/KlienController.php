@@ -159,16 +159,16 @@ class KlienController extends Controller
     public function saveCreate(Request $request)
     {
 
-        $validatedData = $request->validate([
-            'status' => 'required',
-            'telp'   => 'required',
-            'alamat' => 'required',
-          ],
-        [
-            'status.required'=>'Status lead mohon diisi',
-            'telp.required'  =>'Nomor telp mohon diisi',
-            'alamat.required'=>'Alamat mohon diisi'
-        ]);
+        // $validatedData = $request->validate([
+        //     'status' => 'required',
+        //     'telp'   => 'required',
+        //     'alamat' => 'required',
+        //   ],
+        // [
+        //     'status.required'=>'Status lead mohon diisi',
+        //     'telp.required'  =>'Nomor telp mohon diisi',
+        //     'alamat.required'=>'Alamat mohon diisi'
+        // ]);
         
         
         $klien = new Klien;
