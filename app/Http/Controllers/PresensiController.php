@@ -103,10 +103,13 @@ class PresensiController extends Controller
         if(count($check) != 0) {
             return redirect('/presensi')->with('error', 'Presensi Sudah Diisi!');
         }
-        if(count($cuti) != 0) {
-            return redirect('/presensi')->with('error', 'Karyawan Sedang Cuti!');
+        if (count($cuti) != 0) {
+            $statusCuti = $cuti[0]->status; 
+    
+        if ($statusCuti == 2 || $statusCuti == 4) {
+                return redirect('/presensi')->with('error', 'Karyawan Sedang Cuti');
+            }
         }
-
         $presensi = new Presensi();
         $presensi->tanggal = $request->get('tanggal');
         $presensi->status = $request->get('status');

@@ -123,11 +123,15 @@ class QrcodeApiController extends Controller
         }
 
         if (count($cuti) != 0) {
-            return response()->json([
-                'code'=>400, 
-                'status' => 'Gagal',
-                'message' => 'Karyawan Sedang Cuti!'
-            ], 422);
+            $statusCuti = $cuti[0]->status;
+        
+            if ($statusCuti == 2 || $statusCuti == 4) {
+                return response()->json([
+                    'code' => 400,
+                    'status' => 'Gagal',
+                    'message' => 'Karyawan Sedang Cuti'
+                ], 422);
+            }
         }
         // dd($request);
         $presensi = new Presensi();
