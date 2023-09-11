@@ -44,19 +44,19 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Nama Klien</label>
                     <div class="col-lg-10">
-                        <span class="form-text custom-span"> {{$klien->nama_calonklien}}</span>
+                        <span class="form-text custom-span"> {{$klien->nama_calonklien ?: '-'}}</span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Nama Perusahaan</label>
                     <div class="col-lg-10">
-                        <span class="form-text custom-span"> {{$klien->nama_perusahaan}} </span>
+                        <span class="form-text custom-span"> {{$klien->nama_perusahaan ?: '-'}} </span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Jenis Perusahaan</label>
                     <div class="col-lg-10">
-                        <span class="form-text custom-span"> {{$klien->jenis_perusahaan}} </span>
+                        <span class="form-text custom-span"> {{$klien->jenis_perusahaan ?:'-'}} </span>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -121,7 +121,7 @@
                             <span style="font-size: 100%;" class="badge badge-pill bg-teal">Live</span>
                                 @break
                             @default
-                                Unknown Leads
+                            <span style="font-size: 100%" class="badge badge-pill badge-danger">Unknown Leads</span>
                             @endswitch
                         </span>
                     </div>
@@ -161,7 +161,7 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Telp</label>
                     <div class="col-lg-10">
-                        <span class="form-text custom-span"> {{$klien->telp}} </span>
+                        <span class="form-text custom-span"> {{$klien->telp ?: '-'}} </span>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -180,7 +180,7 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Alamat</label>
                     <div class="col-lg-10">
-                        <span class="form-text custom-span"> {{$klien->alamat}} </span>
+                        <span class="form-text custom-span"> {{$klien->alamat ?:'-'}} </span>
                     </div>
                 </div>
                 {{-- <div class="form-group row">
