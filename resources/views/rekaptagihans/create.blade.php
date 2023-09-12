@@ -45,9 +45,14 @@
                     </div>
                 </div>
             </form>
+			<div style="display: flex; justify-content: space-between; align-items: center;">
+				<div>
+					<a href="{{ url('/rekaptagihans') }}" class="btn bg-slate"><i class="icon-undo2 mr-2"></i>Kembali</a>
+				</div>
             <div class="text-right">
                 <a id="btn_reset" href="{{ route('rekaptagihans.create') }}" class="btn bg-slate text-uppercase">Reset  <i class="icon-rotate-ccw2 ml-2"></i></a>
                 <a id="btn_submit" href="{{ route('rekaptagihans.create').'?c='.app('request')->input('c')}}" data-uri="{{ route('rekaptagihans.create') }}" class="btn btn-success text-uppercase">Submit  <i class="icon-paperplane ml-2"></i></a>
+            </div>
             </div>
         </div>
     </div>
