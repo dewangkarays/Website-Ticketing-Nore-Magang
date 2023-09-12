@@ -88,7 +88,8 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Alamat</label>
                             <div class="col-lg-10">
-                                <label class="col-form-label col-lg-10">{{$rekaptagihan->alamat}}</label>
+                                {{-- <label class="col-form-label col-lg-10">{{$rekaptagihan->alamat}}</label> --}}
+                                 <textarea name="alamat" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{$rekaptagihan->alamat}}</textarea>
                             </div>
                         </div>
 
