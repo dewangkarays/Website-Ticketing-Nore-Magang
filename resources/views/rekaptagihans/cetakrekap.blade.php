@@ -23,8 +23,8 @@
         <td style="text-transform: capitalize;">
             {{$rekap->nama_tertagih}}
             <tr>
-        <td style="width: 40%;">
-            {{$rekap->alamat}}
+        <td style="width: 40%; line-height: 0.6;">
+            {!! $rekap->alamat !!}
         </td>
         <td style="width:auto;">
         </td>
