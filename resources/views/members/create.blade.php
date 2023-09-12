@@ -51,7 +51,8 @@
 						<div class="form-group row">
 							<label class="col-form-label col-lg-2">Alamat</label>
 							<div class="col-lg-10">
-								<input type="text" name="address" class="form-control border-teal border-1" placeholder="Alamat">
+								{{-- <input type="text" name="address" class="form-control border-teal border-1" placeholder="Alamat"> --}}
+								 <textarea name="address" id="" cols="30" rows="10" class="summernote form-control border-teal border-1">{{ old('address') }}</textarea>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -122,7 +123,10 @@
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
+	<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
 
+	<script src="{{asset('assets/js/app.js')}}"></script>
+	<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script type="text/javascript">
@@ -365,6 +369,69 @@ var FormValidation = function() {
 
 		// Initialize module
 		// ------------------------------
+
+		 //sumernote wysiwyg
+		var Summernote = function() {
+        var _componentSummernote = function() {
+            if (!$().summernote) {
+                console.warn('Warning - summernote.min.js is not loaded.');
+                return;
+            }
+
+            // Basic examples
+            // ------------------------------
+
+            // Default initialization
+            $('.summernote').summernote({
+                toolbar: [
+                ['para', ['ul', 'ol', 'paragraph']],
+                ],
+                height: 100,
+                callbacks: {
+                    onPaste: function (e) {
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+                    e.preventDefault();
+
+                    setTimeout( function(){
+                        document.execCommand( 'insertText', false, bufferText );
+                    }, 10 );
+                    }
+                }
+            });
+
+            // Control editor height
+            $('.summernote-height').summernote({
+                height: 400
+            });
+ 
+        };
+
+        // Uniform
+        var _componentUniform = function() {
+            if (!$().uniform) {
+                console.warn('Warning - uniform.min.js is not loaded.');
+                return;
+            }
+
+            // Styled file input
+            $('.note-image-input').uniform({
+                fileButtonClass: 'action btn bg-warning-400'
+            });
+        };
+
+
+        //
+        // Return objects assigned to module
+        //
+
+        return {
+            init: function() {
+                _componentSummernote();
+                _componentUniform();
+            }
+        }
+    }();
 
 	document.addEventListener('DOMContentLoaded', function() {
 		FormValidation.init();
