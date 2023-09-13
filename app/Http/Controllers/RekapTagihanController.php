@@ -379,12 +379,19 @@ class RekapTagihanController extends Controller
         $tagihans = Tagihan::whereIn('rekap_tagihan_id', $rekaptagihan)->get();
         // dd($tagihans);
         $rekaptagihan->delete();
+        
+        // Set rekap_tagihan_id menjadi null pada tagihan
         foreach($tagihans as $tagihan){
             $tagihan->update([
                 'rekap_tagihan_id' => null,
             ]);
         }
 
+        // Set rekap_id menjadi null pada tagihan_cicilan yang terkait
+        TagihanCicilan::where('rekap_id', $rekaptagihan->id)->update([
+            'rekap_id' => null,
+        ]);
+        
         return redirect('/rekaptagihans')->with('success', 'Rekap tagihan deleted!');
     }
 
