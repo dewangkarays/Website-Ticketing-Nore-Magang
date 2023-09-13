@@ -143,7 +143,9 @@
         }
 
         .qrcode-container {
+			/* display: none; */
             margin-top: 20px;
+        	max-width: 330px;
         }
     }
     </style>
