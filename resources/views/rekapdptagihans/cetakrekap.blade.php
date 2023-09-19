@@ -12,6 +12,14 @@
         <b>Jatuh Tempo: <br></b>
         {{ date('d/m/Y', strtotime($rekapdp->jatuh_tempo)) }}
     </p>
+
+    <style>
+        p {
+            margin:  0;
+            padding: 0;
+        }
+    </style>
+
 @endsection
 @section('tertagih')
     <tr>
@@ -24,7 +32,7 @@
     </tr>
     <tr>
         <td style="width: 40%;">
-            {{$rekapdp->alamat}}
+            {!! $rekapdp->alamat !!}
         </td>
         <td style="width:auto;">
         </td>

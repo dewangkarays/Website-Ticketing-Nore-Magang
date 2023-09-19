@@ -12,6 +12,14 @@
         <b>Jatuh Tempo: <br></b>
         {{ date('d/m/Y', strtotime($rekap->jatuh_tempo)) }}
     </p>
+    
+    <style>
+        p {
+            margin:  0;
+            padding: 0;
+        }
+    </style>
+
 @endsection
 @section('tertagih')
     {{-- Sub 1 --}}
@@ -23,7 +31,7 @@
         <td style="text-transform: capitalize;">
             {{$rekap->nama_tertagih}}
             <tr>
-        <td style="width: 40%; line-height: 0.6;">
+        <td style="width: 40%;">
             {!! $rekap->alamat !!}
         </td>
         <td style="width:auto;">
@@ -146,6 +154,13 @@
                     <td align="left">Pembayaran Uang Muka</td>
                     <td align="right">@angka($invoice->tagihan->uang_muka)</td>
                 </tr>
+                {{-- @if ($rekap->jml_terbayar > 0 && ($rekap->jml_terbayar < $rekap->total))
+                <tr>
+                    <td></td>
+                    <td align="left">Sudah Terbayar</td>
+                    <td align="right">@angka($rekap->jml_terbayar)</td>
+                </tr>
+                @endif --}}
                 <tr>
                     <td></td>
                     <td align="left">
