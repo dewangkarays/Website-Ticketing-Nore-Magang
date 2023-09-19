@@ -37,19 +37,19 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Email</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{ $user->email }} </span>
+                        <span class="form-text"> {{ $user->email ? $user->email: '-' }}</span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Telp</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{ $user->telp }} </span>
+                        <span class="form-text"> {{ $user->telp ? $user->telp : '-' }}</span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Alamat</label>
                     <div class="col-lg-10">
-                        <span class="form-text"> {{ $user->alamat ? $user->alamat : '-' }} </span>
+                        <span class="form-text"> {!! $user->alamat ? $user->alamat : '-' !!}</span>
                     </div>
                 </div>
                 <div class="form-group row">
