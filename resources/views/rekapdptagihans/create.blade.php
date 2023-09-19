@@ -141,7 +141,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-10">
-                                <input id="alamat" type="text" name="alamat" class="form-control border-teal border-1" placeholder="Contoh: Jl. Inspeksi Gajahmada Semarang 50133" value="{{@$tagihans[0]->user->alamat}}">
+                                <textarea id="alamat" type="text" name="alamat" class="summernote form-control border-teal border-1" placeholder="Contoh: Jl. Inspeksi Gajahmada Semarang 50133"> {{@$tagihans[0]->user->alamat}}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">

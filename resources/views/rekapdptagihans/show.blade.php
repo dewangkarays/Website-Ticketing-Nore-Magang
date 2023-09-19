@@ -88,7 +88,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Alamat</label>
                             <div class="col-lg-10">
-                                <label class="col-form-label col-lg-10">{{$rekapdp->alamat}}</label>
+                                <label class="col-form-label col-lg-10">{!! $rekapdp->alamat !!}</label>
                             </div>
                         </div>
 
