@@ -107,6 +107,7 @@
             {{-- </td> --}}
             {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
             {{-- <td> --}}
+                <br><br>
                 @if ($invoice->keterangan_tambahan != null)
                 {!! $invoice->keterangan_tambahan !!}
                 @else
