@@ -31,8 +31,8 @@
         </td>
     </tr>
     <tr>
-        <td style="width: 40%;">
-            {!! $rekapdp->alamat !!}
+        <td style="width: 200px;">
+            {!! str_replace(array('<p>', '<br>'), array('<p style="margin:0px">', ''), $rekapdp->alamat) !!}
         </td>
         <td style="width:auto;">
         </td>
