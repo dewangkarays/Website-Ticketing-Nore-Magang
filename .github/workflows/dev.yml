@@ -15,7 +15,7 @@ jobs:
           host: noretest.com
           username: u1748803
           port: 65002
-          privateKey: ${{ secrets.PRIVATE_KEY }}
+          privateKey: ${{ secrets.PRIVATE_KEY_TEST }}
           command: |
             cd public_html/optest
             git pull
