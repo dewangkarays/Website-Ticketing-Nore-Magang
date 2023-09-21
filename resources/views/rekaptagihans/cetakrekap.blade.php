@@ -31,8 +31,8 @@
         <td style="text-transform: capitalize;">
             {{$rekap->nama_tertagih}}
             <tr>
-        <td style="width: 40%;">
-            {!! $rekap->alamat !!}
+        <td style="width: 200px;">
+            {!! str_replace(array('<p>', '<br>'), array('<p style="margin:0px">', ''), $rekap->alamat) !!}
         </td>
         <td style="width:auto;">
         </td>
@@ -74,6 +74,7 @@
                 <p></p>
                 @endif
           
+                <br><br>
                 @if ($invoice->tagihan->keterangan_tambahan != null)
                 {!! $invoice->tagihan->keterangan_tambahan !!}
                 @else
