@@ -182,6 +182,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 		//tabeldata Statistik payment
 		Route::get('getstatistikpayment/{id?}', 'PaymentController@getstatistikpayment')->name('getstatistikpayment');
+		Route::get('/filter-data', 'PaymentController@filterData')->name('filter-data');
+
 
 		//Tagihan
 		Route::resource('tagihans', 'TagihanController');

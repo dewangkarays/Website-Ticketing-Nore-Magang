@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Model\Payment;
 use App\Model\User;
+use App\Model\Klien;
 use App\Model\Notification;
 use App\Model\Task;
 use App\Model\Nomor;
@@ -21,6 +22,7 @@ use App\Model\RekapTagihan;
 use App\Model\RekapDptagihan;
 use Barryvdh\DomPDF\PDF;
 use Datatables;
+use DataTime;
 
 class PaymentController extends Controller
 {
@@ -715,6 +717,39 @@ class PaymentController extends Controller
 
         $proyeks = Proyek::selectRaw('jenis_proyek, count(jenis_proyek) as total')->groupBY('jenis_proyek')->orderBY('total', 'ASC')->get();
         //   dd($proyeks);
+
+        $pMarketing = Klien::selectRaw('marketing_id, count(marketing_id) as total')->where('status', 4)->where('member_created', 1)->groupBy('marketing_id')->get();
+        // dd($pMarketing); SELECT marketing_id, COUNT(*) as total FROM kliens WHERE status = 4 GROUP BY marketing_id;
+        $marketingIdArray = [];
+
+        foreach ($pMarketing as $val) {
+            $marketingId = $val->marketing_id;
+            $total = $val->total;
+
+           $userIds = User::where('marketing_id', $marketingId)
+                ->join('tagihans', 'users.id', '=', 'tagihans.user_id')
+                ->pluck('users.id')
+                ->toArray();
+
+            // Menghitung total nominal berdasarkan user_ids yang sudah didapatkan
+            $totalNominal = Tagihan::whereIn('user_id', $userIds)->sum('nominal');
+            $namaMarketing = User::where('id', $marketingId)->value('nama');
+
+            $marketingIdArray[] = [
+                'marketing_id' => $marketingId,
+                'nama' => $namaMarketing,
+                'total' => $total,
+                'user_ids' => $userIds,
+                'total_nominal' => $totalNominal,
+            ];
+            
+        }
+        // dd($marketingIdArray);
+        
+        //  $tNominal = Klien::selectRaw('marketing_id, id, count(marketing_id) as total')->where('status', 4)->where('member_created', 1)->groupBy('marketing_id')->pluck('id')->toArray();
+           
+        $tMarketing = Klien::selectRaw('marketing_id, count(marketing_id) as total')->where('status', 4)->where('member_created', 1)->groupBy('marketing_id')->get();
+
         $years = Payment::selectRaw('year(tanggal) as tahun')->where('status', '1')->groupBy('tahun')->orderBy('tahun', 'DESC')->get();
 
         $qry = Payment::selectRaw('month(tanggal) as bulan, user_role, sum(nominal) as total ')->where('status', '1')->whereYear('tanggal', $filter)->groupBy('bulan', 'user_role')->get()->toArray();
@@ -729,7 +764,7 @@ class PaymentController extends Controller
         $clients = Payment::select('*')->orderBy('tanggal','DESC')->offset(0)->limit(8)->get();
         $totals = Payment::selectRaw('user_id, SUM(nominal) as total')->groupBy('user_id')->orderBy('total','DESC')->get();
 
-        return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter', 'totals', 'proyeks'));
+        return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter', 'totals', 'proyeks' ,'pMarketing','marketingIdArray','tMarketing'));
     }
     public function getstatistikpayment($id)
     {
@@ -749,6 +784,54 @@ class PaymentController extends Controller
 
         return response()->json($proyeks);
     }
+
+  public function filterData(Request $request)
+  {
+    $tglawal  = date('Y-m-d H:i:s', strtotime($request->input('tglawal')));
+    $tglakhir = date('Y-m-d H:i:s', strtotime($request->input('tglakhir')));
+
+    // Query untuk menghitung total berdasarkan marketing_id dalam rentang tanggal
+    $filteredData = Klien::where('status', 4)
+        ->where('member_created', '=', 1)
+        ->whereBetween('created_at', [$tglawal, $tglakhir])
+        ->select('marketing_id', DB::raw('COUNT(*) as total'))
+        ->groupBy('marketing_id')
+        ->get();
+
+    $formattedData = [];
+
+    // Loop melalui hasil query
+    foreach ($filteredData as $data) {
+        $marketingId = $data->marketing_id;
+
+        // Mengambil user_ids berdasarkan marketing_id
+        $userIds = User::where('marketing_id', $marketingId)
+            ->join('tagihans', 'users.id', '=', 'tagihans.user_id')
+            ->pluck('users.id')
+            ->toArray();
+
+        // Menghitung total nominal berdasarkan user_ids yang sudah didapatkan
+        $totalNominal = Tagihan::whereIn('user_id', $userIds)
+            ->whereBetween('created_at', [$tglawal, $tglakhir]) 
+            ->sum('nominal');
+        
+
+       $formattedData[] = [
+            'name' =>  $data->marketing->nama . ' (' . $data->total . ')',
+            'value' => $totalNominal,
+        ];
+    }
+
+      if (empty($formattedData)) {
+        $formattedData[] = [
+            'name' =>  'No Data',0,
+            'value' => 0,
+        ];
+    }
+
+    return response()->json($formattedData);
+    }
+
 
     public function getpayments()
     {

@@ -130,7 +130,62 @@
 			</div>
 		</div>	
 		<!-- /pie and donut -->
-		
+		<div class="card">
+		<div class="card-body">
+			<div class="row justify-content-between">
+				<div class="col-md-3">
+					<div class="input-group">
+						<span class="input-group-prepend">
+							<span class="input-group-text"><i class="icon-calendar"></i></span>
+						</span>
+						<input id="tglawal" type="text" class="form-control pickadate-year" placeholder="Masukkan Tanggal" name="tglawal" value="{{ isset($tglawal) ? date('j F, Y', strtotime($tglawal)) : (request()->filled('tglawal') ? date('j F, Y', strtotime(str_replace(',', '', request()->get('tglawal')))) : date('j F, Y')) }}">
+					</div>
+				</div>
+				<div class="col-md-1 align-self-center text-center">
+					<span class="text-center">Sampai</span>
+				</div>
+				 <div class="col-md-3">
+					<div class="input-group">
+						<span class="input-group-prepend">
+							<span class="input-group-text"><i class="icon-calendar"></i></span>
+						</span>
+						<input id="tglakhir" type="text" class="form-control pickadate-year" placeholder="Masukkan Tanggal" name="tanggalakhir" value="{{ isset($tglakhir) ? date('j F, Y', strtotime($tglakhir)) : (request()->filled('tglakhir') ? date('j F, Y', strtotime(str_replace(',', '', request()->get('tglakhir')))) : date('j F, Y')) }}">
+					</div>
+				</div>
+				<div class="text-right">
+					<button id="filterButton" type="submit" class="btn btn-primary text-uppercase submitBtn">Filter <i class="icon-checkmark"></i></button>
+					<a id="btn_reset" href="" class="btn bg-teal text-uppercase">Reset<i class="icon-rotate-ccw2 ml-2"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Pie and donut -->
+		<div class="row">
+			<div class="col-xl-12">
+
+				<!-- Basic pie -->
+				<div class="card">
+					<div class="card-header header-elements-inline">
+						<h5 class="card-title">Statistik - Pendapatan marketing</h5>
+						<div class="header-elements">
+							<div class="list-icons">
+								<a class="list-icons-item" data-action="collapse"></a>
+								<a class="list-icons-item" data-action="reload"></a>
+								<a class="list-icons-item" data-action="remove"></a>
+							</div>
+						</div>
+					</div>
+
+					<div class="card-body">
+						<div class="chart-container">
+						<div class="chart has-fixed-height" id="pie_pMarketing"></div>
+						</div>
+					</div>
+				</div>
+				<!-- /basic pie -->
+
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-xl-12">
 
@@ -244,6 +299,12 @@
 	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
 	<script src="{{asset('global_assets/js/plugins/visualization/echarts/echarts.min.js')}}"></script>
+	<script src="{{ asset('global_assets/js/plugins/pickers/pickadate/picker.js') }}"></script>
+	<script src="{{ asset('global_assets/js/plugins/pickers/pickadate/picker.date.js') }}"></script>
+	<script src="{{ asset('global_assets/js/plugins/pickers/pickadate/picker.time.js') }}"></script>
+	<script src="{{ asset('global_assets/js/plugins/pickers/pickadate/legacy.js') }}"></script>
+	<script src="{{ asset('global_assets/js/plugins/pickers/daterangepicker.js') }}"></script>
+	
 
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
@@ -539,27 +600,12 @@
 		    }
 		}();
 
-		// Initialize module
-		// ------------------------------
-
-		/* ------------------------------------------------------------------------------
- *
- *  # Echarts - Basic pie example
- *
- *  Demo JS code for basic pie chart [light theme]
- *
- * ---------------------------------------------------------------------------- */
-
-
-// Setup module
-// ------------------------------
+		document.addEventListener('DOMContentLoaded', function() {
+		    EchartsPiesDonuts.init();
+		});
 
 var EchartsPieBasicLight = function() {
 
-
-//
-// Setup module components
-//
 
 // Basic pie chart
 var _scatterPieBasicLightExample = function() {
@@ -752,29 +798,256 @@ return {
 }
 }();
 
-// $.ajax({
-// url : "/statistikpayment"
-// ,
-// dataType: "json"
-// ,
-// success : function(data){
-// if (data.success) { } 
-// else { }
-// },
-// error: function(data){
-// console.log(data);
-// }
-// });
-// Initialize module
-// ------------------------------
 
-document.addEventListener('DOMContentLoaded', function() {
-EchartsPieBasicLight.init();
-});
+	document.addEventListener('DOMContentLoaded', function() {
+	EchartsPieBasicLight.init();
+	});
 
-		document.addEventListener('DOMContentLoaded', function() {
-		    EchartsPiesDonuts.init();
+		$(document).ready(function() {
+			// Inisialisasi elemen input ID tglawal
+
+			$('#filterButton').click(function() {
+				filterData();
+			});
+
+			$('#tglawal').pickadate({
+				format: 'dd mmmm, yyyy', // atur format
+				selectYears: true,
+				selectMonths: true,
+			});
+
+			// Inisialisasi elemen input ID tglakhir
+			$('#tglakhir').pickadate({
+				format: 'dd mmmm, yyyy', 
+				selectYears: true,
+				selectMonths: true,
+			});
+
+			$('#btn_reset').click(function() {
+
+        var today = new Date();
+        var formattedDate = today.getDate() + ' ' + getMonthName(today.getMonth()) + ', ' + today.getFullYear();
+        $('#tglawal').val(formattedDate);
+        $('#tglakhir').val(formattedDate);
 		});
+
+		// Fungsi untuk mendapatkan nama bulan
+		function getMonthName(month) {
+			var monthNames = [
+				"January", "February", "March", "April", "May", "June",
+				"July", "August", "September", "October", "November", "December"
+			];
+			return monthNames[month];
+		}
+
+	});
+
+	function filterData() {
+    var tglawal = document.getElementById("tglawal").value;
+    var tglakhir = document.getElementById("tglakhir").value;
+
+    
+		var token = $('meta[name="csrf-token"]').attr('content');
+		$.ajax({
+			type: 'GET',
+			url: '{{ route("filter-data") }}',
+			headers: {
+				'X-CSRF-TOKEN': token
+			},
+			data: {
+				tglawal: tglawal,
+				tglakhir: tglakhir
+			},
+			dataType: 'json',
+			success: function (data) {
+            	EchartsPieBasicPendapatanMarketing.updatePieChart(data);
+				console.log('success:',data);
+        	},
+			error: function (error) {
+				console.error('Error:', error);
+			}
+		});
+	}
+
+	var legendData = [
+			 @foreach($marketingIdArray as $key => $val)
+				{
+					name: '{{ $val['nama'] }} ({{ $val['total'] }})',
+					value: {{ $val['total_nominal'] }}
+				},
+			@endforeach
+		];
+
+	var EchartsPieBasicPendapatanMarketing = function() {
+
+	
+    //
+    // Setup module components
+    //
+
+    // Basic pie chart
+    var _scatterPieBasicPendapatanMarketing = function() {
+        if (typeof echarts == 'undefined') {
+            console.warn('Warning - echarts.min.js is not loaded.');
+            return;
+        }
+
+        // Define element
+        var pie_basic_element = document.getElementById('pie_pMarketing');
+
+
+        //
+        // Charts configuration
+        //
+
+        if (pie_basic_element) {
+
+            // Initialize chart
+            var pie_basic = echarts.init(pie_basic_element);
+
+
+            // Options
+            pie_basic.setOption({
+
+                // Colors
+                color: [
+					'#1d7678', '#8a68c6', '#4687ae', '#e57970', '#b9666b',
+					'#757f97', '#b4a90a', '#6c813e', '#705b56', '#bb4a8f',
+					'#066c6f', '#7b68b9', '#3e77b9', '#d9823c', '#a13d3d',
+					'#4a536c', '#a78b00', '#647c08', '#5c4e4b', '#9b117a'
+				],
+
+                // Global text styles
+                textStyle: {
+                    fontFamily: 'Roboto, Arial, Verdana, sans-serif',
+                    fontSize: 13
+                },
+
+                // Add title
+                title: {
+                    text: 'Browser popularity',
+                    subtext: 'Open source information',
+                    left: 'center',
+                    textStyle: {
+                        fontSize: 17,
+                        fontWeight: 500
+                    },
+                    subtextStyle: {
+                        fontSize: 12
+                    }
+                },
+
+                // Add tooltip
+                tooltip: {
+                    trigger: 'item',
+                    backgroundColor: 'rgba(0,0,0,0.75)',
+                    padding: [10, 15],
+                    textStyle: {
+                        fontSize: 13,
+                        fontFamily: 'Roboto, sans-serif'
+                    },
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+
+                // Add legend
+                legend: {
+                    orient: 'vertical',
+                    top: 'center',
+                    left: 0,
+                    data: legendData,
+                    itemHeight: 8,
+                    itemWidth: 8
+                },
+
+                // Add series
+                series: [{
+                    name: 'Browsers',
+                    type: 'pie',
+                    radius: '70%',
+                    center: ['50%', '57.5%'],
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 1,
+                            borderColor: '#fff'
+                        }
+                    },
+                    data: [
+						   @foreach($marketingIdArray as $key => $val)
+							{
+								// id: {{ $val['marketing_id'] }}, 
+								name: '{{ $val['nama'] }} ({{ $val['total'] }})',
+								value: {{ $val['total_nominal'] }}
+							},
+						@endforeach
+					]
+                }]
+            });
+        }
+
+        // Resize charts
+        //
+
+        // Resize function
+        var triggerChartResize = function() {
+            pie_basic_element && pie_basic.resize();
+        };
+
+        // On sidebar width change
+        var sidebarToggle = document.querySelector('.sidebar-control');
+        sidebarToggle && sidebarToggle.addEventListener('click', triggerChartResize);
+
+        // On window resize
+        var resizeCharts;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeCharts);
+            resizeCharts = setTimeout(function () {
+                triggerChartResize();
+            }, 200);
+        });
+    };
+
+
+     function updatePieChart(data) {
+        var pieChart = echarts.init(document.getElementById('pie_pMarketing'));
+        
+        // Update legendData here
+        legendData = data.map(function(item) {
+            return {
+                name: item.name + ' (' + item.value + ')',
+                value: item.value
+            };
+        });
+
+		console.log('Updated legendData:', legendData);
+        pieChart.setOption({
+            series: [{
+                data: data,
+            }],
+            // Update legend data
+            legend: {
+                data: data,
+            }
+        });
+
+		console.log('Pie chart data updated:', data); 
+        pieChart.resize();
+    }
+
+		return {
+			init: function() {
+				_scatterPieBasicPendapatanMarketing();
+			},
+			updatePieChart: updatePieChart
+		}
+	}();
+
+	document.addEventListener('DOMContentLoaded', function() {
+		EchartsPieBasicPendapatanMarketing.init();
+	});
+
+
+
+
 	</script>
 	<script type="text/javascript">
 		var DatatableBasic = function() {
