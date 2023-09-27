@@ -26,15 +26,14 @@ class KlienController extends Controller
         $marketings = User::where('role', '50')->get();
         // $totalPerStatus = Klien::selectRaw('status, count(status) as total')->where('member_created',false)->groupBY('status')->orderBY('total','DESC')->get();
         if(\Auth::user()->role==1 || \Auth::user()->role==20){
-           $statusCounts = Klien::where('member_created', false)
-            ->groupBy('status')
+           $statusCounts = Klien::groupBy('status')
             ->selectRaw('status, COUNT(*) as count')
             ->get();
 
             $totalPerStatus = collect($statusCounts)->pluck('count', 'status')->toArray();
             // dd($totalPerStatus);
         }else{
-             $statusCounts = Klien::where('marketing_id','=',\Auth::user()->id)->where('member_created', false)
+             $statusCounts = Klien::where('marketing_id','=',\Auth::user()->id)
                 ->groupBy('status')
                 ->selectRaw('status, COUNT(*) as count')
                 ->get();
@@ -49,21 +48,21 @@ class KlienController extends Controller
     public function getData(Request $request)
     {
       
-        if(\Auth::user()->role==1 || \Auth::user()->role==20){
-            $json_data = Klien::where('member_created',false)
-            ->orderBy('id', 'desc')
-            ->with('marketing')
-            ->get();
-        }else{
-            $json_data = Klien::where('member_created',false)
-            ->where('marketing_id','=',\Auth::user()->id)
-            ->orderBy('id', 'desc')
-            ->with('marketing')
-            ->get();
-        }
+        // if(\Auth::user()->role==1 || \Auth::user()->role==20){
+        //     $json_data = Klien::where('member_created',false)
+        //     ->orderBy('id', 'desc')
+        //     ->with('marketing')
+        //     ->get();
+        // }else{
+        //     $json_data = Klien::where('member_created',false)
+        //     ->where('marketing_id','=',\Auth::user()->id)
+        //     ->orderBy('id', 'desc')
+        //     ->with('marketing')
+        //     ->get();
+        // }
 
     if(\Auth::user()->role==1 || \Auth::user()->role==20){
-        $query = Klien::where('member_created', false);
+        $query = Klien::query();
 
             if ($request->potensi) {
                 $potensi = $request->potensi;
@@ -91,7 +90,7 @@ class KlienController extends Controller
             ->get();
 
     }else{
-        $query = Klien::where('member_created', false);
+        $query = Klien::query();
 
             if ($request->potensi) {
                 $potensi = $request->potensi;
@@ -106,11 +105,6 @@ class KlienController extends Controller
             if ($request->leads) {
                 $leads = $request->leads;
                 $query->where('status', '=', $leads);
-            }
-
-            if ($request->marketing) {
-                $marketing = $request->marketing;
-                $query->where('marketing_id', '=', $marketing);
             }
 
         $json_data = $query->orderBy('id', 'desc')
@@ -133,7 +127,6 @@ class KlienController extends Controller
             $statusCounts = Klien::when($marketingId, function ($query) use ($marketingId) {
                 return $query->where('marketing_id', $marketingId);
             })
-            ->where('member_created', false)
             ->groupBy('status')
             ->selectRaw('status, COUNT(*) as count')
             ->get();
