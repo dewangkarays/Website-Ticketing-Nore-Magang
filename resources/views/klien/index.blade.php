@@ -190,6 +190,7 @@
 								<th>Source</th>
 								{{-- <th>Alamat</th> --}}
 								<th>Marketing</th>
+								<th>Tanggal kontak terakhir</th>
 								<th>Tanggal awal</th>
 								{{-- <th>Keterangan</th> --}}
 								<th class="text-center">Actions</th>
@@ -435,7 +436,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-						targets: [ 8 ]
+						targets: [ 9 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -566,8 +567,28 @@
 							}
 						},
 						{
-							data: 'tanggal_kontakpertama',
-							name: 'tanggal_kontakpertama',
+							data: 'tanggal_kontakterakhir',
+							name: 'tanggal_kontakterakhir',
+						 	render: (data, type, row) => {
+								if (type === 'display') {
+								return data ? `<div style="text-align: center;">${data}</div>` : '<div style="text-align: center;">-</div>';
+								}
+								return data;
+							}
+						},
+						{
+							data: 'created_at',
+							name: 'created_at',
+							render: (data, type, row) => {
+								if (type === 'display' && data !== null && data !== undefined) {
+								const date = new Date(data);
+								const year = date.getFullYear();
+								const month = String(date.getMonth() + 1).padStart(2, '0');
+								const day = String(date.getDate()).padStart(2, '0'); 
+								return `${year}-${month}-${day}`;
+								}
+								return data;
+							}
 						},
 						// {
                         // data: null,
@@ -600,7 +621,7 @@
 								
 									
 								@if(\Auth::user()->role==1 || Auth::user()->role==20|| \Auth::user()->role==50) 
-									if (data.status==4) {
+									if (data.status == 4 && data.member_created == 0) {
 									
 										var actionButtons =
 									`
