@@ -85,10 +85,12 @@ class KlienController extends Controller
                 $query->where('marketing_id', '=', $marketing);
             }
 
-        $json_data = $query->orderBy('id', 'desc')
+        $json_data = $query->orderBy('member_created')
+            ->orderBy('created_at', 'desc')
             ->with('marketing')
             ->get();
 
+            // dd($json_data);
     }else{
         $query = Klien::query();
 
@@ -107,7 +109,8 @@ class KlienController extends Controller
                 $query->where('status', '=', $leads);
             }
 
-        $json_data = $query->orderBy('id', 'desc')
+        $json_data = $query->orderBy('member_created')
+            ->orderBy('created_at', 'desc')
             ->where('marketing_id','=',\Auth::user()->id)
             ->with('marketing')
             ->get();

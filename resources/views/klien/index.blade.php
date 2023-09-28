@@ -184,6 +184,7 @@
 								<th>No</th>
 								<th>Nama Calon Klien</th>
 								<th>Nama Perusahaan</th>
+								<th>member_created</th>
 								{{-- <th>Jenis Perusahaan</th> --}}
 								<th>Potensi</th>
 								<th>Status Lead</th>
@@ -436,7 +437,7 @@
 		            columnDefs: [{ 
 		                orderable: false,
 		                width: 100,
-						targets: [ 9 ]
+						targets: [ 10 ]
 		            }],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
@@ -450,7 +451,7 @@
 		        // Basic datatable
 		        $('.datatable-basic').DataTable({
                     "scrollX": true,
-                    order: [[0, "desc"]],
+                    order: [[3, "asc"]],
 					processing: true,
 					serverSide: true,
 					// "order": true,
@@ -481,7 +482,11 @@
 							data: 'nama_perusahaan',
 							name: 'nama_perusahaan',
 						},
-                       
+                        {
+							data: 'member_created',
+							name: 'member_created',
+							visible: false
+						},
                         {
 							data: null,
 							name: null,
