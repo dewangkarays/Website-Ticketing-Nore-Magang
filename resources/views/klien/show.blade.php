@@ -152,6 +152,9 @@
                             @case(7)
                                 Referal
                                 @break
+                            @case(8)
+                                Visit
+                                @break
                             @default
                                 Unknown Source
                             @endswitch
