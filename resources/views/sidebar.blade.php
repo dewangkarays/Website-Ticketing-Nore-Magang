@@ -68,11 +68,11 @@ ul{
 					</a>
 				</li> -->
 				<li class="nav-item nav-item-submenu">
-					<a href="#" class="nav-link {{ (request()->is('users*','members*','proyeks*')) ? 'active' : '' }}"><i class="icon-users"></i>
+					<a href="#" class="nav-link {{ (request()->is('users*','members*','proyeks*','patchlist*','statuspatchlist*')) ? 'active' : '' }}"><i class="icon-users"></i>
 						<span>Users
 						</span>
 					</a>
-					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('users*','members*','proyeks*')) ? 'block' : 'none' }};">
+					<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: {{ (request()->is('users*','members*','proyeks*','patchlist*','statuspatchlist*')) ? 'block' : 'none' }};">
 						<li class="nav-item">
 							<a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
 								<i class="icon-vcard"></i>
@@ -99,6 +99,28 @@ ul{
 									<i class="icon-traffic-cone"></i>
 									<span>
 										Data Proyek
+									</span>
+								</a></li>
+							</ul>
+						</li>
+						<li class="nav-item nav-item-submenu">
+							<a href="{{ url('/members') }}" class="nav-link {{ (request()->is('patchlist*','statuspatchlist*')) ? 'active' : '' }}">
+								<i class="icon-clipboard6"></i>
+								<span>
+									Patchlist & Status
+								</span>
+							</a>
+							<ul class="nav nav-group-sub" style="display: {{ (request()->is('patchlist*','statuspatchlist*')) ? 'block' : 'none' }};">
+								<li class="nav-item"><a href="{{url('patchlist')}}" class="nav-link {{ (request()->is('patchlist*')) ? 'active' : '' }}">
+									<i class="icon-list-unordered"></i>
+									<span>
+										Patchlist
+									</span>
+								</a></li>
+								<li class="nav-item"><a href="{{url('statuspatchlist')}}" class="nav-link {{ (request()->is('statuspatchlist*')) ? 'active' : '' }}">
+									<i class="icon-file-text"></i>
+									<span>
+										Status Patchlist
 									</span>
 								</a></li>
 							</ul>

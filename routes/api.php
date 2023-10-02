@@ -70,3 +70,6 @@ Route::group(['middleware' => ['cors:api']], function() {
     Route::get('/leads', 'Api\DashboardApiController@index');
     Route::get('/marketing', 'Api\DashboardApiController@getMarketingData');
 });
+
+Route::get('/patchlist/getDataByStatus', 'StatusPatchlistController@getDataByStatus')->name('patchlist.getDataByStatus');
+Route::get('/patchlist/getDetailDataByName', 'StatusPatchlistController@getDetailPatchData')->name('patchlist.detail');
