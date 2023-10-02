@@ -134,6 +134,28 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('leads_excel', 'KlienController@leads_excel');
 		Route::get('/get-statistics', 'KlienController@getStatistics');
 
+		//Route Patchlist
+		Route::resource('patchlist', 'PatchlistController');
+		Route::get('/getpatchlist', 'PatchlistController@getpatchlist')->name('patchlist.getpatchlist');
+		Route::get('/get-nama-proyek-by-user-id', 'PatchlistController@getNamaProyekByUserId')->name('getNamaProyekByUserId');
+		Route::get('/get-nama-proyek-filter', 'PatchlistController@getNamaProyekFilter')->name('patchlist.getNamaProyekFilter');
+		Route::get('/export-patchlist-excel', 'PatchlistController@exportExcel')->name('patchlist.exportExcel');
+
+		Route::get('/get-proyeks/{klienId}', 'PatchlistController@getProyeksByKlien');
+		Route::get('/get-nama-proyek-by-klien', 'PatchlistController@getNamaProyekByKlien');
+		Route::get('/get-nama-proyek/{klienId}', 'PatchlistController@getNamaProyekByKlien');
+		Route::get('/getproyekbyklien', 'PatchlistController@getProyekByKlien')->name('patchlist.getProyekByKlien');
+		Route::get('/get-nama-proyek-by-user', 'PatchlistController@getNamaProyekByUserId')->name('patchlist.getNamaProyekByUserId');
+		Route::get('/get-nama-klien', 'PatchlistController@getNamaKlien');
+		Route::get('/get-nama-proyek/{user_id}', 'PatchlistController@getNamaProyekByUserId');
+		
+		// Status Patchlist
+		Route::resource('statuspatchlist', 'StatusPatchlistController');
+		Route::get('/patchlist/getDataByStatus', 'StatusPatchlistController@getDataByStatus')->name('patchlist.getDataByStatus');
+		Route::get('/patch/{patchName}', 'StatusPatchlistController@showPatchDetail'); 
+		Route::post('/patchlist/updateStatus', 'StatusPatchlistController@updateStatus'); 
+
+
 	});
 
 	//admin
@@ -182,8 +204,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 		//tabeldata Statistik payment
 		Route::get('getstatistikpayment/{id?}', 'PaymentController@getstatistikpayment')->name('getstatistikpayment');
-		Route::get('/filter-data', 'PaymentController@filterData')->name('filter-data');
-
 
 		//Tagihan
 		Route::resource('tagihans', 'TagihanController');

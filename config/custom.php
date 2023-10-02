@@ -183,4 +183,28 @@ return [
         '8' => 'Visit',
     ],
 
+    'prioritas' => [
+        '-2'=> '-2',
+        '-1'=> '-1',
+        '0'=> '0',
+        '1'=> '1',
+        '2'=> '2',
+        '3'=> '3',
+    ],
+
+    'status' => [
+        '0' => 'Hold',
+        '1' => 'Queue',
+        '2' => 'In Progress',
+        '3' => 'Done Test Server',
+        '4' => 'Production',
+    ],
+
+    'kesulitan' => [
+        '0' => 'Sangat Tinggi',
+        '1' => 'Tinggi',
+        '2' => 'Sedang',
+        '3' => 'Rendah',
+    ],
+
 ];

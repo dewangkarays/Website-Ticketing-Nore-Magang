@@ -53,15 +53,6 @@ Route::group(['middleware' => ['auth:api','cors:api']], function() {
     Route::post('/storepresensi',  'Api\QrcodeApiController@store');
     Route::post('/storepresensiqr',  'Api\QrcodeApiController@storeqr');
 
-    // Cuti
-    // Route::get('/cuti', 'Api\CutiApiController@index'); //
-    Route::get('/getcuti', 'Api\CutiApiController@create');
-    // Route::get('/api/cuti', 'Api\CutiApiController@index');
-    Route::post('/storecuti', 'Api\CutiApiController@store');
-    Route::get('/get-verifikator/{id}', 'Api\CutiApiController@getverifikator');
-    Route::get('/cuti/{status}', 'Api\CutiApiController@getcuti');
-    Route::get('/statuscuti', 'Api\CutiApiController@statuscuti');
-
     Route::get('/logout',  'Api\LoginApiController@logout');
 });
 
@@ -70,3 +61,6 @@ Route::group(['middleware' => ['cors:api']], function() {
     Route::get('/leads', 'Api\DashboardApiController@index');
     Route::get('/marketing', 'Api\DashboardApiController@getMarketingData');
 });
+
+Route::get('/patchlist/getDataByStatus', 'StatusPatchlistController@getDataByStatus')->name('patchlist.getDataByStatus');
+Route::get('/patchlist/getDetailDataByName', 'StatusPatchlistController@getDetailPatchData')->name('patchlist.detail');
