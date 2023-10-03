@@ -171,8 +171,8 @@
         <div align="center">
             <img src="{{url($lampiran->gambar)}}" style="max-width:110%;max-height:400px;object-fit: cover;margin-bottom: 16px;page-break-inside:avoid; ">
         </div>
-        @if (!$loop->last)
-            @if (($rekapdpindex + 1) % 2 == 0)
+         @if (!$loop->last)
+            @if ((($rekapdpindex + 1) % 2 == 0) && $lampirans[$rekapdpindex+1]->jenis_lampiran == $lampiran->jenis_lampiran)
         {{-- @php (dd($rekapdpindex)) --}}
             <div class="page-break"></div>   
             @endif
