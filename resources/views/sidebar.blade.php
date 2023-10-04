@@ -168,6 +168,28 @@ ul{
 								</span>
 							</a>
 						</li>
+						<li class="nav-item nav-item-submenu">
+							<a href="{{ url('/members') }}" class="nav-link {{ (request()->is('patchlist*','statuspatchlist*')) ? 'active' : '' }}">
+								<i class="icon-clipboard6"></i>
+								<span>
+									Patchlist & Status
+								</span>
+							</a>
+							<ul class="nav nav-group-sub" style="display: {{ (request()->is('patchlist*','statuspatchlist*')) ? 'block' : 'none' }};">
+								<li class="nav-item"><a href="{{url('patchlist')}}" class="nav-link {{ (request()->is('patchlist*')) ? 'active' : '' }}">
+									<i class="icon-list-unordered"></i>
+									<span>
+										Patchlist
+									</span>
+								</a></li>
+								<li class="nav-item"><a href="{{url('statuspatchlist')}}" class="nav-link {{ (request()->is('statuspatchlist*')) ? 'active' : '' }}">
+									<i class="icon-file-text"></i>
+									<span>
+										Status Patchlist
+									</span>
+								</a></li>
+							</ul>
+						</li>
 					</ul>
 				</li>
 				{{-- marketing --}}
@@ -214,6 +236,28 @@ ul{
 							<i class="icon-traffic-cone"></i>
 							<span>
 								Data Proyek
+							</span>
+						</a></li>
+					</ul>
+				</li>
+				<li class="nav-item nav-item-submenu">
+					<a href="{{ url('/members') }}" class="nav-link {{ (request()->is('patchlist*','statuspatchlist*')) ? 'active' : '' }}">
+						<i class="icon-clipboard6"></i>
+						<span>
+							Patchlist & Status
+						</span>
+					</a>
+					<ul class="nav nav-group-sub" style="display: {{ (request()->is('patchlist*','statuspatchlist*')) ? 'block' : 'none' }};">
+						<li class="nav-item"><a href="{{url('patchlist')}}" class="nav-link {{ (request()->is('patchlist*')) ? 'active' : '' }}">
+							<i class="icon-list-unordered"></i>
+							<span>
+								Patchlist
+							</span>
+						</a></li>
+						<li class="nav-item"><a href="{{url('statuspatchlist')}}" class="nav-link {{ (request()->is('statuspatchlist*')) ? 'active' : '' }}">
+							<i class="icon-file-text"></i>
+							<span>
+								Status Patchlist
 							</span>
 						</a></li>
 					</ul>
@@ -275,6 +319,28 @@ ul{
 								</a></li>
 							</ul>
 						</li>
+						<li class="nav-item nav-item-submenu">
+							<a href="{{ url('/members') }}" class="nav-link {{ (request()->is('patchlist*','statuspatchlist*')) ? 'active' : '' }}">
+								<i class="icon-clipboard6"></i>
+								<span>
+									Patchlist & Status
+								</span>
+							</a>
+							<ul class="nav nav-group-sub" style="display: {{ (request()->is('patchlist*','statuspatchlist*')) ? 'block' : 'none' }};">
+								<li class="nav-item"><a href="{{url('patchlist')}}" class="nav-link {{ (request()->is('patchlist*')) ? 'active' : '' }}">
+									<i class="icon-list-unordered"></i>
+									<span>
+										Patchlist
+									</span>
+								</a></li>
+								<li class="nav-item"><a href="{{url('statuspatchlist')}}" class="nav-link {{ (request()->is('statuspatchlist*')) ? 'active' : '' }}">
+									<i class="icon-file-text"></i>
+									<span>
+										Status Patchlist
+									</span>
+								</a></li>
+							</ul>
+						</li>
 					</ul>
 				</li>
 
@@ -304,6 +370,28 @@ ul{
 
 				{{-- Kantor --}}
 				@if (Auth::user()->role< 80)
+				<li class="nav-item nav-item-submenu">
+					<a href="{{ url('/members') }}" class="nav-link {{ (request()->is('patchlist*','statuspatchlist*')) ? 'active' : '' }}">
+						<i class="icon-clipboard6"></i>
+						<span>
+							Patchlist & Status
+						</span>
+					</a>
+					<ul class="nav nav-group-sub" style="display: {{ (request()->is('patchlist*','statuspatchlist*')) ? 'block' : 'none' }};">
+						<li class="nav-item"><a href="{{url('patchlist')}}" class="nav-link {{ (request()->is('patchlist*')) ? 'active' : '' }}">
+							<i class="icon-list-unordered"></i>
+							<span>
+								Patchlist
+							</span>
+						</a></li>
+						<li class="nav-item"><a href="{{url('statuspatchlist')}}" class="nav-link {{ (request()->is('statuspatchlist*')) ? 'active' : '' }}">
+							<i class="icon-file-text"></i>
+							<span>
+								Status Patchlist
+							</span>
+						</a></li>
+					</ul>
+				</li>
 				<li class="nav-item nav-item-submenu">
 					<a href="#" class="nav-link {{ (request()->is('calendar*','presensi*','cuti*', 'history-cuti*')) ? 'active' : '' }}"><i class="icon-cabinet"></i>
 						<span>
