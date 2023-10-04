@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Model\User;
 use App\Model\Proyek;
 use App\Model\Patchlist;
+use App\Model\ActivityLog;
 use Illuminate\Http\Request;
 use App\Exports\PatchlistExport;
 use Illuminate\Support\Facades\DB;
@@ -32,27 +33,22 @@ class PatchlistController extends Controller
         $proyekList = Patchlist::distinct()->pluck('proyek_id', 'proyek_id');
         $klienList = $this->getKlienList();
         $proyekList = $this->getProyekList();
-
         $filterKlien = request()->input('filterKlien');
         $filterProyek = request()->input('filterProyek');
-    
         $query = Patchlist::query();
 
         if ($filterKlien) {
             $query->where('klien_id', $filterKlien);
         }
-
         if ($filterProyek) {
             $query->where('proyek_id', $filterProyek);
         }
 
         $filteredData = $query->get();
-
         $totalPerStatus = Patchlist::select('status', DB::raw('count(*) as total'))
             ->groupBy('status')
             ->pluck('total', 'status')
             ->toArray();
-
         session(['filteredData' => $filteredData]);
 
         return view('patchlist.index', compact('klienList', 'proyekList', 'filterKlien', 'filterProyek', 'filteredData', 'totalPerStatus'));
@@ -62,11 +58,9 @@ class PatchlistController extends Controller
     {
         if ($request->ajax()) {
             $data = Patchlist::query();
-        
             if ($request->has('filterKlien') && !empty($request->input('filterKlien'))) {
                 $data->where('klien_id', $request->input('filterKlien'));
             }
-                
             if ($request->has('filterProyek') && !empty($request->input('filterProyek'))) {
                 $data->where('proyek_id', $request->input('filterProyek'));
             }
@@ -78,7 +72,7 @@ class PatchlistController extends Controller
 
                     $buttons = '<a href="' . $editRoute . '" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>';
 
-                    if (Auth::user()->role == 1) {
+                    if (Auth::user()) {
                         $buttons .= '<a class="dropdown-item delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="' . $deleteRoute . '"><i class="icon-x"></i> Delete</a>';
                     }
 
@@ -122,7 +116,6 @@ class PatchlistController extends Controller
     public function getNamaProyekByUserId(Request $request)
     {
         $user_id = $request->input('user_id');
-
         $namaProyek = Proyek::where('user_id', $user_id)->pluck('nama_proyek', 'id');
 
         return response()->json($namaProyek);
@@ -178,7 +171,6 @@ class PatchlistController extends Controller
         return response()->json($namaProyekList);
     }
 
-
     public function show($id)
     {
         $patchlist = Patchlist::find($id);
@@ -208,7 +200,7 @@ class PatchlistController extends Controller
         $user_id = User::find($request->input('klien'))->id;
         $keterangan = strip_tags($request->input('keterangan'));
 
-        Patchlist::create([
+        $patchlist = Patchlist::create([
             'patchlist' => $request->patchlist,
             'prioritas' => $request->prioritas,
             'kesulitan' => $request->kesulitan,
@@ -216,6 +208,12 @@ class PatchlistController extends Controller
             'keterangan' => $keterangan,
             'klien_id' => $user_id,
             'proyek_id' => $request->nama_proyek,
+        ]);
+
+        ActivityLog::create([
+            'user_id' => auth()->user()->id,
+            'activity_type' => 'create',
+            'patch_name' => $request->patchlist,
         ]);
 
         return redirect()->route('patchlist.index')->with('success', 'Data Patchlist berhasil disimpan');
@@ -248,6 +246,12 @@ class PatchlistController extends Controller
 
         $patchlist->save();
 
+        ActivityLog::create([
+            'user_id' => auth()->user()->id,
+            'activity_type' => 'edit',
+            'patch_name' => $request->patchlist,
+        ]);
+
         return redirect()->route('patchlist.index')->with('success', 'Data Patchlist berhasil diperbarui');
     }
 
@@ -277,9 +281,6 @@ class PatchlistController extends Controller
     {
         $filterKlien = $request->input('filterKlien');
         $filterProyek = $request->input('filterProyek');
-
-        \Log::info('Filter Klien:', [$filterKlien]);
-        \Log::info('Filter Proyek:', [$filterProyek]);
         
         $data = Patchlist::query();
 
@@ -292,7 +293,6 @@ class PatchlistController extends Controller
         }
 
         $filteredData = $data->get();
-
         $patchlistExport = new PatchlistExport($filteredData);
 
         return Excel::download($patchlistExport, 'patchlist.xlsx');

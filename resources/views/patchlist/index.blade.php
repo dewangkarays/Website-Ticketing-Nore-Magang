@@ -27,7 +27,6 @@
         </div>
     </div>
 </div>
-<!-- /page header -->
 
 <!-- Content area -->
 <div class="content">
@@ -42,7 +41,6 @@
                         @endforeach
                     </select>
                 </div>
-
                 <div class="col">
                     <select style="width: 200px; height: 36px" id="filter_proyek" name="filterProyek" class="form-control select-search">
                         <option value="">-- Nama Proyek --</option>
@@ -78,7 +76,7 @@
 				</div>
 				<div class="col-md-2 text-center">
 					<span class="font-weight-semibold" style="font-size: 100%" id="status-1">
-						Queue: {{$totalPerStatus['1'] ?? 0 }} 
+						Queue: {{$totalPerStatus['1'] ?? 0 }}
 					</span>
 				</div>
 				<div class="col-md-2 text-center">
@@ -98,7 +96,6 @@
 				</div>
 			</div>
         </div>
-
         <div class="table-responsive">
             <table class="table datatable-basic table-hover">
                 <thead>
@@ -119,10 +116,7 @@
             </table>
         </div>
     </div>
-<!-- /hover rows -->
-
 </div>
-<!-- /content area -->
 
 <!-- Danger modal -->
 <div id="modal_theme_danger" class="modal fade" tabindex="-1">
@@ -131,14 +125,12 @@
             <div class="modal-header bg-danger" align="center">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-
             <form action="" method="post" id="delform">
                 @csrf
                 @method('DELETE')
                 <div class="modal-body" align="center">
                     <h2> Hapus Data? </h2>
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn bg-danger">Hapus</button>
@@ -147,8 +139,6 @@
         </div>
     </div>
 </div>
-<!-- /default modal -->
-
 @endsection
 
 @section('js')
@@ -198,7 +188,6 @@
         });
     }
 
-    // Dengan jQuery
     $('#filter_klien').on('change', function() {
         var selectedKlienId = $(this).val();
         updateProyekDropdown(selectedKlienId);
@@ -217,7 +206,7 @@
             var filterKlien = $('#filter_klien').val();
             var filterProyek = $('#filter_proyek').val();
 
-            var exportExcelUrl = $(this).data('export-url'); // Mengambil URL dari data attribute
+            var exportExcelUrl = $(this).data('export-url');
 
             if (filterKlien || filterProyek) {
                 exportExcelUrl += "?";
@@ -234,7 +223,6 @@
                 exportExcelUrl += "filterProyek=" + filterProyek;
             }
 
-            console.log('URL Ekspor Excel:', exportExcelUrl);
             window.location.href = exportExcelUrl;
         });
     });
@@ -283,7 +271,7 @@
                 columnDefs: [{
                     orderable: false,
                     width: 100,
-                     targets: [ 7 ]
+                    targets: [ 7 ]
                 }],
                 dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                 searching: false,
@@ -346,15 +334,15 @@
 							let statusStyle = '';
 
 							if(data?.status == 0 )
-								statusStyle = `<span style="font-size:100%;" class="badge badge-pill bg-primary-400 ml-auto ml-md-0">${status[data?.status]}</span>`
+								statusStyle = `<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">${status[data?.status]}</span>`
 							else if(data?.status == 1)
-								statusStyle = `<span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">${status[data?.status]}</span>`
+								statusStyle = `<span style="font-size:100%;" class="badge badge-pill bg-warning-400 ml-auto ml-md-0">${status[data?.status]}</span>`
                             else if(data?.status == 2)
 								statusStyle = `<span style="font-size:100%;" class="badge badge-pill bg-orange-400 ml-auto ml-md-0">${status[data?.status]}</span>`
                             else if(data?.status == 3)
-								statusStyle = `<span style="font-size:100%;" class="badge badge-pill bg-warning-400 ml-auto ml-md-0">${status[data?.status]}</span>`
+								statusStyle = `<span style="font-size:100%;" class="badge badge-pill bg-primary-400 ml-auto ml-md-0">${status[data?.status]}</span>`
                             else if(data?.status == 4)
-								statusStyle = `<span style="font-size:100%;" class="badge badge-pill bg-danger-400 ml-auto ml-md-0">${status[data?.status]}</span>`
+								statusStyle = `<span style="font-size:100%;" class="badge badge-pill bg-success-400 ml-auto ml-md-0">${status[data?.status]}</span>`
                             
 							return statusStyle;
 						}
@@ -385,7 +373,7 @@
                                     </a>
                             `;
 
-                            @if (Auth::user()->role == 1)
+                            @if (Auth::user())
                                 actionsButton += `
                                     <a href="#" class="btn bg-danger btn-icon delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}" data-toggle="tooltip" data-placement="top" title="Delete">
                                         <i class="icon-x"></i>
@@ -442,7 +430,6 @@
             });
         };
 
-
         //
         // Return objects assigned to module
         //
@@ -463,26 +450,27 @@
         DatatableBasic.init();
     });
 </script>
-<script type="text/javascript">
-		$( document ).ready(function() {
-	        // Default style
-	        @if(session('error'))
-	            new PNotify({
-	                title: 'Error',
-	                text: '{{ session('error') }}.',
-	                icon: 'icon-blocked',
-	                type: 'error'
-	            });
-            @endif
-            @if ( session('success'))
-	            new PNotify({
-	                title: 'Success',
-	                text: '{{ session('success') }}.',
-	                icon: 'icon-checkmark3',
-	                type: 'success'
-	            });
-            @endif
 
-		});
-	</script>
+<script type="text/javascript">
+	$( document ).ready(function() {
+	    // Default style
+	    @if(session('error'))
+	        new PNotify({
+	            title: 'Error',
+	            text: '{{ session('error') }}.',
+	            icon: 'icon-blocked',
+	            type: 'error'
+	        });
+        @endif
+        @if ( session('success'))
+	        new PNotify({
+	            title: 'Success',
+	            text: '{{ session('success') }}.',
+	            icon: 'icon-checkmark3',
+	            type: 'success'
+	        });
+        @endif
+	});
+</script>
+
 @endsection

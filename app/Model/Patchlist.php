@@ -23,4 +23,9 @@ class Patchlist extends Model
         return $this->belongsTo(Proyek::class, 'proyek_id');
     }
 
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class, 'patch_name', 'patchlist');
+    }
+
 }

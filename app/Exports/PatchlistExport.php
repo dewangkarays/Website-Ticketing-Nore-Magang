@@ -38,6 +38,15 @@ class PatchlistExport implements FromCollection, WithHeadings, WithMapping, Shou
 
     public function map($row): array
     {
+        $prioritas = [
+            '-2' => '-2',
+            '-1' => '-1',
+            '0' => '0',
+            '1' => '1',
+            '2' => '2',
+            '3' => '3',
+        ];
+
         $status = [
             '0' => 'Hold',
             '1' => 'Queue',
@@ -63,7 +72,7 @@ class PatchlistExport implements FromCollection, WithHeadings, WithMapping, Shou
         return [
             'ID' => $row->id,
             'Patchlist' => $row->patchlist,
-            'Prioritas' => $row->prioritas,
+            'Prioritas' => $prioritas[$row->prioritas] ?? '',
             'Tanggal Request' => $tanggalRequest,
             'Kesulitan' => $kesulitan[$row->kesulitan] ?? '',
             'Status' => $status[$row->status] ?? '',

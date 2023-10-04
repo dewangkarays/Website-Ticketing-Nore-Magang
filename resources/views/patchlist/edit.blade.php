@@ -18,11 +18,9 @@
         </div>
     </div>
 </div>
-<!-- /page header -->
 
 <!-- Content area -->
 <div class="content">
-
     <!-- Hover rows -->
     <div class="card">
         <div class="card-header header-elements-inline">
@@ -33,9 +31,6 @@
                 @method('PUT')
                 <fieldset class="mb-3">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Edit Patchlist</legend>
-
-                    
-
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Nama Patchlist</label>
                         <div class="col-lg-10">
@@ -46,7 +41,6 @@
                             @enderror
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Prioritas</label>
                         <div class="col-lg-10">
@@ -57,7 +51,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Kesulitan</label>
                         <div class="col-lg-10">
@@ -68,7 +61,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Status</label>
                         <div class="col-lg-10">
@@ -79,7 +71,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Keterangan</label>
                         <div class="col-lg-10">
@@ -94,12 +85,9 @@
                 </div>
             </form>
         </div>
-
     </div>
-    <!-- /hover rows -->
-
 </div>
-<!-- /content area -->
+
 @endsection
 
 @section('js')
@@ -123,7 +111,6 @@
 <script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 
 <script>
-
     $('.form-control-uniform').uniform({
         radioClass: 'choice',
         wrapperClass: 'border-teal-300 text-teal-800'
@@ -144,8 +131,8 @@
 
             // Basic examples
             // ------------------------------
-
             // Default initialization
+
             $('.summernote').summernote({
                 toolbar: [
                 ['para', ['ul', 'ol', 'paragraph']],
@@ -168,26 +155,6 @@
             $('.summernote-height').summernote({
                 height: 400
             });
-
-            // // Air mode
-            // $('.summernote-airmode').summernote({
-            // 	airMode: true
-            // });
-
-
-            // // // Click to edit
-            // // // ------------------------------
-
-            // // // Edit
-            // // $('#edit').on('click', function() {
-            // // 	$('.click2edit').summernote({focus: true});
-            // // })
-
-            // // // Save
-            // // $('#save').on('click', function() {
-            // // 	var aHTML = $('.click2edit').summernote('code');
-            // // 	$('.click2edit').summernote('destroy');
-            // // });
         };
 
         // Uniform
@@ -202,7 +169,6 @@
                 fileButtonClass: 'action btn bg-warning-400'
             });
         };
-
 
         //
         // Return objects assigned to module
@@ -222,6 +188,6 @@
     document.addEventListener('DOMContentLoaded', function() {
         Summernote.init();
     });
-
 </script>
+
 @endsection

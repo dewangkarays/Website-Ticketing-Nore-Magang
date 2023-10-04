@@ -48,12 +48,35 @@
         border-top: 1px solid #ccc;
     }
 
+    .activity-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .profile-circle {
+        width: 30px;
+        height: 30px;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .activity-log {
+        max-height: 775px;
+        overflow-y: auto;
+    }
 </style>
 @endsection
 
 @section('content')
 <head>
-    <!-- ... kode lainnya ... -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <div class="page-header page-header-light">
@@ -113,7 +136,6 @@
 </div>
 
 <!-- Modal -->
-<!-- Modal -->
 <div class="modal fade" id="patchModal" tabindex="-1" role="dialog" aria-labelledby="patchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -124,49 +146,60 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="/patchlist/updateStatus">
-                @csrf
-                    <div class="form-group">
-                        <label for="namaKlien">Nama Klien:</label>
-                        <input type="text" class="form-control" id="namaKlien" readonly>
+                <div class="row">
+                    <div class="col-md-6">
+                        <form method="POST" action="/patchlist/updateStatus">
+                        @csrf
+                            <div class="form-group">
+                                <label for="namaKlien">Nama Klien:</label>
+                                <input type="text" class="form-control" id="namaKlien" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="namaProyek">Nama Proyek:</label>
+                                <input type="text" class="form-control" id="namaProyek" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="patchName">Nama Patch:</label>
+                                <textarea class="form-control" id="patchName" readonly></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="prioritas">Prioritas:</label>
+                                <input type="text" class="form-control" id="prioritas" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggalRequest">Tanggal Request:</label>
+                                <input type="text" class="form-control" id="tanggalRequest" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="kesulitan">Kesulitan:</label>
+                                <input type="text" class="form-control" id="kesulitan" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <select id="status" class="form-control" name="newStatus"> <!-- Pastikan Anda memberikan atribut "name" -->
+                                    @foreach(config('custom.status') as $key => $value)
+                                        <option value="{{ $key }}">{{ $value }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggalPatch">Tanggal Patch:</label>
+                                <input type="text" class="form-control" id="tanggalPatch" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="keterangan">Keterangan:</label>
+                                <textarea class="form-control" id="keterangan" readonly></textarea>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label for="namaProyek">Nama Proyek:</label>
-                        <input type="text" class="form-control" id="namaProyek" readonly>
+                    <div class="col-md-6">
+                        <div class="activity-log">
+                            <h5 style="margin-left: 15px;">Aktivitas:</h5>
+                            <ul id="activity-log">
+                            </ul>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="patchName">Nama Patch:</label>
-                        <textarea class="form-control" id="patchName" readonly></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="prioritas">Prioritas:</label>
-                        <input type="text" class="form-control" id="prioritas" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="tanggalRequest">Tanggal Request:</label>
-                        <input type="text" class="form-control" id="tanggalRequest" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="kesulitan">Kesulitan:</label>
-                        <input type="text" class="form-control" id="kesulitan" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="status">Status:</label>
-                        <select id="status" class="form-control" name="newStatus"> <!-- Pastikan Anda memberikan atribut "name" -->
-                            @foreach(config('custom.status') as $key => $value)
-                                <option value="{{ $key }}">{{ $value }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="tanggalPatch">Tanggal Patch:</label>
-                        <input type="text" class="form-control" id="tanggalPatch" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="keterangan">Keterangan:</label>
-                        <textarea class="form-control" id="keterangan" readonly></textarea>
-                    </div>
-                </form>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali <i class="icon-undo2 mr-2"></i></button>
@@ -191,7 +224,6 @@
 <script src="{{asset('assets/js/custom.js')}}"></script>
 
 <script>
-
     const prioritas = {
         '-2': '-2',
         '-1': '-1',
@@ -241,7 +273,6 @@
                                 type: 'GET',
                                 data: { patchName: patchName },
                                 success: function(detailData) {
-                                    // Mengisi nilai elemen input dengan data
                                     $('#patchName').val(patchName || '-');
                                     $('#namaKlien').val(detailData.namaKlien || '-');
                                     $('#namaProyek').val(detailData.namaProyek || '-');
@@ -263,8 +294,6 @@
                                     });
                                     $('#tanggalPatch').val(detailData.tanggal_patch || '-');
                                     $('#keterangan').val(detailData.keterangan || '-');
-
-                                    // Menampilkan modal
                                     $('#patchModal').modal('show');
                                 },
                                 error: function(error) {
@@ -272,7 +301,6 @@
                                 }
                             });
                         });
-
                         list.append(listItem);
                     });
                 } else {
@@ -282,16 +310,75 @@
                 console.error('Error:', error);
             }
         }
-
-        // Load data for each status
         loadStatusData('0', 'hold-list');
         loadStatusData('1', 'queue-list');
         loadStatusData('2', 'in-progress-list');
         loadStatusData('3', 'done-test-server-list');
         loadStatusData('4', 'production-list');
 
-    });
 
+        function loadActivityLog(patchName) {
+            $('#activity-log').empty();
+            $.ajax({
+                url: '/api/activity-log/getActivityLogByPatchName',
+                type: 'GET',
+                data: { patchName: patchName },
+                success: function (activityLogs) {
+                    activityLogs.sort(function(a, b) {
+                        return new Date(b.created_at) - new Date(a.created_at);
+                    });
+                    if (activityLogs && Array.isArray(activityLogs)) {
+                        activityLogs.forEach(function (activityLog) {
+                            var activityLogItem = $('<li class="activity-item"></li>');
+                            $.ajax({
+                                url: '/api/user/getUserName',
+                                type: 'GET',
+                                data: { userId: activityLog.user_id },
+                                success: function (response) {
+                                    var userName = response.userName;
+                                    var userInitials = getInitials(userName);
+                                    var profileCircle = $('<div class="profile-circle">' + userInitials + '</div>');
+                                    var activityDetails = $('<div class="activity-details"></div>');
+
+                                    if (activityLog.activity_type === 'create') {
+                                        activityDetails.append(userName + ' menambahkan patchlist');
+                                    } else if (activityLog.activity_type === 'edit') {
+                                        activityDetails.append(userName + ' mengedit patchlist');
+                                    }
+                                    activityDetails.append('<br>' + activityLog.created_at);
+                                    activityLogItem.append(profileCircle);
+                                    activityLogItem.append(activityDetails);
+
+                                    $('#activity-log').append(activityLogItem);
+                                },
+                                error: function (error) {
+                                    console.error('Error:', error);
+                                }
+                            });
+                        });
+                    } else {
+                        // ...
+                    }
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+
+        function getInitials(name) {
+            const words = name.split(' ');
+            if (words.length === 1) {
+                return words[0].substring(0, 2).toUpperCase();
+            }
+            return words[0].substring(0, 1).toUpperCase() + words[1].substring(0, 1).toUpperCase();
+        }
+
+        $('#patchModal').on('show.bs.modal', function(event) {
+            var patchName = $('#patchName').val();
+            loadActivityLog(patchName);
+        });
+    });
 </script>
 
 <script>
@@ -310,11 +397,42 @@
                 },
                 success: function(response) {
                     $('#patchModal').modal('hide');
+                    updatePatchlist(patchName, newStatus);
                 },
                 error: function(error) {
+                    console.error('Error:', error);
                 }
             });
         });
+
+        function updatePatchlist(patchName, newStatus) {
+            var patchlistItem = $('li.list-group-item-clickable:contains("' + patchName + '")');
+            var targetColumn = $('.status-columns .col .card-header:contains("' + statuss[newStatus] + '")').siblings('ul.list');
+            patchlistItem.detach();
+            patchlistItem.appendTo(targetColumn);
+        }
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        @if(session('error'))
+            new PNotify({
+                title: 'Error',
+                text: '{{ session('error') }}',
+                icon: 'icon-blocked',
+                type: 'error'
+            });
+        @endif
+        @if(session('success'))
+            new PNotify({
+                title: 'Success',
+                text: '{{ session('success') }}',
+                icon: 'icon-checkmark3',
+                type: 'success'
+            });
+        @endif
     });
 </script>
 

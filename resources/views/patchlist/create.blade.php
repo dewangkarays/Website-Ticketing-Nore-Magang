@@ -20,11 +20,9 @@
         </div>
     </div>
 </div>
-<!-- /page header -->
 
 <!-- Content area -->
 <div class="content">
-
     <!-- Hover rows -->
     <div class="card">
         <div class="card-header header-elements-inline">
@@ -34,11 +32,10 @@
                 @csrf
                 <fieldset class="mb-3">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Data Patchlist</legend>
-
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Klien</label>
                         <div class="col-lg-10">
-                            <select name="klien" id="klien" class="form-control">
+                            <select name="klien" id="klien" class="form-control select-search">
                                 <option value="">-- Pilih Klien --</option>
                                 @foreach($klienList as $id => $nama)
                                     <option value="{{ $id }}">{{ $nama }}</option>
@@ -46,17 +43,14 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Nama Proyek</label>
                         <div class="col-lg-10">
-                            <select id="nama_proyek" name="nama_proyek" class="form-control">
+                            <select id="nama_proyek" name="nama_proyek" class="form-control select-search">
                                 <option value="">-- Pilih Proyek --</option>
                             </select>
                         </div>
                     </div>
-                    
-
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Nama Patchlist</label>
                         <div class="col-lg-10">
@@ -64,7 +58,6 @@
                                 placeholder="Contoh : Nama Patchlist">
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Prioritas</label>
                         <div class="col-lg-10">
@@ -75,7 +68,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Kesulitan</label>
                         <div class="col-lg-10">
@@ -86,7 +78,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Status</label>
                         <div class="col-lg-10">
@@ -97,7 +88,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Keterangan</label>
                         <div class="col-lg-10">
@@ -115,10 +105,8 @@
             </form>
         </div>
     </div>
-    <!-- /hover rows -->
-
 </div>
-<!-- /content area -->
+
 @endsection
 
 @section('js')
@@ -147,8 +135,11 @@
     $(document).ready(function() {
     });
 </script>
+
 <script>
     $(document).ready(function() {
+        $('#klien').select2();
+        $('#nama_proyek').select2();
         $('#klien').change(function() {
             var user_id = $(this).val();
             if (user_id !== '') {
@@ -191,8 +182,8 @@
 
             // Basic examples
             // ------------------------------
-
             // Default initialization
+
             $('.summernote').summernote({
                 toolbar: [
                 ['para', ['ul', 'ol', 'paragraph']],
@@ -230,7 +221,6 @@
             });
         };
 
-
         //
         // Return objects assigned to module
         //
@@ -249,7 +239,6 @@
     document.addEventListener('DOMContentLoaded', function() {
         Summernote.init();
     });
-
 </script>
 
 @endsection

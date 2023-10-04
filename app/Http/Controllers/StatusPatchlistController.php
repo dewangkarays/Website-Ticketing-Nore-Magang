@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Model\User;
 use App\Model\Proyek;
 use App\Model\Patchlist;
+use App\Model\ActivityLog;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class StatusPatchlistController extends Controller
 {
@@ -27,23 +30,46 @@ class StatusPatchlistController extends Controller
 
     public function updateStatus(Request $request)
     {
-        // Pastikan hanya data status yang dikirim
         $newStatus = $request->input('newStatus');
         $patchName = $request->input('patchName');
 
-        Log::info("Received patchName: $patchName, newStatus: $newStatus");
-
-        // Validasi jika diperlukan
-
-        // Update kolom status pada entitas yang sesuai berdasarkan $patchName
         $patchlist = Patchlist::where('patchlist', $patchName)->first();
         if ($patchlist) {
+            $previousStatus = $patchlist->status;
+            
+            if ($previousStatus == 3 && $newStatus != 3) {
+                $tanggalPatchTerakhir = $patchlist->tanggal_patch;
+            }
+
             $patchlist->status = $newStatus;
             $patchlist->save();
             
-            return response()->json(['success' => true]);
-        } else {
-            return response()->json(['error' => 'Data patch tidak ditemukan.'], 404);
+            ActivityLog::create([
+                'user_id' => auth()->user()->id,
+                'activity_type' => 'edit',
+                'patch_name' => $patchName,
+                'activity_details' => 'Mengedit status patchlist ' . $patchName,
+            ]);
+
+            if ($newStatus == 3) {
+                $patchlist->tanggal_patch = now();
+            } elseif ($previousStatus == 3 && $newStatus != 3) {
+                $patchlist->tanggal_patch = $tanggalPatchTerakhir;
+            }
+            
+            $patchlist->save();
+
+            $query = DB::table('patchlists')
+                ->select('id', 'patchlist', 'prioritas', 'created_at', 'kesulitan', 'status', 'keterangan')
+                ->addSelect(DB::raw("CASE WHEN status = 3 THEN tanggal_patch ELSE NULL END as tanggal_patch"))
+                ->where('patchlist', $patchName)
+                ->first();
+
+            if ($previousStatus == 3) {
+                $query->tanggal_patch = $tanggalPatchTerakhir;
+            }
+
+            return response()->json($query);
         }
     }
 
@@ -58,8 +84,9 @@ class StatusPatchlistController extends Controller
     public function showPatchDetail($patchName)
     {
         $patchData = Patchlist::where('patchlist', $patchName)->first();
-    
-        return view('statuspatchlist.detail', compact('patchData'));
+        $activityLogs = ActivityLog::where('patch_name', $patchName)->get();
+
+        return view('statuspatchlist.index', compact('patchData', 'activityLogs'));
     }
 
     public function getDetailPatchData(Request $request)
@@ -94,6 +121,26 @@ class StatusPatchlistController extends Controller
             ]);
         } else {
             return response()->json(["error" => "Data detail patch untuk $patchName tidak ditemukan."], 404);
+        }
+    }
+
+    public function getActivityLogByPatchName(Request $request)
+    {
+        $patchName = $request->input('patchName');
+        $activityLogs = ActivityLog::where('patch_name', $patchName)->get();
+
+        return response()->json($activityLogs);
+    }
+
+    public function getUserNameById(Request $request)
+    {
+        $userId = $request->input('userId');
+        $user = User::find($userId);
+
+        if ($user) {
+            return response()->json(['userName' => $user->nama]);
+        } else {
+            return response()->json(['error' => 'User tidak ditemukan'], 404);
         }
     }
 
