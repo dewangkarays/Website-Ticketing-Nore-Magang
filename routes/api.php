@@ -65,4 +65,4 @@ Route::group(['middleware' => ['cors:api']], function() {
 Route::get('/patchlist/getDataByStatus', 'StatusPatchlistController@getDataByStatus')->name('patchlist.getDataByStatus');
 Route::get('/patchlist/getDetailDataByName', 'StatusPatchlistController@getDetailPatchData')->name('patchlist.detail');
 Route::get('/activity-log/getActivityLogByPatchName', 'StatusPatchlistController@getActivityLogByPatchName');
-Route::get('/user/getUserName', 'StatusPatchListController@getUserNameById');
+Route::get('/user/getUserName', 'StatusPatchlistController@getUserNameById');
