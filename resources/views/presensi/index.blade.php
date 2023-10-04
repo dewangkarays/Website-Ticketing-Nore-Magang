@@ -321,6 +321,9 @@
     <script src="{{ asset('global_assets\js\main\bootstrap.bundle.min.js') }}"></script>
     {{-- <script src="{{asset('global_assets/js/demo_pages/form_select2.js')}}"></script> --}}
     <script>
+
+	$('.select-search').select2();
+
         $(function(){
         function toIsoString(date) {
             var tzo = -date.getTimezoneOffset(),

@@ -193,6 +193,13 @@
 				<div class="card">
 					<div class="card-header header-elements-inline">
 		          	<h5 class="card-title">Total Pembayaran per Perlanggan</h5> 
+					<div class="header-elements">
+						<div class="list-icons">
+							<a class="list-icons-item" data-action="collapse"></a>
+							<a class="list-icons-item" data-action="reload"></a>
+							<a class="list-icons-item" data-action="remove"></a>
+						</div>
+					</div>
 					</div>
 
 					<div class="card-body">
@@ -206,7 +213,7 @@
 									</tr>
 								</thead>
 								<tbody>
-								@if(!$totals->isEmpty())
+								{{-- @if(!$totals->isEmpty())
 									@php ($i = 1)
 									@foreach($totals as $total)
 								    <tr>
@@ -218,7 +225,7 @@
 								    @endforeach
 								@else
 								  	<tr><td align="center" colspan="3">Data Kosong</td></tr>
-								@endif 
+								@endif  --}}
 								</tbody>
 							</table>
 						</div>
@@ -1062,11 +1069,13 @@ return {
 		        // Setting datatable defaults
 		        $.extend( $.fn.dataTable.defaults, {
 		            autoWidth: false,
-		            columnDefs: [{ 
-		                orderable: false,
-		                //width: 200,
-		                targets: [ 0, 1, 2, 3]
-		            }],
+		            columnDefs: [
+						{ 
+							orderable: false,
+							//width: 200,
+							targets: [ 2]
+						}
+					],
 		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
 		            language: {
 		                search: '<span>Filter:</span> _INPUT_',
@@ -1077,7 +1086,77 @@ return {
 		        });
 
 		        // Basic datatable
-		        $('.datatable-basic').DataTable();
+		        $('.datatable-basic').DataTable({
+					 "scrollX": true,
+                    order: [[0, "desc"]],
+					processing: true,
+					serverSide: true,
+					// "order": true,
+					ajax: {
+						"url"   :"{{ route("totalPayment.data") }}",
+                        "type"  :"POST",
+                        "data"  : {
+                            "_token" : "{{ csrf_token() }}",
+                        }
+					},
+					columns:[
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return row.DT_RowIndex;
+							}
+						},
+						{
+							data: 'nama',
+							name: 'nama',
+							render: (data, type, row) => {
+								return data ? data : '-';
+							}
+						},
+						{
+							data: null,
+                            name: null,
+                            render: (data, type, row) => {
+								if (type === 'display' && data !== null && data !== undefined) {
+								const rupiahFormat = new Intl.NumberFormat('id-ID', {
+									style: 'currency',
+									currency: 'IDR',
+									maximumFractionDigits: 0
+								});
+								return rupiahFormat.format(data.total);
+								}
+								return data;
+							}
+						},
+
+					]
+
+				});
+				console.log($('.datatable-basic'))
+				  // Alternative pagination
+		        $('.datatable-pagination').DataTable({
+		            pagingType: "simple",
+		            language: {
+		                paginate: {'next': $('html').attr('dir') == 'rtl' ? 'Next &larr;' : 'Next &rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr; Prev' : '&larr; Prev'}
+		            }
+		        });
+
+		        // Datatable with saving state
+		        $('.datatable-save-state').DataTable({
+		            stateSave: true
+		        });
+
+		        // Scrollable datatable
+		        var table = $('.datatable-scroll-y').DataTable({
+		            autoWidth: true,
+		            scrollY: 300
+		        });
+
+		        // Resize scrollable table when sidebar width changes
+		        $('.sidebar-control').on('click', function() {
+		            table.columns.adjust().draw();
+		        });
 
 		    };
 

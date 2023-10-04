@@ -15,6 +15,7 @@ use App\Model\Tagihan;
 use App\Model\Setting;
 use App\Model\Proyek;
 use App\Model\TagihanCicilan;
+use App\Model\TargetMarketing;
 use App\Exports\PaymentExport; //plugin excel
 use Maatwebsite\Excel\Facades\Excel;
 //use PDF;
@@ -718,7 +719,7 @@ class PaymentController extends Controller
         $proyeks = Proyek::selectRaw('jenis_proyek, count(jenis_proyek) as total')->groupBY('jenis_proyek')->orderBY('total', 'ASC')->get();
         //   dd($proyeks);
 
-        $pMarketing = Klien::selectRaw('marketing_id, count(marketing_id) as total')->where('status', 4)->where('member_created', 1)->groupBy('marketing_id')->get();
+        $pMarketing = Klien::selectRaw('marketing_id, count(marketing_id) as total')->where('member_created', 1)->groupBy('marketing_id')->get();
         // dd($pMarketing); SELECT marketing_id, COUNT(*) as total FROM kliens WHERE status = 4 GROUP BY marketing_id;
         $marketingIdArray = [];
 
@@ -763,9 +764,23 @@ class PaymentController extends Controller
 
         $clients = Payment::select('*')->orderBy('tanggal','DESC')->offset(0)->limit(8)->get();
         $totals = Payment::selectRaw('user_id, SUM(nominal) as total')->groupBy('user_id')->orderBy('total','DESC')->get();
-
+        // dd($totals);
         return view('statistikpayment', compact('years', 'chart', 'pie', 'clients', 'filter', 'totals', 'proyeks' ,'pMarketing','marketingIdArray','tMarketing'));
     }
+
+    public function totalPayment(Request $request)
+    {
+       
+        return view('statistikpayment');
+    }
+
+    public function getdataPayments(Request $request)
+    {
+     $json_data = Payment::selectRaw('user_id, SUM(nominal) as total, MAX(nama) as nama')->groupBy('user_id')->orderBy('total','DESC')->get();
+
+      return Datatables::of($json_data)->addIndexColumn()->make(true);
+    }
+    
     public function getstatistikpayment($id)
     {
         $proyeks = Proyek::where('jenis_proyek', $id)
@@ -791,8 +806,7 @@ class PaymentController extends Controller
     $tglakhir = date('Y-m-d H:i:s', strtotime($request->input('tglakhir')));
 
     // Query untuk menghitung total berdasarkan marketing_id dalam rentang tanggal
-    $filteredData = Klien::where('status', 4)
-        ->where('member_created', '=', 1)
+    $filteredData = Klien::where('member_created', '=', 1)
         ->whereBetween('created_at', [$tglawal, $tglakhir])
         ->select('marketing_id', DB::raw('COUNT(*) as total'))
         ->groupBy('marketing_id')

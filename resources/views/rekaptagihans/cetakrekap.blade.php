@@ -272,9 +272,9 @@
     @foreach ($lampirans as $rekapindex => $lampiran)
     @if (!$loop->first)
         @if ($lampiran->jenis_lampiran != $jenis_terakhir)
-            @if ($rekapindex > 2)
+            {{-- @if ($rekapindex > 2) --}}
                 <div class="page-break"></div>
-            @endif
+            {{-- @endif --}}
         @endif
     @endif
     
@@ -296,7 +296,7 @@
             <img src="{{url($lampiran->gambar)}}" style="max-width:110%;max-height:400px;object-fit: cover;margin-bottom: 16px;page-break-inside:avoid; ">
         </div>
         @if (!$loop->last)
-            @if (($rekapindex + 1) % 2 == 0)
+            @if ((($rekapindex + 1) % 2 == 0) && $lampirans[$rekapindex+1]->jenis_lampiran == $lampiran->jenis_lampiran)
         {{-- @php (dd($rekapindex)) --}}
             <div class="page-break"></div>   
             @endif

@@ -204,6 +204,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 		//tabeldata Statistik payment
 		Route::get('getstatistikpayment/{id?}', 'PaymentController@getstatistikpayment')->name('getstatistikpayment');
+		Route::get('/filter-data', 'PaymentController@filterData')->name('filter-data');
+
+		//datatable server-side Pembayaran per pelanggan
+		Route::get('/totalPayment', 'PaymentController@totalPayment');
+		Route::post('/statistikpayment/getdataPayments', 'PaymentController@getdataPayments')->name('totalPayment.data');
 
 		//Tagihan
 		Route::resource('tagihans', 'TagihanController');

@@ -1,5 +1,12 @@
 @extends('layout')
 
+<style>
+	.summernote ol, ul{
+		list-style: disc !important;
+		list-style-position: inside;
+	}
+</style>
+
 @section('content')
 
 	<!-- Page header -->
@@ -125,7 +132,6 @@
 	<script src="{{asset('global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
 	<script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
 
-	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
 	<script src="{{asset('assets/js/app.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
