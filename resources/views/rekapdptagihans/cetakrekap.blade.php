@@ -66,8 +66,9 @@
             {{-- </td> --}}
             {{-- <td><b>{{$invoice->invoice}}</b></td> --}}
             {{-- <td> --}}
-                <br><br>
+                
                 @if ($invoice->keterangan_tambahan != null)
+                 <div style="line-height: 1.5;">
                 {!! $invoice->keterangan_tambahan !!}
                 @else
                 <p></p>
